@@ -1,139 +1,335 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title>layui</title>
-		<link rel="stylesheet" type="text/css" href="../../layui/css/layui.css" />
-		<link rel="stylesheet" type="text/css" href="../../MyCss/index.css" />
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<title>new售卖机管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../../layui/css/layui.css" />
+	<link rel="stylesheet" href="../../MyCss/indexCss/index.css">
+</head>
 
-	<body>
-		<div class="layui-row">
-			<div class=" layui-col-sm1 layui-col-md2" style="height: 100px;">
-				<!--| 平板：6/12 | 桌面：4/12-->
-				<!--<ul class="layui-nav layui-nav-tree" lay-filter="test layui-col-sm2" >-->
-				<!--左侧导航栏部分-->
-				<ul class="layui-nav layui-nav-tree layui-nav-side layui-col-sm12 layui-col-md12">
-					<li class="layui-nav-item layui-nav-itemed">
-
-						<a href="javascript:;"> <i class="layui-icon layui-icon-chart-screen" style="color: #E2E2E2;"></i> 数据中心</a>
-						<dl class="layui-nav-child">
-							<dd>
-								<a href="javascript:;">统计报表</a>
-							</dd>
-						</dl>
-					</li>
-					<li class="layui-nav-item">
-						<a href="javascript:;">用户管理</a>
-						<dl class="layui-nav-child">
-							<dd>
-								<a href="javascript:;">用户登陆</a>
-							</dd>
-							<dd>
-								<a href="javascript:;">终端管理员</a>
-							</dd>
-							<dd>
-								<a href="javascript:;">成员列表</a>
-							</dd>
-						</dl>
-					</li>
-					<li class="layui-nav-item">
-						<a href="javascript:;">门店管理</a>
-						<dl class="layui-nav-child">
-							<dd>
-								<a href="javascript:;">我的售货机</a>
-							</dd>
-							<dd>
-								<a href="javascript:;">售货机远程操控</a>
-							</dd>
-						</dl>
-					</li>
-					<li class="layui-nav-item">
-						<a href="javascript:;">商品管理</a>
-						<dl class="layui-nav-child">
-							<dd>
-								<a href="javascript:;">通用商品</a>
-							</dd>
-							<dd>
-								<a href="javascript:;">自定义目类</a>
-							</dd>
-							<dd>
-								<a href="javascript:;">自定义商品</a>
-							</dd>
-						</dl>
-					</li>
-					<li class="layui-nav-item">
-						<a href="javascript:;">商户管理</a>
-						<dl class="layui-nav-child">
-							<dd>
-								<a href="javascript:;">商户中心</a>
-							</dd>
-							<dd>
-								<a href="javascript:;">个人商户信息</a>
-							</dd>
-							<dd>
-								<a href="javascript:;">结算详情</a>
-							</dd>
-							<dd>
-								<a href="javascript:;">我的合伙人</a>
-							</dd>
-						</dl>
-					</li>
-				</ul>
-
-			</div>
-			<div class=" layui-col-sm10 layui-col-md10">
-				<!--| 平板：6/12 | 桌面：4/12-->
-				<!--头顶部分-->
-				<div class="headerTop">
-
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header">
+			<div class="layui-logo">售卖机管理系统</div>
+			<!-- 头部区域（可配合layui已有的水平导航） -->
+			<div class="content-header-title">
+				<div class="transform-nav-tab">
+					<i class="layui-icon layui-icon-menu-fill"></i>
 				</div>
-				<div class="layui-tab layui-tab-brief layui-col-sm12 ayui-col-md12" lay-allowClose="true">
-					<ul class="layui-tab-title" style="background: #1f2640;">
-						<li class="layui-this">首页</li>
-						<li>用户基本管理</li>
-						<li>权限分配</li>
-						<li>订单管理</li>
-						<li>用户基本管理</li>
-
-					</ul>
-					<div class="layui-tab-content">
-						<div class="layui-tab-item layui-show">1</div>
-						<div class="layui-tab-item">2</div>
-						<div class="layui-tab-item">3</div>
-						<div class="layui-tab-item">4</div>
-						<div class="layui-tab-item">5</div>
-						<div class="layui-tab-item">6</div>
-					</div>
+				<!-- 公告 -->
+				<div class="swipe-header-notice">
 					<div class="layui-form">
-						<div class="layui-form-item">
-							<label class="layui-form-label">启用</label>
-							<div class="layui-input-block" id="test">
-								<input type="checkbox" name="switch" lay-skin="switch" lay-text="启用|关闭" id="Isuse" value="1" checked>
+						<div class="layui-input-block" id="test">
+							<input type="checkbox" name="switch" lay-skin="switch" id="Isuse" value="1" checked>
+						</div>
+					</div>
+					<div class="swipe-tile">
+						<span>公 告:</span>
+					</div>
+					<div class="swipe-content-carousel">
+						<div class="layui-carousel" id="test1">
+							<div carousel-item>
+								<div>尊敬的商户，我司提现审核工作已恢复，请悉知</div>
+								<div>尊敬的商户，我司提现审核工作已恢复，请悉知</div>
+								<div>尊敬的商户，我司提现审核工作已恢复，请悉知</div>
+								<div>尊敬的商户，我司提现审核工作已恢复，请悉知</div>
+								<div>尊敬的商户，我司提现审核工作已恢复，请悉知</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
 
-		</div>
-		</div>
+			<ul class="layui-nav layui-layout-right nav-header-information">
+				<li class="layui-nav-item header-message">
+					<a href="javascript:;">
+						<i class="layui-icon layui-icon-notice"></i>
+						<span>消息</span>
 
-	</body>
-	<!--<script src="jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>-->
-	<script src="../../layui/layui.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
-				layui.use('element', function() {
-					var element = layui.element;
+						<p>0</p>
+					</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="">体现消息</a>
+						</dd>
+						<dd>
+							<a href="">安全设置</a>
+						</dd>
+					</dl>
+				</li>
+				<li class="layui-nav-item uers-message">
+					<a href="javascript:;">
+						<span>C201912131127</span>
+						<i class="layui-icon layui-icon-user"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<!-- 顶部选项卡 -->
+		<div class="header-nav-tabs-switch">
+			<div>
+				<div class="layui-tab" lay-filter="demo" lay-allowclose="true">
+					<ul class="layui-tab-title">
+						<li class="layui-this" lay-id="11">首页</li>
+						<li lay-id="22">用户管理</li>
+						<li lay-id="33">权限分配</li>
+						<li lay-id="44">商品管理</li>
+						<li lay-id="55">订单管理</li>
+					</ul>
+					<div class="layui-tab-content">
+						<div class="layui-tab-item layui-show">
+
+						</div>
+						<div class="layui-tab-item">
+							<!-- <div class="content-tbas-iframe-html">
+								<iframe class="iframe-show" src="../dataCenter/report.html"></iframe>
+							</div> -->
+						</div>
+						<div class="layui-tab-item">内容3</div>
+						<div class="layui-tab-item">内容4</div>
+						<div class="layui-tab-item">内容5</div>
+					</div>
+					<div class="site-demo-button" style="margin-bottom: 0;">
+							<button class="layui-btn site-demo-active" data-type="tabAdd">新增Tab项</button>
+							<button class="layui-btn site-demo-active" data-type="tabDelete">删除：商品管理</button>
+							<button class="layui-btn site-demo-active" data-type="tabChange">切换到：用户管理</button>
+						  </div>
+					  </div>
+				</div>
+			</div>
+			<div class="layui-side layui-bg-black">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree my-nav-tab" lay-filter="test">
+						<li class="layui-nav-item layui-nav-itemed">
+							<a href="javascript:;">
+								<i class="layui-icon layui-icon-chart-screen"></i>
+								数据中心</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;">统计报表</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon layui-icon-app"></i>
+								用户管理</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;">用户登陆</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">终端管理员</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">成员列表</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon layui-icon-star-fill"></i>
+								门店管理</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;">我的售货机</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">售货机远程操控</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon layui-icon-cart"></i>
+								商品管理</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;">通用商品</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">自定义目类</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">自定义商品</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon layui-icon-survey"></i>
+								商户管理</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;">商户中心</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">个人商户信息</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">结算详情</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">我的合伙人</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon layui-icon-form"></i>
+								账目管理</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;">售货机项目</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">类目项目</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon layui-icon-list"></i>
+								订单管理</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;">用户订单</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">旧版用户订单</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon layui-icon-upload-drag"></i>
+								广告管理</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;">我的素材库</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">发布详情</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon layui-icon-notice"></i>
+								个人中心</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;">实时分账开通</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">绑定实时分账</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">个人信息</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">关联公众号</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon layui-icon-util"></i>
+								操作记录</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;">AT端登陆记录</a>
+								</dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- <div class="layui-body"> -->
+			<!-- 内容主体区域 -->
+			<!-- <div style="padding: 15px;">内容主体区域</div>
+			</div> -->
+
+			<!-- <div class="layui-footer"> -->
+			<!-- 底部固定区域 -->
+			<!-- © layui.com - 底部固定区域
+			</div> -->
+		</div>
+		<script src="../../layui/layui.js"></script>
+		<script>
+			//JavaScript代码区域
+			window.onload = function () {
+				layui.use(['layer', 'form', 'element', 'carousel'], function () {
+
+					// 表单
+					var layer = layui.layer,
+						form = layui.form;
+					// 选项卡
+					// var element = layui.element;
+					// 轮播图
+					var carousel = layui.carousel;
+					carousel.render({
+						elem: '#test1'
+						, width: '480px' //设置容器宽度
+						, height: '25px'
+						, arrow: 'none' //始终显示箭头
+						, anim: 'updown' //切换动画方式
+						, indicator: 'none'
+						, interval: '2000'
+					});
+
+					var $ = layui.jquery
+						, element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+					//触发事件
+					var active = {
+						tabAdd: function () {
+							//新增一个Tab项
+							element.tabAdd('demo', {
+								title: '新选项' + (Math.random() * 1000 | 0) //用于演示
+								, content: `<div class="content-tbas-iframe-html">
+								<iframe class="iframe-show" src="../dataCenter/report.html"></iframe>
+							</div>`
+								, id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+							})
+						}
+						, tabDelete: function (othis) {
+							//删除指定Tab项
+							element.tabDelete('demo', '44'); //删除：“商品管理”
+
+
+							othis.addClass('layui-btn-disabled');
+						}
+						, tabChange: function () {
+							//切换到指定Tab项
+							element.tabChange('demo', '33'); //切换到：用户管理
+						}
+					};
+
+					$('.site-demo-active').on('click', function () {
+						var othis = $(this), type = othis.data('type');
+						active[type] ? active[type].call(this, othis) : '';
+					});
+
+					//Hash地址的定位
+					//   var layid = location.hash.replace(/^#test=/, '');
+					//   element.tabChange('test', layid);
+
+					element.on('tab(test)', function (elem) {
+						location.hash = 'test=' + $(this).attr('lay-id');
+					});
+
+
+
 				});
-//		一般直接写在一个js文件中
-		layui.use(['layer', 'form'], function() {
-			var layer = layui.layer,
-				form = layui.form;
+			}
 
-		});
-	</script>
+
+
+
+		</script>
+</body>
 
 </html>
