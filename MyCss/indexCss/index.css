@@ -55,6 +55,7 @@
 	width: 800px;
 }
 .layui-input-block{
+	margin-top: 10px;
 	margin-left: 10px;	
 }
 .layui-unselect{
