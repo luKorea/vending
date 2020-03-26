@@ -1,0 +1,47 @@
+.list-warp{
+    width: 100%;
+}
+.list-body{
+    margin: 20px    ;
+}
+.mian{
+    margin: 10px 20px 0px 40px;
+}
+.add-member button{
+    padding: 9px 15px;
+    font-size: 12px;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #409eff;
+    border-color: #409eff;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    transition: .1s;
+    border: none;
+}
+.add-member button span{
+    font-size: 12px;
+}
+.data-list{
+    width: 100%;
+}
+.layui-form{
+    width: 100% !important;
+    height: auto;
+}
+.layui-table-header{
+    border: none;
+    border-bottom: solid 1px #e6e6e6;
+    /* background: #fff; */
+}
+.layui-table-cell span{
+    font-size: 14px;
+    color: #909399;
+}
