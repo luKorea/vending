@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>new售卖机管理系统</title>
+	<link rel="stylesheet" href="../../MyCss/public/pubilc.css">
 	<link rel="stylesheet" type="text/css" href="../../layui/css/layui.css" />
 	<link rel="stylesheet" href="../../MyCss/indexCss/index.css">
 </head>
@@ -72,7 +73,7 @@
 				<div class="layui-tab" lay-filter="demo" lay-allowclose="true">
 					<ul class="layui-tab-title">
 						<li class="layui-this" lay-id="11">首页</li>
-						<li lay-id="22">用户管理</li>
+						<li lay-id="22">统计报表</li>
 						<li lay-id="33">权限分配</li>
 						<li lay-id="44">商品管理</li>
 						<li lay-id="55">订单管理</li>
@@ -80,11 +81,18 @@
 					<div class="layui-tab-content">
 						<div class="layui-tab-item layui-show">
 							<div class="content-tbas-iframe-html">
-								<iframe class="iframe-show" src="homePage.html"></iframe>
+								<!-- 首页 -->
+								<!-- <iframe class="iframe-show" src="homePage.html"></iframe> -->
+								<!-- 统计报表 -->
+								<!-- <iframe class="iframe-show" src="../dataCenter/report.html"></iframe> -->
+								<!-- 用户登录 -->
+								<iframe class="iframe-show" src="../userManagement/logo.html"></iframe>
 							</div>
 						</div>
 						<div class="layui-tab-item">
-							222	
+							<div class="content-tbas-iframe-html">
+								<iframe class="iframe-show" src="../dataCenter/report.html"></iframe>
+							</div>
 						</div>
 						<div class="layui-tab-item">内容3</div>
 						<div class="layui-tab-item">内容4</div>
@@ -118,7 +126,7 @@
 							用户管理</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">用户登陆</a>
+								<a href="javascript:;">用户logo</a>
 							</dd>
 							<dd>
 								<a href="javascript:;">终端管理员</a>
@@ -290,7 +298,7 @@
 						element.tabAdd('demo', {
 							title: '新选项' + (Math.random() * 1000 | 0) //用于演示
 							, content: `<div class="content-tbas-iframe-html">
-								<iframe class="iframe-show" src="../dataCenter/report.html"></iframe>
+								<iframe class="iframe-show" src="homePage.html"></iframe>
 							</div>`
 							, id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
 						})
@@ -320,8 +328,9 @@
 				element.on('tab(test)', function (elem) {
 					location.hash = 'test=' + $(this).attr('lay-id');
 				});
-
+					
 			});
+			
 		}	
 	</script>
 </body>

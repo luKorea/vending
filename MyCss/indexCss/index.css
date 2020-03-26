@@ -203,6 +203,8 @@
 	border-top: 0;
 	border-right: 10px solid rgba(238,238,238);
 	overflow:auto ;
+	padding-left: 0;
+	padding-right: 0;
 }
 .header-nav-tabs-switch .layui-tab-content::-webkit-scrollbar{
 	display: none;

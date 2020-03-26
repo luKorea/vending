@@ -1,0 +1,44 @@
+.logo-warp{
+    width: 100%;
+}
+.header-title{
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    font-weight: bold;
+}
+.header-img img{
+    height: 66px;
+    width: 132px;
+}
+.btn1{
+    margin-top: 10px;
+    padding: 9px 15px;
+    color: #fff;
+    background-color: #409eff;
+    border-color: none;
+    border: none;
+    font-size: 12px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.btn1 span,.btn2 span{
+    font-size: 12px;
+}
+.btn2{
+    margin-top: 10px;
+    margin-left: 10px;
+    padding: 9px 15px;
+    font-size: 12px;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #67c23a;
+    cursor: pointer;
+     border-color: none;
+    border: none;
+    cursor: pointer;
+}
+.advice{
+    font-size: 12px;
+    color: #606266;
+    margin-top: 7px;
+}

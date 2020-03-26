@@ -106,18 +106,83 @@
 .seven-days-sum .seven-day-barCharts{
   width: 100%;
   height: 300px;
-  margin-top: 20px;
-  /* background-color: red; */
 }
 #my-seven-day-echarts-canvas{
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 .percentage-number .percentage-barEcharts{
   width: 100%;
-  height: 200px;
+  height: 280px;
+  margin-top: 20px;
 }
 #my-percentage-echarts-canvas{
   width: 100%;
   height: 100%;
+  overflow: hidden;
+}
+.refund-barEcharts{
+  width: 100%;
+  height: 280px;
+  margin-top: 20px;
+}
+#my-thirty-refund-echarts-canvas{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+/* 底部数据 */
+.footer-sales-data{
+  width: 100%;
+}
+.footer-sales-data .footer-padding{
+  padding: 0 25px ;
+}
+.footer-sales-data .footer-padding .footer-machine-data{
+  width: 100%
+}
+.machine-header-title,
+.sales-public-hader{
+  padding: 18px 20px;
+  border-bottom: 1px solid #ebeef5;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between
+}
+.machine-header-title span,.sales-public-hader span{
+  font-weight: 700;
+  font-size: 16px;
+}
+.machine-header-title button,.sales-public-hader button{
+  cursor: pointer;
+  color: #1b7ff1;
+  border: none;
+}
+.machine-body-content,.sales-public-body{
+  padding: 20px
+}
+.machine-content-text,.sales-public-text{
+  height: 24px;
+  line-height: 24px;
+}
+.machine-body-content .ranking,.sales-public-body .ranking{
+  display: inline-block;
+  height: 19px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-right: 5px;
+}
+.machine-body-content .front,.sales-public-body .front{
+  color: #ff9c00;
+}
+.machine-body-content span:nth-child(2),.sales-public-body span:nth-child(2){
+  display: inline-block;
+  width: 90px;
+  height: 19px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: rgb(102, 102, 102);
 }
