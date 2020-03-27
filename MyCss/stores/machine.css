@@ -47,3 +47,189 @@
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
 }
+.fixed-account{
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: default;
+    background: #fff;
+    color: #606266;
+}
+.fixed-account span{
+    font-size: 14px;
+    color: #409EFF;
+    cursor: pointer;
+}
+.sidebar{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    box-sizing: border-box;
+    border-right: 12px solid #eee;
+    background-color: #fff;
+    text-align: center;
+    color: #d3dce6;
+    z-index: 50;
+}
+.sidebar i{
+    cursor: pointer;
+    position: absolute;
+    color: #999;
+    text-align: center;
+    top: 387px;
+    right: -6px;
+    display: block;
+    width: 32px;
+    line-height: 76px;
+    font-size: 24px;
+    height: 76px;
+    background-color: #eee;
+    border-radius: 10px 0 0 10px;
+    -webkit-transition: right 1s;
+}
+.on-left{
+    color: #999;
+    text-align: center;
+    position: absolute;
+    top: 387px;
+    left: -6px;
+    display: block;
+    width: 32px;
+    height: 76px;
+    background-color: #eee;
+    border-radius: 0 10px 10px 0;
+    -webkit-transition: left 1s;
+    cursor: pointer;
+    line-height: 76px;
+    font-size: 24px;
+    display: none;
+}
+/* 右边内容部分 */
+.contnet-right{
+    margin: 10px 0px 0px 40px;
+    /* -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1; */
+    width: 100%;
+    overflow: hidden;
+    
+}
+.margin-top{
+    margin-top: 10px;
+    font-size: 14px;
+}
+.layui-form{
+    display: inline-block;
+    position: relative;
+}
+input{
+    font-size: 14px;
+    color: #606266;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+}
+.layui-form-select dl dd.layui-this{
+    background-color: #409eff !important;
+}
+.key-contnet{
+    line-height: normal;
+    display: inline-table;
+    width: 100%;
+    border-collapse: separate;
+}
+.key-text{
+    background-color: #f5f7fa;
+    color: #909399;
+    vertical-align: middle;
+    position: relative;
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    padding: 0 20px;
+    width: 1px;
+    white-space: nowrap;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+    font-size: 14px;
+    display: table-cell;
+}
+.key-contnet input{
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 38px;
+    line-height: 38px;
+    outline: 0;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+    font-size: 14px;
+}
+.query-btn{
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    transition: .1s;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #409eff;
+    border-color: #409eff;
+}
+.query span{
+    margin-left: 5px;
+    color: #fff;
+    font-size: 14px;
+}
+.sweet-title{
+    margin: 0px;
+    color: red;
+}
+/* 数据列表部分 */
+.data-list-table{
+    /* max-height: 600px; */
+    width: 100%;
+    font-size: 14px;
+    color: #606266;
+    border-right: 0;
+    border-bottom: 0;
+    /* display: flex; */
+    overflow-x: auto !important;
+}
+.data-list-table .layui-table{
+    max-height: 600px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    /* -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1; */
+    width: 100%;
+    max-width: 100%;
+    font-size: 14px;
+    color: #606266;
+    border-right: 0;
+    border-bottom: 0;
+}
+.data-list-table .layui-table tr{
+    overflow-x:hidden;
+}

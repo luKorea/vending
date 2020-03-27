@@ -3,7 +3,7 @@
 	padding: 0;
 	list-style: none;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
     font-family: PingFang-SC-Regular;
 }
 
@@ -15,4 +15,85 @@ input {
 body {
 	margin: 0   ;
 	padding: 0;
+}
+.btn{
+	display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    transition: .1s;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #409eff;
+    border-color: #409eff;
+}
+input{
+    font-size: 14px;
+    color: #606266;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+}
+.key-contnet{
+    line-height: normal;
+    display: inline-table;
+    width: 100%;
+    border-collapse: separate;
+}
+.key-text{
+    background-color: #f5f7fa;
+    color: #909399;
+    vertical-align: middle;   
+    position: relative;
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    padding: 0 20px;
+    width: 1px;
+    white-space: nowrap;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+    font-size: 14px;
+    display: table-cell;
+}
+.key-contnet input{
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 38px;
+    line-height: 38px;
+    outline: 0;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+    font-size: 14px;
+}
+.btn i{
+	color: #fff;
+	font-size: 14px;
+	text-align: center;
+}
+.layui-form-select dl dd.layui-this{
+    background-color: #409eff !important;
+}
+.layui-form{
+	display: inline-block;
+}
+.data-list-table .layui-form{
+	width: 100%;
 }
