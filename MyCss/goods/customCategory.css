@@ -1,0 +1,42 @@
+.custom-warp{
+    width: 100%;
+}
+.header-query{
+    width: 100%;
+    display: flex;
+}
+.query-btn{
+    margin-left: 15px;
+}
+.custom-data-list{
+    width: 100%;
+    max-height: 700px;
+    margin-top: 10px;
+}
+.layui-table thead tr{
+    background-color: #ffffff;
+}
+.layui-table thead tr th{
+    border: none;
+}
+.layui-form{
+    border-left: none;
+    border-right: none;
+}
+.editor-btn,.del-btn {
+    line-height: 28px;
+    height: auto;
+    border-radius: 2px !important;
+    margin-bottom: 5px;
+    margin: 10px 0;
+}
+.editor-btn span,.del-btn span{
+    font-size: 12px;
+    line-height: 30px;
+}
+.layui-table-cell{
+    height: auto;
+}
+.layui-laypage .layui-laypage-curr .layui-laypage-em{
+    background-color: #409eff;
+}

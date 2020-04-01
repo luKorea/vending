@@ -4,7 +4,7 @@
 	list-style: none;
     text-decoration: none;
     font-size: 14px;
-    font-family: PingFang-SC-Regular;
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
 }
 
 input {
@@ -31,10 +31,12 @@ body {
     transition: .1s;
     padding: 12px 20px;
     font-size: 14px;
-    border-radius: 4px;
+    border-radius: 4px !important;
     color: #fff;
-    background-color: #409eff;
-    border-color: #409eff;
+    background-color: #409eff !important;
+    border-color: #409eff !important;
+    display: flex;
+    align-items: center;
 }
 input{
     font-size: 14px;
@@ -96,4 +98,33 @@ input{
 }
 .data-list-table .layui-form{
 	width: 100%;
+}
+.warp-margin{
+    margin: 20px;
+}
+.del-btn{
+    background-color: #f56c6c !important;
+    border-color: #f56c6c !important;
+}
+.layui-table-body{
+    max-height: 620px;
+}
+.layui-table-box .layui-table-body .layui-table td{
+    border-left: none ;
+    border-right: none ;
+}
+.margin{
+    margin:20px;
+}
+.layui-table-box .layui-table thead tr{
+    background-color: #ffffff;
+}
+.layui-table-box .layui-table th{
+    border-left: none ;
+    border-right: none ;
+}
+.layui-table-view{
+    border-left: none !important;
+    border-right: none  !important;
+    border-top: none !important;
 }

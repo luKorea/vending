@@ -212,7 +212,7 @@ input{
     color: #606266;
     border-right: 0;
     border-bottom: 0;
-    /* display: flex; */
+    display: flex;
     overflow-x: auto !important;
 }
 .data-list-table .layui-table{
