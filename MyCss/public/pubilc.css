@@ -128,3 +128,16 @@ input{
     border-right: none  !important;
     border-top: none !important;
 }
+h1{
+    font-size: 20px;
+    font-weight: 800; 
+}
+.flexTwo{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 10px 0;
+}      
+.layui-laypage .layui-laypage-curr .layui-laypage-em{
+    background-color:#409eff !important;
+}
