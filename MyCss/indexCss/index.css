@@ -28,6 +28,7 @@
 	position: absolute;
 	left: 200px;
 	top: 0;
+	width: 65%;
 }
 .content-header-title{
     color: #ffffff;
@@ -52,11 +53,13 @@
     line-height: 35px;
     align-items: center;
 	border-radius: 3px;
-	width: 800px;
+	width: 100%;
 }
 .layui-input-block{
-	margin-top: 10px;
+	margin-top: 8px;
 	margin-left: 10px;	
+	min-height: 0;
+	margin-bottom: 8px;
 }
 .layui-unselect{
 	margin-top: 0;
