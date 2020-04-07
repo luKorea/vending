@@ -1,0 +1,49 @@
+.information-wrap{
+    width: 100%;
+}
+.center{
+    text-align: center;
+}
+.linehei{
+    height: 50px;
+    line-height: 50px;
+}
+.names{
+    width: 130px;
+    text-align: right;
+    margin-right: 10px;
+    display: inline-block;
+}
+.mytitle{
+    min-width: 220px;
+    text-align: left;
+    display: inline-block;
+}
+.mytitle img{
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+    border-radius: 50%;
+}
+.title-btn{
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    transition: .1s;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+.title-btn:hover{
+    border: 1px solid #409eff ;
+    color: #409eff;
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../MyCss/public/pubilc.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../MyCss/advertising/release.css">
+    <title>发布详情</title>
+</head>
+
+<body>
+    <div class="release-wrap">
+        <div class="flex-contnet">
+            <!-- 左边 -->
+            <div class="aside-left">
+                <div style="margin: 20px; min-height: 680px;">
+                    <div class="account">
+                        <input type="text" placeholder="输入用户账户">
+                    </div>
+                    <p style="margin:10px;color:red;">账号</p>
+                    <div class="account-list">
+                        <div>
+                            <span>粤宝商户-中邮广州</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <i class="layui-icon layui-icon-left"></i>
+                </div>
+            </div>
+            <div class="right-contnet">
+                <div class="qeury-header">
+                    <div class="layui-row">
+                        <div class=" layui-col-sm6 layui-col-md3">
+                            <div class="itmes">
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" id="test6" placeholder=" - ">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" layui-col-sm6 layui-col-md4 number">
+                            大小范围(mb):
+                            <div style="max-width: 100px;">
+                                <input type="number">
+                            </div>
+                            ——
+                            <div style="max-width: 100px;">
+                                <input type="number">
+                            </div>
+                        </div>
+                        <div class=" layui-col-sm12 layui-col-md3">
+                            <div>
+                                广告位:
+                                <form class="layui-form" action="" style="max-width: 240px;">
+                                    <div class="layui-form" lay-filter="myDiv">
+                                        <select name="" id="" lay-filter="mySelect">
+                                            <option value="zhang">全部</option>
+                                            <option value="wang">纪念币</option>
+                                            <option value="li">红包</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class=" layui-col-sm7 layui-col-md2">
+                            <button class="layui-btn layui-btn-normal  btn">
+                                <i class="layui-icon layui-icon-search"></i>
+                                <span>查询</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="data-list">
+                    <div>
+                            <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../layui/layui.js"></script>
+<script>
+    layui.use(['element', 'laydate', 'table'], function () {
+        var $ = layui.jquery
+            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        //触发事件
+        var active = {
+            tabAdd: function () {
+                //新增一个Tab项
+                element.tabAdd('demo', {
+                    title: '新选项' + (Math.random() * 1000 | 0) //用于演示
+                    , content: '内容' + (Math.random() * 1000 | 0)
+                    , id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+                })
+            }
+            , tabDelete: function (othis) {
+                //删除指定Tab项
+                element.tabDelete('demo', '44'); //删除：“商品管理”
+
+
+                othis.addClass('layui-btn-disabled');
+            }
+            , tabChange: function () {
+                //切换到指定Tab项
+                element.tabChange('demo', '22'); //切换到：用户管理
+            }
+        };
+
+        $('.site-demo-active').on('click', function () {
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        // 日期选择
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#test6'
+            , range: true
+            , value: new Date(),
+        });
+
+
+        // 展开
+        var show = false;
+        $('.an-btn').click(function () {
+            $(".pack-up").slideToggle();
+        });
+        var table = layui.table;
+        table.render({
+            elem: '#moneyData'
+            , cols: [[
+                { field: 'username', width: 180, title: '发布单号' },
+                { field: 'phone', width: 220, title: '广告时长(s)', },
+                { field: 'CreationTime', width: 100, title: '广告大小(m)', },
+                { field: 'amendTime', width: 100, title: '广告位', },
+                { field: 'bili', width: 180, title: '发布时间', sort: true },
+                { field: 'bili', width: 100, title: '下架时间', sort: true },
+                { field: 'bili', width: 100, title: '操作', },
+
+            ]],
+            data: [
+                {
+                    username: '2222'
+                    , phone: 'cs45121'
+                    , CreationTime: '支付宝'
+                    , amendTime: '99'
+                    , bili: '1:2'
+                },
+                {
+                    username: '2222'
+                    , phone: 'cs45121'
+                    , CreationTime: '支付宝'
+                    , amendTime: '99'
+                    , bili: '1:2'
+                }
+            ]
+            , page: true
+        });
+    });
+</script>
+
+</html>
