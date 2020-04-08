@@ -72,17 +72,13 @@
 			<div>
 				<div class="layui-tab" lay-filter="demo" lay-allowclose="true">
 					<ul class="layui-tab-title">
-						<li class="layui-this" lay-id="11">首页</li>
-						<li lay-id="22">统计报表</li>
-						<li lay-id="33">权限分配</li>
-						<li lay-id="44">商品管理</li>
-						<li lay-id="55">订单管理</li>
+						<li class="layui-this" lay-id="999">首页</li>
 					</ul>
 					<div class="layui-tab-content">
 						<div class="layui-tab-item layui-show">
 							<div class="content-tbas-iframe-html">
 								<!-- 首页 -->
-								<!-- <iframe class="iframe-show" src="homePage.html"></iframe> -->
+								<iframe class="iframe-show" src="homePage.html"></iframe>
 								<!-- 大分类 数据中心 -->
 								<!-- 统计报表 -->
 								<!-- <iframe class="iframe-show" src="../dataCenter/report.html"></iframe> -->
@@ -135,17 +131,11 @@
 								<!-- 个人信息 -->
 								<!-- <iframe class="iframe-show" src="../my/myInformation.html"></iframe> -->
 								<!-- 关联公众号 -->
-								<iframe class="iframe-show" src="../my/ThePublic.html"></iframe>
+								<!-- <iframe class="iframe-show" src="../my/ThePublic.html"></iframe> -->
+								<!-- 大分类操作记录 -->
+								<!-- <iframe class="iframe-show" src="../operation/record.html"></iframe> -->
 							</div>
 						</div>
-						<div class="layui-tab-item">
-							<div class="content-tbas-iframe-html">
-								<!-- <iframe class="iframe-show" src="../stores/machine.html"></iframe> -->
-							</div>
-						</div>
-						<div class="layui-tab-item">内容3</div>
-						<div class="layui-tab-item">内容4</div>
-						<div class="layui-tab-item">内容5</div>
 					</div>
 					<!-- <div class="site-demo-button" style="margin-bottom: 0;">
 						<button class="layui-btn site-demo-active" data-type="tabAdd">新增Tab项</button>
@@ -165,7 +155,7 @@
 							数据中心</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">统计报表</a>
+								<a href="javascript:;" class="navClick"  navId="0">统计报表</a>
 							</dd>
 						</dl>
 					</li>
@@ -175,13 +165,13 @@
 							用户管理</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">用户logo</a>
+								<a href="javascript:;" class="navClick"  navId="1">用户logo</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">终端管理员</a>
+								<a href="javascript:;" class="navClick" navId="2">终端管理员</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">成员列表</a>
+								<a href="javascript:;" class="navClick"  navId="3">成员列表</a>
 							</dd>
 						</dl>
 					</li>
@@ -191,10 +181,10 @@
 							门店管理</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">我的售货机</a>
+								<a href="javascript:;" class="navClick" navId="4">我的售货机</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">售货机远程操控</a>
+								<a href="javascript:;" class="navClick" navId="5">售货机远程操控</a>
 							</dd>
 						</dl>
 					</li>
@@ -204,13 +194,13 @@
 							商品管理</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">通用商品</a>
+								<a href="javascript:;" class="navClick" navId="6">通用商品</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">自定义目类</a>
+								<a href="javascript:;" class="navClick" navId="7">自定义目类</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">自定义商品</a>
+								<a href="javascript:;" class="navClick" navId="8">自定义商品</a>
 							</dd>
 						</dl>
 					</li>
@@ -220,13 +210,13 @@
 							商户管理</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">商户中心</a>
+								<a href="javascript:;" class="navClick" navId="9">商户中心</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">个人商户信息</a>
+								<a href="javascript:;" class="navClick" navId="10">个人商户信息</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">结算详情</a>
+								<a href="javascript:;" class="navClick" navId="11">结算详情</a>
 							</dd>
 							<!-- <dd>
 								<a href="javascript:;">我的合伙人</a>
@@ -239,10 +229,10 @@
 							账目管理</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">售货机账目</a>
+								<a href="javascript:;" class="navClick" navId="12">售货机账目</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">类目账目</a>
+								<a href="javascript:;" class="navClick" navId="13">类目账目</a>
 							</dd>
 						</dl>
 					</li>
@@ -252,10 +242,10 @@
 							订单管理</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">用户订单</a>
+								<a href="javascript:;" class="navClick" navId="14">用户订单</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">旧版用户订单</a>
+								<a href="javascript:;" class="navClick" navId="15">旧版用户订单</a>
 							</dd>
 						</dl>
 					</li>
@@ -265,10 +255,10 @@
 							广告管理</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">我的素材库</a>
+								<a href="javascript:;" class="navClick" navId="16">我的素材库</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">发布详情</a>
+								<a href="javascript:;" class="navClick" navId="17">发布详情</a>
 							</dd>
 						</dl>
 					</li>
@@ -278,16 +268,16 @@
 							个人中心</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">实时分账开通</a>
+								<a href="javascript:;" class="navClick" navId="18">实时分账开通</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">绑定实时分账</a>
+								<a href="javascript:;" class="navClick" navId="19">绑定实时分账</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">个人信息</a>
+								<a href="javascript:;" class="navClick" navId="20">个人信息</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">关联公众号</a>
+								<a href="javascript:;" class="navClick" navId="21">关联公众号</a>
 							</dd>
 						</dl>
 					</li>
@@ -297,7 +287,7 @@
 							操作记录</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">AT端登陆记录</a>
+								<a href="javascript:;"class="navClick" navId="22">AT端登陆记录</a>
 							</dd>
 						</dl>
 					</li>
@@ -305,54 +295,9 @@
 			</div>
 		</div>
 	</div>
+	<script src="../../js/public/navData.js"></script>
 	<script src="../../layui/layui.js"></script>
-	<script>
-		//JavaScript代码区域
-		window.onload = function () {
-			layui.use(['layer', 'form', 'element', 'carousel'], function () {
-
-				// 表单
-				var layer = layui.layer,
-					form = layui.form;
-				// 选项卡
-				// var element = layui.element;
-				// 轮播图
-				var carousel = layui.carousel;
-				carousel.render({
-					elem: '#test1'
-					, width: '480px' //设置容器宽度
-					, height: '25px'
-					, arrow: 'none' //始终显示箭头
-					, anim: 'updown' //切换动画方式
-					, indicator: 'none'
-					, interval: '2000'
-				});
-
-				var $ = layui.jquery
-					, element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
-
-				//触发事件
-					function tabAdd() {
-						//新增一个Tab项
-						element.tabAdd('demo', {
-							title: '新选项' + (Math.random() * 1000 | 0) //用于演示
-							, content: `<div class="content-tbas-iframe-html">
-								<iframe class="iframe-show" src="homePage.html"></iframe>
-							</div>`
-							, id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
-						})
-					}
-				$('.site-demo-active').on('click', function () {
-					var othis = $(this), type = othis.data('type');
-					active[type] ? active[type].call(this, othis) : '';
-				});
-
-				});
-					
-			
-			
-		}	
-	</script>
+	<script src="../../js/index/index.js"></script>
 </body>
 
 </html>
