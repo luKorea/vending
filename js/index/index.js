@@ -42,30 +42,76 @@ window.onload = function () {
 
         // 导航切换事件
         $('.navClick').click(function () {
+
             if (navStr.indexOf($(this).attr('navId')) == -1) {
                 tabAdd($(this).attr('navId'), $(this).html());
                 tabChange($(this).attr('navId'));
                 navStr.push($(this).attr('navId'));
-            }else{
+            } else {
+
                 tabChange($(this).attr('navId'))
             }
         })
-        element.on('tab(demo)', function(data){
-            console.log(this); //当前Tab标题所在的原始DOM元素
-            console.log(data.index); //得到当前Tab的所在下标
-            console.log(data.elem); //得到当前的Tab大容器
-          });
+
         // 监听tabl删除事件
         $(".layui-tab").on("click", function (e) {
             if ($(e.target).is(".layui-tab-close")) {
                 //判断是不是点击删除icon
-                var delIndex=navStr.indexOf($(e.target).parent().attr("lay-id"));
-                navStr.splice(delIndex,1);
+                var delIndex = navStr.indexOf($(e.target).parent().attr("lay-id"));
+                navStr.splice(delIndex, 1);
                 // console.log($(e.target).parent().attr("lay-id"))// 输出哪个tab被点击，没有值时返回undefined
             }
+        });
+
+        // 监听tab切换事件
+        element.on('tab(demo)', function (data) {
+            var Len = $(".navClick").length;
+            for (var i = 0; i < Len; i++) {
+                if ($(this).attr('lay-id')==$(".navClick").eq(i).attr('navId') ){
+                    Index = i;
+                }
+            };
+             // 左侧菜单初始化
+            $('.layui-nav-item').removeClass('layui-nav-itemed');
+            $(".navClick").eq(Index).parent().parent().parent().addClass('layui-nav-itemed');
+            $(".navClick").parent().removeClass('layui-this');
+            $(".navClick").eq(Index).parent().addClass('layui-this')
+            if($(this).attr('lay-id')==999){
+                $('.layui-nav-item').removeClass('layui-nav-itemed');
+                $(".navClick").parent().removeClass('layui-this');
+            }
         })
+        //Hash地址的定位
+        //   var layid = location.hash.replace(/^#test=/, '');
+        //   console.log(layid)
+        //   element.tabChange('test', layid);
 
+        // element.on('tab(demo)', function (elem) {
+        // 	location.hash = 'test=' + $(this).attr('lay-id');
+        // });
 
+        // tab nav 关联
+        // $("body").delegate(".layui-tab-title li","click",function() {
+        //     //或者$(this).childNodes[0].data
+        //     var Len = $(".navClick").length;
+        //     var Index;
+        //     for(var i = 0; i < Len; i++) {
+        //         if($(this).context.childNodes[0].data == $(".navClick").eq(i).text()) {
+        //             Index = i;            
+        //         }
+
+        //     }
+        //     // 左侧菜单初始化
+        //     $('.layui-nav-item').removeClass('layui-nav-itemed');
+        //     $(".navClick").eq(Index).parent().parent().parent().addClass('layui-nav-itemed');
+        //     $(".navClick").parent().removeClass('layui-this');
+        //     $(".navClick").eq(Index).parent().addClass('layui-this')
+        // });
+        
+
+        // 点击导航分类，其他分类收起
+        $('#nav .layui-nav-item>a').click(function(){
+           $(this).parent().siblings().removeClass('layui-nav-itemed')
+        })
     });
-    
 }

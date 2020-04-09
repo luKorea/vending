@@ -141,3 +141,10 @@ h1{
 .layui-laypage .layui-laypage-curr .layui-laypage-em{
     background-color:#409eff !important;
 }
+.layui-table-cell{
+    height: auto !important;
+    line-height: auto !important;
+}
+.layui-table .layui-btn-container .layui-btn{
+    margin-top: 9px;
+}

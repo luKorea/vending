@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../MyCss/public/pubilc.css">
-    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <script src="../../js/public/documentWrite.js"></script>
     <link rel="stylesheet" href="../../MyCss/goods/customGoods.css">
     <title>自定义商品</title>
 </head>
@@ -24,7 +23,7 @@
                     <div class=" layui-col-sm2 layui-col-md2">
                         <div>
                             商品类型:
-                            <form class="layui-form" action=""  style="max-width: 120px;">
+                            <form class="layui-form" action="" style="max-width: 120px;">
                                 <div class="layui-form" lay-filter="myDiv">
                                     <select name="" id="" lay-filter="mySelect">
                                         <option value="zhang">工艺品</option>
@@ -44,7 +43,7 @@
                     <div class=" layui-col-sm2 layui-col-md2">
                         <div>
                             状态:
-                            <form class="layui-form" action=""  style="max-width: 120px;">
+                            <form class="layui-form" action="" style="max-width: 120px;">
                                 <div class="layui-form" lay-filter="myDiv">
                                     <select name="" id="" lay-filter="mySelect">
                                         <option value="zhang">工艺品</option>
@@ -79,39 +78,18 @@
             <div>
                 <div class="data-list-contnet">
                     <div class="list-table">
-                        <table class="layui-hide" id="test" lay-filter="test"></table>
+                        <table class="layui-hide" id="tableTest" lay-filter="test"></table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-<script src="../../layui/layui.js"></script>
-<script>
-    layui.use('table', function () {
-        var $ = layui.jquery;
-        var table = layui.table;
-        table.render({
-            elem: '#test'
-            , cols: [[
-                { field: 'username', width: 120, title: '图片' },
-                { field: 'phone', width: 120, title: '商品名称'},
-                { field: 'CreationTime', width: 120, title: '商品类型'},
-                { field: 'amendTime', width: 120, title: '商品条码',},
-                { field: 'addtime', width: 120, title: '规格说明 '},
-                { field: 'addtime', width: 120, title: '零售价 ', sort: true },
-                { field: 'addtime', width: 120, title: '成本价 ', sort: true },
-                { field: 'addtime', width: 120, title: '会员价 ', sort: true },
-                { field: 'addtime', width: 120, title: '优惠价策略 '},
-                { field: 'addtime', width: 120, title: '其他活动 '},
-                { field: 'addtime', width: 130, title: '所属人 '},
-                { field: 'addtime', width: 120, title: '商品状态 '},
-                { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' }
-            ]],
-            data: []
-            , page: true
-        });
-    })
-</script>
-
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+      <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+      <button class="layui-btn layui-btn-sm btn del-btn" lay-event="delete">删除</button>
+    </div>
+  </script>
+<script src="../../js/goods/cuntomGoods.js"></script>
 </html>
