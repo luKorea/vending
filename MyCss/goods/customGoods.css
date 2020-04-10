@@ -40,3 +40,33 @@
     overflow-x: auto;
     display: flex;
 }
+.layui-btn-container{
+    position: relative;
+}
+.anUp{
+    position: absolute;
+    top: 35px;
+    left: -15px;
+    z-index: 999;
+    display: none;
+}
+.anUp ul{
+    margin: 15px 0;
+}
+.anUp ul li{
+    list-style: none;
+    line-height: 36px;
+    padding: 0 20px;
+    margin: 0;
+    font-size: 14px;
+    color: #606266;
+    cursor: pointer;
+    outline: 0;
+    background-color: #fff;
+}
+.block{
+    display: block;
+}
+.anUp ul li:hover{
+    color: #409eff;
+}

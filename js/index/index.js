@@ -67,16 +67,16 @@ window.onload = function () {
         element.on('tab(demo)', function (data) {
             var Len = $(".navClick").length;
             for (var i = 0; i < Len; i++) {
-                if ($(this).attr('lay-id')==$(".navClick").eq(i).attr('navId') ){
+                if ($(this).attr('lay-id') == $(".navClick").eq(i).attr('navId')) {
                     Index = i;
                 }
             };
-             // 左侧菜单初始化
+            // 左侧菜单初始化
             $('.layui-nav-item').removeClass('layui-nav-itemed');
             $(".navClick").eq(Index).parent().parent().parent().addClass('layui-nav-itemed');
             $(".navClick").parent().removeClass('layui-this');
             $(".navClick").eq(Index).parent().addClass('layui-this')
-            if($(this).attr('lay-id')==999){
+            if ($(this).attr('lay-id') == 999) {
                 $('.layui-nav-item').removeClass('layui-nav-itemed');
                 $(".navClick").parent().removeClass('layui-this');
             }
@@ -107,11 +107,32 @@ window.onload = function () {
         //     $(".navClick").parent().removeClass('layui-this');
         //     $(".navClick").eq(Index).parent().addClass('layui-this')
         // });
-        
+
 
         // 点击导航分类，其他分类收起
-        $('#nav .layui-nav-item>a').click(function(){
-           $(this).parent().siblings().removeClass('layui-nav-itemed')
-        })
+        $('#nav .layui-nav-item>a').click(function () {
+            $(this).parent().siblings().removeClass('layui-nav-itemed')
+        });
+        var d = {
+            pageSize: 1,
+            pageNum: 10
+        };
+        // $.ajax({
+        //     type: 'post',
+        //     url: `/api/goods/findAll`,
+        //     dataType:'jsonp',
+        //     data: JSON.stringify(d),
+
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     success: function (res) {
+        //         console.log(res)
+        //     }
+        // })
+          $.get('/api/user/findUser',function(res){
+            console.log(res)
+          });
+        //   $.post(`/api/goods/findAll`)
     });
 }

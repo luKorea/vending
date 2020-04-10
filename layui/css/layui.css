@@ -3340,7 +3340,7 @@ hr {
 
 .layui-table-cell,
 .layui-table-tool-panel li {
-	overflow: hidden;
+	/* overflow: hidden; */
 	text-overflow: ellipsis;
 	white-space: nowrap
 }

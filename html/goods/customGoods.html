@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../../MyCss/goods/customGoods.css">
     <title>自定义商品</title>
 </head>
-
 <body>
     <div class="Goods-warp">
         <div class="margin">
@@ -86,10 +85,21 @@
     </div>
 </body>
 <script type="text/html" id="barDemo">
-    <div class="layui-btn-container">
-      <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+    <div class="layui-btn-container" >
+      <button class="layui-btn layui-btn-sm btn operation" lay-event="add" >
+          <span>操作</span>
+          <i class="layui-icon layui-icon-down" style="font-size:12px !important;"></i>
+      </button>
       <button class="layui-btn layui-btn-sm btn del-btn" lay-event="delete">删除</button>
+      <div class="anUp">
+        <ul>
+            <li>优惠策略</li>
+            <li>商品信息</li>
+        </ul>
+
+      </div>
     </div>
   </script>
 <script src="../../js/goods/cuntomGoods.js"></script>
+
 </html>

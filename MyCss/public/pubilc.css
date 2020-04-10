@@ -108,6 +108,7 @@ input{
 }
 .layui-table-body{
     max-height: 620px;
+    min-height: 300px;
 }
 .layui-table-box .layui-table-body .layui-table td{
     border-left: none ;
