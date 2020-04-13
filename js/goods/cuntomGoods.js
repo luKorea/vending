@@ -1,4 +1,4 @@
-layui.use(['table','form'], function () {
+layui.use(['table','form','layer'], function () {
     var $ = layui.jquery;
     // $.post('http://172.16.68.199:8086/goods/findAll', { map: 1 }, function (res) {
     //     console.log(res)
@@ -45,6 +45,8 @@ layui.use(['table','form'], function () {
         ,id:'tableId'
         , page:true
         ,loading:true
+        // ,method:'post'
+        // ,limits: [10,20,50]
         
     });
 
@@ -58,7 +60,7 @@ layui.use(['table','form'], function () {
         //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
         table.reload('tableId', {
           page:{
-            curr:1
+            // curr:1
           }
         });
 
@@ -66,13 +68,19 @@ layui.use(['table','form'], function () {
       });
 
       // 监听操作删除
-      var operFlag = true;
+      var indexFlag = null;
+      var operationId=null;
       table.on('tool(test)', function(obj){
         var data = obj.data;
-        if(obj.event === 'add'){
-          // layer.msg('ID：'+ data.id + ' 的查看操作');
-          $(this).siblings('.anUp').addClass('block')
-
+        console.log(data)
+        if(obj.event === 'add'){ 
+          $('.anUp').slideUp();
+          if(indexFlag!=data.id){
+            indexFlag=data.id
+            $(this).siblings('.anUp').slideDown()
+          }else{
+            indexFlag=null;
+          }   
         } else if(obj.event === 'delete'){
           layer.confirm('真的删除行么', function(index){
             
@@ -84,14 +92,16 @@ layui.use(['table','form'], function () {
           console.log(obj)
         }
       });
-      var form=layui.form
-      form.on('selectr(test)', function (obj) {
-        // var elem = $(obj.elem);
-        console.log(obj);
-        console.log(1)
-        // var trElem = elem.parents('tr');
-        // // 更新到表格的缓存数据中，才能在获得选中行等等其他的方法中得到更新之后的值
-        // tableData[trElem.data('index')][elem.attr('name')] = obj.value;
-        form.render('select');
+
+      // 点击优惠事件
+      $('.preferentialClick').click(function(){
+          $('.anUp').slideUp();
+          $('.preferential').fadeIn()
+      })
+    //  取消优惠按钮
+    $('.cancel-btn').on('click',function(){
+      $('.preferential').fadeOut();
+      indexFlag=null;
     })
+      
 })

@@ -130,9 +130,9 @@ window.onload = function () {
         //         console.log(res)
         //     }
         // })
-          $.get('/api/user/findUser',function(res){
-            console.log(res)
-          });
+        //   $.get('/api/user/findUser',function(res){
+        //     console.log(res)
+        //   });
         //   $.post(`/api/goods/findAll`)
     });
 }
