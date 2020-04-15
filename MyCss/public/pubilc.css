@@ -149,3 +149,6 @@ h1{
 .layui-table .layui-btn-container .layui-btn{
     margin-top: 9px;
 }
+.layui-form-radio>i:hover, .layui-form-radioed>i{
+    color:#409eff !important ;
+}
