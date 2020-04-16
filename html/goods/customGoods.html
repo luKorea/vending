@@ -38,7 +38,7 @@
                     <div class=" layui-col-sm2 layui-col-md3">
                         <div style="max-width: 220px;" class="key-contnet">
                             <div class="key-text">关键字</div>
-                            <input type="text" placeholder="商品名称、条码查询" class="KyeText" value="1">
+                            <input type="text" placeholder="商品名称、条码查询" class="KyeText" >
                         </div>
                     </div>
                     <div class=" layui-col-sm2 layui-col-md2">
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class=" layui-col-sm2 layui-col-md2">
-                        <button class="layui-btn layui-btn-normal query-btn btn">
+                        <button class="layui-btn layui-btn-normal query-btnClick btn">
                             <i class="layui-icon layui-icon-search"></i>
                             <span>查询</span>
                         </button>
@@ -98,7 +98,7 @@
                                 <div style="margin-bottom: 22px;" class="forms-list">
                                     <label> 商品名称</label>
                                     <div class="inputWidth">
-                                        <input type="text" readonly="readonly" placeholder="雷神转运珠银">
+                                        <input type="text" name="GoodsName" readonly="readonly">
                                     </div>
                                 </div>
                             </li>
@@ -106,7 +106,7 @@
                                 <div style="margin-bottom: 22px;" class="forms-list">
                                     <label> 销售原价</label>
                                     <div class="inputWidth">
-                                        <input type="text" readonly="readonly" placeholder="198">
+                                        <input type="text" name="goods_Price" readonly="readonly" >
                                     </div>
                                 </div>
                             </li>
@@ -114,7 +114,7 @@
                                 <div style="margin-bottom: 22px;" class="forms-list">
                                     <label> 会员价</label>
                                     <div class="inputWidth">
-                                        <input type="text"  style=" border: 1px solid #67c23a;">
+                                        <input type="text" name="vip_Price"  style=" border: 1px solid #67c23a;">
                                     </div>
                                 </div>
                             </li>
@@ -122,7 +122,7 @@
                                 <div style="margin-bottom: 22px;" class="forms-list">
                                     <label> 第三方积分</label>
                                     <div class="inputWidth">
-                                        <input type="text"  style=" border: 1px solid #67c23a;">
+                                        <input type="text" name="integral" style=" border: 1px solid #67c23a;">
                                     </div>
                                 </div>
                             </li>
@@ -180,10 +180,10 @@
             </div>
         </div>
         <!-- 编辑自定义商品 -->
-        <div class="editor" style="display: none;overflow-y: auto;">
+        <div class="editor" style="overflow-y: auto;display: block;">
             <div class="editor-content">
                 <div class="content-header">
-                    <span>配置优惠设置</span>
+                    <span>编辑自定义商品</span>
                 </div>
                 <div class="editor-body">
                     <div style="margin: 30px;">
@@ -219,7 +219,7 @@
                                                         </select>
                                                     </div>
                                                 </form>
-                                                <button class="layui-btn layui-btn-normal query-btn btn"
+                                                <button type="button" class="layui-btn layui-btn-normal  btn"
                                                     style="margin: 0;">
                                                     <span>刷新</span>
                                                 </button>
@@ -263,8 +263,8 @@
                                             <label for=""> 商品状态</label>
                                             <form class="layui-form" action="">
                                                 <div class="layui-form-item">
-                                                    <input type="radio" name="sex" value="男" title="男">
-                                                    <input type="radio" name="sex" value="女" title="女" checked>
+                                                    <input type="radio" name="sex" value="男" title="不启用">
+                                                    <input type="radio" name="sex" value="女" title="启用" checked>
                                                 </div>
                                             </form>
                                         </div>
@@ -319,7 +319,24 @@
                                 </ul>
                             </div>
                         </div> -->
-                        
+                        <div class="edit-contnet">
+                            <span> 商品详情 </span>
+                            <div style="width: 100%">
+                                <div>
+                                    <textarea  id="editDemo" style="display: none;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-footer" style="margin-top:30px;">
+                            <div style="text-align: center;">
+                                <button class="layui-btn layui-btn-normal btn cancel-btn">
+                                    <span>取消</span>
+                                </button>
+                                <button class="layui-btn layui-btn-normal btn determine-btn">
+                                    <span>确定</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -338,7 +355,7 @@
       <div class="anUp">
         <ul>
             <li class="preferentialClick">优惠策略</li>
-            <li>商品信息</li>
+            <li class="GoodsInformation">商品信息</li>
         </ul>
 
       </div>

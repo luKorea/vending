@@ -1,4 +1,4 @@
-layui.use(['table', 'form', 'layer'], function () {
+layui.use(['table', 'form', 'layer','layedit'], function () {
   var $ = layui.jquery;
   // $.post('http://172.16.68.199:8086/goods/findAll', { map: 1 }, function (res) {
   //     console.log(res)
@@ -45,13 +45,22 @@ layui.use(['table', 'form', 'layer'], function () {
       'limitName': 'pageSize'
     },
     parseData: function (res) {
+      // console.log(res)
       //res 即为原始返回的数据
-      return {
-        "code": res.code, //解析接口状态
-        "msg": '', //解析提示文本
-        "count": res.data.total, //解析数据长度
-        "data": res.data.list //解析数据列表
-      };
+      if(res.code==200){
+        return {
+          "code": res.code, //解析接口状态
+          "msg": '', //解析提示文本
+          "count": res.data.total, //解析数据长度
+          "data": res.data.list //解析数据列表
+        };
+      }else{
+        return{
+          "code": res.code, //解析接口状态
+          "msg": res.message, //解析提示文本
+        }
+      }
+      
     },
     response: {
       statusCode: 200 //规定成功的状态码，默认：0
@@ -79,77 +88,6 @@ layui.use(['table', 'form', 'layer'], function () {
 
     // layer.msg('服务端排序。 ' + obj.field + ' ' + obj.type);
   });
-
-  // 监听操作删除
-  var indexFlag = null;
-  var operationId = null;
-  table.on('tool(test)', function (obj) {
-    // 操作事件
-    if (obj.event === 'add') {
-      var singleData = obj.data;
-      console.log(singleData)
-      $('.anUp').slideUp();
-      if (indexFlag != singleData.goods_Id) {
-        indexFlag = singleData.goods_Id
-        $(this).siblings('.anUp').slideDown()
-      } else {
-        indexFlag = null;
-      }
-      // 点击优惠事件
-      $('.preferentialClick').click(function () {
-        $('.anUp').slideUp();
-        $('.preferential').fadeIn();
-        
-      })
-    } else if (obj.event === 'delete') {
-      console.log(obj)
-      layer.confirm('真的删除行么', function (index) {
-        
-        // obj.del();
-        // layer.close(index);
-        Goodsdel(obj.data.goods_Id,1,obj,index);
-      });
-
-    } else {
-      console.log(obj)
-    }
-  });
-
-  //  取消优惠按钮
-  $('.cancel-btn').on('click', function () {
-    $('.preferential').fadeOut();
-    indexFlag = null;
-  })
-  var d = {
-    pageSize: 1,
-    pageNum: 10
-  };
-  function ajax() {
-    console.log(1)
-    $.ajax({
-      type: 'post',
-      url: `/api/goods/findAll`,
-      data: JSON.stringify(d),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      success: function (res) {
-        console.log(res)
-      }
-    })
-  };
-  // ajax(); 
-  // 查询渲染优惠设置
-  // function upPreferential(){
-  //   tableIns.reload({
-  //     where: { //设定异步数据接口的额外参数，任意设
-  //       aaaaaa: 'xxx'
-  //       ,bbb: 'yyy'
-  //       //…
-  //     }
-  //   })
-  // }
-  // upPreferential(tableIns);
 
   // 商品状态下拉框数据请求
   var form=layui.form;
@@ -181,18 +119,92 @@ layui.use(['table', 'form', 'layer'], function () {
   form.on('select(mySelect)', function(data){
     GoodsTypeID=data.value;
   }); 
-  // 关键字
-  var keyGoodsName= $(".KyeText").val();
-  console.log(keyGoodsName);
   var stateId=''
   // 状态下拉框监听
   form.on('select(stateSelect)', function(data){
     stateId=data.value;
   }); 
-  // 开始价格   结束价格
-  var startingPrice=$('.startingPrice').val()
-  , closingPrice=$('.closingPrice').val();
-  console.log(startingPrice,closingPrice)
-//                        1关键字 2商品类型ID 3状态ID 4开始价格 5结束价格
-  upPreferential(tableIns,keyGoodsName,stateId,startingPrice,closingPrice)
+
+  // 点击查询事件，重新渲染数据表格
+  $('.query-btnClick').click(function(){
+    //                        1关键字 2商品类型ID 3状态ID 4开始价格 5结束价格
+    upPreferential(tableIns, $(".KyeText").val(),GoodsTypeID,stateId,$('.startingPrice').val(),$('.closingPrice').val());
+  })
+
+  // 监听操作删除
+  var indexFlag = null;
+  var operationId = null;
+  table.on('tool(test)', function (obj) {
+    // 操作事件
+    if (obj.event === 'add') {
+      var singleData = obj.data;
+      console.log(singleData)
+      $('.anUp').slideUp();
+      if (indexFlag != singleData.goods_Id) {
+        indexFlag = singleData.goods_Id
+        $(this).siblings('.anUp').slideDown()
+      } else {
+        indexFlag = null;
+      }
+      // 点击优惠事件
+      $('.preferentialClick').click(function () {
+        $('.anUp').slideUp();
+        $('.preferential').fadeIn();
+        $('input[name="GoodsName"]').val(singleData.goods_Name);
+        $('input[name="goods_Price"]').val(singleData.goods_Price);
+        $('input[name="vip_Price"]').val(singleData.vipPrice);
+        $('input[name="integral"]').val(singleData.integral);
+      })
+
+      // 点击商品信息事件
+      $('.GoodsInformation').click(function(){
+        console.log(999)
+        $('.anUp').slideUp();
+        $('.editor').fadeIn();
+      })
+    } else if (obj.event === 'delete') {
+      console.log(obj)
+      layer.confirm('真的删除行么', function (index) {
+        
+        // obj.del();
+        // layer.close(index);
+        Goodsdel(obj.data.goods_Id,1,obj,index);
+      });
+
+    } else {
+      console.log(obj)
+    }
+  });
+
+  //  取消优惠按钮
+  $('.cancel-btn').on('click', function () {
+  //  console.log($(this).parent().find('editor')) 
+   $(this).parent().find('editor').fadeOut();
+    // $('.preferential').fadeOut();
+    indexFlag = null;
+  })
+
+  // 编辑器初始化
+  var layedit = layui.layedit;
+  layedit.set({
+    uploadImage: {
+      url: '/api/fileUpload' //接口url
+      ,type: 'post' //默认post
+      , code: 200 //0表示成功，其它失败
+      
+    },
+   
+    
+  })
+  
+   //建立编辑器
+  var EditIndex = layedit.build('editDemo', {
+    height: 180,
+  })
+  $('.upload-btn1').click(function(){
+    // console.log(layedit.getText(EditIndex))
+    // layedit.getSelection(index)
+    console.log(layedit.getSelection(EditIndex))
+  })
+  
 })
