@@ -12,6 +12,8 @@ function Goodsdel(id, indexs, obj, index) {
                     layer.close(index);
             }
         })
+    }else if(index==2){
+      $.get
     }
     
 }
@@ -20,6 +22,7 @@ function Goodsdel(id, indexs, obj, index) {
 // tableIns --数据表格实例对象
 //                                  1关键字 2商品类型ID 3状态ID 4开始价格 5结束价格
 function upPreferential(tableIns,keyGoodsName,GoodsTypeID,stateId,startingPrice,closingPrice){
+
     tableIns.reload({
       where: { //设定异步数据接口的额外参数，任意设     
         goods_name: keyGoodsName, //关键字

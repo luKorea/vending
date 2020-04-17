@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../MyCss/public/pubilc.css">
-    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <script src="../../js/public/documentWrite.js"></script>
     <link rel="stylesheet" href="../../MyCss/goods/customCategory.css">
     <title>自定义类目</title>
 </head>
@@ -20,7 +19,7 @@
                 </button>
                 <div style="max-width: 330px;margin-left: 50px;" class="key-contnet">
                     <div class="key-text">关键字</div>
-                    <input type="text">
+                    <input type="text" class="keyText">
                 </div>
                 <button class="layui-btn layui-btn-normal query-btn btn">
                     <i class="layui-icon layui-icon-search"></i>
@@ -29,22 +28,7 @@
             </div>
             <div class="custom-data-list">
                 <div>
-                    <table class="layui-hide" id="test" lay-filter="test"></table>
-
-                    <!-- <table class="layui-table" id="list-table" lay-data="{page:true, id:'idTest'}" lay-filter="demo">
-                        <thead>
-                            <tr>
-                                <th lay-data="{ field: 'username', width: 150, title: '类型名称',sort: true }"></th>
-                                <th lay-data="{ field: 'phone', width: 150, title: '类型备注',sort: true }"></th>
-                                <th lay-data="{ field: 'CreationTime', width: 180, title: '使用机型',sort: true   }"> </th>
-                                <th lay-data="{ field: 'amendTime', width: 180, title: '商户名',sort: true  }"></th>
-                                <th lay-data="{ field: 'addtime', width: 160, title: '添加时间',sort: true }"></th>
-                                <th
-                                    lay-data="{ field: 'operation',position:'absolute',right:0, width: 160, title: '操作',toolbar: '#barDemo'  }">
-                                </th>
-                            </tr>
-                        </thead>
-                    </table> -->
+                    <table class="layui-hide" id="tableTest" lay-filter="test"></table>
 
                 </div>
             </div>
@@ -69,112 +53,6 @@
     </button>
 </a>
 </script>
-<script src="../../layui/layui.js"></script>
-<script>
-    layui.use('table', function () {
-        var table = layui.table;
-
-        //温馨提示：默认由前端自动合计当前行数据。从 layui 2.5.6 开始： 若接口直接返回了合计行数据，则优先读取接口合计行数据。
-        //详见：https://www.layui.com/doc/modules/table.html#totalRow
-        table.render({
-            elem: '#test'
-            , cols: [[
-                { field: 'username', width: 150, title: '类型名称', sort: true },
-                { field: 'phone', width: 150, title: '类型备注', sort: true },
-                { field: 'CreationTime', width: 180, title: '使用机型', sort: true },
-                { field: 'amendTime', width: 180, title: '商户名', sort: true },
-                { field: 'addtime', width: 160, title: '添加时间', sort: true },
-                { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' }
-            ]],
-            data: [
-                {
-                    username: '22',
-                    phone: '33',
-                    CreationTime: '44',
-                    amendTime: '55',
-                    addtime: '66',
-                },
-                {
-                    username: '22',
-                    phone: '33',
-                    CreationTime: '44',
-                    amendTime: '55',
-                    addtime: '66',
-                },
-                {
-                    username: '22',
-                    phone: '33',
-                    CreationTime: '44',
-                    amendTime: '55',
-                    addtime: '66',
-                },
-                {
-                    username: '22',
-                    phone: '33',
-                    CreationTime: '44',
-                    amendTime: '55',
-                    addtime: '66',
-                },
-                {
-                    username: '22',
-                    phone: '33',
-                    CreationTime: '44',
-                    amendTime: '55',
-                    addtime: '66',
-                },
-                {
-                    username: '22',
-                    phone: '33',
-                    CreationTime: '44',
-                    amendTime: '55',
-                    addtime: '66',
-                },
-                {
-                    username: '22',
-                    phone: '33',
-                    CreationTime: '44',
-                    amendTime: '55',
-                    addtime: '66',
-                },
-                {
-                    username: '22',
-                    phone: '33',
-                    CreationTime: '44',
-                    amendTime: '55',
-                    addtime: '66',
-                },
-                {
-                    username: '22',
-                    phone: '33',
-                    CreationTime: '44',
-                    amendTime: '55',
-                    addtime: '66',
-                },
-                {
-                    username: '22',
-                    phone: '33',
-                    CreationTime: '44',
-                    amendTime: '55',
-                    addtime: '66',
-                },
-                {
-                    username: '22',
-                    phone: '33',
-                    CreationTime: '44',
-                    amendTime: '55',
-                    addtime: '66',
-                },
-                {
-                    username: '22',
-                    phone: '33',
-                    CreationTime: '44',
-                    amendTime: '55',
-                    addtime: '66',
-                },
-            ]
-            , page: true
-        });
-    });
-</script>
+<script src="../../js/goods/customCategory.js"></script>
 
 </html>

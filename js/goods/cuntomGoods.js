@@ -1,16 +1,13 @@
-layui.use(['table', 'form', 'layer','layedit'], function () {
+layui.use(['table', 'form', 'layer', 'layedit'], function () {
   var $ = layui.jquery;
   // $.post('http://172.16.68.199:8086/goods/findAll', { map: 1 }, function (res) {
   //     console.log(res)
   // })
 
   var table = layui.table;
-  var listJson = {
-    pageName: 'pageSize',
-    limitName: 'pageNum'
-  };
-
- var tableIns = table.render({
+  // 商品图片
+  var goodsImage = null;
+  var tableIns = table.render({
     elem: '#tableTest'
     , url: `/api/goods/findAll`
     , method: 'post'
@@ -18,7 +15,7 @@ layui.use(['table', 'form', 'layer','layedit'], function () {
     cols: [[
       { field: 'username', width: 120, title: '图片' },
       { field: 'goods_Name', width: 120, title: '商品名称' },
-      { field: `classifyName`, width: 120, title: '商品类型', templet:'<div>{{d.classify.classifyName}}</div>'},
+      { field: `classifyName`, width: 120, title: '商品类型', templet: '<div>{{d.classify.classifyName}}</div>' },
       { field: 'goods_Core', width: 120, title: '商品条码', },
       { field: 'goods_Param', width: 120, title: '规格说明 ' },
       { field: 'goods_Price', width: 120, title: '零售价 ', sort: true },
@@ -26,7 +23,7 @@ layui.use(['table', 'form', 'layer','layedit'], function () {
       { field: 'vipPrice', width: 120, title: '会员价 ', sort: true },
       { field: 'strategy', width: 120, title: '优惠价策略 ' },
       { field: 'goodsActivity', width: 120, title: '其他活动 ' },
-      { field: 'userName', width: 130, title: '所属人 ', templet:'<div>{{d.user.userName}}</div>'},
+      { field: 'userName', width: 130, title: '所属人 ', templet: '<div>{{d.user.userName}}</div>' },
       { field: 'goods_Status', width: 120, title: '商品状态 ' },
       { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
       // { fixed: 'right', width: 160, align: 'center', toolbar: '#barDemo' }
@@ -47,20 +44,20 @@ layui.use(['table', 'form', 'layer','layedit'], function () {
     parseData: function (res) {
       // console.log(res)
       //res 即为原始返回的数据
-      if(res.code==200){
+      if (res.code == 200) {
         return {
           "code": res.code, //解析接口状态
           "msg": '', //解析提示文本
           "count": res.data.total, //解析数据长度
           "data": res.data.list //解析数据列表
         };
-      }else{
-        return{
+      } else {
+        return {
           "code": res.code, //解析接口状态
           "msg": res.message, //解析提示文本
         }
       }
-      
+
     },
     response: {
       statusCode: 200 //规定成功的状态码，默认：0
@@ -90,45 +87,47 @@ layui.use(['table', 'form', 'layer','layedit'], function () {
   });
 
   // 商品状态下拉框数据请求
-  var form=layui.form;
-  function selectData(IdClass){  
+  var form = layui.form;
+  function selectData(IdClass) {
     $.ajax({
-      type:'post',
-      url:`/api/classify/findAll`,
-      data: JSON.stringify({pageNum:1,pageSize:10}),
+      type: 'post',
+      url: `/api/classify/findAll`,
+      data: JSON.stringify({ pageNum: 1, pageSize: 10 }),
       headers: {
         "Content-Type": "application/json",
-      },success:function (res) {
-        if(res.code==200){
-          var optionList=`<option value="">全部</option>`;
+      }, success: function (res) {
+        if (res.code == 200) {
+          var optionList = `<option value="">全部</option>`;
           $('#GoodsType').empty;
-          $.each(res.data.list,function (index,ele) {
-              optionList+= `<option value="${ele.classifyId}">${ele.classifyName}</option>`
+          $('#EditGoodsType').empty;
+          $.each(res.data.list, function (index, ele) {
+            optionList += `<option value="${ele.classifyId}">${ele.classifyName}</option>`
           });
           // $('#GoodsType').empty;
-          $('#GoodsType').append(optionList)
+          $('#GoodsType').append(optionList);
+          $('#EditGoodsType').append(optionList)
           form.render('select');
         }
       }
     })
   }
-  selectData(); 
+  selectData();
   // 查询商品类型id
-  var GoodsTypeID='';
+  var GoodsTypeID = '';
   // 监听商品类型下拉框
-  form.on('select(mySelect)', function(data){
-    GoodsTypeID=data.value;
-  }); 
-  var stateId=''
+  form.on('select(mySelect)', function (data) {
+    GoodsTypeID = data.value;
+  });
+  var stateId = ''
   // 状态下拉框监听
-  form.on('select(stateSelect)', function(data){
-    stateId=data.value;
-  }); 
+  form.on('select(stateSelect)', function (data) {
+    stateId = data.value;
+  });
 
   // 点击查询事件，重新渲染数据表格
-  $('.query-btnClick').click(function(){
+  $('.query-btnClick').click(function () {
     //                        1关键字 2商品类型ID 3状态ID 4开始价格 5结束价格
-    upPreferential(tableIns, $(".KyeText").val(),GoodsTypeID,stateId,$('.startingPrice').val(),$('.closingPrice').val());
+    upPreferential(tableIns, $(".KyeText").val(), GoodsTypeID, stateId, $('.startingPrice').val(), $('.closingPrice').val());
   })
 
   // 监听操作删除
@@ -157,18 +156,30 @@ layui.use(['table', 'form', 'layer','layedit'], function () {
       })
 
       // 点击商品信息事件
-      $('.GoodsInformation').click(function(){
-        console.log(999)
+      $('.GoodsInformation').click(function () {
         $('.anUp').slideUp();
         $('.editor').fadeIn();
+        
+        form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+          "goods-Barcode": singleData.goods_Core // "商品条码
+          , "goods-Name": singleData.goods_Name //商品名称
+          , "goods-Type": singleData.classify.classifyId //商品类型
+          , "goods-Brand": singleData.brand  //品牌
+          , "goods-Price": singleData.goods_Price //零售价
+          , "goods-Cost": singleData.goods_Cost //成本价
+          , "goods-Param":singleData.goods_Param //规格描述
+          , 'goods-Status':singleData.goods_Status //商品状态
+        });
+        var EditValData=form.val("EditValData");
+        console.log(EditValData)
       })
     } else if (obj.event === 'delete') {
       console.log(obj)
       layer.confirm('真的删除行么', function (index) {
-        
+
         // obj.del();
         // layer.close(index);
-        Goodsdel(obj.data.goods_Id,1,obj,index);
+        Goodsdel(obj.data.goods_Id, 1, obj, index);
       });
 
     } else {
@@ -177,10 +188,8 @@ layui.use(['table', 'form', 'layer','layedit'], function () {
   });
 
   //  取消优惠按钮
-  $('.cancel-btn').on('click', function () {
-  //  console.log($(this).parent().find('editor')) 
-   $(this).parent().find('editor').fadeOut();
-    // $('.preferential').fadeOut();
+  $('.preferential .cancel-btn').on('click', function () {
+    $('.preferential').fadeOut();
     indexFlag = null;
   })
 
@@ -189,22 +198,41 @@ layui.use(['table', 'form', 'layer','layedit'], function () {
   layedit.set({
     uploadImage: {
       url: '/api/fileUpload' //接口url
-      ,type: 'post' //默认post
+      , type: 'post' //默认post
       , code: 200 //0表示成功，其它失败
-      
+
     },
-   
-    
+
   })
-  
-   //建立编辑器
+
+  //建立编辑器
   var EditIndex = layedit.build('editDemo', {
     height: 180,
   })
-  $('.upload-btn1').click(function(){
-    // console.log(layedit.getText(EditIndex))
-    // layedit.getSelection(index)
-    console.log(layedit.getSelection(EditIndex))
+  $('.upload-btn1').click(function () {
+    console.log(layedit.getContent(EditIndex))
   })
-  
+
+  // 取消编辑按钮
+  $('.editor .cancel-btn').click(function () {
+    $('.editor').fadeOut();
+    indexFlag = null;
+  });
+
+
+  //商品移入移出显示
+  $('.upload-list1').mouseover(function () {
+    $(this).children('.up-iconCont1').hide();
+    $(this).children('.layui-icon-close').show();
+  });
+  $('.upload-list1').mouseleave(function () {
+    $(this).children('.up-iconCont1').show();
+    $(this).children('.layui-icon-close').hide();
+  })
+  $('.upload-list1 .layui-icon-close').click(function () {
+    goodsImage = null;
+    $(this).parent('.upload-list1').hide()
+  })
+
+
 })

@@ -191,6 +191,10 @@
     padding: 12px 20px;
     font-size: 14px;
     border-radius: 4px;
+}  
+.cancel-btn:hover{
+    border-color: #409eff !important ;
+    color: #409eff !important;
 }
 .determine-btn{
     display: inline-block !important;
@@ -342,4 +346,14 @@
 .up-iconCont1 span i:nth-child(1){
     color: #fff;
     font-size: 12px;
+}
+.upload-list1 .layui-icon-close{
+    display: none;
+    position: absolute;
+    top: 0px;
+    right: 3px;
+    cursor: pointer;
+    opacity: .75;
+    color: #606266;
+    padding: 2px;
 }
