@@ -3,15 +3,24 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   // $.post('http://172.16.68.199:8086/goods/findAll', { map: 1 }, function (res) {
   //     console.log(res)
   // })
-
   var table = layui.table;
   // 商品图片
   var goodsImage = null;
+  var token = sessionStorage.token + '';
+  console.log(token)
+  // table.set({headers:{token: sessionStorage.token}})
   var tableIns = table.render({
     elem: '#tableTest'
     , url: `/api/goods/findAll`
-    , method: 'post'
-    , contentType: 'application/json',
+    , method: 'post',
+    headers: {
+      
+      "content-Type": "application/json",
+      token,
+    },
+    processData : false
+
+    , 
     cols: [[
       { field: 'username', width: 120, title: '图片' },
       { field: 'goods_Name', width: 120, title: '商品名称' },
@@ -100,12 +109,14 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
           var optionList = `<option value="">全部</option>`;
           $('#GoodsType').empty;
           $('#EditGoodsType').empty;
+          $('#addGoodsType').empty;
           $.each(res.data.list, function (index, ele) {
             optionList += `<option value="${ele.classifyId}">${ele.classifyName}</option>`
           });
           // $('#GoodsType').empty;
           $('#GoodsType').append(optionList);
-          $('#EditGoodsType').append(optionList)
+          $('#EditGoodsType').append(optionList);
+          $('#addGoodsType').append(optionList)
           form.render('select');
         }
       }
@@ -159,7 +170,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       $('.GoodsInformation').click(function () {
         $('.anUp').slideUp();
         $('.editor').fadeIn();
-        
+
         form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
           "goods-Barcode": singleData.goods_Core // "商品条码
           , "goods-Name": singleData.goods_Name //商品名称
@@ -167,10 +178,10 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
           , "goods-Brand": singleData.brand  //品牌
           , "goods-Price": singleData.goods_Price //零售价
           , "goods-Cost": singleData.goods_Cost //成本价
-          , "goods-Param":singleData.goods_Param //规格描述
-          , 'goods-Status':singleData.goods_Status //商品状态
+          , "goods-Param": singleData.goods_Param //规格描述
+          , 'goods-Status': singleData.goods_Status //商品状态
         });
-        var EditValData=form.val("EditValData");
+        var EditValData = form.val("EditValData");
         console.log(EditValData)
       })
     } else if (obj.event === 'delete') {
@@ -232,7 +243,143 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   $('.upload-list1 .layui-icon-close').click(function () {
     goodsImage = null;
     $(this).parent('.upload-list1').hide()
+  });
+
+
+  // 添加自定义商品部分
+  $('.add-btn').click(function () {
+    $('.addGoods').fadeIn();
+  });
+
+  // 取消添加自定义商品
+  $('.addGoods .cancel-btn2').click(function () {
+    $('.addGoods').fadeOut();
+  });
+
+  // 点击上传图片
+  $('.upload-btn2').click(function () {
+    $('.ImgCropping').fadeIn();
+  });
+
+
+
+
+  //剪切图片弹窗部分
+  (window.onresize = function () {
+    var win_height = $(window).height();
+    var win_width = $(window).width();
+    if (win_width <= 768) {
+      $(".tailoring-content").css({
+        "top": (win_height - $(".tailoring-content").outerHeight()) / 2,
+        "left": 0
+      });
+    } else {
+      $(".tailoring-content").css({
+        "top": (win_height - $(".tailoring-content").outerHeight()) / 2,
+        "left": (win_width - $(".tailoring-content").outerWidth()) / 2
+      });
+    }
+  })();
+
+  //图像上传
+  $('#chooseImg').on('change', function () {
+    console.log(this);
+    var that = this;
+    if (!this.files || !this.files[0]) {
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function (evt) {
+      var replaceSrc = evt.target.result;
+      //更换cropper的图片
+      $('#tailoringImg').cropper('replace', replaceSrc, false);//默认false，适应高度，不失真
+    }
+    reader.readAsDataURL(that.files[0]);
+  })
+  //cropper图片裁剪
+  $('#tailoringImg').cropper({
+    aspectRatio: 1 / 1,//默认比例
+    preview: '.previewImg',//预览视图
+    guides: false,  //裁剪框的虚线(九宫格)
+    autoCropArea: 0.5,  //0-1之间的数值，定义自动剪裁区域的大小，默认0.8
+    movable: false, //是否允许移动图片
+    dragCrop: true,  //是否允许移除当前的剪裁框，并通过拖动来新建一个剪裁框区域
+    movable: true,  //是否允许移动剪裁框
+    resizable: true,  //是否允许改变裁剪框的大小
+    zoomable: false,  //是否允许缩放图片大小
+    mouseWheelZoom: false,  //是否允许通过鼠标滚轮来缩放图片
+    touchDragZoom: true,  //是否允许通过触摸移动来缩放图片
+    rotatable: true,  //是否允许旋转图片
+    crop: function (e) {
+      // 输出结果数据裁剪图像。
+      // console.log(e.target.currentSrc)
+    }
+  });
+
+  //旋转
+  $(".cropper-rotate-btn").on("click", function () {
+    $('#tailoringImg').cropper("rotate", 45);
+  });
+  //复位
+  $(".cropper-reset-btn").on("click", function () {
+    $('#tailoringImg').cropper("reset");
+  });
+  //换向
+  var flagX = true;
+  $(".cropper-scaleX-btn").on("click", function () {
+    if (flagX) {
+      $('#tailoringImg').cropper("scaleX", -1);
+      flagX = false;
+    } else {
+      $('#tailoringImg').cropper("scaleX", 1);
+      flagX = true;
+    }
+    flagX != flagX;
+  });
+  //裁剪后的处理
+  $("#sureCut").on("click", function () {
+    if ($("#tailoringImg").attr("src") == null) {
+      return false;
+    } else {
+      var cas = $('#tailoringImg').cropper('getCroppedCanvas');//获取被裁剪后的canvas
+      var base64url = cas.toDataURL('image/png'); //转换为base64地址形式
+      // console.log(base64url)
+      // $("#finalImg").prop("src",base64url);//显示为图片的形式
+      $(".tailoring-container").fadeOut();
+
+      // 调用
+      var editImgfile = dataURLtoFile(base64url, 'jpg');
+      console.log(editImgfile)
+      var editImg = new FormData();
+      editImg.append("file", editImgfile);
+      console.log(editImg)
+      $.ajax({
+        type: 'post',
+        url: '/api/fileUpload',
+        processData: false,
+        contentType: false,
+        data: editImg,
+        success: function (res) {
+          console.log(res)
+        }
+      });
+    }
+  });
+
+  // 关闭图片剪切弹窗
+  $('.close-tailoring').click(function () {
+    $('.ImgCropping').fadeOut();
   })
 
+
+  // base64转化为file
+  function dataURLtoFile(dataurl, filename) {//将base64转换为文件
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
 
 })

@@ -2,296 +2,300 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../../js/public/documentWrite.js"></script>
-    <link rel="stylesheet" href="../../MyCss/goods/customGoods.css">
-    <title>自定义商品</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="../../js/public/documentWrite.js"></script>
+	<link rel="stylesheet" href="../../MyCss/public/cropper.min.css">
+	<link rel="stylesheet" href="../../MyCss/public/ImgCropping.css">
+	<link rel="stylesheet" href="../../MyCss/goods/customGoods.css">
+	<title>自定义商品</title>
 </head>
 
 <body>
-    <!-- <img style="width: 100px;height: 100px;" src="ftp://172.16.68.199/yuebao/a2bbecf6-5991-4331-92d6-60cf9d865072.jpg" alt=""> -->
-    <div class="Goods-warp">
-        <div class="margin">
-            <div class="header-query">
-                <div class="layui-row">
-                    <div class=" layui-col-sm2 layui-col-md2">
-                        <button class="layui-btn layui-btn-normal  add-btn btn" style="margin: 0;">
-                            <i class="layui-icon layui-icon-app"></i>
-                            <span>添加自定义商品</span>
-                        </button>
-                    </div>
-                    <div class=" layui-col-sm2 layui-col-md2">
-                        <div>
-                            商品类型:
-                                <form class="layui-form" action="" style="max-width: 120px;">
-                                    <div class="layui-form" lay-filter="myDiv">
-                                        <select name="" id="GoodsType" lay-filter="mySelect">
-                                        </select>
-                                    </div>
-                                </form>
-                        </div>
-                    </div>
-                    <div class=" layui-col-sm2 layui-col-md3">
-                        <div style="max-width: 220px;" class="key-contnet">
-                            <div class="key-text">关键字</div>
-                            <input type="text" placeholder="商品名称、条码查询" class="KyeText" >
-                        </div>
-                    </div>
-                    <div class=" layui-col-sm2 layui-col-md2">
-                        <div>
-                            状态:
-                            <form class="layui-form" action="" style="max-width: 120px;">
-                                <div class="layui-form" lay-filter="myDiv">
-                                    <select name="" id="" lay-filter="stateSelect">
-                                        <option value="">全部</option>
-                                        <option value="0">不启用</option>
-                                        <option value="1">启用</option>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class=" layui-col-sm3 layui-col-md3">
-                        <div>
-                            价格范围：
-                            <div class="price-one-input">
-                                <input type="number" class="startingPrice">
-                            </div>
-                            ——
-                            <div class="price-tow-input">
-                                <input type="number" class="closingPrice">
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" layui-col-sm2 layui-col-md2">
-                        <button class="layui-btn layui-btn-normal query-btnClick btn">
-                            <i class="layui-icon layui-icon-search"></i>
-                            <span>查询</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!-- 数据列表内容 -->
-            <div>
-                <div class="data-list-contnet">
-                    <div class="list-table">
-                        <table class="layui-hide" id="tableTest" lay-filter="test"></table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- 弹窗 优惠 -->
-        <div class="preferential">
-            <!-- <div class="mask"> </div> -->
-            <div class="preferentialContnet">
-                <div class="content-header">
-                    <span>配置优惠设置</span>
-                </div>
-                <div class="content-body">
-                    <form class="mask-form">
-                        <ul>
-                            <li>
-                                <div style="margin-bottom: 22px;" class="forms-list">
-                                    <label> 商品名称</label>
-                                    <div class="inputWidth">
-                                        <input type="text" name="GoodsName" readonly="readonly">
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div style="margin-bottom: 22px;" class="forms-list">
-                                    <label> 销售原价</label>
-                                    <div class="inputWidth">
-                                        <input type="text" name="goods_Price" readonly="readonly" >
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div style="margin-bottom: 22px;" class="forms-list">
-                                    <label> 会员价</label>
-                                    <div class="inputWidth">
-                                        <input type="text" name="vip_Price"  style=" border: 1px solid #67c23a;">
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div style="margin-bottom: 22px;" class="forms-list">
-                                    <label> 第三方积分</label>
-                                    <div class="inputWidth">
-                                        <input type="text" name="integral" style=" border: 1px solid #67c23a;">
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="forms-list">
-                                    <label> 商品活动</label>
-                                    <div class="choice">
-                                        <form class="layui-form" action="" style="max-width: 120px;">
-                                            <div class="layui-form" id="skill" lay-filter="skill">
-                                                <input type="checkbox" name="" title="一元惠购" lay-skin="primary" checked>
-                                                <input type="checkbox" name="" title="嗨购" lay-skin="primary">
-                                                <input type="checkbox" name="" title="嗨多多" lay-skin="primary">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <button class="layui-btn layui-btn-normal btn" style="display: block;">
-                                    <span>点击保存</span>
-                                </button>
-                            </li>
-                            <li>
-                                <div style="margin-bottom: 22px;" class="forms-list">
-                                    <label> 优惠策略</label>
-                                    <div class="inputWidth">
-                                        <form class="layui-form" action="" style="max-width: 240px;">
-                                            <div class="layui-form" lay-filter="myDiv">
-                                                <select name="" id="" lay-filter="mySelect">
-                                                    <option value="zhang"></option>
-                                                    <option value="zhang">无</option>
-                                                    <option value="zhang">工艺品</option>
-                                                    <option value="wang">纪念币</option>
-                                                    <option value="li">红包</option>
-                                                </select>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </form>
-                </div>
-                <div class="content-footer">
-                    <div style="text-align: center;">
-                        <button class="layui-btn layui-btn-normal btn cancel-btn">
-                            <span>取消</span>
-                        </button>
-                        <button class="layui-btn layui-btn-normal btn determine-btn">
-                            <span>确定</span>
-                        </button>
-                    </div>
-                </div>
+	<!-- <img style="width: 100px;height: 100px;" src="ftp://172.16.68.199/yuebao/a2bbecf6-5991-4331-92d6-60cf9d865072.jpg" alt=""> -->
+	<div class="Goods-warp">
+		<div class="margin">
+			<div class="header-query">
+				<div class="layui-row">
+					<div class=" layui-col-sm2 layui-col-md2">
+						<button class="layui-btn layui-btn-normal  add-btn btn" style="margin: 0;">
+							<i class="layui-icon layui-icon-app"></i>
+							<span>添加自定义商品</span>
+						</button>
+					</div>
+					<div class=" layui-col-sm2 layui-col-md2">
+						<div>
+							商品类型:
+							<form class="layui-form" action="" style="max-width: 120px;">
+								<div class="layui-form" lay-filter="myDiv">
+									<select name="" id="GoodsType" lay-filter="mySelect">
+									</select>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class=" layui-col-sm2 layui-col-md3">
+						<div style="max-width: 220px;" class="key-contnet">
+							<div class="key-text">关键字</div>
+							<input type="text" placeholder="商品名称、条码查询" class="KyeText">
+						</div>
+					</div>
+					<div class=" layui-col-sm2 layui-col-md2">
+						<div>
+							状态:
+							<form class="layui-form" action="" style="max-width: 120px;">
+								<div class="layui-form" lay-filter="myDiv">
+									<select name="" id="" lay-filter="stateSelect">
+										<option value="">全部</option>
+										<option value="0">不启用</option>
+										<option value="1">启用</option>
+									</select>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class=" layui-col-sm3 layui-col-md3">
+						<div>
+							价格范围：
+							<div class="price-one-input">
+								<input type="number" class="startingPrice">
+							</div>
+							——
+							<div class="price-tow-input">
+								<input type="number" class="closingPrice">
+							</div>
+						</div>
+					</div>
+					<div class=" layui-col-sm2 layui-col-md2">
+						<button class="layui-btn layui-btn-normal query-btnClick btn">
+							<i class="layui-icon layui-icon-search"></i>
+							<span>查询</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- 数据列表内容 -->
+			<div>
+				<div class="data-list-contnet">
+					<div class="list-table">
+						<table class="layui-hide" id="tableTest" lay-filter="test"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 弹窗 优惠 -->
+		<div class="preferential">
+			<!-- <div class="mask"> </div> -->
+			<div class="preferentialContnet">
+				<div class="content-header">
+					<span>配置优惠设置</span>
+				</div>
+				<div class="content-body">
+					<form class="mask-form">
+						<ul>
+							<li>
+								<div style="margin-bottom: 22px;" class="forms-list">
+									<label> 商品名称</label>
+									<div class="inputWidth">
+										<input type="text" name="GoodsName" readonly="readonly">
+									</div>
+								</div>
+							</li>
+							<li>
+								<div style="margin-bottom: 22px;" class="forms-list">
+									<label> 销售原价</label>
+									<div class="inputWidth">
+										<input type="text" name="goods_Price" readonly="readonly">
+									</div>
+								</div>
+							</li>
+							<li>
+								<div style="margin-bottom: 22px;" class="forms-list">
+									<label> 会员价</label>
+									<div class="inputWidth">
+										<input type="text" name="vip_Price" style=" border: 1px solid #67c23a;">
+									</div>
+								</div>
+							</li>
+							<li>
+								<div style="margin-bottom: 22px;" class="forms-list">
+									<label> 第三方积分</label>
+									<div class="inputWidth">
+										<input type="text" name="integral" style=" border: 1px solid #67c23a;">
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="forms-list">
+									<label> 商品活动</label>
+									<div class="choice">
+										<form class="layui-form" action="" style="max-width: 120px;">
+											<div class="layui-form" id="skill" lay-filter="skill">
+												<input type="checkbox" name="" title="一元惠购" lay-skin="primary" checked>
+												<input type="checkbox" name="" title="嗨购" lay-skin="primary">
+												<input type="checkbox" name="" title="嗨多多" lay-skin="primary">
+											</div>
+										</form>
+									</div>
+								</div>
+							</li>
+							<li>
+								<button class="layui-btn layui-btn-normal btn" style="display: block;">
+									<span>点击保存</span>
+								</button>
+							</li>
+							<li>
+								<div style="margin-bottom: 22px;" class="forms-list">
+									<label> 优惠策略</label>
+									<div class="inputWidth">
+										<form class="layui-form" action="" style="max-width: 240px;">
+											<div class="layui-form" lay-filter="myDiv">
+												<select name="" id="" lay-filter="mySelect">
+													<option value="zhang"></option>
+													<option value="zhang">无</option>
+													<option value="zhang">工艺品</option>
+													<option value="wang">纪念币</option>
+													<option value="li">红包</option>
+												</select>
+											</div>
+										</form>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</form>
+				</div>
+				<div class="content-footer">
+					<div style="text-align: center;">
+						<button class="layui-btn layui-btn-normal btn cancel-btn">
+							<span>取消</span>
+						</button>
+						<button class="layui-btn layui-btn-normal btn determine-btn">
+							<span>确定</span>
+						</button>
+					</div>
+				</div>
 
-            </div>
-        </div>
-        <!-- 编辑自定义商品 -->
-        <div class="editor" style="overflow-y: auto;">
-            <div class="editor-content">
-                <div class="content-header">
-                    <span>编辑自定义商品</span>
-                </div>
-                <div class="editor-body">
-                    <div style="margin: 30px;">
-                        <div>
-                            <form action="" class="layui-form" lay-filter="EditValData">
-                                <ul>
-                                    <li>
-                                        <div class="editor-list" style="margin-bottom:22px">
-                                            <label for=""> 商品条码</label>
-                                            <div class="editorWidthInput">
-                                                <input type="text" name="goods-Barcode">
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="editor-list" style="margin-bottom:22px">
-                                            <label for=""><span style="color:red;">*</span> 商品名称</label>
-                                            <div class="editorWidthInput">
-                                                <input type="text" name="goods-Name">
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="editor-list" style="margin-bottom:22px">
-                                            <label for=""> <span style="color:red;">*</span>商品类型</label>
-                                            <div class="editorWidthInput">
-                                                <form class="layui-form" action="" style="max-width: 120px;">
-                                                    <div class="layui-form" lay-filter="myDiv">
-                                                        <select name="goods-Type" id="EditGoodsType" lay-filter="mySelect">
-                                        
-                                                        </select>
-                                                    </div>
-                                                </form>
-                                                <button type="button" class="layui-btn layui-btn-normal  btn"
-                                                    style="margin: 0;">
-                                                    <span>刷新</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="editor-list" style="margin-bottom:22px">
-                                            <label for=""><span style="color:red;">*</span> 品牌/商标</label>
-                                            <div class="editorWidthInput">
-                                                <input type="text" name="goods-Brand">
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="editor-list" style="margin-bottom:22px">
-                                            <label for=""><span style="color:red;">*</span> 统一零售价</label>
-                                            <div class="editorWidthInput">
-                                                <input type="text" name="goods-Price"> 
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="editor-list" style="margin-bottom:22px">
-                                            <label for=""><span style="color:red;">*</span> 成本价</label>
-                                            <div class="editorWidthInput">
-                                                <input type="text" name="goods-Cost">
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="editor-list" style="margin-bottom:22px">
-                                            <label for=""> 规格描述</label>
-                                            <div class="editorWidthInput">
-                                                <textarea maxlength="200" name="goods-Param"></textarea>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="editor-list" style="margin-bottom:22px" style="display: flex;align-items: center;"  >
-                                            <label for=""> 商品状态</label>
-                                            <form class="layui-form" action="" ></form>
-                                                <div class="layui-form-item" style="margin: 0;">
-                                                    <input type="radio" name="goods-Status" value="0" title="不启用">
-                                                    <input type="radio" name="goods-Status" value="1" title="启用" checked>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </form>
-                        </div>
-                        <!-- 上传图片 -->
-                        <div >
-                            <label for="">
-                                <button class="layui-btn layui-btn-normal upload-btn1 btn">
-                                    <span>点击上传商品图片</span>
-                                </button></label>
-                                <div class="up-title">
-                                    <p>建议图片尺寸为：200*200；</p>
-                                    <p>只能上传image类型图片文件(点击图片右上角删除图片)</p>
-                                </div>
-                            <div class="upload-demo1">
-                                <ul>
-                                    <li class="upload-list1">
-                                        <img src="http://pic.hnzczy.cn/1585304624004_32007447.png" alt="">
-                                        <label for="" class="up-iconCont1">
-                                            <span>
-                                                <i class="layui-icon layui-icon-ok"></i>
-                                            </span>
-                                        </label>
-                                        <i class="layui-icon layui-icon-close"></i>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- <div style="margin-top: 30px;">
+			</div>
+		</div>
+		<!-- 编辑自定义商品 -->
+		<div class="editor" style="overflow-y: auto;">
+			<div class="editor-content">
+				<div class="content-header">
+					<span>编辑自定义商品</span>
+				</div>
+				<div class="editor-body">
+					<div style="margin: 30px;">
+						<div>
+							<form action="" class="layui-form" lay-filter="EditValData">
+								<ul>
+									<li>
+										<div class="editor-list" style="margin-bottom:22px">
+											<label for=""> 商品条码</label>
+											<div class="editorWidthInput">
+												<input type="text" name="goods-Barcode">
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="editor-list" style="margin-bottom:22px">
+											<label for=""><span style="color:red;">*</span> 商品名称</label>
+											<div class="editorWidthInput">
+												<input type="text" name="goods-Name">
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="editor-list" style="margin-bottom:22px">
+											<label for=""> <span style="color:red;">*</span>商品类型</label>
+											<div class="editorWidthInput">
+												<form class="layui-form" action="" style="max-width: 120px;">
+													<div class="layui-form" lay-filter="myDiv">
+														<select name="goods-Type" id="EditGoodsType"
+															lay-filter="mySelect">
+
+														</select>
+													</div>
+												</form>
+												<button type="button" class="layui-btn layui-btn-normal  btn"
+													style="margin: 0;">
+													<span>刷新</span>
+												</button>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="editor-list" style="margin-bottom:22px">
+											<label for=""><span style="color:red;">*</span> 品牌/商标</label>
+											<div class="editorWidthInput">
+												<input type="text" name="goods-Brand">
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="editor-list" style="margin-bottom:22px">
+											<label for=""><span style="color:red;">*</span> 统一零售价</label>
+											<div class="editorWidthInput">
+												<input type="text" name="goods-Price">
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="editor-list" style="margin-bottom:22px">
+											<label for=""><span style="color:red;">*</span> 成本价</label>
+											<div class="editorWidthInput">
+												<input type="text" name="goods-Cost">
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="editor-list" style="margin-bottom:22px">
+											<label for=""> 规格描述</label>
+											<div class="editorWidthInput">
+												<textarea maxlength="200" name="goods-Param"></textarea>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="editor-list" style="margin-bottom:22px"
+											style="display: flex;align-items: center;">
+											<label for=""> 商品状态</label>
+											<form class="layui-form" action=""></form>
+											<div class="layui-form-item" style="margin: 0;">
+												<input type="radio" name="goods-Status" value="0" title="不启用">
+												<input type="radio" name="goods-Status" value="1" title="启用" checked>
+											</div>
+							</form>
+						</div>
+						</li>
+						</ul>
+						</form>
+					</div>
+					<!-- 上传图片 -->
+					<div>
+						<label for="">
+							<button class="layui-btn layui-btn-normal upload-btn1 btn">
+								<span>点击上传商品图片</span>
+							</button></label>
+						<div class="up-title">
+							<p>建议图片尺寸为：200*200；</p>
+							<p>只能上传image类型图片文件(点击图片右上角删除图片)</p>
+						</div>
+						<div class="upload-demo1">
+							<ul>
+								<li class="upload-list1">
+									<img src="http://pic.hnzczy.cn/1585304624004_32007447.png" alt="">
+									<label for="" class="up-iconCont1">
+										<span>
+											<i class="layui-icon layui-icon-ok"></i>
+										</span>
+									</label>
+									<i class="layui-icon layui-icon-close"></i>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- <div style="margin-top: 30px;">
                             <label for="">
                                 <button class="layui-btn layui-btn-normal upload-btn1 btn">
                                     <span>点击上传商品图片</span>
@@ -314,50 +318,252 @@
                                 </ul>
                             </div>
                         </div> -->
-                        <div class="edit-contnet" style="margin-top: 10px;">
-                            <span > 商品详情 </span>
-                            <div style="width: 100%">
-                                <div>
-                                    <textarea  id="editDemo" style="display: none;"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="content-footer" style="margin-top:30px;">
-                            <div style="text-align: center;">
-                                <button class="layui-btn layui-btn-normal btn cancel-btn">
-                                    <span>取消</span>
-                                </button>
-                                <button class="layui-btn layui-btn-normal btn determine-btn">
-                                    <span>确定</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+					<div class="edit-contnet" style="margin-top: 10px;">
+						<span> 商品详情 </span>
+						<div style="width: 100%">
+							<div>
+								<textarea id="editDemo" style="display: none;"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="content-footer" style="margin-top:30px;">
+						<div style="text-align: center;">
+							<button class="layui-btn layui-btn-normal btn cancel-btn">
+								<span>取消</span>
+							</button>
+							<button class="layui-btn layui-btn-normal btn determine-btn">
+								<span>确定</span>
+							</button>
+						</div>
+					</div>
+				</div>
 
-                </div>
-        </div>
-        <!-- 添加自定义商品 -->
-        
-        </div>
-    </div>
+			</div>
+		</div>
+		<!-- 添加自定义商品 -->
+	</div>
+	<div class="addGoods" style="overflow-y: auto;">
+		<div class="editor-content">
+			<div class="content-header">
+				<span>编辑自定义商品</span>
+			</div>
+			<div class="editor-body">
+				<div style="margin: 30px;">
+					<div>
+						<form action="" class="layui-form" lay-filter="addValData">
+							<ul>
+								<li>
+									<div class="editor-list" style="margin-bottom:22px">
+										<label for=""> 商品条码</label>
+										<div class="editorWidthInput">
+											<input type="text" name="goods-Barcode">
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="editor-list" style="margin-bottom:22px">
+										<label for=""><span style="color:red;">*</span> 商品名称</label>
+										<div class="editorWidthInput">
+											<input type="text" name="goods-Name">
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="editor-list" style="margin-bottom:22px">
+										<label for=""> <span style="color:red;">*</span>商品类型</label>
+										<div class="editorWidthInput">
+											<form class="layui-form" action="" style="max-width: 120px;">
+												<div class="layui-form" lay-filter="myDiv">
+													<select name="goods-Type" id="addGoodsType" lay-filter="mySelect">
+
+													</select>
+												</div>
+											</form>
+											<button type="button" class="layui-btn layui-btn-normal  btn"
+												style="margin: 0;">
+												<span>刷新</span>
+											</button>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="editor-list" style="margin-bottom:22px">
+										<label for=""><span style="color:red;">*</span> 品牌/商标</label>
+										<div class="editorWidthInput">
+											<input type="text" name="goods-Brand">
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="editor-list" style="margin-bottom:22px">
+										<label for=""><span style="color:red;">*</span> 统一零售价</label>
+										<div class="editorWidthInput">
+											<input type="text" name="goods-Price">
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="editor-list" style="margin-bottom:22px">
+										<label for=""><span style="color:red;">*</span> 成本价</label>
+										<div class="editorWidthInput">
+											<input type="text" name="goods-Cost">
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="editor-list" style="margin-bottom:22px">
+										<label for=""> 规格描述</label>
+										<div class="editorWidthInput">
+											<textarea maxlength="200" name="goods-Param"></textarea>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="editor-list" style="margin-bottom:22px"
+										style="display: flex;align-items: center;">
+										<label for=""> 商品状态</label>
+										<form class="layui-form" action="">
+											<div class="layui-form-item" style="margin: 0;">
+												<input type="radio" name="goods-Status" value="0" title="不启用">
+												<input type="radio" name="goods-Status" value="1" title="启用">
+											</div>
+										</form>
+									</div>
+								</li>
+							</ul>
+						</form>
+					</div>
+					<!-- 上传图片 -->
+					<div>
+						<label for="">
+							<button class="layui-btn layui-btn-normal upload-btn2 btn">
+								<span>点击上传商品图片</span>
+							</button></label>
+						<div class="up-title">
+							<p>建议图片尺寸为：200*200；</p>
+							<p>只能上传image类型图片文件(点击图片右上角删除图片)</p>
+						</div>
+						<div class="upload-demo2">
+							<ul>
+								<li class="upload-list2">
+									<img src="http://pic.hnzczy.cn/1585304624004_32007447.png" alt="">
+									<label for="" class="up-iconCont2">
+										<span>
+											<i class="layui-icon layui-icon-ok"></i>
+										</span>
+									</label>
+									<i class="layui-icon layui-icon-close"></i>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="edit-contnet" style="margin-top: 10px;">
+						<span> 商品详情 </span>
+						<div style="width: 100%">
+							<div>
+								<textarea id="editDemo" style="display: none;"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="content-footer" style="margin-top:30px;">
+						<div style="text-align: center;">
+							<button class="layui-btn layui-btn-normal btn cancel-btn2">
+								<span>取消</span>
+							</button>
+							<button class="layui-btn layui-btn-normal btn determine-btn2">
+								<span>确定</span>
+							</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- 选择图片 剪切 -->
+		<div class="ImgCropping">
+			<div style="display: block" class="tailoring-container">
+				<div class="black-cloth"></div>
+				<div class="tailoring-content">
+					<div class="tailoring-content-one">
+						<label title="上传图片" for="chooseImg" class="l-btn choose-btn">
+							<input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg"
+								class="hidden"> <!-- onchange="selectImg(this)" -->
+							选择图片
+						</label>
+						<div class="close-tailoring" onclick="closeTailor(this)">×</div>
+					</div>
+					<div class="tailoring-content-two">
+						<div class="tailoring-box-parcel">
+							<img id="tailoringImg">
+						</div>
+						<div class="preview-box-parcel">
+							<p>图片预览：</p>
+							<div class="square previewImg"></div>
+							<div class="circular previewImg"></div>
+						</div>
+					</div>
+					<div class="tailoring-content-three">
+						<button class="l-btn cropper-reset-btn">复位</button>
+						<button class="l-btn cropper-rotate-btn">旋转</button>
+						<button class="l-btn cropper-scaleX-btn">换向</button>
+						<button class="l-btn sureCut" id="sureCut">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 </body>
 <script type="text/html" id="barDemo">
-    <div class="layui-btn-container" >
-      <button class="layui-btn layui-btn-sm btn operation" lay-event="add" >
+		<div class="layui-btn-container">
+			<button class="layui-btn layui-btn-sm btn operation" lay-event="add">
           <span>操作</span>
           <i class="layui-icon layui-icon-down" style="font-size:12px !important;"></i>
       </button>
-      <button class="layui-btn layui-btn-sm btn del-btn" lay-event="delete">删除</button>
-      <div class="anUp">
-        <ul>
-            <li class="preferentialClick">优惠策略</li>
-            <li class="GoodsInformation">商品信息</li>
-        </ul>
+			<button class="layui-btn layui-btn-sm btn del-btn" lay-event="delete">删除</button>
+			<div class="anUp">
+				<ul>
+					<li class="preferentialClick">优惠策略</li>
+					<li class="GoodsInformation">商品信息</li>
+				</ul>
 
-      </div>
-    </div>
-  </script>
+			</div>
+		</div>
+	</script>
+<script src="../../js/public/cropper.min.js"></script>
 <script src="../../js/goods/cuntomGoods.js"></script>
+<script>
+		//  function selectImg(file) {
+		//      console.log(file)
+		//     if (!file.files || !file.files[0]){
+		//         return;
+		//     }
+		//     var reader = new FileReader();
+		//     reader.onload = function (evt) {
+		//         var replaceSrc = evt.target.result;
+		//         //更换cropper的图片
+		//         $('#tailoringImg').cropper('replace', replaceSrc,false);//默认false，适应高度，不失真
+		//     }
+		//     reader.readAsDataURL(file.files[0]);
+		// }
+		// //cropper图片裁剪
+		// $('#tailoringImg').cropper({
+		//     aspectRatio: 1/1,//默认比例
+		//     preview: '.previewImg',//预览视图
+		//     guides: false,  //裁剪框的虚线(九宫格)
+		//     autoCropArea: 0.5,  //0-1之间的数值，定义自动剪裁区域的大小，默认0.8
+		//     movable: false, //是否允许移动图片
+		//     dragCrop: true,  //是否允许移除当前的剪裁框，并通过拖动来新建一个剪裁框区域
+		//     movable: true,  //是否允许移动剪裁框
+		//     resizable: true,  //是否允许改变裁剪框的大小
+		//     zoomable: false,  //是否允许缩放图片大小
+		//     mouseWheelZoom: false,  //是否允许通过鼠标滚轮来缩放图片
+		//     touchDragZoom: true,  //是否允许通过触摸移动来缩放图片
+		//     rotatable: true,  //是否允许旋转图片
+		//     crop: function(e) {
+		//         // 输出结果数据裁剪图像。
+		//         // console.log(e.target.currentSrc)
+		//     }
+		// });
+</script>
 
 </html>
