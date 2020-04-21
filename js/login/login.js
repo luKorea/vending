@@ -1,4 +1,5 @@
 layui.use(['form', 'layer'], function () {
+    // window.history.forward(1);
     var $ = layui.jquery;
     var form = layui.form;
     var layer = layui.layer;
@@ -42,6 +43,7 @@ layui.use(['form', 'layer'], function () {
                                     pass: logData.pass
                                 })
                             }
+                            window.location.href="../index/index.html"
                         } else {
                             layer.msg(res.data)
                         }

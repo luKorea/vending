@@ -7,42 +7,43 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   // 商品图片
   var goodsImage = null;
   var token = sessionStorage.token + '';
-  console.log(token)
+  // console.log(token)
   // table.set({headers:{token: sessionStorage.token}})
   var tableIns = table.render({
     elem: '#tableTest'
     , url: `/api/goods/findAll`
     , method: 'post',
+    contentType: "application/json",
     headers: {
-      
-      "content-Type": "application/json",
       token,
     },
-    processData : false
-
-    , 
     cols: [[
-      { field: 'username', width: 120, title: '图片' },
-      { field: 'goods_Name', width: 120, title: '商品名称' },
-      { field: `classifyName`, width: 120, title: '商品类型', templet: '<div>{{d.classify.classifyName}}</div>' },
+      { field: 'goods_Images', width: 120, title: '图片', templet: "#imgtmp" },
+      { field: 'goods_Name', width: 120, title: '商品名称', color: '#409eff' },
+      { field: `classifyName`, width: 120, title: '商品类目', templet: '<div>{{  d.classify.classifyName ? d.classify.classifyName: ""}}</div>' },
       { field: 'goods_Core', width: 120, title: '商品条码', },
       { field: 'goods_Param', width: 120, title: '规格说明 ' },
       { field: 'goods_Price', width: 120, title: '零售价 ', sort: true },
       { field: 'goods_Cost', width: 120, title: '成本价 ', sort: true },
-      { field: 'vipPrice', width: 120, title: '会员价 ', sort: true },
-      { field: 'strategy', width: 120, title: '优惠价策略 ' },
-      { field: 'goodsActivity', width: 120, title: '其他活动 ' },
-      { field: 'userName', width: 130, title: '所属人 ', templet: '<div>{{d.user.userName}}</div>' },
-      { field: 'goods_Status', width: 120, title: '商品状态 ' },
+      // { field: 'vipPrice', width: 120, title: '会员价 ', sort: true },
+      // { field: 'strategy', width: 120, title: '优惠价策略 ' },
+      // { field: 'goodsActivity', width: 120, title: '其他活动 ' },
+      {
+        field: 'userName', width: 130, title: '所属人 ', templet: function (d) {
+          return d.user != null ? d.user.userName : ''
+        }
+      },
+      {
+        field: 'goods_Status', width: 120, title: '商品状态 ', templet: function (d) {
+          return d.goods_Status = 1 ? '启用' : '不启用'
+        }
+      },
       { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
       // { fixed: 'right', width: 160, align: 'center', toolbar: '#barDemo' }
     ]]
     , id: 'tableId'
     , page: true
     , loading: true
-    , where: {
-
-    }
     // ,method:'post'
     // ,limits: [10,20,50]
     ,
@@ -72,7 +73,12 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       statusCode: 200 //规定成功的状态码，默认：0
     },
     done: function (res) {
-      // console.log(res);
+      console.log(999)
+      if (res.code == 403) {
+        window.history.go(-1)
+      }else{
+        
+      }
     }
 
   });
@@ -104,7 +110,9 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       data: JSON.stringify({ pageNum: 1, pageSize: 10 }),
       headers: {
         "Content-Type": "application/json",
-      }, success: function (res) {
+        token,
+      },
+      success: function (res) {
         if (res.code == 200) {
           var optionList = `<option value="">全部</option>`;
           $('#GoodsType').empty;
@@ -144,10 +152,15 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   // 监听操作删除
   var indexFlag = null;
   var operationId = null;
+  // 剪切图片判断条件
+  var editGoodsImg = null;
+  var addGoodsImgIndex = null;
+  var singleData = null;
+  var EditIndex = null;
   table.on('tool(test)', function (obj) {
     // 操作事件
     if (obj.event === 'add') {
-      var singleData = obj.data;
+      singleData = obj.data;
       console.log(singleData)
       $('.anUp').slideUp();
       if (indexFlag != singleData.goods_Id) {
@@ -165,24 +178,31 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
         $('input[name="vip_Price"]').val(singleData.vipPrice);
         $('input[name="integral"]').val(singleData.integral);
       })
-
+      $('.upload-btn1').click(function () {
+        addGoodsImgIndex = 1;
+        $('.ImgCropping').fadeIn();
+      })
       // 点击商品信息事件
       $('.GoodsInformation').click(function () {
         $('.anUp').slideUp();
         $('.editor').fadeIn();
 
         form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
-          "goods-Barcode": singleData.goods_Core // "商品条码
-          , "goods-Name": singleData.goods_Name //商品名称
-          , "goods-Type": singleData.classify.classifyId //商品类型
-          , "goods-Brand": singleData.brand  //品牌
-          , "goods-Price": singleData.goods_Price //零售价
-          , "goods-Cost": singleData.goods_Cost //成本价
-          , "goods-Param": singleData.goods_Param //规格描述
-          , 'goods-Status': singleData.goods_Status //商品状态
+          "goodsBarcode": singleData.goods_Core // "商品条码
+          , "goodsName": singleData.goods_Name //商品名称
+          , "goodsType": singleData.classify.classifyId //商品类型
+          // , "goodsBrand": singleData.brand  //品牌
+          , "goodsPrice": singleData.goods_Price //零售价
+          , "goodsCost": singleData.goods_Cost //成本价
+          , "goodsParam": singleData.goods_Param //规格描述
+          , 'goodsStatus': singleData.goods_Status //商品状态
         });
-        var EditValData = form.val("EditValData");
-        console.log(EditValData)
+        $('#editImg').attr("src", singleData.goods_Images)
+        //  建立编辑器
+        $('#editDemo').val(singleData.goods_Descript)
+         EditIndex = layedit.build('editDemo', {
+          height: 180,
+        })
       })
     } else if (obj.event === 'delete') {
       console.log(obj)
@@ -198,6 +218,53 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
     }
   });
 
+
+  // 修改商品信息点击事件
+  $('.editDetermine-btn').click(function () {
+    var EditValData = form.val("EditValData");
+    console.log(EditValData)
+    if (EditValData.goodsName && EditValData.goodsType && EditValData.goodsPrice && EditValData.goodsCost) {
+      $.ajax({
+        type: 'post',
+        url: `/api/goods/updateGoods`,
+        headers: {
+          "Content-Type": "application/json",
+          token,
+        },
+        data: JSON.stringify({
+          goods_Core: EditValData.goodsBarcode, //商品条码
+          goods_Name: EditValData.goodsName,   //商品名称
+          classify_Id: EditValData.goodsType,     //商品类型
+          brand: EditValData.goodsBrand,        //品牌
+          goods_Price: EditValData.goodsPrice,  //同意零售价
+          goods_Cost: EditValData.goodsCost,    //成本价
+          goods_Param: EditValData.goodsParam,  //规格
+          goods_Status: EditValData.goodsStatus, //状态
+          goods_Images: $('#editImg').attr("src"), //商品图片 不在form里
+          goods_Descript: layedit.getContent(EditIndex) //商品详情，编辑器里的内容
+        }),
+        success: function (res) {
+          if (res.code == 200) {
+            layer.msg('修改成功');
+            tableIns.reload({
+              where: {
+              }
+            })
+            $('.editor').fadeOut();
+
+          } else if (res.code == 403) {
+            window.history.go(-1)
+          } else {
+            layer.msg('操作失败')
+          }
+        }
+
+      })
+    } else {
+      layer.msg('带*为必填')
+    }
+  })
+
   //  取消优惠按钮
   $('.preferential .cancel-btn').on('click', function () {
     $('.preferential').fadeOut();
@@ -208,7 +275,10 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   var layedit = layui.layedit;
   layedit.set({
     uploadImage: {
-      url: '/api/fileUpload' //接口url
+      url: '/api/fileUpload',//接口url
+      headers: {
+        token,
+      }
       , type: 'post' //默认post
       , code: 200 //0表示成功，其它失败
 
@@ -216,13 +286,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
 
   })
 
-  //建立编辑器
-  var EditIndex = layedit.build('editDemo', {
-    height: 180,
-  })
-  $('.upload-btn1').click(function () {
-    console.log(layedit.getContent(EditIndex))
-  })
+
 
   // 取消编辑按钮
   $('.editor .cancel-btn').click(function () {
@@ -247,21 +311,90 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
 
 
   // 添加自定义商品部分
+  var addGoodsImg = null;
+  // var addGoodsImgIndex=null;
   $('.add-btn').click(function () {
     $('.addGoods').fadeIn();
+    addGoodsImg = 2;
   });
 
   // 取消添加自定义商品
   $('.addGoods .cancel-btn2').click(function () {
     $('.addGoods').fadeOut();
+    $('.upload-demo2 .upload-list2').fadeOut();
   });
 
-  // 点击上传图片
+  // 添加商品点击上传图片
+
   $('.upload-btn2').click(function () {
+    addGoodsImgIndex = 2;
     $('.ImgCropping').fadeIn();
   });
 
+  var AddIndex = layedit.build('addDemo', {
+    height: 180,
+  })
 
+  // 点击确定添加
+  $('.determine-btn2').click(function () {
+    var addValData = form.val("addValData");
+    console.log(addValData);
+    // 编辑器内容
+    console.log(layedit.getContent(AddIndex))
+    // &&addValData.goodsBrand
+    if (addValData.goodsName && addValData.goodsType && addValData.goodsPrice && addValData.goodsCost) {
+      if (addGoodsImg) {
+        $.ajax({
+          type: 'post',
+          url: `/api/goods/saveGoods`,
+          headers: {
+            "Content-Type": "application/json",
+            token,
+          },
+          data: JSON.stringify({
+            goods_Core: addValData.goodsBarcode, //商品条码
+            goods_Name: addValData.goodsName,   //商品名称
+            classify_Id: addValData.goodsType,     //商品类型
+            brand: addValData.goodsBrand,        //品牌
+            goods_Price: addValData.goodsPrice,  //同意零售价
+            goods_Cost: addValData.goodsCost,    //成本价
+            goods_Param: addValData.goodsParam,  //规格
+            goods_Status: addValData.goodsStatus, //状态
+            goods_Images: addGoodsImg, //商品图片 不在form里
+            goods_Descript: layedit.getContent(AddIndex) //商品详情，编辑器里的内容
+          }), success: function (res) {
+            console.log(res)
+            if (res.code == 200) {
+              $('.addGoods').fadeOut();
+              $('.upload-demo2 .upload-list2').fadeOut();
+              addGoodsImg = null;
+              form.val("addValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+                "goodsBarcode": ''
+                , "goodsName": ''
+                , "goodsType": ''
+                , "goodsBrand": ''
+                , "goodsPrice": ''
+                , "goodsCost": ''
+                , "goodsParam": ''
+              });
+              layer.msg('添加成功')
+              tableIns.reload({
+                where: {
+                }
+              })
+            } else {
+              layer.msg('操作失败')
+            }
+          }
+        })
+      } else {
+        layer.msg('请上传商品图片')
+      }
+
+    } else {
+      layer.msg('带*为必填')
+    }
+  });
 
 
   //剪切图片弹窗部分
@@ -295,7 +428,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       $('#tailoringImg').cropper('replace', replaceSrc, false);//默认false，适应高度，不失真
     }
     reader.readAsDataURL(that.files[0]);
-  })
+  });
   //cropper图片裁剪
   $('#tailoringImg').cropper({
     aspectRatio: 1 / 1,//默认比例
@@ -358,9 +491,28 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
         url: '/api/fileUpload',
         processData: false,
         contentType: false,
+        headers: {
+          token,
+        },
         data: editImg,
         success: function (res) {
           console.log(res)
+          if (res.code == 0) {
+            // addGoodsImgIndex 1为编辑 2为添加
+            if (addGoodsImgIndex == 2) {
+              addGoodsImg = res.data.src;
+              $('#GoodsImg').attr("src", addGoodsImg);
+              $('.ImgCropping').fadeOut();
+              $('.upload-demo2 .upload-list2').fadeIn();
+            } else {
+              editGoodsImg = res.data.src;
+              $('#editImg').attr("src", editGoodsImg);
+              $('.ImgCropping').fadeOut();
+            }
+          } else {
+            layer.msg(res.msg)
+          }
+
         }
       });
     }

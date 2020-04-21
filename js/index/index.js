@@ -1,5 +1,7 @@
 //JavaScript代码区域
 window.onload = function () {
+    var userName=sessionStorage.username;
+    $('#userLogin .userName').html(userName)
     var navStr = []; //判断tba选项卡有没有这个参数;
     layui.use(['layer', 'form', 'element', 'carousel'], function () {
         // 表单

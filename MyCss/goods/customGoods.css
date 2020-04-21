@@ -315,6 +315,10 @@
     color: #606266;
     line-height: 1.8;
     position: relative;
+    
+}
+.upload-list2{
+    display: none;
 }
 .upload-list1 img,.upload-list2 img{
     vertical-align: middle;

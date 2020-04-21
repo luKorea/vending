@@ -2,27 +2,78 @@
 
 // 删除商品数据列表数据
 // 传id
+var token=sessionStorage.token;
 function Goodsdel(id, indexs, obj, index) {
   // index 1为自定义商品 2为自定义类目 3为通用商品 
   if (indexs == 1) {
-    $.get(`/api/goods/deleteById`, { goods_Id: id }, function (res) {
-      console.log(res)
-      if (res.code == 200) {
-        obj.del();
-        layer.close(index);
+    $.ajax({
+      url:`/api/goods/deleteById`,
+      type:'get',
+      headers: {
+        "Content-Type": "application/json",
+        token,
+      },
+      data:{
+        goods_Id: id
+      },success:function(res){
+        if (res.code == 200) {
+          obj.del();
+          layer.close(index);
+        }else if(res.code==403){
+          window.history.go(-1)
+        }else{
+          layer.msg(res.message);
+        }
       }
     })
+    // $.get(`/api/goods/deleteById`, { goods_Id: id }, function (res) {
+    //   console.log(res)
+    //   if (res.code == 200) {
+    //     obj.del();
+    //     layer.close(index);
+    //   }else if(res.code==403){
+    //     window.history.go(-1)
+    //   }else{
+    //     layer.msg('操作失败');
+    //   }
+    // })
   } else if (indexs == 2) {
-    $.get(`/api/classify/deleteById`, { id }, function (res) {
-      console.log(res)
-      if (res.code == 200) {
-        obj.del();
-        layer.close(index);
-        layer.msg('删除成功');
-      } else {
-        layer.msg('操作失败');
+
+    $.ajax({
+      type:'get',
+      url:`/api/classify/deleteById`,
+      headers: {
+        "Content-Type": "application/json",
+        token,
+      },
+      data:{
+        id,
+      },success:function(res){
+        if (res.code == 200) {
+              obj.del();
+              layer.close(index);
+              layer.msg('删除成功');
+            }else if(res.code==403){
+              window.history.go(-1)
+            }  else {
+              layer.msg(res.message);
+            }
       }
     })
+    // $.get(`/api/classify/deleteById`, { id }, function (res) {
+    //   console.log(res)
+    //   if (res.code == 200) {
+    //     obj.del();
+    //     layer.close(index);
+    //     layer.msg('删除成功');
+    //   }
+    //   // else if(res.code==403){
+    //   //   // window.history.go(-1)
+    //   // } 
+    //   else {
+    //     layer.msg('操作失败');
+    //   }
+    // })
   }
 
 }
