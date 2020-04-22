@@ -178,7 +178,7 @@
 
 			</div>
 		</div>
-		<!-- 编辑自定义商品 -->
+		<!-- 编辑商品 -->
 		<div class="editor" style="overflow-y: auto;">
 			<div class="editor-content">
 				<div class="content-header">
@@ -263,8 +263,7 @@
 											<form class="layui-form" action="">
 												<div class="layui-form-item" style="margin: 0;">
 													<input type="radio" name="goodsStatus" value="0" title="不启用">
-													<input type="radio" name="goodsStatus" value="1" title="启用"
-														checked>
+													<input type="radio" name="goodsStatus" value="1" title="启用" checked>
 												</div>
 											</form>
 										</div>
@@ -322,8 +321,11 @@
 						<div class="edit-contnet" style="margin-top: 10px;">
 							<span> 商品详情 </span>
 							<div style="width: 100%">
-								<div>
+								<!-- <div>
 									<textarea id="editDemo" style="display: none;"></textarea>
+								</div> -->
+								<div id="editWangEditor">
+									
 								</div>
 							</div>
 						</div>
@@ -332,8 +334,11 @@
 								<button class="layui-btn layui-btn-normal btn cancel-btn">
 									<span>取消</span>
 								</button>
-								<button class="layui-btn layui-btn-normal btn editDetermine-btn">
+								<button class="layui-btn layui-btn-normal btn editDetermine-btn" style="margin: 0 0 0 15px;">
 									<span>确定</span>
+								</button>
+								<button class="layui-btn layui-btn-normal btn reading-btn" id="edit" style="margin: 0 0 0 15px;">
+									<span>阅览富文本</span>
 								</button>
 							</div>
 						</div>
@@ -343,6 +348,7 @@
 			</div>
 			<!-- 添加自定义商品 -->
 		</div>
+		<!-- 添加商品-->
 		<div class="addGoods" style="overflow-y: auto;">
 			<div class="editor-content">
 				<div class="content-header">
@@ -462,8 +468,13 @@
 						<div class="edit-contnet" style="margin-top: 10px;">
 							<span> 商品详情 </span>
 							<div style="width: 100%">
-								<div>
+								<!-- layui edit部分 -->
+								<!-- <div>
 									<textarea id="addDemo" style="display: none;"></textarea>
+								</div> -->
+								<!-- wangEditor 部分 -->
+								<div id="addWangEditor">
+									
 								</div>
 							</div>
 						</div>
@@ -472,8 +483,11 @@
 								<button class="layui-btn layui-btn-normal btn cancel-btn2">
 									<span>取消</span>
 								</button>
-								<button class="layui-btn layui-btn-normal btn determine-btn2">
+								<button class="layui-btn layui-btn-normal btn determine-btn2" style="margin: 0 0 0 15px;">
 									<span>确定</span>
+								</button>
+								<button class="layui-btn layui-btn-normal btn reading-btn" id="add" style="margin: 0 0 0 15px;">
+									<span>阅览富文本</span>
 								</button>
 							</div>
 						</div>
@@ -485,7 +499,7 @@
 		</div>
 		<!-- 选择图片 剪切 -->
 		<div class="ImgCropping">
-			<div style="display: block" class="tailoring-container">
+			<div class="tailoring-container">
 				<div class="black-cloth"></div>
 				<div class="tailoring-content">
 					<div class="tailoring-content-one">
@@ -515,7 +529,18 @@
 				</div>
 			</div>
 		</div>
+		<div class="reading">
+			<div class="reading-contnet">
+				<div class="reading-header">			
+					<h1>详情页预览</h1>
+					<div class="reading-down">×</div>
+				</div>
+				<div class="reading-box">
 
+				</div>
+			</div>
+			
+		</div>
 </body>
 <script type="text/html" id="barDemo">
 		<div class="layui-btn-container">
@@ -535,8 +560,8 @@
 	</script>
 <script type="text/html" id="imgtmp">
         <div><img src="{{d.goods_Images}}  " style="width: 40px; height: 40px;"></div>
-    </script>
+</script>
+<script src="../../js/public/wangEditor.min.js"></script>
 <script src="../../js/public/cropper.min.js"></script>
 <script src="../../js/goods/cuntomGoods.js"></script>
-
 </html>

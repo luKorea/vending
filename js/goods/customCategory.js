@@ -13,10 +13,13 @@ layui.use(['table', 'form', 'layer',], function () {
       token,
     }
     , cols: [[
+      { field: 'rank', width: 150, title: '类目排序', sort: true },
       { field: 'classifyName', width: 150, title: '类目名称', sort: true },
       { field: 'remark', width: 150, title: '类目备注' },
       // { field: 'type', width: 180, title: '使用机型'},
-      // { field: 'users', width: 180, title: '商户名', sort: true }, //templet: '<div>{{d.user.userName}}</div>'      
+      { field: 'userName', width: 200, title: '添加人', templet: function (d) {
+        return d.user.userName != null ? d.user.userName : ""
+      }},  // { field: 'users', width: 180, title: '商户名', sort: true }, //templet: '<div>{{d.user.userName}}</div>'      
       { field: 'classifyTime', width: 200, title: '添加时间', sort: true },
       { field: 'users ', width: 160, title: '操作人' },
       { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' }
@@ -59,31 +62,9 @@ layui.use(['table', 'form', 'layer',], function () {
       }
     })
   })
-
-  // 监听操作删除
   var indexFlag = null;
   var operationId = null;
-  // table.on('tool(test)', function (obj) {
-  //   // 操作事件
-
-  //   if (obj.event === 'add') {
-  //     var singleData = obj.data;
-  //     console.log(singleData)
-
-
-  //   } else if (obj.event === 'delete') {
-  //     console.log(obj)
-  //     layer.confirm('确定删除？', function (index) {
-  //       // obj.del();
-  //       // layer.close(index);
-  //       Goodsdel(obj.data.classifyId, 2, obj, index);
-  //     });
-
-  //   } else {
-  //     console.log(obj)
-  //   }
-  // });
-  $('.add-btn').click(function () {
+  $('.add-btn').click(function () { 
     $('.addClass').fadeIn();
   })
   $('.cancel-btn').click(function () {
@@ -95,7 +76,7 @@ layui.use(['table', 'form', 'layer',], function () {
   $('.determine-btn').click(function () {
     var addVal = form.val("aDDValData");
     if (addVal.addTypeName) {
-      if (addVal.addNote) {
+      if (addVal.sorting) {
         $.ajax({
           type: 'post',
           url: `/api/classify/saveClassify`,
@@ -106,7 +87,8 @@ layui.use(['table', 'form', 'layer',], function () {
           data: JSON.stringify({
             type: addVal.terminalType,
             classifyName: addVal.addTypeName,
-            remark: addVal.addNote
+            remark: addVal.addNote,
+            rank: addVal.sorting,
           }),
           success: function (res) {
             if (res.code == 200) {
@@ -121,7 +103,7 @@ layui.use(['table', 'form', 'layer',], function () {
           }
         })
       } else {
-        layer.msg('请填写备注');
+        layer.msg('请填写类目排序');
       }
     } else {
       layer.msg('请填写类型名称');
@@ -132,34 +114,27 @@ layui.use(['table', 'form', 'layer',], function () {
   table.on('tool(test)', function (obj) {
     // 操作事件
      editData = obj.data;
-    console.log(editData)
     if (obj.event === 'edit') {
       $('.editClass').fadeIn();
       form.val("editValData", {
         "addTypeName": editData.classifyName,
-        "addNote": editData.remark
-      })
-      // 确定修改
-      
+        "addNote": editData.remark,
+        "sorting":editData.rank
+      })    
     } else if (obj.event === 'delete') {
-      console.log(obj)
       layer.confirm('确定删除？', function (index) {
-
         // obj.del();
         // layer.close(index);
         Goodsdel(editData.classifyId, 2, obj, index);
       });
 
-    } else {
-      console.log(obj)
     }
   });
-
+// 确定修改
   $('.editDetermine-btn').click(function () {
     var editInputVal = form.val("editValData");
-    // console.log(editInputVal)
     if (editInputVal.addTypeName) {
-      if (editInputVal.addNote) {
+      if (editInputVal.sorting) {
         $.ajax({
           type: 'post',
           url: `/api/classify/updateClassify`,
@@ -170,7 +145,8 @@ layui.use(['table', 'form', 'layer',], function () {
           data: JSON.stringify({
             classifyId: editData.classifyId,
             classifyName: editInputVal.addTypeName,
-            remark: editInputVal.addNote
+            remark: editInputVal.addNote,
+            rank:editInputVal.sorting,
           }),
           success: function (res) {
             if (res.code == 200) {
@@ -188,7 +164,7 @@ layui.use(['table', 'form', 'layer',], function () {
           }
         })
       } else {
-        layer.msg('请填写备注');
+        layer.msg('排序不能为空');
       }
     } else {
       layer.msg('请填写类型名称');

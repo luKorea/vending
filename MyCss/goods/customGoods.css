@@ -47,7 +47,7 @@
     position: absolute;
     top: 35px;
     left: -15px;
-    z-index: 999;
+    z-index: 11;
     display: none;
 }
 .anUp ul{
@@ -71,7 +71,7 @@
 .anUp ul li:hover{
     color: #409eff;
 }
-.preferential,.editor,.addGoods{
+.preferential,.editor,.addGoods,.reading{
     position: fixed;
     top: 0;
     bottom: 0;
@@ -82,6 +82,9 @@
     background:rgba(0, 0, 0, 0.3);
     display: none;
     /* overflow-y: auto; */
+}
+.readingContent{
+    z-index: 9999999;
 }
 .editor::-webkit-scrollbar{
     display: none;
@@ -219,7 +222,7 @@
     border-radius: 4px;
 }
 /* 编辑自定义商品部分 */
-.editor-content{
+.editor-content,.reading-contnet{
     width: 800px;
     position: relative;
     margin: 2vh auto 50px;
@@ -376,4 +379,62 @@
     width: 100%;
     z-index: 99999;
     display: none;
+}
+
+
+/* 阅览富文本部分 */
+.reading-header{
+    position: fixed;
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ebeef5;
+    color: #fff;
+    z-index: 99999;
+}
+.reading-header h1{
+    /* margin-left: 10px; */
+    padding: 20px 0;
+    font-weight: 700;
+    font-size: 16px;
+    color: #303133;
+    font-family: PingFang-SC-Regular;
+    vertical-align: middle;
+}
+.reading-down{
+    margin-right: 30px;
+    width: 30px;
+    border-radius: 100%;
+    background: #eee;
+    color: #fff;
+    font-size: 22px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    
+}
+.reading-down:hover{
+    color: #409eff;
+}
+.reading-box{
+    width: 88%;
+    margin: 0 auto ;
+    box-sizing: border-box;
+    margin-top: 65px;
+    padding-bottom: 30px;
+}
+.reading-box  img {
+    width: 100%;
+}
+.reading-box p img{
+    width: 100%;
+}
+.reading::-webkit-scrollbar{
+ display: none;   
+}
+.reading-contnet{
+    position: relative;
+    max-height: 770px;
+    overflow-y: auto;
 }

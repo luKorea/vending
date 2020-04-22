@@ -4,6 +4,8 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   //     console.log(res)
   // })
   var table = layui.table;
+  // wangEditor 获取全局属性
+  var E = window.wangEditor;
   // 商品图片
   var goodsImage = null;
   var token = sessionStorage.token + '';
@@ -73,7 +75,6 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       statusCode: 200 //规定成功的状态码，默认：0
     },
     done: function (res) {
-      console.log(999)
       if (res.code == 403) {
         window.history.go(-1)
       }else{
@@ -198,15 +199,11 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
           , 'goodsStatus': singleData.goods_Status //商品状态
         });
         $('#editImg').attr("src", singleData.goods_Images)
-        //  建立编辑器
-        $('#editDemo').val(singleData.goods_Descript)
-         EditIndex = layedit.build('editDemo', {
-          height: 180,
-        })
+        editWangEditor.txt.html(singleData.goods_Descript)
       })
     } else if (obj.event === 'delete') {
       console.log(obj)
-      layer.confirm('真的删除行么', function (index) {
+      layer.confirm('确定删除？', function (index) {
 
         // obj.del();
         // layer.close(index);
@@ -218,6 +215,41 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
     }
   });
 
+    // wangEditor 富文本编辑器创建
+    var editWangEditor = new E('#editWangEditor')
+    editWangEditor.customConfig.customUploadImg = function(files, insert) {
+      // files 是 input 中选中的文件列表
+      var imgs = new FormData();
+      imgs.append("file", files[0]);
+      // console.log(files[0]);
+      
+        $.ajax({
+          type:'post',
+          url:`/api/fileUpload`,   
+          processData: false,
+          contentType: false, 
+          headers: {
+            token,
+          },
+          data:imgs,
+          success:function(res){
+            if(res.code==0){
+              insert(res.data.src)
+            }else{
+              layer.msg('上传失败')
+            }
+            
+          }
+        })
+    
+    }
+  
+    editWangEditor.customConfig.uploadImgHooks = {
+      error: function (xhr, editWangEditor) {
+        layer.msg('图片上传失败')
+    },
+    }
+    editWangEditor.create(); 
 
   // 修改商品信息点击事件
   $('.editDetermine-btn').click(function () {
@@ -241,7 +273,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
           goods_Param: EditValData.goodsParam,  //规格
           goods_Status: EditValData.goodsStatus, //状态
           goods_Images: $('#editImg').attr("src"), //商品图片 不在form里
-          goods_Descript: layedit.getContent(EditIndex) //商品详情，编辑器里的内容
+          goods_Descript: editWangEditor.txt.html() //商品详情，编辑器里的内容
         }),
         success: function (res) {
           if (res.code == 200) {
@@ -315,6 +347,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   // var addGoodsImgIndex=null;
   $('.add-btn').click(function () {
     $('.addGoods').fadeIn();
+    $('.tailoring-container').fadeIn();
     addGoodsImg = 2;
   });
 
@@ -327,20 +360,56 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   // 添加商品点击上传图片
 
   $('.upload-btn2').click(function () {
+    // console.log(editor.txt.html())
     addGoodsImgIndex = 2;
     $('.ImgCropping').fadeIn();
   });
+    // layui edit 编辑器创建
+  // var AddIndex = layedit.build('addDemo', {
+  //   height: 180,
+  // })
 
-  var AddIndex = layedit.build('addDemo', {
-    height: 180,
-  })
+  // wangEditor 富文本编辑器创建
+  var addWangEditor = new E('#addWangEditor')
+  addWangEditor.customConfig.customUploadImg = function(files, insert) {
+    // files 是 input 中选中的文件列表
+    var imgs = new FormData();
+    imgs.append("file", files[0]);
+    // console.log(files[0]);
+    
+      $.ajax({
+        type:'post',
+        url:`/api/fileUpload`,   
+        processData: false,
+        contentType: false, 
+        headers: {
+          token,
+        },
+        data:imgs,
+        success:function(res){
+          if(res.code==0){
+            insert(res.data.src)
+          }else{
+            layer.msg('上传失败')
+          }
+          
+        }
+      })
+  
+  }
 
+  addWangEditor.customConfig.uploadImgHooks = {
+    error: function (xhr, addWangEditor) {
+      layer.msg('图片上传失败')
+  },
+  }
+  addWangEditor.create();  
+
+  
   // 点击确定添加
   $('.determine-btn2').click(function () {
     var addValData = form.val("addValData");
     console.log(addValData);
-    // 编辑器内容
-    console.log(layedit.getContent(AddIndex))
     // &&addValData.goodsBrand
     if (addValData.goodsName && addValData.goodsType && addValData.goodsPrice && addValData.goodsCost) {
       if (addGoodsImg) {
@@ -361,7 +430,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
             goods_Param: addValData.goodsParam,  //规格
             goods_Status: addValData.goodsStatus, //状态
             goods_Images: addGoodsImg, //商品图片 不在form里
-            goods_Descript: layedit.getContent(AddIndex) //商品详情，编辑器里的内容
+            goods_Descript: addWangEditor.txt.html() //商品详情，编辑器里的内容
           }), success: function (res) {
             console.log(res)
             if (res.code == 200) {
@@ -377,11 +446,16 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
                 , "goodsCost": ''
                 , "goodsParam": ''
               });
-              layer.msg('添加成功')
+              layer.msg('添加成功');
+              
+             
+              // 重新加载数据
               tableIns.reload({
                 where: {
                 }
               })
+               // 添加成功清空wangEditor文本内容
+               addWangEditor.txt.clear();
             } else {
               layer.msg('操作失败')
             }
@@ -395,6 +469,35 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       layer.msg('带*为必填')
     }
   });
+
+
+
+  // 富文本阅览部分
+  $('.reading-btn').click(function(){
+    // add为添加的富文本  edit为编辑的富文本
+    $('.reading').fadeIn();
+    console.log($('.reading-contnet').offset().left)
+    $('.reading-header').css({
+      'left':$('.reading-contnet').offset().left+'px',
+      'top':$('.reading-contnet').offset().top+'px',
+    })
+    if($(this).attr('id')=='add'){
+      console.log(addWangEditor.txt.html())
+      $('.reading').fadeIn();
+      // $('.reading .reading-header h1').html('详情页预览')
+      $('.reading-box').html(addWangEditor.txt.html())
+    }else{
+      console.log(editWangEditor.txt.html())
+      // $('.reading .reading-header h1').html('详情页预览')
+      $('.reading-box').html(editWangEditor.txt.html())
+    }
+  });
+
+  // 关闭富文本弹窗
+  $('.reading-down').click(function(){
+    $('.reading').fadeOut();
+  });
+  
 
 
   //剪切图片弹窗部分
