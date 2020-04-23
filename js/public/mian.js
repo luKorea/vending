@@ -26,19 +26,7 @@ function Goodsdel(id, indexs, obj, index) {
         }
       }
     })
-    // $.get(`/api/goods/deleteById`, { goods_Id: id }, function (res) {
-    //   console.log(res)
-    //   if (res.code == 200) {
-    //     obj.del();
-    //     layer.close(index);
-    //   }else if(res.code==403){
-    //     window.history.go(-1)
-    //   }else{
-    //     layer.msg('操作失败');
-    //   }
-    // })
   } else if (indexs == 2) {
-
     $.ajax({
       type:'get',
       url:`/api/classify/deleteById`,
@@ -60,20 +48,6 @@ function Goodsdel(id, indexs, obj, index) {
             }
       }
     })
-    // $.get(`/api/classify/deleteById`, { id }, function (res) {
-    //   console.log(res)
-    //   if (res.code == 200) {
-    //     obj.del();
-    //     layer.close(index);
-    //     layer.msg('删除成功');
-    //   }
-    //   // else if(res.code==403){
-    //   //   // window.history.go(-1)
-    //   // } 
-    //   else {
-    //     layer.msg('操作失败');
-    //   }
-    // })
   }
 
 }
@@ -93,4 +67,20 @@ function upPreferential(tableIns, keyGoodsName, GoodsTypeID, stateId, startingPr
       //…
     }
   })
-}
+};
+  // 编辑器添加网络视频
+  // 点击提交
+  //输入框父元素class名   编辑器
+function insert(className, editClass,videoTabFlag) {
+  // return $(`.${className} input[name="videoInput"]`).val();
+  if (editClass.txt.html().length > 11) {
+    // console.log(addWangEditor.txt.html())
+    editClass.txt.append(`<p>${$(`.${className} input[name="videoInput"]`).val()}</p>`);
+    $('.videoTab').fadeOut();
+    $(`.${className} input[name="videoInput"]`).val('')
+  } else {
+    editClass.txt.html(`<p>${$(`.${className} input[name="videoInput"]`).val()}</p>`);
+    $('.videoTab').fadeOut();
+    $(`.${className} input[name="videoInput"]`).val('')
+  }
+};

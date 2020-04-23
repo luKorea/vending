@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="../../MyCss/public/cropper.min.css">
 	<link rel="stylesheet" href="../../MyCss/public/ImgCropping.css">
 	<link rel="stylesheet" href="../../MyCss/goods/customGoods.css">
-	<title>自定义商品</title>
+	<title>商品管理</title>
 </head>
 
 <body>
@@ -25,7 +25,7 @@
 					</div>
 					<div class=" layui-col-sm2 layui-col-md2">
 						<div>
-							商品类型:
+							商品类目:
 							<form class="layui-form" action="" style="max-width: 120px;">
 								<div class="layui-form" lay-filter="myDiv">
 									<select name="" id="GoodsType" lay-filter="mySelect">
@@ -37,7 +37,7 @@
 					<div class=" layui-col-sm2 layui-col-md3">
 						<div style="max-width: 220px;" class="key-contnet">
 							<div class="key-text">关键字</div>
-							<input type="text" placeholder="商品名称、条码查询" class="KyeText">
+							<input type="text" placeholder="商品名称、编号查询" class="KyeText">
 						</div>
 					</div>
 					<div class=" layui-col-sm2 layui-col-md2">
@@ -338,7 +338,7 @@
 									<span>确定</span>
 								</button>
 								<button class="layui-btn layui-btn-normal btn reading-btn" id="edit" style="margin: 0 0 0 15px;">
-									<span>阅览富文本</span>
+									<span>预览</span>
 								</button>
 							</div>
 						</div>
@@ -467,7 +467,7 @@
 						</div>
 						<div class="edit-contnet" style="margin-top: 10px;">
 							<span> 商品详情 </span>
-							<div style="width: 100%">
+							<div style="width: 100%;position: relative;" >
 								<!-- layui edit部分 -->
 								<!-- <div>
 									<textarea id="addDemo" style="display: none;"></textarea>
@@ -475,6 +475,30 @@
 								<!-- wangEditor 部分 -->
 								<div id="addWangEditor">
 									
+								</div>
+								<div class="upVideo" title="上传视频">
+									<i class="layui-icon layui-icon-video" title="上传视频"></i>
+								</div>
+								<div class="videoTab" style="display: none;">
+									<i class="layui-icon layui-icon-close"></i>
+									<ul class="tbaTitle">
+										<li class="active">上传视频</li>
+										<li>网络视频</li>
+									</ul>
+									<div class="tabContent">
+										<div style="text-align: center;display: block;">
+											<div class="upVideoData">
+												<i class="w-e-icon-upload2"></i>
+												<input type="file" accept="video/*"  name="addEidtVideo">
+											</div>
+										</div>
+										<div class="addVideoInput">
+											<input type="text" class="videoInput" name="videoInput" placeholder="格式如：<iframe src=... ></iframe>">
+											<div>
+												<button class="insert-btn">插入</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -487,7 +511,7 @@
 									<span>确定</span>
 								</button>
 								<button class="layui-btn layui-btn-normal btn reading-btn" id="add" style="margin: 0 0 0 15px;">
-									<span>阅览富文本</span>
+									<span>预览</span>
 								</button>
 							</div>
 						</div>
@@ -495,7 +519,6 @@
 
 				</div>
 			</div>
-
 		</div>
 		<!-- 选择图片 剪切 -->
 		<div class="ImgCropping">
@@ -541,6 +564,7 @@
 			</div>
 			
 		</div>
+
 </body>
 <script type="text/html" id="barDemo">
 		<div class="layui-btn-container">
