@@ -155,3 +155,7 @@ h1{
 td{
     padding: 10px 0 !important;
 }
+body .layui-form-checked[lay-skin=primary] i{
+    border-color: #409eff !important;
+    background-color: #409eff !important;
+}

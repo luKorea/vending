@@ -7,15 +7,16 @@
     resize: none;
     border: none;
     padding:5px 10px;
-    background: #8C85E6;
+    background: #409eff;
     color: #fff;
-    border:solid 1px #8C85E6;
+    border:solid 1px #409eff;
     border-radius: 3px;
     font-size: 14px;
 }
 .l-btn:hover{
-    background: #8078e3;
+    background: #63aaf1;
     animation: anniu 1s infinite;
+    cursor: pointer;
 }
 .l-btn:active{
     box-shadow: 0 2px 3px rgba(0,0,0,.2) inset;

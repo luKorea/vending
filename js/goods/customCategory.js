@@ -17,11 +17,12 @@ layui.use(['table', 'form', 'layer',], function () {
       { field: 'classifyName', width: 150, title: '类目名称', sort: true },
       { field: 'remark', width: 150, title: '类目备注' },
       // { field: 'type', width: 180, title: '使用机型'},
-      { field: 'userName', width: 200, title: '添加人', templet: function (d) {
+      { field: 'userName', width: 200, title: '创建人', templet: function (d) {
         return d.user.userName != null ? d.user.userName : ""
       }},  // { field: 'users', width: 180, title: '商户名', sort: true }, //templet: '<div>{{d.user.userName}}</div>'      
-      { field: 'classifyTime', width: 200, title: '添加时间', sort: true },
-      { field: 'users ', width: 160, title: '操作人' },
+      { field: 'classifyTime', width: 200, title: '创建时间', sort: true },
+      { field: 'users ', width: 160, title: '最后操作人' },
+      { field: 'users ', width: 200, title: '最后操作时间' , sort: true },
       { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' }
     ]]
     , id: 'tableId'

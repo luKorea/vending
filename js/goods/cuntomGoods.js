@@ -20,7 +20,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       token,
     },
     cols: [[
-      { field: 'goods_Images', width: 120, title: '图片', templet: "#imgtmp" },
+      { field: 'goods_Images', width: 100, title: '图片', templet: "#imgtmp" },
       { field: 'goods_Name', width: 120, title: '商品名称', color: '#409eff' },
       { field: `classifyName`, width: 120, title: '商品类目', templet: '<div>{{  d.classify.classifyName ? d.classify.classifyName: ""}}</div>' },
       { field: 'goods_Core', width: 120, title: '商品编号', },
@@ -31,10 +31,13 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       // { field: 'strategy', width: 120, title: '优惠价策略 ' },
       // { field: 'goodsActivity', width: 120, title: '其他活动 ' },
       {
-        field: 'userName', width: 130, title: '添加人 ', templet: function (d) {
+        field: 'userName', width: 130, title: '创建人 ', templet: function (d) {
           return d.user != null ? d.user.userName : ''
         }
       },
+      { field: 'goods_Time', width: 200, title: '创建时间时间 ', sort: true },
+      { field: 'update_user', width: 130, title: '最后操作人 ' },
+      { field: 'update_time', width: 200, title: '最后操作时间 ', sort: true },
       {
         field: 'goods_Status', width: 120, title: '商品状态 ', templet: function (d) {
           return d.goods_Status = 1 ? '启用' : '不启用'
@@ -82,24 +85,6 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       }
     }
 
-  });
-
-
-  //监听排序事件 
-  table.on('sort(test)', function (obj) { //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-    // console.log(obj.field); //当前排序的字段名
-    // console.log(obj.type); //当前排序类型：desc（降序）、asc（升序）、null（空对象，默认排序）
-    // console.log(this); //当前排序的 th 对象
-
-    //尽管我们的 table 自带排序功能，但并没有请求服务端。
-    //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
-    table.reload('tableId', {
-      page: {
-        // curr:1
-      }
-    });
-
-    // layer.msg('服务端排序。 ' + obj.field + ' ' + obj.type);
   });
 
   // 商品状态下拉框数据请求
@@ -182,6 +167,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       $('.upload-btn1').click(function () {
         addGoodsImgIndex = 1;
         $('.ImgCropping').fadeIn();
+        $('.tailoring-container').fadeIn();
       })
       // 点击商品信息事件
       $('.GoodsInformation').click(function () {
@@ -200,6 +186,17 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
         });
         $('#editImg').attr("src", singleData.goods_Images)
         editWangEditor.txt.html(singleData.goods_Descript)
+      });
+      // 点击预览事件
+      $('.anUp .previewDetails').click(function(){
+        $('.anUp').slideUp();
+        $('.Goods-warp').addClass('fixed');
+        $('.reading').fadeIn();
+        $('.reading-header').css({
+          'left': $('.reading-contnet').offset().left + 'px',
+          'top': $('.reading-contnet').offset().top + 'px',
+        });
+        $('.reading-box').html(singleData.goods_Descript)
       })
     } else if (obj.event === 'delete') {
       console.log(obj)
@@ -245,7 +242,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   $('.editDetermine-btn').click(function () {
     var EditValData = form.val("EditValData");
     console.log(EditValData)
-    if (EditValData.goodsName && EditValData.goodsType && EditValData.goodsPrice && EditValData.goodsCost) {
+    if (EditValData.goodsBarcode&&EditValData.goodsName && EditValData.goodsType && EditValData.goodsPrice && EditValData.goodsCost) {
       $.ajax({
         type: 'post',
         url: `/api/goods/updateGoods`,
@@ -278,7 +275,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
           } else if (res.code == 403) {
             window.history.go(-1)
           } else {
-            layer.msg('操作失败')
+            layer.msg(res.message)
           }
         }
 
@@ -318,18 +315,18 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
 
 
   //商品移入移出显示
-  $('.upload-list1').mouseover(function () {
-    $(this).children('.up-iconCont1').hide();
-    $(this).children('.layui-icon-close').show();
-  });
-  $('.upload-list1').mouseleave(function () {
-    $(this).children('.up-iconCont1').show();
-    $(this).children('.layui-icon-close').hide();
-  })
-  $('.upload-list1 .layui-icon-close').click(function () {
-    goodsImage = null;
-    $(this).parent('.upload-list1').hide()
-  });
+  // $('.upload-list1').mouseover(function () {
+  //   $(this).children('.up-iconCont1').hide();
+  //   $(this).children('.layui-icon-close').show();
+  // });
+  // $('.upload-list1').mouseleave(function () {
+  //   $(this).children('.up-iconCont1').show();
+  //   $(this).children('.layui-icon-close').hide();
+  // })
+  // $('.upload-list1 .layui-icon-close').click(function () {
+  //   goodsImage = null;
+  //   $(this).parent('.upload-list1').hide()
+  // });
 
 
   // 添加自定义商品部分
@@ -353,6 +350,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
     // console.log(editor.txt.html())
     addGoodsImgIndex = 2;
     $('.ImgCropping').fadeIn();
+    $('.tailoring-container').fadeIn();
   });
   // layui edit 编辑器创建
   // var AddIndex = layedit.build('addDemo', {
@@ -423,11 +421,11 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
     if (videoTabFlag) {
       $('.videoTab').fadeIn();
       videoTabFlag = false;
-      event.stopPropagation();
+      e.stopPropagation();
     } else {
       $('.videoTab').fadeOut();
       videoTabFlag = true;
-      event.stopPropagation();
+      e.stopPropagation();
     }
   });
   // 关闭上传视频弹窗事件
@@ -435,11 +433,11 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
     var e = e || event;
     $('.videoTab').fadeOut();
     videoTabFlag = true;
-    event.stopPropagation();
+    e.stopPropagation();
   });
   $('.videoTab').click(function (e) {
     var e = e || event;
-    event.stopPropagation();
+    e.stopPropagation();
   });
   $('.tbaTitle li').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
@@ -447,6 +445,10 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   })
   // 点击盒子其他地方隐藏弹窗
   $('.addGoods').click(function () {
+    $('.videoTab').fadeOut();
+    videoTabFlag = true;
+  });
+  $('.editor').click(function () {
     $('.videoTab').fadeOut();
     videoTabFlag = true;
   })
@@ -457,6 +459,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
     // console.log(e);
     // $(this).val("")
     var that = this;
+    console.log($(this).attr('idType'))
     var addvideo = new FormData();
     addvideo.append("file", e.target.files[0]);
     $.ajax({
@@ -470,14 +473,26 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       data: addvideo,
       success: function (res) {
         if (res.code == 0) {
-          if (addWangEditor.txt.html().length > 11) {
-            // console.log(addWangEditor.txt.html())
-            addWangEditor.txt.append(`<p><iframe src="${res.data.src}"></iframe></p>`);
-            $(that).val("")
+          if ($(that).attr('idType') == 'edit') {
+            if (editWangEditor.txt.html().length > 11) {
+              // console.log(addWangEditor.txt.html())
+              editWangEditor.txt.append(`<p><iframe src="${res.data.src}"></iframe></p>`);
+              $(that).val("")
+            } else {
+              editWangEditor.txt.html(`<p><iframe src="${res.data.src}"></iframe></p>`);
+              $(that).val("")
+              // addWangEditor.txt.append(`<p><iframe src="${res.data.src}"></iframe></p>`);
+            }
           } else {
-            addWangEditor.txt.html(`<p><iframe src="${res.data.src}"></iframe></p>`);
-            $(that).val("")
-            // addWangEditor.txt.append(`<p><iframe src="${res.data.src}"></iframe></p>`);
+            if (addWangEditor.txt.html().length > 11) {
+              // console.log(addWangEditor.txt.html())
+              addWangEditor.txt.append(`<p><iframe src="${res.data.src}"></iframe></p>`);
+              $(that).val("")
+            } else {
+              addWangEditor.txt.html(`<p><iframe src="${res.data.src}"></iframe></p>`);
+              $(that).val("")
+              // addWangEditor.txt.append(`<p><iframe src="${res.data.src}"></iframe></p>`);
+            }         
           }
           $('.videoTab').fadeOut();
           videoTabFlag = true;
@@ -493,16 +508,21 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   $('.addVideoInput .insert-btn').click(function () {
     insert('addVideoInput', addWangEditor);
     videoTabFlag = true;
+  });
+  $('.EditVideoInput .insert-btn').click(function(){
+    console.log(99)
+    insert('EditVideoInput', editWangEditor);
+    videoTabFlag = true;
   })
 
- 
+
   addWangEditor.create();
   // 点击确定添加
   $('.determine-btn2').click(function () {
     var addValData = form.val("addValData");
     console.log(addValData);
     // &&addValData.goodsBrand
-    if (addValData.goodsName && addValData.goodsType && addValData.goodsPrice && addValData.goodsCost) {
+    if (addValData.goodsBarcode&&addValData.goodsName && addValData.goodsType && addValData.goodsPrice && addValData.goodsCost) {
       if (addGoodsImg) {
         $.ajax({
           type: 'post',
@@ -566,19 +586,17 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   // 富文本阅览部分
   $('.reading-btn').click(function () {
     // add为添加的富文本  edit为编辑的富文本
+    $('.Goods-warp').addClass('fixed');
     $('.reading').fadeIn();
-    console.log($('.reading-contnet').offset().left)
     $('.reading-header').css({
       'left': $('.reading-contnet').offset().left + 'px',
       'top': $('.reading-contnet').offset().top + 'px',
     })
     if ($(this).attr('id') == 'add') {
-      console.log(addWangEditor.txt.html())
       $('.reading').fadeIn();
       // $('.reading .reading-header h1').html('详情页预览')
       $('.reading-box').html(addWangEditor.txt.html())
-    } else {
-      console.log(editWangEditor.txt.html())
+    } else if($(this).attr('id') == 'edit'){
       // $('.reading .reading-header h1').html('详情页预览')
       $('.reading-box').html(editWangEditor.txt.html())
     }
@@ -586,7 +604,9 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
 
   // 关闭富文本弹窗
   $('.reading-down').click(function () {
+    $('.Goods-warp').removeClass('fixed');
     $('.reading').fadeOut();
+    indexFlag = null;
   });
 
 

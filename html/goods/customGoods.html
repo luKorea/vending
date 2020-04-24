@@ -17,13 +17,13 @@
 		<div class="margin">
 			<div class="header-query">
 				<div class="layui-row">
-					<div class=" layui-col-sm2 layui-col-md2">
+					<div class=" layui-col-sm2 layui-col-md2 layui-col-lg2">
 						<button class="layui-btn layui-btn-normal  add-btn btn" style="margin: 0;">
 							<i class="layui-icon layui-icon-app"></i>
 							<span>添加商品</span>
 						</button>
 					</div>
-					<div class=" layui-col-sm2 layui-col-md2">
+					<div class=" layui-col-sm2 layui-col-md3 layui-col-lg2" >
 						<div>
 							商品类目:
 							<form class="layui-form" action="" style="max-width: 120px;">
@@ -34,13 +34,13 @@
 							</form>
 						</div>
 					</div>
-					<div class=" layui-col-sm2 layui-col-md3">
+					<div class=" layui-col-sm2 layui-col-md4 layui-col-lg3">
 						<div style="max-width: 220px;" class="key-contnet">
 							<div class="key-text">关键字</div>
 							<input type="text" placeholder="商品名称、编号查询" class="KyeText">
 						</div>
 					</div>
-					<div class=" layui-col-sm2 layui-col-md2">
+					<div class=" layui-col-sm2 layui-col-md3 layui-col-lg2" >
 						<div>
 							状态:
 							<form class="layui-form" action="" style="max-width: 120px;">
@@ -54,7 +54,7 @@
 							</form>
 						</div>
 					</div>
-					<div class=" layui-col-sm3 layui-col-md3">
+					<div class=" layui-col-sm3 layui-col-md6 layui-col-lg3" style="margin-top:10px;">
 						<div>
 							价格范围：
 							<div class="price-one-input">
@@ -67,7 +67,7 @@
 						</div>
 					</div>
 					<div class=" layui-col-sm2 layui-col-md2">
-						<button class="layui-btn layui-btn-normal query-btnClick btn">
+						<button class="layui-btn layui-btn-normal query-btnClick btn" style="margin-top: 0;" >
 							<i class="layui-icon layui-icon-search"></i>
 							<span>查询</span>
 						</button>
@@ -191,7 +191,7 @@
 								<ul>
 									<li>
 										<div class="editor-list" style="margin-bottom:22px">
-											<label for=""> 商品编码</label>
+											<label for=""> 商品编号</label>
 											<div class="editorWidthInput">
 												<input type="text" name="goodsBarcode">
 											</div>
@@ -207,7 +207,7 @@
 									</li>
 									<li>
 										<div class="editor-list" style="margin-bottom:22px">
-											<label for=""> <span style="color:red;">*</span>商品类型</label>
+											<label for=""> <span style="color:red;">*</span>商品类目</label>
 											<div class="editorWidthInput">
 												<form class="layui-form" action="" style="max-width: 120px;">
 													<div class="layui-form" lay-filter="myDiv">
@@ -279,18 +279,18 @@
 								</button></label>
 							<div class="up-title">
 								<p>建议图片尺寸为：200*200；</p>
-								<p>只能上传image类型图片文件(点击图片右上角删除图片)</p>
+								<!-- <p>只能上传image类型图片文件(点击图片右上角删除图片)</p> -->
 							</div>
 							<div class="upload-demo1">
 								<ul>
 									<li class="upload-list1">
 										<img id="editImg" src="http://pic.hnzczy.cn/1585304624004_32007447.png" alt="">
-										<label for="" class="up-iconCont1">
+										<!-- <label for="" class="up-iconCont1">
 											<span>
 												<i class="layui-icon layui-icon-ok"></i>
 											</span>
-										</label>
-										<i class="layui-icon layui-icon-close"></i>
+										</label> -->
+										<!-- <i class="layui-icon layui-icon-close"></i> -->
 									</li>
 								</ul>
 							</div>
@@ -320,12 +320,36 @@
                         </div> -->
 						<div class="edit-contnet" style="margin-top: 10px;">
 							<span> 商品详情 </span>
-							<div style="width: 100%">
+							<div style="width: 100%;position: relative;" >
 								<!-- <div>
 									<textarea id="editDemo" style="display: none;"></textarea>
 								</div> -->
 								<div id="editWangEditor">
 									
+								</div>
+								<div class="upVideo" title="上传视频">
+									<i class="layui-icon layui-icon-video" title="上传视频"></i>
+								</div>
+								<div class="videoTab" style="display: none;">
+									<i class="layui-icon layui-icon-close"></i>
+									<ul class="tbaTitle">
+										<li class="active">上传视频</li>
+										<li>网络视频</li>
+									</ul>
+									<div class="tabContent">
+										<div style="text-align: center;display: block;">
+											<div class="upVideoData">
+												<i class="w-e-icon-upload2"></i>
+												<input type="file" accept="video/*"  name="addEidtVideo" idType="edit">
+											</div>
+										</div>
+										<div class="EditVideoInput">
+											<input type="text" class="videoInput" name="videoInput" placeholder="格式如：<iframe src=... ></iframe>">
+											<div>
+												<button class="insert-btn">插入</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -361,7 +385,7 @@
 								<ul>
 									<li>
 										<div class="editor-list" style="margin-bottom:22px">
-											<label for=""> 商品条码</label>
+											<label for=""><span style="color:red;">*</span> 商品编号</label>
 											<div class="editorWidthInput">
 												<input type="text" name="goodsBarcode">
 											</div>
@@ -377,7 +401,7 @@
 									</li>
 									<li>
 										<div class="editor-list" style="margin-bottom:22px">
-											<label for=""> <span style="color:red;">*</span>商品类型</label>
+											<label for=""> <span style="color:red;">*</span>商品类目</label>
 											<div class="editorWidthInput">
 												<form class="layui-form" action="" style="max-width: 120px;">
 													<div class="layui-form" lay-filter="myDiv">
@@ -449,18 +473,18 @@
 								</button></label>
 							<div class="up-title">
 								<p>建议图片尺寸为：200*200；</p>
-								<p>只能上传image类型图片文件(点击图片右上角删除图片)</p>
+								<!-- <p>只能上传image类型图片文件(点击图片右上角删除图片)</p> -->
 							</div>
 							<div class="upload-demo2">
 								<ul>
 									<li class="upload-list2">
 										<img id="GoodsImg" src="" alt="">
-										<label for="" class="up-iconCont2">
+										<!-- <label for="" class="up-iconCont2">
 											<span>
 												<i class="layui-icon layui-icon-ok"></i>
 											</span>
-										</label>
-										<i class="layui-icon layui-icon-close"></i>
+										</label> -->
+										<!-- <i class="layui-icon layui-icon-close"></i> -->
 									</li>
 								</ul>
 							</div>
@@ -577,6 +601,7 @@
 				<ul>
 					<!-- <li class="preferentialClick">优惠策略</li> -->
 					<li class="GoodsInformation">商品信息</li>
+					<li class="previewDetails">预览详情</li>
 				</ul>
 
 			</div>
@@ -589,3 +614,4 @@
 <script src="../../js/public/cropper.min.js"></script>
 <script src="../../js/goods/cuntomGoods.js"></script>
 </html>
+

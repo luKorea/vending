@@ -3,7 +3,13 @@
 }
 .header-query{
     width: 100%;
-    padding-top: 10px;
+}
+.fixed{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
 }
 .price-one-input,.price-tow-input{
     max-width: 80px;
@@ -306,6 +312,7 @@
 .upload-list1,.upload-list2{
     overflow: hidden;
     z-index: 0;
+    width: 90px;
     background-color: #fff;
     border: 1px solid #c0ccda;
     border-radius: 6px;
@@ -331,7 +338,7 @@
     float: left;
     position: relative;
     z-index: 1;
-    margin-left: -80px;
+    margin-left: -75px;
 }
 .up-iconCont1,.up-iconCont2{
     display: block;
@@ -486,7 +493,7 @@
 /* 上传视频部分 */
 .videoTab{
     position: absolute;
-    top: 38px;
+    top: 36px;
     width: 300px;
     left: 50%;
     border: 1px solid #ccc;
@@ -571,3 +578,14 @@
     cursor: pointer;
     border-radius: 3px;
 }
+    .data-list-contnet .layui-form{
+        width: 100%;
+        overflow-x: auto;
+
+    }
+    .layui-table-body{
+        max-height: 520px !important;
+    }
+    .layui-row>div{
+        margin-top: 10px;
+    }
