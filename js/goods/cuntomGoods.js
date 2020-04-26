@@ -35,7 +35,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
           return d.user != null ? d.user.userName : ''
         }
       },
-      { field: 'goods_Time', width: 200, title: '创建时间时间 ', sort: true },
+      { field: 'goods_Time', width: 200, title: '创建时间 ', sort: true },
       { field: 'update_user', width: 130, title: '最后操作人 ' },
       { field: 'update_time', width: 200, title: '最后操作时间 ', sort: true },
       {

@@ -1,4 +1,4 @@
-layui.use('table', function () {
+layui.use(['table','form'], function () {
     var $ = layui.jquery;
     var table = layui.table;
     var token=sessionStorage.token;
@@ -16,18 +16,18 @@ layui.use('table', function () {
         },
         cols: [[
             { field: 'userName', width: 200, title: '账号' },
-            { field: 'name', width: 150, title: '用户名' },
-            { field: '2', width: 150, title: '手机号' },
+            { field: 'name', width: 150, title: '姓名' },
+            { field: 'phone', width: 150, title: '手机号' },
             { field: 'addTime', width: 200, title: '添加时间', sort: true  },
-            { field: '4', width: 150, title: '是否启用' , templet: function (d) {
+            { field: 'open', width: 150, title: '是否启用' , templet: function (d) {
                 return d.open == 0 ? '不启用' : '启用'
               }
             },
-            { field: '5', width: 150, title: '终端管理员', templet: function (d) {
+            { field: 'roleSign', width: 150, title: '终端管理员', templet: function (d) {
                 return d.roleSign == 0 ? '否' : '是'
               }
              },
-            { field: '6', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
+            { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
         ]]
         , id: 'tableId'
         , page: true
@@ -45,9 +45,9 @@ layui.use('table', function () {
           if (res.code == 200) {
             return {
               "code": res.code, //解析接口状态
-              "msg": '', //解析提示文本
+              "msg": res.message, //解析提示文本
               "count": res.data.total, //解析数据长度
-              "data": res.data //解析数据列表
+              "data": res.data.list //解析数据列表
             };
           } else {
             return {
@@ -69,10 +69,7 @@ layui.use('table', function () {
         }
     
       });
-
-
-
-
+      var uuID=null;
     //监听工具条
     table.on('tool(test)', function (obj) {
         var data = obj.data;
@@ -91,4 +88,57 @@ layui.use('table', function () {
         var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';
     });
+
+    var form = layui.form;
+
+    var informationType=null;
+    // type 'add' edit 
+    //点击添加成员事件
+    $('.addBtn').click(function(){
+      $('.MemberOperation').fadeIn();
+      informationType=$(this).attr('typeId');
+      uuID=null;
+    });
+    // 取消事件
+    $('.cancel_btn').click(function(){
+      $('.MemberOperation').fadeOut();
+    });
+
+    // 提交事件
+    $('.submit_btn').click(function(){
+      var urlApi=null;
+      if(informationType=='add'){
+        urlApi='/api/user/saveUser'
+      }else{
+        urlApi='/api/user/updateUser'
+      }
+      var informData=form.val("information");
+      var openStart =informData.startThe?1:0;
+      var roleSignStart=informData.administrator?1:0;
+      if(urlApi){
+        $.ajax({
+          type:'post',
+          url:urlApi,
+          headers: {
+            "Content-Type": "application/json",
+            token,
+          },
+          data:{
+            UUId:uuID,
+            userName:informData.userName,
+            name:informData.name,
+            userPwd:informData.userPwd,
+            alonePwd:informData.alonePwd,
+            phone:informData.phone,
+            cardId:informData.cardId,
+            open:openStart,
+            roleSign:roleSignStart
+          },
+          success:function(res){
+            console.log(res)
+          }
+        })
+      }
+    })
+    
 });

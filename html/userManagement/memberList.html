@@ -10,12 +10,12 @@
 </head>
 
 <body>
-    <div class="list-warp">
+    <div class="list-wrap">
         <div class="list-body">
             <div>
                 <div class="mian">
                     <div class="add-member">
-                        <button class="layui-btn layui-btn-normal btn">
+                        <button class="layui-btn layui-btn-normal btn addBtn" typeID='add'>
                             <span>添加成员</span>
                         </button>
                     </div>
@@ -24,28 +24,104 @@
                             <div class="list-table">
                                 <table class="layui-hide" id="tableTest" lay-filter="test"></table>
                             </div>
-                            <!-- <table class="layui-table" lay-data="{width: 892, height:330,  page:true, id:'idTest'}"
-                                lay-filter="demo">
-                                <thead>
-                                    <tr>
-                                        <th lay-data="{ field: 'account', width: 150, title: '账号' }"></th>
-                                        <th lay-data="{ field: 'username', width: 150, title: '用户名' }"></th>
-                                        <th lay-data="{ field: 'phone', width: 150, title: '手机号'}"></th>
-                                        <th lay-data="{ field: 'addTime', width: 180, title: '添加时间' }"></th>
-                                        <th lay-data="{ field: 'start', width: 180, title: '是否启用' }"></th>
-                                        <th lay-data="{ field: 'administrator', width: 150, title: '终端管理员', }"></th>
-                                        <th
-                                            lay-data="{ field: 'operation', width: 135, title: '操作',toolbar: '#barDemo'  }">
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table> -->
-
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- 添加成员 编辑成员 -->
+        <div class="MemberOperation">
+            <div class="MemberContent">
 
+                <div class="OperationHeader">
+                    <span>添加成员</span>
+                    <button class="cancel_btn">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <form class="layui-form" lay-filter="information">
+                    <div style="text-align: initial;padding: 25px 25px 30px;">
+                        <div class="layui-row">
+                            <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
+                                <label> <span style="color: red;">*</span>用户名</label>
+                                <div class="inputWidth">
+                                    <input type="text" name="userName">
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
+                                <label> <span style="color: red;">*</span>姓名</label>
+                                <div class="inputWidth">
+                                    <input type="text" name="name">
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
+                                <label><span style="color: red;">*</span> 登录密码</label>
+                                <div class="inputWidth">
+                                    <input type="password" name="userPwd">
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
+                                <label> <span style="color: red;">*</span>独立密码</label>
+                                <div class="inputWidth">
+                                    <input type="password" name="alonePwd">
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
+                                <label> <span style="color: red;">*</span>手机号码</label>
+                                <div class="inputWidth">
+                                    <input type="number" name="phone">
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
+                                <label>身份证号</label>
+                                <div class="inputWidth">
+                                    <input type="text" name="cardId">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 开关部分 -->
+                        <div>
+                            <div class="switchList">
+                                <span class="switchTitle">是否启用：</span>
+                                <div>
+                                    <div class="switchContent">
+                                        <input type="checkbox" name="startThe" lay-skin="switch" lay-text="开启|关闭" checked>
+                                    </div>
+                                </div>   
+                            </div>
+                            <div class="switchList">
+                                <span class="switchTitle">终端管理员：</span>
+                                <div>
+                                    <div class="switchContent">
+                                        <input type="checkbox" name="administrator" lay-skin="switch" lay-text="开启|关闭" checked>
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px; border-bottom: 1px solid rgb(204, 204, 204);">
+                            <div class="terminal">
+                                <span>终端权限：</span>
+                                <div class="checkCont">
+                                    <input type="checkbox" name="" title="管理员权限" lay-skin="primary"> 
+                                    <input type="checkbox" name="" title="商品管理权限" lay-skin="primary"> 
+                                    <input type="checkbox" name="" title="货道管理权限" lay-skin="primary"> 
+                                    <input type="checkbox" name="" title="广告管理权限" lay-skin="primary"> 
+                                    <input type="checkbox" name="" title="wifi权限(仅AT端)" lay-skin="primary"> 
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 15px;">
+                            <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
+                                <span>取消</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal btn submit_btn" type="button">
+                                <span>提交</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
 </body>
@@ -65,4 +141,5 @@
     </div>
 </script>
 <script src="../../js/userManagement/memberList.js"></script>
+
 </html>

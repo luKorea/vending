@@ -2507,17 +2507,17 @@ hr {
 
 .layui-form-checked,
 .layui-form-checked:hover {
-	border-color: #5FB878
+	border-color: #409eff
 }
 
 .layui-form-checked span,
 .layui-form-checked:hover span {
-	background-color: #5FB878
+	background-color: #409eff
 }
 
 .layui-form-checked i,
 .layui-form-checked:hover i {
-	color: #5FB878
+	color: #409eff
 }
 
 .layui-form-item .layui-form-checkbox {
@@ -2559,13 +2559,13 @@ hr {
 }
 
 .layui-form-checkbox[lay-skin=primary]:hover i {
-	border-color: #5FB878;
+	border-color: #409eff;
 	color: #fff
 }
 
 .layui-form-checked[lay-skin=primary] i {
-	border-color: #5FB878!important;
-	background-color: #5FB878;
+	border-color: #409eff!important;
+	background-color: #409eff;
 	color: #fff
 }
 
@@ -2940,7 +2940,7 @@ hr {
 .layui-laypage input,
 .layui-laypage select,
 .layui-laypage span {
-	border: 1px solid #e2e2e2
+	border: 1px solid #e2e2e2 
 }
 
 .layui-laypage a,
