@@ -125,7 +125,7 @@
 }
 .layui-nav .header-message a{
 	padding-left: 0;
-	padding-right: 40px;
+	/* padding-right: 1%; */
 }
 .my-nav-tab .layui-nav-item a i{
 	margin-right:  4px;

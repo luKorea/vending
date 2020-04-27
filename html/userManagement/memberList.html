@@ -30,7 +30,7 @@
             </div>
         </div>
         <!-- 添加成员 编辑成员 -->
-        <div class="MemberOperation">
+        <div class="MemberOperation" style="overflow-y: auto;">
             <div class="MemberContent">
 
                 <div class="OperationHeader">
@@ -107,6 +107,7 @@
                                     <input type="checkbox" name="" title="货道管理权限" lay-skin="primary"> 
                                     <input type="checkbox" name="" title="广告管理权限" lay-skin="primary"> 
                                     <input type="checkbox" name="" title="wifi权限(仅AT端)" lay-skin="primary"> 
+                                
                                 </div>
                             </div>
                         </div>
@@ -127,17 +128,17 @@
 </body>
 <script type="text/html" id="barDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm btn operation" lay-event="add">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="operation">
             <span style="color:#fff;">操作</span>
             <i class="layui-icon layui-icon-down" style="font-size:12px !important;"></i>
         </button>
         <button class="layui-btn layui-btn-sm btn del-btn" lay-event="delete">删除</button>
-        <!-- <div class="anUp">
+        <div class="anUp">
             <ul>
-                <li class="GoodsInformation">商品信息</li>
-                <li class="previewDetails">预览详情</li>
+                <li class="GoodsInformation" typeID='edit'>编辑</li>
+                <!-- <li class="previewDetails">门店数据</li> -->
             </ul>
-        </div> -->
+        </div>
     </div>
 </script>
 <script src="../../js/userManagement/memberList.js"></script>

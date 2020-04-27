@@ -13,9 +13,9 @@ layui.use(['table', 'form', 'layer',], function () {
       token,
     }
     , cols: [[
-      { field: 'rank', width: 150, title: '类目排序', sort: true },
+      { field: 'rank', width: 150, title: '排序', sort: true },
       { field: 'classifyName', width: 150, title: '类目名称', sort: true },
-      { field: 'remark', width: 150, title: '类目备注' },
+      { field: 'remark', width: 150, title: '备注' },
       // { field: 'type', width: 180, title: '使用机型'},
       { field: 'userName', width: 200, title: '创建人', templet: function (d) {
         return d.user.userName != null ? d.user.userName : ""

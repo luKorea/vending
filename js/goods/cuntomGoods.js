@@ -25,14 +25,14 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       { field: `classifyName`, width: 120, title: '商品类目', templet: '<div>{{  d.classify.classifyName ? d.classify.classifyName: ""}}</div>' },
       { field: 'goods_Core', width: 120, title: '商品编号', },
       { field: 'goods_Param', width: 120, title: '规格说明 ' },
-      { field: 'goods_Price', width: 120, title: '零售价 ', sort: true },
+      { field: 'goods_Price', width: 120, title: '销售价 ', sort: true },
       { field: 'goods_Cost', width: 120, title: '成本价 ', sort: true },
       // { field: 'vipPrice', width: 120, title: '会员价 ', sort: true },
       // { field: 'strategy', width: 120, title: '优惠价策略 ' },
       // { field: 'goodsActivity', width: 120, title: '其他活动 ' },
       {
         field: 'userName', width: 130, title: '创建人 ', templet: function (d) {
-          return d.user != null ? d.user.userName : ''
+          return d.user.userName != null ? d.user.userName : ''
         }
       },
       { field: 'goods_Time', width: 200, title: '创建时间 ', sort: true },
@@ -43,7 +43,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
           return d.goods_Status = 1 ? '启用' : '不启用'
         }
       },
-      { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
+      { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo',fixed: 'right' },
       // { fixed: 'right', width: 160, align: 'center', toolbar: '#barDemo' }
     ]]
     , id: 'tableId'
