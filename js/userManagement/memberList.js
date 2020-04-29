@@ -23,7 +23,7 @@ layui.use(['table','form'], function () {
             { field: 'addTime', width: 180, title: '创建时间', sort: true  },
             { field: '1', width: 150, title: '最后操作人',   },
             { field: '2', width: 180, title: '最后操作时间', sort: true  },
-            { field: 'open', width: 150, title: '是否启用' , templet: function (d) {
+            { field: 'open', width: 150, title: '状态' , templet: function (d) {
                 return d.open == 0 ? '不启用' : '启用'
               }
             },
@@ -88,6 +88,7 @@ layui.use(['table','form'], function () {
             };
             // 点击编辑事件
             $('.GoodsInformation').click(function(){
+              $('.OperationHeader span').html('编辑用户')
               informationType=$(this).attr('typeId');
               console.log(informationType)
               $('.MemberOperation').fadeIn();
@@ -141,6 +142,7 @@ layui.use(['table','form'], function () {
       $('.MemberOperation').fadeIn();
       informationType=$(this).attr('typeId');
       uuID=null;
+      $('.OperationHeader span').html('添加用户')
     });
     // 取消事件
     $('.cancel_btn').click(function(){
@@ -211,5 +213,17 @@ layui.use(['table','form'], function () {
           }
         })
       }
+    })
+    $('.listInput input[name="phone"]').blur(function(){
+      var phone = $(this).val();
+      if(phone){
+        if(!(/^1[3456789]\d{9}$/.test(phone))){ 
+          // alert("手机号码有误，请重填");  
+          layer.msg('请填写正确的手机号码');
+          $(this).val('')
+          return false; 
+      } 
+      }
+      
     })
 });

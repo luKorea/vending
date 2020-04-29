@@ -1,5 +1,6 @@
 .release-wrap{
     width: 100%;
+    /* overflow-x: hidden; */
 }
 .flex-contnet{
     display: flex;   
@@ -81,6 +82,8 @@
     margin-right: 60px;
     margin-left: 30px;
     width: 100%;
+    /* overflow-x: auto; */
+    overflow: hidden;
 }
 #test6 {
     width: 310px;
@@ -105,5 +108,86 @@
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
+}
+.data-list{
+    width: 100%;
+    /* overflow: hidden; */
+}
+.listtable{
+    width: 100%;
+    /* overflow-x: auto; */
+    overflow: hidden;
+    display: flex;
+}
+.listtable .layui-form{
+    width: 100%;
+    overflow-x: auto;
+}
+.terminal{
+    background-color: #e6a23c !important;
+    border-color: #e6a23c !important;
+}
+.editMaterial{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 99;
+    background:rgba(0, 0, 0, 0.3);
+}
+.materialContnet{
+    width: 1000px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+}
+.playHeader{
+    padding: 20px 20px 10px;
+    text-align: center;
 
+}
+.playHeader span{
+    line-height: 24px;
+    font-size: 18px;
+    color: #303133;
+}
+.close{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 0;
+    background: 0 0;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    font-size: 16px;
+}
+.close i{
+    color: #909399;
+}
+.close i:hover{
+    color: #409eff;
+}
+.playBox{
+    text-align: initial;
+    padding: 25px 25px 30px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.querySearch{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.querySearch>div{
+    display: flex;
+    justify-content: start;
+    align-items: center;
 }

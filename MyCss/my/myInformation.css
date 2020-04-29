@@ -47,3 +47,119 @@
     border: 1px solid #409eff ;
     color: #409eff;
 }
+.edit,.loginPaw,.independentPaw{
+    width: 500px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.eidtHeader{
+    padding: 20px 20px 10px;
+}
+.eidtHeader span{
+    line-height: 24px;
+    font-size: 18px;
+    color: #303133;
+}
+.eidtHeader button,.pawHeader button{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 0;
+    background: 0 0;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    font-size: 16px;
+
+}
+.eidtHeader button i,.pawHeader button i{
+    color: #909399;
+}
+.eidtHeader button i:hover{
+    color: #409eff;
+}
+.pawHeader button i:hover{
+    color: #409eff;
+}
+.editBox,.pawBox{
+    padding: 30px 20px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.editList,.pawList{
+    width: 100%;
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.editList label,.pawList label{
+    width: 100px;
+    font-size: 14px;
+    color: #606266;
+    line-height: 40px;
+    padding: 0 12px 0 0;
+    box-sizing: border-box;
+    text-align: right;
+}
+.pawList label{
+    width: 130px;
+}
+.inputWidth{
+    width: 250px;
+}
+.inputWidth input{
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+}
+.inputWidth input:hover{
+    border-color: #409eff;
+}
+.marginVh{
+    margin-top: 0;
+}
+.editBtn,.pawBtn{
+    padding: 10px 20px 20px;
+    text-align: right;
+    box-sizing: border-box;
+}
+.cancel-btn{
+    background-color: #fff !important;
+    border: 1px solid #dcdfe6 !important;
+    color: #606266;
+}
+.cancel-btn:hover{
+    color:#409eff ;
+    border: 1px solid #409eff !important;
+}
+.pawHeader{
+    padding: 20px 20px 10px;
+    text-align: center;
+}
+.pawHeader span{
+    line-height: 24px;
+    font-size: 18px;
+    color: #303133;
+}

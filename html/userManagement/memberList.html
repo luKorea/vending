@@ -16,7 +16,7 @@
                 <div class="mian">
                     <div class="add-member">
                         <button class="layui-btn layui-btn-normal btn addBtn" typeID='add'>
-                            <span>添加成员</span>
+                            <span>添加用户</span>
                         </button>
                     </div>
                     <div>
@@ -34,7 +34,7 @@
             <div class="MemberContent">
 
                 <div class="OperationHeader">
-                    <span>添加成员</span>
+                    <span></span>
                     <button class="cancel_btn">
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
@@ -69,7 +69,7 @@
                             <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
                                 <label> <span style="color: red;">*</span>手机号码</label>
                                 <div class="inputWidth">
-                                    <input type="number" name="phone">
+                                    <input type="number" name="phone" onkeyup="this.value=this.value.replace(/\D/g,'')">
                                 </div>
                             </div>
                             <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">

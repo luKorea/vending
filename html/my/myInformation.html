@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../MyCss/public/pubilc.css">
-    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <script src="../../js/public/documentWrite.js"></script>
     <link rel="stylesheet" href="../../MyCss/my/myInformation.css">
     <title>个人信息</title>
 </head>
@@ -69,22 +68,178 @@
                     </div>
                 </div>
                 <div style="margin-top: 30px; display: flex; justify-content: space-around;">
-                    <button class="title-btn">
+                    <button class="title-btn editBtnClcick">
                         <span>编辑基本信息</span>
                     </button>
                     <button class="title-btn">
-                        <span>接触微信绑定</span>
+                        <span>解除微信绑定</span>
                     </button>
-                    <button class="title-btn">
+                    <button class="title-btn loginPawClick">
                         <span>修改登陆密码</span>
                     </button>
-                    <button class="title-btn">
+                    <button class="title-btn independentPawClick">
                         <span>修改独立密码</span>
                     </button>
                 </div>
             </div>
         </div>
+        <!-- 编辑信息 -->
+        <div class="maskContnet editCont" >
+            <div class="edit marginVh">
+                <div class="eidtHeader">
+                    <span>编辑基本信息</span>
+                    <button type="button" class="editCancel">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="editBox">
+                    <div>
+                        <form action="" class="layui-form" lay-filter="editVal">
+                            <div class="editList">
+                                <label for=""><span style="color: red;">*</span>用户名</label>
+                                <div>
+                                    <div class="inputWidth">
+                                        <input type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="editList">
+                                <label for=""><span style="color: red;">*</span>联系人</label>
+                                <div>
+                                    <div class="inputWidth">
+                                        <input type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="editList">
+                                <label for=""><span style="color: red;">*</span>联系电话</label>
+                                <div>
+                                    <div class="inputWidth">
+                                        <input type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="editList">
+                                <label for=""><span style="color: red;">*</span>联系地址</label>
+                                <div>
+                                    <div class="inputWidth">
+                                        <input type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="editBtn">
+                    <div>
+                        <button class="layui-btn layui-btn-normal btn cancel-btn editCancel">
+                            <span>取消</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn determine-btn"
+                            style="margin: 0 0 0 15px;">
+                            <span>确定</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 修改登录密码 -->
+        <div class="maskContnet loginPawCont">
+            <div class="loginPaw marginVh">
+                <div class="pawHeader">
+                    <span>修改密码</span>
+                    <button type="button" class="loginPawCancel">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="pawBox">
+                    <div>
+                        <form action="" class="layui-form" lay-filter="editVal">
+                            <div class="pawList">
+                                <label for=""><span style="color: red;">*</span>旧密码</label>
+                                <div>
+                                    <div class="inputWidth">
+                                        <input type="password">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pawList">
+                                <label for=""><span style="color: red;">*</span>新密码</label>
+                                <div>
+                                    <div class="inputWidth">
+                                        <input type="password">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pawList">
+                                <label for=""><span style="color: red;">*</span>确人新密码</label>
+                                <div>
+                                    <div class="inputWidth">
+                                        <input type="password">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="pawBtn">
+                    <div>
+                        <button class="layui-btn layui-btn-normal btn cancel-btn loginPawCancel">
+                            <span>取消</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn determine-btn"
+                            style="margin: 0 0 0 15px;">
+                            <span>确定</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- 修改独立密码 -->
+         <div class="maskContnet independentPawCont" style="display: block;">
+            <div class="independentPaw marginVh">
+                <div class="pawHeader">
+                    <span>修改密码</span>
+                    <button type="button" class="independentPawCancel">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="pawBox">
+                    <div>
+                        <form action="" class="layui-form" lay-filter="editVal">
+                            <div class="pawList">
+                                <label for=""><span style="color: red;">*</span>用户密码</label>
+                                <div>
+                                    <div class="inputWidth">
+                                        <input type="password">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pawList">
+                                <label for=""><span style="color: red;">*</span>新独立密码</label>
+                                <div>
+                                    <div class="inputWidth">
+                                        <input type="password">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="pawBtn">
+                    <div>
+                        <button class="layui-btn layui-btn-normal btn cancel-btn independentPawCancel">
+                            <span>取消</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn determine-btn"
+                            style="margin: 0 0 0 15px;">
+                            <span>确定</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
-
+<script src="../../js/my/myInformation.js"></script>
 </html>
