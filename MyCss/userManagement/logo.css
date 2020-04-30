@@ -44,4 +44,135 @@
 }
 .ImgPreview{
     width: 300px;
+    position: relative;
+    margin: 3vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.ImgHeader{
+    padding: 20px 20px 10px;
+}
+.ImgHeader button{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 0;
+    background: 0 0;
+    border: none;
+    outline: 0;  
+    cursor: pointer;
+    font-size: 16px;
+}
+.ImgHeader button i{
+    color: #909399;
+}
+.ImgHeader button i:hover{
+    color: #409eff;
+}
+.Imgbox{
+    padding: 30px 20px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.Imgbox img{
+    width: 100%;
+}
+.ImgHeader span{
+    line-height: 24px;
+    font-size: 18px;
+    color: #303133;
+}
+.editImg{
+    width: 600px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.editBox{
+    padding: 30px 20px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.background{
+    text-align: center; 
+    line-height: 250px; 
+    height: 250px; 
+    width: 500px; 
+    margin-left: 50px; 
+    background-image: url('../../img/ge.jpg');
+    background-size: 20% 30%;
+}
+.editBox img{
+    width: 200px;
+    /* max-height: 200px; */
+    display: inline-block;
+    vertical-align: middle;
+    z-index: 100;
+    position: relative;
+    text-align: center;
+    line-height: 250px;
+}
+.editBtn{
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.InputFile{
+    position: relative;   
+    cursor: pointer;
+}
+.InputFile label{
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    transition: .1s;
+    font-weight: 500;
+    padding: 8px 15px;
+    font-size: 12px;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #409eff;
+    border-color: #409eff;
+}
+.InputFile input{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    opacity: 0;  
+}
+.layui-btn{
+    line-height: 0;
+    height: 34px;
+}
+.ImgUpload button{
+    padding: 7px 15px;
+    font-size: 12px;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #f56c6c;
+    border: none;
+    line-height: 1;
+    outline: none;
+}
+.ImgUpload button:hover{
+    background-color: #eb8b8b;
+    cursor: pointer;
 }

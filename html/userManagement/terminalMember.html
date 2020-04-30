@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../../MyCss/public/pubilc.css">
+    <title>终端管理员</title>
+    <script src="../../js/public/documentWrite.js"></script>
     <link rel="stylesheet" href="../../MyCss/userManagement/terminalMember.css">
-    <link rel="stylesheet" href="../../layui/css/layui.css">
+    
 </head>
 
 <body>
+    
     <div class="teminal-warp">
         <div class="content-body">
             <div>
@@ -31,121 +32,27 @@
             <div>
                 <div class="list-content">
                     <table id="demo" lay-filter="test"></table>
-                    <!-- <table class="layui-table"
-                        lay-data="{width: 892, height:330, url:'data.json', page:true, id:'idTest'}" lay-filter="demo">
-                        <thead>
-                            <tr>
-                                <th lay-data="{ field: 'username', width: 150, title: '用户名' }"></th>
-                                <th lay-data="{ field: 'phone', width: 150, title: '手机号'}"></th>
-                                <th lay-data="{ field: 'card', width: 150, title: '身份证' }"></th>
-                                <th lay-data="{ field: 'CreationTime', width: 180, title: '创建时间', sort: true }"></th>
-                                <th lay-data="{ field: 'amendTime', width: 180, title: '修改时间', sort: true }"></th>
-                                <th lay-data="{ field: 'wealth', width: 150, title: '是否绑定微信', }"></th>
-                                <th lay-data="{ field: 'Alipay', width: 150, title: '是否绑定支付宝' }"></th>
-                                <th lay-data="{ field: 'permissions', width: 135, title: '权限' }">评分</th>
-                                <th lay-data="{ field: 'operation', width: 135, title: '操作',toolbar: '#barDemo'  }">
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <script type="text/html" id="barDemo">
-                        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-                      </script> -->
                 </div>
             </div>
         </div>
     </div>
 </body>
-<script src="../../layui/layui.js"></script>
-<script>
-
-    // layui.use('table', function () {
-    //     var table = layui.table;
-    //     //监听表格复选框选择
-    //     table.on('checkbox(demo)', function (obj) {
-    //         console.log(obj)
-    //     });
-    //     //监听工具条
-    //     table.on('tool(demo)', function (obj) {
-    //         var data = obj.data;
-    //         if (obj.event === 'detail') {
-    //             layer.msg('ID：' + data.id + ' 的查看操作');
-    //         } else if (obj.event === 'del') {
-    //             layer.confirm('真的删除行么', function (index) {
-    //                 obj.del();
-    //                 layer.close(index);
-    //             });
-    //         } else if (obj.event === 'edit') {
-    //             layer.alert('编辑行：<br>' + JSON.stringify(data))
-    //         }
-    //     });
-
-    //     var $ = layui.$, active = {
-    //         getCheckData: function () { //获取选中数据
-    //             var checkStatus = table.checkStatus('idTest')
-    //                 , data = checkStatus.data;
-    //             layer.alert(JSON.stringify(data));
-    //         }
-    //         , getCheckLength: function () { //获取选中数目
-    //             var checkStatus = table.checkStatus('idTest')
-    //                 , data = checkStatus.data;
-    //             layer.msg('选中了：' + data.length + ' 个');
-    //         }
-    //         , isAll: function () { //验证是否全选
-    //             var checkStatus = table.checkStatus('idTest');
-    //             layer.msg(checkStatus.isAll ? '全选' : '未全选')
-    //         }
-    //     };
-
-    //     $('.demoTable .layui-btn').on('click', function () {
-    //         var type = $(this).data('type');
-    //         active[type] ? active[type].call(this) : '';
-    //     });
-    // });
-
-
-
-
-
-
-
-
-
-
-    layui.use('table', function () {
-        var table = layui.table;
-        table.render({
-            elem: '#demo'
-            // , url: 'data.json'
-            // , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-            //     layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
-            //     //,curr: 5 //设定初始在第 5 页
-            //     , groups: 1 //只显示 1 个连续页码
-            //     , first: false //不显示首页
-            //     , last: false //不显示尾页
-
-            // },
-            // ,method:'post',
-            // contentType: "application/json;charset=utf-8"
-          
-            ,cols: [[
-                , { field: 'username', width: 150, title: '用户名' }
-                , { field: 'phone', width: 150, title: '手机号', sort: true }
-                , { field: 'city', width: 150, title: '身份证' }     
-                , { field: 'experience', width: 180, title: '创建时间', sort: true }
-                , { field: 'experience', width: 180, title: '修改时间', sort: true }
-                , { field: 'score', width: 150, title: '是否绑定微信', }
-                , { field: 'classify', width: 150, title: '是否绑定支付宝' }
-                , { field: 'wealth', width: 135, title: '权限' }
-                , { field: 'wealth', width: 135, title: '操作',toolbar: '#barDemo'  }
-
-            ]]
-
-        });
-    });
-
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="add">
+            <span>操作</span>
+            <i class="layui-icon layui-icon-down" style="font-size:12px !important;"></i>
+        </button>
+        <div class="anUp">
+            <ul>
+                <li class="GoodsInformation">编辑</li>
+                <li class="previewDetails">机器归属</li>
+                <li class="previewDetails">解除微信绑定</li>
+                <li class="previewDetails">解除支付宝绑定</li>
+                <li class="previewDetails">删除</li>
+            </ul>
+        </div>
+    </div>
 </script>
-
+<script src="../../js/userManagement/terminalMember.js"></script>
 </html>

@@ -194,3 +194,12 @@ body .layui-form-checked[lay-skin=primary] i{
     display: none;
     overflow-y: auto;
 }
+.margin0{
+    margin-top:0 !important;
+}
+.layui-table-header{
+    background-color: #fff !important;
+}
+.anUp{
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+}

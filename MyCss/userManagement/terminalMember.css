@@ -94,3 +94,31 @@
 .layui-form{
     width: 100% !important;
 }
+.anUp{
+    position: absolute;
+    top: 35px;
+    left: -20px;
+    z-index: 11;
+    display: none;
+}
+.anUp ul{
+    margin: 15px 0;
+}
+.anUp ul li{
+    list-style: none;
+    line-height: 36px;
+    padding: 0 20px;
+    margin: 0;
+    font-size: 14px;
+    color: #606266;
+    cursor: pointer;
+    outline: 0;
+    background-color: #fff;
+}
+.block{
+    display: block !important;
+    transition: all 1s;
+}
+.anUp ul li:hover{
+    color: #409eff;
+}

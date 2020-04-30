@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../../MyCss/public/pubilc.css">
+    <title>logo</title>
+    <script src="../../js/public/documentWrite.js"></script>
     <link rel="stylesheet" href="../../MyCss/userManagement/logo.css">
 </head>
 <body>
@@ -13,22 +13,61 @@
             <div class="header-title">
                 商户logo
             </div>
-            <div class="header-img">
+            <div class="header-img">    
                 <img src="http://pic.hnzczy.cn/1576563578391_69017928.png" alt="logo">
             </div>
-            <button class="btn1"><span>图片修改</span></button>
-            <button class="btn2"><span>图片预览</span></button>
+            <button class="btn1 editImgClick layui-btn layui-btn-normal"><span>图片修改</span></button>
+            <button class="btn2 ImgPreviewClick layui-btn layui-btn-normal"><span>图片预览</span></button>
             <div class="advice">
                 持该商户AT、Nweb显示，如果logo宽高比例大于4:1，图片会变形，支持格式：jpg,png
                 <span style="font-weight: bold; margin-left: 5px;font-size:12px;">(建议宽高比2:1)</span>
             </div>
         </div>
-        <div class="maskContnet" style="display: block;">
-            <div class="ImgPreview">
-
+        <!--图片预览  -->
+        <div class="maskContnet previewImgContnet">
+            <div class="ImgPreview margin0">
+                <div class="ImgHeader">
+                    <button>
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="Imgbox">
+                    <div style="text-align: center;">
+                        <img src="http://pic.hnzczy.cn/1576563578391_69017928.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 修改图片 -->
+        <div class="maskContnet editImgContent">
+            <div class="editImg margin0">
+                <div class="ImgHeader">
+                    <span>用户logo</span>
+                    <button>
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="editBox">
+                    <div class="background">
+                        <div style="position: absolute;width: 500px;height: 250px;background: rgba(0, 0, 0, 0.3);"> </div>
+                        <img src="http://pic.hnzczy.cn/1576563578391_69017928.png" alt="">
+                    </div>
+                    <div class="editBtn">
+                        <div class="InputFile">
+                            <label>更换图片</label>
+                            <input type="file" accept="image/*">
+                        </div>
+                        <div class="ImgUpload">
+                            <button >
+                                <span>上传</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
     </div>
 </body>
+<script src="../../js/userManagement/logo.js"></script>
 </html>
