@@ -1,4 +1,4 @@
-.teminal-warp{
+.teminal-wrap{
     width: 100%;
 }
 .content-body{
@@ -77,6 +77,10 @@
     font-size: 14px;
     border-radius: 4px;
 }
+.key-button:hover{
+    background-color: #67adf3;
+    /* border-color: #73b2f1; */
+}
 .key-button i{
     color: #fff;
 }
@@ -121,4 +125,89 @@
 }
 .anUp ul li:hover{
     color: #409eff;
+}
+.editBox{
+    width: 700px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.5s;
+}
+.editHeader,.machineHeader{
+    padding: 20px 20px 10px;
+}
+.editHeader span,.machineHeader span{
+    line-height: 24px;
+    font-size: 18px;
+    color: #303133;
+}
+.editBody{
+    padding: 30px 20px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.editFooter{
+    padding: 10px 20px 20px;
+    text-align: right;
+    box-sizing: border-box;
+}
+.cancel-btn{
+    border: 1px solid #dcdfe6 !important;
+    color: #606266 !important;
+    background-color: #fff !important;
+}
+.cancel-btn:hover{
+    border: 1px solid #409eff !important;
+    color:#409eff !important ;
+}
+.machineBox{
+    width: 680px;
+    position: relative;
+    margin: 3vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.5s;
+}
+.machineBody{
+    padding: 30px 20px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.keySearch{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+}
+.machineHeader button{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 0;
+    background: 0 0;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    font-size: 16px;
+}
+.machineHeader button i{
+    color: #909399;
+}
+.machineHeader button i:hover{
+    color: #409eff;
+}
+.listFlex{
+    display: flex;
+    justify-content: space-between;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
 }

@@ -8,8 +8,8 @@ layui.use(['table', 'form'], function () {
             { field: 'card', width: 200, title: '身份证' },
             { field: 'addTime', width: 180, title: '创建时间', sort: true },
             { field: 'editTime', width: 180, title: '修改时间', sort: true },
-            { field: 'wachat', width: 150, title: '是否绑定微信', },
-            { field: 'alplay', width: 150, title: '是否绑定支付宝' },
+            { field: 'wachat', width: 200, title: '是否绑定微信', style:' overflow: hidden;text-overflow: ellipsis;white-space: normal;word-break: break-all;'},
+            { field: 'alplay', width: 200, title: '是否绑定支付宝', style:' overflow: hidden;text-overflow: ellipsis;white-space: normal;word-break: break-all;margin-left:5px'},
             { field: 'permissions', width: 135, title: '权限' },
             { field: 'operation', width: 135, title: '操作', toolbar: '#barDemo' }
         ]],
@@ -21,7 +21,7 @@ layui.use(['table', 'form'], function () {
                 addTime: '2020-04-30',
                 editTime: '2020-04-30',
                 wachat: 'oSpXos2WPD5LCrnPFZisxiyWA5pE',
-                alplay: '',
+                alplay: 'oSpXos2WPD5LCrnPFZisxiyWA5pE',
                 permissions: '管理员权限',
                 id:'1'
 
@@ -54,18 +54,43 @@ layui.use(['table', 'form'], function () {
         , loading: true
 
     });
-    // 监听开关
+    // 监听操作
     var ClickIndexFlag=null;
     var valData=null;
     table.on('tool(test)', function (obj) {
+        console.log(999)
         valData=obj.data;
         $('.anUp').slideUp();
         if(ClickIndexFlag!=valData.id){
             ClickIndexFlag=valData.id;
-            $(this).siblings('.anUp').slideDown()
+            $(this).siblings('.anUp').slideDown();
+            // 编辑
+            $('.GoodsInformation').click(function(){
+                $('.editCont').fadeIn();
+                $('.editBox').removeClass('margin0')
+                $('.anUp').slideUp();
+                ClickIndexFlag=null;
+            });
+            // 机器归属
+            $('.previewDetails').click(function(){
+                $('.machineCont').fadeIn();
+                $('.machineBox').removeClass('margin0');
+                $('.anUp').slideUp();
+                ClickIndexFlag=null;
+            })
         }else{
             ClickIndexFlag=null;
-        }
-       
+        }      
+    });
+
+    // 取消编辑
+    $('.cancel-btn').click(function(){
+        $('.editBox').addClass('margin0')
+        $('.editCont').fadeOut();
+    });
+    // 机器所属关闭
+    $('.machineHeader button').click(function(){
+        $('.machineBox').addClass('margin0')
+        $('.machineCont').fadeOut();
     })
 })

@@ -190,7 +190,8 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       // 点击预览事件
       $('.anUp .previewDetails').click(function(){
         $('.anUp').slideUp();
-        $('.Goods-warp').addClass('fixed');
+        $('.Goods-wrap').addClass('fixed');
+        // $('.Goods-warp').addClass('fixed');
         $('.reading').fadeIn();
         $('.reading-header').css({
           'left': $('.reading-contnet').offset().left + 'px',
@@ -383,6 +384,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   // 编辑器上传图片
   addWangEditor.customConfig.customUploadImg = function (files, insert) {
     // files 是 input 中选中的文件列表
+    console.log(files)
     var imgs = new FormData();
     imgs.append("file", files[0]);
     // console.log(files[0]);
@@ -586,7 +588,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   // 富文本阅览部分
   $('.reading-btn').click(function () {
     // add为添加的富文本  edit为编辑的富文本
-    $('.Goods-warp').addClass('fixed');
+    $('.Goods-wrap').addClass('fixed');
     $('.reading').fadeIn();
     $('.reading-header').css({
       'left': $('.reading-contnet').offset().left + 'px',
@@ -604,7 +606,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
 
   // 关闭富文本弹窗
   $('.reading-down').click(function () {
-    $('.Goods-warp').removeClass('fixed');
+    $('.Goods-wrap').removeClass('fixed');
     $('.reading').fadeOut();
     indexFlag = null;
   });
