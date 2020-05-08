@@ -58,7 +58,6 @@ layui.use(['table', 'form'], function () {
     var ClickIndexFlag=null;
     var valData=null;
     table.on('tool(test)', function (obj) {
-        console.log(999)
         valData=obj.data;
         $('.anUp').slideUp();
         if(ClickIndexFlag!=valData.id){

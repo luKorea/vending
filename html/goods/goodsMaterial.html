@@ -19,13 +19,14 @@
             <div class="tabLine"></div>
         </div>
         <div class="tabBox">
+            <!-- 图片列表部分 -->
             <div class="ImgContnet">
                 <div style="padding: 0 20px;">
                     <div class="layui-row">
-                        <div class=" layui-col-sm3 layui-col-md2 layui-col-lg1">
+                        <div class=" layui-col-sm3 layui-col-md2 layui-col-lg2">
                             <button class="layui-btn layui-btn-normal  add-btn btn" style="margin: 0;">
                                 <i class="layui-icon layui-icon-app"></i>
-                                <span>添加图片</span>
+                                <span>添加商品图片</span>
                             </button>
                         </div>
                         <div class=" layui-col-sm5 layui-col-md4 layui-col-lg2">
@@ -59,8 +60,12 @@
                                 <p >Cr7</p>
                             </div>
                             <div class="ImgList">
+                                <img src="http://172.16.68.199:8087/image/589b28cb-5adb-469b-b497-b131b6648d9c.jpg" alt="">
+                                <!-- <p>Cr7</p> -->
+                            </div>
+                            <div class="ImgList">
                                 <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="">
-                                <p>Cr7</p>
+                                <!-- <p>Cr7</p> -->
                             </div>
                             <div class="ImgList">
                                 <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="">
@@ -94,18 +99,18 @@
                                 <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="">
                                 <p>Cr7</p>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- 视频列表部分 -->
             <div class="VideoContnet">
                 <div style="padding: 0 20px;">
                     <div class="layui-row">
                         <div class=" layui-col-sm3 layui-col-md2 layui-col-lg1">
                             <button class="layui-btn layui-btn-normal  add-btn btn" style="margin: 0;">
                                 <i class="layui-icon layui-icon-app"></i>
-                                <span>添加图片</span>
+                                <span>添加视频</span>
                             </button>
                         </div>
                         <div class=" layui-col-sm5 layui-col-md4 layui-col-lg2">
@@ -135,7 +140,16 @@
                     <div class="videoListBox">
                         <div class="videoFlex">
                             <div class="videoList">
-                                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4" autoplay="autoplay"></video> 
+                                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4"></video> 
+                                <!-- <img src="../../img/play.jpg" alt=""> -->
+                                <p>Cr7</p>
+                            </div>
+                            <div class="videoList">
+                                <video src="http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4"></video> 
+                                <p>Cr7</p>
+                            </div>
+                            <div class="videoList">
+                                <video src="http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4"></video> 
                                 <p>Cr7</p>
                             </div>
                             <div class="videoList">
@@ -162,15 +176,88 @@
                                 <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4"></video> 
                                 <p>Cr7</p>
                             </div>
-                            <div class="videoList">
-                                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4"></video> 
-                                <p>Cr7</p>
-                            </div>
-                            <div class="videoList">
-                                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4"></video> 
-                                <p>Cr7</p>
-                            </div>
+                           
                         </div>
+                    </div>
+                </div>
+            </div>     
+        </div>
+        <!-- 视频弹窗播放 -->
+        <div class="videoPlay maskContnet">
+            <div class="mask"></div>
+            <div class="playVideo">
+                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4" controls="controls"></video> 
+                  <!-- http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4 -->
+            </div>
+        </div>
+
+        <!--添加图片  -->
+        <div class="addImgCont maskContnet" >
+            <div class="addImgBox margin0">
+                <div class="addImgHeader">
+                    <span>添加图片</span>
+                </div>
+                <div class="addImgBody">
+                    <div class="listFlex">
+                        <label for="">图片名称</label>
+                        <div class="FlexInputWidth">
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="listFlex">
+                        <button class="layui-btn layui-btn-normal upload-btn btn">
+                            <span>点击上传商品图片</span>
+                        </button>
+                    </div>
+                    <p style="margin-left: 15px;">建议图片尺寸为：200*200；</p>
+                    <div class="upload-list">
+                        <img src="../../img/icon.png" alt="">
+                    </div>
+                </div>
+                <div class="addImgFooter">
+                    <div>
+                        <button class="layui-btn layui-btn-normal btn cancel-btn">
+                            <span>取消</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn determine-btn2"
+                            style="margin: 0 0 0 15px;">
+                            <span>确定</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 添加视频 -->
+        <div class="addVideoCont maskContnet">
+            <div class="addVideoBox margin0">
+                <div class="addVideoHeader">
+                    <span>添加商品视频</span>
+                </div>
+                <div class="addVideoBody">
+                    <div class="listFlex">
+                        <label for="">视频名称</label>
+                        <div class="FlexInputWidth">
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="listFlex">
+                        <button class="layui-btn layui-btn-normal upload-btn btn"   >
+                            <span>点击上传商品图片</span>
+                        </button>
+                    </div>
+                    <div class="uploadVideo">
+                        <video src="http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4" controls="controls"></video>
+                    </div>
+                </div>
+                <div class="addVideoFooter">
+                    <div>
+                        <button class="layui-btn layui-btn-normal btn cancel-btn">
+                            <span>取消</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn determine-btn2"
+                            style="margin: 0 0 0 15px;">
+                            <span>确定</span>
+                        </button>
                     </div>
                 </div>
             </div>

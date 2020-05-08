@@ -5,7 +5,7 @@ layui.use(['form', 'layer', 'laydate'], function () {
         $(this).addClass('active').siblings().removeClass('active');
         let that = $(this);
         $('.tabLine').animate({
-            left: (that.offset().left - 4) + 'px'
+            left: (that.offset().left) + 'px'
         }, 500);
         if ($(this).index() == 0) {
             $('.ImgContnet').animate({
@@ -38,6 +38,36 @@ layui.use(['form', 'layer', 'laydate'], function () {
         max: '0'
     });
     $('.videoList video').click(function(){
-        console.log($(this))
+        // console.log($(this))
+        $('.playVideo video').attr('src',$(this).attr('src'))
+        $('.videoPlay').fadeIn();
+    });
+
+
+    // 关闭视频弹窗
+    $('.mask').click(function(){
+        $('.videoPlay').fadeOut(function(){
+            $('.playVideo video').attr('src','')
+        });   
+    });
+    // 添加图片弹出框
+    $('.ImgContnet .add-btn').click(function(){
+        $('.addImgCont').fadeIn();
+        $('.addImgBox').removeClass('margin0')
+    })
+    // 关闭添加图片
+    $('.addImgFooter .cancel-btn').click(function(){
+        $('.addImgBox').addClass('margin0');
+        $('.addImgCont').fadeOut();
+    })
+    // 添加视频弹出框
+    $('.VideoContnet .add-btn').click(function(){
+        $('.addVideoCont').fadeIn();
+        $('.addVideoBox').removeClass('margin0')
+    });
+    // 关闭添加视频
+    $('.addVideoFooter .cancel-btn').click(function(){
+        $('.addVideoCont').fadeOut();
+        $('.addVideoBox').addClass('margin0')
     })
 })

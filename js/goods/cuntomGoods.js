@@ -43,7 +43,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
           return d.goods_Status = 1 ? '启用' : '不启用'
         }
       },
-      { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo',fixed: 'right' },
+      { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
       // { fixed: 'right', width: 160, align: 'center', toolbar: '#barDemo' }
     ]]
     , id: 'tableId'

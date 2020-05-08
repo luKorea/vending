@@ -10,6 +10,7 @@
     width: 240px;
     position: relative;
     padding-right: 40px;
+    transition: all 0.3;
 }
 .account{
     width: 100%;
@@ -81,6 +82,7 @@
     margin-right: 60px;
     margin-left: 30px;
     width: 100%;
+    overflow: hidden;
 }
 .query-header{
     width: 100%;
@@ -88,11 +90,14 @@
 .layui-col-md3{
     margin-top: 10px
 }
+.layui-row>div{
+    margin-top: 10px
+}
 .layui-col-md4,.layui-col-md2{
     margin-top: 10px
 }
 #test6 {
-    width: 310px;
+    width: 230px;
     text-align: center;
 }
 .number>div{
@@ -114,5 +119,170 @@
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
-
+}
+.titleBox{
+    width: 500px;
+    position: relative;
+    margin: 3vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.BoxHeader{
+    padding: 20px 20px 10px;
+}
+.BoxHeader span{
+    line-height: 24px;
+    font-size: 18px;
+    color: #303133;
+}
+.BoxHeader button{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 0;
+    background: 0 0;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    font-size: 16px;
+}
+.BoxHeader button i{
+    color: #909399;
+}
+.BoxHeader button i:hover{
+    color: #409eff;
+}
+.titleBody{
+    padding: 30px 20px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.titleBody>div>div{
+    margin-top: 10px;
+    line-height: 24px;
+}
+.titleBody>div>div:nth-child(1){
+    margin-top: 0;
+}
+.titleFooter{
+    text-align: center;
+    margin-top: 20px;
+}
+.issue{
+    background-color: #f56c6c ;
+    padding: 7px 15px;
+    font-size: 12px;
+    border-radius: 3px;
+    border: none;
+    color: #fff;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+.issue:hover{
+    background-color: #f17f7f ;
+}
+.issue i{
+    margin-left: 5px;
+    vertical-align: middle;
+}
+.uploadMateriaBox{
+    width: 600px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.5s;
+}
+.uploadMateriaBody{
+    padding: 30px 20px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.uploadMateriaBody form{
+    width: 100%;
+}
+.FlexInputWidth{
+    width: 60%;
+}
+.materiaDow{
+    width: 100%;
+    margin-top: 22px;
+}
+.materiaImg{
+    width: 50%;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #c0ccda;
+    border-radius: 6px;
+}
+.materiaImg img{
+    width: 100%;
+}
+.cancel-btn{
+    background: #fff !important;
+    border: 1px solid #dcdfe6 !important;
+    color: #606266;
+}
+.cancel-btn:hover{
+    color: #409eff;
+    border-color: #409eff !important;
+    transition: all 0.3s ;
+}
+.layui-form-radio{
+    margin: 0;
+}
+.anUp{
+    display: none;
+}
+.layui-icon-right{
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    color: #999;
+    top: 387px;
+    left: -6px;
+    display: block;
+    width: 32px;
+    line-height: 76px;
+    font-size: 24px;
+    height: 76px;
+    background-color: #eee;
+    border-radius: 10px 0 0 10px;
+    -webkit-transition: right 1s;
+    display: none;
+}
+.anUp{
+    position: absolute;
+    top: 35px;
+    left: -20px;
+    z-index: 11;
+    display: none;
+}
+.anUp ul{
+    margin: 15px 0;
+}
+.anUp ul li{
+    list-style: none;
+    line-height: 36px;
+    padding: 0 20px;
+    margin: 0;
+    font-size: 14px;
+    color: #606266;
+    cursor: pointer;
+    outline: 0;
+    background-color: #fff;
+}
+.block{
+    display: block !important;
+    transition: all 1s;
+}
+.anUp ul li:hover{
+    color: #409eff;
 }

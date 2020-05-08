@@ -8,6 +8,7 @@ var navList=[
     '<iframe class="iframe-show" src="../goods/generalGoods.html"></iframe>',
     '<iframe class="iframe-show" src="../goods/customCategory.html"></iframe>',
     '<iframe class="iframe-show" src="../goods/customGoods.html"></iframe>',
+    '<iframe class="iframe-show" src="../goods/goodsMaterial.html"></iframe>',
     '<iframe class="iframe-show" src="../merchants/merchantsCenter.html"></iframe>',
     '<iframe class="iframe-show" src="../merchants/Mymerchants.html"></iframe>',
     '<iframe class="iframe-show" src="../merchants/settlementDetails.html"></iframe>',

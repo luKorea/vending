@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../../MyCss/public/pubilc.css">
-    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <script src="../../js/public/documentWrite.js"></script>
     <link rel="stylesheet" href="../../MyCss/advertising/fodder.css">
     <title>我的素材库</title>
 </head>
@@ -17,9 +16,9 @@
             <div class="aside-left">
                 <div style="margin: 20px; min-height: 680px;">
                     <div class="account">
-                        <input type="text" placeholder="输入用户账户">
+                        <input type="text" placeholder="输入商户账号">
                     </div>
-                    <p style="margin:10px;color:red;">账号</p>
+                    <p style="margin:10px;color:red;">商户账号</p>
                     <div class="account-list">
                         <div>
                             <span>粤宝商户-中邮广州</span>
@@ -27,15 +26,17 @@
                     </div>
                 </div>
                 <div class="sidebar">
-                    <i class="layui-icon layui-icon-left"></i>
+                    <i class="layui-icon layui-icon-left"></i>          
                 </div>
             </div>
+            <i class="layui-icon layui-icon-right" ></i>
             <!-- 右边 -->
             <div class="right-contnet">
                 <div class="query-header">
                     <div class="layui-row">
-                        <div class="layui-col-sm6 layui-col-md3">
+                        <div class="layui-col-sm9 layui-col-md5 layui-col-lg3">  
                             <div class="itmes">
+                                时间选择：
                                 <div class="layui-inline">
                                     <div class="layui-input-inline">
                                         <input type="text" class="layui-input" id="test6" placeholder=" - ">
@@ -43,35 +44,35 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-col-sm6 layui-col-md3">
+                        <div class="layui-col-sm8 layui-col-md5 layui-col-lg3">
                             <div>
                                 素材属性:
                                 <form class="layui-form" action="" style="max-width: 240px;">
                                     <div class="layui-form" lay-filter="myDiv">
                                         <select name="" id="" lay-filter="mySelect">
                                             <option value="zhang">全部</option>
-                                            <option value="wang">纪念币</option>
-                                            <option value="li">红包</option>
+                                            <option value="wang">图片</option>
+                                            <option value="li">视频</option>
                                         </select>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        <div class="layui-col-sm12 layui-col-md3">
+                        <div class="layui-col-sm8 layui-col-md5 layui-col-lg3">
                             <div>
                                 素材类别:
                                 <form class="layui-form" action="" style="max-width: 240px;">
                                     <div class="layui-form" lay-filter="myDiv">
                                         <select name="" id="" lay-filter="mySelect">
                                             <option value="zhang">全部</option>
-                                            <option value="wang">纪念币</option>
-                                            <option value="li">红包</option>
+                                            <option value="wang">横板</option>
+                                            <option value="li">竖版</option>
                                         </select>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        <div class="layui-col-sm7 layui-col-md3">
+                        <div class="layui-col-sm8 layui-col-m5 layui-col-lg3">
                             <div>
                                 审核状态:
                                 <form class="layui-form" action="" style="max-width: 240px;">
@@ -86,7 +87,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="layui-col-sm7 layui-col-md4 number">
+                        <div class="layui-col-sm9 layui-col-md6 layui-col-lg4 number">
                             大小范围(mb):
                             <div style="max-width: 100px;">
                                 <input type="number">
@@ -96,128 +97,196 @@
                                 <input type="number">
                             </div>
                         </div>
-                        <div class="layui-col-sm7 layui-col-md2 ">
-                            <div style="max-width: 280px;margin-left: -45px;" class="key-contnet">
+                        <div class="layui-col-sm8 layui-col-md3 layui-col-lg3">
+                            <div style="max-width: 280px;" class="key-contnet">
                                 <div class="key-text">关键字</div>
-                                <input type="text" placeholder="请输入商户编号">
+                                <input type="text" placeholder="请输入素材名">
                             </div>
                         </div>
-                        <div class="layui-col-sm7 layui-col-md3 ">
+                        <div class="layui-col-sm7 layui-col-md4 layui-col-lg2">
+                            <div>
+                                素材状态:
+                                <form class="layui-form" action="" style="max-width: 120px;">
+                                    <div class="layui-form" lay-filter="myDiv">
+                                        <select name="" id="" lay-filter="mySelect">
+                                            <option value="zhang">全部</option>
+                                            <option value="wang">启用</option>
+                                            <option value="li">不启用</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm7 layui-col-md6 layui-col-lg3">
                             <button class="layui-btn layui-btn-normal  btn">
                                 <i class="layui-icon layui-icon-search"></i>
                                 <span>查询</span>
                             </button>
-                            <button class="layui-btn layui-btn-normal  btn" style="margin-left: 30px;">
-                                <i class="layui-icon layui-icon-add-circle"></i>
+                            <button class="layui-btn layui-btn-normal  btn uploadBtn" style="margin-left: 10px;">
+                                <i class="layui-icon layui-icon-add-circle "></i>
                                 <span>上传素材</span>
                             </button>
+                            <button class="layui-btn layui-btn-normal del-btn btn">
+                                <span>删除素材</span>
+                            </button>
                         </div>
-                        <div class="layui-col-sm7 layui-col-md3 ">
-                                <button class="layui-btn layui-btn-normal del-btn btn">
-                                    <span>删除文件</span>
-                                </button>
-                                <button class="layui-btn layui-btn-normal  btn" >
-                                    <span>发放广告</span>
-                                </button>
-                        </div>
-
                     </div>
                 </div>
                 <div class="data-list">
                     <div>
-                            <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
+                        <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
                     </div>
                 </div>
             </div>
 
         </div>
+        <!-- 上传图片视频提示 -->
+        <div class="uploadTitle maskContnet">
+            <div class="titleBox margin0">
+                <div class="titleHeader BoxHeader">
+                    <span>上传素材</span>
+                    <button>
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="titleBody">
+                    <div style="color: blue;">
+                        <div>选定素材横竖版样式，发布广告的时候，将自动过滤不符合播放区的素材，避免终端屏幕缩放显示变形，影响广告效果</div>
+                        <div>
+                            素材文件长宽比例最佳为16:9(横屏)或9:16(竖屏)；
+                        </div>
+                        <div>
+                            <p>图片文件：</p>
+                            <p>最大分辨率支持：1080*1920（9:16竖)；1920*1080（16：9横）；</p>
+                            <p>单个图片文件大小≤2M，图片格式仅支持jpg/png；</p>
+                        </div>
+                        <div>
+                            <p>视频文件：</p>
+                            <p>最大分辨率支持：720*1280（9：16竖屏)；1280*720（16：9横屏）；</p>
+                            <p>单个视频文件大小≤20M；视频格式仅支持MP4，帧率=25fps ，码率≤2048mps；</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="titleFooter">
+                    <button class="issue">
+                        <span>上传</span>
+                        <i class="layui-icon layui-icon-upload-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
+        <!-- 上传素材部分 -->
+        <div class="uploadMaterialCont maskContnet" style="overflow-y: auto;">
+            <div class="uploadMateriaBox margin0">
+                <div class="BoxHeader">
+                    <span>上传素材</span>
+                </div>
+                <div class="uploadMateriaBody">
+                    <div>
+                        <form action="" class="layui-form" lay-filter="uploadValData">
+                            <div class="listFlex">
+                                <label><span style="color: red;">*</span>素材名</label>
+                                <div class="FlexInputWidth">
+                                    <input type="text">
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label><span style="color: red;">*</span>素材属性</label>
+                                <div class="FlexInputWidth">
+                                    <div class="layui-form" lay-filter="myDiv">
+                                        <select name="" id="" lay-filter="mySelect">
+                                            <option value="zhang">全部</option>
+                                            <option value="wang">图片</option>
+                                            <option value="li">视频</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label><span style="color: red;">*</span>播放时长</label>
+                                <div class="FlexInputWidth">
+                                    <input type="text" placeholder="以秒为单位">
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label><span style="color: red;">*</span>素材类别</label>
+                                <div class="FlexInputWidth">
+                                    <div class="layui-form" lay-filter="myDiv">
+                                        <select name="" id="" lay-filter="mySelect">
+                                            <option value="zhang">全部</option>
+                                            <option value="wang">横版</option>
+                                            <option value="li">竖版</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label><span style="color: red;">*</span>广告类型</label>
+                                <div class="FlexInputWidth">
+                                    <div class="layui-form" lay-filter="myDiv">
+                                        <select name="" id="" lay-filter="mySelect">
+                                            <option value="zhang">全部</option>
+                                            <option value="wang">横版</option>
+                                            <option value="li">竖版</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label><span style="color: red;">*</span>素材状态</label>
+                                <div class="FlexInputWidth">
+                                    <div class="layui-form-item" style="margin: 0;">
+                                        <input type="radio" name="goodsStatus" value="0" title="不启用">
+                                        <input type="radio" name="goodsStatus" value="1" title="启用" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="layui-btn layui-btn-normal  btn " type="button">
+                                <i class="layui-icon layui-icon-add-circle "></i>
+                                <span>上传图片</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal  btn " type="button">
+                                <i class="layui-icon layui-icon-add-circle "></i>
+                                <span>上传视频</span>
+                            </button>
+                            <div class="materiaDow">
+                                <div class="materiaImg">
+                                    <img src="http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg " alt="">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="uploadMateriaFooter">
+                    <button class="layui-btn layui-btn-normal btn cancel-btn">
+                        <span>取消</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn editDetermine-btn"
+                        style="margin: 0 0 0 15px;">
+                        <span>确定</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
-<script src="../../layui/layui.js"></script>
-<script>
-    layui.use(['element', 'laydate', 'table'], function () {
-        var $ = layui.jquery
-            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="add">
+            <span>操作</span>
+            <i class="layui-icon layui-icon-down" style="font-size:12px !important;"></i>
+        </button>
+        <div class="anUp">
+            <ul>
+                <!-- <li class="preferentialClick">优惠策略</li> -->
+                <li class="GoodsInformation">素材信息</li>
+                <li class="previewDetails">预览素材</li>
+            </ul>
 
-        //触发事件
-        var active = {
-            tabAdd: function () {
-                //新增一个Tab项
-                element.tabAdd('demo', {
-                    title: '新选项' + (Math.random() * 1000 | 0) //用于演示
-                    , content: '内容' + (Math.random() * 1000 | 0)
-                    , id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
-                })
-            }
-            , tabDelete: function (othis) {
-                //删除指定Tab项
-                element.tabDelete('demo', '44'); //删除：“商品管理”
-
-
-                othis.addClass('layui-btn-disabled');
-            }
-            , tabChange: function () {
-                //切换到指定Tab项
-                element.tabChange('demo', '22'); //切换到：用户管理
-            }
-        };
-
-        $('.site-demo-active').on('click', function () {
-            var othis = $(this), type = othis.data('type');
-            active[type] ? active[type].call(this, othis) : '';
-        });
-
-        // 日期选择
-        var laydate = layui.laydate;
-        laydate.render({
-            elem: '#test6'
-            , range: true
-            , value: new Date(),
-        });
-
-
-        // 展开
-        var show = false;
-        $('.an-btn').click(function () {
-            $(".pack-up").slideToggle();
-        });
-        var table = layui.table;
-        table.render({
-            elem: '#moneyData'
-            , cols: [[
-                  {type:'checkbox', fixed: 'left'},
-                { field: 'username', width: 80, title: '微缩图' },
-                { field: 'phone', width: 220, title: '文件名', },
-                { field: 'CreationTime', width: 100, title: '大小', },
-                { field: 'amendTime', width: 100, title: '分辨率', },
-                { field: 'bili', width: 180, title: '属性', sort: true },
-                { field: 'bili', width: 100, title: '播放时长', sort: true },
-                { field: 'bili', width: 100, title: '广告类型', },
-                { field: 'bili', width: 160, title: '审核状态', },
-                { field: 'bili', width: 160, title: '上传时间', },
-                { field: 'jine', width: 180, title: '上传人 ', },
-
-            ]],
-            data: [
-                {
-                    username: '2222'
-                    , phone: 'cs45121'
-                    , CreationTime: '支付宝'
-                    , amendTime: '99'
-                    , bili: '1:2'
-                },
-                {
-                    username: '2222'
-                    , phone: 'cs45121'
-                    , CreationTime: '支付宝'
-                    , amendTime: '99'
-                    , bili: '1:2'
-                }
-            ]
-            , page: true
-        });
-    });
+        </div>
+    </div>
 </script>
+<script src="../../js/advertising/fodder.js"></script>
 
 </html>

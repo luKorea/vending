@@ -25,9 +25,9 @@
 .tabLine{
     position: absolute;
     bottom: 0;
-    left: 96px;
+    left: 100px;
     height: 3px;
-    width: 40px;
+    width: 30px;
     border-radius: 10px;
     background-color: #409eff;
 }
@@ -56,7 +56,7 @@
     display: flex;
     justify-content: start;
     flex-wrap: wrap;
-    align-items: center;
+    /* align-items: center; */
     margin-top: 30px;
     margin-left: 40px;
 }
@@ -67,10 +67,12 @@
     border-radius: 5px;
     /* background-color: red; */
     text-align: center;
+    position:relative
 }
 .ImgList img{
-    /* width: 100%; */
+    width: 100%;
     border-radius: 5px;
+    cursor: pointer;
 }
 .ImgList p, .videoList p{  
     margin-top: 8px;
@@ -83,4 +85,111 @@
 .videoList video{
     width: 100%;
     border-radius: 5px;
+    cursor: pointer;
+}
+#ip-left>div{
+    border-color: transparent #409eff transparent transparent !important;
+}
+#ip-right>div{
+    border-color: transparent transparent transparent #409eff !important;
+}
+.videoList img{
+    width: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+}
+.mask{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+}
+.playVideo video{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    /* background-color: white; */
+}
+.addImgBox,.addVideoBox{
+    width: 500px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.addImgHeader,.addVideoHeader{
+    padding: 20px 20px 10px;
+}
+.addImgHeader span,.addVideoHeader span{
+    line-height: 24px;
+    font-size: 16px;
+    color: #303133;
+}
+.addImgBody,.addVideoBody{
+    padding: 30px 20px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.FlexInputWidth input{
+    width: 80%;
+}
+.listFlex button{
+    margin-left: 15px;
+}
+.upload-list{
+    overflow: hidden;
+    z-index: 0;
+    width: 90px;
+    background-color: #fff;
+    border: 1px solid #c0ccda;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    padding: 10px 10px 10px 90px;
+    height: 92px;
+    transition: all .5s cubic-bezier(.55,0,.1,1);
+    font-size: 14px;
+    color: #606266;
+    line-height: 1.8;
+    position: relative;
+    margin-left: 15px;
+}
+.upload-list img{
+    vertical-align: middle;
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    float: left;
+    position: relative;
+    z-index: 1;
+    margin-left: -75px;
+}
+.addImgFooter,.addVideoFooter{
+    padding: 10px 20px 20px;
+    text-align: right;
+    box-sizing: border-box;
+}
+.cancel-btn{
+    background-color: #fff !important;
+    border: 1px solid #dcdfe6 !important;
+    color: #606266;
+}
+.cancel-btn:hover{
+    border-color: #409eff !important;
+    color: #409eff !important;
+}
+.uploadVideo{
+    width: 100%;
+}
+.uploadVideo video{
+    width: 100%;
 }

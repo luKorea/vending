@@ -192,7 +192,7 @@ body .layui-form-checked[lay-skin=primary] i{
     z-index: 99;
     background: rgba(0, 0, 0, 0.3);
     display: none;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 .margin0{
     margin-top:0 !important;
@@ -243,4 +243,8 @@ body .layui-form-checked[lay-skin=primary] i{
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
+}
+.uploadMateriaFooter{
+    padding: 20px 0;
+    text-align: center;
 }

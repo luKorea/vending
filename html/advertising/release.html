@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="../../js/public/documentWrite.js"></script>
     <link rel="stylesheet" href="../../MyCss/advertising/release.css">
-    <title>发布详情</title>
+    <title>广告详情管理</title>
 </head>
 
 <body>
@@ -82,49 +82,42 @@
             </div>
         </div>
         <!-- 编辑素材 -->
-        <!-- <div class="editMaterial" style="display: block;">
-            <div class="materialContnet">
+        <div class="preview" style="display: block;">
+            <div class="previewContnet margin0">
                 <div class="playHeader">
-                    <span>编辑素材</span>
+                    <span>广告预览</span>
                     <button class="close" type="button">
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
                 </div>
-                <div class="playBox">
-                    <div>
-                        <form action="" class="layui-form" lay-filter="">
-                            <div class="querySearch">
-                                <div>
-                                    <span>素材属性:</span>
-                                    <div class="layui-form" style="width: 120px;">
-                                        <select name="" id="" lay-filter="stateSelect">
-                                            <option value="">全部</option>
-                                            <option value="0">图片</option>
-                                            <option value="1">视频</option>
-                                        </select>
-                                    </div>
+                <div class="previewBody">
+                    <div class="previewSwiper">
+                            <div class="layui-carousel" id="swiperDetails" lay-filter="swiperDetails">
+                                <div carousel-item>
+                                    <div><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588942169127&di=687fc02922b3f51c66350f4a9f60598f&imgtype=0&src=http%3A%2F%2Fimg8.zol.com.cn%2Fbbs%2Fupload%2F23370%2F23369536.jpg" alt=""></div>
+                                    <div><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588942169127&di=687fc02922b3f51c66350f4a9f60598f&imgtype=0&src=http%3A%2F%2Fimg8.zol.com.cn%2Fbbs%2Fupload%2F23370%2F23369536.jpg" alt=""></div>
+                                   <div><video src="http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4" controls="controls"></video></div>
+                                    <video src="http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4" controls="controls"></video>
                                 </div>
                             </div>
-                     </form>
                     </div>
-                </div>
+                </div>  
             </div>
-        </div> -->
+        </div>
     </div>
 </body>
 <script type="text/html" id="barDemo">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm btn operation" lay-event="add">
-            <span>编辑素材</span>
+            <span>广告预览</span>
         </button>
         <button class="layui-btn layui-btn-sm btn terminal" lay-event="add">
-            <span>编辑终端</span>
+            <span>广告详情</span>
         </button>
         <button class="layui-btn layui-btn-sm btn del-btn" lay-event="delete">
-            <span>删除</span>        
+            <span>查看</span>        
         </button>
-      
     </div>
 </script>
-<script src="../../js/advertising/release.js"></script>
+<script src="../../js/advertising/release.js"></script> 
 </html>
