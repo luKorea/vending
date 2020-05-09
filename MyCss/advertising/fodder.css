@@ -286,3 +286,25 @@
 .anUp ul li:hover{
     color: #409eff;
 }
+.previewBox{
+    width: 600px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.5s;
+}   
+.perviewBody{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+}
+.imgCont{
+    width: 350px;
+    margin: 0 auto 30px;
+}
+.imgCont img{
+    width: 100%;
+}

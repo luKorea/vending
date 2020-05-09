@@ -82,7 +82,7 @@
             </div>
         </div>
         <!-- 编辑素材 -->
-        <div class="preview" style="display: block;">
+        <div class="preview maskContnet">
             <div class="previewContnet margin0">
                 <div class="playHeader">
                     <span>广告预览</span>
@@ -104,18 +104,56 @@
                 </div>  
             </div>
         </div>
+        <!-- 广告使用情况 -->
+        <div class="toViveCont maskContnet">
+            <div class="toViveBox margin0">
+                <div class="playHeader">
+                    <span>广告使用情况</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="toViveBody">
+                    <div>
+                        <table class="layui-hide" id="machine" lay-filter="machine"></table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="advertisingDetails maskContnet" style="display: block;">
+            <div class="detailsBox margin0">
+                <div class="playHeader detalisHeader">
+                    <span>广告详情 </span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="detailsBody">
+
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 <script type="text/html" id="barDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm btn operation" lay-event="add">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="preview">
             <span>广告预览</span>
         </button>
-        <button class="layui-btn layui-btn-sm btn terminal" lay-event="add">
+        <button class="layui-btn layui-btn-sm btn terminal" lay-event="details">
             <span>广告详情</span>
         </button>
-        <button class="layui-btn layui-btn-sm btn del-btn" lay-event="delete">
-            <span>查看</span>        
+        <button class="layui-btn layui-btn-sm btn del-btn" lay-event="toView">
+            <span>广告使用情况</span>        
+        </button>
+    </div>
+</script>
+<script type="text/html" id="machineDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation">
+            <span>查看地址</span>
         </button>
     </div>
 </script>

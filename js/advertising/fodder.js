@@ -112,4 +112,16 @@ layui.use([ 'laydate', 'table','layer'], function () {
             indexFlag=null;
         }
     })
+    // 预览素材
+    $('.previewDetails').click(function(){
+        $('.anUp').slideUp();
+        indexFlag=null;
+        $('.materialPreview').fadeIn();
+        $('.previewBox').removeClass('margin0');
+    });
+    // 关闭预览
+    $('.previewHeader button').click(function(){
+        $('.previewBox').addClass('margin0');
+        $('.materialPreview').fadeOut();
+    })
 });
