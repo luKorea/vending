@@ -84,3 +84,24 @@ function insert(className, editClass) {
     $(`.${className} input[name="videoInput"]`).val('')
   }
 };
+
+// tab切换下一步事件
+function nextStep(before,after){
+  $(`.${before}`).animate({
+      left:-100+'%'
+  },500);
+  $(`.${after}`).animate({
+      left:0
+  },500);
+};
+
+// tab切换上一步
+function onStep(before,after){
+  $(`.${before}`).animate({
+    left:100+'%'
+},500);
+$(`.${after}`).animate({
+    left:0
+},500);
+}
+

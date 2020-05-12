@@ -248,3 +248,30 @@ body .layui-form-checked[lay-skin=primary] i{
     padding: 20px 0;
     text-align: center;
 }
+
+.playHeader{
+    padding: 20px 20px 10px;
+    text-align: center;
+}
+.playHeader span{
+    line-height: 24px;
+    font-size: 18px;
+    color: #303133;
+} 
+.playHeader .close{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 0;
+    background: 0 0;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    font-size: 16px;
+}
+.playHeader .close i{
+    color: #909399;
+}
+.playHeader .close i:hover{
+    color: #409eff;
+}

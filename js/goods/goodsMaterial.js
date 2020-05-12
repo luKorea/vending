@@ -8,19 +8,9 @@ layui.use(['form', 'layer', 'laydate'], function () {
             left: (that.offset().left) + 'px'
         }, 500);
         if ($(this).index() == 0) {
-            $('.ImgContnet').animate({
-                left: 0
-            }, 500);
-            $('.VideoContnet').animate({
-                left: 100 + '%'
-            }, 500);
+            onStep('VideoContnet','ImgContnet');
         } else {
-            $('.ImgContnet').animate({
-                left: -100 + '%'
-            }, 500);
-            $('.VideoContnet').animate({
-                left: 0
-            }, 500);
+            nextStep('ImgContnet','VideoContnet')
         }
     });
 
