@@ -4,24 +4,28 @@ layui.use([ 'laydate', 'table','layer'], function () {
     var laydate = layui.laydate;
     laydate.render({
         elem: '#test6'
-        , range: true
-    });
+        // ,type: 'datetime'
+        ,range: true    
+        ,isInitValue: false
+      });
     var table = layui.table;
     table.render({
         elem: '#moneyData'
         , cols: [[
               {type:'checkbox',},
-            { field: 'username', width: 80, title: '微缩图' },
+            { field: 'username', width: 120, title: '微缩图' },
             { field: 'phone', width: 150, title: '素材名', },
             { field: 'CreationTime', width: 100, title: '大小', },
-            { field: 'amendTime', width: 100, title: '分辨率', },
+            { field: 'amendTime', width: 130, title: '分辨率', },
             { field: 'bili', width: 150, title: '素材属性', sort: true },
+            { field: 'bili', width: 150, title: '素材类别', sort: true },
             { field: 'bili', width: 100, title: '播放时长', sort: true },
             { field: 'bili', width: 160, title: '审核状态', },
+            { field: 'bili', width: 160, title: '素材状态', },
             { field: 'bili', width: 160, title: '上传时间', },
             { field: 'jine', width: 150, title: '上传人 ', },
-            { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo' },
-
+            // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo',fixed: 'right',right: 0 },
+            { field: 'operation', right: 0, width: 200, title: '操作', toolbar: '#barDemo', fixed: 'right' },
         ]],
         data: [
             {

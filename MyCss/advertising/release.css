@@ -161,7 +161,7 @@
     color: #909399;
 }
 .close i:hover{
-    color: #409eff;
+    color: #be954a;
 }
 .previewBody{
     padding: 20px 20px;
@@ -250,7 +250,7 @@ video{
 }
 .listSort span{
     font-weight: bold;
-    color: #409eff;
+    color: #be954a;
 }
 .listLift{
     width: 20px;
@@ -350,8 +350,15 @@ video{
     background: #fff;
     transition: .15s ease-out;
 }
+.stepsOne{
+    border: 2px solid #e6a23c;
+    margin-left: 30%;
+}
+.stepsTwo{
+    border: 2px solid #909399;  
+}
 .stepsThree,.publishLast{
-    display: none;
+    /* display: none; */
 }
 
 .stepsOne>div,.stepsTwo>div,.stepsThree>div{
@@ -359,10 +366,13 @@ video{
     text-align: center;
     font-weight: 700;
     /* line-height: 1; */
-    color: inherit;
+    color: #e6a23c;
+}
+.stepsTwo>div{
+    color: #909399;
 }
 .oneLine{
-    width: 0%;
+    width: 35%;
     height: 2px;
     border-color: inherit;
     background-color: #c0c4cc;
@@ -373,8 +383,16 @@ video{
 }
 .textTitle>li{
     font-weight: bold;
-    color: #303133;
     font-size: 16px;
+}
+.chooseMaterial{
+    margin-left: 30%;
+}
+.textTitle .chooseMaterial{
+    color: #e6a23c;
+}
+.publishLast{
+    color: #909399;
 }
 .Set{
     position: absolute;
@@ -382,7 +400,7 @@ video{
 }
 .publishLast{
     position: absolute;
-    right: 0;
+    right: 30%;
 }
 .stepsBody{
     width: 100%;
@@ -534,4 +552,48 @@ video{
     color: #606266;
     line-height: 24px;
     font-size: 14px;
+}
+.machineDetailsBox{
+    width: 1150px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.machineDetailsBody{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.machineDetailsList{
+    padding: 20px;
+}
+.listSize input{
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+}
+.detailsFooter{
+    
+}
+.layui-row>div{
+    margin-bottom: 10px;
 }

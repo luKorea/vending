@@ -68,8 +68,8 @@
 	height: 65px;
 }
 .layui-form-onswitch{
-	border-color: #409eff;
-    background-color: #409eff;
+	border-color: #be954a;
+    background-color: #be954a;
 }
 .swipe-tile span{
     display: inline-block;
@@ -176,7 +176,7 @@
 	top: 0;
 	width: 100%;
 	height: 3px;
-	background: #409eff;
+	background: #be954a;
 	border-width: 0;
     border-style: solid;
     border-bottom:0;

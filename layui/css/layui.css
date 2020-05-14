@@ -1038,7 +1038,7 @@ a cite {
 	height: 100%;
 	line-height: 60px;
 	text-align: center;
-	color: #009688;
+	color: #be954a;
 	font-size: 16px
 }
 
@@ -1737,7 +1737,7 @@ a cite {
 	margin-bottom: 10px;
 	padding: 15px;
 	line-height: 22px;
-	border-left: 5px solid #009688;
+	border-left: 5px solid #be954a;
 	border-radius: 0 2px 2px 0;
 	background-color: #f2f2f2
 }
@@ -1949,7 +1949,7 @@ a cite {
 }
 
 .layui-bg-green {
-	background-color: #009688!important
+	background-color: #be954a!important
 }
 
 .layui-bg-cyan {
@@ -2047,7 +2047,7 @@ hr {
 	height: 38px;
 	line-height: 38px;
 	padding: 0 18px;
-	background-color: #009688;
+	background-color: #be954a;
 	color: #fff;
 	white-space: nowrap;
 	text-align: center;
@@ -2107,7 +2107,7 @@ hr {
 }
 
 .layui-btn-primary:hover {
-	border-color: #009688;
+	border-color: #be954a;
 	color: #333
 }
 
@@ -2185,7 +2185,7 @@ hr {
 
 .layui-btn-group .layui-btn-primary:hover {
 	border-color: #C9C9C9;
-	color: #009688
+	color: #be954a
 }
 
 .layui-btn-group .layui-btn:first-child {
@@ -2507,17 +2507,17 @@ hr {
 
 .layui-form-checked,
 .layui-form-checked:hover {
-	border-color: #409eff
+	border-color: #be954a
 }
 
 .layui-form-checked span,
 .layui-form-checked:hover span {
-	background-color: #409eff
+	background-color: #be954a
 }
 
 .layui-form-checked i,
 .layui-form-checked:hover i {
-	color: #409eff
+	color: #be954a
 }
 
 .layui-form-item .layui-form-checkbox {
@@ -2559,13 +2559,13 @@ hr {
 }
 
 .layui-form-checkbox[lay-skin=primary]:hover i {
-	border-color: #409eff;
+	border-color: #be954a;
 	color: #fff
 }
 
 .layui-form-checked[lay-skin=primary] i {
-	border-color: #409eff!important;
-	background-color: #409eff;
+	border-color: #be954a!important;
+	background-color: #be954a;
 	color: #fff
 }
 
@@ -2965,7 +2965,7 @@ hr {
 }
 
 .layui-laypage a:hover {
-	color: #009688
+	color: #be954a
 }
 
 .layui-laypage em {
@@ -2997,7 +2997,7 @@ hr {
 	padding: 1px;
 	width: 100%;
 	height: 100%;
-	background-color: #009688
+	background-color: #be954a
 }
 
 .layui-laypage-em {
@@ -3062,7 +3062,7 @@ hr {
 
 .layui-laypage input:focus,
 .layui-laypage select:focus {
-	border-color: #009688!important
+	border-color: #be954a!important
 }
 
 .layui-laypage button {
@@ -3731,11 +3731,11 @@ body .layui-table-tips .layui-layer-content {
 
 .layui-upload-drag .layui-icon {
 	font-size: 50px;
-	color: #009688
+	color: #be954a
 }
 
 .layui-upload-drag[lay-over] {
-	border-color: #009688
+	border-color: #be954a
 }
 
 .layui-upload-iframe {
@@ -3910,7 +3910,8 @@ body .layui-table-tips .layui-layer-content {
 	top: 0;
 	width: 0;
 	height: 5px;
-	background-color: #5FB878;
+	/* background-color: #5FB878; */
+	background-color: #be954a;
 	transition: all .2s;
 	-webkit-transition: all .2s
 }
@@ -4029,7 +4030,7 @@ body .layui-table-tips .layui-layer-content {
 .layui-nav-tree .layui-nav-bar {
 	width: 5px;
 	height: 0;
-	background-color: #009688
+	background-color: #be954a
 }
 
 .layui-nav-tree .layui-nav-child dd.layui-this,
@@ -4037,7 +4038,7 @@ body .layui-table-tips .layui-layer-content {
 .layui-nav-tree .layui-this,
 .layui-nav-tree .layui-this>a,
 .layui-nav-tree .layui-this>a:hover {
-	background-color: #409eff;
+	background-color: #be954a;
 	color: #fff
 }
 
@@ -4108,7 +4109,8 @@ body .layui-table-tips .layui-layer-content {
 .layui-bg-blue .layui-nav-itemed>a,
 .layui-nav-tree.layui-bg-blue .layui-nav-title a,
 .layui-nav-tree.layui-bg-blue .layui-nav-title a:hover {
-	background-color: #007DDB!important
+	/* background-color: #007DDB!important */
+	background-color: #be954a!important
 }
 
 .layui-breadcrumb {
@@ -4278,7 +4280,7 @@ body .layui-table-tips .layui-layer-content {
 }
 
 .layui-tab-brief>.layui-tab-title .layui-this {
-	/*color: #009688*/
+	/*color: #be954a*/
 	
 	color: #FFFFFF;
 }
@@ -4289,7 +4291,7 @@ body .layui-table-tips .layui-layer-content {
 	border: none;
 	border-radius: 0;
 	/*border-bottom: 2px solid #5FB878;*/
-	border-bottom:3px solid #409eff;
+	border-bottom:3px solid #be954a;
 }
 
 .layui-tab-brief[overflow]>.layui-tab-title .layui-this:after {
@@ -5181,7 +5183,7 @@ body .layui-util-face .layui-layer-content {
 }
 
 .layui-slider-input-btn i:hover {
-	color: #009688
+	color: #be954a
 }
 
 .layui-slider-vertical {

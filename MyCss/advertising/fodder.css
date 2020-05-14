@@ -151,7 +151,7 @@
     color: #909399;
 }
 .BoxHeader button i:hover{
-    color: #409eff;
+    color: #be954a;
 }
 .titleBody{
     padding: 30px 20px;
@@ -227,10 +227,10 @@
     background: #fff !important;
     border: 1px solid #dcdfe6 !important;
     color: #606266;
-}
+}   
 .cancel-btn:hover{
-    color: #409eff;
-    border-color: #409eff !important;
+    color: #be954a;
+    border-color: #be954a !important;
     transition: all 0.3s ;
 }
 .layui-form-radio{
@@ -282,7 +282,7 @@
     transition: all 1s;
 }
 .anUp ul li:hover{
-    color: #409eff;
+    color: #be954a;
 }
 .previewBox{
     width: 600px;
@@ -305,4 +305,18 @@
 }
 .imgCont img{
     width: 100%;
+}
+.data-list{
+    width: 100%;
+    /* overflow: hidden; */
+}
+.listtable{
+    width: 100%;
+    /* overflow-x: auto; */
+    overflow: hidden;
+    display: flex;
+}
+.listtable .layui-form{
+    width: 100%;
+    overflow-x: auto;
 }

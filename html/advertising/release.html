@@ -33,29 +33,36 @@
             <div class="right-contnet">
                 <div class="qeury-header">
                     <div class="layui-row">
-                        <div class=" layui-col-sm6 layui-col-md5 layui-col-lg3">
-                            <div class="itmes">
-                                <div class="layui-inline">
+                        <div class=" layui-col-sm6 layui-col-md12 layui-col-lg4">
+                            <div class="itmes key-contnet">
+                                <div class="key-text">发布时间</div>
+                                <div class="layui-inline" style="max-width: 300px;">
                                     <div class="layui-input-inline">
                                         <input type="text" class="layui-input" id="test6" placeholder=" - ">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class=" layui-col-sm6 layui-col-md6 layui-col-lg4 number">
-                            大小范围(mb):
-                            <div style="max-width: 100px;">
-                                <input type="number">
-                            </div>
-                            ——
-                            <div style="max-width: 100px;">
-                                <input type="number">
+                        <div class=" layui-col-sm6 layui-col-md8 layui-col-lg4 number">
+                            <!-- 大小范围(mb): -->
+                            <div class="key-contnet" style="display: inline-table;;">
+                                <div class="key-text">大小范围(mb)</div>
+                                <form class="layui-form" action="" style="display: flex;justify-content: start;">
+                                <div style="max-width: 100px;">
+                                    <input type="number">
+                                </div>
+                                <span style="line-height: 35px;">——</span>   
+                                <div style="max-width: 100px;">
+                                    <input type="number">
+                                </div>
+                            </form>
                             </div>
                         </div>
-                        <div class=" layui-col-sm12 layui-col-md5 layui-col-lg3">
-                            <div>
-                                广告位:
-                                <form class="layui-form" action="" style="max-width: 240px;">
+                        <div class=" layui-col-sm12 layui-col-md6 layui-col-lg3">
+                            <div class="key-contnet">
+                                <!-- 广告位: -->
+                                <div class="key-text">广告位</div>
+                                <form class="layui-form" action="" style="max-width: 100%;">
                                     <div class="layui-form" lay-filter="myDiv">
                                         <select name="" id="" lay-filter="mySelect">
                                             <option value="zhang">全部</option>
@@ -66,13 +73,23 @@
                                 </form>
                             </div>
                         </div>
-                        <div class=" layui-col-sm7 layui-col-md3 layui-col-lg2">
+                        <div class=" layui-col-sm7 layui-col-md3 layui-col-lg1">
                             <button class="layui-btn layui-btn-normal  btn">
                                 <i class="layui-icon layui-icon-search"></i>
                                 <span>查询</span>
                             </button>
                         </div>
+                        <div class=" layui-col-sm8 layui-col-md5 layui-col-lg5">
+                            <button class="layui-btn layui-btn-normal  btn publicAdvertisingBtn">
+                                <i class="layui-icon layui-icon-add-circle"></i>
+                                <span>发布广告</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal  btn machineAdvertisingBtn">
+                                <span>购金机广告</span>
+                            </button>
+                        </div>
                     </div>
+                    <div class="layui-row"></div>
                 </div>
                 <div class="data-list">
                     <div class="listtable">
@@ -94,17 +111,25 @@
                     <div class="previewSwiper">
                         <div class="layui-carousel" id="swiperDetails" lay-filter="swiperDetails">
                             <div carousel-item>
-                                <div><img
-                                        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588942169127&di=687fc02922b3f51c66350f4a9f60598f&imgtype=0&src=http%3A%2F%2Fimg8.zol.com.cn%2Fbbs%2Fupload%2F23370%2F23369536.jpg"
-                                        alt=""></div>
-                                <div><img
-                                        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588942169127&di=687fc02922b3f51c66350f4a9f60598f&imgtype=0&src=http%3A%2F%2Fimg8.zol.com.cn%2Fbbs%2Fupload%2F23370%2F23369536.jpg"
-                                        alt=""></div>
-                                <div><video
+                                <div>
+                                    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588942169127&di=687fc02922b3f51c66350f4a9f60598f&imgtype=0&src=http%3A%2F%2Fimg8.zol.com.cn%2Fbbs%2Fupload%2F23370%2F23369536.jpg"
+                                        alt="">
+                                </div>
+                                <div>
+                                    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588942169127&di=687fc02922b3f51c66350f4a9f60598f&imgtype=0&src=http%3A%2F%2Fimg8.zol.com.cn%2Fbbs%2Fupload%2F23370%2F23369536.jpg"
+                                        alt="">
+                                </div>
+                                <div>
+                                    <video
                                         src="http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4"
-                                        controls="controls"></video></div>
-                                <video src="http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4"
-                                    controls="controls"></video>
+                                        controls="controls"></video>
+                                </div>
+                                <div>
+                                    <video
+                                        src="http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4"
+                                        controls="controls"></video>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -151,7 +176,8 @@
                                 <span>粤宝文化科技</span>
                             </div>
                             <div class="listSize">
-                                <span>3(mb)</span>
+                                <!-- <span>3(mb)</span> -->
+                                <input type="text" value="3">
                             </div>
                             <div class="listAttribute">
                                 <span>图片</span>
@@ -171,12 +197,12 @@
                                 </button>
                             </div>
                             <div class="listLift">
-                                <img src="../../img/lift.png" alt="">
+                                <!-- <img src="../../img/lift.png" alt=""> -->
                             </div>
                         </li>
                         <li class="detailsList">
                             <div class="listSort">
-                                <span>1</span>
+                                <span>2</span>
                             </div>
                             <div class="listImg">
                                 <img src="http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg "
@@ -186,217 +212,8 @@
                                 <span>粤宝文化科技</span>
                             </div>
                             <div class="listSize">
-                                <span>3(mb)</span>
-                            </div>
-                            <div class="listAttribute">
-                                <span>图片</span>
-                            </div>
-                            <div class="listType">
-                                <span>横版</span>
-                            </div>
-                            <div class="listTimer">
-                                <span>30(s)</span>
-                            </div>
-                            <div class="uploadName">
-                                <span>C999</span>
-                            </div>
-                            <div class="listPreview">
-                                <button class="layui-btn layui-btn-normal  btn">
-                                    <span>预览</span>
-                                </button>
-                            </div>
-                            <div class="listLift">
-                                <img src="../../img/lift.png" alt="">
-                            </div>
-                        </li>
-                        <li class="detailsList">
-                            <div class="listSort">
-                                <span>1</span>
-                            </div>
-                            <div class="listImg">
-                                <img src="http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg "
-                                    alt="">
-                            </div>
-                            <div class="listName">
-                                <span>粤宝文化科技</span>
-                            </div>
-                            <div class="listSize">
-                                <span>3(mb)</span>
-                            </div>
-                            <div class="listAttribute">
-                                <span>图片</span>
-                            </div>
-                            <div class="listType">
-                                <span>横版</span>
-                            </div>
-                            <div class="listTimer">
-                                <span>30(s)</span>
-                            </div>
-                            <div class="uploadName">
-                                <span>C999</span>
-                            </div>
-                            <div class="listPreview">
-                                <button class="layui-btn layui-btn-normal  btn">
-                                    <span>预览</span>
-                                </button>
-                            </div>
-                            <div class="listLift">
-                                <img src="../../img/lift.png" alt="">
-                            </div>
-                        </li>
-                        <li class="detailsList">
-                            <div class="listSort">
-                                <span>1</span>
-                            </div>
-                            <div class="listImg">
-                                <img src="http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg "
-                                    alt="">
-                            </div>
-                            <div class="listName">
-                                <span>粤宝文化科技</span>
-                            </div>
-                            <div class="listSize">
-                                <span>3(mb)</span>
-                            </div>
-                            <div class="listAttribute">
-                                <span>图片</span>
-                            </div>
-                            <div class="listType">
-                                <span>横版</span>
-                            </div>
-                            <div class="listTimer">
-                                <span>30(s)</span>
-                            </div>
-                            <div class="uploadName">
-                                <span>C999</span>
-                            </div>
-                            <div class="listPreview">
-                                <button class="layui-btn layui-btn-normal  btn">
-                                    <span>预览</span>
-                                </button>
-                            </div>
-                            <div class="listLift">
-                                <img src="../../img/lift.png" alt="">
-                            </div>
-                        </li>
-                        <li class="detailsList">
-                            <div class="listSort">
-                                <span>1</span>
-                            </div>
-                            <div class="listImg">
-                                <img src="http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg "
-                                    alt="">
-                            </div>
-                            <div class="listName">
-                                <span>粤宝文化科技</span>
-                            </div>
-                            <div class="listSize">
-                                <span>3(mb)</span>
-                            </div>
-                            <div class="listAttribute">
-                                <span>图片</span>
-                            </div>
-                            <div class="listType">
-                                <span>横版</span>
-                            </div>
-                            <div class="listTimer">
-                                <span>30(s)</span>
-                            </div>
-                            <div class="uploadName">
-                                <span>C999</span>
-                            </div>
-                            <div class="listPreview">
-                                <button class="layui-btn layui-btn-normal  btn">
-                                    <span>预览</span>
-                                </button>
-                            </div>
-                            <div class="listLift">
-                                <img src="../../img/lift.png" alt="">
-                            </div>
-                        </li>
-                        <li class="detailsList">
-                            <div class="listSort">
-                                <span>1</span>
-                            </div>
-                            <div class="listImg">
-                                <img src="http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg "
-                                    alt="">
-                            </div>
-                            <div class="listName">
-                                <span>粤宝文化科技</span>
-                            </div>
-                            <div class="listSize">
-                                <span>3(mb)</span>
-                            </div>
-                            <div class="listAttribute">
-                                <span>图片</span>
-                            </div>
-                            <div class="listType">
-                                <span>横版</span>
-                            </div>
-                            <div class="listTimer">
-                                <span>30(s)</span>
-                            </div>
-                            <div class="uploadName">
-                                <span>C999</span>
-                            </div>
-                            <div class="listPreview">
-                                <button class="layui-btn layui-btn-normal  btn">
-                                    <span>预览</span>
-                                </button>
-                            </div>
-                            <div class="listLift">
-                                <img src="../../img/lift.png" alt="">
-                            </div>
-                        </li>
-                        <li class="detailsList">
-                            <div class="listSort">
-                                <span>1</span>
-                            </div>
-                            <div class="listImg">
-                                <img src="http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg "
-                                    alt="">
-                            </div>
-                            <div class="listName">
-                                <span>粤宝文化科技</span>
-                            </div>
-                            <div class="listSize">
-                                <span>3(mb)</span>
-                            </div>
-                            <div class="listAttribute">
-                                <span>图片</span>
-                            </div>
-                            <div class="listType">
-                                <span>横版</span>
-                            </div>
-                            <div class="listTimer">
-                                <span>30(s)</span>
-                            </div>
-                            <div class="uploadName">
-                                <span>C999</span>
-                            </div>
-                            <div class="listPreview">
-                                <button class="layui-btn layui-btn-normal  btn">
-                                    <span>预览</span>
-                                </button>
-                            </div>
-                            <div class="listLift">
-                                <img src="../../img/lift.png" alt="">
-                            </div>
-                        </li>
-                        <li class="detailsList">
-                            <div class="listSort">
-                                <span>1</span>
-                            </div>
-                            <div class="listImg">
-                                <img src="http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg "
-                                    alt="">
-                            </div>
-                            <div class="listName">
-                                <span>粤宝文化科技</span>
-                            </div>
-                            <div class="listSize">
-                                <span>3(mb)</span>
+                                <!-- <span>3(mb)</span> -->
+                                <input type="text" value="3">
                             </div>
                             <div class="listAttribute">
                                 <span>图片</span>
@@ -421,6 +238,13 @@
                         </li>
                     </ul>
                 </div>
+                <div class="detailsFooter">
+                    <div style="text-align: right;margin:10px 30px 20px 0;padding-bottom: 20px  ;">
+                        <button class="layui-btn layui-btn-normal  btn confirmBtn">
+                            <span>确定修改</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- 广告素材预览 -->
@@ -444,7 +268,7 @@
         <div class="ScottCont maskContnet">
             <div class="scottBox margin0">
                 <div class="playHeader">
-                    <span>广告素材预览</span>
+                    <span>购金机地址</span>
                     <button class="close" type="button">
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
@@ -455,7 +279,7 @@
             </div>
         </div>
         <!-- 发布广告 -->
-        <div class="releaseAdvertising maskContnet" style="overflow-y: auto;display: block;">
+        <div class="releaseAdvertising maskContnet" style="overflow-y: auto;">
             <div class="publishBox margin0">
                 <div class="playHeader">
                     <span>发布广告</span>
@@ -469,10 +293,7 @@
                             <div> 1</div>
                         </li>
                         <li class="oneLine"></li>
-                        <!-- <li class="stepsTwo">
-                            <div> 2</div>
-                        </li> -->
-                        <li class="stepsThree">
+                        <li class="stepsTwo">
                             <div> 2</div>
                         </li>
                     </ul>
@@ -615,7 +436,7 @@
             </div>
         </div>
         <!-- 发布广告选择素材 -->
-        <div class="pubilshMaterialCont maskContnet" >
+        <div class="pubilshMaterialCont maskContnet">
             <div class="pubilshMaterialBox margin0">
                 <div class="playHeader">
                     <span>选择素材</span>
@@ -630,7 +451,7 @@
                     </div>
                     <div class="layui-form" style="margin-left: 20px;">
                         <div style="max-width: 300px;" class="key-contnet">
-                            <div class="key-text">关键字</div>
+                            <div class="key-text">时间</div>
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
                                     <input type="text" class="layui-input" id="itemrs1">
@@ -669,14 +490,53 @@
                             部分内容无法编辑修改。
                         </div>
                         <div>
-                          请仔细检查确定无误之后发布广告
+                            请仔细检查确定无误之后发布广告
                         </div>
                     </div>
                 </div>
                 <div style="text-align: right;margin:10px 30px 20px 0;padding-bottom: 20px  ;">
-                    <button class="layui-btn layui-btn-normal  btn">
+                    <button class="layui-btn layui-btn-normal  btn confirmBtn">
                         <span>确定发布</span>
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 购金机广告详情 -->
+        <div class="machineDetailsCont maskContnet">
+            <div class="machineDetailsBox margin0">
+                <div class="playHeader">
+                    <span>购金机广告详情</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="machineDetailsBody">
+                    <div class="pubilshKey machineDetailsKey">
+                        <div style="max-width: 300px;" class="key-contnet">
+                            <div class="key-text">关键字</div>
+                            <input type="text" placeholder="购金机编号、名称" class="KyeText">
+                        </div>
+                        <div class="layui-form" style="margin-left: 20px;">
+                            <div style="max-width: 300px;" class="key-contnet">
+                                <div class="key-text">时间</div>
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" id="itemrs2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="layui-btn layui-btn-normal  btn" style="margin-left: 20px;">
+                            <i class="layui-icon layui-icon-search"></i>
+                            <span>查询</span>
+                        </button>
+                    </div>
+                    <div class="machineDetailsList">
+                        <div>
+                            <table class="layui-hide" id="machineDetailsList" lay-filter="machineDetailsList"></table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -699,6 +559,16 @@
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm btn operation viewBtn">
             <span>查看地址</span>
+        </button>
+    </div>
+</script>
+<script type="text/html" id="machineAdvertising">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation viewBtn">
+            <span>预览广告</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn operation viewBtn">
+            <span>广告详情</span>
         </button>
     </div>
 </script>
