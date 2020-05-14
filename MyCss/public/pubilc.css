@@ -9,7 +9,7 @@
 
 input {
 	border: none;
-	outline: none;
+	/* outline: #be954a !important; */
 }
 
 body {

@@ -20,7 +20,7 @@
     cursor: pointer;
 }
 .navTab .active{
-    color: #409eff;
+    color: #be954a;
 }
 .tabLine{
     position: absolute;
@@ -29,7 +29,7 @@
     height: 3px;
     width: 30px;
     border-radius: 10px;
-    background-color: #409eff;
+    background-color: #be954a;
 }
 .tabBox{
     width: 100%;
@@ -88,10 +88,10 @@
     cursor: pointer;
 }
 #ip-left>div{
-    border-color: transparent #409eff transparent transparent !important;
+    border-color: transparent #be954a transparent transparent !important;
 }
 #ip-right>div{
-    border-color: transparent transparent transparent #409eff !important;
+    border-color: transparent transparent transparent #be954a !important;
 }
 .videoList img{
     width: 50px;
@@ -184,8 +184,8 @@
     color: #606266;
 }
 .cancel-btn:hover{
-    border-color: #409eff !important;
-    color: #409eff !important;
+    border-color: #be954a !important;
+    color: #be954a !important;
 }
 .uploadVideo{
     width: 100%;

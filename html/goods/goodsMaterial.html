@@ -32,19 +32,23 @@
                         <div class=" layui-col-sm5 layui-col-md4 layui-col-lg2">
                             <div style="max-width: 220px;" class="key-contnet">
                                 <div class="key-text">关键字</div>
-                                <input type="text" placeholder="图片名称" class="KyeText">
+                                <input type="text" placeholder="素材名" class="KyeText">
                             </div>
                         </div>         
-                        <div class=" layui-col-sm4 layui-col-md2">
-                            <div class="itmes">
-                                <div class="layui-form">
-                                    <div class="layui-inline">
-                                        <div class="layui-input-inline">
-                                            <input type="text" class="layui-input" id="itemrs1">
+                        <div class=" layui-col-sm6 layui-col-md3">
+                            <div class="key-contnet">
+                                <div class="key-text">发布时间</div>
+                                <div class="itmes">
+                                    <div class="layui-form">
+                                        <div class="layui-inline">
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input" id="itemrs1">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                           
                         </div>
                         <div class=" layui-col-sm4 layui-col-md2">
                             <button class="layui-btn layui-btn-normal query-btnClick btn" style="margin-top: 0;">
@@ -54,50 +58,9 @@
                         </div>
                     </div>
                     <div class="imgListBox">
-                        <div class="ImgFlex" id="ImgFlex">
-                            <div class="ImgList">
-                                <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="../../img/failure.jpg" title="Cr7">
-                                <p >Cr7</p>
-                            </div>
-                            <div class="ImgList">
-                                <img src="http://172.16.68.199:8087/image/589b28cb-5adb-469b-b497-b131b6648d9c.jpg" alt="">
-                                <!-- <p>Cr7</p> -->
-                            </div>
-                            <div class="ImgList">
-                                <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="">
-                                <!-- <p>Cr7</p> -->
-                            </div>
-                            <div class="ImgList">
-                                <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="">
-                                <p>Cr7</p>
-                            </div>
-                            <div class="ImgList">
-                                <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="">
-                                <p>Cr7</p>
-                            </div>
-                            <div class="ImgList">
-                                <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="">
-                                <p>Cr7</p>
-                            </div>
-                            <div class="ImgList">
-                                <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="">
-                                <p>Cr7</p>
-                            </div>
-                            <div class="ImgList">
-                                <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="">
-                                <p>Cr7</p>
-                            </div>
-                            <div class="ImgList">
-                                <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="">
-                                <p>Cr7</p>
-                            </div>
-                            <div class="ImgList">
-                                <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="">
-                                <p>Cr7</p>
-                            </div>
-                            <div class="ImgList">
-                                <img src="http://172.16.68.199:8087/image/9078d845-05c9-40fb-a1a7-732463149fe7.jpg " alt="">
-                                <p>Cr7</p>
+                        <div class="data-list">
+                            <div class="listtable">
+                                <table class="layui-hide" id="ImgData" lay-filter="ImgData"></table>
                             </div>
                         </div>
                     </div>
@@ -116,7 +79,7 @@
                         <div class=" layui-col-sm5 layui-col-md4 layui-col-lg2">
                             <div style="max-width: 220px;" class="key-contnet">
                                 <div class="key-text">关键字</div>
-                                <input type="text" placeholder="图片名称" class="KyeText">
+                                <input type="text" placeholder="素材名" class="KyeText">
                             </div>
                         </div>         
                         <div class=" layui-col-sm4 layui-col-md2">
@@ -138,45 +101,10 @@
                         </div>
                     </div>
                     <div class="videoListBox">
-                        <div class="videoFlex">
-                            <div class="videoList">
-                                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4"></video> 
-                                <!-- <img src="../../img/play.jpg" alt=""> -->
-                                <p>Cr7</p>
+                        <div class="data-list">
+                            <div class="listtable">
+                                <table class="layui-hide" id="VideoData" lay-filter="VideoData"></table>
                             </div>
-                            <div class="videoList">
-                                <video src="http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4"></video> 
-                                <p>Cr7</p>
-                            </div>
-                            <div class="videoList">
-                                <video src="http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4"></video> 
-                                <p>Cr7</p>
-                            </div>
-                            <div class="videoList">
-                                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4"></video> 
-                                <p>Cr7</p>
-                            </div>
-                            <div class="videoList">
-                                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4"></video> 
-                                <p>Cr7</p>
-                            </div>
-                            <div class="videoList">
-                                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4"></video> 
-                                <p>Cr7</p>
-                            </div>
-                            <div class="videoList">
-                                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4"></video> 
-                                <p>Cr7</p>
-                            </div>
-                            <div class="videoList">
-                                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4"></video> 
-                                <p>Cr7</p>
-                            </div>
-                            <div class="videoList">
-                                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4"></video> 
-                                <p>Cr7</p>
-                            </div>
-                           
                         </div>
                     </div>
                 </div>
@@ -264,6 +192,16 @@
         </div>
     </div>
 </body>
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="add">
+            <span>预览</span>
+        </button>
+    </div>
+</script>
+<script type="text/html" id="imgtmp">
+    <div><img src="{{d.Img}}  " style="width: 40px; height: 40px;"></div>
+</script>
 <script src="../../js/public/imagePreview.min.js"></script>
 <script src="../../js/goods/goodsMaterial.js"></script>
 

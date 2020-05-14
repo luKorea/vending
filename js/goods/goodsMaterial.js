@@ -1,4 +1,4 @@
-layui.use(['form', 'layer', 'laydate'], function () {
+layui.use(['form', 'layer', 'laydate','table'], function () {
     ImagePreview.init({id:$("#ImgFlex img")})
     // tab切换
     $('.navTab li').click(function () {
@@ -60,4 +60,76 @@ layui.use(['form', 'layer', 'laydate'], function () {
         $('.addVideoCont').fadeOut();
         $('.addVideoBox').addClass('margin0')
     })
+
+    var table=layui.table,
+        advertisingLis = table.render({
+        elem: '#ImgData'
+
+        , cols: [[
+            { field: 'Img', width: 150, title: '素材图',templet: "#imgtmp" },
+            { field: 'phone', width: 180, title: '素材名', },
+            { field: 'CreationTime', width: 200, title: '素材编号', },
+            { field: 'bili', width: 180, title: '发布时间', sort: true },
+            { field: '2', width: 150, title: '发布人', },
+            // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
+            { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo',},
+
+        ]],
+        data: [
+            {
+                Img:'http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg ',
+                username: '2222'
+                , phone: 'cs45121'
+                , CreationTime: '支付宝'
+                , amendTime: '99'
+                , bili: '1:2'
+            },
+            {
+                Img:'http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg ',
+                username: '2222'
+                , phone: 'cs45121'
+                , CreationTime: '支付宝'
+                , amendTime: '99'
+                , bili: '1:2'
+            }
+        ]
+        , page: true
+        , id: 'ImgListData'
+
+    });
+  var  videoTable = table.render({
+        elem: '#VideoData'
+
+        , cols: [[
+            { field: 'Img', width: 150, title: '微缩图',templet: "#imgtmp" },
+            { field: 'phone', width: 180, title: '素材名', },
+            { field: 'CreationTime', width: 200, title: '素材编号', },
+            { field: 'bili', width: 180, title: '发布时间', sort: true },
+            { field: '2', width: 150, title: '发布人', },
+            // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
+            { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo',},
+
+        ]],
+        data: [
+            {
+                Img:'http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg ',
+                username: '2222'
+                , phone: 'cs45121'
+                , CreationTime: '支付宝'
+                , amendTime: '99'
+                , bili: '1:2'
+            },
+            {
+                Img:'http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg ',
+                username: '2222'
+                , phone: 'cs45121'
+                , CreationTime: '支付宝'
+                , amendTime: '99'
+                , bili: '1:2'
+            }
+        ]
+        , page: true
+        , id: 'VideoListData'
+
+    });
 })

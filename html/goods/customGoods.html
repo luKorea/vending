@@ -24,8 +24,9 @@
 						</button>
 					</div>
 					<div class=" layui-col-sm4 layui-col-md4 layui-col-lg2">
-						<div>
-							商品类目:
+						<div class="key-contnet">
+							<!-- 商品类目: -->
+							<div class="key-text">商品类目</div>
 							<form class="layui-form" action="" style="max-width: 120px;">
 								<div class="layui-form" lay-filter="myDiv">
 									<select name="" id="GoodsType" lay-filter="mySelect">
@@ -40,9 +41,10 @@
 							<input type="text" placeholder="商品名称、编号查询" class="KyeText">
 						</div>
 					</div>
-					<div class=" layui-col-sm3 layui-col-md3 layui-col-lg2">
-						<div>
-							状态:
+					<div class=" layui-col-sm3 layui-col-md4 layui-col-lg2">
+						<div class="key-contnet">
+							<!-- 状态: -->
+							<div class="key-text">状态</div>
 							<form class="layui-form" action="" style="max-width: 120px;">
 								<div class="layui-form" lay-filter="myDiv">
 									<select name="" id="" lay-filter="stateSelect">
@@ -55,8 +57,9 @@
 						</div>
 					</div>
 					<div class=" layui-col-sm8 layui-col-md6 layui-col-lg3" style="margin-top:10px;">
-						<div>
-							销售价范围：
+						<div class="key-contnet">
+							<!-- 销售价范围： -->
+							<div class="key-text">销售价范围：</div>
 							<div class="price-one-input">
 								<input type="number" class="startingPrice">
 							</div>
@@ -66,7 +69,7 @@
 							</div>
 						</div>
 					</div>
-					<div class=" layui-col-sm4 layui-col-md2">
+					<div class=" layui-col-sm4 layui-col-md4 layui-col-lg2">
 						<button class="layui-btn layui-btn-normal query-btnClick btn" style="margin-top: 0;">
 							<i class="layui-icon layui-icon-search"></i>
 							<span>查询</span>
@@ -181,9 +184,15 @@
 		<!-- 编辑商品 -->
 		<div class="editor" style="overflow-y: auto;">
 			<div class="editor-content">
-				<div class="content-header">
+				<!-- <div class="content-header">
 					<span>编辑商品</span>
-				</div>
+				</div> -->
+				<div class="playHeader">
+                    <span>广告预览</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
 				<div class="editor-body">
 					<div style="margin: 30px;">
 						<div>
@@ -355,10 +364,7 @@
 							</div>
 						</div>
 						<div class="content-footer" style="margin-top:30px;">
-							<div style="text-align: center;">
-								<button class="layui-btn layui-btn-normal btn cancel-btn">
-									<span>取消</span>
-								</button>
+							<div style="text-align: center;">		
 								<button class="layui-btn layui-btn-normal btn editDetermine-btn"
 									style="margin: 0 0 0 15px;">
 									<span>确定</span>
@@ -366,6 +372,9 @@
 								<button class="layui-btn layui-btn-normal btn reading-btn" id="edit"
 									style="margin: 0 0 0 15px;">
 									<span>预览</span>
+								</button>
+								<button class="layui-btn layui-btn-normal btn cancel-btn">
+									<span>取消</span>
 								</button>
 							</div>
 						</div>
@@ -378,9 +387,15 @@
 		<!-- 添加商品-->
 		<div class="addGoods" style="overflow-y: auto;">
 			<div class="editor-content">
-				<div class="content-header">
+				<!-- <div class="content-header">
 					<span>添加商品</span>
-				</div>
+				</div> -->
+				<div class="playHeader">
+                    <span>广告预览</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
 				<div class="editor-body">
 					<div style="margin: 30px;">
 						<div>
@@ -531,10 +546,7 @@
 							</div>
 						</div>
 						<div class="content-footer" style="margin-top:30px;">
-							<div style="text-align: center;">
-								<button class="layui-btn layui-btn-normal btn cancel-btn2">
-									<span>取消</span>
-								</button>
+							<div style="text-align: center;">	
 								<button class="layui-btn layui-btn-normal btn determine-btn2"
 									style="margin: 0 0 0 15px;">
 									<span>确定</span>
@@ -542,6 +554,9 @@
 								<button class="layui-btn layui-btn-normal btn reading-btn" id="add"
 									style="margin: 0 0 0 15px;">
 									<span>预览</span>
+								</button>
+								<button class="layui-btn layui-btn-normal btn cancel-btn2">
+									<span>取消</span>
 								</button>
 							</div>
 						</div>

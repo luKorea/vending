@@ -77,7 +77,7 @@
     transition: all 1s;
 }
 .anUp ul li:hover{
-    color: #409eff;
+    color: #be954a;
 }
 .preferential,.editor,.addGoods,.reading{
     position: fixed;
@@ -163,18 +163,18 @@
     width: 100%;
 }
 .inputWidth input:hover{
-    border: 1px solid #409eff;  
+    border: 1px solid #be954a;  
 }
 .choice{
     width: 500px;
 }
 .layui-form-checked[lay-skin=primary] i{
-    border-color: #409eff!important;
-    background-color: #409eff;
+    border-color: #be954a!important;
+    background-color: #be954a;
     color: #fff;
 }
 .layui-form-checked span{
-    color:#409eff !important;
+    color:#be954a !important;
 }
 .btn{
     /* display: block; */
@@ -204,12 +204,12 @@
     border-radius: 4px;
 }  
 .cancel-btn:hover{
-    border-color: #409eff !important ;
-    color: #409eff !important;
+    border-color: #be954a !important ;
+    color: #be954a !important;
 }
 .cancel-btn2:hover{
-    border-color: #409eff !important ;
-    color: #409eff !important;
+    border-color: #be954a !important ;
+    color: #be954a !important;
 }
 .determine-btn{
     display: inline-block !important;
@@ -425,7 +425,7 @@
     
 }
 .reading-down:hover{
-    color: #409eff;
+    color: #be954a;
 }
 .reading-box{
     width: 88%;

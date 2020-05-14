@@ -2,11 +2,17 @@ layui.use([ 'laydate', 'table','layer'], function () {
         var layer=layui.layer;
     // 日期选择
     var laydate = layui.laydate;
+    // laydate.render({
+    //     elem: '#test6'
+    //     // ,type: 'datetime'
+    //     ,range: true    
+    //     ,isInitValue: false
+    //   });
     laydate.render({
         elem: '#test6'
-        // ,type: 'datetime'
-        ,range: true    
-        ,isInitValue: false
+        ,type: 'datetime'
+        ,range: '到'
+        ,format: 'yyyy年M月d日H时m分s秒'
       });
     var table = layui.table;
     table.render({
