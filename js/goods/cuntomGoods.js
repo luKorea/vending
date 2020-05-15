@@ -172,7 +172,8 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       // 点击商品信息事件
       $('.GoodsInformation').click(function () {
         $('.anUp').slideUp();
-        $('.editor').fadeIn();
+        // $('.editor').fadeIn();
+        popupShow('editor','editor-content');
 
         form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
           "goodsBarcode": singleData.goods_Core // "商品条码
@@ -189,9 +190,8 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       });
       // 点击预览事件
       $('.anUp .previewDetails').click(function(){
-        $('.anUp').slideUp();
+        $('.anUp').slideUp();   
         $('.Goods-wrap').addClass('fixed');
-        // $('.Goods-warp').addClass('fixed');
         $('.reading').fadeIn();
         $('.reading-header').css({
           'left': $('.reading-contnet').offset().left + 'px',
@@ -334,14 +334,17 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   var addGoodsImg = null;
   // var addGoodsImgIndex=null;
   $('.add-btn').click(function () {
-    $('.addGoods').fadeIn();
+    // $('.addGoods').fadeIn();
+    popupShow('addGoods','editor-content');
     $('.tailoring-container').fadeIn();
+    
     addGoodsImg = 2;
   });
 
   // 取消添加自定义商品
   $('.addGoods .cancel-btn2').click(function () {
-    $('.addGoods').fadeOut();
+    // $('.addGoods').fadeOut();
+    popupHide('addGoods','editor-content');
     $('.upload-demo2 .upload-list2').fadeOut();
   });
 
@@ -749,5 +752,11 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
     }
     return new File([u8arr], filename, { type: mime });
   }
+   // 关闭弹窗
+   $('.playHeader .close').click(function () {
+    $(this).parent().parent().addClass('margin0')
+    $(this).parents('.maskContnet').fadeOut();
+    indexFlag=null;
+});
 
 })

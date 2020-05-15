@@ -38,7 +38,7 @@
     height: auto;
 }
 .layui-laypage .layui-laypage-curr .layui-laypage-em{
-    background-color: #409eff;
+    background-color: #be954a;
 }
 .addClass,.editClass{
     position: fixed;
@@ -52,7 +52,7 @@
     display: none;
     /* overflow-y: auto; */
 }
-.addContent{
+.addContent,.editContent{
     width: 700px;
     position: relative;
     margin: 15vh auto 50px;
@@ -60,6 +60,7 @@
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0,0,0,.3);
     box-sizing: border-box;
+    transition: all 0.3s;
 }
 .content-header{
     padding: 20px 20px 10px;
@@ -120,10 +121,10 @@
     border-radius: 4px;
 }
 .cancel-btn:hover{
-    border-color: #409eff !important ;
-    color: #409eff !important;
+    border-color: #be954a !important ;
+    color: #be954a !important;
 }
 .editCancel-btn:hover{
-    border-color: #409eff !important ;
-    color: #409eff !important;
+    border-color: #be954a !important ;
+    color: #be954a !important;
 }

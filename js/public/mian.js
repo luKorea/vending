@@ -105,3 +105,13 @@ $(`.${after}`).animate({
 },500);
 }
 
+// 弹窗显示
+function popupShow(contnet,contnetChild){
+  $(`.${contnet}`).fadeIn();
+  $(`.${contnetChild}`).removeClass('margin0')
+};
+// 取消关闭弹窗
+function popupHide(contnet,contnetChild){
+  $(`.${contnetChild}`).addClass('margin0')
+  $(`.${contnet}`).fadeOut();
+};

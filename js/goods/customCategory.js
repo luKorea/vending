@@ -18,7 +18,7 @@ layui.use(['table', 'form', 'layer',], function () {
       { field: 'remark', width: 150, title: '备注' },
       // { field: 'type', width: 180, title: '使用机型'},
       { field: 'userName', width: 200, title: '创建人', templet: function (d) {
-        return d.user.userName != null ? d.user.userName : ""
+        return d.user != null ? d.user.userName : ''
       }},  // { field: 'users', width: 180, title: '商户名', sort: true }, //templet: '<div>{{d.user.userName}}</div>'      
       { field: 'classifyTime', width: 200, title: '创建时间', sort: true },
       { field: 'users ', width: 160, title: '最后操作人' },
@@ -66,10 +66,10 @@ layui.use(['table', 'form', 'layer',], function () {
   var indexFlag = null;
   var operationId = null;
   $('.add-btn').click(function () { 
-    $('.addClass').fadeIn();
+    popupShow('addClass','addContent');
   })
   $('.cancel-btn').click(function () {
-    $('.addClass').fadeOut();
+    popupHide('addClass','addContent')
   })
   var form = layui.form;
 
@@ -99,7 +99,8 @@ layui.use(['table', 'form', 'layer',], function () {
 
                 }
               })
-              $('.addClass').fadeOut();
+              // $('.addClass').fadeOut();
+              popupHide('addClass','addContent');
             }
           }
         })
@@ -116,7 +117,7 @@ layui.use(['table', 'form', 'layer',], function () {
     // 操作事件
      editData = obj.data;
     if (obj.event === 'edit') {
-      $('.editClass').fadeIn();
+      popupShow('editClass','editContent');
       form.val("editValData", {
         "addTypeName": editData.classifyName,
         "addNote": editData.remark,
@@ -157,8 +158,7 @@ layui.use(['table', 'form', 'layer',], function () {
                 }
               })
               layer.msg('修改成功');
-              // alert(1)
-              $('.editClass').fadeOut();
+              popupHide('editClass','editContent');
             } else {
               layer.msg('操作失败');
             }
@@ -173,6 +173,12 @@ layui.use(['table', 'form', 'layer',], function () {
   })
 
   $('.editCancel-btn').click(function () {
-    $('.editClass').fadeOut();
+    popupHide('editClass','editContent')
   })
+
+// 头部×关闭弹窗
+  $('.playHeader .close').click(function () {
+    $(this).parent().parent().addClass('margin0')
+    $(this).parents('.maskContnet').fadeOut();
+}); 
 })                                                      

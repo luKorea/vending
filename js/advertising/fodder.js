@@ -9,10 +9,8 @@ layui.use([ 'laydate', 'table','layer'], function () {
     //     ,isInitValue: false
     //   });
     laydate.render({
-        elem: '#test6'
-        ,type: 'datetime'
-        ,range: '到'
-        ,format: 'yyyy年M月d日H时m分s秒'
+        elem: '#test6',
+        range: true,
       });
     var table = layui.table;
     table.render({
@@ -68,15 +66,12 @@ layui.use([ 'laydate', 'table','layer'], function () {
 
     // 填写上传素材框
     $('.issue').click(function(){
-        $('.uploadTitle').fadeOut();
-        $('.titleBox').addClass('margin0')
-        $('.uploadMaterialCont').fadeIn();
-        $('.uploadMateriaBox').removeClass('margin0')
+        popupHide('uploadTitle','titleBox');
+        popupShow('uploadMaterialCont','uploadMateriaBox');
     });
     // 取消
     $('.uploadMateriaFooter').click(function(){
-        $('.uploadMaterialCont').fadeOut();
-        $('.uploadMateriaBox    ').addClass('margin0')
+        popupHide('uploadMaterialCont','uploadMateriaBox');
     })
 
 
@@ -130,8 +125,40 @@ layui.use([ 'laydate', 'table','layer'], function () {
         $('.previewBox').removeClass('margin0');
     });
     // 关闭预览
-    $('.previewHeader button').click(function(){
-        $('.previewBox').addClass('margin0');
-        $('.materialPreview').fadeOut();
-    })
+    // $('.previewHeader button').click(function(){
+    //     $('.previewBox').addClass('margin0');
+    //     $('.materialPreview').fadeOut();
+    // })
+     // 关闭弹窗
+     $('.playHeader .close').click(function () {
+        $(this).parent().parent().addClass('margin0')
+        $(this).parents('.maskContnet').fadeOut();
+
+    });
+
+    // $.ajax({
+    //     type:'post',
+    //     url:`/api/advertising/saveAdvertising`,
+    //     data:JSON.stringify({
+    //         name:'粤宝文化',
+    //         size:'3',
+    //         attribute:'图片',
+    //         duration:'20',
+    //         status:1,
+    //         uid:'1'
+    //     }),
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         token,
+    //       },
+    //       success:function(res){
+    //           console.log(res)
+    //       }
+    // })
+    var form=layui.form;
+    form.on('select(myAttribute)', function(data){
+        console.log(data.elem); //得到select原始DOM对象
+        console.log(data.value); //得到被选中的值
+        console.log(data.othis); //得到美化后的DOM对象
+      }); 
 });

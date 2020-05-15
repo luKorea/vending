@@ -44,8 +44,8 @@
                                     </div>
                                 </div> -->
                                 <div class="layui-inline">
-                                    <div class="layui-input-inline">
-                                        <input type="text" class="layui-input" id="test6" placeholder="开始 到 结束" autocomplete="off">
+                                      <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" id="test6" placeholder=" - " autocomplete="off">
                                       </div>
                                   </div>
                             </div>
@@ -196,10 +196,16 @@
         </div>
 
         <!-- 上传素材部分 -->
-        <div class="uploadMaterialCont maskContnet" style="overflow-y: auto;">
+        <div class="uploadMaterialCont maskContnet" style="overflow-y: auto;display: block;">
             <div class="uploadMateriaBox margin0">
-                <div class="BoxHeader">
+                <!-- <div class="BoxHeader">
                     <span>上传素材</span>
+                </div> -->
+                <div class="playHeader">
+                    <span>上传素材</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
                 </div>
                 <div class="uploadMateriaBody">
                     <div>
@@ -213,11 +219,11 @@
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>素材属性</label>
                                 <div class="FlexInputWidth">
-                                    <div class="layui-form" lay-filter="myDiv">
-                                        <select name="" id="" lay-filter="mySelect">
-                                            <option value="zhang">全部</option>
-                                            <option value="wang">图片</option>
-                                            <option value="li">视频</option>
+                                    <div class="layui-form" >
+                                        <select name="" id="" lay-filter="myAttribute">
+                                            <option value="全部">全部</option>
+                                            <option value="图片">图片</option>
+                                            <option value="视频">视频</option>
                                         </select>
                                     </div>
                                 </div>
@@ -261,29 +267,30 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="layui-btn layui-btn-normal  btn " type="button">
+                            <button class="layui-btn layui-btn-normal  btn ImgBtn" type="button" style="display: none;">
                                 <i class="layui-icon layui-icon-add-circle "></i>
                                 <span>上传图片</span>
                             </button>
-                            <button class="layui-btn layui-btn-normal  btn " type="button">
+                            <button class="layui-btn layui-btn-normal  btn VideoBtn" type="button" style="display: none;">
                                 <i class="layui-icon layui-icon-add-circle "></i>
                                 <span>上传视频</span>
                             </button>
                             <div class="materiaDow">
                                 <div class="materiaImg">
                                     <img src="http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg " alt="">
+                                    <!-- <video src=""></video> -->
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="uploadMateriaFooter">
-                    <button class="layui-btn layui-btn-normal btn cancel-btn">
-                        <span>取消</span>
-                    </button>
+                <div class="uploadMateriaFooter">          
                     <button class="layui-btn layui-btn-normal btn editDetermine-btn"
                         style="margin: 0 0 0 15px;">
                         <span>确定</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn cancel-btn">
+                        <span>取消</span>
                     </button>
                 </div>
             </div>
@@ -291,9 +298,15 @@
         <!-- 素材预览 -->
         <div class="materialPreview maskContnet">
             <div class="previewBox margin0">
-                <div class="previewHeader BoxHeader">
+                <!-- <div class="previewHeader BoxHeader">
                     <span>上传素材</span>
                     <button>
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div> -->
+                <div class="playHeader">
+                    <span>广告预览</span>
+                    <button class="close" type="button">
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
                 </div>
@@ -315,7 +328,7 @@
         <div class="anUp">
             <ul>
                 <!-- <li class="preferentialClick">优惠策略</li> -->
-                <li class="GoodsInformation">素材信息</li>
+                <li class="GoodsInformation">编辑素材</li>
                 <li class="previewDetails">预览素材</li>
             </ul>
 

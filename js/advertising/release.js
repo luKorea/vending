@@ -4,7 +4,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
     laydate.render({
         elem: '#test6',
          range: true,
-        type: 'datetime'
+        // type: 'datetime'
     });
 
 
@@ -106,7 +106,6 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
     $('.playHeader .close').click(function () {
         $(this).parent().parent().addClass('margin0')
         $(this).parents('.maskContnet').fadeOut();
-
     });
     // 广告素材预览
     $('.listPreview .previewBtn').click(function () {
