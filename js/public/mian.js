@@ -115,3 +115,23 @@ function popupHide(contnet,contnetChild){
   $(`.${contnetChild}`).addClass('margin0')
   $(`.${contnet}`).fadeOut();
 };
+
+function base64(file,element){
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = ()=>{
+      const img  = reader.result;
+      $(`${element}`).attr('src',img)
+    }
+}
+
+
+// base64转化为file
+function dataURLtoFile(dataurl, filename) {//将base64转换为文件
+  var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, { type: mime });
+}

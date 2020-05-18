@@ -33,6 +33,7 @@
             <!-- 右边 -->
             <div class="right-contnet">
                 <div class="query-header">
+                    <form action="" class="layui-form" lay-filter="KeyValData">
                     <div class="layui-row">
                         <div class="layui-col-sm9 layui-col-md9 layui-col-lg4">
                             <div class="itmes key-contnet">
@@ -53,7 +54,7 @@
                         <div class="layui-col-sm8 layui-col-md9 layui-col-lg4">
                             <div style="max-width: 280px;" class="key-contnet">
                                 <div class="key-text">关键字</div>
-                                <input type="text" placeholder="请输入素材名">
+                                <input type="text" name="name" placeholder="请输入素材名">
                             </div>
                         </div>
                         <div class="layui-col-sm8 layui-col-md9 layui-col-lg4">
@@ -62,10 +63,10 @@
                                 <div class="key-text">素材属性</div>
                                 <form class="layui-form" action="" style="max-width: 240px;">
                                     <div class="layui-form" lay-filter="myDiv">
-                                        <select name="" id="" lay-filter="mySelect">
-                                            <option value="zhang">全部</option>
-                                            <option value="wang">图片</option>
-                                            <option value="li">视频</option>
+                                        <select name="attribute" id="" lay-filter="mySelect">
+                                            <option value="">全部</option>
+                                            <option value="图片">图片</option>
+                                            <option value="视频">视频</option>
                                         </select>
                                     </div>
                                 </form>
@@ -77,10 +78,10 @@
                                 <div class="key-text">素材类别</div>
                                 <form class="layui-form" action="" style="max-width: 240px;">
                                     <div class="layui-form" lay-filter="myDiv">
-                                        <select name="" id="" lay-filter="mySelect">
-                                            <option value="zhang">全部</option>
-                                            <option value="wang">横板</option>
-                                            <option value="li">竖版</option>
+                                        <select name="type" id="" lay-filter="mySelect">
+                                            <option value="">全部</option>
+                                            <option value="横板">横板</option>
+                                            <option value="竖版">竖版</option>
                                         </select>
                                     </div>
                                 </form>
@@ -92,11 +93,11 @@
                                 <div class="key-text">审核状态</div>
                                 <form class="layui-form" action="" style="max-width: 240px;">
                                     <div class="layui-form" lay-filter="myDiv">
-                                        <select name="" id="" lay-filter="mySelect">
-                                            <option value="zhang">全部</option>
-                                            <option value="wang">未审核</option>
-                                            <option value="li">审核通过</option>
-                                            <option value="li">审核未通过</option>
+                                        <select name="checkStatus" id="" lay-filter="mySelect">
+                                            <option value="">全部</option>
+                                            <option value="未审核">未审核</option>
+                                            <option value="审核通过">审核通过</option>
+                                            <option value="审核未通过">审核未通过</option>
                                         </select>
                                     </div>
                                 </form>
@@ -108,11 +109,11 @@
                                 <div class="key-text">大小范围(mb)</div>
                                 <form class="layui-form" action="" style="display: flex;justify-content: start;">
                                     <div style="max-width: 100px;">
-                                        <input type="number">
+                                        <input type="number" name="minSize">
                                     </div>
                                     <span style="line-height: 35px;">——</span>    
                                     <div style="max-width: 100px;">
-                                        <input type="number">
+                                        <input type="number" name="maxSize">
                                     </div>
                                 </form>
                                 
@@ -127,17 +128,17 @@
                                 <div class="key-text">素材状态</div>
                                 <form class="layui-form" action="" style="max-width: 240px;">
                                     <div class="layui-form" lay-filter="myDiv">
-                                        <select name="" id="" lay-filter="mySelect">
-                                            <option value="zhang">全部</option>
-                                            <option value="wang">启用</option>
-                                            <option value="li">不启用</option>
+                                        <select name="advertisingStatus" id="" lay-filter="mySelect">
+                                            <option value="">全部</option>
+                                            <option value="是">启用</option>
+                                            <option value="否">不启用</option>
                                         </select>
                                     </div>
                                 </form>
                             </div>
                         </div>
                         <div class="layui-col-sm7 layui-col-md9 layui-col-lg6">
-                            <button class="layui-btn layui-btn-normal  btn">
+                            <button class="layui-btn layui-btn-normal  btn keyQueryBtn">
                                 <i class="layui-icon layui-icon-search"></i>
                                 <span>查询</span>
                             </button>
@@ -150,6 +151,7 @@
                             </button>
                         </div>
                     </div>
+                </form>
                 </div>
                 <div class="data-list">
                     <div class="listtable">
@@ -196,7 +198,7 @@
         </div>
 
         <!-- 上传素材部分 -->
-        <div class="uploadMaterialCont maskContnet" style="overflow-y: auto;display: block;">
+        <div class="uploadMaterialCont maskContnet" style="overflow-y: auto;">
             <div class="uploadMateriaBox margin0">
                 <!-- <div class="BoxHeader">
                     <span>上传素材</span>
@@ -213,15 +215,21 @@
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>素材名</label>
                                 <div class="FlexInputWidth">
-                                    <input type="text">
+                                    <input type="text" name="materialName">
                                 </div>
                             </div>
+                            <!-- <div class="listFlex">
+                                <label><span style="color: red;">*</span>素材编号</label>
+                                <div class="FlexInputWidth">
+                                    <input type="text" name="materialNumber">
+                                </div>
+                            </div> -->
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>素材属性</label>
                                 <div class="FlexInputWidth">
                                     <div class="layui-form" >
-                                        <select name="" id="" lay-filter="myAttribute">
-                                            <option value="全部">全部</option>
+                                        <select name="materiaAttribute" id="" lay-filter="myAttribute">
+                                            <option value="">全部</option>
                                             <option value="图片">图片</option>
                                             <option value="视频">视频</option>
                                         </select>
@@ -229,19 +237,13 @@
                                 </div>
                             </div>
                             <div class="listFlex">
-                                <label><span style="color: red;">*</span>播放时长</label>
-                                <div class="FlexInputWidth">
-                                    <input type="text" placeholder="以秒为单位">
-                                </div>
-                            </div>
-                            <div class="listFlex">
                                 <label><span style="color: red;">*</span>素材类别</label>
                                 <div class="FlexInputWidth">
                                     <div class="layui-form" lay-filter="myDiv">
-                                        <select name="" id="" lay-filter="mySelect">
-                                            <option value="zhang">全部</option>
-                                            <option value="wang">横版</option>
-                                            <option value="li">竖版</option>
+                                        <select name="materiaType" id="" lay-filter="mySelect">
+                                            <option value="">全部</option>
+                                            <option value="横版">横版</option>
+                                            <option value="竖版">竖版</option>
                                         </select>
                                     </div>
                                 </div>
@@ -262,31 +264,34 @@
                                 <label><span style="color: red;">*</span>素材状态</label>
                                 <div class="FlexInputWidth">
                                     <div class="layui-form-item" style="margin: 0;">
-                                        <input type="radio" name="goodsStatus" value="0" title="不启用">
-                                        <input type="radio" name="goodsStatus" value="1" title="启用" checked>
+                                        <input type="radio" name="materiaStatus" value="否" title="不启用">
+                                        <input type="radio" name="materiaStatus" value="是" title="启用" checked>
                                     </div>
                                 </div>
                             </div>
                             <button class="layui-btn layui-btn-normal  btn ImgBtn" type="button" style="display: none;">
                                 <i class="layui-icon layui-icon-add-circle "></i>
                                 <span>上传图片</span>
+                                <input type="file" accept="image/*" name="ImgFile">
                             </button>
-                            <button class="layui-btn layui-btn-normal  btn VideoBtn" type="button" style="display: none;">
+                            <button class="layui-btn layui-btn-normal  btn VideoBtn" type="button" style="display: none;margin-left: 0;">
                                 <i class="layui-icon layui-icon-add-circle "></i>
                                 <span>上传视频</span>
+                                <input type="file" accept="video/*" name="videoFile">
                             </button>
-                            <div class="materiaDow">
+                            <div class="materiaDow" style="display: none;">
                                 <div class="materiaImg">
-                                    <img src="http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg " alt="">
-                                    <!-- <video src=""></video> -->
+                                    <img src="" alt="" style="display: none;">
+                                    <video src="" style="display: none;" controls="controls" id="video">
+                                    </video>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
                 <div class="uploadMateriaFooter">          
-                    <button class="layui-btn layui-btn-normal btn editDetermine-btn"
-                        style="margin: 0 0 0 15px;">
+                    <button class="layui-btn layui-btn-normal btn confirmBtn"
+                        style="margin: 0 0 0 15px;" type="button">
                         <span>确定</span>
                     </button>
                     <button class="layui-btn layui-btn-normal btn cancel-btn">
@@ -334,6 +339,9 @@
 
         </div>
     </div>
+</script>
+<script type="text/html" id="imgtmp">
+    <div><img src="{{d.img}}  " style="width: 40px;"></div>
 </script>
 <script src="../../js/advertising/fodder.js"></script>
 </html>

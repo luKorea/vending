@@ -220,7 +220,7 @@
     border: 1px solid #c0ccda;
     border-radius: 6px;
 }
-.materiaImg img{
+.materiaImg img,.materiaImg video{
     width: 100%;
 }
 .cancel-btn{
@@ -259,7 +259,7 @@
 .anUp{
     position: absolute;
     top: 35px;
-    left: -20px;
+    left: 40px;
     z-index: 11;
     display: none;
 }
@@ -319,4 +319,15 @@
 .listtable .layui-form{
     width: 100%;
     overflow-x: auto;
+}
+.ImgBtn,.VideoBtn{
+    position: relative;
+}
+.ImgBtn input,.VideoBtn input{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
 }
