@@ -69,7 +69,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
       } else {
         return {
           "code": res.code, //解析接口状态
-          "msg": res.message, //解析提示文本
+          "msg": res.msg, //解析提示文本
         }
       }
 

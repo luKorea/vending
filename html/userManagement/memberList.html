@@ -85,31 +85,35 @@
                                 <span class="switchTitle">是否启用：</span>
                                 <div>
                                     <div class="switchContent">
-                                        <input type="checkbox" name="startThe" lay-skin="switch" lay-text="开启|关闭" checked>
+                                        <input type="checkbox" name="startThe" lay-skin="switch" lay-text="开启|关闭"
+                                            checked>
                                     </div>
-                                </div>   
+                                </div>
                             </div>
                             <div class="switchList">
                                 <span class="switchTitle">终端管理员：</span>
                                 <div>
                                     <div class="switchContent">
-                                        <input type="checkbox" name="administrator" lay-skin="switch" lay-text="开启|关闭" checked>
+                                        <input type="checkbox" name="administrator" lay-skin="switch" lay-text="开启|关闭"
+                                            checked>
                                     </div>
-                                </div>   
+                                </div>
                             </div>
                         </div>
                         <div style="margin-top: 10px; border-bottom: 1px solid rgb(204, 204, 204);">
-                            <div class="terminal">
-                                <span>终端权限：</span>
-                                <div class="checkCont">
-                                    <input type="checkbox" name="" title="管理员权限" lay-skin="primary"> 
-                                    <input type="checkbox" name="" title="商品管理权限" lay-skin="primary"> 
-                                    <input type="checkbox" name="" title="货道管理权限" lay-skin="primary"> 
-                                    <input type="checkbox" name="" title="广告管理权限" lay-skin="primary"> 
-                                    <input type="checkbox" name="" title="wifi权限(仅AT端)" lay-skin="primary"> 
-                                
+                            
+                                <div class="terminal ">
+                                    <span>终端权限：</span>
+                                    <div class="checkCont">
+                                        <input type="checkbox" lay-filter="permissions" name="haha" title="管理员权限"
+                                            lay-skin="primary" value="22">
+                                        <input type="checkbox" name="aaacc" title="商品管理权限" lay-skin="primary" value="55">
+                                        <input type="checkbox" disabled name="" title="货道管理权限" lay-skin="primary">
+                                        <input type="checkbox" name="" title="广告管理权限" lay-skin="primary">
+                                        <input type="checkbox" name="" title="wifi权限(仅AT端)" lay-skin="primary">
+                                    </div>
                                 </div>
-                            </div>
+                           
                         </div>
                         <div style="text-align: center; margin-top: 15px;">
                             <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">

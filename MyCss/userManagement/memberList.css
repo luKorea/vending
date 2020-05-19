@@ -13,8 +13,8 @@
     font-size: 12px;
     border-radius: 3px;
     color: #fff;
-    background-color: #409eff;
-    border-color: #409eff;
+    background-color: #be954a;
+    border-color: #be954a;
     display: inline-block;
     line-height: 1;
     white-space: nowrap;
@@ -94,7 +94,7 @@
     font-size: 16px;
 }
 .OperationHeader>button :hover{
-    color: #409eff;
+    color: #be954a;
 }
 .OperationHeader>button i{
     color: #909399;
@@ -137,7 +137,7 @@
     width: 100%;
 }
 .inputWidth input:hover{
-    border-color: #409eff;
+    border-color: #be954a;
 }
 .switchList{
     width: 100%;
@@ -164,8 +164,8 @@
     margin-bottom: 10px;
 }
 .layui-form-onswitch{
-    border-color: #409eff;
-    background-color: #409eff;
+    border-color: #be954a;
+    background-color: #be954a;
 }
 .terminal{
     width: 100%;
@@ -180,8 +180,8 @@
     border: 1px solid #dcdfe6 !important;
 }
 .cancel-btn:hover{
-    border-color: #409eff !important ;
-    color: #409eff !important;
+    border-color: #be954a !important ;
+    color: #be954a !important;
 }
 .layui-btn-container{
     position: relative;
@@ -212,5 +212,5 @@
     transition: all 1s;
 }
 .anUp ul li:hover{
-    color: #409eff;
+    color: #be954a;
 }

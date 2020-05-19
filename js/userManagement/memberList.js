@@ -225,5 +225,17 @@ layui.use(['table','form'], function () {
       } 
       }
       
-    })
+    });
+
+    // 监听终端权限
+    form.on('checkbox(permissions)', function(data){
+      console.log(data.elem.checked); //是否被选中，true或者false
+      console.log(data.value); //复选框value值，也可以通过data.elem.value得到
+  //     form.val("information", {
+  //       "aaacc":true
+  // });
+  var data1 = form.val("information");
+  console.log(data1)
+    }); 
+    
 });

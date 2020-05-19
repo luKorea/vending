@@ -209,11 +209,11 @@
 .FlexInputWidth{
     width: 60%;
 }
-.materiaDow{
+.materiaDow,.materiaDowEdit{
     width: 100%;
     margin-top: 22px;
 }
-.materiaImg{
+.materiaImg,.materiaImgEdit{
     width: 80%;
     margin: 0 auto;
     padding: 10px;
@@ -223,12 +223,15 @@
 .materiaImg img,.materiaImg video{
     width: 100%;
 }
-.cancel-btn{
+.materiaImgEdit img,.materiaImgEdit video{
+    width: 100%;
+}
+.cancel-btn,.editCancelBtn{
     background: #fff !important;
     border: 1px solid #dcdfe6 !important;
     color: #606266;
 }   
-.cancel-btn:hover{
+.cancel-btn:hover,.editCancelBtn:hover{
     color: #be954a;
     border-color: #be954a !important;
     transition: all 0.3s ;

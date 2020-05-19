@@ -96,6 +96,7 @@
                                         <select name="checkStatus" id="" lay-filter="mySelect">
                                             <option value="">全部</option>
                                             <option value="未审核">未审核</option>
+                                            <option value="待审核">审核</option>
                                             <option value="审核通过">审核通过</option>
                                             <option value="审核未通过">审核未通过</option>
                                         </select>
@@ -218,17 +219,11 @@
                                     <input type="text" name="materialName">
                                 </div>
                             </div>
-                            <!-- <div class="listFlex">
-                                <label><span style="color: red;">*</span>素材编号</label>
-                                <div class="FlexInputWidth">
-                                    <input type="text" name="materialNumber">
-                                </div>
-                            </div> -->
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>素材属性</label>
                                 <div class="FlexInputWidth">
                                     <div class="layui-form" >
-                                        <select name="materiaAttribute" id="" lay-filter="myAttribute">
+                                        <select name="materiaAttribute"  id="" lay-filter="myAttribute">
                                             <option value="">全部</option>
                                             <option value="图片">图片</option>
                                             <option value="视频">视频</option>
@@ -248,18 +243,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="listFlex">
-                                <label><span style="color: red;">*</span>广告类型</label>
-                                <div class="FlexInputWidth">
-                                    <div class="layui-form" lay-filter="myDiv">
-                                        <select name="" id="" lay-filter="mySelect">
-                                            <option value="zhang">全部</option>
-                                            <option value="wang">横版</option>
-                                            <option value="li">竖版</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> -->
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>素材状态</label>
                                 <div class="FlexInputWidth">
@@ -291,10 +274,96 @@
                 </div>
                 <div class="uploadMateriaFooter">          
                     <button class="layui-btn layui-btn-normal btn confirmBtn"
-                        style="margin: 0 0 0 15px;" type="button">
+                        style="margin: 0 0 0 15px;" type="button" >
                         <span>确定</span>
                     </button>
                     <button class="layui-btn layui-btn-normal btn cancel-btn">
+                        <span>取消</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+          <!-- 编辑素材部分 -->
+          <div class="editMaterialCont maskContnet" style="overflow-y: auto;">
+            <div class="uploadMateriaBox margin0">
+                <!-- <div class="BoxHeader">
+                    <span>上传素材</span>
+                </div> -->
+                <div class="playHeader">
+                    <span>编辑素材</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="uploadMateriaBody">
+                    <div>
+                        <form action="" class="layui-form" lay-filter="editValData">
+                            <div class="listFlex">
+                                <label><span style="color: red;">*</span>素材名</label>
+                                <div class="FlexInputWidth">
+                                    <input type="text" disabled  name="materialName">
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label><span style="color: red;">*</span>素材属性</label>
+                                <div class="FlexInputWidth">
+                                    <div class="layui-form" >
+                                        <select name="materiaAttribute" disabled id="" lay-filter="">
+                                            <option value="">全部</option>
+                                            <option value="图片">图片</option>
+                                            <option value="视频">视频</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label><span style="color: red;">*</span>素材类别</label>
+                                <div class="FlexInputWidth">
+                                    <div class="layui-form" lay-filter="myDiv">
+                                        <select name="materiaType" disabled id="" lay-filter="mySelect">
+                                            <option value="">全部</option>
+                                            <option value="横版">横版</option>
+                                            <option value="竖版">竖版</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label><span style="color: red;">*</span>素材状态</label>
+                                <div class="FlexInputWidth">
+                                    <div class="layui-form-item" style="margin: 0;">
+                                        <input type="radio" name="materiaStatus" value="否" title="不启用">
+                                        <input type="radio" name="materiaStatus" value="是" title="启用" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="layui-btn layui-btn-normal  btn edieImgBtn" type="button" style="display: none;">
+                                <i class="layui-icon layui-icon-add-circle "></i>
+                                <span>上传图片</span>
+                                <input type="file" accept="image/*" name="">
+                            </button>
+                            <button class="layui-btn layui-btn-normal  btn editVideoBtn" type="button" style="display: none;margin-left: 0;">
+                                <i class="layui-icon layui-icon-add-circle "></i>
+                                <span>上传视频</span>
+                                <input type="file" accept="video/*" name="">
+                            </button>
+                            <div class="materiaDowEdit" style="display: none;">
+                                <div class="materiaImgEdit">
+                                    <img src="" alt="" style="display: none;">
+                                    <video src="" style="display: none;" controls="controls" id="video">
+                                    </video>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="uploadMateriaFooter">          
+                    <button class="layui-btn layui-btn-normal btn editConfirmBtn"
+                        style="margin: 0 0 0 15px;" type="button" >
+                        <span>确定</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn editCancelBtn">
                         <span>取消</span>
                     </button>
                 </div>
@@ -317,7 +386,8 @@
                 </div>
                 <div class="perviewBody">
                     <div class="imgCont">
-                        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588942169127&di=687fc02922b3f51c66350f4a9f60598f&imgtype=0&src=http%3A%2F%2Fimg8.zol.com.cn%2Fbbs%2Fupload%2F23370%2F23369536.jpg" alt="">
+                        <img src="" alt="" style="display: none;">
+                        <video src="" controls="controls" style="display: none;"> </video>
                     </div>
                 </div>
             </div>
