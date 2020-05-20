@@ -1,6 +1,7 @@
 layui.use(['laydate', 'table', 'layer'], function () {
     var token = sessionStorage.token;
     var layer = layui.layer;
+    var form = layui.form;
     // 日期选择
     var laydate = layui.laydate;
     // laydate.render({
@@ -10,9 +11,9 @@ layui.use(['laydate', 'table', 'layer'], function () {
     //     ,isInitValue: false
     //   });
     //开始时间
-    var startTime='';
+    var startTime = '';
     //结束时间
-    var  endTime='';
+    var endTime = '';
     laydate.render({
         elem: '#test6',
         range: true,
@@ -20,8 +21,8 @@ layui.use(['laydate', 'table', 'layer'], function () {
             console.log(value); //得到日期生成的值，如：2017-08-18
             timerKey = value.split(' - ');
             console.log(timerKey);
-            startTime=timerKey[0];
-            endTime=timerKey[1];
+            startTime = timerKey[0];
+            endTime = timerKey[1];
         }
 
     });
@@ -89,20 +90,20 @@ layui.use(['laydate', 'table', 'layer'], function () {
 
     // 查询事件
     $('.keyQueryBtn').click(function () {
-        var KeyValData=form.val("KeyValData");
+        var KeyValData = form.val("KeyValData");
         tableIns.reload({
             where: { //设定异步数据接口的额外参数，任意设     
-                keyWord:KeyValData.name,//关键字
-                attribute:KeyValData.attribute,//素材属性
-                type:KeyValData.type,//素材类别
-                checkStatus:KeyValData.checkStatus,//审核状态
-                minSize:KeyValData.minSize,//最小mb
-                maxSize:KeyValData.maxSize,//最大mb
-                status:KeyValData.advertisingStatus,//素材状态
-                startTime:startTime,//开始时间
-                endTime:endTime//结束时间
+                keyWord: KeyValData.name,//关键字
+                attribute: KeyValData.attribute,//素材属性
+                type: KeyValData.type,//素材类别
+                checkStatus: KeyValData.checkStatus,//审核状态
+                minSize: KeyValData.minSize,//最小mb
+                maxSize: KeyValData.maxSize,//最大mb
+                status: KeyValData.advertisingStatus,//素材状态
+                startTime: startTime,//开始时间
+                endTime: endTime//结束时间
             }
-          })
+        })
     })
     // 上传素材弹出说明框
     $('.uploadBtn').click(function () {
@@ -137,30 +138,42 @@ layui.use(['laydate', 'table', 'layer'], function () {
     $('.del-btn').click(function () {
         var checkStatus = table.checkStatus('tableId');
         console.log(checkStatus)
-        var listID=null;
+        var listID = null;
         if (checkStatus.data.length > 0) {
-            listID=checkStatus.data.map((item,index)=>{
+            listID = checkStatus.data.map((item, index) => {
                 return item.vId;
             });
             console.log(listID);
             layer.confirm('确定删除？', function (index) {
                 $.ajax({
-                    type:'post',
-                    url:'/api/advertising/deleteAdvertising',
+                    type: 'post',
+                    url: '/api/advertising/deleteAdvertising',
                     headers: {
                         "Content-Type": "application/json",
                         token,
                     },
-                    data:JSON.stringify({list:listID}),
-                    success:function(res){
+                    data: JSON.stringify({ list: listID }),
+                    success: function (res) {
                         console.log(res);
-                        if(res.code==200){
-                            layer.msg('请选择要删除的素材', { icon: 7, anim: 1 });
-                        }
                         layer.close(index);
+                        if (res.code == 200) {
+                            layer.msg(res.message, { icon: 1 });
+                            tableIns.reload({
+                                where: {
+                                }
+                            })
+                        } else if (res.code == 201) {
+                            layer.msg(res.message, { icon: 7, anim: 1 });
+                        } else if (res.code == 202) {
+                            tableIns.reload({
+                                where: {
+                                }
+                            });
+                            layer.msg(res.message, { icon: 7 });
+                        }
                     }
                 })
-              });
+            });
         } else {
             layer.msg('请选择要删除的素材', { icon: 7, anim: 1 });
         }
@@ -178,8 +191,11 @@ layui.use(['laydate', 'table', 'layer'], function () {
     });
     var indexFlag = null;
     valData = null;
-    table.on('tool(moneyData)', function (obj) {      
+    var editImgVideo=null;
+    table.on('tool(moneyData)', function (obj) {
+
         valData = obj.data;
+        editImgVideo=valData.img;
         console.log(valData)
         $('.anUp').slideUp();
         if (indexFlag != valData.vId) {
@@ -190,32 +206,159 @@ layui.use(['laydate', 'table', 'layer'], function () {
         }
         // 预览素材
         $('.previewDetails').click(function () {
+            console.log(44)
             $('.anUp').slideUp();
-            if(valData.img.indexOf('mp4')>-1){
-                $('.imgCont video').attr('src',valData.img).show().siblings().hide();       
-            }else{
-                $('.imgCont img').attr('src',valData.img).show().siblings().hide();    
-            }      
+            if (valData.img.indexOf('mp4') > -1) {
+                $('.imgCont video').attr('src', valData.img).show().siblings().hide();
+            } else {
+                $('.imgCont img').attr('src', valData.img).show().siblings().hide();
+            }
             indexFlag = null;
-            popupShow('materialPreview','previewBox');
+            popupShow('materialPreview', 'previewBox');
         });
 
         // 编辑素材
-        $('.GoodsInformation').click(function(){
+        $('.GoodsInformation').click(function () {
+            console.log(33)
+
             $('.anUp').slideUp();
             indexFlag = null;
-            popupShow('editMaterialCont','uploadMateriaBox');
-            form.val("editValData",{
-                "materialName":valData.name,
-                "materiaAttribute":valData.advertisingAttribute,
-                "materiaType":valData.advertisingType,
-                "materiaStatus":valData.advertisingStatus
+            popupShow('editMaterialCont', 'uploadMateriaBox');
+            form.val("editValData", {
+                "materialName": valData.name,
+                "materiaAttribute": valData.advertisingAttribute,
+                "materiaType": valData.advertisingType,
+                "materiaStatus": valData.advertisingStatus
             })
+            if (valData.checkStatus == '未审核' || valData.checkStatus == '审核未通过') {
+                $('.editCont select[name="materiaAttribute"]').prop("disabled", '');
+                $('.editCont select[name="materiaType"]').prop("disabled", '');
+                form.render();
+                $('.materiaDowEdit').show().children().show();
+                if (valData.advertisingAttribute == '图片') {
+                    $('.editImgBtn').show().siblings('.editVideoBtn').hide();
+                    $('.materiaImgEdit img').attr('src', valData.img).show().siblings().hide();
+                } else {
+                    $('.editVideoBtn').show().siblings('.editImgBtn').hide();
+                    $('.materiaImgEdit video').attr('src', valData.img).show().siblings().hide();
+                }
+            } else {
+                $('.editCont select[name="materiaAttribute"]').prop("disabled", true);
+                $('.editCont select[name="materiaType"]').prop("disabled", true);
+                form.render();
+                $('.editImgBtn').hide();
+                $('.editVideoBtn').hide();
+                $('.materiaDowEdit').hide().children().hide();
+                $('.materiaImgEdit img').hide().siblings().hide();
+            }
         })
     });
-   $('.editCancelBtn').click(function(){
-    popupHide('editMaterialCont','uploadMateriaBox');
-   })
+
+    // 编辑确定修改
+    $('.editConfirmBtn').click(function () {
+        var editValDataConfirm = form.val("editValData");
+        console.log(editValDataConfirm)
+        if (valData.checkStatus == '未审核' || valData.checkStatus == '审核未通过') {
+            $.ajax({
+                type: 'post',
+                url: '/api/advertising/findAdvertising',
+                headers: {
+                    "Content-Type": "application/json",
+                    token,
+                },
+                data: JSON.stringify({
+                    id: valData.vId
+                }),
+                success: function (res) {
+                    console.log(res)
+                    if (res.code == 200) {
+                        if (res.data == '未审核' || res.data == '审核未通过') {
+
+                        } else {
+                            layer.confirm('检测到当前素材只能修改名称和状态，是否继续修改？', function (index) {
+                                console.log(999);
+                                layer.close(index);
+                            })
+                        }
+                    }
+                }
+            })
+        } else {
+            editMaterial(
+                valData.vId,
+                editValDataConfirm.materialName,
+                editValDataConfirm.materiaAttribute,
+                editValDataConfirm.materiaStatus,
+                editValDataConfirm.materiaType,
+                valData.duration,
+                valData.img,
+                valData.size,
+                valData.url);
+        }
+    });
+    // 素材内容 editImgVideo
+       
+    // 监听 编辑素材属性选择
+    form.on('select(EditSelect)', function (data) {
+        console.log(data.value); //得到被选中的值
+        if(data.value=='图片'){
+            $('.editImgBtn').show().siblings('.editVideoBtn').hide();
+            $('.materiaImgEdit img').show().siblings().hide();
+        }else{
+            $('.editVideoBtn').show().siblings('.editImgBtn').hide();
+            $('.materiaImgEdit video').show().siblings().hide();
+        }
+    });
+
+    $('.editImgBtn input[name="edit"]').change(function(e){
+        var EditImgFile=null;
+        EditImgFile=FormData();
+        EditImgFile.append('file',e.target.files[0]);
+        
+
+    })
+    
+
+    // 编辑素材            id 名字  属性                   是否启用         类别            时长    原图  大小 微缩图
+    function editMaterial(vId, name, advertisingAttribute, advertisingStatus, advertisingType, duration, img, size, url) {
+        $.ajax({
+            type: 'post',
+            url: '/api/advertising/updateAdvertising',
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            data: JSON.stringify({
+                vId,
+                name,
+                advertisingAttribute,
+                advertisingStatus,
+                advertisingType,
+                duration,
+                img,
+                url,
+                size
+            }),
+            success: function (editRes) {
+                console.log(editRes)
+                if (editRes.code == 200) {
+                    tableIns.reload({
+                        where: {
+                        }
+                    })
+                    layer.msg(res.message, { icon: 1, anim: 1 });
+
+                } else if (res.code == 403) {
+                    window.history.go(-1)
+                } else {
+                    layer.msg(res.message)
+                }
+            }
+        })
+    }
+    $('.editCancelBtn').click(function () {
+        popupHide('editMaterialCont', 'uploadMateriaBox');
+    })
 
     // 关闭弹窗
     $('.playHeader .close').click(function () {
@@ -223,7 +366,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
         $(this).parents('.maskContnet').fadeOut();
 
     });
-    var form = layui.form;
+    
     form.on('select(myAttribute)', function (data) {
         // console.log(data.value); //得到被选中的值
         if (data.value == '图片') {
@@ -364,19 +507,19 @@ layui.use(['laydate', 'table', 'layer'], function () {
                                 }
                             });
                             layer.msg(res.message)
-                            form.val("uploadValData",{
-                                "materialName":'',
-                                "materiaAttribute":'',
-                                "materiaType":'',
-                                "materiaStatus":'', 
+                            form.val("uploadValData", {
+                                "materialName": '',
+                                "materiaAttribute": '',
+                                "materiaType": '',
+                                "materiaStatus": '',
                             });
                             $('.uploadMaterialCont .materiaImg video').hide();
                             $('.uploadMaterialCont .materiaDow').hide();
                             $('.uploadMaterialCont .materiaDow img').hide();
                             $('.uploadMaterialCont .ImgBtn').hide();
                             $('.uploadMaterialCont .VideoBtn').hide();
-                            imgVideoHttp=null;
-                            ImgFile=null;
+                            imgVideoHttp = null;
+                            ImgFile = null;
                         } else if (res.code == 403) {
                             window.history.go(-1)
                         } else {
@@ -425,6 +568,4 @@ layui.use(['laydate', 'table', 'layer'], function () {
         //     }
         // })
     };
-    // layer.msg('请选择要删除的素材', { icon: 1});
-    layer.msg('请选择要删除的素材', { icon: 2});
 });

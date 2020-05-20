@@ -234,8 +234,28 @@ layui.use(['table','form'], function () {
   //     form.val("information", {
   //       "aaacc":true
   // });
-  var data1 = form.val("information");
-  console.log(data1)
+  // var data1 = form.val("information");
+  // console.log(data1)
+      if(data.elem.checked){
+        form.val("information",{
+          "Goods":true,
+          "Aisle":true,
+          "Advertising":true,
+          "Wifi":true
+        });
+        $('.checkCont .checkboxList').prop('disabled',true);
+        form.render();
+      }else{
+        form.val("information",{
+          "Goods":false,
+          "Aisle":false,
+          "Advertising":false,
+          "Wifi":false
+        });
+        // $('.checkCont .checkboxList').attr('disabled')=false;
+        $('.checkCont .checkboxList').prop("disabled",'');
+        form.render();
+      }
     }); 
     
 });

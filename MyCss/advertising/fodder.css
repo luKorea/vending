@@ -306,7 +306,7 @@
     width: 350px;
     margin: 0 auto 30px;
 }
-.imgCont img{
+.imgCont img,.imgCont video{
     width: 100%;
 }
 .data-list{
@@ -332,5 +332,17 @@
     position: absolute;
     top: 0;
     left: 0;
+    opacity: 0;
+}
+.editImgBtn,.editVideoBtn{
+    position: relative;
+}
+.editImgBtn input,.editVideoBtn input{
+    position: absolute;
+    /* clip: rect(100px, 0px, 0px, 0px); */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
     opacity: 0;
 }

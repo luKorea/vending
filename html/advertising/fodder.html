@@ -297,19 +297,19 @@
                     </button>
                 </div>
                 <div class="uploadMateriaBody">
-                    <div>
+                    <div class="editCont">
                         <form action="" class="layui-form" lay-filter="editValData">
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>素材名</label>
                                 <div class="FlexInputWidth">
-                                    <input type="text" disabled  name="materialName">
+                                    <input type="text"  name="materialName">
                                 </div>
                             </div>
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>素材属性</label>
                                 <div class="FlexInputWidth">
                                     <div class="layui-form" >
-                                        <select name="materiaAttribute" disabled id="" lay-filter="">
+                                        <select name="materiaAttribute" disabled id="" lay-filter="EditSelect">
                                             <option value="">全部</option>
                                             <option value="图片">图片</option>
                                             <option value="视频">视频</option>
@@ -321,8 +321,8 @@
                                 <label><span style="color: red;">*</span>素材类别</label>
                                 <div class="FlexInputWidth">
                                     <div class="layui-form" lay-filter="myDiv">
-                                        <select name="materiaType" disabled id="" lay-filter="mySelect">
-                                            <option value="">全部</option>
+                                        <select name="materiaType" disabled id="" lay-filter="">
+                                            <!-- <option value="">全部</option> -->
                                             <option value="横版">横版</option>
                                             <option value="竖版">竖版</option>
                                         </select>
@@ -338,10 +338,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="layui-btn layui-btn-normal  btn edieImgBtn" type="button" style="display: none;">
+                            <button class="layui-btn layui-btn-normal  btn editImgBtn" type="button" style="display: none;">
                                 <i class="layui-icon layui-icon-add-circle "></i>
                                 <span>上传图片</span>
-                                <input type="file" accept="image/*" name="">
+                                <input type="file" accept="image/*" name="edit">
                             </button>
                             <button class="layui-btn layui-btn-normal  btn editVideoBtn" type="button" style="display: none;margin-left: 0;">
                                 <i class="layui-icon layui-icon-add-circle "></i>
@@ -396,7 +396,7 @@
 </body>
 <script type="text/html" id="barDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm btn operation" lay-event="add">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="add" type="button">
             <span>操作</span>
             <i class="layui-icon layui-icon-down" style="font-size:12px !important;"></i>
         </button>
@@ -405,8 +405,8 @@
                 <!-- <li class="preferentialClick">优惠策略</li> -->
                 <li class="GoodsInformation">编辑素材</li>
                 <li class="previewDetails">预览素材</li>
+                <li class="submitAudit" >提交审核</li>
             </ul>
-
         </div>
     </div>
 </script>
