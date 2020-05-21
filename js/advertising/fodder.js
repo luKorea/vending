@@ -45,7 +45,11 @@ layui.use(['laydate', 'table', 'layer'], function () {
             { field: 'advertisingType', width: 150, title: '素材类别', sort: true },
             { field: 'duration', width: 100, title: '播放时长', sort: true },
             { field: 'checkStatus', width: 160, title: '审核状态', },
-            { field: 'advertisingStatus', width: 160, title: '素材状态', },
+            {
+                field: 'advertisingStatus', width: 160, title: '素材状态', templet: function (d) {
+                    return d.advertisingStatus = '是' ? '启用' : '不启用'
+                }
+            },
             { field: 'creationTime', width: 160, title: '上传时间', },
             { field: 'addUser', width: 150, title: '上传人 ', },
             // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo',fixed: 'right',right: 0 },
@@ -85,12 +89,15 @@ layui.use(['laydate', 'table', 'layer'], function () {
             } else {
 
             }
+        
         }
     });
 
     // 查询事件
     $('.keyQueryBtn').click(function () {
         var KeyValData = form.val("KeyValData");
+        var keyStatus = form.val("keyStatus");
+        console.log(KeyValData);
         tableIns.reload({
             where: { //设定异步数据接口的额外参数，任意设     
                 keyWord: KeyValData.name,//关键字
@@ -99,7 +106,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
                 checkStatus: KeyValData.checkStatus,//审核状态
                 minSize: KeyValData.minSize,//最小mb
                 maxSize: KeyValData.maxSize,//最大mb
-                status: KeyValData.advertisingStatus,//素材状态
+                status: keyStatus.advertisingStatus,//素材状态
                 startTime: startTime,//开始时间
                 endTime: endTime//结束时间
             }
@@ -191,69 +198,117 @@ layui.use(['laydate', 'table', 'layer'], function () {
     });
     var indexFlag = null;
     valData = null;
-    var editImgVideo=null;
+    // 素材内容
+    var editImgVideo = null;
+    // 素材大小
+    var editSize = null;
+    // 素材时长
+    var editDuration = null;
+    var numberOf=1;
     table.on('tool(moneyData)', function (obj) {
-
-        valData = obj.data;
-        editImgVideo=valData.img;
-        console.log(valData)
-        $('.anUp').slideUp();
-        if (indexFlag != valData.vId) {
-            indexFlag = valData.vId;
-            $(this).siblings('.anUp').slideDown();
-        } else {
-            indexFlag = null;
-        }
-        // 预览素材
-        $('.previewDetails').click(function () {
-            console.log(44)
+        if(obj.event==numberOf){
+            valData = obj.data;
+            editImgVideo = valData.img;
+            editSize = valData.size;
+            editDuration = valData.duration;
+            console.log(valData)
             $('.anUp').slideUp();
-            if (valData.img.indexOf('mp4') > -1) {
-                $('.imgCont video').attr('src', valData.img).show().siblings().hide();
-            } else {
-                $('.imgCont img').attr('src', valData.img).show().siblings().hide();
+            if(valData.checkStatus=='未审核'){
+                $('.submitAudit').show();
+            }else{
+                $('.submitAudit').hide();
             }
-            indexFlag = null;
-            popupShow('materialPreview', 'previewBox');
-        });
-
-        // 编辑素材
-        $('.GoodsInformation').click(function () {
-            console.log(33)
-
-            $('.anUp').slideUp();
-            indexFlag = null;
-            popupShow('editMaterialCont', 'uploadMateriaBox');
-            form.val("editValData", {
-                "materialName": valData.name,
-                "materiaAttribute": valData.advertisingAttribute,
-                "materiaType": valData.advertisingType,
-                "materiaStatus": valData.advertisingStatus
-            })
-            if (valData.checkStatus == '未审核' || valData.checkStatus == '审核未通过') {
-                $('.editCont select[name="materiaAttribute"]').prop("disabled", '');
-                $('.editCont select[name="materiaType"]').prop("disabled", '');
-                form.render();
-                $('.materiaDowEdit').show().children().show();
-                if (valData.advertisingAttribute == '图片') {
-                    $('.editImgBtn').show().siblings('.editVideoBtn').hide();
-                    $('.materiaImgEdit img').attr('src', valData.img).show().siblings().hide();
+            if (indexFlag != valData.vId) {
+                indexFlag = valData.vId;
+                $(this).siblings('.anUp').slideDown();
+            } else {
+                indexFlag = null;
+            }
+            // 预览素材
+            $('.previewDetails').click(function () {
+                console.log(44)
+                $('.anUp').slideUp();
+                if (valData.img.indexOf('mp4') > -1) {
+                    $('.imgCont video').attr('src', valData.img).show().siblings().hide();
                 } else {
-                    $('.editVideoBtn').show().siblings('.editImgBtn').hide();
-                    $('.materiaImgEdit video').attr('src', valData.img).show().siblings().hide();
+                    $('.imgCont img').attr('src', valData.img).show().siblings().hide();
                 }
-            } else {
-                $('.editCont select[name="materiaAttribute"]').prop("disabled", true);
-                $('.editCont select[name="materiaType"]').prop("disabled", true);
-                form.render();
-                $('.editImgBtn').hide();
-                $('.editVideoBtn').hide();
-                $('.materiaDowEdit').hide().children().hide();
-                $('.materiaImgEdit img').hide().siblings().hide();
-            }
-        })
+                indexFlag = null;
+                popupShow('materialPreview', 'previewBox');
+            });
+    
+            // 编辑素材
+            $('.GoodsInformation').click(function () {
+                $('.anUp').slideUp();
+                indexFlag = null;
+                popupShow('editMaterialCont', 'uploadMateriaBox');
+                form.val("editValData", {
+                    "materialName": valData.name,
+                    "materiaAttribute": valData.advertisingAttribute,
+                    "materiaType": valData.advertisingType,
+                    "materiaStatus": valData.advertisingStatus
+                })
+                if (valData.checkStatus == '未审核' || valData.checkStatus == '审核未通过') {
+                    $('.editCont select[name="materiaAttribute"]').prop("disabled", '');
+                    $('.editCont select[name="materiaType"]').prop("disabled", '');
+                    form.render();
+                    $('.materiaDowEdit').show().children().show();
+                    if (valData.advertisingAttribute == '图片') {
+                        $('.editImgBtn').show().siblings('.editVideoBtn').hide();
+                        $('.materiaImgEdit img').attr('src', valData.img).show().siblings().hide();
+                    } else {
+                        $('.editVideoBtn').show().siblings('.editImgBtn').hide();
+                        $('.materiaImgEdit video').attr('src', valData.img).show().siblings().hide();
+                    }
+                } else {
+                    $('.editCont select[name="materiaAttribute"]').prop("disabled", true);
+                    $('.editCont select[name="materiaType"]').prop("disabled", true);
+                    form.render();
+                    $('.editImgBtn').hide();
+                    $('.editVideoBtn').hide();
+                    $('.materiaDowEdit').hide().children().hide();
+                    $('.materiaImgEdit img').hide().siblings().hide();
+                }
+            })
+    
+           
+        }
+        
+        
     });
-
+          // 提交审核
+    $('body').on('click','.submitAudit',function(){
+        $('.anUp').slideUp();
+            indexFlag = null;
+            layer.confirm('确定提交审核？',function(index){
+                $.ajax({
+                    type:'post',
+                    url:'/api/advertising/checkAdvertisingStatus',
+                    headers: {
+                        "Content-Type": "application/json",
+                        token,
+                    },
+                    data:JSON.stringify({
+                        vId:valData.vId,
+                        status:'待审核'
+                    }),
+                    success:function(res){
+                        layer.close(index);
+                        if(res.code==200){
+                            layer.msg('提交成功', { icon: 1 });
+                            tableIns.reload({
+                                where: {
+                                }
+                            });
+                        }else if(res.code==403){
+                            window.history.go(-1)
+                        }else{
+                            layer.msg(res.message, { icon: 1 });
+                        }
+                    }
+                })
+            });
+    })
     // 编辑确定修改
     $('.editConfirmBtn').click(function () {
         var editValDataConfirm = form.val("editValData");
@@ -273,10 +328,33 @@ layui.use(['laydate', 'table', 'layer'], function () {
                     console.log(res)
                     if (res.code == 200) {
                         if (res.data == '未审核' || res.data == '审核未通过') {
+                            if ((editImgVideo.indexOf('jpg') > 1 & editValDataConfirm.materiaAttribute == '图片') || (editImgVideo.indexOf('mp4') > 1 & editValDataConfirm.materiaAttribute == '视频')) {
+                                editMaterial(
+                                    valData.vId,
+                                    editValDataConfirm.materialName,
+                                    editValDataConfirm.materiaAttribute,
+                                    editValDataConfirm.materiaStatus,
+                                    editValDataConfirm.materiaType,
+                                    editDuration,
+                                    editImgVideo,
+                                    editSize.slice(0, 4),
+                                    valData.url);
+                            } else {
+                                layer.msg('素材属性不正确', { icon: 7 });
+                            }
 
                         } else {
                             layer.confirm('检测到当前素材只能修改名称和状态，是否继续修改？', function (index) {
-                                console.log(999);
+                                editMaterial(
+                                    valData.vId,
+                                    editValDataConfirm.materialName,
+                                    editValDataConfirm.materiaAttribute,
+                                    editValDataConfirm.materiaStatus,
+                                    editValDataConfirm.materiaType,
+                                    valData.duration,
+                                    valData.img,
+                                    valData.size,
+                                    valData.url);
                                 layer.close(index);
                             })
                         }
@@ -297,27 +375,84 @@ layui.use(['laydate', 'table', 'layer'], function () {
         }
     });
     // 素材内容 editImgVideo
-       
+
     // 监听 编辑素材属性选择
     form.on('select(EditSelect)', function (data) {
         console.log(data.value); //得到被选中的值
-        if(data.value=='图片'){
+        if (data.value == '图片') {
             $('.editImgBtn').show().siblings('.editVideoBtn').hide();
             $('.materiaImgEdit img').show().siblings().hide();
-        }else{
+        } else {
             $('.editVideoBtn').show().siblings('.editImgBtn').hide();
             $('.materiaImgEdit video').show().siblings().hide();
         }
     });
-
-    $('.editImgBtn input[name="edit"]').change(function(e){
-        var EditImgFile=null;
-        EditImgFile=FormData();
-        EditImgFile.append('file',e.target.files[0]);
-        
+    // 编辑图片选择
+    $('.editImgBtn input[name="editImg"]').change(function (e) {
+        let that = this;
+        editSize = e.target.files[0].size / 1024 / 1024 + ''
+        var EditImgFile = new FormData();
+        EditImgFile.append('file', e.target.files[0]);
+        $.ajax({
+            type: 'post',
+            url: `/api/fileUpload`,
+            processData: false,
+            contentType: false,
+            headers: {
+                token,
+            },
+            data: EditImgFile,
+            success: function (res) {
+                console.log(res)
+                if (res.code == 0) {
+                    editImgVideo = res.data.src;
+                    $('.materiaImgEdit img').attr('src', editImgVideo);
+                    $('.materiaImgEdit video').attr('src', '');
+                    $(that).val();
+                } else if (res.code == 403) {
+                    window.history.go(-1)
+                } else {
+                    layer.msg(res.message)
+                }
+            }
+        })
+    });
+    //编辑视频选择
+    $('.editVideoBtn input[name="editVideo"]').change(function (e) {
+        editSize = e.target.files[0].size / 1024 / 1024 + ''
+        let that2 = this;
+        var EditVideoFile = new FormData();
+        EditVideoFile.append('file', e.target.files[0]);
+        $.ajax({
+            type: 'post',
+            url: `/api/fileUpload`,
+            processData: false,
+            contentType: false,
+            headers: {
+                token,
+            },
+            data: EditVideoFile,
+            success: function (res) {
+                console.log(res);
+                if (res.code == 0) {
+                    editImgVideo = res.data.src;
+                    $('.materiaImgEdit video').attr('src', editImgVideo);
+                    $('.materiaImgEdit img').attr('src', '');
+                    $("#EditVideo")[0].addEventListener("loadedmetadata", function () {
+                        editDuration = parseInt(this.duration)
+                        // editDuration = this.duration; //获取总时长
+                        console.log(editDuration)
+                    });
+                    $(that2).val();
+                } else if (res.code == 403) {
+                    window.history.go(-1)
+                } else {
+                    layer.msg(res.message)
+                }
+            }
+        })
 
     })
-    
 
     // 编辑素材            id 名字  属性                   是否启用         类别            时长    原图  大小 微缩图
     function editMaterial(vId, name, advertisingAttribute, advertisingStatus, advertisingType, duration, img, size, url) {
@@ -340,22 +475,23 @@ layui.use(['laydate', 'table', 'layer'], function () {
                 size
             }),
             success: function (editRes) {
-                console.log(editRes)
                 if (editRes.code == 200) {
+                    popupHide('editMaterialCont', 'uploadMateriaBox');
                     tableIns.reload({
                         where: {
                         }
-                    })
-                    layer.msg(res.message, { icon: 1, anim: 1 });
-
-                } else if (res.code == 403) {
+                    });
+                    layer.msg(editRes.message, { icon: 1, anim: 1 });
+                } else if (editRes.code == 403) {
                     window.history.go(-1)
                 } else {
-                    layer.msg(res.message)
+                    layer.msg(editRes.message)
                 }
             }
         })
     }
+   
+
     $('.editCancelBtn').click(function () {
         popupHide('editMaterialCont', 'uploadMateriaBox');
     })
@@ -366,7 +502,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
         $(this).parents('.maskContnet').fadeOut();
 
     });
-    
+
     form.on('select(myAttribute)', function (data) {
         // console.log(data.value); //得到被选中的值
         if (data.value == '图片') {
@@ -438,7 +574,8 @@ layui.use(['laydate', 'table', 'layer'], function () {
                     $('.materiaImg video').attr('src', res.data.src);
                     imgVideoHttp = res.data.src;
                     $("#video")[0].addEventListener("loadedmetadata", function () {
-                        tol = this.duration; //获取总时长
+                        tol = parseInt(this.duration); //获取总时长
+                        console.log(tol)
                     });
                     that.val('');
                 } else {

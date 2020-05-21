@@ -1,4 +1,5 @@
 layui.use(['element', 'laydate', 'table', 'carousel'], function () {
+    var token=sessionStorage.token;
     // 日期选择
     var laydate = layui.laydate;
     laydate.render({
@@ -180,109 +181,61 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
             direction: 'right' //设置文本标注方位
         });
     };
-
-
-
     // 发布广告选择素材部分
     var ChooseMaterial = table.render({
-        elem: '#chooseData'
-        , cols: [[
+        elem: '#chooseData',
+        url: '/api/advertising/selectAdvertising',
+        method: 'post',
+        contentType: "application/json",
+        headers: {
+            token,
+        },
+         cols: [[
             { type: 'checkbox', },
-            { field: 'username', width: 80, title: '微缩图' },
-            { field: 'phone', width: 150, title: '素材名', },
-            { field: 'CreationTime', width: 100, title: '大小', },
-            { field: 'amendTime', width: 100, title: '分辨率', },
-            { field: 'bili', width: 150, title: '素材属性' },
-            { field: 'bili', width: 160, title: '上传时间', sort: true },
-            { field: 'jine', width: 150, title: '上传人 ', },
+            { field: 'img', width: 80, title: '微缩图',templet: "#imgtmp" },
+            { field: 'name', width: 150, title: '素材名', },
+            { field: 'size', width: 100, title: '大小', },
+            { field: 'advertisingAttribute', width: 150, title: '素材属性' },
+            { field: 'creationTime', width: 160, title: '上传时间', sort: true },
+            { field: 'addUser', width: 150, title: '上传人 ', },
         ]],
-        data: [
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '支付宝'
-                , amendTime: '99'
-                , bili: '1:2'
-                , id: '1'
-            },
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '支付宝'
-                , amendTime: '99'
-                , bili: '1:2'
-                , id: '2'
-            },
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '支付宝'
-                , amendTime: '99'
-                , bili: '1:2'
-                , id: '1'
-            },
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '支付宝'
-                , amendTime: '99'
-                , bili: '1:2'
-                , id: '2'
-            },
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '支付宝'
-                , amendTime: '99'
-                , bili: '1:2'
-                , id: '1'
-            },
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '支付宝'
-                , amendTime: '99'
-                , bili: '1:2'
-                , id: '2'
-            },
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '支付宝'
-                , amendTime: '99'
-                , bili: '1:2'
-                , id: '1'
-            },
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '支付宝'
-                , amendTime: '99'
-                , bili: '1:2'
-                , id: '2'
-            },
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '支付宝'
-                , amendTime: '99'
-                , bili: '1:2'
-                , id: '1'
-            },
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '支付宝'
-                , amendTime: '99'
-                , bili: '1:2'
-                , id: '2'
-            }
-        ],
         page: true,
         id: 'chooesId',
         height: 450,
         loading: true,
-        width: 950
+        width: 950,
+        request: {
+            'pageName': 'pageNum',
+            'limitName': 'pageSize'
+        },
+        parseData: function (res) {
+            // console.log(res)
+            //res 即为原始返回的数据
+            if (res.code == 200) {
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": '', //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.list //解析数据列表
+                };
+            } else {
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                }
+            }
+        },
+        response: {
+            statusCode: 200 //规定成功的状态码，默认：0
+        },
+        done: function (res) {
+            if (res.code == 403) {
+                window.history.go(-1)
+            } else {
+
+            }
+        
+        }
     });
 
 
