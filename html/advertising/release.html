@@ -66,8 +66,8 @@
                                     <div class="layui-form" lay-filter="myDiv">
                                         <select name="" id="" lay-filter="mySelect">
                                             <option value="zhang">全部</option>
-                                            <option value="wang">纪念币</option>
-                                            <option value="li">红包</option>
+                                            <option value="wang">首页广告位</option>
+                                            <option value="li">详情页广告位</option>
                                         </select>
                                     </div>
                                 </form>
@@ -85,7 +85,7 @@
                                 <span>发布广告</span>
                             </button>
                             <button class="layui-btn layui-btn-normal  btn machineAdvertisingBtn">
-                                <span>购金机广告</span>
+                                <span>购金机在用广告</span>
                             </button>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
 
         </div>
         <!-- 广告详情 -->
-        <div class="advertisingDetails maskContnet">
+        <div class="advertisingDetails maskContnet">  
             <div class="detailsBox margin0">
                 <div class="playHeader detalisHeader">
                     <span>广告详情 </span>
@@ -163,6 +163,33 @@
                     </button>
                 </div>
                 <div class="detailsBody">
+                    <ul class="detailsHeaderBox">
+                        <li class="detailsList">
+                            <div class="listSort">
+                                <span>排序</span>
+                            </div>
+                            <div class="listImg">
+                                <span>素材图</span>
+                            </div>
+                            <div class="listName">
+                                <span>素材名称</span>
+                            </div>
+                            <div class="listSize">
+                                <!-- <span>3(mb)</span> -->
+                                <!-- <input type="text" value="3"> -->
+                                <span>播放时长</span>
+                            </div>
+                            <div class="listAttribute">
+                                <span>素材属性</span>
+                            </div>
+                            <div class="listType">
+                                <span>素材类别</span>
+                            </div>
+                            <div class="uploadName">
+                                <span>上传人</span>
+                            </div>
+                        </li>
+                    </ul>
                     <ul class="detailsListBox">
                         <li class="detailsList">
                             <div class="listSort">
@@ -185,9 +212,9 @@
                             <div class="listType">
                                 <span>横版</span>
                             </div>
-                            <div class="listTimer">
+                            <!-- <div class="listTimer">
                                 <span>30(s)</span>
-                            </div>
+                            </div> -->
                             <div class="uploadName">
                                 <span>C999</span>
                             </div>
@@ -220,9 +247,6 @@
                             </div>
                             <div class="listType">
                                 <span>横版</span>
-                            </div>
-                            <div class="listTimer">
-                                <span>30(s)</span>
                             </div>
                             <div class="uploadName">
                                 <span>C999</span>
@@ -305,7 +329,6 @@
                 </div>
                 <!-- 步骤内容 -->
                 <div class="stepsBody">
-
                     <!--第二部 广告设置  -->
                     <div class="setAdvertising">
                         <!-- 表头部分 -->
@@ -333,9 +356,8 @@
                             </li>
                         </ul>
                         <ul class="SetContList">
-                            <li class="setMateraialList">
+                            <!-- <li class="setMateraialList">
                                 <div class="liftImg" style="text-align: center;">
-                                    <!-- <img src="../../img/lift.png" alt=""> -->
                                 </div>
                                 <div class="SetSorting">
                                     <div>1</div>
@@ -359,36 +381,9 @@
                                         <span>删除</span>
                                     </button>
                                 </div>
-                            </li>
-                            <li class="setMateraialList">
-                                <div class="liftImg" style="text-align: center;">
-                                    <img src="../../img/lift.png" alt="">
-                                </div>
-                                <div class="SetSorting">
-                                    <div>2</div>
-                                </div>
-                                <div class="abbreviateImg">
-                                    <img src="http://pic.hnzczy.cn/1587690837362_36729533.jpg" alt="">
-                                </div>
-                                <div class="SetName">
-                                    <div>粤宝文化科技</div>
-                                </div>
-                                <div class="duration">
-                                    <div>
-                                        <input type="text" value="6">
-                                    </div>
-                                </div>
-                                <div class="SetType">
-                                    <div>横版</div>
-                                </div>
-                                <div class="SetOperation">
-                                    <button class="layui-btn layui-btn-normal  btn del-btn">
-                                        <span>删除</span>
-                                    </button>
-                                </div>
-                            </li>
+                            </li> -->
                         </ul>
-                        <div class="SetFooter" style="margin-top: 10px;">
+                        <div class="SetFooter" style="margin-top: 10px;padding-bottom: 20px;">
                             <button class="layui-btn layui-btn-normal  btn addBtn">
                                 <span>添加</span>
                             </button>
@@ -468,7 +463,7 @@
                     <table class="layui-hide" id="chooseData" lay-filter="chooseData"></table>
                 </div>
                 <div style="text-align: right;margin:10px 30px 20px 0;padding-bottom: 20px  ;">
-                    <button class="layui-btn layui-btn-normal  btn">
+                    <button class="layui-btn layui-btn-normal  btn determineBtn">
                         <span>确定</span>
                     </button>
                 </div>

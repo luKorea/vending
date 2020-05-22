@@ -47,7 +47,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
             { field: 'checkStatus', width: 160, title: '审核状态', },
             {
                 field: 'advertisingStatus', width: 160, title: '素材状态', templet: function (d) {
-                    return d.advertisingStatus = '是' ? '启用' : '不启用'
+                    return d.advertisingStatus == '是' ? '启用' : '不启用'
                 }
             },
             { field: 'creationTime', width: 160, title: '上传时间', },
@@ -76,7 +76,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
             } else {
                 return {
                     "code": res.code, //解析接口状态
-                    "msg": res.msg, //解析提示文本
+                    "msg": res.message, //解析提示文本
                 }
             }
         },
@@ -145,6 +145,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
     $('.del-btn').click(function () {
         var checkStatus = table.checkStatus('tableId');
         console.log(checkStatus)
+        console.log
         var listID = null;
         if (checkStatus.data.length > 0) {
             listID = checkStatus.data.map((item, index) => {
@@ -303,7 +304,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
                         }else if(res.code==403){
                             window.history.go(-1)
                         }else{
-                            layer.msg(res.message, { icon: 1 });
+                            layer.msg(res.message, { icon: 7 });
                         }
                     }
                 })
