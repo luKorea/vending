@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>开具电子发票</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="icon" type="image/png" sizes="144x144" href="img/icon.png" />
+	</head>
+
+	<body>
+
+		<div class="wrap">
+			<div class="box">
+				<div class="header">
+					<h1>开具电子发票</h1>
+				</div>
+				<div class="bodyCont">
+					<ul class="titleList">
+						<li style="margin-bottom: 22px;">
+							<h2>订单信息</h2>
+							<div class="an" style="margin-left: 15px;">
+								<span>+</span>
+								<div>
+						</li>
+
+						<li>
+							<span>订单编号:</span>
+							<p>订单信息订单信息订单信息订单信息订单信息</p>
+						</li>
+						<li>
+							<span>订单金额:</span>
+							<p>订单金额</p>
+						</li>
+						<li>
+							<span>订单时间:</span>
+							<p>订单时间</p>
+						</li>
+						<li class="detail" style="display: none;">
+							<span>订单明细:</span>
+							<p>订单时间</p>
+						</li>
+					</ul>
+					<ul class="InputList" style="margin-top: 30px;">
+						<h2><span style="color: red;">*</span>项表示必填。</h2>
+						<li class="invoice">
+							<p><span style="color: red;">*</span> 发票抬头(个人或企业全称):</p>
+							<input type="" name="" id="" value="" />
+						</li>
+						<div class="invoiceTitle" style="color: red;margin-top: -20px;display: none;">
+							请填写发票
+						</div>
+						<li>
+							<p>纳税人识别号（抬头填个人的，不用填写）:</p>
+							<input type="" name="" id="" value="" />
+						</li>
+						<li>
+							<p>地址、电话（抬头填个人的，不用填写）:</p>
+							<input type="" name="" id="" value="" />
+						</li>
+						<li>
+							<p>开户行及账号（抬头填个人的，不用填写）:</p>
+							<input type="" name="" id="" value="" />
+						</li>
+						<li class="email">
+							<p><span style="color: red;">*</span> 电子邮箱（用于接收电子发票）:</p>
+							<input type="" name="" id="" value="" />
+						</li>
+						<div class="emailTitle" style="color: red;margin-top: -20px;display: none;">
+							请填写发票
+						</div>
+					</ul>
+					<div class="footerBtn" >
+						<button>提交</button>
+					</div>
+					
+					<!--提示语-->
+					<div class="promptCont">
+						<img src="img/sigh.jpg"/>
+						<p>您已开具过电子发票</p>
+					</div>
+					</div>
+					<div class="mask" style="display: none;">
+						<div class="maskTitle">
+							正在提交，请稍候
+						</div>
+					</div>
+
+					</div>
+				</div>
+
+	</body>
+	<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+
+</html>
