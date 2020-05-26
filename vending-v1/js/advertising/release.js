@@ -35,7 +35,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
     });
     var table = layui.table;
     var advertisingLis = table.render({
-        elem: '#moneyData',
+        elem: '#machineListData',
         url: '/api/publicized/selectPublicize',
         method: 'post',
         contentType: "application/json",
@@ -120,8 +120,11 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
 
 
     // 监听操作点击事件
-    table.on('tool(moneyData)', function (obj) {
-        console.log(obj)
+    var advertisingDetailsList=null;
+    var numderID=null;
+    table.on('tool(machineListData)', function (obj) {
+        // console.log(obj)
+        numderID=obj.data.number;
         if (obj.event === 'preview') {
             publisSwiperCont(obj.data.publicizeAdvert,'previewSwiperCont','swiperDetails')
             popupShow('preview','previewContnet');
@@ -129,6 +132,9 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
         } else if (obj.event === 'toView') {
             popupShow('toViveCont','toViveBox');
         } else if (obj.event === 'details') {
+            advertisingDetailsList=obj.data.publicizeAdvert;
+            console.log(advertisingDetailsList);
+            advertisingDetails(advertisingDetailsList,'detailsListBox')
             popupShow('advertisingDetails','detailsBox');
         }
 
@@ -139,9 +145,71 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
         $(this).parents('.maskContnet').fadeOut();
     });
     // 广告素材预览
-    $('.listPreview .previewBtn').click(function () {
-        $('.materialPreview').fadeIn();
-        $('.MateriaBox').removeClass('margin0')
+    $('.detailsListBox').on('click','.listPreview .previewBtn',function(){
+        // alert($(this).attr('previewIndex'));
+        $('.MateriaBody .materiaImg img').attr('src',advertisingDetailsList[$(this).attr('previewIndex')].img)
+        popupShow('materialPreview','MateriaBox');
+
+    });
+    // 广告详情修改排序
+    $('.detailsListBox').on('click','.listLift img',function(){
+        console.log($(this).attr('ImgIndex'));
+        var ImgIndex=$(this).attr('ImgIndex');
+        var ImgList_1=advertisingDetailsList[ImgIndex-1];
+        advertisingDetailsList[ImgIndex-1]=advertisingDetailsList[ImgIndex];
+        advertisingDetailsList[ImgIndex]=ImgList_1;
+        advertisingDetails(advertisingDetailsList,'detailsListBox')
+    });
+    // 广告详情修改失去焦点事件
+    $('.detailsListBox').on('blur','.listSize input',function(){
+        if($(this).val()>0&$(this).val()!=''){
+            advertisingDetailsList[$(this).attr('inputIndex')].time=$(this).val();
+        }else{
+            $(this).val(advertisingDetailsList[$(this).attr('inputIndex')].time);
+        }
+        
+        // advertisingDetails(advertisingDetailsList,'detailsListBox');
+    });
+
+    // 广告详情确定修改事件
+    $('.detailsFooter .confirmBtn').click(function(){
+        var editDetailsList=[];
+        advertisingDetailsList.forEach((item,index)=>{
+            var editObj={
+                sort:index+1,
+                time:item.time,
+                vid:item.vid
+            }
+            editDetailsList.push(editObj)
+        });
+        setTimeout(()=>{
+            $.ajax({
+                type:'post',
+                url:'/api/publicized/updatePublicize',
+                processData: false,
+                contentType: false,
+                headers: {
+                    "Content-Type": "application/json",
+                    token,
+                },
+                data:JSON.stringify({
+                    number:numderID,
+                    publicizeAdvert:editDetailsList
+                }),
+                success:function(res){
+                    console.log(res)
+                    if(res.code==200){
+                        popupHide('advertisingDetails','detailsBox');
+                        layer.msg('修改成功', { icon: 1, anim: 1 });
+                        editDetailsList=[];
+                    }else if(res.code==403){
+                        window.history.go(-1)
+                    }else{
+                        layer.msg(res.message, { icon: 7 });
+                    }
+                }
+            })
+        },1000)
     })
     // 查看购金机列表
     var machineList = table.render({
@@ -211,8 +279,6 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
             direction: 'right' //设置文本标注方位
         });
     };
-
-
 
     // 返回上一步
     $('.publishCont .onBtn').click(function () {
@@ -523,46 +589,46 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
     })
 
     // 广告详情函数
-    function advertisingDetails(that, ListData, element) {
-        var detailsList = null;
+    function advertisingDetails(ListData, element) {
+        var detailsList = '';
         $.each(ListData, function (index, ele) {
             detailsList += ` <li class="detailsList">
                                 <div class="listSort">
-                                    <span>1</span>
+                                    <span>${index+1}</span>
                                 </div>
                                 <div class="listImg">
-                                    <img src="http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg "
+                                    <img src="${ele.img}"
                                         alt="">
                                 </div>
                                 <div class="listName">
-                                    <span>粤宝文化科技</span>
+                                    <span>${ele.name}</span>
                                 </div>
                                 <div class="listSize">
-                                    <span>3(mb)</span>
+                                    <input type="number" inputIndex="${index}" value="${ele.time}">
                                 </div>
                                 <div class="listAttribute">
-                                    <span>图片</span>
+                                    <span>${ele.advertisingAttribute}</span>
                                 </div>
                                 <div class="listType">
-                                    <span>横版</span>
-                                </div>
-                                <div class="listTimer">
-                                    <span>30(s)</span>
+                                    <span>${ele.advertisingType}</span>
+                                </div>      
+                                <div class="listSize">
+                                    <span>${ele.size}</span>
                                 </div>
                                 <div class="uploadName">
-                                    <span>C999</span>
+                                    <span>${ele.addUser}</span>
                                 </div>
                                 <div class="listPreview">
-                                    <button class="layui-btn layui-btn-normal  btn previewBtn">
+                                    <button class="layui-btn layui-btn-normal  btn previewBtn " previewIndex="${index}">
                                         <span>预览</span>
                                     </button>
                                 </div>
-                                <div class="listLift">
-                                    <img src="../../img/lift.png" alt="">
+                                <div class="listLift" >
+                                    <img src="../../img/lift.png" alt="" ${index==0?'class="hidden"':''} ImgIndex="${index}">
                                 </div>
                             </li>`
         });
-        $(`.${element}`).remove();
+        $(`.${element}`).empty();
         $(`.${element}`).html(detailsList);
     };
 

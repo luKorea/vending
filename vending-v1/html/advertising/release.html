@@ -58,9 +58,10 @@
                                 </form>
                             </div>
                         </div> -->
+                         <!-- 广告位: -->
                         <div class=" layui-col-sm12 layui-col-md6 layui-col-lg3">
                             <div class="key-contnet">
-                                <!-- 广告位: -->
+                               
                                 <div class="key-text">广告位</div>
                                 <form class="layui-form" action="" style="max-width: 100%;">
                                     <div class="layui-form" lay-filter="myDiv">
@@ -93,7 +94,7 @@
                 </div>
                 <div class="data-list">
                     <div class="listtable">
-                        <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
+                        <table class="layui-hide" id="machineListData" lay-filter="machineListData"></table>
                     </div>
                 </div>
             </div>
@@ -157,59 +158,26 @@
                             <div class="listName">
                                 <span>素材名称</span>
                             </div>
-                            <div class="listSize">
-                                <!-- <span>3(mb)</span> -->
-                                <!-- <input type="text" value="3"> -->
-                                <span>播放时长</span>
-                            </div>
+                            <div class="listTimer">
+                                <span>播放时长(s)</span>
+                            </div>                
                             <div class="listAttribute">
                                 <span>素材属性</span>
                             </div>
                             <div class="listType">
                                 <span>素材类别</span>
                             </div>
+                            <div class="listSize">
+                                <span>素材大小(mb)</span>
+                            </div>
                             <div class="uploadName">
                                 <span>上传人</span>
                             </div>
+                            <!-- <div></div>
+                            <div></div> -->
                         </li>
                     </ul>
                     <ul class="detailsListBox">
-                        <li class="detailsList">
-                            <div class="listSort">
-                                <span>1</span>
-                            </div>
-                            <div class="listImg">
-                                <img src="http://172.16.68.199:8087/image/1d1704c6-59ad-4566-9436-803fb4c5d24b.jpg "
-                                    alt="">
-                            </div>
-                            <div class="listName">
-                                <span>粤宝文化科技</span>
-                            </div>
-                            <div class="listSize">
-                                <!-- <span>3(mb)</span> -->
-                                <input type="text" value="3">
-                            </div>
-                            <div class="listAttribute">
-                                <span>图片</span>
-                            </div>
-                            <div class="listType">
-                                <span>横版</span>
-                            </div>
-                            <!-- <div class="listTimer">
-                                <span>30(s)</span>
-                            </div> -->
-                            <div class="uploadName">
-                                <span>C999</span>
-                            </div>
-                            <div class="listPreview">
-                                <button class="layui-btn layui-btn-normal  btn previewBtn">
-                                    <span>预览</span>
-                                </button>
-                            </div>
-                            <div class="listLift">
-                                <!-- <img src="../../img/lift.png" alt=""> -->
-                            </div>
-                        </li>
                         <li class="detailsList">
                             <div class="listSort">
                                 <span>2</span>
@@ -231,6 +199,9 @@
                             <div class="listType">
                                 <span>横版</span>
                             </div>
+                            <div class="listTimer">
+                                <span>30(s)</span>
+                            </div>
                             <div class="uploadName">
                                 <span>C999</span>
                             </div>
@@ -239,7 +210,7 @@
                                     <span>预览</span>
                                 </button>
                             </div>
-                            <div class="listLift">
+                            <div class="listLift" style="float: right;">
                                 <img src="../../img/lift.png" alt="">
                             </div>
                         </li>

@@ -1,6 +1,13 @@
 $(function(){
-	$('.an span').click(function(){
-		$(this).text($(".detail").is(":hidden") ? "-" : "+");
+	var Flag=true;
+	$('.an img').click(function(){
+		if(Flag){
+			$(this).addClass('active');
+			Flag=false;
+		}else{
+			$(this).removeClass('active');
+			Flag=true;
+		}
 		$('.detail').slideToggle();
 	});
 	$('.invoice input').blur(function(){

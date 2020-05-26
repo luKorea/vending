@@ -203,7 +203,7 @@ video{
     box-sizing: border-box;
 }
 .detailsBox{
-    width: 1000px;
+    width: 1200px;
     position: relative;
     margin: 2vh auto 50px;
     background: #fff;
@@ -264,7 +264,7 @@ video{
     width: 100%;
 }
 .listName{
-    width: 15%;
+    width: 12%;
 }
 .listSize,.listAttribute,.listType,.listTimer{
     width: 8%;    
@@ -594,9 +594,6 @@ video{
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
-}
-.detailsFooter{
-    
 }
 .layui-row>div{
     margin-bottom: 10px;
