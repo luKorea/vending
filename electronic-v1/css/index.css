@@ -3,10 +3,13 @@
 	padding: 0;
 	list-style: none;
 }
-
+body{
+	background: #FFFFFF;
+}
 .wrap {
 	width: 100%;
 	position: relative;
+	background: #FFFFFF;
 }
 
 .header {

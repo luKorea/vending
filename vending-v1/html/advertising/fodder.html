@@ -65,8 +65,8 @@
                                     <div class="layui-form" lay-filter="myDiv">
                                         <select name="attribute" id="" lay-filter="mySelect">
                                             <option value="">全部</option>
-                                            <option value="图片">图片</option>
-                                            <option value="视频">视频</option>
+                                            <option value="0">图片</option>
+                                            <option value="1">视频</option>
                                         </select>
                                     </div>
                                 </form>
@@ -80,8 +80,8 @@
                                     <div class="layui-form" lay-filter="myDiv">
                                         <select name="type" id="" lay-filter="mySelect">
                                             <option value="">全部</option>
-                                            <option value="横版">横版</option>
-                                            <option value="竖版">竖版</option>
+                                            <option value="0">横版</option>
+                                            <option value="1">竖版</option>
                                         </select>
                                     </div>
                                 </form>
@@ -95,10 +95,10 @@
                                     <div class="layui-form" lay-filter="myDiv">
                                         <select name="checkStatus" id="" lay-filter="mySelect">
                                             <option value="">全部</option>
-                                            <option value="未审核">未审核</option>
-                                            <option value="待审核">待审核</option>
-                                            <option value="已审核">已审核</option>
-                                            <option value="审核未通过">审核未通过</option>
+                                            <option value="0">未审核</option>
+                                            <option value="1">待审核</option>
+                                            <option value="2">审核通过</option>
+                                            <option value="3">审核未通过</option>
                                         </select>
                                     </div>
                                 </form>
@@ -131,8 +131,8 @@
                                     <div class="layui-form" >
                                         <select name="advertisingStatus" id="" lay-filter="mySelect">
                                             <option value="">全部</option>
-                                            <option value="是">启用</option>
-                                            <option value="否">不启用</option>
+                                            <option value="1">启用</option>
+                                            <option value="0">不启用</option>
                                         </select>
                                     </div>
                                 </form>
@@ -225,8 +225,8 @@
                                     <div class="layui-form" >
                                         <select name="materiaAttribute"  id="" lay-filter="myAttribute">
                                             <option value="">全部</option>
-                                            <option value="图片">图片</option>
-                                            <option value="视频">视频</option>
+                                            <option value="0">图片</option>
+                                            <option value="1">视频</option>
                                         </select>
                                     </div>
                                 </div>
@@ -237,8 +237,8 @@
                                     <div class="layui-form" lay-filter="myDiv">
                                         <select name="materiaType" id="" lay-filter="mySelect">
                                             <option value="">全部</option>
-                                            <option value="横版">横版</option>
-                                            <option value="竖版">竖版</option>
+                                            <option value="0">横版</option>
+                                            <option value="1">竖版</option>
                                         </select>
                                     </div>
                                 </div>
@@ -247,8 +247,8 @@
                                 <label><span style="color: red;">*</span>素材状态</label>
                                 <div class="FlexInputWidth">
                                     <div class="layui-form-item" style="margin: 0;">
-                                        <input type="radio" name="materiaStatus" value="否" title="不启用">
-                                        <input type="radio" name="materiaStatus" value="是" title="启用" checked>
+                                        <input type="radio" name="materiaStatus" value="0" title="不启用">
+                                        <input type="radio" name="materiaStatus" value="1" title="启用" checked>
                                     </div>
                                 </div>
                             </div>
@@ -311,8 +311,8 @@
                                     <div class="layui-form" >
                                         <select name="materiaAttribute" disabled id="" lay-filter="EditSelect">
                                             <option value="">全部</option>
-                                            <option value="图片">图片</option>
-                                            <option value="视频">视频</option>
+                                            <option value="0">图片</option>
+                                            <option value="1">视频</option>
                                         </select>
                                     </div>
                                 </div>
@@ -323,8 +323,8 @@
                                     <div class="layui-form" lay-filter="myDiv">
                                         <select name="materiaType" disabled id="" lay-filter="">
                                             <!-- <option value="">全部</option> -->
-                                            <option value="横版">横版</option>
-                                            <option value="竖版">竖版</option>
+                                            <option value="0">横版</option>
+                                            <option value="1">竖版</option>
                                         </select>
                                     </div>
                                 </div>
@@ -333,8 +333,8 @@
                                 <label><span style="color: red;">*</span>素材状态</label>
                                 <div class="FlexInputWidth">
                                     <div class="layui-form-item" style="margin: 0;">
-                                        <input type="radio" name="materiaStatus" value="否" title="不启用">
-                                        <input type="radio" name="materiaStatus" value="是" title="启用" checked>
+                                        <input type="radio" name="materiaStatus" value="0" title="不启用">
+                                        <input type="radio" name="materiaStatus" value="1" title="启用" checked>
                                     </div>
                                 </div>
                             </div>
@@ -379,7 +379,7 @@
                     </button>
                 </div> -->
                 <div class="playHeader">
-                    <span>素材预览</span>
+                    <span>预览素材</span>
                     <button class="close" type="button">
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
@@ -411,7 +411,7 @@
     </div>
 </script>
 <script type="text/html" id="imgtmp">
-    <div><img src="{{d.img}}  " style="width: 40px;"></div>
+    <div ><img src="{{d.img}}  " style="width: 40px;"></div>
 </script>
 <script src="../../js/advertising/fodder.js"></script>
 </html>

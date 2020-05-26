@@ -9,6 +9,7 @@ $(function(){
 			Flag=true;
 		}
 		$('.detail').slideToggle();
+//		$('.detail').toggle();
 	});
 	$('.invoice input').blur(function(){
 		if($(this).val()){

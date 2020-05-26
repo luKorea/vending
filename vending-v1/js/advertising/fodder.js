@@ -41,13 +41,19 @@ layui.use(['laydate', 'table', 'layer'], function () {
             { field: 'name', width: 150, title: '素材名', },
             { field: 'size', width: 100, title: '大小(mb)', },
             { field: 'amendTime', width: 130, title: '分辨率', },
-            { field: 'advertisingAttribute', width: 150, title: '素材属性', sort: true },
-            { field: 'advertisingType', width: 150, title: '素材类别', sort: true },
+            { field: 'advertisingAttribute', width: 150, title: '素材属性', sort: true ,templet:function(d){
+                return d.advertisingAttribute==0?'图片':'视频'
+            }},
+            { field: 'advertisingType', width: 150, title: '素材类别', sort: true, templet:function(d){
+                return d.advertisingType==0?'横屏':'竖屏'
+            }},
             { field: 'duration', width: 100, title: '播放时长', sort: true },
-            { field: 'checkStatus', width: 160, title: '审核状态', },
+            { field: 'checkStatus', width: 160, title: '审核状态', templet:function(d){
+                    return d.checkStatus==0?'未审核':d.checkStatus==1?'待审核':d.checkStatus==2?'审核通过':'审核不通过'
+            }},
             {
                 field: 'advertisingStatus', width: 160, title: '素材状态', templet: function (d) {
-                    return d.advertisingStatus == '是' ? '启用' : '不启用'
+                    return d.advertisingStatus == '1' ? '启用' : '不启用'
                 }
             },
             { field: 'creationTime', width: 160, title: '上传时间', },
@@ -214,7 +220,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
             editDuration = valData.duration;
             console.log(valData)
             $('.anUp').slideUp();
-            if(valData.checkStatus=='未审核'){
+            if(valData.checkStatus=='0'){
                 $('.submitAudit').show();
             }else{
                 $('.submitAudit').hide();
@@ -249,12 +255,12 @@ layui.use(['laydate', 'table', 'layer'], function () {
                     "materiaType": valData.advertisingType,
                     "materiaStatus": valData.advertisingStatus
                 })
-                if (valData.checkStatus == '未审核' || valData.checkStatus == '审核未通过') {
+                if (valData.checkStatus == '0' || valData.checkStatus == '3') {
                     $('.editCont select[name="materiaAttribute"]').prop("disabled", '');
                     $('.editCont select[name="materiaType"]').prop("disabled", '');
                     form.render();
                     $('.materiaDowEdit').show().children().show();
-                    if (valData.advertisingAttribute == '图片') {
+                    if (valData.advertisingAttribute == '0') {
                         $('.editImgBtn').show().siblings('.editVideoBtn').hide();
                         $('.materiaImgEdit img').attr('src', valData.img).show().siblings().hide();
                     } else {
@@ -314,7 +320,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
     $('.editConfirmBtn').click(function () {
         var editValDataConfirm = form.val("editValData");
         console.log(editValDataConfirm)
-        if (valData.checkStatus == '未审核' || valData.checkStatus == '审核未通过') {
+        if (valData.checkStatus == '0' || valData.checkStatus == '3') {
             $.ajax({
                 type: 'post',
                 url: '/api/advertising/findAdvertising',
@@ -328,8 +334,8 @@ layui.use(['laydate', 'table', 'layer'], function () {
                 success: function (res) {
                     console.log(res)
                     if (res.code == 200) {
-                        if (res.data == '未审核' || res.data == '审核未通过') {
-                            if ((editImgVideo.indexOf('jpg') > 1 & editValDataConfirm.materiaAttribute == '图片') || (editImgVideo.indexOf('mp4') > 1 & editValDataConfirm.materiaAttribute == '视频')) {
+                        if (res.data == '0' || res.data == '3') {
+                            if ((editImgVideo.indexOf('jpg') > 1 & editValDataConfirm.materiaAttribute == '0') || (editImgVideo.indexOf('mp4') > 1 & editValDataConfirm.materiaAttribute == '1')) {
                                 editMaterial(
                                     valData.vId,
                                     editValDataConfirm.materialName,
@@ -380,7 +386,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
     // 监听 编辑素材属性选择
     form.on('select(EditSelect)', function (data) {
         console.log(data.value); //得到被选中的值
-        if (data.value == '图片') {
+        if (data.value == '0') {
             $('.editImgBtn').show().siblings('.editVideoBtn').hide();
             $('.materiaImgEdit img').show().siblings().hide();
         } else {
@@ -506,7 +512,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
 
     form.on('select(myAttribute)', function (data) {
         // console.log(data.value); //得到被选中的值
-        if (data.value == '图片') {
+        if (data.value == '0') {
             $('.VideoBtn').hide();
             $('.ImgBtn').fadeIn();
             $('.materiaDow video').hide()
@@ -516,7 +522,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
             } else {
                 $('.materiaDow').hide();
             }
-        } else if (data.value == '视频') {
+        } else if (data.value == '1') {
             $('.ImgBtn').hide();
             $('.VideoBtn').fadeIn();
             $('.materiaDow img').hide();
@@ -595,7 +601,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
             if (imgVideoHttp || ImgFile) {
                 var imgFileData = new FormData();
                 imgFileData.append('file', ImgFile)
-                if (addList.materiaAttribute == '图片') {
+                if (addList.materiaAttribute == '0') {
                     // 上传图片
                     $.ajax({
                         type: 'post',
