@@ -43,6 +43,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
             token,
         },
         cols: [[
+            { type: 'checkbox', },
             { field: 'number', width: 210, title: '发布单号' },
             {
                 field: 'advertisingTime', width: 120, title: '广告时长(s)', templet: function (d) {
@@ -60,6 +61,11 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                         return advertisingSize += Number(item.size);
                     });
                     return advertisingSize
+                }
+            },
+            {
+                field: 'attribute', width: 150, title: '审核状态', templet: function (d) {
+                    return d.attribute == 0 ? '未审核' : d.attribute == 1 ? '待审核' : d.attribute == 2 ? '审核通过' : '审核不通过'
                 }
             },
             { field: 'amendTime', width: 130, title: '广告位', },
@@ -107,18 +113,6 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
 
     // 广告预览轮播
     var carousel = layui.carousel;
-    // //建造轮播实例
-    // var ins = carousel.render({
-    //     elem: '#swiperDetails',
-    //     width: '100%',//设置容器宽度
-    //     arrow: 'always', //始终显示箭头
-    //     height: '100%',
-    //     interval: 5000
-    // });
-
-
-
-
     // 监听操作点击事件
     var advertisingDetailsList = null;
     var numderID = null;
@@ -129,7 +123,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
         if (obj.event === 'preview') {
             console.log(obj.data.publicizeAdvert)
             durationData = obj.data.publicizeAdvert;
-            publisSwiperCont(obj.data.publicizeAdvert, 'previewSwiperCont', 'swiperDetails',durationData);
+            publisSwiperCont(obj.data.publicizeAdvert, 'previewSwiperCont', 'swiperDetails', durationData);
             var options = {
                 'interval': durationData[0].time * 1000
             }
@@ -152,10 +146,10 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
         $(this).parent().parent().addClass('margin0')
         $(this).parents('.maskContnet').fadeOut();
         // publis = null;
-        if(publis){
-            publis.reload({autoplay:false});
+        if (publis) {
+            publis.reload({ autoplay: false });
         }
-        
+
     });
     // 广告素材预览
     $('.detailsListBox').on('click', '.listPreview .previewBtn', function () {
@@ -299,7 +293,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
         $('.stepsTwo').css('borderColor', '#909399');
         $('.stepsTwo>div').css('color', '#909399');
         $('.publishLast').css('color', '#909399');
-        publis.reload({autoplay:false});
+        publis.reload({ autoplay: false });
     })
     var keyStartTiem = '';
     var keyEndTiem = '';
@@ -351,9 +345,11 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                     { field: 'img', width: 80, title: '微缩图', templet: "#imgtmp" },
                     { field: 'name', width: 150, title: '素材名', },
                     { field: 'size', width: 100, title: '大小', },
-                    { field: 'advertisingAttribute', width: 150, title: '素材属性',templet:function(d){
-                        return d.advertisingAttribute==0?'图片':'视频'
-                    } },
+                    {
+                        field: 'advertisingAttribute', width: 150, title: '素材属性', templet: function (d) {
+                            return d.advertisingAttribute == 0 ? '图片' : '视频'
+                        }
+                    },
                     { field: 'creationTime', width: 160, title: '上传时间', sort: true },
                     { field: 'addUser', width: 150, title: '上传人 ', },
                 ]],
@@ -452,7 +448,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
         })
         if (addMaterList.length > 0) {
             if (InputFlaf) {
-                publisSwiperCont(addMaterList, 'swiperList', 'publisSwiper',addMaterList);
+                publisSwiperCont(addMaterList, 'swiperList', 'publisSwiper', addMaterList);
                 nextStep('setAdvertising', 'publishCont');
             } else {
                 layer.msg('素材播放时长必须大于0', { icon: 7 });
@@ -487,7 +483,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                                     </div>
                                 </div>
                                 <div class="SetType">
-                                    <div>${ele.advertisingType==0?'横屏':'竖屏'}</div>
+                                    <div>${ele.advertisingType == 0 ? '横屏' : '竖屏'}</div>
                                 </div>
                                 <div class="SetOperation">
                                     <button class="layui-btn layui-btn-normal  btn delBtn" delindex="${index}">
@@ -623,10 +619,10 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                                     <input type="number" inputIndex="${index}" value="${ele.time}">
                                 </div>
                                 <div class="listAttribute">
-                                    <span>${ele.advertisingAttribute==0?'图片':'视频'}</span>
+                                    <span>${ele.advertisingAttribute == 0 ? '图片' : '视频'}</span>
                                 </div>
                                 <div class="listType">
-                                    <span>${ele.advertisingType==0?'横屏':'竖屏'}</span>
+                                    <span>${ele.advertisingType == 0 ? '横屏' : '竖屏'}</span>
                                 </div>      
                                 <div class="listSize">
                                     <span>${ele.size}</span>
@@ -650,7 +646,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
 
     // 发布广告轮播图
     var publis = null;
-    function publisSwiperCont(list, theElement, IdELement,durationData) {
+    function publisSwiperCont(list, theElement, IdELement, durationData) {
         var swiperList = '';
         $.each(list, function (index, ele) {
             swiperList += ` <div>
@@ -666,20 +662,128 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
             arrow: 'always', //始终显示箭头
             height: '100%',
             interval: 3000,
-            autoplay:true,
+            autoplay: true,
         });
-        var options=null;
+        var options = null;
         carousel.on(`change(${IdELement})`, function (obj) { //test1来源于对应HTML容器的 lay-filter="test1" 属性值
             console.log(obj.index); //当前条目的索引
-            setTimeout(()=>{
-                 options = {                
-                    'interval': durationData[obj.index].time*1000||durationData[obj.index].inputVal*1000
+            setTimeout(() => {
+                options = {
+                    'interval': durationData[obj.index].time * 1000 || durationData[obj.index].inputVal * 1000
                 }
                 console.log(options)
                 publis.reload(options);
-            },500)
-           
+            }, 500)
+
         });
 
     };
+
+    // 提交审核
+    $('.submitAuditBtn').click(function () {
+        var submitCheckStatus = table.checkStatus('advertisingData');
+        console.log(submitCheckStatus)
+        checkList = [];
+        if (submitCheckStatus.data.length > 0) {
+            $('.mask').fadeIn();
+            $('.maskSpan').addClass('maskIcon')
+            submitCheckStatus.data.forEach((item, index) => {
+                var submitObj = {
+                    number: item.number,
+                    status: '1'
+                }
+                checkList.push(submitObj)
+            });
+            setTimeout(() => {
+                auditMethods('1', checkList);
+            }, 1000)
+        } else {
+            layer.msg('请选择需要提交审核的素材', { icon: 7, anim: 1 });
+        }
+    });
+    // 审核通过
+    $('.approvedBtn').click(function(){
+        var approveCheckStatus = table.checkStatus('advertisingData');
+        approveList = [];
+        if (approveCheckStatus.data.length > 0) {
+            layer.confirm('确定审核通过？', function (index) {
+                layer.close(index);
+                $('.mask').fadeIn();
+                $('.maskSpan').addClass('maskIcon')
+                approveCheckStatus.data.forEach((item, index) => {
+                    var approveObj = {
+                        number: item.number,
+                        status: '2'
+                    }
+                    approveList.push(approveObj)
+                });
+                setTimeout(() => {
+                    auditMethods('0',approveList)
+                },1000)
+            })
+
+        } else {
+            layer.msg('请选择需要通过审核的素材', { icon: 7, anim: 1 });
+        }
+    });
+    // 审核不通过
+    $('.noPassBtn').click(function(){
+        var noPassCheckStatus=table.checkStatus('advertisingData');
+        noPassList=[];
+        if (noPassCheckStatus.data.length > 0){
+            layer.confirm('确定审核不通过？', function (index) {
+                layer.close(index);
+                $('.mask').fadeIn();
+                noPassCheckStatus.data.forEach((item, index) => {
+                    var noPassObj = {
+                        number: item.number,
+                        status: '3'
+                    }
+                    noPassList.push(noPassObj)
+                });
+                setTimeout(() => {
+                    auditMethods('0',noPassList)
+                },1000)
+            })
+        }else{
+            layer.msg('请选择需要不通过审核的素材', { icon: 7, anim: 1 });
+        }
+    })
+    // 提交审核，审核通过，审核不通过方法
+    function auditMethods(type, data) {
+        $.ajax({
+            type: 'post',
+            url: '/api/publicized/updateStatus',
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            data:JSON.stringify({
+                data,
+                type:type
+            }),
+            success:function(res){
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                if (res.code == 200) {
+                    layer.msg(res.message, { icon: 1 });
+                    advertisingLis.reload({
+                        where: {
+                        }
+                    })                           
+                } else if (res.code == 201) {
+                    layer.msg(res.message, { icon: 2, anim: 1 });
+                } else if (res.code == 202) {
+                    layer.msg(res.message, { icon: 7 });
+                    advertisingLis.reload({
+                        where: {
+                        }
+                    });                           
+                } else if (res.code == 403) {
+                    window.history.go(-1)
+                }
+            }
+        })
+
+    }
 });

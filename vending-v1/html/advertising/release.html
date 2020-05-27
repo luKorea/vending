@@ -80,13 +80,26 @@
                                 <span>查询</span>
                             </button>
                         </div>
-                        <div class=" layui-col-sm8 layui-col-md5 layui-col-lg5">
+                        <div class=" layui-col-sm8 layui-col-md5 layui-col-lg3">
                             <button class="layui-btn layui-btn-normal  btn publicAdvertisingBtn">
                                 <i class="layui-icon layui-icon-add-circle"></i>
                                 <span>发布广告</span>
                             </button>
                             <button class="layui-btn layui-btn-normal  btn machineAdvertisingBtn">
                                 <span>购金机在用广告</span>
+                            </button>
+                        </div>
+                        <div class="layui-col-sm7 layui-col-md6 layui-col-lg4">
+                            <button class="layui-btn layui-btn-normal  btn submitAuditBtn">
+                                <!-- <i class="layui-icon layui-icon-search"></i> -->
+                                <span>提交审核</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal  btn approvedBtn" style="margin-left: 10px;">
+                                <!-- <i class="layui-icon layui-icon-add-circle "></i> -->
+                                <span>审核通过</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal noPassBtn btn">
+                                <span>审核不通过</span>
                             </button>
                         </div>
                     </div>
@@ -476,6 +489,16 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <!-- 遮罩 -->
+        <div class="mask maskContnet">
+            <div class="TitleContentWith">
+                <span class="maskSpan" style="display: inline-block;"> 
+                    <i class="layui-icon layui-icon-loading "></i>
+                </span>
+               
+                数据处理中，请稍候
             </div>
         </div>
     </div>

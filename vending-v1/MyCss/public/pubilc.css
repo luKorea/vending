@@ -102,7 +102,7 @@ input{
 .warp-margin{
     margin: 20px;
 }
-.del-btn{
+.del-btn,.noPassBtn{
     background-color: #f56c6c !important;
     border-color: #f56c6c !important;
 }
@@ -277,4 +277,34 @@ body .layui-form-checked[lay-skin=primary] i{
 }
 .layui-laypage-limits select{
     outline: none !important;
+}
+.TitleContentWith{
+    width: 200px;
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.6);
+    text-align: center;
+    line-height: 200px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    color: #fff;
+    border-radius: 5px;
+}
+
+@-webkit-keyframes rotation{
+
+    from {-webkit-transform: rotate(0deg);}
+
+    to {-webkit-transform: rotate(360deg);}
+
+}
+.maskIcon{
+    -webkit-transform: rotate(360deg);
+    animation: rotation 3s linear infinite;
+    -moz-animation: rotation 3s linear infinite;
+    -webkit-animation: rotation 3s linear infinite;
+    -o-animation: rotation 3s linear infinite;
 }

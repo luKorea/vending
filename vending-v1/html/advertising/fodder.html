@@ -98,7 +98,7 @@
                                             <option value="0">未审核</option>
                                             <option value="1">待审核</option>
                                             <option value="2">审核通过</option>
-                                            <option value="3">审核未通过</option>
+                                            <option value="3">审核不通过</option>
                                         </select>
                                     </div>
                                 </form>
@@ -156,11 +156,11 @@
                                 <!-- <i class="layui-icon layui-icon-search"></i> -->
                                 <span>提交审核</span>
                             </button>
-                            <button class="layui-btn layui-btn-normal  btn uploadBtn" style="margin-left: 10px;">
+                            <button class="layui-btn layui-btn-normal  btn approvedBtn" style="margin-left: 10px;">
                                 <!-- <i class="layui-icon layui-icon-add-circle "></i> -->
                                 <span>审核通过</span>
                             </button>
-                            <button class="layui-btn layui-btn-normal del-btn btn">
+                            <button class="layui-btn layui-btn-normal noPassBtn btn">
                                 <span>审核不通过</span>
                             </button>
                         </div>
@@ -405,6 +405,14 @@
                 </div>
             </div>
         </div>
+        <div class="mask maskContnet">
+            <div class="TitleContentWith">
+                <span  style="display: inline-block;"> 
+                    <i class="layui-icon layui-icon-loading "></i>
+                </span>
+                数据处理中，请稍候
+            </div>
+        </div>
     </div>
 </body>
 <script type="text/html" id="barDemo">
@@ -424,7 +432,7 @@
     </div>
 </script>
 <script type="text/html" id="imgtmp">
-    <div ><img src="{{d.img}}  " style="width: 40px;"></div>
+    <div ><img src="{{d.advertisingAttribute==0?d.img:''}}  " style="width: 40px;" ></div>
 </script>
 <script src="../../js/advertising/fodder.js"></script>
 </html>
