@@ -220,11 +220,11 @@ layui.use(['laydate', 'table', 'layer'], function () {
             editDuration = valData.duration;
             console.log(valData)
             $('.anUp').slideUp();
-            if(valData.checkStatus=='0'){
-                $('.submitAudit').show();
-            }else{
-                $('.submitAudit').hide();
-            }
+            // if(valData.checkStatus=='0'){
+            //     $('.submitAudit').show();
+            // }else{
+            //     $('.submitAudit').hide();
+            // }
             if (indexFlag != valData.vId) {
                 indexFlag = valData.vId;
                 $(this).siblings('.anUp').slideDown();
@@ -276,12 +276,8 @@ layui.use(['laydate', 'table', 'layer'], function () {
                     $('.materiaDowEdit').hide().children().hide();
                     $('.materiaImgEdit img').hide().siblings().hide();
                 }
-            })
-    
-           
-        }
-        
-        
+            })         
+        }      
     });
           // 提交审核
     $('body').on('click','.submitAudit',function(){

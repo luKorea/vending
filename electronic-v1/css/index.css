@@ -68,7 +68,7 @@ body{
 		padding: 10px;
 		margin: -10px auto -10px;
 	}
-@media screen and (min-width: 350px) and (max-width: 800px) {
+@media screen and (min-width: 50px) and (max-width: 800px) {
 	.header h1 {
 		font-family: 微软雅黑;
 		font-style: normal;
