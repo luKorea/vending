@@ -308,3 +308,20 @@ body .layui-form-checked[lay-skin=primary] i{
     -webkit-animation: rotation 3s linear infinite;
     -o-animation: rotation 3s linear infinite;
 }
+.layui-icon-right{
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    color: #999;
+    top: 387px;
+    left: -6px;
+    display: block;
+    width: 32px;
+    line-height: 76px;
+    font-size: 24px;
+    height: 76px;
+    background-color: #eee;
+    border-radius: 10px 0 0 10px;
+    -webkit-transition: right 1s;
+    display: none;
+}

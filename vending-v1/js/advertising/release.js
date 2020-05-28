@@ -16,7 +16,18 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
             endTime = timerKey[1];
         }
     });
-
+  // 收起左边账号事件
+  $('.sidebar .layui-icon-left').click(function () {
+    $('.aside-left').slideUp(function () {
+        $('.layui-icon-right').show();
+    });
+    $('.layui-icon-right').click(function () {
+        $('.aside-left').slideDown(function () {
+            $('.layui-icon-right').hide();
+        });
+    });
+    // $('.aside-left').width(0)
+});
     // 查询
     $('.keyBtn').click(function () {
         advertisingLis.reload({

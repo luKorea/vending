@@ -1,7 +1,10 @@
-layui.use(['table','form'], function () {
+layui.use(['table','form','layer','tree','util'], function () {
     var $ = layui.jquery;
     var table = layui.table;
-    var layer=layui.layer;
+    var layer=layui.layer,
+    layer = layui.layer,
+    util = layui.util,
+    tree = layui.tree
     var token=sessionStorage.token;
     var d=JSON.stringify({
         'pageName': 'pageNum',
@@ -258,4 +261,61 @@ layui.use(['table','form'], function () {
       }
     }); 
     
+    var   data10 = [{
+      title: '江西'
+      ,id: 1
+      ,children: [{
+        title: '南昌'
+        ,id: 1000
+        ,children: [{
+          title: '青山湖区'
+          ,id: 10001
+        },{
+          title: '高新区'
+          ,id: 10002
+        }]
+      },{
+        title: '九江'
+        ,id: 1001
+      },{
+        title: '赣州'
+        ,id: 1002
+      }]
+    },{
+      title: '广西'
+      ,id: 2
+      ,children: [{
+        title: '南宁'
+        ,id: 2000
+      },{
+        title: '桂林'
+        ,id: 2001
+      }]
+    },{
+      title: '陕西'
+      ,id: 3
+      ,children: [{
+        title: '西安'
+        ,id: 3000
+      },{
+        title: '延安'
+        ,id: 3001
+      }]
+    }]
+    tree.render({
+      elem: '#test12'
+      ,data: data10
+      ,showCheckbox: true  //是否显示复选框
+      ,id: 'demoId1'
+      ,isJump: false//是否允许点击节点时弹出新窗口跳转
+      ,showLine: false
+      ,click: function(obj){
+        var data = obj.data;  //获取当前点击的节点数据
+        layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
+      }
+    })
+    $('.aaaaaaa').click(function(){
+      console.log(tree.getChecked('demoId1'))
+    })
+
 });
