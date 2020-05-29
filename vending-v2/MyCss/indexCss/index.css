@@ -1,0 +1,235 @@
+*{
+    margin: 0;
+	padding: 0;
+	list-style: none;
+	text-decoration: none;
+}
+/* 标题 */
+.layui-layout-admin .layui-logo{
+	color: #ffffff;
+	font-size: 24px;
+	padding: 15px 0;
+	background: #1f2640;
+}
+.layui-nav-tree{
+	margin-top: 30px;
+}
+.layui-nav .layui-nav-item a{
+	height: 56px;
+}
+.layui-nav{
+	background-color: rgb(32, 34, 57);
+}
+.layui-layout-admin .layui-header{
+	background-color: black;
+}
+/* 顶部 */
+.content-header-title{
+	position: absolute;
+	left: 200px;
+	top: 0;
+	width: 65%;
+}
+.content-header-title{
+    color: #ffffff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.transform-nav-tab{
+    margin-left: 5%;
+    /* margin-top: 18px; */
+}
+.transform-nav-tab i{
+    font-size: 30px;
+    color:#be954a;
+}
+.swipe-header-notice{
+    background: #1f2640;  
+    margin: 15px 0;
+    margin-left: 10%;
+    display: flex;
+    justify-content: flex-start;
+    line-height: 35px;
+    align-items: center;
+	border-radius: 3px;
+	width: 100%;
+}
+.layui-input-block{
+	margin-top: 8px;
+	margin-left: 10px;	
+	min-height: 0;
+	margin-bottom: 8px;
+}
+.layui-unselect{
+	margin-top: 0;
+}
+.layui-header{
+	height: 65px;
+}
+.layui-form-onswitch{
+	border-color: #be954a;
+    background-color: #be954a;
+}
+.swipe-tile span{
+    display: inline-block;
+    margin-left:10px;
+}
+.swipe-content-carousel{
+    margin-left: 5%;
+}
+#test1{
+    background-color: #1f2640;
+}
+.layui-carousel>[carousel-item]>*{
+    background-color: #1f2640;
+}
+.layui-this{
+	line-height: 25px;
+}
+.layui-nav .layui-nav-item a{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.header-message .layui-nav-more{
+	display: none;
+}
+.uers-message span{
+	margin-right: 10px;
+	font-size: 14px;
+	color: #fff;
+}
+.uers-message i{
+	font-size: 20px;
+	color: #fff;
+}
+.header-message span{
+	color: #ffffff;
+	font-size: 14px;
+}
+.header-message p{
+	background: #f9722e ;
+    border-radius: 50%;
+    padding: 0 6px;
+    font-size: 12px;
+    height: 18px;
+    line-height: 18px;
+    margin-left: 5px;
+    border: 1px solid #f9722e ;
+}
+.header-message i{
+	font-size: 20px;
+	color: #ffffff;
+	margin-right: 6px;
+}
+.layui-nav .header-message a{
+	padding-left: 0;
+	/* padding-right: 1%; */
+}
+.my-nav-tab .layui-nav-item a i{
+	margin-right:  4px;
+	color: #E2E2E2;
+	font-size: 14px;
+}
+.nav-header-information{
+	margin-top: 5px;
+}
+.nav-header-information .layui-nav-child  a{
+	/* width: 100%; */
+	text-align: center;
+	
+}
+/* 头部选项卡*/
+.header-nav-tabs-switch{
+	margin-left:200px ;
+	z-index: 9999999999;
+	box-sizing: border-box;
+	/* border: solid 15px rgba(238,238,238); */
+	overflow: hidden;
+}
+.header-nav-tabs-switch .layui-tab{
+	border: solid 15px rgba(238,238,238); 
+	border-right: none;
+	margin: 0;
+} 
+.header-nav-tabs-switch .layui-tab-title{
+	/* border-bottom: solid 15px rgba(238,238,238) ; */
+}
+.layui-tab-title li{
+	font-size: 14px;
+}
+.header-nav-tabs-switch .layui-tab-title li:nth-child(1) i{
+	display: none;
+}
+.header-nav-tabs-switch .layui-tab-title li::after{
+	content: '';
+	position: absolute;
+    left: 0;
+	top: 0;
+	width: 0;
+}
+.header-nav-tabs-switch .layui-tab-title .layui-this:after{
+	content: '';
+	position: absolute;
+    left: 0;
+	top: 0;
+	width: 100%;
+	height: 3px;
+	background: #be954a;
+	border-width: 0;
+    border-style: solid;
+    border-bottom:0;
+    box-sizing: border-box;
+	pointer-events: none;
+	transition: all .5s;
+}
+.header-nav-tabs-switch .layui-tab-title{
+	background: #1f2640;
+}
+.header-nav-tabs-switch .layui-this{
+	background: #1a2036;
+	color: #fff;
+}
+.layui-tab-title{
+	height: 50px;
+}
+.layui-tab-title li{
+	height: 50px;
+	line-height: 50px;
+}
+.header-nav-tabs-switch .layui-tab-content{
+	position: fixed;
+	top: 145px;
+	bottom: 0px;
+	border: 15px solid rgba(238,238,238);
+	right: 0;
+	left: 200px;
+	box-sizing: border-box;
+	border-top: 0;
+	border-right: 10px solid rgba(238,238,238);
+	overflow:auto ;
+	padding-left: 0;
+	padding-right: 0;
+	padding: 0;
+}
+.header-nav-tabs-switch .layui-tab-content::-webkit-scrollbar{
+	display: none;
+}
+.header-nav-tabs-switch .layui-tab-item{
+	height: 100%;
+}
+
+/* 外部引入文件 */
+.content-tbas-iframe-html{
+	width: 100%;
+	min-height: 100%;
+}
+.content-tbas-iframe-html .iframe-show{
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+#userLogin .layui-nav-more{
+	display: none;
+}

@@ -1,0 +1,35 @@
+.details-wrap{
+    width: 100%; 
+    overflow: hidden;
+}
+.details-header{
+    width: 100%;
+    display: flex;
+}
+.header-title{
+    width: 25%;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+h1{
+    font-weight: 800; 
+}
+.prompt{
+    margin-top: 30px;
+    color: red;
+    width: 58.33333%;
+    margin-left: 8.33333%;
+}
+.times{
+    width: 25%;
+}
+.query-btn{
+    margin-left: 50px;
+}
+.details-data-list{
+  width: 100%;
+}
+.details-data-list .layui-form {
+    width: 100%;
+    overflow-x: auto;
+}

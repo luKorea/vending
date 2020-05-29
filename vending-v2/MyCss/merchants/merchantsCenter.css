@@ -1,0 +1,9 @@
+.center-warp{
+    width: 100%;
+}
+.none-title p{
+    color: rgb(153, 153, 153);
+    text-align: center;
+    margin-top: 50px;
+    font-size: 18px;
+}
