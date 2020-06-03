@@ -450,7 +450,7 @@ video{
     cursor: pointer;
 }
 .SetSorting{
-    width: 180px;
+    width: 120px;
 }
 .abbreviateImg{
     width: 120px;
@@ -462,7 +462,7 @@ video{
     width: 150px;
 }
 .SetType{
-    width: 200px;
+    width: 150px;
 }
 .SetOperation{
     width: 105px;
@@ -524,7 +524,7 @@ video{
     height: 480px;
 }
 .pubilshMaterialBox{
-    width: 1000px;
+    width: 1100px;
     position: relative;
     margin: 2vh auto 50px;
     background: #fff;

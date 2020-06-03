@@ -170,11 +170,12 @@ layui.use(['laydate', 'table', 'layer'], function () {
                         } else if (res.code == 201) {
                             layer.msg(res.message, { icon: 7, anim: 1 });
                         } else if (res.code == 202) {
+                            layer.msg(res.message, { icon: 7 });
                             tableIns.reload({
                                 where: {
                                 }
                             });
-                            layer.msg(res.message, { icon: 7 });
+                            
                         } else if (res.code == 403) {
                             window.history.go(-1)
                         }
@@ -274,6 +275,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
         checkList = [];
         if (submitCheckStatus.data.length > 0) {
             $('.mask').fadeIn();
+            $('.maskSpan').addClass('maskIcon')
             submitCheckStatus.data.forEach((item, index) => {
                 var submitObj = {
                     id: item.vId,
@@ -297,6 +299,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
             layer.confirm('确定审核通过？', function (index) {
                 layer.close(index);
                 $('.mask').fadeIn();
+                $('.maskSpan').addClass('maskIcon')
                 approveCheckStatus.data.forEach((item, index) => {
                     var approveObj = {
                         id: item.vId,
@@ -322,6 +325,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
             layer.confirm('确定审核不通过？', function (index) {
                 layer.close(index);
                 $('.mask').fadeIn();
+                $('.maskSpan').addClass('maskIcon')
                 noPassCheckStatus.data.forEach((item, index) => {
                     var noPassObj = {
                         id: item.vId,
@@ -716,6 +720,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
             }),
             success: function (res) {
                 $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon')
                 console.log(res)
                 if (res.code == 200) {
                     layer.msg(res.message, { icon: 1 });

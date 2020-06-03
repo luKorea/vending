@@ -7,14 +7,14 @@
     resize: none;
     border: none;
     padding:5px 10px;
-    background: #409eff;
+    background: #be954a;
     color: #fff;
-    border:solid 1px #409eff;
+    border:solid 1px #be954a;
     border-radius: 3px;
     font-size: 14px;
 }
 .l-btn:hover{
-    background: #63aaf1;
+    background: #cca65f;
     animation: anniu 1s infinite;
     cursor: pointer;
 }

@@ -446,7 +446,9 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
   });
   $('.tbaTitle li').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
-    $('.tabContent>div').eq($(this).index()).show().siblings().hide();
+    $('.addGoods .tabContent>div').eq($(this).index()).show().siblings().hide();
+    // console.log($(this).index())
+    console.log( $('.tabContent>div').length)
   })
   // 点击盒子其他地方隐藏弹窗
   $('.addGoods').click(function () {
@@ -744,14 +746,14 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
 
 
   // base64转化为file
-  function dataURLtoFile(dataurl, filename) {//将base64转换为文件
-    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], filename, { type: mime });
-  }
+  // function dataURLtoFile(dataurl, filename) {//将base64转换为文件
+  //   var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+  //     bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+  //   while (n--) {
+  //     u8arr[n] = bstr.charCodeAt(n);
+  //   }
+  //   return new File([u8arr], filename, { type: mime });
+  // }
    // 关闭弹窗
    $('.playHeader .close').click(function () {
     $(this).parent().parent().addClass('margin0')

@@ -15,7 +15,7 @@
             <div>
                 <div class="mian">
                     <div class="add-member">
-                        <button class="layui-btn layui-btn-normal btn addBtn" typeID='add'>
+                        <button class="layui-btn layui-btn-normal btn addBtn" typeID='1'>
                             <span>添加用户</span>
                         </button>
                     </div>
@@ -31,7 +31,7 @@
         </div>
         <!-- 添加成员 编辑成员 -->
         <div class="MemberOperation" style="overflow-y: auto;">
-            <div class="MemberContent">
+            <div class="MemberContent margin0">
 
                 <div class="OperationHeader">
                     <span></span>
@@ -39,8 +39,9 @@
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
                 </div>
-                <form class="layui-form" lay-filter="information">
-                    <div style="text-align: initial;padding: 25px 25px 30px;">
+
+                <div style="text-align: initial;padding: 25px 25px 30px;">
+                    <form class="layui-form" lay-filter="information">
                         <div class="layui-row">
                             <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
                                 <label> <span style="color: red;">*</span>用户名</label>
@@ -79,6 +80,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <!-- 开关部分 -->
                         <div>
                             <div class="switchList">
@@ -100,58 +102,58 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="margin-top: 10px; border-bottom: 1px solid rgb(204, 204, 204);">
-                            
-                                <div class="terminal ">
-                                    <span>终端权限：</span>
-                                    <div class="checkCont">
-                                        <input type="checkbox" lay-filter="permissions" name="haha" title="管理员权限"
-                                            lay-skin="primary" value="22">
-                                        <input type="checkbox" class="checkboxList" name="Goods" title="商品管理权限" lay-skin="primary" value="55">
-                                        <input type="checkbox" class="checkboxList"  name="Aisle" title="货道管理权限" lay-skin="primary">
-                                        <input type="checkbox" class="checkboxList" name="Advertising" title="广告管理权限" lay-skin="primary">
-                                        <input type="checkbox" class="checkboxList" name="Wifi" title="wifi权限(仅AT端)" lay-skin="primary">
-                                    </div>
+                    </form>
+                    <div style="margin-top: 10px; border-bottom: 1px solid rgb(204, 204, 204);"  class="roleCont">
+                        <form class="layui-form" lay-filter="checkboxData">
+                            <div class="terminal ">
+                                <span style="display: inline-block;width: 15%;">用户角色：</span>
+                                <div class="checkCont">
+                                    <!-- <input type="checkbox" lay-filter="permissions" name="haha" title="管理员权限"
+                                        lay-skin="primary" value="22">
+                                    <input type="checkbox" class="checkboxList" name="Goods" title="商品管理权限"
+                                        lay-skin="primary" value="55">
+                                    <input type="checkbox" class="checkboxList" name="Aisle" title="货道管理权限"
+                                        lay-skin="primary">
+                                    <input type="checkbox" class="checkboxList" name="Advertising" title="广告管理权限"
+                                        lay-skin="primary">
+                                    <input type="checkbox" class="checkboxList" name="Wifi" title="wifi权限(仅AT端)"
+                                        lay-skin="primary"> -->
                                 </div>
-                           
-                        </div>
-                        <div style="text-align: center; margin-top: 15px;">
-                            <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
-                                <span>取消</span>
-                            </button>
-                            <button class="layui-btn layui-btn-normal btn submit_btn" type="button">
-                                <span>提交</span>
-                            </button>
-                        </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <button class="layui-btn layui-btn-normal btn submit_btn" type="button">
+                            <span>提交</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
+                            <span>取消</span>
+                        </button>                       
+                    </div>
+                </div>
 
+            </div>
+        </div>
+        <div class="mask maskContnet">
+            <div class="TitleContentWith">
+                <span class="maskSpan" style="display: inline-block;"> 
+                    <i class="layui-icon layui-icon-loading "></i>
+                </span>
+               
+                数据处理中，请稍候
             </div>
         </div>
     </div>
-         <div class="maskContnet" style="display: block;">
-            <div style="width: 80%;margin: 0 auto ;background: #ffffff;height: 500px;">
-                <div id="test12" class="demo-tree-more"></div>
-
-                <div class="aaaaaaa" style="background: red;">
-                    54654654654654
-                </div>
-            </div>
-        </div> 
 </body>
 <script type="text/html" id="barDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm btn operation" lay-event="operation">
-            <span style="color:#fff;">操作</span>
-            <i class="layui-icon layui-icon-down" style="font-size:12px !important;"></i>
+        <!-- <button class="layui-btn layui-btn-sm btn operation" lay-event="editRole">
+            <span style="color:#fff;">编辑角色</span>
+        </button> -->
+        <button class="layui-btn layui-btn-sm btn operation" typeID='2' lay-event="edit">
+            <span style="color:#fff;">编辑</span>
         </button>
         <button class="layui-btn layui-btn-sm btn del-btn" lay-event="delete">删除</button>
-        <div class="anUp">
-            <ul>
-                <li class="GoodsInformation" typeID='edit'>编辑</li>
-                <!-- <li class="previewDetails">门店数据</li> -->
-            </ul>
-        </div>
     </div>
 </script>
 <script src="../../js/userManagement/memberList.js"></script>

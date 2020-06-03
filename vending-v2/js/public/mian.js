@@ -72,6 +72,7 @@ function upPreferential(tableIns, keyGoodsName, GoodsTypeID, stateId, startingPr
   // 点击提交
   //输入框父元素class名   编辑器
 function insert(className, editClass) {
+  console.log($(`.${className} input[name="videoInput"]`).val())
   // return $(`.${className} input[name="videoInput"]`).val();  
   if (editClass.txt.html().length > 11) {
     // console.log(addWangEditor.txt.html())

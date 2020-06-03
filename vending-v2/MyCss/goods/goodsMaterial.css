@@ -115,7 +115,7 @@
     margin: auto;
     /* background-color: white; */
 }
-.addImgBox,.addVideoBox{
+.addImgBox,.addVideoBox,.editBox,.playBox{
     width: 500px;
     position: relative;
     margin: 2vh auto 50px;
@@ -125,6 +125,10 @@
     box-sizing: border-box;
     transition: all 0.3s;
 }
+.playBody{
+    box-sizing: border-box;
+    padding: 20px;
+}
 .addImgHeader,.addVideoHeader{
     padding: 20px 20px 10px;
 }
@@ -133,17 +137,23 @@
     font-size: 16px;
     color: #303133;
 }
-.addImgBody,.addVideoBody{
+.addImgBody,.addVideoBody,.editBody{
     padding: 30px 20px;
     color: #606266;
     line-height: 24px;
     font-size: 14px;
 }
+.playBody img,.playBody video{
+    width: 100%;
+}
 .FlexInputWidth input{
     width: 80%;
 }
+.FlexInputWidth input:hover{
+    border-color: #be954a;
+}
 .listFlex button{
-    margin-left: 15px;
+    /* margin-left: 15px;    */
 }
 .upload-list{
     overflow: hidden;
@@ -162,6 +172,7 @@
     line-height: 1.8;
     position: relative;
     margin-left: 15px;
+    display: none;
 }
 .upload-list img{
     vertical-align: middle;
@@ -178,18 +189,40 @@
     text-align: right;
     box-sizing: border-box;
 }
-.cancel-btn{
+.cancel-btn,.editCancelBtn{
     background-color: #fff !important;
     border: 1px solid #dcdfe6 !important;
     color: #606266;
 }
-.cancel-btn:hover{
+.cancel-btn:hover,.editCancelBtn:hover{
     border-color: #be954a !important;
     color: #be954a !important;
 }
 .uploadVideo{
     width: 100%;
+    display: none;
 }
 .uploadVideo video{
     width: 100%;
+}
+.ImgCropping{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 99999;
+    display: none;
+}
+.uploadVideoChange{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 22%;
+    height: 100%;
+    opacity: 0;
+}
+.layui-row>div{
+    margin-bottom: 10px;
 }

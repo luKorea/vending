@@ -7,7 +7,7 @@
     <title>商品素材库</title>
     <script src="../../js/public/documentWrite.js"></script>
     <link rel="stylesheet" href="../../MyCss/public/cropper.min.css">
-	<link rel="stylesheet" href="../../MyCss/public/ImgCropping.css">
+    <link rel="stylesheet" href="../../MyCss/public/ImgCropping.css">
     <link rel="stylesheet" href="../../MyCss/goods/goodsMaterial.css">
 </head>
 
@@ -25,37 +25,54 @@
             <div class="ImgContnet">
                 <div style="padding: 0 20px;">
                     <div class="layui-row">
-                        <div class=" layui-col-sm3 layui-col-md2 layui-col-lg2">
+                        <div class=" layui-col-sm3 layui-col-md3 layui-col-lg1">
                             <button class="layui-btn layui-btn-normal  add-btn btn" style="margin: 0;">
                                 <i class="layui-icon layui-icon-app"></i>
-                                <span>添加商品图片</span>
+                                <span>添加图片</span>
                             </button>
                         </div>
                         <div class=" layui-col-sm5 layui-col-md4 layui-col-lg2">
                             <div style="max-width: 220px;" class="key-contnet">
                                 <div class="key-text">关键字</div>
-                                <input type="text" placeholder="素材名" class="KyeText">
+                                <input type="text" placeholder="图片名" name="KeyImgName" class="KyeText">
                             </div>
-                        </div>         
-                        <div class=" layui-col-sm6 layui-col-md3">
+                        </div>
+                        <div class=" layui-col-sm6 layui-col-md3 layui-col-lg3">
                             <div class="key-contnet">
                                 <div class="key-text">发布时间</div>
                                 <div class="itmes">
                                     <div class="layui-form">
                                         <div class="layui-inline">
                                             <div class="layui-input-inline">
-                                                <input type="text" class="layui-input" id="itemrs1">
+                                                <input type="text" class="layui-input" id="itemrs1" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                           
+
                         </div>
-                        <div class=" layui-col-sm4 layui-col-md2">
-                            <button class="layui-btn layui-btn-normal query-btnClick btn" style="margin-top: 0;">
+                        <div class=" layui-col-sm4 layui-col-md4 layui-col-lg2">
+                            <button class="layui-btn layui-btn-normal ImgQueyuBtnClick btn" style="margin-top: 0;">
                                 <i class="layui-icon layui-icon-search"></i>
                                 <span>查询</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal delBtn btn" style="margin-top: 0;" typeId="0">
+                                <span>删除图片</span>
+                            </button>
+                        </div>
+                        <div class=" layui-col-sm4 layui-col-md8 layui-col-lg4">
+                            <button class="layui-btn layui-btn-normal  btn submitAuditBtn" typeId="0">
+                                <!-- <i class="layui-icon layui-icon-search"></i> -->
+                                <span>提交审核</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal  btn auditBtn" style="margin-left: 10px;"
+                                typeId="0" type="2">
+                                <!-- <i class="layui-icon layui-icon-add-circle "></i> -->
+                                <span>审核通过</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal auditBtn btn noPassBtn" typeId="0" type="3">
+                                <span>审核不通过</span>
                             </button>
                         </div>
                     </div>
@@ -81,24 +98,41 @@
                         <div class=" layui-col-sm5 layui-col-md4 layui-col-lg2">
                             <div style="max-width: 220px;" class="key-contnet">
                                 <div class="key-text">关键字</div>
-                                <input type="text" placeholder="素材名" class="KyeText">
+                                <input type="text" placeholder="视频名" name="keyVideoName" class="KyeText">
                             </div>
-                        </div>         
+                        </div>
                         <div class=" layui-col-sm4 layui-col-md2">
                             <div class="itmes">
                                 <div class="layui-form">
                                     <div class="layui-inline">
                                         <div class="layui-input-inline">
-                                            <input type="text" class="layui-input" id="itemrs2">
+                                            <input type="text" class="layui-input" id="itemrs2" autocomplete="off">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class=" layui-col-sm4 layui-col-md2">
-                            <button class="layui-btn layui-btn-normal query-btnClick btn" style="margin-top: 0;">
+                        <div class=" layui-col-sm4 layui-col-md4 layui-col-lg2">
+                            <button class="layui-btn layui-btn-normal VideoQueryBtnClick btn" style="margin-top: 0;">
                                 <i class="layui-icon layui-icon-search"></i>
                                 <span>查询</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal delBtn btn" style="margin-top: 0;" typeId="1">
+                                <span>删除图片</span>
+                            </button>
+                        </div>
+                        <div class=" layui-col-sm4 layui-col-md8 layui-col-lg4">
+                            <button class="layui-btn layui-btn-normal  btn submitAuditBtn" typeId="1">
+                                <!-- <i class="layui-icon layui-icon-search"></i> -->
+                                <span>提交审核</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal  btn auditBtn" style="margin-left: 10px;"
+                                typeId="1" type="2">
+                                <!-- <i class="layui-icon layui-icon-add-circle "></i> -->
+                                <span>审核通过</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal auditBtn btn noPassBtn" typeId="1" type="3">
+                                <span>审核不通过</span>
                             </button>
                         </div>
                     </div>
@@ -110,48 +144,99 @@
                         </div>
                     </div>
                 </div>
-            </div>     
+            </div>
         </div>
         <!-- 视频弹窗播放 -->
         <div class="videoPlay maskContnet">
-            <div class="mask"></div>
-            <div class="playVideo">
-                <video src="http://172.16.68.199:8087/image/9fe6fb5f-4929-4514-9d91-5766efcdcacd.mp4" controls="controls"></video> 
-                  <!-- http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4 -->
+            <div class="playBox margin0" style="padding-bottom: 20px;">
+                <div class="playHeader">
+                    <span>添加图片</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="playBody">
+                    <div style="width: 350px;margin: 0 auto;">
+                        <!-- <img src="http://172.16.68.199:8087/image/2e49a1db-99d4-4012-8bd3-00861cf5d74f.jpg " alt="">
+                        <video src=""
+                    controls="controls"></video> -->
+                    </div>
+
+                </div>
             </div>
         </div>
 
         <!--添加图片素材  -->
-        <div class="addImgCont maskContnet" >
+        <div class="addImgCont maskContnet">
             <div class="addImgBox margin0">
-                <div class="addImgHeader">
+                <div class="playHeader">
                     <span>添加图片</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
                 </div>
                 <div class="addImgBody">
-                    <div class="listFlex">
-                        <label for="">图片名称</label>
-                        <div class="FlexInputWidth">
-                            <input type="text">
+                    <form class="layui-form" action="" lay-filter="ImgData" style="width: 100%;">
+                        <div class="listFlex">
+                            <label for="">图片名称：</label>
+                            <div class="FlexInputWidth">
+                                <input type="text" name=ImgNane>
+                            </div>
                         </div>
-                    </div>
-                    <div class="listFlex">
-                        <button class="layui-btn layui-btn-normal upload-btn btn">
-                            <span>点击上传商品图片</span>
+                        <div class="listFlex">
+                            <button class="layui-btn layui-btn-normal uploadBtn btn" type="button">
+                                <span>点击上传图片</span>
+                            </button>
+                        </div>
+                        <p>建议图片尺寸为：200*200；</p>
+                        <div class="upload-list">
+                            <img src="../../img/icon.png" id="GoodsImg" alt="">
+                        </div>
+                        <!-- <div class="listFlex" style="margin-top:20px;align-items: center;">
+                            <span for=""> 商品状态</span>
+                            <div class="layui-form-item" style="margin: 0;margin-left: 10px;">
+                                <input type="radio" name="goodsStatus" value="0" title="不启用">
+                                <input type="radio" name="goodsStatus" value="1" title="启用" checked>
+                            </div>
+                        </div> -->
+                    </form>
+                </div>
+                <div class="addImgFooter">
+                    <div>
+                        <button class="layui-btn layui-btn-normal btn ImgBtn" style="margin: 0 0 0 15px;">
+                            <span>确定</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn cancel-btn">
+                            <span>取消</span>
                         </button>
                     </div>
-                    <p style="margin-left: 15px;">建议图片尺寸为：200*200；</p>
-                    <div class="upload-list">
-                        <img src="../../img/icon.png" alt="">
+                </div>
+            </div>
+        </div>
+        <!-- 修改图片 视频素材 -->
+        <div class="editImgCont maskContnet">
+            <div class="editBox margin0">
+                <div class="playHeader">
+                    <span>编辑图片</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="editBody">
+                    <div class="listFlex">
+                        <label for="">图片名称：</label>
+                        <div class="FlexInputWidth">
+                            <input type="text" name=EidtImgNane>
+                        </div>
                     </div>
                 </div>
                 <div class="addImgFooter">
                     <div>
-                        <button class="layui-btn layui-btn-normal btn cancel-btn">
-                            <span>取消</span>
-                        </button>
-                        <button class="layui-btn layui-btn-normal btn determine-btn2"
-                            style="margin: 0 0 0 15px;">
+                        <button class="layui-btn layui-btn-normal btn editImgBtn" style="margin: 0 0 0 15px;">
                             <span>确定</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn editCancelBtn">
+                            <span>取消</span>
                         </button>
                     </div>
                 </div>
@@ -160,33 +245,37 @@
         <!-- 添加视频素材 -->
         <div class="addVideoCont maskContnet">
             <div class="addVideoBox margin0">
-                <div class="addVideoHeader">
-                    <span>添加商品视频</span>
+                <div class="playHeader">
+                    <span>添加视频</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
                 </div>
                 <div class="addVideoBody">
                     <div class="listFlex">
-                        <label for="">视频名称</label>
+                        <label style="text-align: left;" for="">视频名称:</label>
                         <div class="FlexInputWidth">
-                            <input type="text">
+                            <input type="text" name="VideoName">
                         </div>
                     </div>
-                    <div class="listFlex">
-                        <button class="layui-btn layui-btn-normal upload-btn btn"   >
-                            <span>点击上传商品图片</span>
+                    <div class="listFlex" style="position: relative;">
+                        <button class="layui-btn layui-btn-normal upload-btn btn">
+                            <span>点击上视频</span>
+                            <input class="uploadVideoChange" type="file" accept="video/*">
                         </button>
+
                     </div>
                     <div class="uploadVideo">
-                        <video src="http://172.16.68.199:8087/image/475cfdc3-b6d3-4b0e-b212-705ec9937aa5.mp4" controls="controls"></video>
+                        <video src="" controls="controls"></video>
                     </div>
                 </div>
                 <div class="addVideoFooter">
                     <div>
+                        <button class="layui-btn layui-btn-normal btn addVideoBtn" style="margin: 0 0 0 15px;">
+                            <span>确定</span>
+                        </button>
                         <button class="layui-btn layui-btn-normal btn cancel-btn">
                             <span>取消</span>
-                        </button>
-                        <button class="layui-btn layui-btn-normal btn determine-btn2"
-                            style="margin: 0 0 0 15px;">
-                            <span>确定</span>
                         </button>
                     </div>
                 </div>
@@ -194,48 +283,69 @@
         </div>
 
         <!-- 选择图片 剪切 -->
-		<div class="ImgCropping" style="display: block;">
-			<div class="tailoring-container">
-				<div class="black-cloth"></div>
-				<div class="tailoring-content">
-					<div class="tailoring-content-one">
-						<label title="上传图片" for="chooseImg" class="l-btn choose-btn">
-							<input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg"
-								class="hidden"> <!-- onchange="selectImg(this)" -->
-							选择图片
-						</label>
-						<div class="close-tailoring">×</div>
-					</div>
-					<div class="tailoring-content-two">
-						<div class="tailoring-box-parcel">
-							<img id="tailoringImg">
-						</div>
-						<div class="preview-box-parcel">
-							<p>图片预览：</p>
-							<div class="square previewImg"></div>
-							<div class="circular previewImg"></div>
-						</div>
-					</div>
-					<div class="tailoring-content-three">
-						<button class="l-btn cropper-reset-btn">复位</button>
-						<button class="l-btn cropper-rotate-btn">旋转</button>
-						<button class="l-btn cropper-scaleX-btn">换向</button>
-						<button class="l-btn sureCut" id="sureCut">确定</button>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div class="ImgCropping">
+            <div class="tailoring-container">
+                <div class="black-cloth"></div>
+                <div class="tailoring-content">
+                    <div class="tailoring-content-one">
+                        <label title="上传图片" for="chooseImg" class="l-btn choose-btn">
+                            <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg"
+                                class="hidden"> <!-- onchange="selectImg(this)" -->
+                            选择图片
+                        </label>
+                        <div class="close-tailoring">×</div>
+                    </div>
+                    <div class="tailoring-content-two">
+                        <div class="tailoring-box-parcel">
+                            <img id="tailoringImg">
+                        </div>
+                        <div class="preview-box-parcel">
+                            <p>图片预览：</p>
+                            <div class="square previewImg"></div>
+                            <div class="circular previewImg"></div>
+                        </div>
+                    </div>
+                    <div class="tailoring-content-three">
+                        <button class="l-btn cropper-reset-btn">复位</button>
+                        <button class="l-btn cropper-rotate-btn">旋转</button>
+                        <button class="l-btn cropper-scaleX-btn">换向</button>
+                        <button class="l-btn sureCut" id="sureCut">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mask maskContnet">
+            <div class="TitleContentWith">
+                <span class="maskSpan" style="display: inline-block;">
+                    <i class="layui-icon layui-icon-loading "></i>
+                </span>
+                数据处理中，请稍候
+            </div>
+        </div>
     </div>
 </body>
-<script type="text/html" id="barDemo">
+<script type="text/html" id="barDemoImg">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm btn operation" lay-event="add">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="edit">
+            <span>编辑</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="perview">
+            <span>预览</span>
+        </button>
+    </div>
+</script>
+<script type="text/html" id="barDemoVideo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="edit">
+            <span>编辑</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="perview">
             <span>预览</span>
         </button>
     </div>
 </script>
 <script type="text/html" id="imgtmp">
-    <div><img src="{{d.Img}}  " style="width: 40px; height: 40px;"></div>
+    <div><img src="{{d.img}}  " style="width: 40px; height: 40px;"></div>
 </script>
 <!-- <script src="../../js/public/imagePreview.min.js"></script> -->
 <script src="../../js/public/cropper.min.js"></script>

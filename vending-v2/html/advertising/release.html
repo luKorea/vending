@@ -173,7 +173,7 @@
                                 <span>素材名称</span>
                             </div>
                             <div class="listTimer">
-                                <span>播放时长(s)</span>
+                                <span>播放时长(秒)</span>
                             </div>                
                             <div class="listAttribute">
                                 <span>素材属性</span>
@@ -182,7 +182,7 @@
                                 <span>素材类别</span>
                             </div>
                             <div class="listSize">
-                                <span>素材大小(mb)</span>
+                                <span>素材大小(MB)</span>
                             </div>
                             <div class="uploadName">
                                 <span>上传人</span>
@@ -314,7 +314,10 @@
                                 <div>素材名称</div>
                             </li>
                             <li class="duration">
-                                <div>播放时长</div>
+                                <div>播放时长(秒)</div>
+                            </li>
+                            <li class="SetType">
+                                <div>素材属性</div>
                             </li>
                             <li class="SetType">
                                 <div>素材类别</div>
@@ -535,7 +538,7 @@
     </div>
 </script>
 <script type="text/html" id="imgtmp">
-    <div><img src="{{d.img}}  " style="width: 40px;"></div>
+    <div><img src="{{d.advertisingAttribute==0?d.img:''}}  " style="width: 40px;"></div>
 </script>
 <script type="text/javascript"
     src="https://webapi.amap.com/maps?v=1.4.15&key=4b78c5cee1f0f8c37a2a2f8283e256b9"></script>

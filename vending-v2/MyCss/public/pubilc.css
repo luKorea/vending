@@ -102,7 +102,7 @@ input{
 .warp-margin{
     margin: 20px;
 }
-.del-btn,.noPassBtn{
+.del-btn,.noPassBtn,.delBtn{
     background-color: #f56c6c !important;
     border-color: #f56c6c !important;
 }

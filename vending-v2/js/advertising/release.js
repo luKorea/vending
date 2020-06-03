@@ -114,7 +114,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
         },
         done: function (res) {
             if (res.code == 403) {
-                window.history.go(-1)
+                window.parent.location.href = "login.html";
             } else {
 
             }
@@ -129,7 +129,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
     var numderID = null;
     var durationData = null;
     table.on('tool(machineListData)', function (obj) {
-        // console.log(obj)
+        console.log(obj)
         numderID = obj.data.number;
         if (obj.event === 'preview') {
             console.log(obj.data.publicizeAdvert)
@@ -221,7 +221,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                         layer.msg('修改成功', { icon: 1, anim: 1 });
                         editDetailsList = [];
                     } else if (res.code == 403) {
-                        window.history.go(-1)
+                        window.parent.location.href = "login.html";
                     } else {
                         layer.msg(res.message, { icon: 7 });
                     }
@@ -355,7 +355,8 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                     { type: 'checkbox', },
                     { field: 'img', width: 80, title: '微缩图', templet: "#imgtmp" },
                     { field: 'name', width: 150, title: '素材名', },
-                    { field: 'size', width: 100, title: '大小', },
+                    { field: 'size', width: 100, title: '大小(MB)', },
+                    { field: 'duration', width: 120, title: '播放时长(秒)', },
                     {
                         field: 'advertisingAttribute', width: 150, title: '素材属性', templet: function (d) {
                             return d.advertisingAttribute == 0 ? '图片' : '视频'
@@ -368,7 +369,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                 id: 'chooesId',
                 height: 450,
                 loading: true,
-                width: 950,
+                width: 1100,
                 request: {
                     'pageName': 'pageNum',
                     'limitName': 'pageSize'
@@ -399,7 +400,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                 },
                 done: function (res) {
                     if (res.code == 403) {
-                        window.history.go(-1)
+                        window.parent.location.href = "login.html";
                     } else {
 
                     }
@@ -473,6 +474,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
 
     // 广告设置素材列表
     function materaialMethods(addList, theElement) {
+        console.log(addList)
         var materaiaList = '';
         $.each(addList, function (index, ele) {
             materaiaList += ` <li class="setMateraialList">
@@ -492,6 +494,9 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                                     <div>
                                         <input type="number" value="${ele.inputVal ? ele.inputVal : ''}" index="${index}">
                                     </div>
+                                </div>
+                                <div class="SetType">
+                                    <div>${ele.advertisingAttribute==0?'图片':'视频'}</div>
                                 </div>
                                 <div class="SetType">
                                     <div>${ele.advertisingType == 0 ? '横屏' : '竖屏'}</div>
@@ -547,7 +552,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                                 where: {}
                             })
                         } else if (res.code == 403) {
-                            window.history.go(-1)
+                            window.parent.location.href = "../login/login.html";
                         } else {
                             layer.msg(res.message, { icon: 7 });
                         }
@@ -791,7 +796,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                         }
                     });                           
                 } else if (res.code == 403) {
-                    window.history.go(-1)
+                    window.parent.location.href = "login.html";
                 }
             }
         })
