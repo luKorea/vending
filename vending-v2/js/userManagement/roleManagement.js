@@ -12,23 +12,20 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         url: `/api/role/findRole`,
         method: 'post',
         contentType: "application/json",
-        // , method: 'get',
-        // ,contentType: "application/json",
         headers: {
             token,
         },
         cols: [[
             { field: 'name', width: 180, title: '用户名' },
-            { field: 'addU', width: 150, title: '添加人' },
-            { field: 'phone', width: 200, title: '添加时间' },
-            { field: '1', width: 180, title: '最后修改人', },
-            { field: 'addTime', width: 200, title: '最后修改时间', sort: true },
+            { field: 'addUser', width: 150, title: '添加人' },
+            { field: 'addTime', width: 200, title: '添加时间' },
+            { field: 'lastUser', width: 180, title: '最后修改人', },
+            { field: 'lastTime', width: 200, title: '最后修改时间', sort: true },
             { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
         ]]
         , id: 'tableId'
         , page: true
         , loading: true
-        // ,method:'post'
         , limits: [10, 20, 50]
         ,
         request: {
@@ -116,7 +113,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         token,
                     },
                     data: JSON.stringify({
-                        id: data.id
+                        id: objData.id
                     }),
                     success: function (res) {
                         layer.close(index);

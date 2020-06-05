@@ -325,3 +325,15 @@ body .layui-form-checked[lay-skin=primary] i{
     -webkit-transition: right 1s;
     display: none;
 }
+.layui-icon-close:hover{
+    color: #be954a;
+    cursor: pointer;
+
+}
+.tableCell{
+    color:#be954a ;
+}
+.mask_margin{
+    margin-top: -30px;
+transition: all 0.3s;
+}

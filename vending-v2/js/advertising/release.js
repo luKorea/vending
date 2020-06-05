@@ -57,20 +57,23 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
             { type: 'checkbox', },
             { field: 'number', width: 210, title: '发布单号' },
             {
-                field: 'advertisingTime', width: 120, title: '广告时长(s)', templet: function (d) {
+                field: 'advertisingTime', width: 120, title: '广告时长(秒)', templet: function (d) {
                     var advertisingTime = 0;
                     d.publicizeAdvert.forEach((item, index) => {
                         return advertisingTime += Number(item.time);
                     });
+                    
                     return advertisingTime
                 }
             },
             {
-                field: 'advertisingSize', width: 120, title: '广告大小(m)', templet: function (d) {
+                field: 'advertisingSize', width: 120, title: '广告大小(Mb)', templet: function (d) {
                     var advertisingSize = 0
                     d.publicizeAdvert.forEach((item, index) => {
                         return advertisingSize += Number(item.size);
                     });
+                    // console.log(advertisingSize)
+                    advertisingSize=advertisingSize.toFixed(2)
                     return advertisingSize
                 }
             },
@@ -518,6 +521,8 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
     });
     // 确定发布
     $('.pubilshSweet .confirmBtn').click(function () {
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon')
         var confirmList = [];
         addMaterList.forEach((item, index) => {
             var confirmObj = {
@@ -542,11 +547,12 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                         publicizeAdvert: confirmList
                     }),
                     success: function (res) {
-                        console.log(res)
+                        $('.mask').fadeOut();
+                        $('.maskSpan').removeClass('maskIcon')
                         if (res.code == 200) {
                             popupHide('pubilshSweet', 'sweetBox');
                             popupHide('releaseAdvertising', 'publishBox')
-                            layer.msg('发布成功', { icon: 1, anim: 1 });
+                            layer.msg('发布成功', { icon: 1, });
                             addMaterList = [];
                             advertisingLis.reload({
                                 where: {}

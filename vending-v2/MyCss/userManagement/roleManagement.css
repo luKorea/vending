@@ -208,12 +208,13 @@
 .permissionsData{
     width: 90%;
     /* background-color: skyblue; */
-    height: 100px;
+    /* height: 100px; */
     display: flex;
     justify-self: start;
     flex-wrap: wrap;
 }
 .permissionsData>div{
     width: 33%;
+    margin-bottom: 10px;
     overflow: hidden;
 }

@@ -33,7 +33,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
             { type: 'checkbox', },
             { field: 'img', width: 120, title: '微缩图', templet: "#imgtmp" },
             { field: 'name', width: 150, title: '素材名', },
-            { field: 'size', width: 100, title: '大小(mb)', },
+            { field: 'size', width: 100, title: '大小(MB)', },
             { field: 'amendTime', width: 130, title: '分辨率', },
             {
                 field: 'advertisingAttribute', width: 150, title: '素材属性', sort: true, templet: function (d) {

@@ -188,11 +188,11 @@
 					<span>编辑商品</span>
 				</div> -->
 				<div class="playHeader">
-                    <span>编辑商品</span>
-                    <button class="close" type="button">
-                        <i class="layui-icon layui-icon-close"></i>
-                    </button>
-                </div>
+					<span>编辑商品</span>
+					<button class="close" type="button">
+						<i class="layui-icon layui-icon-close"></i>
+					</button>
+				</div>
 				<div class="editor-body">
 					<div style="margin: 30px;">
 						<div>
@@ -336,10 +336,13 @@
 								<div id="editWangEditor">
 
 								</div>
-								<div class="upVideo" title="上传视频">
+								<div class="upVideo" title="上传视频" typeID="1">
 									<i class="layui-icon layui-icon-video" title="上传视频"></i>
 								</div>
-								<div class="videoTab" style="display: none;">
+								<div class="upImg" contType="2" goodsIndex="1">
+									<i class="layui-icon layui-icon-picture"></i>
+								</div>
+								<!-- <div class="videoTab" style="display: none;">
 									<i class="layui-icon layui-icon-close"></i>
 									<ul class="tbaTitle">
 										<li class="active">上传视频</li>
@@ -360,11 +363,11 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 						<div class="content-footer" style="margin-top:30px;">
-							<div style="text-align: center;">		
+							<div style="text-align: center;">
 								<button class="layui-btn layui-btn-normal btn editDetermine-btn"
 									style="margin: 0 0 0 15px;">
 									<span>确定</span>
@@ -391,11 +394,11 @@
 					<span>添加商品</span>
 				</div> -->
 				<div class="playHeader">
-                    <span>添加商品</span>
-                    <button class="close" type="button">
-                        <i class="layui-icon layui-icon-close"></i>
-                    </button>
-                </div>
+					<span>添加商品</span>
+					<button class="close" type="button">
+						<i class="layui-icon layui-icon-close"></i>
+					</button>
+				</div>
 				<div class="editor-body">
 					<div style="margin: 30px;">
 						<div>
@@ -518,35 +521,16 @@
 								<div id="addWangEditor">
 
 								</div>
-								<div class="upVideo" title="上传视频">
+								<div class="upVideo" title="上传视频" typeID="2">
 									<i class="layui-icon layui-icon-video" title="上传视频"></i>
 								</div>
-								<div class="videoTab" style="display: none;">
-									<i class="layui-icon layui-icon-close"></i>
-									<ul class="tbaTitle">
-										<li class="active">上传视频</li>
-										<li>网络视频</li>
-									</ul>
-									<div class="tabContent">
-										<div style="text-align: center;display: block;">
-											<div class="upVideoData">
-												<i class="w-e-icon-upload2"></i>
-												<input type="file" accept="video/*" name="addEidtVideo">
-											</div>
-										</div>
-										<div class="addVideoInput">
-											<input type="text" class="videoInput" name="videoInput"
-												placeholder="格式如：<iframe src=... ></iframe>">
-											<div>
-												<button class="insert-btn">插入</button>
-											</div>
-										</div>
-									</div>
+								<div class="upImg" contType="2" goodsIndex="2">
+									<i class="layui-icon layui-icon-picture"></i>
 								</div>
 							</div>
 						</div>
 						<div class="content-footer" style="margin-top:30px;">
-							<div style="text-align: center;">	
+							<div style="text-align: center;">
 								<button class="layui-btn layui-btn-normal btn determine-btn2"
 									style="margin: 0 0 0 15px;">
 									<span>确定</span>
@@ -610,7 +594,78 @@
 			</div>
 		</div>
 
+		<!-- 商品素材列表 -->
+		<div class="GoodsMaterial maskContnet">
+			<div class="goodsMaterialBox margin0">
+				<div class="playHeader">
+					<span>图片列表</span>
+					<button class="close" type="button">
+						<i class="layui-icon layui-icon-close"></i>
+					</button>
+				</div>
+				<div class="materialKeyCont">
+					<div style="max-width: 220px;" class="key-contnet">
+						<div class="key-text">关键字</div>
+						<input type="text" placeholder="图片名" class="KyeText" name="KyeText">
+					</div>
+					<button class="layui-btn layui-btn-normal queryBtnClick btn" style="margin: 0 0 0 15px;">
+						<i class="layui-icon layui-icon-search"></i>
+						<span>查询</span>
+					</button>
+				</div>
+				<div class="materialBody">
+					<div>
+						<div class="list-table">
+							<table class="layui-hide" id="materiaImgTable" lay-filter="materiaImgTable"></table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="goodsmaterialVideo maskContnet">
+			<div class="materialBox margin0">
+				<div class="playHeader">
+					<span>视频列表</span>
+					<button class="close" type="button">
+						<i class="layui-icon layui-icon-close"></i>
+					</button>
+				</div>
+				<div class="materialVideoKeyCont">
+					<div style="max-width: 220px;" class="key-contnet">
+						<div class="key-text">关键字</div>
+						<input type="text" placeholder="视频名" class="KyeText" name="KyeText">
+					</div>
+					<button class="layui-btn layui-btn-normal queryBtnClick btn" style="margin: 0 0 0 15px;">
+						<i class="layui-icon layui-icon-search"></i>
+						<span>查询</span>
+				</div>
+				<div class="materialBody">
+					<div>
+						<div class="list-table">
+							<table class="layui-hide" id="materiaVideoTable" lay-filter="materiaVideoTable"></table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 素材预览 -->
+		<div class="materialPreview maskContnet">
+			<div class="previewBox margin0">
+				<div class="playHeader">
+					<span>视频列表</span>
+					<button class="close" type="button">
+						<i class="layui-icon layui-icon-close"></i>
+					</button>
+				</div>
+				<div class="perviewBody">
+					<div class="imgCont">
+						<video src="" controls="controls"></video>
+					</div>
+				</div>
+			</div>
+		</div>
 </body>
+
 <script type="text/html" id="barDemo">
 		<div class="layui-btn-container">
 			<button class="layui-btn layui-btn-sm btn operation" lay-event="add">
@@ -624,12 +679,32 @@
 					<li class="GoodsInformation">商品信息</li>
 					<li class="previewDetails">预览详情</li>
 				</ul>
-
 			</div>
+		</div>
+	</script>
+	<!-- 图片素材 -->
+	<script type="text/html" id="materiaImg">
+		<div class="layui-btn-container">
+			<button class="layui-btn layui-btn-sm btn ImgDetermineBtn" lay-event="add">
+				<span>确定</span>
+			</button>
+		</div>
+	</script>
+	<script type="text/html" id="barDemoVideo">
+		<div class="layui-btn-container">
+			<button class="layui-btn layui-btn-sm btn ImgDetermineBtn" lay-event="preview">
+				<span>预览</span>
+			</button>
+			<button class="layui-btn layui-btn-sm btn ImgDetermineBtn" lay-event="add">
+				<span>确定	</span>
+			</button>
 		</div>
 	</script>
 <script type="text/html" id="imgtmp">
         <div><img src="{{d.goods_Images}}  " style="width: 40px; height: 40px;"></div>
+</script>
+<script type="text/html" id="materiaImgtmp">
+	<div><img src="{{d.img}}  " style="width: 40px;"></div>
 </script>
 <script src="../../js/public/wangEditor.min.js"></script>
 <script src="../../js/public/cropper.min.js"></script>

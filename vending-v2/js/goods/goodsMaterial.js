@@ -1,5 +1,6 @@
 layui.use(['form', 'layer', 'laydate', 'table'], function () {
   // tab切换
+  var index=0
   $('.navTab li').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
     let that = $(this);
@@ -7,9 +8,38 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
       left: (that.offset().left) + 'px'
     }, 500);
     if ($(this).index() == 0) {
-      onStep('VideoContnet', 'ImgContnet');
-    } else {
-      nextStep('ImgContnet', 'VideoContnet')
+      if(index==0){
+        index=$(this).index();
+        return ;
+      }else if(index==1){
+        index=$(this).index();
+        onStep('details', 'ImgContnet');      
+      }else{
+        index=$(this).index();
+        onStep('VideoContnet', 'ImgContnet');  
+      }
+    } else if ($(this).index() == 1) {
+      if(index==0){
+        index=$(this).index();
+        nextStep('ImgContnet', 'details')
+      }else if(index==1){
+        index=$(this).index();
+        return ;
+      }else{
+        index=$(this).index();
+        onStep('VideoContnet', 'details');  
+      }
+    }else{
+      if(index==0){
+        index=$(this).index();
+        nextStep('ImgContnet', 'VideoContnet')
+      }else if(index=1){
+        index=$(this).index();
+        nextStep('details', 'VideoContnet')
+      }else{
+        index=$(this).index();
+        return ;
+      }
     }
   });
   var startTime = '';
@@ -35,12 +65,27 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
   var endTime2 = '';
   laydate.render({
     elem: '#itemrs2',
+    range: true,
     done: function (value, date, endDate) {
       console.log(value); //得到日期生成的值，如：2017-08-18
       timerKey = value.split(' - ');
       console.log(timerKey);
       startTime2 = timerKey[0];
       endTime2 = timerKey[1];
+    }
+  });
+  var startTime3 = '';
+  //结束时间
+  var endTime3 = '';
+  laydate.render({
+    elem: '#itemrs3',
+    range: true,
+    done: function (value, date, endDate) {
+      console.log(value); //得到日期生成的值，如：2017-08-18
+      timerKey = value.split(' - ');
+      console.log(timerKey);
+      startTime3 = timerKey[0];
+      endTime3 = timerKey[1];
     }
   });
   $('.videoList video').click(function () {
@@ -87,7 +132,7 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
       cols: [[
         { type: 'checkbox', },
         { field: 'img', width: 150, title: '图片', templet: "#imgtmp" },
-        { field: 'name', width: 180, title: '图片名', },
+        { field: 'name', width: 180, title: '图片名称', },
         {
           field: 'status', width: 180, title: '审核状态', templet: function (d) {
             return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
@@ -133,7 +178,7 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
       },
       done: function (res) {
         if (res.code == 403) {
-          window.history.go(-1)
+          window.parent.location.href = "../login/login.html";
         } else {
 
         }
@@ -147,7 +192,7 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     ImgDAtaVal = obj.data;
     if (obj.event == 'edit') {
       popupShow('editImgCont', 'editBox');
-      $('.editImgCont .playHeader span').html('编辑图片')
+      $('.editImgCont .playHeader span').html('编辑商品图片')
       $('.editBody label').html('图片名称：')
       $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
       tableData = advertisingLis;
@@ -219,6 +264,17 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
         conditionTwo: endTime2
       }
     })
+  });
+  // 详情图片查询
+  $('.detailsImgQueyuBtnClick').click(function(){
+    detailsTable.reload({
+      where: {
+        conditionThree: $('.details input[name="KeyImgName"]').val(),
+        conditionFour: '2',
+        condition: startTime3,
+        conditionTwo: endTime3
+      }
+    })
   })
   var videoTable = table.render({
     elem: '#VideoData',
@@ -231,7 +287,7 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     cols: [[
       // { field: 'Img', width: 150, title: '素材图',templet: "" },
       { type: 'checkbox', },
-      { field: 'name', width: 180, title: '视频名', },
+      { field: 'name', width: 180, title: '视频名称', },
       {
         field: 'name', width: 180, title: '审核状态', templet: function (d) {
           return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
@@ -283,14 +339,13 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
       }
     }
   });
-
   // 监听视频操作
   table.on('tool(VideoData)', function (obj) {
     console.log(obj);
     ImgDAtaVal = obj.data;
     if (obj.event == 'edit') {
       popupShow('editImgCont', 'editBox');
-      $('.editImgCont .playHeader span').html('编辑视频');
+      $('.editImgCont .playHeader span').html('编辑商品视频');
       $('.editBody label').html('视频名称：');
       $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
       tableData = videoTable;
@@ -400,7 +455,9 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
             console.log(res)
             if (res.code == 200) {
               popupHide('addVideoCont', 'addVideoBox');
-              $('.FlexInputWidth input[name="VideoName"]').val('')
+              $('.FlexInputWidth input[name="VideoName"]').val('');
+              videoSrc=null;
+              $('.uploadVideo').fadeIn();
               layer.msg(res.message, { icon: 1 });
               videoTable.reload({
                 where: {}
@@ -430,9 +487,12 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     if ($(this).attr('typeId') == 0) {
       checkStatus = table.checkStatus('ImgListData');
       tableIV = advertisingLis;
-    } else {
+    } else if($(this).attr('typeId') == 1){
       checkStatus = table.checkStatus('VideoListData');
       tableIV = videoTable;
+    }else{
+      checkStatus=table.checkStatus('detailsId');
+      tableIV=detailsTable;
     }
     console.log(checkStatus)
     if (checkStatus.data.length > 0) {
@@ -499,9 +559,12 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     if ($(this).attr('typeId') == 0) {
       checkStatusList = table.checkStatus('ImgListData');
       tableType = advertisingLis;
-    } else {
+    } else if($(this).attr('typeId') == 1) {
       checkStatusList = table.checkStatus('VideoListData');
       tableType = videoTable;
+    }else{
+      checkStatusList = table.checkStatus('detailsId');
+      tableType = detailsTable;
     }
     if (checkStatusList.data.length > 0) {
       $('.mask').fadeIn();
@@ -532,13 +595,16 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     if ($(this).attr('typeId') == 0) {
       checkStatusList = table.checkStatus('ImgListData');
       tableType = advertisingLis;
-    } else {
+    } else if($(this).attr('typeId') == 1){
       checkStatusList = table.checkStatus('VideoListData');
       tableType = videoTable;
+    }else {
+      checkStatusList = table.checkStatus('detailsId');
+      tableType = detailsTable;
     }
 
     if (checkStatusList.data.length > 0) {
-      layer.confirm($(that).attr('type')==2?'确定审核通过':'确定审核不通过？', function (index) {
+      layer.confirm($(that).attr('type') == 2 ? '确定审核通过' : '确定审核不通过？', function (index) {
         layer.close(index);
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
@@ -549,9 +615,9 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
           };
           auditList.push(submiObj)
         });
-        setTimeout(()=>{
+        setTimeout(() => {
           goodsAudit('0', auditList, tableType, $(that).attr('typeId'));
-        },1000)
+        }, 1000)
       })
     } else {
       layer.msg('请选择需要提交审核的图片或视频', { icon: 7 });
@@ -724,4 +790,156 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     $(this).parent().parent().addClass('margin0')
     $(this).parents('.maskContnet').fadeOut();
   });
+
+
+
+  var detailsTable = table.render({
+    elem: '#detailsImgData',
+    method: 'post',
+    url: '/api/good_material/getGoodMaterial',
+    contentType: "application/json",
+    headers: {
+      token,
+    },
+    cols: [[
+      { type: 'checkbox', },
+      { field: 'img', width: 150, title: '图片', templet: "#detailsImgtmp" },
+      { field: 'name', width: 180, title: '图片名称', },
+      {
+        field: 'status', width: 180, title: '审核状态', templet: function (d) {
+          return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
+
+        }
+      },
+      { field: 'number', width: 200, title: '图片编号', },
+      { field: 'publishTime', width: 180, title: '发布时间', sort: true },
+      { field: 'addUser', width: 150, title: '发布人', },
+      // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
+      { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoImg', },
+    ]]
+    , page: true
+    , id: 'detailsId'
+    , loading: true,
+    request: {
+      'pageName': 'pageNum',
+      'limitName': 'pageSize'
+    },
+    parseData: function (res) {
+      // console.log(res)
+      //res 即为原始返回的数据
+      if (res.code == 200) {
+        return {
+          "code": res.code, //解析接口状态
+          "msg": '', //解析提示文本
+          "count": res.data.total, //解析数据长度
+          "data": res.data.list //解析数据列表
+        };
+      } else {
+        return {
+          "code": res.code, //解析接口状态
+          "msg": res.msg, //解析提示文本
+        }
+      }
+
+    },
+    where: {
+      conditionFour: '2'
+    },
+    response: {
+      statusCode: 200 //规定成功的状态码，默认：0
+    },
+    done: function (res) {
+      if (res.code == 403) {
+        window.parent.location.href = "../login/login.html";
+      } else {
+
+      }
+    }
+  });
+
+  $('.details .add-btn').click(function(){
+    popupShow('addDetailsImgCont','addDetailsImgBox');
+  });
+  $('.addDetailsImgCont input[name="fileDetails"]').change(function(e){
+    var that=this;
+    var upDetails=new FormData();
+    upDetails.append('file', e.target.files[0]);
+    $.ajax({
+      type: 'post',
+      url: '/api/fileUpload',
+      processData: false,
+      contentType: false,
+      headers: {
+        token,
+      },
+      data: upDetails,
+      success: function (res) {
+        console.log(res)
+        $(that).val('');
+        if (res.code == 0) {
+          videoSrc = res.data.src
+          $('.upload-list2').fadeIn();
+          $('#GoodsDetailsImg').attr('src', res.data.src)
+        } else {
+          layer.msg(res.message, { icon: 7 });
+        }
+      }
+    })
+  });
+  // 确定添加详情图片
+  $('.detailsImgBtn').click(function(){
+    if($('.addDetailsImgBody input[name="detailsImgNane"]').val()){
+      if( $('#GoodsDetailsImg').attr('src')){
+        $.ajax({
+          type: 'post',
+          url: '/api/good_material/saveGoodMaterial',
+          headers: {
+            "Content-Type": "application/json",
+            token,
+          },
+          data: JSON.stringify({
+            attribute: '2',
+            img: $('#GoodsDetailsImg').attr('src'),
+            name: $('.addDetailsImgBody input[name="detailsImgNane"]').val(),
+          }),
+          success: function (res) {
+            console.log(res)
+            if (res.code == 200) {
+              popupHide('addDetailsImgCont','addDetailsImgBox');
+              $('.addDetailsImgBody input[name="detailsImgNane"]').val('')
+              $('.upload-list2').fadeOut();
+              $('#GoodsDetailsImg').attr('src', '')
+              layer.msg(res.message, { icon: 1 });
+              detailsTable.reload({
+                where: {}
+              })
+            } else if (res.code == 403) {
+              window.parent.location.href = "../login/login.html";
+            } else {
+              layer.msg(res.message, { icon: 2 });
+            }
+          }
+        })
+      }else{
+        layer.msg('请上传图片', { icon: 7 });
+      }
+    }else{
+      layer.msg('请输入图片名称', { icon: 7 });
+    }
+  });
+
+  table.on('tool(detailsImgData)', function (obj) {
+    console.log(obj)
+    ImgDAtaVal = obj.data;
+    if (obj.event == 'edit') {
+      popupShow('editImgCont', 'editBox');
+      $('.editImgCont .playHeader span').html('编辑详情图片')
+      $('.editBody label').html('图片名称：')
+      $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
+      tableData = detailsTable;
+    } else {
+      popupShow('videoPlay', 'playBox');
+      $('.playBody div').html(`<img src="${ImgDAtaVal.img}" alt="">`)
+    }
+  })
 })

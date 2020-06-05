@@ -230,7 +230,7 @@
     border-radius: 4px;
 }
 /* 编辑自定义商品部分 */
-.editor-content,.reading-contnet{
+.editor-content,.reading-contnet,.goodsMaterialBox,.materialBox{
     width: 800px;
     position: relative;
     margin: 2vh auto 50px;
@@ -240,7 +240,7 @@
     box-sizing: border-box;
     transition: all 0.3s;
 }
-.editor-body{
+.editor-body,.materialBody{
     padding: 30px 20px;
     color: #606266;
     line-height: 24px;
@@ -462,22 +462,27 @@
     right: 115px;
     cursor: pointer;
 }
+.upImg{
+    position: absolute;
+    top: 5px;
+    right: 185px;
+    cursor: pointer;
+}
 .upVideo .layui-icon-video{
     padding: 5px 10px;
     color: #999;
     font-size: 18px;
 }
-.upVideo .layui-icon-video:hover{
-    color: #333;;
+.upImg .layui-icon-picture{
+    padding: 5px 10px;
+    color: #999;
+    font-size: 18px;
 }
-.upVideo input{
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    z-index: 999999;
+.upVideo .layui-icon-video:hover{
+    color: #333;
+}
+.upImg .layui-icon-picture:hover{
+    color: #333;
 }
 .w-e-toolbar .w-e-menu:nth-child(17){
     /* display: none; */
@@ -485,6 +490,15 @@
     margin: 5px 15px;
 }
 .w-e-toolbar .w-e-menu:nth-child(17) i{
+    /* opacity: 0; */
+    display: none;
+}
+.w-e-toolbar .w-e-menu:nth-child(15){
+    /* display: none; */
+    padding: 0;
+    margin: 5px 15px;
+}
+.w-e-toolbar .w-e-menu:nth-child(15) i{
     /* opacity: 0; */
     display: none;
 }
@@ -591,4 +605,29 @@
     }
     .layui-row>div{
         margin-top: 10px;
+    }
+    .materialKeyCont,.materialVideoKeyCont{
+        padding: 20px;
+    }
+    .previewBox{
+        width: 600px;
+        position: relative;
+        margin: 2vh auto 50px;
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 0 1px 3px rgba(0,0,0,.3);
+        box-sizing: border-box;
+        transition: all 0.5s;
+    }
+    .perviewBody{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+    }
+    .imgCont{
+        width: 350px;
+        margin: 0 auto 30px;
+    }
+    .imgCont video{
+        width: 100%;
     }

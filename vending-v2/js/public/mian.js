@@ -71,20 +71,20 @@ function upPreferential(tableIns, keyGoodsName, GoodsTypeID, stateId, startingPr
   // 编辑器添加网络视频
   // 点击提交
   //输入框父元素class名   编辑器
-function insert(className, editClass) {
-  console.log($(`.${className} input[name="videoInput"]`).val())
-  // return $(`.${className} input[name="videoInput"]`).val();  
-  if (editClass.txt.html().length > 11) {
-    // console.log(addWangEditor.txt.html())
-    editClass.txt.append(`<p>${$(`.${className} input[name="videoInput"]`).val()}</p>`);
-    $('.videoTab').fadeOut();
-    $(`.${className} input[name="videoInput"]`).val('')
-  } else {
-    editClass.txt.html(`<p>${$(`.${className} input[name="videoInput"]`).val()}</p>`);
-    $('.videoTab').fadeOut();
-    $(`.${className} input[name="videoInput"]`).val('')
-  }
-};
+// function insert(className, editClass) {
+//   console.log($(`.${className} input[name="videoInput"]`).val())
+//   // return $(`.${className} input[name="videoInput"]`).val();  
+//   if (editClass.txt.html().length > 11) {
+//     // console.log(addWangEditor.txt.html())
+//     editClass.txt.append(`<p>${$(`.${className} input[name="videoInput"]`).val()}</p>`);
+//     $('.videoTab').fadeOut();
+//     $(`.${className} input[name="videoInput"]`).val('')
+//   } else {
+//     editClass.txt.html(`<p>${$(`.${className} input[name="videoInput"]`).val()}</p>`);
+//     $('.videoTab').fadeOut();
+//     $(`.${className} input[name="videoInput"]`).val('')
+//   }
+// };
 
 // tab切换下一步事件
 function nextStep(before,after){

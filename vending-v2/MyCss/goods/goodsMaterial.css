@@ -27,7 +27,7 @@
     bottom: 0;
     left: 100px;
     height: 3px;
-    width: 30px;
+    width: 60px;
     border-radius: 10px;
     background-color: #be954a;
 }
@@ -42,9 +42,9 @@
     width: 100%;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 0%;
 }
-.VideoContnet{
+.VideoContnet,.details{
     width: 100%;
     position: absolute;
     top: 0;
@@ -115,7 +115,7 @@
     margin: auto;
     /* background-color: white; */
 }
-.addImgBox,.addVideoBox,.editBox,.playBox{
+.addImgBox,.addVideoBox,.editBox,.playBox,.addDetailsImgBox{
     width: 500px;
     position: relative;
     margin: 2vh auto 50px;
@@ -137,7 +137,7 @@
     font-size: 16px;
     color: #303133;
 }
-.addImgBody,.addVideoBody,.editBody{
+.addImgBody,.addVideoBody,.editBody,.addDetailsImgBody{
     padding: 30px 20px;
     color: #606266;
     line-height: 24px;
@@ -152,9 +152,18 @@
 .FlexInputWidth input:hover{
     border-color: #be954a;
 }
-.listFlex button{
-    /* margin-left: 15px;    */
+.listFlex {
+    position: relative;
 }
+.upDetails{
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 25%;
+    height: 100%;
+    opacity: 0;
+}
+
 .upload-list{
     overflow: hidden;
     z-index: 0;
@@ -174,6 +183,33 @@
     margin-left: 15px;
     display: none;
 }
+.upload-list2{
+    overflow: hidden;
+    z-index: 0;
+    width: 90%;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid #c0ccda;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    padding: 10px 10px 10px 10px;
+    transition: all .5s cubic-bezier(.55,0,.1,1);
+    font-size: 14px;
+    color: #606266;
+    position: relative;
+    margin-left: 15px;
+    display: none;
+}
+.upload-list2 img{
+    vertical-align: middle;
+    display: inline-block;
+    width: 80%;    
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin: 0 auto;
+}
 .upload-list img{
     vertical-align: middle;
     display: inline-block;
@@ -184,12 +220,12 @@
     z-index: 1;
     margin-left: -75px;
 }
-.addImgFooter,.addVideoFooter{
+.addImgFooter,.addVideoFooter,.addDetailsImgFooter{
     padding: 10px 20px 20px;
     text-align: right;
     box-sizing: border-box;
 }
-.cancel-btn,.editCancelBtn{
+.cancel-btn,.editCancelBtn,.detalisCancelBtn{
     background-color: #fff !important;
     border: 1px solid #dcdfe6 !important;
     color: #606266;
