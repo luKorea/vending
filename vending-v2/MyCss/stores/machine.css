@@ -47,7 +47,7 @@
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
 }
-.fixed-account{
+.fixedAccount{
     overflow-y: auto;
     overflow-x: hidden;
     border: 1px solid #ccc;
@@ -55,11 +55,19 @@
     cursor: default;
     background: #fff;
     color: #606266;
-}
-.fixed-account span{
-    font-size: 14px;
-    color: #409EFF;
+    margin-bottom: 22px;
     cursor: pointer;
+}
+.fixedAccount span{
+    font-size: 14px;
+    color: #606266;
+}
+.accountContnet .active{
+    color: #be954a;
+    border-color:#be954a ;
+}
+.accountContnet .active span{
+    color: #be954a;
 }
 .sidebar{
     position: absolute;
@@ -280,6 +288,10 @@ input{
 }
 .navSetCont{
     width: 100%;
+    display: flex;
+    justify-content: start;
+    flex-wrap: nowrap;
+    overflow: hidden;
 }
 .setCoreListOne{
     width: 100%;
@@ -339,4 +351,40 @@ input{
 .editMachineBox{
     text-align: initial;
     padding: 25px 25px 30px;
+}
+.listFlex label{
+    width: 130px;
+}
+.notice{
+    margin-left: 130px;
+    font-size: 14px;
+    line-height: 40px;
+    color: red;
+    margin-bottom: 22px;
+}
+.cancelBtn,.editCancelBtn{
+    background: #fff !important;
+    border: 1px solid #dcdfe6 !important;
+    color: #606266;
+}
+.cancelBtn:hover,.editCancelBtn:hover{
+    border-color: #be954a !important;
+    color: #be954a !important;
+}
+.mapContent{
+    width: 500px;
+    height: 500px;
+    margin: 22px auto;
+}
+.machineMap{
+    width: 100%;
+    height: 100%;
+}
+input:hover{
+    border-color: #be954a;
+}
+.salesTwo{
+    width: 100%;
+    height: 200px;
+    background-color: red;
 }

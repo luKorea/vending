@@ -11,21 +11,22 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     'limitName': 'pageSize'
   })
   var tableIns = table.render({
-    elem: '#tableTest'
-    , url: `/api/user/findUser`
-    // , method: 'get',
-    // ,contentType: "application/json",
-    , headers: {
+    elem: '#tableTest',
+    url: `/api/user/findUser`,
+    method: 'post',
+    contentType: "application/json",
+    headers: {
       token,
     },
     cols: [[
       { field: 'userName', width: 180, title: '用户名' },
       { field: 'name', width: 150, title: '姓名' },
       { field: 'phone', width: 150, title: '手机号' },
+      { field: 'merchantName', width: 150, title: '所属商户' },
       { field: '1', width: 150, title: '创建人', },
       { field: 'addTime', width: 180, title: '创建时间', sort: true },
       { field: '1', width: 150, title: '最后操作人', },
-      { field: '2', width: 180, title: '最后操作时间', sort: true },
+      { field: 'lastTime', width: 180, title: '最后操作时间', sort: true },
       {
         field: 'open', width: 150, title: '状态', templet: function (d) {
           return d.open == 0 ? '不启用' : '启用'
@@ -76,10 +77,20 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     }
   });
   var uuID = null;
+
+  // 查询
+  $('.queryBtnClick ').click(function(){
+    tableIns.reload({
+      where:{
+        conditionTwo:$('.mian input[name="keyMerchants"]').val(),
+        // condition:2
+      }
+    })
+  })
   //监听工具条
   table.on('tool(test)', function (obj) {
     var data = obj.data;
-    uuID=data.uuid;
+    uuID = data.uuid;
     console.log(data)
     if (obj.event === 'edit') {
       // layer.msg('ID：' + data.uuid + ' 的查看操作');
@@ -88,17 +99,22 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       informationType = $(this).attr('typeID');
       console.log(informationType)
       // $('.MemberOperation').fadeIn();
-      popupShow('MemberOperation', 'MemberContent')
+      popupShow('MemberOperation', 'MemberContent');
+      mercantsSelectList(merchantsListData,'marchantsList',form);
       form.val("information", {
         "userName": data.userName,
         "name": data.name,
         "userPwd": '      ',
+        "DuserPwd":'      ',
         "alonePwd": '      ',
+        'DalonePwd':'      ',
         "phone": data.phone,
         "cardId": data.cardId,
         "startThe": data.open ? 'on' : '',
-        "administrator": data.roleSign ? 'on' : ''
+        "administrator": data.roleSign ? 'on' : '',
+        "marchantsListname":data.merchantId
       })
+      form.render('select');
       userRoles(roleList, 'checkCont', data);
     } else if (obj.event === 'delete') {
 
@@ -140,6 +156,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     informationType = $(this).attr('typeID');
     uuID = null;
     $('.OperationHeader span').html('添加用户')
+    mercantsSelectList(merchantsListData,'marchantsList',form);
     form.val("information", {
       "userName": '',
       "name": '',
@@ -147,9 +164,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       "alonePwd": '',
       "phone": '',
       "cardId": '',
+      'marchantsListname':''
     });
+    form.render('select');
     $('.checkCont').empty();
     $('.roleCont').hide();
+    
+    
+    
   });
   // 取消事件
   $('.cancel_btn').click(function () {
@@ -164,12 +186,20 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 添加
     // console.log(form.val("checkboxData"));
 
-    if (!(informData.userName && informData.name && informData.userPwd && informData.alonePwd && informData.phone)) {
-      layer.msg('带*为必填',{icon:7});
+    if (!(informData.userName && informData.name && informData.userPwd && informData.alonePwd && informData.phone&&informData.marchantsListname)) {
+      layer.msg('带*为必填', { icon: 7 });
       return;
     }
-    if (!(informData.userName && informData.name && informData.phone)) {
-      layer.msg('带*为必填',{icon:7});
+    if (!(informData.userName && informData.name && informData.phone&&informData.marchantsListname)) {
+      layer.msg('带*为必填', { icon: 7 });
+      return;
+    }
+    if(!(informData.DuserPwd==informData.userPwd)){
+      layer.msg('登录密码不一致', { icon: 7 });
+      return ;
+    }
+    if(!(informData.alonePwd==informData.DalonePwd)){
+      layer.msg('独立密码不一致', { icon: 7 });
       return;
     }
     $('.mask').fadeIn();
@@ -200,16 +230,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
           },
           data: JSON.stringify({
-            UUId: uuID,
-            userName: informData.userName,
+            uid: uuID,
+            username: informData.userName,
             name: informData.name,
             userPwd: informData.userPwd != '      ' ? informData.userPwd : '',
             alonePwd: informData.alonePwd != '      ' ? informData.alonePwd : '',
             phone: informData.phone,
             cardId: informData.cardId,
-            // open:openStart,
-            // roleSign:roleSignStart
-            roleId:informationType==2?roleListArray:''
+            open: openStart,
+            roleSign: roleSignStart,
+            roleId: informationType == 2 ? roleListArray : null,
+            merchantId:Number(informData.marchantsListname) 
           }),
           success: function (res) {
             $('.mask').fadeOut();
@@ -230,11 +261,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 "cardId": '',
               })
               $('.MemberOperation').fadeOut();
-              layer.msg(res.message,{icon:1})
+              layer.msg(res.message, { icon: 1 })
             } else if (res.code == 403) {
               window.history.go(-1)
             } else {
-              layer.msg(res.message,{icon:2})
+              layer.msg(res.message, { icon: 2 })
             }
           }
         })
@@ -325,4 +356,29 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     })
     form.render('checkbox');
   }
+
+  // 获取商户列表
+  var merchantsListData = merchantsListMian('');
+  // 左侧商户列表
+  leftMerchantsList(merchantsListData,'accountContnet');
+  $('.fixedAccount').click(function(){
+    // alert($(this).attr('mid'))
+    $('.fixedAccount').removeClass('active');
+    $(this).addClass('active')
+    tableIns.reload({
+      where:{
+        condition:$(this).attr('mid')?Number($(this).attr('mid')):''
+      }
+    })
+  })
+
+  // 左边商户列表显示隐藏事件
+  $('.sidebar i').click(function(){
+    $('.left-mian').hide()
+    $('.onLeft').show()
+  });
+  $('.onLeft').click(function(){
+    $(this).hide();
+    $('.left-mian').show()
+  })
 });

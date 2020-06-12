@@ -35,6 +35,7 @@ layui.use(['form', 'layer'], function () {
                     }),
                     success: function (res) {
                         if (res.code == 200) {
+                            console.log(res)
                             sessionStorage.username = res.data.username;
                             sessionStorage.token = res.data.token;
                             if (logData.keep == 'on') {

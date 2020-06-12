@@ -2,50 +2,50 @@
 
 // 删除商品数据列表数据
 // 传id
-var token=sessionStorage.token;
+var token = sessionStorage.token;
 function Goodsdel(id, indexs, obj, index) {
   // index 1为自定义商品 2为自定义类目 3为通用商品 
   if (indexs == 1) {
     $.ajax({
-      url:`/api/goods/deleteById`,
-      type:'get',
+      url: `/api/goods/deleteById`,
+      type: 'get',
       headers: {
         "Content-Type": "application/json",
         token,
       },
-      data:{
+      data: {
         goods_Id: id
-      },success:function(res){
+      }, success: function (res) {
         if (res.code == 200) {
           obj.del();
           layer.close(index);
-        }else if(res.code==403){
+        } else if (res.code == 403) {
           window.history.go(-1)
-        }else{
+        } else {
           layer.msg(res.message);
         }
       }
     })
   } else if (indexs == 2) {
     $.ajax({
-      type:'get',
-      url:`/api/classify/deleteById`,
+      type: 'get',
+      url: `/api/classify/deleteById`,
       headers: {
         "Content-Type": "application/json",
         token,
       },
-      data:{
+      data: {
         id,
-      },success:function(res){
+      }, success: function (res) {
         if (res.code == 200) {
-              obj.del();
-              layer.close(index);
-              layer.msg('删除成功');
-            }else if(res.code==403){
-              window.history.go(-1)
-            }  else {
-              layer.msg(res.message);
-            }
+          obj.del();
+          layer.close(index);
+          layer.msg('删除成功');
+        } else if (res.code == 403) {
+          window.parent.location.href = "../login/login.html";
+        } else {
+          layer.msg(res.message);
+        }
       }
     })
   }
@@ -68,9 +68,9 @@ function upPreferential(tableIns, keyGoodsName, GoodsTypeID, stateId, startingPr
     }
   })
 };
-  // 编辑器添加网络视频
-  // 点击提交
-  //输入框父元素class名   编辑器
+// 编辑器添加网络视频
+// 点击提交
+//输入框父元素class名   编辑器
 // function insert(className, editClass) {
 //   console.log($(`.${className} input[name="videoInput"]`).val())
 //   // return $(`.${className} input[name="videoInput"]`).val();  
@@ -87,43 +87,43 @@ function upPreferential(tableIns, keyGoodsName, GoodsTypeID, stateId, startingPr
 // };
 
 // tab切换下一步事件
-function nextStep(before,after){
+function nextStep(before, after) {
   $(`.${before}`).animate({
-      left:-100+'%'
-  },500);
+    left: -100 + '%'
+  }, 500);
   $(`.${after}`).animate({
-      left:0
-  },500);
+    left: 0
+  }, 500);
 };
 
 // tab切换上一步
-function onStep(before,after){
+function onStep(before, after) {
   $(`.${before}`).animate({
-    left:100+'%'
-},500);
-$(`.${after}`).animate({
-    left:0
-},500);
+    left: 100 + '%'
+  }, 500);
+  $(`.${after}`).animate({
+    left: 0
+  }, 500);
 }
 
 // 弹窗显示
-function popupShow(contnet,contnetChild){
+function popupShow(contnet, contnetChild) {
   $(`.${contnet}`).fadeIn();
   $(`.${contnetChild}`).removeClass('margin0')
 };
 // 取消关闭弹窗
-function popupHide(contnet,contnetChild){
+function popupHide(contnet, contnetChild) {
   $(`.${contnetChild}`).addClass('margin0')
   $(`.${contnet}`).fadeOut();
 };
 
-function base64(file,element){
+function base64(file, element) {
   const reader = new FileReader();
   reader.readAsDataURL(file);
-  reader.onload = ()=>{
-      const img  = reader.result;
-      $(`${element}`).attr('src',img)
-    }
+  reader.onload = () => {
+    const img = reader.result;
+    $(`${element}`).attr('src', img)
+  }
 }
 
 
@@ -135,4 +135,114 @@ function dataURLtoFile(dataurl, filename) {//将base64转换为文件
     u8arr[n] = bstr.charCodeAt(n);
   }
   return new File([u8arr], filename, { type: mime });
+}
+
+function phoneRegular(that) {
+  var phone = $(that).val()
+  if (phone) {
+    if (!(/^1[3456789]\d{9}$/.test(phone))) {
+      // alert("手机号码有误，请重填");  
+      layer.msg('请填写正确的手机号码',{icon:7});
+      $(that).val('')
+      return false;
+    }
+  }
+}
+
+
+// 获取商户列表
+
+// function merchantsListMian() {
+//   var marchantsList = []
+//   $.ajax({
+//     type: 'post',
+//     url: '/api/merchant/getMerchantList',
+//     headers: {
+//       token,
+//       "Content-Type": "application/json",
+//     },
+//     async: false,
+//     data: JSON.stringify({
+//       pageNum: 1,
+//       pageSize: 1000000
+//     }),
+//     success: function (res) {
+//       if (res.code == 200) {
+//         if (res.data.list.length > 0) {
+//           res.data.list.forEach((item, index) => {
+//             var marchantsObj = {
+//               name: item.name,
+//               id: item.id,
+//               topMerchant:item.topMerchant
+//             }
+//             marchantsList.push(marchantsObj)
+//           });
+//         }
+//       }
+//     }
+//   })
+//   console.log(marchantsList)
+//   return marchantsList
+// };
+
+// / 获取商户列表
+
+function merchantsListMian(id) {
+  var marchantsList = []
+  $.ajax({
+    type: 'post',
+    url: '/api/merchant/getTopMerchant',
+    headers: {
+      token,
+      "Content-Type": "application/json",
+    },
+    async: false,
+    data:JSON.stringify({
+      id,
+    }),
+    success: function (res) {
+      if (res.code == 200) {
+        marchantsList=res.data;
+        if (res.data.length > 0) {
+          marchantsList.forEach((item, index) => {
+            if(item.id==item.topMerchant){
+              marchantsList.splice(index,1);
+              marchantsList.unshift(item)
+            }
+          });
+        }
+      }
+    }
+  })
+  // console.log(marchantsList)
+  return marchantsList
+};
+
+
+
+// 商户下拉框渲染
+function mercantsSelectList( list, element, form,) {
+  var merchantOption = ``;
+  list.forEach((item, indx) => {
+    merchantOption += `<option value="${item.id}">${item.name}</option>`
+  });
+  $(`.${element}`).empty();
+  $(`.${element}`).html(merchantOption);
+  form.render('select');
+}
+
+
+// 左侧商户列表
+function leftMerchantsList(list, element) {
+  var merchantsNameList = `<p style="margin:20px;color:red;">商户</p>
+  <div class="fixedAccount" mid="">
+                          <span> 全部商户</span>
+                      </div>`;
+  list.forEach((item, index) => {
+    merchantsNameList += `<div class="fixedAccount ${index!=0?'marginLeft':''}" mid="${item.id}" ">
+                          <span> ${item.name}</span>
+                      </div>`
+  });
+  $(`.${element}`).empty();
+  $(`.${element}`).html(merchantsNameList);
 }

@@ -67,7 +67,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                 }
             },
             {
-                field: 'advertisingSize', width: 120, title: '广告大小(Mb)', templet: function (d) {
+                field: 'advertisingSize', width: 120, title: '广告大小(MB)', templet: function (d) {
                     var advertisingSize = 0
                     d.publicizeAdvert.forEach((item, index) => {
                         return advertisingSize += Number(item.size);
@@ -86,7 +86,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
             { field: 'creationTime', width: 210, title: '发布时间', sort: true },
             { field: 'offTime', width: 210, title: '下架时间', sort: true },
             { field: 'addUser', width: 150, title: '发布人', },
-            { field: 'operation', right: 0, width: 300, title: '操作', toolbar: '#barDemo', fixed: 'right' },
+            { field: 'operation', right: 0, width: 380, title: '操作', toolbar: '#barDemo', fixed: 'right' },
         ]],
         page: true,
         id: 'advertisingData',
@@ -152,6 +152,8 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
             console.log(advertisingDetailsList);
             advertisingDetails(advertisingDetailsList, 'detailsListBox')
             popupShow('advertisingDetails', 'detailsBox');
+        }else if(obj.event){
+            popupShow('machineDetailsCont', 'machineDetailsBox')
         }
 
     });
@@ -342,8 +344,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
     // 添加素材列表
     var addMaterList = [];
     $('.setAdvertising .addBtn').click(function () {
-        $('.pubilshMaterialCont').fadeIn();
-        $('.pubilshMaterialBox').removeClass('margin0');
+        popupShow('pubilshMaterialCont','pubilshMaterialBox');
         // 发布广告选择素材部分
         if (!ChooseMaterial) {
             ChooseMaterial = table.render({
@@ -357,7 +358,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                 cols: [[
                     { type: 'checkbox', },
                     { field: 'img', width: 80, title: '微缩图', templet: "#imgtmp" },
-                    { field: 'name', width: 150, title: '素材名', },
+                    { field: 'name', width: 150, title: '素材名称', },
                     { field: 'size', width: 100, title: '大小(MB)', },
                     { field: 'duration', width: 120, title: '播放时长(秒)', },
                     {
@@ -451,7 +452,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
     });
 
     // 发布广告删除删除事件
-    $('.SetContList').on('click')
+    // $('.SetContList').on('click')
     // 发布广告操作
     // 广告设置下
     $('.setAdvertising .nextBtn').click(function () {
@@ -516,8 +517,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
     };
     // 发布
     $('.publishCont .publishBtn').click(function () {
-        $('.pubilshSweet').fadeIn();
-        $('.sweetBox').removeClass('margin0')
+        popupShow('pubilshSweet','sweetBox')
     });
     // 确定发布
     $('.pubilshSweet .confirmBtn').click(function () {
@@ -572,40 +572,72 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
     });
 
 
-    // 购金机角度看广告部分
+    // 推送广告部分
     var machineAdvertising = table.render({
         elem: '#machineDetailsList',
+        url: `/api/machine/getMachineList`,
+        method: 'post',
+        contentType: "application/json",
+        headers: {
+            token,
+        },
         cols: [[
-            { field: 'username', width: 150, title: '机器编号' },
-            { field: 'phone', width: 180, title: '机器名称', },
-            { field: 'CreationTime', width: 250, title: '机器地址', },
-            { field: 'amendTime', width: 130, title: '广告位', },
-            { field: 'bili', width: 180, title: '发布时间', sort: true },
-            // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
-            { field: 'operatio', width: 210, title: '操作', toolbar: '#machineAdvertising', },
-
+            { type: 'checkbox', },
+            { field: 'info', width: 200, title: '售货机信息'},
+            { field: 'location', width: 180, title: '地址', },
+            { field: 'userNum', width: 250, title: '商户账号', },
+            { field: 'actionTime', width: 200, title: '激活时间', },
+            { field: 'description', width: 180, title: '描述', sort: true },
         ]],
-        data: [
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '广州市丽丰中心'
-                , amendTime: '99'
-                , bili: '1:2'
-            },
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '广州市丽丰大厦'
-                , amendTime: '99'
-                , bili: '1:2'
-            }
-        ],
         page: true,
         id: 'machineAdvertisingList',
-        skin: 'nob'
-    });
+        loading: true,
+        limits: [10, 20, 50],
+        request: {
+            'pageName': 'pageNum',
+            'limitName': 'pageSize'
+        },
+        parseData: function (res) {
+            // console.log(res)
+            //res 即为原始返回的数据
+            if (res.code == 200) {
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.list //解析数据列表
+                };
+            } else {
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.message,   //解析提示文本
+                }
+            }
 
+        },
+        where: {
+            condition: '1',
+            conditionTwo:'1',
+            conditionFour:'1'
+          },
+        response: {
+            statusCode: 200 //规定成功的状态码，默认：0
+        },
+        done: function (res) {
+            if (res.code == 403) {
+                window.parent.location.href = "../login/login.html";
+            }
+        }
+        // skin: 'nob'
+    });
+        //推送广告查询
+        $('.machineDetailsCont .machineKeyBtn').click(function(){
+            machineAdvertising.reload({
+                where:{
+                    conditionSix:$('.machineDetailsCont input[name="machineKey"]').val()
+                }
+            })
+        });
     // 发布广告弹窗事件
     $('.publicAdvertisingBtn').click(function () {
         $('.setAdvertising').css('left', 0);
@@ -616,12 +648,6 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
         popupShow('releaseAdvertising', 'publishBox')
         materaialMethods(addMaterList, 'SetContList');
     });
-    // 购机机广告弹窗
-    $('.machineAdvertisingBtn').click(function () {
-        $('.machineDetailsCont').fadeIn();
-        $('.machineDetailsBox').removeClass('margin0')
-    })
-
     // 广告详情函数
     function advertisingDetails(ListData, element) {
         var detailsList = '';
@@ -808,4 +834,46 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
         })
 
     }
+
+    // 广告推送
+    $('.machineDetailsCont .determineBtn').click(function(){
+        var pishList=table.checkStatus('machineAdvertisingList');
+        console.log(pishList);
+        if(pishList.data.length>0){
+            $('.mask').fadeIn();
+            $('.maskSpan').addClass('maskIcon')
+            var pushStr=[];
+            pishList.data.forEach((item,index)=>{
+                pushStr.push(item.machineId)
+            })  
+            pushStr=pushStr.toString();
+            setTimeout(()=>{
+                $.ajax({
+                    type:'post',
+                    headers: {
+                        "Content-Type": "application/json",
+                        token,
+                    },
+                    url:'/api/pushAd',
+                    data:JSON.stringify({
+                        number:numderID,
+                        machine:pushStr
+                    }),
+                    success:function(res){
+                        $('.mask').fadeOut();
+                        $('.maskSpan').removeClass('maskIcon');
+                        popupHide('machineDetailsCont','machineDetailsBox');
+                        if(res=='success'){
+                            layer.msg('推送成功', { icon: 1 });
+                        }else{
+                            layer.msg('推送失败', { icon: 2 });
+                        }
+                    }
+                })
+            },1000)
+        }else{       
+            layer.msg('请选择售货机', { icon: 7 });
+        }
+        
+    })
 });

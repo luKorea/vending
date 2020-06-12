@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../js/public/documentWrite.js"></script>
+    <title>商户列表</title>
+    <link rel="stylesheet" href="../../MyCss/merchants/merchantsList.css">
+</head>
+
+<body>
+    <div class="list-wrap">
+        <div class="list-body">
+            <div>
+                <div class="mian">
+                    <div class="addMember">
+                        <button class="layui-btn layui-btn-normal btn addBtn" >
+                            <span>添加商户</span>
+                        </button>
+                        <div style="max-width: 350px;margin-left: 25px;" class="key-contnet">
+							<div class="key-text">关键字</div>
+							<input type="text" placeholder="商户名" name="keyMerchants" class="KyeText">
+                        </div>
+                        <button class="layui-btn layui-btn-normal queryBtnClick btn" style="margin: 0 0 0 25px;">
+							<i class="layui-icon layui-icon-search"></i>
+							<span>查询</span>
+						</button>
+                    </div>
+                    <div>
+                        <div class="data-list">
+                            <div class="list-table">
+                                <table class="layui-hide" id="tableTest" lay-filter="test"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  编辑商户 -->
+        <div class="MemberOperation" style="overflow-y: auto;">
+            <div class="MemberContent margin0">
+                <div class="OperationHeader">
+                    <span>编辑商户</span>
+                    <button class="cancel_btn">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div style="text-align: initial;padding: 25px 25px 30px;">
+                    <div class="editMerchants">
+                        <div class="listInput">
+                            <label for=""><span style="color: red;">*</span> 商户名:</label>
+                            <input type="text" name="merchantsName">
+                        </div>
+                        <div class="listInput">
+                            <label for=""><span style="color: red;">*</span> 隶属商户:</label>
+                            <form class="layui-form" action="" >
+                                <div class="layui-form" lay-filter="">
+									<select name="marchantsListname" class="marchantsList" lay-filter="stateSelect">
+										<!-- <option value="">全部</option>
+										<option value="0">不启用</option>
+										<option disabled value="1">启用</option> -->
+									</select>
+								</div>
+                            </form>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;" class="Medit">
+                        <button class="layui-btn layui-btn-normal btn submit_btn" type="button">
+                            <span>提交</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
+                            <span>取消</span>
+                        </button>                       
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- 添加商户 -->
+        <div  class="addMerchants maskContnet">
+            <div class="addBox margin0">
+                <div class="playHeader">
+                    <span>添加商户</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="addBody">
+                    <div class="listInput">
+                        <label for=""><span style="color: red;">*</span> 商户名:</label>
+                        <input type="text" name="merchantsName">
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <button class="layui-btn layui-btn-normal btn addSubmiBtn" type="button">
+                            <span>提交</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn addCancelBtn cancel_btn" type="button">
+                            <span>取消</span>
+                        </button>                       
+                    </div>
+                </div>           
+            </div>
+        </div>
+        <div class="mask maskContnet">
+            <div class="TitleContentWith">
+                <span class="maskSpan" style="display: inline-block;"> 
+                    <i class="layui-icon layui-icon-loading "></i>
+                </span>
+               
+                数据处理中，请稍候
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <!-- <button class="layui-btn layui-btn-sm btn operation" lay-event="editRole">
+            <span style="color:#fff;">编辑角色</span>
+        </button> -->
+        <button class="layui-btn layui-btn-sm btn operation" typeID='2' lay-event="edit">
+            <span style="color:#fff;">编辑</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn del-btn" lay-event="delete">删除</button>
+    </div>
+</script>
+<script src="../../js/merchants/merchantsList.js"></script>
+
+</html>

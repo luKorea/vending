@@ -924,7 +924,7 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
         layer.msg('请上传图片', { icon: 7 });
       }
     }else{
-      layer.msg('请输入图片名称', { icon: 7 });
+      layer.msg('请输入图片', { icon: 7 });
     }
   });
 

@@ -32,7 +32,7 @@ layui.use(['laydate', 'table', 'layer'], function () {
         cols: [[
             { type: 'checkbox', },
             { field: 'img', width: 120, title: '微缩图', templet: "#imgtmp" },
-            { field: 'name', width: 150, title: '素材名', },
+            { field: 'name', width: 150, title: '素材名称', },
             { field: 'size', width: 100, title: '大小(MB)', },
             { field: 'amendTime', width: 130, title: '分辨率', },
             {

@@ -12,12 +12,34 @@
 <body>
     <div class="list-wrap">
         <div class="list-body">
-            <div>
+            <div style="display: flex;">
+                <div class="left-mian">
+                    <div class="accountContnet">
+                        <!-- <div class="input-account">
+                            <input type="text" placeholder="输入用户账号">
+                        </div> -->
+                        <p style="margin:20px;color:#be954a;">商户</p>
+                        <!-- <div class="fixedAccount">
+                            <span> 粤宝商户-中邮广州</span>
+                        </div> -->
+                    </div>
+                    <!-- 右侧栏 -->
+                    <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
+                </div>
+                <i class="layui-icon layui-icon-right  onLeft"></i>
                 <div class="mian">
                     <div class="add-member">
                         <button class="layui-btn layui-btn-normal btn addBtn" typeID='1'>
                             <span>添加用户</span>
                         </button>
+                        <div style="max-width: 350px;margin-left: 25px;" class="key-contnet">
+							<div class="key-text">关键字</div>
+							<input type="text" placeholder="用户名" name="keyMerchants" class="KyeText">
+                        </div>
+                        <button class="layui-btn layui-btn-normal queryBtnClick btn" style="margin: 0 0 0 25px;">
+							<i class="layui-icon layui-icon-search"></i>
+							<span>查询</span>
+						</button>
                     </div>
                     <div>
                         <div class="data-list">
@@ -62,9 +84,21 @@
                                 </div>
                             </div>
                             <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
+                                <label><span style="color: red;">*</span> 确定登录密码</label>
+                                <div class="inputWidth">
+                                    <input type="password" name="DuserPwd">
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
                                 <label> <span style="color: red;">*</span>独立密码</label>
                                 <div class="inputWidth">
                                     <input type="password" name="alonePwd">
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
+                                <label> <span style="color: red;">*</span>确定独立密码</label>
+                                <div class="inputWidth">
+                                    <input type="password" name="DalonePwd">
                                 </div>
                             </div>
                             <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
@@ -82,7 +116,7 @@
                         </div>
 
                         <!-- 开关部分 -->
-                        <!-- <div>
+                        <div>
                             <div class="switchList">
                                 <span class="switchTitle">是否启用：</span>
                                 <div>
@@ -101,23 +135,23 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
+                        <div class="terminal" style="margin-top: 15px;">
+                            <span style="display: inline-block;width:10%;padding-right: 12px;">隶属商户：</span>
+                            <div class="layui-form" lay-filter="">
+                                <select name="marchantsListname" class="marchantsList" lay-filter="stateSelect">
+                                    <!-- <option value="">全部</option>
+                                    <option value="0">不启用</option>
+                                    <option disabled value="1">启用</option> -->
+                                </select>
+                            </div>
+                        </div>
                     </form>
                     <div style="margin-top: 10px; border-bottom: 1px solid rgb(204, 204, 204);"  class="roleCont">
                         <form class="layui-form" lay-filter="checkboxData">
                             <div class="terminal ">
                                 <span style="display: inline-block;width: 15%;">用户角色：</span>
                                 <div class="checkCont">
-                                    <!-- <input type="checkbox" lay-filter="permissions" name="haha" title="管理员权限"
-                                        lay-skin="primary" value="22">
-                                    <input type="checkbox" class="checkboxList" name="Goods" title="商品管理权限"
-                                        lay-skin="primary" value="55">
-                                    <input type="checkbox" class="checkboxList" name="Aisle" title="货道管理权限"
-                                        lay-skin="primary">
-                                    <input type="checkbox" class="checkboxList" name="Advertising" title="广告管理权限"
-                                        lay-skin="primary">
-                                    <input type="checkbox" class="checkboxList" name="Wifi" title="wifi权限(仅AT端)"
-                                        lay-skin="primary"> -->
                                 </div>
                             </div>
                         </form>

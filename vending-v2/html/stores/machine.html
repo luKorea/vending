@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的售货机</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="../../js/public/documentWrite.js"></script>
     <link rel="stylesheet" href="../../MyCss/stores/machine.css">
 </head>
@@ -16,14 +17,14 @@
                 <div class="contnet-flex">
                     <!-- 左边部分 -->
                     <div class="left-mian">
-                        <div class="account-contnet">
-                            <div class="input-account">
+                        <div class="accountContnet">
+                            <!-- <div class="input-account">
                                 <input type="text" placeholder="输入用户账号">
-                            </div>
-                            <p style="margin:20px;color:red;">账号</p>
+                            </div> -->
+                            <!-- <p style="margin:20px;color:red;">商户</p>
                             <div class="fixed-account">
                                 <span> 粤宝商户-中邮广州</span>
-                            </div>
+                            </div> -->
                         </div>
                         <!-- 右侧栏 -->
                         <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
@@ -75,11 +76,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class=" layui-col-sm9 layui-col-md6 layui-col-lg4 margin-top">
-                                        <!-- 启用状态: -->
+                                    <!-- <div class=" layui-col-sm9 layui-col-md6 layui-col-lg4 margin-top">
                                         <div class="key-contnet">
                                             <div class="key-text">启用状态</div>
-
                                             <div class="layui-form" lay-filter="myDiv">
                                                 <select name="openStatus" id="" lay-filter="mySelect">
                                                     <option value="">全部</option>
@@ -87,10 +86,8 @@
                                                     <option value="0">不启动</option>
                                                 </select>
                                             </div>
-
                                         </div>
-
-                                    </div>
+                                    </div> -->
                                     <div class=" layui-col-sm9 layui-col-md6 layui-col-lg4 margin-top">
                                         <!-- 缺货状态: -->
                                         <div class="key-contnet">
@@ -126,7 +123,7 @@
                         <!-- 数据列表部分 -->
 
                         <div style="box-sizing: border-box;">
-                            <p class="sweet-title">温馨提示：蓝色字体可点击查看。。</p>
+                            <!-- <p class="sweet-title">温馨提示：蓝色字体可点击查看。。</p> -->
                             <div class="data-list-table">
                                 <!-- <div> -->
                                 <table class="layui-hide" id="machineTable" lay-filter="machineTable"></table>
@@ -138,7 +135,7 @@
             </div>
         </div>
         <!--  设置部分-->
-        <div class="setUpCont ">
+        <div class="setUpCont " style="overflow-y: auto;display: block;">
             <div class="maskHeader">
                 <span>Y2019119164白云富力桃园邮政支局详细信息</span>
                 <p class="close">
@@ -154,7 +151,7 @@
                 </ul>
                 <ul class="navSetCont">
                     <!-- 终端详情 -->
-                    <li class="setCoreListOne">
+                    <li class="setCoreListOne" style="display: none;">
                         <div class="terminalState">
                             <h1 style="color:#606266;font-size:16px;line-height:24px;font-weight:bold;">终端状态</h1>
                             <!-- 基本信息 -->
@@ -273,12 +270,15 @@
                             </div>
                         </div>
                     </li>
+                    <li class="salesTwo">
+222
+                    </li>
 
                 </ul>
             </div>
         </div>
         <!-- 编辑部分 -->
-        <div class="editMachineCont" >
+        <div class="editMachineCont" style="overflow-y: auto;">
             <div class="playHeader">
                 <span>终端基本信息</span>
                 <button class="close" type="button">
@@ -286,7 +286,126 @@
                 </button>
             </div>
             <div class="editMachineBox">
-
+                <div style="margin:20px;">
+                    <div style="width: 605px;margin: 0 auto;">
+                        <form class="layui-form" style="width: 100%;"  lay-filter="editmachine">
+                            <ul>
+                                <li class="listFlex">
+                                    <label for=""><span style="color: red;">*</span>终端编号</label>
+                                    <input type="text" name="sNumber">
+                                </li>
+                                <li class="listFlex">
+                                    <label for=""><span style="color: red;">*</span>终端名称</label>
+                                    <input type="text" name="tName">
+                                </li>
+                                <li class="listFlex">
+                                    <label for=""><span style="color: red;">*</span>终端序列号</label>
+                                    <input type="text" disabled style="cursor: not-allowed;" name="number">
+                                </li>
+                                <!-- <li class="listFlex">
+                                    <label for=""><span style="color: red;">*</span>国家</label>
+                                    <input type="text">
+                                </li> -->
+                                <li class="listFlex">
+                                    <label for=""><span style="color: red;">*</span>省市区</label>
+                                    <div style="width: 100%; display: flex;justify-content: start;">
+                                            <div class="layui-input-inline">
+                                                <select name="province" class="province" lay-verify="required" lay-search lay-filter="province">
+                                                    <option value="">省份</option>
+                                                </select>
+                                            </div>
+                                            <div class="layui-input-inline">
+                                                <select name="city" class="city" lay-verify="required" lay-search lay-filter="city">
+                                                    <option value="">地级市</option>
+                                                </select>
+                                            </div>
+                                            <div class="layui-input-inline">
+                                                <select name="district" class="district" lay-verify="required" lay-search>
+                                                    <option value="">县/区</option>
+                                                </select>
+                                            </div>
+                                    </div>
+                                </li>
+                                <li class="listFlex">
+                                    <label for=""><span style="color: red;">*</span>地址</label>
+                                    <input type="text" name="mapVal" value="广州市丽丰中心">
+                                </li>
+                                <li class="listFlex">
+                                    <label for=""><span style="color: red;">*</span>地区</label>
+                                    <input type="text" name="area">
+                                </li>
+                                <div class="mapContent">
+                                    <div class="machineMap" id="machineMap">
+    
+                                    </div>
+                                </div>
+                                <li class="listFlex">
+                                    <div class="listFlex" style="width: 50%;">
+                                        <label for=""><span style="color: red;">*</span>经度</label>
+                                        <input type="text" name="longitude" disabled style="cursor: not-allowed;">
+                                    </div>
+                                    <div class="listFlex" style="width: 50%;">
+                                        <label for=""><span style="color: red;">*</span>纬度</label>
+                                        <input type="text" disabled name="latitude" style="cursor: not-allowed;">
+                                    </div>
+                                </li>
+                                <li class="listFlex">
+                                    <label for=""><span style="color: red;">*</span>商户名</label>
+                                    <!-- <input type="text" name="userName"> -->
+                                    <div class="layui-input-inline" style="width: 100%;">
+                                        <select name="merchantsName" class="merchantsName"  >
+                                            <option value="">县/区</option>
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="listFlex">
+                                    <label for=""><span style="color: red;">*</span>商户手机号</label>
+                                    <input type="number" name="userPhone">
+                                </li>
+                                <li class="listFlex">
+                                    <label for="">负责人手机</label>
+                                    <input type="number" name="headPhone">
+                                </li>
+                                <!-- <li class="listFlex">
+                                    <label for="">试用权限(天)</label>
+                                    <input type="text" name="trialDay">
+                                </li>
+                                <p class="notice">请注意：不填为不限制使用期限</p> -->
+                                <!-- <li class="listFlex">
+                                    <label for="">设备编号</label>
+                                    <input type="text" name="equipmentNum">
+                                </li> -->
+                                <!-- <li class="listFlex">
+                                    <label for="">设备型号</label>
+                                    <input type="text" name="equipmentModel">
+                                </li> -->
+                                <li class="listFlex">
+                                    <label for="">描述</label>
+                                    <input type="text" name="describe">
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="editFooterBtn">
+                <div style="text-align: center; padding: 15px ;">
+                    <button class="layui-btn layui-btn-normal btn edittBtn" type="button">
+                        <span>提交</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn  editCancelBtn" type="button">
+                        <span>取消</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mask maskContnet">
+            <div class="TitleContentWith">
+                <span class="maskSpan" style="display: inline-block;">
+                    <i class="layui-icon layui-icon-loading "></i>
+                </span>
+                数据处理中，请稍候
             </div>
         </div>
     </div>
@@ -299,11 +418,16 @@
         <button class="layui-btn layui-btn-sm btn" lay-event="edit">
             <span style="color:#fff;">编辑</span>
         </button>
-        <button class="layui-btn layui-btn-sm btn" lay-event="log">
-            <span style="color:#fff;">日志</span>
+        <button class="layui-btn layui-btn-sm btn {{d.actionStatus!=0?'hide':''}}" lay-event="activate">
+            <span style="color:#fff;">激活</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn {{d.openStatus==0& d.actionStatus==1?'':'hide'}}" lay-event="startThe">
+            <span style="color:#fff;">启动</span>
         </button>
     </div>
 </script>
+<script src="../../js/public/area.js"></script>
+<script src="../../js/public/selectMore.js"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=4b78c5cee1f0f8c37a2a2f8283e256b9&plugin=AMap.Geocoder"></script>
 <script src="../../js/stores/machine.js"></script>
-
 </html>

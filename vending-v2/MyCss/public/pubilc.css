@@ -227,7 +227,7 @@ body .layui-form-checked[lay-skin=primary] i{
     font-size: 14px;
     width: 100%;
 }
-.FlexInputWidth input{
+.FlexInputWidth input,.listFlex input{
     -webkit-appearance: none;
     background-color: #fff;
     background-image: none;
@@ -336,4 +336,10 @@ body .layui-form-checked[lay-skin=primary] i{
 .mask_margin{
     margin-top: -30px;
 transition: all 0.3s;
+}
+.hide{
+    display: none !important;
+}
+.marginLeft{
+    margin-left: 25px;
 }

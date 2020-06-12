@@ -75,7 +75,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var objData=null;
     table.on('tool(test)', function (obj) {
          objData = obj.data;
-        console.log(objData)
         $('.editInput input[name="userName"]').val(objData.name)
         if (obj.event === 'operation') {
             popupShow('editRold', 'editBox');
@@ -124,7 +123,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                                 where: {}
                             });
                         } else if (res.code == 403) {
-                            window.history.go(-1)
+                           window.parent.location.href = "../login/login.html";
                         } else {
                             layer.msg(res.message, { icon: 2 });
                         }
@@ -158,6 +157,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     console.log(res)
                     if (res.code == 200) {
                         layer.msg(res.message, { icon: 1 });
+                        $('.addInput input[name="userName"]').val('')
                         tableIns.reload({
                             where: {}
                         });
@@ -183,14 +183,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         if($('.editInput input[name="userName"]').val()){
             var datalll=form.val("editInformation");
             for(let i in datalll){
-                console.log(datalll[i])
                 permissionsDataList.forEach((item,index)=>{
                     if(item.id==datalll[i]){
                         permissionsArray.push(item)
                     }
                 })
             };
-            console.log(permissionsArray)
             setTimeout(()=>{
                 $.ajax({
                     type:'post',
@@ -262,7 +260,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     //         form.render();
     //       }
     //     }); 
-
+    // 角色权限函数
     function permissionsList(list, element,TrueData) {
         var ListData = '';
         list.forEach((ele, index) => {
