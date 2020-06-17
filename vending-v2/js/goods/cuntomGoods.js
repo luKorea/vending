@@ -1,5 +1,15 @@
-layui.use(['table', 'form', 'layer', 'layedit'], function () {
-  var $ = layui.jquery;
+layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
+  var $ = layui.jquery,
+  tree =layui.tree ;
+     // 收起
+     $('.sidebar i').click(function () {
+      $('.left-mian').hide();
+      $('.on-left').show()
+  });
+  $('.on-left').click(function () {
+      $('.left-mian').show();
+      $('.on-left').hide()
+  })
   // $.post('http://172.16.68.199:8086/goods/findAll', { map: 1 }, function (res) {
   //     console.log(res)
   // })
@@ -21,7 +31,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
     },
     cols: [[
       { field: 'goods_Images', width: 100, title: '图片', templet: "#imgtmp" },
-      { field: 'goods_Name', width: 120, title: '商品名称', color: '#409eff',templet: '<div><span class="tableCell">{{  d.goods_Name}}</span></div>' },
+      { field: 'goods_Name', width: 120, title: '商品名称', color: '#409eff' },
       { field: `classifyName`, width: 120, title: '商品类目', templet: '<div>{{  d.classify.classifyName ? d.classify.classifyName: ""}}</div>' },
       { field: 'goods_Core', width: 120, title: '商品编号', },
       { field: 'goods_Param', width: 120, title: '规格说明 ' },
@@ -79,7 +89,7 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
     },
     done: function (res) {
       if (res.code == 403) {
-        window.history.go(-1)
+        window.parent.location.href = "../login/login.html";
       } else {
 
       }
@@ -696,5 +706,79 @@ layui.use(['table', 'form', 'layer', 'layedit'], function () {
     popupShow('GoodsMaterial','goodsMaterialBox');
       materialCont();
 
-  })
+  });
+   // 刷新页面
+   $('.refreshBtn').click(function(){
+    location.reload();
+});
+//树状图
+var dataList = treeList();
+console.log(dataList);
+var inst1 = tree.render({
+  elem: '#testGoods',
+  id: 'treelist',
+  showLine: !0 //连接线
+  ,
+  onlyIconControl: true //左侧图标控制展开收缩
+  ,
+  isJump: !1 //弹出新窗口跳转
+  ,
+  edit: false //开启节点的操作
+  ,
+  data: dataList,
+  text: {
+    defaultNodeName: '无数据',
+    none: '加载数据失败！'
+  },
+  click: function (obj) {
+    console.log(obj);
+    machineList.reload({
+      where:{
+        merchantId:obj.data.id
+      }
+    })
+    var nodes = document.getElementsByClassName("layui-tree-txt");
+    for (var i = 0; i < nodes.length; i++) {
+      if (nodes[i].innerHTML === obj.data.title)
+        nodes[i].style.color = "#be954a";
+      else
+        nodes[i].style.color = "#555";
+    }
+    if (!obj.data.children) {
+      $.ajax({
+        type: 'post',
+        url: '/api/merchant/getMerchantGroup',
+        headers: {
+          token,
+          "Content-Type": "application/json",
+        },
+        async: false,
+        data: JSON.stringify({
+          topId: obj.data.id
+        }),
+        success: function (res) {
+          if (res.code == 200) {
+            if (res.data[0].childMerchant.length > 0) {
+              console.log(res)
+              obj.data.spread = true;
+              obj.data.children = [];
+              res.data[0].childMerchant.forEach((item, index) => {
+
+                var childrenObj = {
+                  id: item.id,
+                  title: item.name
+                }
+                obj.data.children.push(childrenObj)
+              });
+              tree.reload('treelist', {
+              });
+            }
+          }
+        }
+      })
+      
+    }
+
+  },
+});
 })

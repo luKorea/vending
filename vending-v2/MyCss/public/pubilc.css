@@ -343,3 +343,72 @@ transition: all 0.3s;
 .marginLeft{
     margin-left: 25px;
 }
+.treeColor span{
+    color:#be954a !important;
+}
+.layui-tree-entry{
+    padding: 10px 0 !important;
+}
+.layui-tree-txt{
+    font-size: 16px;
+}
+
+.left-mian{
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 240px;
+    flex: 0 0 240px;
+    width: 240px;
+    position: relative;
+    padding-right: 40px;
+}
+.account-contnet{
+    margin: 20px;
+    min-height: 750px;
+}
+.sidebar{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    height: 800px;
+    box-sizing: border-box;
+    border-right: 12px solid #eee;
+    background-color: #fff;
+    text-align: center;
+    color: #d3dce6;
+    z-index: 50;
+}
+.sidebar i{
+    cursor: pointer;
+    position: absolute;
+    color: #999;
+    text-align: center;
+    top: 387px;
+    right: -6px;
+    display: block;
+    width: 32px;
+    line-height: 76px;
+    font-size: 24px;
+    height: 76px;
+    background-color: #eee;
+    border-radius: 10px 0 0 10px;
+    -webkit-transition: right 1s;
+}
+.on-left{
+    color: #999;
+    text-align: center;
+    position: absolute;
+    top: 387px;
+    left: -6px;
+    display: block;
+    width: 32px;
+    height: 76px;
+    background-color: #eee;
+    border-radius: 0 10px 10px 0;
+    -webkit-transition: left 1s;
+    cursor: pointer;
+    line-height: 76px;
+    font-size: 24px;
+    display: none;
+}

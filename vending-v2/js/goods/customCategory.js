@@ -42,6 +42,8 @@ layui.use(['table', 'form', 'layer',], function () {
           "count": res.data.total, //解析数据长度
           "data": res.data.list //解析数据列表
         };
+      }else if(res.code==403){
+        window.parent.location.href = "../login/login.html";
       } else {
         return {
           "code": res.code, //解析接口状态
@@ -92,15 +94,20 @@ layui.use(['table', 'form', 'layer',], function () {
             rank: addVal.sorting,
           }),
           success: function (res) {
+            popupHide('addClass','addContent');
             if (res.code == 200) {
-              layer.msg('添加成功');
+              layer.msg(res.message,{icon:1});
               tableIns.reload({
                 where: {
 
                 }
               })
               // $('.addClass').fadeOut();
-              popupHide('addClass','addContent');
+              
+            }else if(res.code==403){
+              window.parent.location.href = "../login/login.html";
+            }else{
+              layer.msg(res.message,{icon:2});
             }
           }
         })
@@ -148,19 +155,23 @@ layui.use(['table', 'form', 'layer',], function () {
             classifyId: editData.classifyId,
             classifyName: editInputVal.addTypeName,
             remark: editInputVal.addNote,
-            rank:editInputVal.sorting,
+            rank:Number(editInputVal.sorting),
           }),
           success: function (res) {
-            if (res.code == 200) {
+            popupHide('editClass','editContent');
+            if (res.code == 200) {          
+              layer.msg(res.message,{icon:1});
               tableIns.reload({
                 where: {
 
                 }
-              })
-              layer.msg('修改成功');
-              popupHide('editClass','editContent');
-            } else {
-              layer.msg('操作失败');
+              })       
+              
+            }else if(res.code==403){
+              window.parent.location.href = "../login/login.html";
+            } 
+            else {
+              layer.msg(res.msmessage,{icon:2});
             }
           }
         })
@@ -181,4 +192,9 @@ layui.use(['table', 'form', 'layer',], function () {
     $(this).parent().parent().addClass('margin0')
     $(this).parents('.maskContnet').fadeOut();
 }); 
+
+ // 刷新页面
+ $('.refreshBtn').click(function(){
+  location.reload();
+})
 })                                                      

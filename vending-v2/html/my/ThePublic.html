@@ -2,70 +2,163 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../MyCss/public/pubilc.css">
-    <link rel="stylesheet" href="../../layui/css/layui.css">
-    <link rel="stylesheet" href="../../MyCss/my/ThePublic.css">
-    <title>关联公众号</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="../../js/public/documentWrite.js"></script>
+	<link rel="stylesheet" href="../../MyCss/my/ThePublic.css">
+	<title>关联公众号</title>
 </head>
 
 <body>
-    <div class="public-wrap">
-        <div class="aboutGxh">
-            <div>
-                <button class="layui-btn layui-btn-normal query-btn btn">
-                    <i class="layui-icon layui-icon-refresh"></i>
-                    <span>刷新</span>
-                </button>
-                <button class="layui-btn layui-btn-normal query-btn btn" style="margin-left: 30px;">
-                    <i class="layui-icon layui-icon-add-1"></i>
-                    <span>添加</span>
-                </button>
-            </div>
-            <!-- 数据列表 -->
-            <div class="data-list" style="margin-top: 15px;">
-                <div>
-                    <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="public-wrap">
+		<div class="aboutGxh">
+			<div>
+				<button class="layui-btn layui-btn-normal query-btn btn">
+					<i class="layui-icon layui-icon-refresh"></i>
+					<span>刷新</span>
+				</button>
+				<button class="layui-btn layui-btn-normal query-btn btn" style="margin-left: 30px;">
+					<i class="layui-icon layui-icon-add-1"></i>
+					<span>添加</span>
+				</button>
+			</div>
+			<!-- 数据列表 -->
+			<div class="data-list" style="margin-top: 15px;">
+				<div>
+					<table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
+		<!-- <div id="test1" class="demo-tree demo-tree-box"></div> -->
+	</div>
 </body>
-<script src="../../layui/layui.js"></script>
 <script>
-    layui.use(['element', 'laydate', 'table'], function () {
-        var $ = layui.jquery
-            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
-        var table = layui.table;
-        table.render({
-            elem: '#moneyData'
-            , cols: [[
-                { field: 'username', width: 160, title: '姓名',sort: true },
-                { field: 'phone', width: 200, title: '接收通知微信', },
-                { field: 'CreationTime', width: 220, title: '是否关注公众号', },
-                { field: 'amendTime', width: 140, title: '关联售货机', },
-                { field: 'jine', width: 200, title: '操作 ', toolbar: '#barDemo' },
+	layui.use(['element', 'laydate', 'table', 'tree', 'layer'], function () {
+		var $ = layui.jquery,
+			element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+		var table = layui.table;
+		table.render({
+			elem: '#moneyData',
+			cols: [
+				[{
+					field: 'username',
+					width: 160,
+					title: '姓名',
+					sort: true
+				},
+				{
+					field: 'phone',
+					width: 200,
+					title: '接收通知微信',
+				},
+				{
+					field: 'CreationTime',
+					width: 220,
+					title: '是否关注公众号',
+				},
+				{
+					field: 'amendTime',
+					width: 140,
+					title: '关联售货机',
+				},
+				{
+					field: 'jine',
+					width: 200,
+					title: '操作 ',
+					toolbar: '#barDemo'
+				},
 
-            ]],
-            data: [
-                {
-                    username: '2222'
-                    , phone: 'cs45121'
-                    , CreationTime: '否'
-                    , amendTime: '99'
-                },
-                {
-                    username: '2222'
-                    , phone: 'cs45121'
-                    , CreationTime: '否'
-                    , amendTime: '99'
-                }
-            ]
-            , page: true
-        });
-    });
+				]
+			],
+			data: [{
+				username: '2222',
+				phone: 'cs45121',
+				CreationTime: '否',
+				amendTime: '99'
+			},
+			{
+				username: '2222',
+				phone: 'cs45121',
+				CreationTime: '否',
+				amendTime: '99'
+			}
+			],
+			page: true
+		});
 
+		var dataList = treeList();
+		console.log(dataList)
+		var tree = layui.tree;
+
+		//渲染
+		var inst1 = tree.render({
+			elem: '#test1',
+			id: 'treelist',
+			showLine: !0 //连接线
+			,
+			onlyIconControl: !1 //左侧图标控制展开收缩
+			,
+			isJump: !1 //弹出新窗口跳转
+			,
+			edit: false //开启节点的操作
+			,
+			data: dataList,
+			text: {
+				defaultNodeName: '无数据',
+				none: '加载数据失败！'
+			},
+			click: function (obj) {
+				console.log(obj);
+				var nodes = document.getElementsByClassName("layui-tree-txt");
+				for (var i = 0; i < nodes.length; i++) {
+					if (nodes[i].innerHTML === obj.data.title)
+						nodes[i].style.color = "#be954a";
+					else
+						nodes[i].style.color = "#555";
+				}
+				if (!obj.data.children) {
+					$.ajax({
+						type: 'post',
+						url: '/api/merchant/getMerchantGroup',
+						headers: {
+							token,
+							"Content-Type": "application/json",
+						},
+						async: false,
+						data: JSON.stringify({
+							topId: obj.data.id
+						}),
+						success: function (res) {
+							if (res.code == 200) {
+								if (res.data[0].childMerchant.length > 0) {
+									console.log(res)
+									obj.data.spread = true;
+									obj.data.children = [];
+									res.data[0].childMerchant.forEach((item, index) => {
+
+										var childrenObj = {
+											id: item.id,
+											title: item.name
+										}
+										obj.data.children.push(childrenObj)
+									});
+									tree.reload('treelist', {
+
+									});
+								}
+
+							}
+						}
+					})
+				}
+
+			},
+		});
+
+
+	});
 </script>
 
 </html>

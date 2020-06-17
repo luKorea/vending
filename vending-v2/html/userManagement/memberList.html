@@ -22,6 +22,7 @@
                         <!-- <div class="fixedAccount">
                             <span> 粤宝商户-中邮广州</span>
                         </div> -->
+                        <div id="test1" class="demo-tree demo-tree-box"></div>
                     </div>
                     <!-- 右侧栏 -->
                     <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
@@ -33,13 +34,17 @@
                             <span>添加用户</span>
                         </button>
                         <div style="max-width: 350px;margin-left: 25px;" class="key-contnet">
-							<div class="key-text">关键字</div>
-							<input type="text" placeholder="用户名" name="keyMerchants" class="KyeText">
+                            <div class="key-text">关键字</div>
+                            <input type="text" placeholder="用户名" name="keyMerchants" class="KyeText">
                         </div>
                         <button class="layui-btn layui-btn-normal queryBtnClick btn" style="margin: 0 0 0 25px;">
-							<i class="layui-icon layui-icon-search"></i>
-							<span>查询</span>
-						</button>
+                            <i class="layui-icon layui-icon-search"></i>
+                            <span>查询</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal query-btn btn refreshBtn" type="button">
+                            <i class="layui-icon layui-icon-refresh "></i>
+                            <span>刷新</span>
+                        </button>
                     </div>
                     <div>
                         <div class="data-list">
@@ -147,7 +152,7 @@
                             </div>
                         </div>
                     </form>
-                    <div style="margin-top: 10px; border-bottom: 1px solid rgb(204, 204, 204);"  class="roleCont">
+                    <div style="margin-top: 10px; border-bottom: 1px solid rgb(204, 204, 204);" class="roleCont">
                         <form class="layui-form" lay-filter="checkboxData">
                             <div class="terminal ">
                                 <span style="display: inline-block;width: 15%;">用户角色：</span>
@@ -162,7 +167,7 @@
                         </button>
                         <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
                             <span>取消</span>
-                        </button>                       
+                        </button>
                     </div>
                 </div>
 
@@ -170,10 +175,10 @@
         </div>
         <div class="mask maskContnet">
             <div class="TitleContentWith">
-                <span class="maskSpan" style="display: inline-block;"> 
+                <span class="maskSpan" style="display: inline-block;">
                     <i class="layui-icon layui-icon-loading "></i>
                 </span>
-               
+
                 数据处理中，请稍候
             </div>
         </div>

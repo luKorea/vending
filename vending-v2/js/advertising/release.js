@@ -117,7 +117,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
         },
         done: function (res) {
             if (res.code == 403) {
-                window.parent.location.href = "login.html";
+                window.parent.location.href = "../login/login.html";
             } else {
 
             }
@@ -226,7 +226,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                         layer.msg('修改成功', { icon: 1, anim: 1 });
                         editDetailsList = [];
                     } else if (res.code == 403) {
-                        window.parent.location.href = "login.html";
+                        window.parent.location.href = "../login/login.html";
                     } else {
                         layer.msg(res.message, { icon: 7 });
                     }
@@ -404,7 +404,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                 },
                 done: function (res) {
                     if (res.code == 403) {
-                        window.parent.location.href = "login.html";
+                        window.parent.location.href = "../login/login.html";
                     } else {
 
                     }
@@ -584,8 +584,8 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
         cols: [[
             { type: 'checkbox', },
             { field: 'info', width: 200, title: '售货机信息'},
-            { field: 'location', width: 180, title: '地址', },
-            { field: 'userNum', width: 250, title: '商户账号', },
+            { field: 'location', width: 300, title: '地址', },
+            { field: 'userNum', width: 150, title: '商户账号', },
             { field: 'actionTime', width: 200, title: '激活时间', },
             { field: 'description', width: 180, title: '描述', sort: true },
         ]],
@@ -616,9 +616,9 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
 
         },
         where: {
-            condition: '1',
-            conditionTwo:'1',
-            conditionFour:'1'
+            onlineStatus: '1',
+            openStatus:'1',
+            actionStatus:'1'
           },
         response: {
             statusCode: 200 //规定成功的状态码，默认：0
@@ -828,7 +828,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                         }
                     });                           
                 } else if (res.code == 403) {
-                    window.parent.location.href = "login.html";
+                    window.parent.location.href = "../login/login.html";
                 }
             }
         })
@@ -860,10 +860,11 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
                         machine:pushStr
                     }),
                     success:function(res){
+                        console.log(res)
                         $('.mask').fadeOut();
                         $('.maskSpan').removeClass('maskIcon');
                         popupHide('machineDetailsCont','machineDetailsBox');
-                        if(res=='success'){
+                        if(res=='true'){
                             layer.msg('推送成功', { icon: 1 });
                         }else{
                             layer.msg('推送失败', { icon: 2 });

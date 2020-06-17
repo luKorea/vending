@@ -75,6 +75,7 @@
     right: 0;
     width: 40px;
     height: 100%;
+    height: 800px;
     box-sizing: border-box;
     border-right: 12px solid #eee;
     background-color: #fff;
@@ -288,9 +289,12 @@ input{
 }
 .navSetCont{
     width: 100%;
+    /* position: absolute;
+    top: 0;
+    left: 0; */
     display: flex;
     justify-content: start;
-    flex-wrap: nowrap;
+    flex-wrap: nowrap;  
     overflow: hidden;
 }
 .setCoreListOne{
@@ -385,6 +389,17 @@ input:hover{
 }
 .salesTwo{
     width: 100%;
-    height: 200px;
-    background-color: red;
+}
+.details .layui-inline{
+    width: 60%;
+}
+.shipmentRecord .layui-inline{
+    width: 80%;
+}
+.layui-input-inline{
+    width: 100%;
+}
+/* 出货记录部分 */
+.shipmentRecord{
+    width: 100%;
 }

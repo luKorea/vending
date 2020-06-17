@@ -1,5 +1,5 @@
 
-layui.use(['table', 'form', 'layer'], function () {
+layui.use(['table', 'form', 'layer','laydate','tree'], function () {
     // 收起
     $('.sidebar i').click(function () {
         $('.left-mian').hide();
@@ -12,11 +12,13 @@ layui.use(['table', 'form', 'layer'], function () {
     // 获取商户列表
     var merchantsListData = merchantsListMian('');
     // 左侧商户列表
-    leftMerchantsList(merchantsListData, 'accountContnet');
+    // leftMerchantsList(merchantsListData, 'accountContnet');
     var table = layui.table,
         token = sessionStorage.token,
         layer = layui.layer,
         form = layui.form,
+        tree =layui.tree ,
+        laydate=layui.laydate,
         machineList = table.render({
             elem: '#machineTable',
             url: `/api/machine/getMachineList`,
@@ -27,10 +29,10 @@ layui.use(['table', 'form', 'layer'], function () {
             },
             cols: [[
                 {
-                    field: 'info', width: 200, title: '终端信息', align: 'center', 
+                    field: 'info', width: 200, title: '终端信息', align: 'center',
                     // templet: function (d) {  return `<div><span style="color:#be954a">${d.info}</span></div>` }  
-                }, 
-                { field: 'location', width: 230, title: '地址', align: 'center' },
+                },
+                { field: 'location', width: 230, title: '地址', },
                 {
                     field: 'CreationTime', width: 150, title: '缺货状态', sort: true, align: 'center', templet: function (d) {
                         return `<div><span class="${d.stockStatus == 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.stockStatus == 0 ? '正常' : d.stockStatus == 1 ? '一般' : '严重'}</span></div>`
@@ -56,13 +58,13 @@ layui.use(['table', 'form', 'layer'], function () {
                         return `<div><span class="${d.wayStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.wayStatus == 0 ? '不正常' : '正常'}</span></div>`
                     }
                 },
-                { field: 'dealTime', width: 150, title: '最后交易时间', sort: true, align: 'center' },
-                { field: 'userNum', width: 150, title: '商户号', align: 'center' },
-                { field: 'appVersion', width: 135, title: '软件版本', align: 'center' },
-                { field: 'controllerVersion', width: 135, title: '控制器版本', sort: true, align: 'center' },
-                { field: 'connectTime', width: 150, title: '联机时间', sort: true, align: 'center' },
-                { field: 'actionTime', width: 150, title: '激活时间', sort: true, align: 'center' },
-                { field: 'description', width: 250, title: '描述', align: 'center' },
+                { field: 'dealTime', width: 150, title: '最后交易时间', sort: true, },
+                { field: 'userNum', width: 150, title: '商户号', },
+                { field: 'appVersion', width: 135, title: '软件版本', },
+                { field: 'controllerVersion', width: 135, title: '控制器版本', sort: true, },
+                { field: 'connectTime', width: 150, title: '联机时间', sort: true, },
+                { field: 'actionTime', width: 150, title: '激活时间', sort: true, },
+                { field: 'description', width: 250, title: '描述', },
                 { field: 'operation', fixed: 'right', right: 0, width: 250, title: '操作', toolbar: '#barDemo', align: 'left' },
             ]]
             , id: 'tableId'
@@ -129,6 +131,7 @@ layui.use(['table', 'form', 'layer'], function () {
             left: that.index() != 0 ? (that.offset().left) + 'px' : (that.offset().left - 20) + 'px',
             width: (that).width() + 'px'
         }, 500);
+        $('.navSetCont li').eq($(this).index()).fadeIn().siblings().hide();
     });
     // 监听售货机列表操作
     var machineSetData = null
@@ -137,7 +140,10 @@ layui.use(['table', 'form', 'layer'], function () {
         machineSetData = obj.data;
         if (obj.event == 'set') {
             $('.setUpCont').show();
-            $('.setNav li').eq(0).addClass('active');
+            $('.setNav li').eq(0).addClass('active').siblings().removeClass('active');
+            $('.tabLine').css({
+                left:'0'
+            })
             $('.setCoreListOne').show().siblings().hide();
             form.val("setDataVal", {
                 'info': machineSetData.info,
@@ -146,13 +152,15 @@ layui.use(['table', 'form', 'layer'], function () {
                 'latitude': machineSetData.latitude,
                 'location': machineSetData.location
             })
+            salesFun(machineSetData.machineId)
+            recordFun(machineSetData.machineId)
         } else if (obj.event == 'edit') {
             var region = null;
             if (machineSetData.location) {
                 region = machineSetData.location.split(' ')
             }
-            
-            mercantsSelectList(merchantsListData,'merchantsName',form)
+
+            mercantsSelectList(merchantsListData, 'merchantsName', form)
             form.val("editmachine", {
                 'sNumber': machineSetData.number,
                 'tName': machineSetData.info,
@@ -165,7 +173,7 @@ layui.use(['table', 'form', 'layer'], function () {
                 'userPhone': machineSetData.userPhone,
                 'headPhone': machineSetData.chargerPhone,
                 'describe': machineSetData.description,
-                'merchantsName':machineSetData.userNum
+                'merchantsName': machineSetData.userNum
             });
 
             provinceChange(region[0]);
@@ -205,74 +213,146 @@ layui.use(['table', 'form', 'layer'], function () {
                 })
             })
         } else if (obj.event == 'startThe') {
-            layer.confirm('确定启动该设备？', function (index) {
-                layer.close(index);
-                $('.mask').fadeIn();
-                $('.maskSpan').addClass('maskIcon')
-                $.ajax({
-                    type: 'post',
-                    url: '/api/machine/getStatus',
-                    headers: {
-                        "Content-Type": "application/json",
-                        token,
-                    },
-                    data: JSON.stringify({
-                        machineId: machineSetData.machineId,
-                    }),
-                    success: function (Dres) {
-                        if (Dres.code == 200) {
-                            var statusType = JSON.parse(Dres.data);
-                            if (statusType.actionStatus == 1) {
-                                $.ajax({
-                                    type: 'post',
-                                    url: '/api/machine/activeMachine',
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                        token,
-                                    },
-                                    data: JSON.stringify({
-                                        machineId: machineSetData.machineId,
-                                        openStatus: '1'
-                                    }),
-                                    success: function (Sres) {
-                                        if (Sres.code == 200) {
-                                            $.ajax({
-                                                type: 'post',
-                                                url: '/api/pushActive',
-                                                headers: {
-                                                    "Content-Type": "application/json",
-                                                    token,
-                                                },
-                                                data: JSON.stringify({
-                                                    machine: machineSetData.machineId,
-                                                    action: 'true'
-                                                }),
-                                                success: function (res) {
-                                                    $('.mask').fadeOut();
-                                                    $('.maskSpan').removeClass('maskIcon');
-                                                    layer.msg('启动成功', { icon: 1 });
-                                                    machineList.reload({
-                                                        where: {}
-                                                    })
-                                                }
-                                            })
-                                        } else {
-                                            layer.msg(Sres.message, { icon: 2 })
+            if(machineSetData.openStatus!=1){
+                layer.confirm('确定营业？', function (index) {
+                    layer.close(index);
+                    $('.mask').fadeIn();
+                    $('.maskSpan').addClass('maskIcon')
+                    $.ajax({
+                        type: 'post',
+                        url: '/api/machine/getStatus',
+                        headers: {
+                            "Content-Type": "application/json",
+                            token,
+                        },
+                        data: JSON.stringify({
+                            machineId: machineSetData.machineId,
+                        }),
+                        success: function (Dres) {
+                            if (Dres.code == 200) {
+                                var statusType = JSON.parse(Dres.data);
+                                if (statusType.actionStatus == 1) {
+                                    $.ajax({
+                                        type: 'post',
+                                        url: '/api/machine/activeMachine',
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            token,
+                                        },
+                                        data: JSON.stringify({
+                                            machineId: machineSetData.machineId,
+                                            openStatus: '1'
+                                        }),
+                                        success: function (Sres) {
+                                            if (Sres.code == 200) {
+                                                $.ajax({
+                                                    type: 'post',
+                                                    url: '/api/pushActive',
+                                                    headers: {
+                                                        "Content-Type": "application/json",
+                                                        token,
+                                                    },
+                                                    data: JSON.stringify({
+                                                        machine: machineSetData.machineId,
+                                                        action: 'true'
+                                                    }),
+                                                    success: function (res) {
+                                                        $('.mask').fadeOut();
+                                                        $('.maskSpan').removeClass('maskIcon');
+                                                        layer.msg('营业成功', { icon: 1 });
+                                                        machineList.reload({
+                                                            where: {}
+                                                        })
+                                                    }
+                                                })
+                                            } else {
+                                                layer.msg(Sres.message, { icon: 2 })
+                                            }
                                         }
-                                    }
-                                })
+                                    })
+                                } else {
+                                    layer.msg('该设备未激活,无法营业', { icon: 7 })
+                                }
+                            } else if (Dres.code == 403) {
+                                window.parent.location.href = "../login/login.html";
                             } else {
-                                layer.msg('该设备未激活,无法启动', { icon: 7 })
+                                layer.msg(Dres.message, { icon: 2 })
                             }
-                        } else if (Dres.code == 403) {
-                            window.parent.location.href = "../login/login.html";
-                        } else {
-                            layer.msg(Dres.message, { icon: 2 })
+    
                         }
-
-                    }
+                    })
                 })
-            })
+            }else{
+                layer.confirm('确定取消营业？', function (index) {
+                    layer.close(index);
+                    $('.mask').fadeIn();
+                    $('.maskSpan').addClass('maskIcon')
+                    $.ajax({
+                        type: 'post',
+                        url: '/api/machine/getStatus',
+                        headers: {
+                            "Content-Type": "application/json",
+                            token,
+                        },
+                        data: JSON.stringify({
+                            machineId: machineSetData.machineId,
+                        }),
+                        success: function (Dres) {
+                            if (Dres.code == 200) {
+                                var statusType = JSON.parse(Dres.data);
+                                if (statusType.actionStatus == 1) {
+                                    $.ajax({
+                                        type: 'post',
+                                        url: '/api/machine/activeMachine',
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            token,
+                                        },
+                                        data: JSON.stringify({
+                                            machineId: machineSetData.machineId,
+                                            openStatus: '0'
+                                        }),
+                                        success: function (Sres) {
+                                            if (Sres.code == 200) {
+                                                $.ajax({
+                                                    type: 'post',
+                                                    url: '/api/pushActive',
+                                                    headers: {
+                                                        "Content-Type": "application/json",
+                                                        token,
+                                                    },
+                                                    data: JSON.stringify({
+                                                        machine: machineSetData.machineId,
+                                                        action: 'false'
+                                                    }),
+                                                    success: function (res) {
+                                                        $('.mask').fadeOut();
+                                                        $('.maskSpan').removeClass('maskIcon');
+                                                        layer.msg('取消营业成功', { icon: 1 });
+                                                        machineList.reload({
+                                                            where: {}
+                                                        })
+                                                    }
+                                                })
+                                            } else {
+                                                layer.msg(Sres.message, { icon: 2 })
+                                            }
+                                        }
+                                    })
+                                } else {
+                                    layer.msg('该设备未激活,无法进行营业操作', { icon: 7 })
+                                }
+                            } else if (Dres.code == 403) {
+                                window.parent.location.href = "../login/login.html";
+                            } else {
+                                layer.msg(Dres.message, { icon: 2 })
+                            }
+    
+                        }
+                    })
+                })  
+            }
+            
 
         }
     });
@@ -349,7 +429,7 @@ layui.use(['table', 'form', 'layer'], function () {
                     area: editMachineData.area,
                     longitude: editMachineData.longitude,
                     latitude: editMachineData.latitude,
-                    userNum:editMachineData.merchantsName,
+                    userNum: editMachineData.merchantsName,
                     userPhone: editMachineData.userPhone,
                     chargerPhone: editMachineData.headPhone,
                     description: editMachineData.describe,
@@ -377,16 +457,292 @@ layui.use(['table', 'form', 'layer'], function () {
     });
 
     // 手机号码正则判断
-    $()
+    // $()
     // 点击商户条件
-    $('.fixedAccount').click(function(){
+    $('.fixedAccount').click(function () {
         // alert($(this).attr('mid'))
         $('.fixedAccount').removeClass('active');
         $(this).addClass('active')
         machineList.reload({
+            where: {
+                merchantId: $(this).attr('mid')
+            }
+        })
+    });
+    // 销售详情部分
+    //开始时间
+    var selesStartTime = '';
+    //结束时间
+    var selesEndTime = '';
+    laydate.render({
+        elem: '#test6',
+        range: true,
+        done: function (value, date, endDate) {
+            console.log(value); //得到日期生成的值，如：2017-08-18
+            timerKey = value.split(' - ');
+            console.log(timerKey);
+            selesStartTime = timerKey[0];
+            selesEndTime = timerKey[1];
+        }
+    });
+
+    var startTime='',
+        endTime='';
+    laydate.render({
+        elem: '#test7',
+        range: true,
+        done: function (value, date, endDate) {
+            console.log(value); //得到日期生成的值，如：2017-08-18
+            timerKey = value.split(' - ');
+            console.log(timerKey);
+            startTime = timerKey[0];
+            endTime = timerKey[1];
+        }
+    });
+
+    // 销售详情列表
+    var salesDatilsList=null;
+    function salesFun(id){
+        salesDatilsList = table.render({
+            elem: '#salesDateilsTable',
+            url: `/api//machine/getSalesList`,
+            method: 'post',
+            contentType: "application/json",
+            headers: {
+                token,
+            },
+            cols: [[
+                {
+                    field: 'time', width: 200, title: '时间', sort: true 
+                },
+                { field: 'number', width: 250, title: '订单号', },
+                {
+                    field: 'shipStatus', width: 150, title: '出货状态', sort: true, templet: function (d) {
+                        return `<div><span class="${d.shipStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.shipStatus == 0 ? '出货失败' : '出货成功'}</span></div>`
+                    }
+                },
+                {
+                    field: 'payStatus', width: 150, title: '支付状态', sort: true,  templet: function (d) {
+                        return `<div><span class="${d.payStatus == 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payStatus == 0 ? '已支付' :d.payStatus == 1?'未支付':'取消支付' }</span></div>`
+                    }
+                },
+                {
+                    field: 'payType', width: 150, title: '支付方式', sort: true,  templet: function (d) {
+                        return `<div><span class="${d.payType != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payType == 0 ? '支付宝' : '微信'}</span></div>`
+                    }
+                },
+                { field: 'payee', width: 150, title: '收款方', sort: true, },
+                { field: 'amount', width: 150, title: '金额', },
+            ]]
+            , id: 'salesId'
+            , page: true
+            , loading: true
+            , limits: [10, 20, 50, 100]
+            ,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where:{
+                condition:id
+            },
+            parseData: function (res) {
+                // console.log(res)
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+    
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    window.parent.location.href = "../login/login.html";
+                }
+            }
+        });
+    }
+
+    // 销售详情查询
+    $('.selesQueryBtn').click(function(){
+        var selesVal= form.val('salesDataVal')
+        console.log(selesVal)
+        salesDatilsList.reload({
+            where:{
+                conditionFive:selesVal.shipmentStatus,
+                conditionSix:selesVal.payStatus,
+                conditionSeven:selesVal.payType,
+                conditionTwo:selesStartTime,
+                conditionThree:selesEndTime,
+            }
+        })
+    })
+      // 出货记录列表
+    var   recordDataList=null;
+    function recordFun(id){
+        recordDataList = table.render({
+            elem: '#shipmentListTable',
+            url: `/api//machine/getShippingList`,
+            method: 'post',
+            contentType: "application/json",
+            headers: {
+                token,
+            },
+            cols: [[
+                { field: 'time', width: 200, title: '出货时间', },
+                {
+                    field: 'source', width: 120, title: '操作来源', sort: true, 
+                },
+                {
+                    field: 'goodName', width: 150, title: '商品名', sort: true,  
+                },
+                {
+                    field: 'way', width: 130, title: '货道名', sort: true, 
+                },
+                {
+                    field: 'cabinetName', width: 130, title: '机柜名', sort: true,  
+                },
+                { field: 'cabinetType', width: 100, title: '机柜类型', sort: true, },
+                { field: 'countNum', width: 100, title: '出货时数量(个)',templet:function(d){
+                    return d.stock+d.count
+                } },
+                { field: 'stock', width: 100, title: '出货后数量(个)', sort: true, },
+                { field: 'count', width: 100, title: '出货数量(个)', },
+            ]]
+            , id: 'shipmentId'
+            , page: true
+            , loading: true
+            , limits: [10, 20, 50, 100]
+            ,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where:{
+                condition:id
+            },
+            parseData: function (res) {
+                // console.log(res)
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+    
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    window.parent.location.href = "../login/login.html";
+                }
+            }
+        });
+    }
+    // 出货记录列表
+    $('.shipmentQueryBtn').click(function(){
+        recordDataList.reload({
+            conditionTwo:startTime,
+            conditionThree:endTime,
+            conditionFour:$('.shipmentRecord input[name="keyName"]').val()
+        })
+    });
+//树状图
+    var dataList = treeList();
+    console.log(dataList);
+    var inst1 = tree.render({
+      elem: '#test1',
+      id: 'treelist',
+      showLine: !0 //连接线
+      ,
+      onlyIconControl: true //左侧图标控制展开收缩
+      ,
+      isJump: !1 //弹出新窗口跳转
+      ,
+      edit: false //开启节点的操作
+      ,
+      data: dataList,
+      text: {
+        defaultNodeName: '无数据',
+        none: '加载数据失败！'
+      },
+      click: function (obj) {
+        console.log(obj);
+        machineList.reload({
           where:{
-            merchantId:$(this).attr('mid')
+            merchantId:obj.data.id
           }
         })
-      })
+        var nodes = document.getElementsByClassName("layui-tree-txt");
+        for (var i = 0; i < nodes.length; i++) {
+          if (nodes[i].innerHTML === obj.data.title)
+            nodes[i].style.color = "#be954a";
+          else
+            nodes[i].style.color = "#555";
+        }
+        if (!obj.data.children) {
+          $.ajax({
+            type: 'post',
+            url: '/api/merchant/getMerchantGroup',
+            headers: {
+              token,
+              "Content-Type": "application/json",
+            },
+            async: false,
+            data: JSON.stringify({
+              topId: obj.data.id
+            }),
+            success: function (res) {
+              if (res.code == 200) {
+                if (res.data[0].childMerchant.length > 0) {
+                  console.log(res)
+                  obj.data.spread = true;
+                  obj.data.children = [];
+                  res.data[0].childMerchant.forEach((item, index) => {
+  
+                    var childrenObj = {
+                      id: item.id,
+                      title: item.name
+                    }
+                    obj.data.children.push(childrenObj)
+                  });
+                  tree.reload('treelist', {
+                  });
+                }
+              }
+            }
+          })
+          
+        }
+  
+      },
+    });
+
+
+        // 刷新页面
+        $('.refreshBtn').click(function(){
+            location.reload();
+        })
 });

@@ -59,10 +59,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
           "count": res.data.total, //解析数据长度
           "data": res.data.list //解析数据列表
         };
-      } else {
+      } else if (res.code == 403) {
+        window.parent.location.href = "../login/login.html";
+      }
+      else {
         return {
           "code": res.code, //解析接口状态
-          "msg": res.message,   //解析提示文本
+          "msg": res.msg,   //解析提示文本
         }
       }
 
@@ -72,17 +75,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     },
     done: function (res) {
       if (res.code == 403) {
-        window.history.go(-1)
+
       }
     }
   });
   var uuID = null;
 
   // 查询
-  $('.queryBtnClick ').click(function(){
+  $('.queryBtnClick ').click(function () {
     tableIns.reload({
-      where:{
-        conditionTwo:$('.mian input[name="keyMerchants"]').val(),
+      where: {
+        conditionTwo: $('.mian input[name="keyMerchants"]').val(),
         // condition:2
       }
     })
@@ -100,19 +103,19 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       console.log(informationType)
       // $('.MemberOperation').fadeIn();
       popupShow('MemberOperation', 'MemberContent');
-      mercantsSelectList(merchantsListData,'marchantsList',form);
+      mercantsSelectList(merchantsListData, 'marchantsList', form);
       form.val("information", {
         "userName": data.userName,
         "name": data.name,
         "userPwd": '      ',
-        "DuserPwd":'      ',
+        "DuserPwd": '      ',
         "alonePwd": '      ',
-        'DalonePwd':'      ',
+        'DalonePwd': '      ',
         "phone": data.phone,
         "cardId": data.cardId,
         "startThe": data.open ? 'on' : '',
         "administrator": data.roleSign ? 'on' : '',
-        "marchantsListname":data.merchantId
+        "marchantsListname": data.merchantId
       })
       form.render('select');
       userRoles(roleList, 'checkCont', data);
@@ -134,7 +137,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
               obj.del();
               layer.close(index);
             } else if (res.code == 403) {
-              window.history.go(-1)
+              window.parent.location.href = "../login/login.html";
             } else {
               layer.msg(res.message);
             }
@@ -156,7 +159,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     informationType = $(this).attr('typeID');
     uuID = null;
     $('.OperationHeader span').html('添加用户')
-    mercantsSelectList(merchantsListData,'marchantsList',form);
+    mercantsSelectList(merchantsListData, 'marchantsList', form);
     form.val("information", {
       "userName": '',
       "name": '',
@@ -164,14 +167,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       "alonePwd": '',
       "phone": '',
       "cardId": '',
-      'marchantsListname':''
+      'marchantsListname': ''
     });
     form.render('select');
     $('.checkCont').empty();
     $('.roleCont').hide();
-    
-    
-    
+
+
+
   });
   // 取消事件
   $('.cancel_btn').click(function () {
@@ -186,19 +189,19 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 添加
     // console.log(form.val("checkboxData"));
 
-    if (!(informData.userName && informData.name && informData.userPwd && informData.alonePwd && informData.phone&&informData.marchantsListname)) {
+    if (!(informData.userName && informData.name && informData.userPwd && informData.alonePwd && informData.phone && informData.marchantsListname)) {
       layer.msg('带*为必填', { icon: 7 });
       return;
     }
-    if (!(informData.userName && informData.name && informData.phone&&informData.marchantsListname)) {
+    if (!(informData.userName && informData.name && informData.phone && informData.marchantsListname)) {
       layer.msg('带*为必填', { icon: 7 });
       return;
     }
-    if(!(informData.DuserPwd==informData.userPwd)){
+    if (!(informData.DuserPwd == informData.userPwd)) {
       layer.msg('登录密码不一致', { icon: 7 });
-      return ;
+      return;
     }
-    if(!(informData.alonePwd==informData.DalonePwd)){
+    if (!(informData.alonePwd == informData.DalonePwd)) {
       layer.msg('独立密码不一致', { icon: 7 });
       return;
     }
@@ -240,7 +243,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             open: openStart,
             roleSign: roleSignStart,
             roleId: informationType == 2 ? roleListArray : null,
-            merchantId:Number(informData.marchantsListname) 
+            merchantId: Number(informData.marchantsListname)
           }),
           success: function (res) {
             $('.mask').fadeOut();
@@ -263,7 +266,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
               $('.MemberOperation').fadeOut();
               layer.msg(res.message, { icon: 1 })
             } else if (res.code == 403) {
-              window.history.go(-1)
+              window.parent.location.href = "../login/login.html";
             } else {
               layer.msg(res.message, { icon: 2 })
             }
@@ -360,25 +363,104 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
   // 获取商户列表
   var merchantsListData = merchantsListMian('');
   // 左侧商户列表
-  leftMerchantsList(merchantsListData,'accountContnet');
-  $('.fixedAccount').click(function(){
-    // alert($(this).attr('mid'))
-    $('.fixedAccount').removeClass('active');
-    $(this).addClass('active')
-    tableIns.reload({
-      where:{
-        condition:$(this).attr('mid')?Number($(this).attr('mid')):''
-      }
-    })
-  })
+  // leftMerchantsList(merchantsListData,'accountContnet');
+  // $('.fixedAccount').click(function(){
+  //   // alert($(this).attr('mid'))
+  //   $('.fixedAccount').removeClass('active');
+  //   $(this).addClass('active')
+  //   tableIns.reload({
+  //     where:{
+  //       condition:$(this).attr('mid')?Number($(this).attr('mid')):''
+  //     }
+  //   })
+  // })
 
   // 左边商户列表显示隐藏事件
-  $('.sidebar i').click(function(){
+  $('.sidebar i').click(function () {
     $('.left-mian').hide()
     $('.onLeft').show()
   });
-  $('.onLeft').click(function(){
+  $('.onLeft').click(function () {
     $(this).hide();
     $('.left-mian').show()
+  })
+
+
+
+
+
+  //树状图
+  var dataList = treeList();
+  var inst1 = tree.render({
+    elem: '#test1',
+    id: 'treelist',
+    showLine: !0 //连接线
+    ,
+    onlyIconControl: true //左侧图标控制展开收缩
+    ,
+    isJump: !1 //弹出新窗口跳转
+    ,
+    edit: false //开启节点的操作
+    ,
+    data: dataList,
+    text: {
+      defaultNodeName: '无数据',
+      none: '加载数据失败！'
+    },
+    click: function (obj) {
+      console.log(obj);
+      tableIns.reload({
+        where: {
+          condition: obj.data.id
+        }
+      })
+      var nodes = document.getElementsByClassName("layui-tree-txt");
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].innerHTML === obj.data.title)
+          nodes[i].style.color = "#be954a";
+        else
+          nodes[i].style.color = "#555";
+      }
+      if (!obj.data.children) {
+        $.ajax({
+          type: 'post',
+          url: '/api/merchant/getMerchantGroup',
+          headers: {
+            token,
+            "Content-Type": "application/json",
+          },
+          async: false,
+          data: JSON.stringify({
+            topId: obj.data.id
+          }),
+          success: function (res) {
+            if (res.code == 200) {
+              if (res.data[0].childMerchant.length > 0) {
+                console.log(res)
+                obj.data.spread = true;
+                obj.data.children = [];
+                res.data[0].childMerchant.forEach((item, index) => {
+
+                  var childrenObj = {
+                    id: item.id,
+                    title: item.name
+                  }
+                  obj.data.children.push(childrenObj)
+                });
+                tree.reload('treelist', {
+
+                });
+              }
+            }
+          }
+        })
+
+      }
+
+    },
+  });
+  // 刷新页面
+  $('.refreshBtn').click(function () {
+    location.reload();
   })
 });

@@ -281,5 +281,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         form.render('checkbox');
     }
 
-    
+     // 刷新页面
+     $('.refreshBtn').click(function(){
+        location.reload();
+    })
 });

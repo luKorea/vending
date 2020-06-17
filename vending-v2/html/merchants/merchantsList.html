@@ -91,6 +91,16 @@
                         <label for=""><span style="color: red;">*</span> 商户名:</label>
                         <input type="text" name="merchantsName">
                     </div>
+                    <div class="listInput">
+                        <label for=""><span style="color: red;">*</span> 隶属商户:</label>
+                        <form class="layui-form" action="" >
+                            <div class="layui-form" lay-filter="">
+                                <select name="marchantsListname" class="addMarchantsList" lay-filter="stateSelect">
+                                    <option disabled value="1">启用</option> -->
+                                </select>
+                            </div>
+                        </form>
+                    </div>
                     <div style="text-align: center; margin-top: 15px;">
                         <button class="layui-btn layui-btn-normal btn addSubmiBtn" type="button">
                             <span>提交</span>

@@ -1,5 +1,5 @@
 var navList=[
-    '<iframe class="iframe-show" src="../dataCenter/report.html"></iframe>',
+    '<iframe class="iframe-show" src="../dataCenter/report.html" iframeId="1"></iframe>',
     '<iframe class="iframe-show" src="../userManagement/logo.html"></iframe>',
     '<iframe class="iframe-show" src="../userManagement/terminalMember.html"></iframe>',
     '<iframe class="iframe-show" src="../userManagement/memberList.html"></iframe>',

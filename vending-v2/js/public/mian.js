@@ -3,6 +3,7 @@
 // 删除商品数据列表数据
 // 传id
 var token = sessionStorage.token;
+var machineId=sessionStorage.machineID;
 function Goodsdel(id, indexs, obj, index) {
   // index 1为自定义商品 2为自定义类目 3为通用商品 
   if (indexs == 1) {
@@ -219,6 +220,59 @@ function merchantsListMian(id) {
 };
 
 
+//ajax方法的封装
+// function ajax(url,type,data,userToken){
+//   return $.ajax({
+//     type,
+//     url,
+//     data,
+//     headers: {
+//       token:userToken,
+//       "Content-Type": "application/json",
+//     },
+//   })
+// };
+
+// 树装列表
+function treeList(){
+  var dataList=[]
+  $.ajax({
+    type:'post',
+    url:'/api/merchant/getMerchantGroup',
+    headers: {
+      token,
+      "Content-Type": "application/json",
+    },
+    async:false,
+    data:JSON.stringify({
+      topId:machineId
+    }),
+    success:function(res){
+      if(res.code==200){
+        var tree=res.data[0]
+        var treeObj={
+          id:tree.id,
+          title:tree.name,
+          children:[],
+          spread:true
+        }
+        dataList.push(treeObj)
+        tree.childMerchant.forEach((item,index)=>{
+          var chidernObj={
+            id:item.id,
+            title:item.name,
+            index,
+          }
+          dataList[0].children.push(chidernObj)
+        })
+        // console.log(data)
+      }
+    }
+  })
+  return dataList;
+}
+
+
 
 // 商户下拉框渲染
 function mercantsSelectList( list, element, form,) {
@@ -234,7 +288,7 @@ function mercantsSelectList( list, element, form,) {
 
 // 左侧商户列表
 function leftMerchantsList(list, element) {
-  var merchantsNameList = `<p style="margin:20px;color:red;">商户</p>
+  var merchantsNameList = `<p style="margin:20px;color:#be954a;">商户</p>
   <div class="fixedAccount" mid="">
                           <span> 全部商户</span>
                       </div>`;

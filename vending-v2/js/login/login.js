@@ -38,6 +38,7 @@ layui.use(['form', 'layer'], function () {
                             console.log(res)
                             sessionStorage.username = res.data.username;
                             sessionStorage.token = res.data.token;
+                            sessionStorage.machineID=res.data.merchantId;
                             if (logData.keep == 'on') {
                                 sessionStorage.accountPass = JSON.stringify({
                                     account: logData.account,

@@ -120,6 +120,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     
     //点击添加成员事件
     $('.addBtn').click(function () {
+        marchantsList = merchantsListMian('');
+        mercantsSelectList( marchantsList,'addMarchantsList',form);
+        form.render('select');
         popupShow('addMerchants', 'addBox')
 
     });
@@ -161,7 +164,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     "Content-Type": "application/json",
                 },
                 data: JSON.stringify({
-                    name: $('.addBox input[name="merchantsName"]').val()
+                    name: $('.addBox input[name="merchantsName"]').val(),
+                    topMerchant:Number($('.addMarchantsList').val())
                 }),
                 success: function (res) {
                     console.log(res)
