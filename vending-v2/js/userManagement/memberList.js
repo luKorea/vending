@@ -5,12 +5,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     layer = layui.layer,
     util = layui.util,
     tree = layui.tree
-  var token = sessionStorage.token;
-  var d = JSON.stringify({
-    'pageName': 'pageNum',
-    'limitName': 'pageSize'
-  })
-  var tableIns = table.render({
+  var token = sessionStorage.token,
+      UserId=sessionStorage.UserId,
+   tableIns = table.render({
     elem: '#tableTest',
     url: `/api/user/findUser`,
     method: 'post',
@@ -23,9 +20,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       { field: 'name', width: 150, title: '姓名' },
       { field: 'phone', width: 150, title: '手机号' },
       { field: 'merchantName', width: 150, title: '所属商户' },
-      { field: '1', width: 150, title: '创建人', },
+      { field: 'addUser', width: 150, title: '创建人', },
       { field: 'addTime', width: 180, title: '创建时间', sort: true },
-      { field: '1', width: 150, title: '最后操作人', },
+      { field: 'lastUser', width: 150, title: '最后操作人', },
       { field: 'lastTime', width: 180, title: '最后操作时间', sort: true },
       {
         field: 'open', width: 150, title: '状态', templet: function (d) {
@@ -100,7 +97,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       // 点击编辑事件
       $('.OperationHeader span').html('编辑用户')
       informationType = $(this).attr('typeID');
-      console.log(informationType)
       // $('.MemberOperation').fadeIn();
       popupShow('MemberOperation', 'MemberContent');
       mercantsSelectList(merchantsListData, 'marchantsList', form);
@@ -167,7 +163,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       "alonePwd": '',
       "phone": '',
       "cardId": '',
-      'marchantsListname': ''
+      'marchantsListname': '',
+      'DalonePwd': '',
+      "DuserPwd": '',
     });
     form.render('select');
     $('.checkCont').empty();
@@ -250,6 +248,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             $('.maskSpan').removeClass('maskIcon')
             console.log(res)
             if (res.code == 200) {
+              if(informationType==2){
+                if(UserId==uuID){
+                  sessionStorage.machineID=informData.marchantsListname
+                }
+                
+              }
               tableIns.reload({
                 where: {
 
@@ -270,6 +274,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             } else {
               layer.msg(res.message, { icon: 2 })
             }
+          },
+          error:function(err){
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon')
+            layer.msg('请求服务器超时', { icon: 2 })
           }
         })
       }
@@ -333,10 +342,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       pageSize: 1000
     }),
     success: function (res) {
-      console.log(res)
       if (res.code == 200) {
         roleList = res.data.list;
       }
+    },error:function(err){
+      layer.msg('服务器请求超时',{icon:2})
     }
   })
   // 渲染用户角色

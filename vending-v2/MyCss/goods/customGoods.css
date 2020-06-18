@@ -639,3 +639,29 @@
     .imgCont video{
         width: 100%;
     }
+    .topBox{
+        width: 1300px;
+        position: relative;
+        margin: 2vh auto 50px;
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 0 1px 3px rgba(0,0,0,.3);
+        box-sizing: border-box;
+        transition: all 0.5s;
+    }
+    .topBody{
+        margin-top: 15px;
+    }
+    .topKey{
+        display: flex;
+        justify-content: start;
+        align-items: center;
+    }
+    .topKey .btn{
+        margin: 0;
+        margin-left: 20px;
+    }
+    .topKey .key-contnet{
+        width: auto;
+        margin-left: 20px;
+    }

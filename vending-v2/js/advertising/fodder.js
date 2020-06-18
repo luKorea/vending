@@ -1,9 +1,10 @@
-layui.use(['laydate', 'table', 'layer'], function () {
-    var token = sessionStorage.token;
-    var layer = layui.layer;
-    var form = layui.form;
+layui.use(['laydate', 'table', 'layer','tree'], function () {
+    var token = sessionStorage.token,
+     layer = layui.layer,
+     form = layui.form,
     // 日期选择
-    var laydate = layui.laydate;
+     laydate = layui.laydate,
+     tree=layui.tree;
     //开始时间
     var startTime = '';
     //结束时间
@@ -775,4 +776,74 @@ layui.use(['laydate', 'table', 'layer'], function () {
         //     }
         // })
     };
+
+
+    var dataList = treeList();
+    var inst1 = tree.render({
+      elem: '#test1',
+      id: 'treelist',
+      showLine: !0 //连接线
+      ,
+      onlyIconControl: true //左侧图标控制展开收缩
+      ,
+      isJump: !1 //弹出新窗口跳转
+      ,
+      edit: false //开启节点的操作
+      ,
+      data: dataList,
+      text: {
+        defaultNodeName: '无数据',
+        none: '加载数据失败！'
+      },
+      click: function (obj) {
+        console.log(obj);
+        machineList.reload({
+          where:{
+            merchantId:obj.data.id
+          }
+        })
+        var nodes = document.getElementsByClassName("layui-tree-txt");
+        for (var i = 0; i < nodes.length; i++) {
+          if (nodes[i].innerHTML === obj.data.title)
+            nodes[i].style.color = "#be954a";
+          else
+            nodes[i].style.color = "#555";
+        }
+        if (!obj.data.children) {
+          $.ajax({
+            type: 'post',
+            url: '/api/merchant/getMerchantGroup',
+            headers: {
+              token,
+              "Content-Type": "application/json",
+            },
+            async: false,
+            data: JSON.stringify({
+              topId: obj.data.id
+            }),
+            success: function (res) {
+              if (res.code == 200) {
+                if (res.data[0].childMerchant.length > 0) {
+                  console.log(res)
+                  obj.data.spread = true;
+                  obj.data.children = [];
+                  res.data[0].childMerchant.forEach((item, index) => {
+  
+                    var childrenObj = {
+                      id: item.id,
+                      title: item.name
+                    }
+                    obj.data.children.push(childrenObj)
+                  });
+                  tree.reload('treelist', {
+                  });
+                }
+              }
+            }
+          })
+          
+        }
+  
+      },
+    });
 });

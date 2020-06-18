@@ -1,14 +1,14 @@
-layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
+layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   var $ = layui.jquery,
-  tree =layui.tree ;
-     // 收起
-     $('.sidebar i').click(function () {
-      $('.left-mian').hide();
-      $('.on-left').show()
+    tree = layui.tree;
+  // 收起
+  $('.sidebar i').click(function () {
+    $('.left-mian').hide();
+    $('.on-left').show()
   });
   $('.on-left').click(function () {
-      $('.left-mian').show();
-      $('.on-left').hide()
+    $('.left-mian').show();
+    $('.on-left').hide()
   })
   // $.post('http://172.16.68.199:8086/goods/findAll', { map: 1 }, function (res) {
   //     console.log(res)
@@ -66,6 +66,9 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
       'pageName': 'pageNum',
       'limitName': 'pageSize'
     },
+    where: {
+      merchantId: sessionStorage.machineID
+    },
     parseData: function (res) {
       // console.log(res)
       //res 即为原始返回的数据
@@ -103,7 +106,7 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
     $.ajax({
       type: 'post',
       url: `/api/classify/findAll`,
-      data: JSON.stringify({ pageNum: 1, pageSize: 10 }),
+      data: JSON.stringify({ pageNum: 1, pageSize: 10,merchantId:'0'}),
       headers: {
         "Content-Type": "application/json",
         token,
@@ -111,16 +114,18 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
       success: function (res) {
         if (res.code == 200) {
           var optionList = `<option value="">全部</option>`;
-          $('#GoodsType').empty;
-          $('#EditGoodsType').empty;
-          $('#addGoodsType').empty;
+          $('#GoodsType').empty();
+          $('#EditGoodsType').empty();
+          $('#addGoodsType').empty();
+          $('#topClass').empty();
           $.each(res.data.list, function (index, ele) {
             optionList += `<option value="${ele.classifyId}">${ele.classifyName}</option>`
           });
           // $('#GoodsType').empty;
           $('#GoodsType').append(optionList);
           $('#EditGoodsType').append(optionList);
-          $('#addGoodsType').append(optionList)
+          $('#addGoodsType').append(optionList);
+          $('#topClass').append(optionList);
           form.render('select');
         }
       }
@@ -190,10 +195,10 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
   // 选择商品图片
   $('.upload-btn1').click(function () {
     addGoodsImgIndex = 1;
-    logoCont=1;
-    conditionFour=0
-      materialCont();
-    popupShow('GoodsMaterial','goodsMaterialBox');
+    logoCont = 1;
+    conditionFour = 0
+    materialCont();
+    popupShow('GoodsMaterial', 'goodsMaterialBox');
   });
   // 点击商品信息事件
   $('body').on('click', '.GoodsInformation', function () {
@@ -235,7 +240,7 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
   editWangEditor.create();
   // 修改商品信息点击事件
   $('.editDetermine-btn').click(function () {
-    indexFlag=null;
+    indexFlag = null;
     var EditValData = form.val("EditValData");
     console.log(EditValData)
     if (EditValData.goodsBarcode && EditValData.goodsName && EditValData.goodsType && EditValData.goodsPrice && EditValData.goodsCost) {
@@ -260,9 +265,9 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
           goods_Descript: editWangEditor.txt.html() //商品详情，编辑器里的内容
         }),
         success: function (res) {
-          
+
           if (res.code == 200) {
-            layer.msg('修改成功',{icon:1});
+            layer.msg('修改成功', { icon: 1 });
             tableIns.reload({
               where: {
               }
@@ -272,13 +277,13 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
           } else if (res.code == 403) {
             window.parent.location.href = "../login/login.html";
           } else {
-            layer.msg(res.message,{icon:2})
+            layer.msg(res.message, { icon: 2 })
           }
         }
 
       })
     } else {
-      layer.msg('带*为必填',{icon:7})
+      layer.msg('带*为必填', { icon: 7 })
     }
   })
   //  取消优惠按钮
@@ -313,7 +318,7 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
   // 添加自定义商品部分
   var addGoodsImg = null;
   // 1为logo 2为内容
-  var logoCont=null;
+  var logoCont = null;
   $('.add-btn').click(function () {
     // $('.addGoods').fadeIn();
     popupShow('addGoods', 'editor-content');
@@ -332,10 +337,10 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
   $('.upload-btn2').click(function () {
     // console.log(editor.txt.html())
     addGoodsImgIndex = 2;
-    logoCont=1;
-    conditionFour=0;
-      materialCont();
-    popupShow('GoodsMaterial','goodsMaterialBox');
+    logoCont = 1;
+    conditionFour = 0;
+    materialCont();
+    popupShow('GoodsMaterial', 'goodsMaterialBox');
   });
   // layui edit 编辑器创建
   // var AddIndex = layedit.build('addDemo', {
@@ -374,11 +379,11 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
   // 编辑器上传视频弹窗tba切换
   var videoTabFlag = true;
   // 点击编辑器视频事件
-  var materialType=null;
+  var materialType = null;
   $('.upVideo').click(function (e) {
-    materialType=$(this).attr('typeID')
-    popupShow('goodsmaterialVideo','materialBox');
-    if(!videoTable){
+    materialType = $(this).attr('typeID')
+    popupShow('goodsmaterialVideo', 'materialBox');
+    if (!videoTable) {
       materVideoCont();
     }
   });
@@ -424,7 +429,7 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
                 , "goodsCost": ''
                 , "goodsParam": ''
               });
-              layer.msg('添加成功',{icon:1});
+              layer.msg('添加成功', { icon: 1 });
 
 
               // 重新加载数据
@@ -434,11 +439,11 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
               })
               // 添加成功清空wangEditor文本内容
               addWangEditor.txt.clear();
-            }else if(res.code==403){
+            } else if (res.code == 403) {
               window.parent.location.href = "../login/login.html";
             }
-             else {
-              layer.msg(res.message,{icon:2})
+            else {
+              layer.msg(res.message, { icon: 2 })
             }
           }
         })
@@ -488,9 +493,9 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
   // 商品素材部分
 
   // 图片素材
-  var conditionFour=null;
-  var advertisingLis=null;
-  function materialCont(){
+  var conditionFour = null;
+  var advertisingLis = null;
+  function materialCont() {
     advertisingLis = table.render({
       elem: '#materiaImgTable',
       method: 'post',
@@ -533,7 +538,7 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
       },
       where: {
         conditionFour: conditionFour,
-        conditionFive:'2'
+        conditionFive: '2'
       },
       response: {
         statusCode: 200 //规定成功的状态码，默认：0
@@ -542,30 +547,30 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
         if (res.code == 403) {
           window.parent.location.href = "../login/login.html";
         } else {
-  
+
         }
       }
     });
   }
- 
+
 
   // 关键字查询
-  $('.materialKeyCont .queryBtnClick').click(function(){
+  $('.materialKeyCont .queryBtnClick').click(function () {
     console.log($('.materialKeyCont input[name="KyeText"]').val())
     advertisingLis.reload({
-      where:{
-        conditionFour:conditionFour,
-        conditionFive:'2',
-        conditionThree:$('.materialKeyCont input[name="KyeText"]').val()
+      where: {
+        conditionFour: conditionFour,
+        conditionFive: '2',
+        conditionThree: $('.materialKeyCont input[name="KyeText"]').val()
       }
     })
   })
-  $('.goodsmaterialVideo .queryBtnClick').click(function(){
+  $('.goodsmaterialVideo .queryBtnClick').click(function () {
     videoTable.reload({
-      where:{
-        conditionFour:'0',
-        conditionFive:'2',
-        conditionThree:$('.goodsmaterialVideo input[name="KyeText"]').val()
+      where: {
+        conditionFour: '0',
+        conditionFive: '2',
+        conditionThree: $('.goodsmaterialVideo input[name="KyeText"]').val()
       }
     })
   })
@@ -574,42 +579,42 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
   table.on('tool(materiaImgTable)', function (obj) {
     console.log(obj);
     // 1为商品图片 2为内容图片
-    console.log(logoCont,addGoodsImg)
-    if(logoCont==1){
+    console.log(logoCont, addGoodsImg)
+    if (logoCont == 1) {
       // 1为编辑 2为添加
-      if(addGoodsImgIndex==2){
-        addGoodsImg=obj.data.img;
+      if (addGoodsImgIndex == 2) {
+        addGoodsImg = obj.data.img;
         $('#GoodsImg').attr("src", addGoodsImg);
         $('.upload-demo2 .upload-list2').fadeIn();
-        popupHide('GoodsMaterial','goodsMaterialBox');
-      }else{
-        editGoodsImg=obj.data.img;
+        popupHide('GoodsMaterial', 'goodsMaterialBox');
+      } else {
+        editGoodsImg = obj.data.img;
         $('#editImg').attr("src", editGoodsImg);
-        popupHide('GoodsMaterial','goodsMaterialBox');
+        popupHide('GoodsMaterial', 'goodsMaterialBox');
       }
-    }else{
-      if(addGoodsImgIndex==2){
+    } else {
+      if (addGoodsImgIndex == 2) {
         if (addWangEditor.txt.html().length > 11) {
-          addWangEditor.txt.append(`<p><img src="${obj.data.img}"></img></p>`);   
+          addWangEditor.txt.append(`<p><img src="${obj.data.img}"></img></p>`);
         } else {
-          addWangEditor.txt.html(`<p><img src="${obj.data.img}"></img></p>`);       
+          addWangEditor.txt.html(`<p><img src="${obj.data.img}"></img></p>`);
         }
-      }else{
+      } else {
         if (editWangEditor.txt.html().length > 11) {
-          editWangEditor.txt.append(`<p><img src="${obj.data.img}"></img></p>`);       
+          editWangEditor.txt.append(`<p><img src="${obj.data.img}"></img></p>`);
         } else {
           editWangEditor.txt.html(`<p><img src="${obj.data.img}"></img></p>`);
         }
       }
-      popupHide('GoodsMaterial','goodsMaterialBox');
+      popupHide('GoodsMaterial', 'goodsMaterialBox');
     }
   });
 
 
   // 视频部分
-  var videoTable=null;
-  function materVideoCont(){
-     videoTable = table.render({
+  var videoTable = null;
+  function materVideoCont() {
+    videoTable = table.render({
       elem: '#materiaVideoTable',
       method: 'post',
       url: '/api/good_material/getGoodMaterial',
@@ -625,7 +630,7 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
         { field: 'addUser', width: 150, title: '发布人', },
         // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
         { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoVideo', },
-  
+
       ]]
       , page: true
       , id: 'VideoListData'
@@ -650,11 +655,228 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
             "msg": res.message, //解析提示文本
           }
         }
-  
+
       },
       where: {
         conditionFour: '1',
-        conditionFive:'2'
+        conditionFive: '2'
+      },
+      response: {
+        statusCode: 200 //规定成功的状态码，默认：0
+      },
+      done: function (res) {
+        if (res.code == 403) {
+          window.parent.location.href = "../login/login.html";
+        } else {
+
+        }
+      }
+    });
+  }
+
+
+  table.on('tool(materiaVideoTable)', function (obj) {
+    console.log(obj)
+    if (obj.event == 'preview') {
+      popupShow('materialPreview', 'previewBox');
+      $('.perviewBody video').attr('src', obj.data.img);
+      console.log(materialType);
+    } else {
+      console.log(materialType);
+      if (materialType == 2) {
+        if (addWangEditor.txt.html().length > 11) {
+          addWangEditor.txt.append(`<p><iframe src="${obj.data.img}"></iframe></p>`);
+        } else {
+          addWangEditor.txt.html(`<p><iframe src="${obj.data.img}"></iframe></p>`);
+        }
+        popupHide('goodsmaterialVideo', 'materialBox');
+      } else {
+        if (editWangEditor.txt.html().length > 11) {
+          editWangEditor.txt.append(`<p><iframe src="${obj.data.img}"></iframe></p>`);
+        } else {
+          editWangEditor.txt.html(`<p><iframe src="${obj.data.img}"></iframe></p>`);
+        }
+        popupHide('goodsmaterialVideo', 'materialBox');
+      }
+    }
+  })
+
+
+  // 富文本编辑器选择图片
+  $('.upImg').click(function () {
+    logoCont = $(this).attr('contType');
+    addGoodsImgIndex = $(this).attr('goodsIndex');
+    conditionFour = 2
+    console.log(logoCont, addGoodsImgIndex);
+    popupShow('GoodsMaterial', 'goodsMaterialBox');
+    materialCont();
+
+  });
+  // 刷新页面
+  $('.refreshBtn').click(function () {
+    location.reload();
+  });
+  //树状图
+  var dataList = treeList();
+  var inst1 = tree.render({
+    elem: '#testGoods',
+    id: 'treelist',
+    showLine: !0 //连接线
+    ,
+    onlyIconControl: true //左侧图标控制展开收缩
+    ,
+    isJump: !1 //弹出新窗口跳转
+    ,
+    edit: false //开启节点的操作
+    ,
+    data: dataList,
+    text: {
+      defaultNodeName: '无数据',
+      none: '加载数据失败！'
+    },
+    click: function (obj) {
+      console.log(obj);
+      tableIns.reload({
+        where: {
+          merchantId: obj.data.id
+        }
+      })
+      var nodes = document.getElementsByClassName("layui-tree-txt");
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].innerHTML === obj.data.title)
+          nodes[i].style.color = "#be954a";
+        else
+          nodes[i].style.color = "#555";
+      }
+      if (!obj.data.children) {
+        $.ajax({
+          type: 'post',
+          url: '/api/merchant/getMerchantGroup',
+          headers: {
+            token,
+            "Content-Type": "application/json",
+          },
+          async: false,
+          data: JSON.stringify({
+            topId: obj.data.id
+          }),
+          success: function (res) {
+            if (res.code == 200) {
+              if (res.data[0].childMerchant.length > 0) {
+                console.log(res)
+                obj.data.spread = true;
+                obj.data.children = [];
+                res.data[0].childMerchant.forEach((item, index) => {
+
+                  var childrenObj = {
+                    id: item.id,
+                    title: item.name
+                  }
+                  obj.data.children.push(childrenObj)
+                });
+                tree.reload('treelist', {
+                });
+              }
+            }
+          }
+        })
+
+      }
+
+    },
+  });
+
+  // 获取父商品
+  var parentGoods=null;
+  // 判断是否有上级
+  var parentTopMachineFlag=false;
+  // 父商户id
+  var topMachineId=''
+  $('.addParent').click(function () {
+    if(!parentGoods){
+      $('.mask').fadeIn();
+      $('.maskSpan').addClass('maskIcon');
+      
+      setTimeout(()=>{
+        var parentFlag=merchantsListMian('');
+        parentFlag.forEach((item,index)=>{
+          if(item.id==sessionStorage.machineID){
+            $('.mask').fadeOut();
+              $('.maskSpan').removeClass('maskIcon');
+            if(item.id==item.topMerchant){
+              parentTopMachineFlag=false;    
+              layer.msg('没有上级商户',{icon:7})
+            }else{
+              popupShow('topGoodsList','topBox');
+              parentGoodsList(item.topMerchant)
+            }    
+          }
+        })
+      },500)
+    }else{
+      popupShow('topGoodsList','topBox');
+    }
+    
+    
+  });
+  //父商品列表
+  
+  function parentGoodsList(id){
+    parentGoods = table.render({
+      elem: '#parentTableTest'
+      , url: `/api/goods/findAll`
+      , method: 'post',
+      contentType: "application/json",
+      headers: {
+        token,
+      },
+      cols: [[
+        { type: 'checkbox', },
+        { field: 'goods_Images', width: 100, title: '图片', templet: "#imgtmp" },
+        { field: 'goods_Name', width: 120, title: '商品名称', color: '#409eff' },
+        { field: `classifyName`, width: 120, title: '商品类目', templet: '<div>{{  d.classify.classifyName ? d.classify.classifyName: ""}}</div>' },
+        { field: 'goods_Core', width: 120, title: '商品编号', },
+        { field: 'goods_Param', width: 120, title: '规格说明 ' },
+        { field: 'goods_Price', width: 120, title: '销售价 ', sort: true },
+        { field: 'goods_Cost', width: 120, title: '成本价 ', sort: true },
+        {
+          field: 'userName', width: 130, title: '创建人 ', templet: function (d) {
+            return d.user.userName != null ? d.user.userName : ''
+          }
+        },
+        { field: 'goods_Time', width: 200, title: '创建时间 ', sort: true },
+      ]]
+      , id: 'parentTableId'
+      , page: true
+      , loading: true
+      // ,method:'post'
+      // ,limits: [10,20,50]
+      ,
+      request: {
+        'pageName': 'pageNum',
+        'limitName': 'pageSize'
+      },
+      where: {
+        merchantId:id,
+        goods_Status:'1'
+      },
+      parseData: function (res) {
+        // console.log(res)
+        //res 即为原始返回的数据
+        if (res.code == 200) {
+          return {
+            "code": res.code, //解析接口状态
+            "msg": '', //解析提示文本
+            "count": res.data.total, //解析数据长度
+            "data": res.data.list //解析数据列表
+          };
+        } else {
+          return {
+            "code": res.code, //解析接口状态
+            "msg": res.msg, //解析提示文本
+          }
+        }
+  
       },
       response: {
         statusCode: 200 //规定成功的状态码，默认：0
@@ -666,119 +888,41 @@ layui.use(['table', 'form', 'layer', 'layedit','tree'], function () {
   
         }
       }
+  
     });
   }
-  
-
-  table.on('tool(materiaVideoTable)', function (obj) {
-    console.log(obj)
-    if(obj.event=='preview'){
-      popupShow('materialPreview','previewBox');
-      $('.perviewBody video').attr('src',obj.data.img);
-      console.log(materialType);
+  // 父商品查询
+  $('.topQueryBtn').click(function(){
+    var topdata={
+      'goods_name':$('.topKey input[name="KyeText"]').val(),
+      'classify_id':$('#topClass').val()
+    }
+    console.log(topdata)
+    KeyQueryFun(parentGoods,topdata)
+  });
+  // 复制父商户商品
+  $('.topCopyBtn').click(function(){
+    var topArray=[];
+    var topCheCkList=checkStatusList=table.checkStatus('parentTableId');
+    console.log(topCheCkList);
+    if(topCheCkList.data.length>0){
+      topCheCkList.data.forEach((item,index)=>{
+        var copyOBj={
+          className:item.classify.classifyName,
+          goodsId:item.goods_Id,
+          merchantId:Number(sessionStorage.machineID) 
+        };
+        topArray.push(copyOBj)
+      });
+      setTimeout(()=>{
+        loadingAjax('/api/goods/forwardGoods','post',JSON.stringify({goods:topArray,merchantId:Number(sessionStorage.machineID)}),sessionStorage.token,'mask','maskSpan','topGoodsList','topBox').done(function(res){
+          console.log(res)
+        }).fail(function(err){
+          console.log(err)
+        })
+      },1000)
     }else{
-      console.log(materialType);
-      if(materialType==2){
-        if (addWangEditor.txt.html().length > 11) {
-          addWangEditor.txt.append(`<p><iframe src="${obj.data.img}"></iframe></p>`);   
-        } else {
-          addWangEditor.txt.html(`<p><iframe src="${obj.data.img}"></iframe></p>`);       
-        }
-        popupHide('goodsmaterialVideo','materialBox');
-      }else{
-        if (editWangEditor.txt.html().length > 11) {
-          editWangEditor.txt.append(`<p><iframe src="${obj.data.img}"></iframe></p>`);       
-        } else {
-          editWangEditor.txt.html(`<p><iframe src="${obj.data.img}"></iframe></p>`);
-        }
-        popupHide('goodsmaterialVideo','materialBox');
-      }
+      layer.msg('请选择需要复制的商品',{icon:7})
     }
   })
-
-
-  // 富文本编辑器选择图片
-  $('.upImg').click(function(){
-    logoCont=$(this).attr('contType');
-    addGoodsImgIndex=$(this).attr('goodsIndex');
-    conditionFour=2
-    console.log(logoCont,addGoodsImgIndex);
-    popupShow('GoodsMaterial','goodsMaterialBox');
-      materialCont();
-
-  });
-   // 刷新页面
-   $('.refreshBtn').click(function(){
-    location.reload();
-});
-//树状图
-var dataList = treeList();
-console.log(dataList);
-var inst1 = tree.render({
-  elem: '#testGoods',
-  id: 'treelist',
-  showLine: !0 //连接线
-  ,
-  onlyIconControl: true //左侧图标控制展开收缩
-  ,
-  isJump: !1 //弹出新窗口跳转
-  ,
-  edit: false //开启节点的操作
-  ,
-  data: dataList,
-  text: {
-    defaultNodeName: '无数据',
-    none: '加载数据失败！'
-  },
-  click: function (obj) {
-    console.log(obj);
-    machineList.reload({
-      where:{
-        merchantId:obj.data.id
-      }
-    })
-    var nodes = document.getElementsByClassName("layui-tree-txt");
-    for (var i = 0; i < nodes.length; i++) {
-      if (nodes[i].innerHTML === obj.data.title)
-        nodes[i].style.color = "#be954a";
-      else
-        nodes[i].style.color = "#555";
-    }
-    if (!obj.data.children) {
-      $.ajax({
-        type: 'post',
-        url: '/api/merchant/getMerchantGroup',
-        headers: {
-          token,
-          "Content-Type": "application/json",
-        },
-        async: false,
-        data: JSON.stringify({
-          topId: obj.data.id
-        }),
-        success: function (res) {
-          if (res.code == 200) {
-            if (res.data[0].childMerchant.length > 0) {
-              console.log(res)
-              obj.data.spread = true;
-              obj.data.children = [];
-              res.data[0].childMerchant.forEach((item, index) => {
-
-                var childrenObj = {
-                  id: item.id,
-                  title: item.name
-                }
-                obj.data.children.push(childrenObj)
-              });
-              tree.reload('treelist', {
-              });
-            }
-          }
-        }
-      })
-      
-    }
-
-  },
-});
 })

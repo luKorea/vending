@@ -32,6 +32,9 @@ layui.use(['table', 'form', 'layer',], function () {
       'pageName': 'pageNum',
       'limitName': 'pageSize'
     },
+    where:{
+      merchantId:sessionStorage.machineID
+    },
     parseData: function (res) {
       // console.log(res)
       //res 即为原始返回的数据

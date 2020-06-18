@@ -138,6 +138,7 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
     table.on('tool(machineTable)', function (obj) {
         console.log(obj);
         machineSetData = obj.data;
+        $('.maskHeader span').html(machineSetData.info+'详细信息')
         if (obj.event == 'set') {
             $('.setUpCont').show();
             $('.setNav li').eq(0).addClass('active').siblings().removeClass('active');
@@ -161,6 +162,7 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
             }
 
             mercantsSelectList(merchantsListData, 'merchantsName', form)
+            $('.editMachineBox .layui-tree-txt').css({color:'#555'})
             form.val("editmachine", {
                 'sNumber': machineSetData.number,
                 'tName': machineSetData.info,
@@ -671,7 +673,7 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
     });
 //树状图
     var dataList = treeList();
-    console.log(dataList);
+    var dataListEdit=treeList();
     var inst1 = tree.render({
       elem: '#test1',
       id: 'treelist',
@@ -739,6 +741,71 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
   
       },
     });
+    var nodesEdti=null;
+    var inst2 = tree.render({
+        elem: '#test2',
+        id: 'treelistEdit',
+        showLine: !0 //连接线
+        ,
+        onlyIconControl: true //左侧图标控制展开收缩
+        ,
+        isJump: !1 //弹出新窗口跳转
+        ,
+        edit: false //开启节点的操作
+        ,
+        data: dataListEdit,
+        text: {
+          defaultNodeName: '无数据',
+          none: '加载数据失败！'
+        },
+        click: function (obj) {
+          console.log(obj);
+          form.val("editmachine", {
+              "merchantsName":obj.data.id
+          })
+           nodesEdti = document.getElementsByClassName("layui-tree-txt");
+          for (var i = 0; i < nodesEdti.length; i++) {
+            if (nodesEdti[i].innerHTML === obj.data.title)
+            nodesEdti[i].style.color = "#be954a";
+            else
+            nodesEdti[i].style.color = "#555";
+          }
+          if (!obj.data.children) {
+            $.ajax({
+              type: 'post',
+              url: '/api/merchant/getMerchantGroup',
+              headers: {
+                token,
+                "Content-Type": "application/json",
+              },
+              async: false,
+              data: JSON.stringify({
+                topId: obj.data.id
+              }),
+              success: function (res) {
+                if (res.code == 200) {
+                  if (res.data[0].childMerchant.length > 0) {
+                    console.log(res)
+                    obj.data.spread = true;
+                    obj.data.children = [];
+                    res.data[0].childMerchant.forEach((item, index) => {
+                      var childrenObj = {
+                        id: item.id,
+                        title: item.name
+                      }
+                      obj.data.children.push(childrenObj)
+                    });
+                    tree.reload('treelistEdit', {
+                    });
+                  }
+                }
+              }
+            })
+            
+          }
+    
+        },
+      });
 
 
         // 刷新页面

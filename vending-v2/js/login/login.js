@@ -39,12 +39,14 @@ layui.use(['form', 'layer'], function () {
                             sessionStorage.username = res.data.username;
                             sessionStorage.token = res.data.token;
                             sessionStorage.machineID=res.data.merchantId;
+                            sessionStorage.UserId=res.data.UUId
                             if (logData.keep == 'on') {
                                 sessionStorage.accountPass = JSON.stringify({
                                     account: logData.account,
                                     pass: logData.pass
                                 })
                             }
+                            // return ;
                             window.location.href="../index/index.html"
                         } else {
                             layer.msg(res.data)

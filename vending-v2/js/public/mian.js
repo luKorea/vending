@@ -3,7 +3,7 @@
 // 删除商品数据列表数据
 // 传id
 var token = sessionStorage.token;
-var machineId=sessionStorage.machineID;
+var machineId = sessionStorage.machineID;
 function Goodsdel(id, indexs, obj, index) {
   // index 1为自定义商品 2为自定义类目 3为通用商品 
   if (indexs == 1) {
@@ -143,7 +143,7 @@ function phoneRegular(that) {
   if (phone) {
     if (!(/^1[3456789]\d{9}$/.test(phone))) {
       // alert("手机号码有误，请重填");  
-      layer.msg('请填写正确的手机号码',{icon:7});
+      layer.msg('请填写正确的手机号码', { icon: 7 });
       $(that).val('')
       return false;
     }
@@ -198,16 +198,16 @@ function merchantsListMian(id) {
       "Content-Type": "application/json",
     },
     async: false,
-    data:JSON.stringify({
+    data: JSON.stringify({
       id,
     }),
     success: function (res) {
       if (res.code == 200) {
-        marchantsList=res.data;
+        marchantsList = res.data;
         if (res.data.length > 0) {
           marchantsList.forEach((item, index) => {
-            if(item.id==item.topMerchant){
-              marchantsList.splice(index,1);
+            if (item.id == item.topMerchant) {
+              marchantsList.splice(index, 1);
               marchantsList.unshift(item)
             }
           });
@@ -220,53 +220,45 @@ function merchantsListMian(id) {
 };
 
 
-//ajax方法的封装
-// function ajax(url,type,data,userToken){
-//   return $.ajax({
-//     type,
-//     url,
-//     data,
-//     headers: {
-//       token:userToken,
-//       "Content-Type": "application/json",
-//     },
-//   })
-// };
 
 // 树装列表
-function treeList(){
-  var dataList=[]
+function treeList() {
+  var dataList = []
   $.ajax({
-    type:'post',
-    url:'/api/merchant/getMerchantGroup',
+    type: 'post',
+    url: '/api/merchant/getMerchantGroup',
     headers: {
       token,
       "Content-Type": "application/json",
     },
-    async:false,
-    data:JSON.stringify({
-      topId:machineId
+    async: false,
+    data: JSON.stringify({
+      topId: machineId
     }),
-    success:function(res){
-      if(res.code==200){
-        var tree=res.data[0]
-        var treeObj={
-          id:tree.id,
-          title:tree.name,
-          children:[],
-          spread:true
+    success: function (res) {
+      if (res.code == 200) {
+        var tree = res.data[0]
+        var treeObj = {
+          id: tree.id,
+          title: tree.name,
+          children: [],
+          spread: true
         }
         dataList.push(treeObj)
-        tree.childMerchant.forEach((item,index)=>{
-          var chidernObj={
-            id:item.id,
-            title:item.name,
+        tree.childMerchant.forEach((item, index) => {
+          var chidernObj = {
+            id: item.id,
+            title: item.name,
             index,
           }
           dataList[0].children.push(chidernObj)
         })
         // console.log(data)
       }
+    },
+    error: function (err) {
+      layer.msg('服务器超时', { icon: 2 });
+      return;
     }
   })
   return dataList;
@@ -275,7 +267,7 @@ function treeList(){
 
 
 // 商户下拉框渲染
-function mercantsSelectList( list, element, form,) {
+function mercantsSelectList(list, element, form, ) {
   var merchantOption = ``;
   list.forEach((item, indx) => {
     merchantOption += `<option value="${item.id}">${item.name}</option>`
@@ -293,10 +285,127 @@ function leftMerchantsList(list, element) {
                           <span> 全部商户</span>
                       </div>`;
   list.forEach((item, index) => {
-    merchantsNameList += `<div class="fixedAccount ${index!=0?'marginLeft':''}" mid="${item.id}" ">
+    merchantsNameList += `<div class="fixedAccount ${index != 0 ? 'marginLeft' : ''}" mid="${item.id}" ">
                           <span> ${item.name}</span>
                       </div>`
   });
   $(`.${element}`).empty();
   $(`.${element}`).html(merchantsNameList);
+}
+
+
+//ajax方法的封装
+function ajaxFun(url, type, data, userToken, callback, reject) {
+  return $.ajax({
+    type,
+    url,
+    data,
+    headers: {
+      token: userToken,
+      "Content-Type": "application/json",
+    },
+    // success:function(res){
+    //   callback(res)
+    // },
+    // error:function(err){
+    //   alert(1)
+    //   reject(err)
+    // }
+  })
+};
+// ajax('/api/merchant/getTopMerchant','post',JSON.stringify({id:''}),token).done(function(res){
+//   console.log(res)
+// }).fail(function(err){
+//   console.log(err)
+// })
+
+function loadingAjax(url, type, data, userToken, mask, maskSpan, element, elementChild) {
+
+  return new Promise(function (resolve, reject) {
+    ajaxFun(url, type, data, userToken, resolve, reject).then(function (res) {
+      if (res.code == 200) {
+        if (mask) {
+          $('.mask').fadeOut();
+          $('.maskSpan').removeClass('maskIcon');
+        }
+        if (element) {
+          popupHide(element, elementChild)
+        }
+        callback
+        resolve(res)
+      } else if (res.code == 403) {
+        window.parent.location.href = "../login/login.html";
+      } else {
+        // return $.Deferred().reject(res.message);
+        reject(res)
+      }
+    }).catch(function (err) {
+      if (mask) {
+        $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon');
+      }
+      if (element) {
+        popupHide(element, elementChild)
+      }
+      layer.msg('服务器请求超时',{icon:7})
+      return;
+    })
+  })
+  // return ajaxFun(url,type,data,userToken).then(function(res){
+  //   console.log(res)
+  //    if(res.code==200){
+  //       if(mask){
+  //         $('.mask').fadeOut();
+  //        $('.maskSpan').removeClass('maskIcon');
+  //       }
+  //       if(element){
+  //         popupHide(element,elementChild)
+  //       }
+  //       callback
+  //       return res.data;
+  //   }
+  //   // else if(res.code==403){
+  //   //   return ;
+  //   //   window.parent.location.href = "../login/login.html";
+  //   // }
+  //   else{
+  //     // return $.Deferred().reject(res.message);
+  //   }
+  // }),function(err){
+  //   if(mask){
+  //     $('.mask').fadeOut();
+  //    $('.maskSpan').removeClass('maskIcon');
+  //   }
+  //   if(element){
+  //     popupHide(element,elementChild)
+  //   }
+  //   layer.msg('服务器请求超时',{icon:7})
+  // }
+}
+loadingAjax('/api/merchant/getTopMerchant', 'post', JSON.stringify({ id: '' }), token).then(function (res) {
+  console.log(done)
+  console.log(res)
+}).catch(function (err) {
+  console.log(err)
+})
+
+
+//查询方法
+function KeyQueryFun(tableList, data) {
+  tableList.reload({
+    where: data
+  })
+};
+
+//数据表格选择判断
+
+function dataJudgeLength(checkStatusID, table, data) {
+  var checkStatusList = table.checkStatus('checkStatusID');
+  if (checkStatusList.data.length > 0) {
+    data = checkStatusList.data;
+  } else return false;
+  // {
+  //   // layer.msg('请选择',{icon:7})
+
+  // }
 }

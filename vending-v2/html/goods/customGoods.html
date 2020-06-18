@@ -87,16 +87,22 @@
 								  </div>
 							  </div>
 						  </div>
-						  <div class=" layui-col-sm4 layui-col-md6 layui-col-lg2">
+						  <div class=" layui-col-sm4 layui-col-md8 layui-col-lg4">
 							  <button class="layui-btn layui-btn-normal query-btnClick btn" style="margin-top: 0;">
 								  <i class="layui-icon layui-icon-search"></i>
 								  <span>查询</span>
 							  </button>
+							  <button style="margin-top: 0;" class="layui-btn layui-btn-normal addParent btn "
+							  type="button">
+							  <i class="layui-icon layui-icon-add-circle-fine "></i>
+							  <span>获取父商户商品</span>
+						  </button>
 							  <button style="margin-top: 0;" class="layui-btn layui-btn-normal query-btn btn refreshBtn"
 								  type="button">
 								  <i class="layui-icon layui-icon-refresh "></i>
 								  <span>刷新</span>
 							  </button>
+							  
 						  </div>
 					  </div>
 				  </div>
@@ -692,6 +698,63 @@
 				</div>
 			</div>
 		</div>
+
+		<!--上级商户商品列表 -->
+		<div class="topGoodsList maskContnet" >
+			<div class="topBox margin0">
+				<div class="playHeader">
+					<span>上级商户商品</span>
+					<button class="close" type="button">
+						<i class="layui-icon layui-icon-close"></i>
+					</button>
+				</div>
+				<div class="topBody">
+					<div class="topKey">
+						<div style="max-width: 220px;" class="key-contnet">
+							<div class="key-text">关键字</div>
+							<input type="text" placeholder="图片名" class="KyeText" name="KyeText">
+						</div>
+						<div class="key-contnet">
+							<!-- 商品类目: -->
+							<div class="key-text">商品类目</div>
+							<form class="layui-form" action="" style="max-width: 240px;">
+								<div class="layui-form" lay-filter="myDiv">
+									<select name="topClass" id="topClass" lay-filter="">
+									</select>
+								</div>
+							</form>
+						</div>
+						<button class="layui-btn layui-btn-normal topQueryBtn btn" >
+							<i class="layui-icon layui-icon-search"></i>
+							<span>查询</span>
+						</button>
+						<button class="layui-btn layui-btn-normal topCopyBtn btn" >
+							<i class="layui-icon layui-icon-search"></i>
+							<span>复制</span>
+						</button>
+					</div>
+					 <!-- 数据列表内容 -->
+					 <div>
+  
+						<div class="data-list-contnet">
+							<div class="list-table">
+								<table class="layui-hide" id="parentTableTest" lay-filter="parentTableTest"></table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 遮罩 -->
+        <div class="mask maskContnet">
+            <div class="TitleContentWith">
+                <span class="maskSpan" style="display: inline-block;">
+                    <i class="layui-icon layui-icon-loading "></i>
+                </span>
+                数据处理中，请稍候
+            </div>
+		</div>
+	</div>	
 </body>
 
 <script type="text/html" id="barDemo">
