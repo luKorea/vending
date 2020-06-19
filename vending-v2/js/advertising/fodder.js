@@ -1,10 +1,10 @@
-layui.use(['laydate', 'table', 'layer','tree'], function () {
+layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     var token = sessionStorage.token,
-     layer = layui.layer,
-     form = layui.form,
-    // 日期选择
-     laydate = layui.laydate,
-     tree=layui.tree;
+        layer = layui.layer,
+        form = layui.form,
+        // 日期选择
+        laydate = layui.laydate,
+        tree = layui.tree;
     //开始时间
     var startTime = '';
     //结束时间
@@ -65,10 +65,14 @@ layui.use(['laydate', 'table', 'layer','tree'], function () {
         page: true,
         id: 'tableId',
         loading: true,
-        height: 'full-200',
+        height: 'full-200', 
         request: {
             'pageName': 'pageNum',
             'limitName': 'pageSize'
+        },
+        where: {
+            'merchantId': Number(sessionStorage.machineID)
+            // merchantId: sessionStorage.machineID
         },
         parseData: function (res) {
             // console.log(res)
@@ -76,7 +80,7 @@ layui.use(['laydate', 'table', 'layer','tree'], function () {
             if (res.code == 200) {
                 return {
                     "code": res.code, //解析接口状态
-                    "msg": '', //解析提示文本
+                    "msg": res.message, //解析提示文本
                     "count": res.data.total, //解析数据长度
                     "data": res.data.list //解析数据列表
                 };
@@ -176,7 +180,7 @@ layui.use(['laydate', 'table', 'layer','tree'], function () {
                                 where: {
                                 }
                             });
-                            
+
                         } else if (res.code == 403) {
                             window.history.go(-1)
                         }
@@ -285,7 +289,7 @@ layui.use(['laydate', 'table', 'layer','tree'], function () {
                 checkList.push(submitObj)
             });
             setTimeout(() => {
-                auditMethods('1',checkList);
+                auditMethods('1', checkList);
             }, 1000)
         } else {
             layer.msg('请选择需要提交审核的素材', { icon: 7, anim: 1 });
@@ -309,8 +313,8 @@ layui.use(['laydate', 'table', 'layer','tree'], function () {
                     approveList.push(approveObj)
                 });
                 setTimeout(() => {
-                    auditMethods('0',approveList)
-                },1000)
+                    auditMethods('0', approveList)
+                }, 1000)
             })
 
         } else {
@@ -319,10 +323,10 @@ layui.use(['laydate', 'table', 'layer','tree'], function () {
     });
 
     // 审核不通过
-    $('.noPassBtn').click(function(){
-        var noPassCheckStatus=table.checkStatus('tableId');
-        noPassList=[];
-        if (noPassCheckStatus.data.length > 0){
+    $('.noPassBtn').click(function () {
+        var noPassCheckStatus = table.checkStatus('tableId');
+        noPassList = [];
+        if (noPassCheckStatus.data.length > 0) {
             layer.confirm('确定审核不通过？', function (index) {
                 layer.close(index);
                 $('.mask').fadeIn();
@@ -335,10 +339,10 @@ layui.use(['laydate', 'table', 'layer','tree'], function () {
                     noPassList.push(noPassObj)
                 });
                 setTimeout(() => {
-                    auditMethods('0',noPassList)
-                },1000)
+                    auditMethods('0', noPassList)
+                }, 1000)
             })
-        }else{
+        } else {
             layer.msg('请选择需要不通过审核的素材', { icon: 7, anim: 1 });
         }
     })
@@ -707,7 +711,7 @@ layui.use(['laydate', 'table', 'layer','tree'], function () {
     })
 
     // 提交审核，审核通过，审核不通过方法
-    function auditMethods(type,data){
+    function auditMethods(type, data) {
         $.ajax({
             type: 'post',
             url: '/api/advertising/checkAdvertisingStatus',
@@ -728,7 +732,7 @@ layui.use(['laydate', 'table', 'layer','tree'], function () {
                     tableIns.reload({
                         where: {
                         }
-                    })                           
+                    })
                 } else if (res.code == 201) {
                     layer.msg(res.message, { icon: 2, anim: 1 });
                 } else if (res.code == 202) {
@@ -736,7 +740,7 @@ layui.use(['laydate', 'table', 'layer','tree'], function () {
                     tableIns.reload({
                         where: {
                         }
-                    });                           
+                    });
                 } else if (res.code == 403) {
                     window.history.go(-1)
                 }
@@ -779,71 +783,75 @@ layui.use(['laydate', 'table', 'layer','tree'], function () {
 
 
     var dataList = treeList();
-    var inst1 = tree.render({
-      elem: '#test1',
-      id: 'treelist',
-      showLine: !0 //连接线
-      ,
-      onlyIconControl: true //左侧图标控制展开收缩
-      ,
-      isJump: !1 //弹出新窗口跳转
-      ,
-      edit: false //开启节点的操作
-      ,
-      data: dataList,
-      text: {
-        defaultNodeName: '无数据',
-        none: '加载数据失败！'
-      },
-      click: function (obj) {
-        console.log(obj);
-        machineList.reload({
-          where:{
-            merchantId:obj.data.id
-          }
-        })
-        var nodes = document.getElementsByClassName("layui-tree-txt");
-        for (var i = 0; i < nodes.length; i++) {
-          if (nodes[i].innerHTML === obj.data.title)
-            nodes[i].style.color = "#be954a";
-          else
-            nodes[i].style.color = "#555";
-        }
-        if (!obj.data.children) {
-          $.ajax({
-            type: 'post',
-            url: '/api/merchant/getMerchantGroup',
-            headers: {
-              token,
-              "Content-Type": "application/json",
-            },
-            async: false,
-            data: JSON.stringify({
-              topId: obj.data.id
-            }),
-            success: function (res) {
-              if (res.code == 200) {
-                if (res.data[0].childMerchant.length > 0) {
-                  console.log(res)
-                  obj.data.spread = true;
-                  obj.data.children = [];
-                  res.data[0].childMerchant.forEach((item, index) => {
-  
-                    var childrenObj = {
-                      id: item.id,
-                      title: item.name
-                    }
-                    obj.data.children.push(childrenObj)
-                  });
-                  tree.reload('treelist', {
-                  });
-                }
-              }
-            }
-          })
-          
-        }
-  
-      },
-    });
+    // function treeFun() {
+    //     var inst1 = tree.render({
+    //         elem: '#test1',
+    //         id: 'treelist',
+    //         showLine: !0 //连接线
+    //         ,
+    //         onlyIconControl: true //左侧图标控制展开收缩
+    //         ,
+    //         isJump: !1 //弹出新窗口跳转
+    //         ,
+    //         edit: false //开启节点的操作
+    //         ,
+    //         data: dataList,
+    //         text: {
+    //             defaultNodeName: '无数据',
+    //             none: '加载数据失败！'
+    //         },
+    //         click: function (obj) {
+    //             console.log(999)
+    //             tableIns.reload({
+    //                 where: {
+    //                     merchantId: obj.data.id
+    //                 }
+    //             })
+    //             var nodes = document.getElementsByClassName("layui-tree-txt");
+    //             for (var i = 0; i < nodes.length; i++) {
+    //                 if (nodes[i].innerHTML === obj.data.title)
+    //                     nodes[i].style.color = "#be954a";
+    //                 else
+    //                     nodes[i].style.color = "#555";
+    //             }
+    //             if (!obj.data.children) {
+    //                 $.ajax({
+    //                     type: 'post',
+    //                     url: '/api/merchant/getMerchantGroup',
+    //                     headers: {
+    //                         token,
+    //                         "Content-Type": "application/json",
+    //                     },
+    //                     async: false,
+    //                     data: JSON.stringify({
+    //                         topId: obj.data.id
+    //                     }),
+    //                     success: function (res) {
+    //                         if (res.code == 200) {
+    //                             if (res.data[0].childMerchant.length > 0) {
+    //                                 console.log(res)
+    //                                 obj.data.spread = true;
+    //                                 obj.data.children = [];
+    //                                 res.data[0].childMerchant.forEach((item, index) => {
+
+    //                                     var childrenObj = {
+    //                                         id: item.id,
+    //                                         title: item.name
+    //                                     }
+    //                                     obj.data.children.push(childrenObj)
+    //                                 });
+    //                                 tree.reload('treelist', {
+    //                                 });
+    //                             }
+    //                         }
+    //                     }
+    //                 })
+
+    //             }
+
+    //         },
+    //     });
+    // }
+    treeFun(tree,'test1',tableIns,dataList,'merchantId')
+
 });

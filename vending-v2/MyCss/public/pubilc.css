@@ -293,7 +293,7 @@ body .layui-form-checked[lay-skin=primary] i{
     color: #fff;
     border-radius: 5px;
 }
-
+/* loading旋转 */
 @-webkit-keyframes rotation{
 
     from {-webkit-transform: rotate(0deg);}
@@ -308,6 +308,15 @@ body .layui-form-checked[lay-skin=primary] i{
     -webkit-animation: rotation 3s linear infinite;
     -o-animation: rotation 3s linear infinite;
 }
+/* mymove */
+@-webkit-keyframes mymove{
+    from{opacity: 0;transform: scale3d(0.3, 0.3, 0.3);}
+    to{    opacity: 1;transform: scale3d(1, 1, 1);}
+}
+.myImg{
+    animation: mymove 1s 1;
+}
+
 .layui-icon-right{
     position: absolute;
     text-align: center;

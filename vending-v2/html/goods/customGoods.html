@@ -18,107 +18,119 @@
 			<div class="contnet-flex">
 				<!-- 左边部分 -->
 				<div class="left-mian">
-				  <div class="accountContnet"style="margin-left:15px;">
-					  <!-- <div class="input-account">
+					<div class="accountContnet" style="margin-left:15px;">
+						<!-- <div class="input-account">
 						  <input type="text" placeholder="输入用户账号">
 					  </div> -->
-					  <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
-					  <!-- <div class="fixed-account">
+						<p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
+						<!-- <div class="fixed-account">
 						  <span> 粤宝商户-中邮广州</span>
 					  </div> -->
-					  <div id="testGoods" class="demo-tree demo-tree-box"></div>
-				  </div>
-				  <!-- 右侧栏 -->
-				  <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
-			  </div>
-			  <i class="layui-icon layui-icon-right  on-left"></i>
-			  <div class="margin">
-				  <div class="header-query">
-					  <div class="layui-row">
-						  <div class=" layui-col-sm3 layui-col-md2 layui-col-lg2">
-							  <button class="layui-btn layui-btn-normal  add-btn btn" style="margin: 0;">
-								  <i class="layui-icon layui-icon-app"></i>
-								  <span>添加商品</span>
-							  </button>
-						  </div>
-						  <div class=" layui-col-sm4 layui-col-md4 layui-col-lg2">
-							  <div class="key-contnet">
-								  <!-- 商品类目: -->
-								  <div class="key-text">商品类目</div>
-								  <form class="layui-form" action="" style="max-width: 120px;">
-									  <div class="layui-form" lay-filter="myDiv">
-										  <select name="" id="GoodsType" lay-filter="mySelect">
-										  </select>
-									  </div>
-								  </form>
-							  </div>
-						  </div>
-						  <div class=" layui-col-sm5 layui-col-md4 layui-col-lg3">
-							  <div style="max-width: 220px;" class="key-contnet">
-								  <div class="key-text">关键字</div>
-								  <input type="text" placeholder="商品名称、编号查询" class="KyeText">
-							  </div>
-						  </div>
-						  <div class=" layui-col-sm3 layui-col-md4 layui-col-lg2">
-							  <div class="key-contnet">
-								  <!-- 状态: -->
-								  <div class="key-text">状态</div>
-								  <form class="layui-form" action="" style="max-width: 120px;">
-									  <div class="layui-form" lay-filter="myDiv">
-										  <select name="" id="" lay-filter="stateSelect">
-											  <option value="">全部</option>
-											  <option value="0">不启用</option>
-											  <option value="1">启用</option>
-										  </select>
-									  </div>
-								  </form>
-							  </div>
-						  </div>
-						  <div class=" layui-col-sm8 layui-col-md6 layui-col-lg3" style="margin-top:10px;">
-							  <div class="key-contnet">
-								  <!-- 销售价范围： -->
-								  <div class="key-text">销售价范围：</div>
-								  <div class="price-one-input">
-									  <input type="number" class="startingPrice">
-								  </div>
-								  ——
-								  <div class="price-tow-input">
-									  <input type="number" class="closingPrice">
-								  </div>
-							  </div>
-						  </div>
-						  <div class=" layui-col-sm4 layui-col-md8 layui-col-lg4">
-							  <button class="layui-btn layui-btn-normal query-btnClick btn" style="margin-top: 0;">
-								  <i class="layui-icon layui-icon-search"></i>
-								  <span>查询</span>
-							  </button>
-							  <button style="margin-top: 0;" class="layui-btn layui-btn-normal addParent btn "
-							  type="button">
-							  <i class="layui-icon layui-icon-add-circle-fine "></i>
-							  <span>获取父商户商品</span>
-						  </button>
-							  <button style="margin-top: 0;" class="layui-btn layui-btn-normal query-btn btn refreshBtn"
-								  type="button">
-								  <i class="layui-icon layui-icon-refresh "></i>
-								  <span>刷新</span>
-							  </button>
-							  
-						  </div>
-					  </div>
-				  </div>
-				  <!-- 数据列表内容 -->
-				  <div>
-  
-					  <div class="data-list-contnet">
-						  <div class="list-table">
-							  <table class="layui-hide" id="tableTest" lay-filter="test"></table>
-						  </div>
-					  </div>
-				  </div>
-			  </div>
-		  </div>
+						<div id="testGoods" class="demo-tree demo-tree-box"></div>
+					</div>
+					<!-- 右侧栏 -->
+					<div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
+				</div>
+				<i class="layui-icon layui-icon-right  on-left"></i>
+				<div class="margin">
+					<div class="header-query">
+						<div class="layui-row">
+							<div class=" layui-col-sm3 layui-col-md2 layui-col-lg2">
+								<button class="layui-btn layui-btn-normal  add-btn btn" style="margin: 0;">
+									<i class="layui-icon layui-icon-app"></i>
+									<span>添加商品</span>
+								</button>
+							</div>
+							<div class=" layui-col-sm4 layui-col-md4 layui-col-lg2">
+								<div class="key-contnet">
+									<!-- 商品类目: -->
+									<div class="key-text">商品类目</div>
+									<form class="layui-form" action="" style="max-width: 120px;">
+										<div class="layui-form" lay-filter="myDiv">
+											<select name="" id="GoodsType" lay-filter="mySelect">
+											</select>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div class=" layui-col-sm5 layui-col-md4 layui-col-lg3">
+								<div style="max-width: 220px;" class="key-contnet">
+									<div class="key-text">关键字</div>
+									<input type="text" placeholder="商品名称、编号查询" class="KyeText">
+								</div>
+							</div>
+							<div class=" layui-col-sm3 layui-col-md4 layui-col-lg2">
+								<div class="key-contnet">
+									<!-- 状态: -->
+									<div class="key-text">状态</div>
+									<form class="layui-form" action="" style="max-width: 120px;">
+										<div class="layui-form" lay-filter="myDiv">
+											<select name="" id="" lay-filter="stateSelect">
+												<option value="">全部</option>
+												<option value="0">不启用</option>
+												<option value="1">启用</option>
+											</select>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div class=" layui-col-sm8 layui-col-md6 layui-col-lg3" style="margin-top:10px;">
+								<div class="key-contnet">
+									<!-- 销售价范围： -->
+									<div class="key-text">销售价范围：</div>
+									<div class="price-one-input">
+										<input type="number" class="startingPrice">
+									</div>
+									——
+									<div class="price-tow-input">
+										<input type="number" class="closingPrice">
+									</div>
+								</div>
+							</div>
+							<div class=" layui-col-sm4 layui-col-md5 layui-col-lg2">
+								<button class="layui-btn layui-btn-normal query-btnClick btn" style="margin-top: 0;">
+									<i class="layui-icon layui-icon-search"></i>
+									<span>查询</span>
+								</button>
+								<button style="margin-top: 0;"
+									class="layui-btn layui-btn-normal query-btn btn refreshBtn" type="button">
+									<i class="layui-icon layui-icon-refresh "></i>
+									<span>刷新</span>
+								</button>
+
+							</div>
+							<div class=" layui-col-sm4 layui-col-md10 layui-col-lg4">
+								<button style="margin-top: 0;" class="layui-btn layui-btn-normal pushGoodsBtn btn "
+									type="button" buteType="1">
+									<i class="layui-icon layui-icon-export "></i>
+									<span>强制推送商品</span>
+								</button>
+								<button style="margin-top: 0;" class="layui-btn layui-btn-normal pushGoodsBtn btn "
+									type="button" buteType="0">
+									<i class="layui-icon layui-icon-transfer "></i>
+									<span>非强制推送商品</span>
+								</button>
+								<!-- <button style="margin-top: 0;" class="layui-btn layui-btn-normal addParent btn "
+									type="button">
+									<i class="layui-icon layui-icon-add-circle-fine "></i>
+									<span>获取上级商户商品</span>
+								</button> -->
+							</div>
+						</div>
+					</div>
+					<!-- 数据列表内容 -->
+					<div>
+
+						<div class="data-list-contnet">
+							<div class="list-table">
+								<table class="layui-hide" id="tableTest" lay-filter="test"></table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	
+
 
 		<!-- 弹窗 优惠 -->
 		<div class="preferential">
@@ -700,7 +712,7 @@
 		</div>
 
 		<!--上级商户商品列表 -->
-		<div class="topGoodsList maskContnet" >
+		<div class="topGoodsList maskContnet">
 			<div class="topBox margin0">
 				<div class="playHeader">
 					<span>上级商户商品</span>
@@ -724,18 +736,18 @@
 								</div>
 							</form>
 						</div>
-						<button class="layui-btn layui-btn-normal topQueryBtn btn" >
+						<button class="layui-btn layui-btn-normal topQueryBtn btn">
 							<i class="layui-icon layui-icon-search"></i>
 							<span>查询</span>
 						</button>
-						<button class="layui-btn layui-btn-normal topCopyBtn btn" >
+						<button class="layui-btn layui-btn-normal topCopyBtn btn">
 							<i class="layui-icon layui-icon-search"></i>
 							<span>复制</span>
 						</button>
 					</div>
-					 <!-- 数据列表内容 -->
-					 <div>
-  
+					<!-- 数据列表内容 -->
+					<div>
+
 						<div class="data-list-contnet">
 							<div class="list-table">
 								<table class="layui-hide" id="parentTableTest" lay-filter="parentTableTest"></table>
@@ -746,15 +758,15 @@
 			</div>
 		</div>
 		<!-- 遮罩 -->
-        <div class="mask maskContnet">
-            <div class="TitleContentWith">
-                <span class="maskSpan" style="display: inline-block;">
-                    <i class="layui-icon layui-icon-loading "></i>
-                </span>
-                数据处理中，请稍候
-            </div>
+		<div class="mask maskContnet">
+			<div class="TitleContentWith">
+				<span class="maskSpan" style="display: inline-block;">
+					<i class="layui-icon layui-icon-loading "></i>
+				</span>
+				数据处理中，请稍候
+			</div>
 		</div>
-	</div>	
+	</div>
 </body>
 
 <script type="text/html" id="barDemo">

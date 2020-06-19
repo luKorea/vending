@@ -1,5 +1,6 @@
-layui.use(['element', 'laydate', 'table', 'carousel'], function () {
-    var token = sessionStorage.token;
+layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
+    var token = sessionStorage.token,
+    tree=layui.tree;
     var startTime = '';
     //结束时间
     var endTime = '';
@@ -95,6 +96,9 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
             'pageName': 'pageNum',
             'limitName': 'pageSize'
         },
+        where:{
+            conditionThree:sessionStorage.machineID
+        },
         parseData: function (res) {
             // console.log(res)
             //res 即为原始返回的数据
@@ -146,6 +150,7 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
             popupShow('preview', 'previewContnet');
             // ins.reload('swiperDetails');
         } else if (obj.event === 'toView') {
+            machineDetailsFun(numderID)
             popupShow('toViveCont', 'toViveBox')
         } else if (obj.event === 'details') {
             advertisingDetailsList = obj.data.publicizeAdvert;
@@ -235,46 +240,64 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
         }, 1000)
     })
     // 查看购金机列表
-    var machineList = table.render({
-        elem: '#machine',
-        cols: [[
-            { field: 'username', width: 150, title: '机器编号' },
-            { field: 'phone', width: 180, title: '机器名称', },
-            { field: 'CreationTime', width: 250, title: '机器地址', },
-            { field: 'amendTime', width: 130, title: '广告位', },
-            { field: 'bili', width: 180, title: '发布时间', sort: true },
-            // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
-            { field: 'operatio', width: 120, title: '操作', toolbar: '#machineDemo', },
-
-        ]],
-        data: [
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '广州市丽丰大厦'
-                , amendTime: '99'
-                , bili: '1:2'
+    var machineList=null;
+    function machineDetailsFun(id){
+         machineList = table.render({
+            elem: '#machine',
+            url: '/api//publicized/getPublicizedMachine',
+            method: 'post',
+                contentType: "application/json",
+                headers: {
+                    token,
+                },
+            cols: [[
+                { field: 'number', width: 150, title: '售货机编号' },
+                { field: 'info', width: 180, title: '售货机名称', },
+                { field: 'location', width: 250, title: '机售货机地址', },
+                { field: 'operatio', width: 120, title: '操作', toolbar: '#machineDemo', },
+    
+            ]],
+            page: true,
+            id: 'machineDataDetails',
+            skin: 'nob',
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
             },
-            {
-                username: '2222'
-                , phone: 'cs45121'
-                , CreationTime: '广州市丽丰大厦'
-                , amendTime: '99'
-                , bili: '1:2'
+            where:{
+                condition:id
+            },
+            parseData: function (res) {
+                // console.log(res)
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": '', //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                    }
+                }
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    window.parent.location.href = "../login/login.html";
+                } else {
+
+                }
             }
-        ],
-        page: true,
-        id: 'machineData',
-        skin: 'nob'
-    });
-    // 监听购金机点击地图事件
-    // 监听操作点击事件
-    $('.viewBtn').click(function () {
-        $('.ScottCont').fadeIn(function () {
-            ScottMethods();
         });
-        $('.scottBox').removeClass('margin0')
-    })
+    }
+   
+  
     // 高德地图
     function ScottMethods() {
         var map = new AMap.Map('machineScottBody', {
@@ -880,71 +903,16 @@ layui.use(['element', 'laydate', 'table', 'carousel'], function () {
 
 
     var dataList = treeList();
-    var inst1 = tree.render({
-      elem: '#test1',
-      id: 'treelist',
-      showLine: !0 //连接线
-      ,
-      onlyIconControl: true //左侧图标控制展开收缩
-      ,
-      isJump: !1 //弹出新窗口跳转
-      ,
-      edit: false //开启节点的操作
-      ,
-      data: dataList,
-      text: {
-        defaultNodeName: '无数据',
-        none: '加载数据失败！'
-      },
-      click: function (obj) {
-        console.log(obj);
-        machineList.reload({
-          where:{
-            merchantId:obj.data.id
-          }
-        })
-        var nodes = document.getElementsByClassName("layui-tree-txt");
-        for (var i = 0; i < nodes.length; i++) {
-          if (nodes[i].innerHTML === obj.data.title)
-            nodes[i].style.color = "#be954a";
-          else
-            nodes[i].style.color = "#555";
-        }
-        if (!obj.data.children) {
-          $.ajax({
-            type: 'post',
-            url: '/api/merchant/getMerchantGroup',
-            headers: {
-              token,
-              "Content-Type": "application/json",
-            },
-            async: false,
-            data: JSON.stringify({
-              topId: obj.data.id
-            }),
-            success: function (res) {
-              if (res.code == 200) {
-                if (res.data[0].childMerchant.length > 0) {
-                  console.log(res)
-                  obj.data.spread = true;
-                  obj.data.children = [];
-                  res.data[0].childMerchant.forEach((item, index) => {
-  
-                    var childrenObj = {
-                      id: item.id,
-                      title: item.name
-                    }
-                    obj.data.children.push(childrenObj)
-                  });
-                  tree.reload('treelist', {
-                  });
-                }
-              }
-            }
-          })
-          
-        }
-  
-      },
-    });
+    treeFun(tree,'test1',advertisingLis,dataList,'conditionThree');
+    table.on('tool(machine)',function(obj){
+        console.log(obj)
+    })
+      // 监听购金机点击地图事件
+    // 监听操作点击事件
+    $('.viewBtn').click(function () {
+        $('.ScottCont').fadeIn(function () {
+            ScottMethods();
+        });
+        $('.scottBox').removeClass('margin0')
+    })
 });

@@ -221,7 +221,7 @@ function merchantsListMian(id) {
 
 
 
-// 树装列表
+// 树装列表数据
 function treeList() {
   var dataList = []
   $.ajax({
@@ -263,11 +263,77 @@ function treeList() {
   })
   return dataList;
 }
+//树方法实列
+function treeFun(tree, element, tableID, data, key) {
+  tree.render({
+    elem: `#${element}`,
+    id: 'treelist',
+    showLine: !0 //连接线
+    ,
+    onlyIconControl: true, //左侧图标控制展开收缩 
+    data,
+    text: {
+      defaultNodeName: '无数据',
+      none: '加载数据失败！'
+    },
+    click: function (obj) {
+      var whereKey={
+        key:obj.data.id
+      }
+      console.log(obj)
+      tableID.reload({
+        where: {
+          [key]: obj.data.id
+        }
+      })
+      var nodes = document.getElementsByClassName("layui-tree-txt");
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].innerHTML === obj.data.title)
+          nodes[i].style.color = "#be954a";
+        else
+          nodes[i].style.color = "#555";
+      }
+      if (!obj.data.children) {
+        $.ajax({
+          type: 'post',
+          url: '/api/merchant/getMerchantGroup',
+          headers: {
+            token,
+            "Content-Type": "application/json",
+          },
+          async: false,
+          data: JSON.stringify({
+            topId: obj.data.id
+          }),
+          success: function (res) {
+            if (res.code == 200) {
+              if (res.data[0].childMerchant.length > 0) {
+                console.log(res)
+                obj.data.spread = true;
+                obj.data.children = [];
+                res.data[0].childMerchant.forEach((item, index) => {
 
+                  var childrenObj = {
+                    id: item.id,
+                    title: item.name
+                  }
+                  obj.data.children.push(childrenObj)
+                });
+                tree.reload('treelist', {
+                });
+              }
+            }
+          }
+        })
 
+      }
+
+    },
+  });
+}
 
 // 商户下拉框渲染
-function mercantsSelectList(list, element, form, ) {
+function mercantsSelectList(list, element, form,) {
   var merchantOption = ``;
   list.forEach((item, indx) => {
     merchantOption += `<option value="${item.id}">${item.name}</option>`
@@ -294,8 +360,8 @@ function leftMerchantsList(list, element) {
 }
 
 
-//ajax方法的封装
-function ajaxFun(url, type, data, userToken, callback, reject) {
+//ajax方法的封装 callback, reject
+function ajaxFun(url, type, data, userToken) {
   return $.ajax({
     type,
     url,
@@ -319,8 +385,7 @@ function ajaxFun(url, type, data, userToken, callback, reject) {
 //   console.log(err)
 // })
 
-function loadingAjax(url, type, data, userToken, mask, maskSpan, element, elementChild) {
-
+function loadingAjax(url, type, data, userToken, mask, element, elementChild, layer) {
   return new Promise(function (resolve, reject) {
     ajaxFun(url, type, data, userToken, resolve, reject).then(function (res) {
       if (res.code == 200) {
@@ -331,9 +396,10 @@ function loadingAjax(url, type, data, userToken, mask, maskSpan, element, elemen
         if (element) {
           popupHide(element, elementChild)
         }
-        callback
+        // callback
         resolve(res)
       } else if (res.code == 403) {
+        // return ;
         window.parent.location.href = "../login/login.html";
       } else {
         // return $.Deferred().reject(res.message);
@@ -347,7 +413,7 @@ function loadingAjax(url, type, data, userToken, mask, maskSpan, element, elemen
       if (element) {
         popupHide(element, elementChild)
       }
-      layer.msg('服务器请求超时',{icon:7})
+      layer.msg('服务器请求超时', { icon: 2 })
       return;
     })
   })
@@ -382,12 +448,12 @@ function loadingAjax(url, type, data, userToken, mask, maskSpan, element, elemen
   //   layer.msg('服务器请求超时',{icon:7})
   // }
 }
-loadingAjax('/api/merchant/getTopMerchant', 'post', JSON.stringify({ id: '' }), token).then(function (res) {
-  console.log(done)
-  console.log(res)
-}).catch(function (err) {
-  console.log(err)
-})
+// loadingAjax('/api/merchant/a', 'post', JSON.stringify({ id: '' }), token).then(function (res) {
+//   // console.log(done)
+//   console.log(res)
+// }).catch(function (err) {
+//   console.log(err)
+// })
 
 
 //查询方法
