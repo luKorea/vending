@@ -1,6 +1,10 @@
 .custom-warp{
     width: 100%;
 }
+.warp-margin{
+    width: 100%;
+    overflow: hidden;
+}
 .header-query{
     width: 100%;
     display: flex;

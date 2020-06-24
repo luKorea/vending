@@ -126,8 +126,6 @@ function base64(file, element) {
     $(`${element}`).attr('src', img)
   }
 }
-
-
 // base64转化为file
 function dataURLtoFile(dataurl, filename) {//将base64转换为文件
   var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
@@ -138,7 +136,7 @@ function dataURLtoFile(dataurl, filename) {//将base64转换为文件
   return new File([u8arr], filename, { type: mime });
 }
 
-function phoneRegular(that) {
+function phoneRegular(that,layer) {
   var phone = $(that).val()
   if (phone) {
     if (!(/^1[3456789]\d{9}$/.test(phone))) {
@@ -149,45 +147,7 @@ function phoneRegular(that) {
     }
   }
 }
-
-
-// 获取商户列表
-
-// function merchantsListMian() {
-//   var marchantsList = []
-//   $.ajax({
-//     type: 'post',
-//     url: '/api/merchant/getMerchantList',
-//     headers: {
-//       token,
-//       "Content-Type": "application/json",
-//     },
-//     async: false,
-//     data: JSON.stringify({
-//       pageNum: 1,
-//       pageSize: 1000000
-//     }),
-//     success: function (res) {
-//       if (res.code == 200) {
-//         if (res.data.list.length > 0) {
-//           res.data.list.forEach((item, index) => {
-//             var marchantsObj = {
-//               name: item.name,
-//               id: item.id,
-//               topMerchant:item.topMerchant
-//             }
-//             marchantsList.push(marchantsObj)
-//           });
-//         }
-//       }
-//     }
-//   })
-//   console.log(marchantsList)
-//   return marchantsList
-// };
-
 // / 获取商户列表
-
 function merchantsListMian(id) {
   var marchantsList = []
   $.ajax({
@@ -277,15 +237,75 @@ function treeFun(tree, element, tableID, data, key) {
       none: '加载数据失败！'
     },
     click: function (obj) {
-      var whereKey={
-        key:obj.data.id
-      }
-      console.log(obj)
+      sessionStorage.merchantIdData=obj.data.id;
+      varData=obj.data.id;
+      console.log(obj);
       tableID.reload({
         where: {
-          [key]: obj.data.id
+          [key]: obj.data.id+''
         }
       })
+      var nodes = document.getElementsByClassName("layui-tree-txt");
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].innerHTML === obj.data.title)
+          nodes[i].style.color = "#be954a";
+        else
+          nodes[i].style.color = "#555";
+      }
+      if (!obj.data.children) {
+        $.ajax({
+          type: 'post',
+          url: '/api/merchant/getMerchantGroup',
+          headers: {
+            token,
+            "Content-Type": "application/json",
+          },
+          async: false,
+          data: JSON.stringify({
+            topId: obj.data.id
+          }),
+          success: function (res) {
+            if (res.code == 200) {
+              if (res.data[0].childMerchant.length > 0) {
+                obj.data.spread = true;
+                obj.data.children = [];
+                res.data[0].childMerchant.forEach((item, index) => {
+
+                  var childrenObj = {
+                    id: item.id,
+                    title: item.name
+                  }
+                  obj.data.children.push(childrenObj)
+                });
+                tree.reload('treelist', {
+                });
+              }
+            }
+          }
+        })
+
+      }
+
+    },
+  });
+}
+
+// 树复选方法
+function treeFunCheck(tree, element, tableID, data, key){
+  tree.render({
+    elem: `#${element}`,
+    id: 'treelistCheck',
+    showCheckbox:true,
+    single:true,
+    ckall:true,
+    onlyIconControl: true, //左侧图标控制展开收缩 
+    data,
+    text: {
+      defaultNodeName: '无数据',
+      none: '加载数据失败！'
+    },
+    click: function (obj) {
+      console.log(obj)
       var nodes = document.getElementsByClassName("layui-tree-txt");
       for (var i = 0; i < nodes.length; i++) {
         if (nodes[i].innerHTML === obj.data.title)
@@ -319,7 +339,7 @@ function treeFun(tree, element, tableID, data, key) {
                   }
                   obj.data.children.push(childrenObj)
                 });
-                tree.reload('treelist', {
+                tree.reload('treelistCheck', {
                 });
               }
             }
@@ -327,11 +347,22 @@ function treeFun(tree, element, tableID, data, key) {
         })
 
       }
-
     },
-  });
-}
+    oncheck:function(obj){
+      console.log(obj);
 
+    }
+  });
+};
+
+// 获取树选中id
+function getChildNodes(treeNode, result) {
+  for (var i in treeNode) {
+      result.push(treeNode[i].id);
+      result = getChildNodes(treeNode[i].children, result);
+  }
+  return result;
+}
 // 商户下拉框渲染
 function mercantsSelectList(list, element, form,) {
   var merchantOption = ``;
@@ -384,10 +415,10 @@ function ajaxFun(url, type, data, userToken) {
 // }).fail(function(err){
 //   console.log(err)
 // })
-
 function loadingAjax(url, type, data, userToken, mask, element, elementChild, layer) {
   return new Promise(function (resolve, reject) {
     ajaxFun(url, type, data, userToken, resolve, reject).then(function (res) {
+      console.log(res);
       if (res.code == 200) {
         if (mask) {
           $('.mask').fadeOut();
@@ -409,9 +440,6 @@ function loadingAjax(url, type, data, userToken, mask, element, elementChild, la
       if (mask) {
         $('.mask').fadeOut();
         $('.maskSpan').removeClass('maskIcon');
-      }
-      if (element) {
-        popupHide(element, elementChild)
       }
       layer.msg('服务器请求超时', { icon: 2 })
       return;

@@ -30,7 +30,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       token,
     },
     cols: [[
-      {checkbox: true},
+      { checkbox: true },
       { field: 'goods_Images', width: 100, title: '图片', templet: "#imgtmp" },
       { field: 'goods_Name', width: 120, title: '商品名称', color: '#409eff' },
       { field: `classifyName`, width: 120, title: '商品类目', templet: '<div>{{  d.classify.classifyName ? d.classify.classifyName: ""}}</div>' },
@@ -94,8 +94,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     done: function (res) {
       if (res.code == 403) {
         window.parent.location.href = "../login/login.html";
-      } else {
-
       }
     }
 
@@ -107,7 +105,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     $.ajax({
       type: 'post',
       url: `/api/classify/findAll`,
-      data: JSON.stringify({ pageNum: 1, pageSize: 10,merchantId:'0'}),
+      data: JSON.stringify({ pageNum: 1, pageSize: 10, merchantId: '0' }),
       headers: {
         "Content-Type": "application/json",
         token,
@@ -118,7 +116,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           $('#GoodsType').empty();
           $('#EditGoodsType').empty();
           $('#addGoodsType').empty();
-          $('#topClass').empty();
           $.each(res.data.list, function (index, ele) {
             optionList += `<option value="${ele.classifyId}">${ele.classifyName}</option>`
           });
@@ -126,7 +123,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           $('#GoodsType').append(optionList);
           $('#EditGoodsType').append(optionList);
           $('#addGoodsType').append(optionList);
-          $('#topClass').append(optionList);
           form.render('select');
         }
       }
@@ -640,6 +636,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         'pageName': 'pageNum',
         'limitName': 'pageSize'
       },
+      where: {
+        conditionFour: '1',
+        conditionFive: '2'
+      },
       parseData: function (res) {
         // console.log(res)
         //res 即为原始返回的数据
@@ -657,10 +657,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           }
         }
 
-      },
-      where: {
-        conditionFour: '1',
-        conditionFive: '2'
       },
       response: {
         statusCode: 200 //规定成功的状态码，默认：0
@@ -719,47 +715,15 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   });
   //树状图
   var dataList = treeList();
-  treeFun(tree,'testGoods',tableIns,dataList,'merchantId')
+  treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId')
+  treeFunCheck(tree, 'testGoodsCheck', tableIns, dataList, 'merchantId')
 
-  // 获取父商品
-  var parentGoods=null;
-  // 判断是否有上级
-  var parentTopMachineFlag=false;
-  // 父商户id
-  var topMachineId=''
-  $('.addParent').click(function () {
-    if(!parentGoods){
-      $('.mask').fadeIn();
-      $('.maskSpan').addClass('maskIcon');
-      
-      setTimeout(()=>{
-        var parentFlag=merchantsListMian('');
-        parentFlag.forEach((item,index)=>{
-          if(item.id==sessionStorage.machineID){
-            $('.mask').fadeOut();
-              $('.maskSpan').removeClass('maskIcon');
-            if(item.id==item.topMerchant){
-              parentTopMachineFlag=false;    
-              layer.msg('没有上级商户',{icon:7})
-            }else{
-              popupShow('topGoodsList','topBox');
-              parentGoodsList(item.topMerchant)
-            }    
-          }
-        })
-      },500)
-    }else{
-      popupShow('topGoodsList','topBox');
-    }
-    
-    
-  });
-  //父商品列表
-  
-  function parentGoodsList(id){
+  // 接收列表非强制
+  var parentGoods = null;
+  function parentGoodsList() {
     parentGoods = table.render({
       elem: '#parentTableTest'
-      , url: `/api/goods/findAll`
+      , url: `/api/goods/getSendHistory`
       , method: 'post',
       contentType: "application/json",
       headers: {
@@ -767,33 +731,37 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       },
       cols: [[
         { type: 'checkbox', },
-        { field: 'goods_Images', width: 100, title: '图片', templet: "#imgtmp" },
-        { field: 'goods_Name', width: 120, title: '商品名称', color: '#409eff' },
-        { field: `classifyName`, width: 120, title: '商品类目', templet: '<div>{{  d.classify.classifyName ? d.classify.classifyName: ""}}</div>' },
-        { field: 'goods_Core', width: 120, title: '商品编号', },
-        { field: 'goods_Param', width: 120, title: '规格说明 ' },
-        { field: 'goods_Price', width: 120, title: '销售价 ', sort: true },
-        { field: 'goods_Cost', width: 120, title: '成本价 ', sort: true },
+        { field: 'goods_images', width: 120, title: '图片', templet: "#Listimgtmp" },
+        { field: 'goods_Name', width: 150, title: '商品名称', color: '#409eff' },
+        { field: `classifyName`, width: 160, title: '商品类目', },
         {
-          field: 'userName', width: 130, title: '创建人 ', templet: function (d) {
-            return d.user.userName != null ? d.user.userName : ''
+          field: 'goods_Param', width: 130, title: '接收状态 ', templet: function (d) {
+            return d.received == 0 ? '未接收' : '已接收'
           }
         },
-        { field: 'goods_Time', width: 200, title: '创建时间 ', sort: true },
+        { field: 'sendTime', width: 200, title: '推送时间 ', sort: true,templet:function(d){
+          var myDate=new Date(d.sendTime);
+          var y=myDate.getFullYear();
+          var m=myDate.getMonth()+1;
+          var d=myDate.getDate();
+          var h=myDate.getHours();
+          var min=myDate.getMinutes();
+          var s=myDate.getSeconds();
+          return y+'-'+m+'-'+d+' '+h+':'+min+':'+s
+        } },
       ]]
       , id: 'parentTableId'
       , page: true
       , loading: true
-      // ,method:'post'
-      // ,limits: [10,20,50]
+      , limits: [10, 20, 50]
       ,
       request: {
         'pageName': 'pageNum',
         'limitName': 'pageSize'
       },
       where: {
-        merchantId:id,
-        goods_Status:'1'
+        condition: sessionStorage.machineID,
+        conditionFour: '0'
       },
       parseData: function (res) {
         // console.log(res)
@@ -811,7 +779,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             "msg": res.msg, //解析提示文本
           }
         }
-  
       },
       response: {
         statusCode: 200 //规定成功的状态码，默认：0
@@ -819,54 +786,169 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       done: function (res) {
         if (res.code == 403) {
           window.parent.location.href = "../login/login.html";
-        } else {
-  
+        };
+        var statusList = res.data.list;
+
+        for (var i in res.data) {
+          var item = res.data[i];
+          if (item.merchantId == sessionStorage.machineID || item.received == 1) {// 这里是判断需要禁用的条件（如：状态为0的）
+            // checkbox 根据条件设置不可选中
+            $('.list_table1 tr[data-index=' + i + '] input[type="checkbox"]').prop('disabled', true);
+            state = "1";// 隐藏表头全选判断状态
+            form.render();// 重新渲染一下
+          }
         }
+
+        // if(state == "1"){
+        //   // 根据条件移除全选 checkbox
+        //   $('th[data-field=0] div').replaceWith('<div class="layui-table-cell laytable-cell-5-0-0"><span></span></div>');
+        // }else {
+        //    //翻页显示全选按钮 checkbox
+        //    $('th[data-field=0] div').replaceWith('<div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary" lay-filter="layTableAllChoose"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div>');
+        // }
+
+
+
+
       }
-  
     });
   }
-  // 父商品查询
-  $('.topQueryBtn').click(function(){
-    var topdata={
-      'goods_name':$('.topKey input[name="KyeText"]').val(),
-      'classify_id':$('#topClass').val()
-    }
-    console.log(topdata)
-    KeyQueryFun(parentGoods,topdata)
-  });
-  // 复制父商户商品
-  $('.topCopyBtn').click(function(){
-    var topArray=[];
-    var topCheCkList=checkStatusList=table.checkStatus('parentTableId');
-    console.log(topCheCkList);
-    if(topCheCkList.data.length>0){
-      $('.mask').fadeIn();
-      $('.maskSpan').addClass('maskIcon');
-      topCheCkList.data.forEach((item,index)=>{
-        var copyOBj={
-          className:item.classify.classifyName,
-          goodsId:item.goods_Id,
-          merchantId:Number(sessionStorage.machineID) 
-        };
-        topArray.push(copyOBj)
-      });
-      setTimeout(()=>{
-        loadingAjax('/api/goods/forwardGoods','post',JSON.stringify({goods:topArray,merchantId:Number(sessionStorage.machineID)}),sessionStorage.token,'mask','topGoodsList','topBox',layer).then(function(res){
-          // console.log(res)
-          layer.msg('复制成功',{icon:1})
-          tableIns.reload({
-            where:{}
-          })
-        }).catch(function(err){
-          // console.log(err)
-          layer.msg('复制失败',{icon:2})
-        })
-      },1000)
-    }else{
-      layer.msg('请选择需要复制的商品',{icon:7})
-    }
-  });
+
 
   // 推送
+  //是否强制推送
+  var PType = null;
+  // 推送数据
+  var pushList = null;
+  var checkID = null;
+  $('.pushGoodsBtn').click(function () {
+    pushList = table.checkStatus('tableId');
+    console.log(pushList)
+    if (pushList.data.length > 0) {
+      popupShow('chooseLower', 'chooseBox')
+    } else {
+      layer.msg('请选择需要推送的商品', { icon: 7 })
+    }
+  });
+  // 确定推送
+  var role=null;
+  $('.determineBtn').click(function () {
+    var checkedData = tree.getChecked('treelistCheck');
+     role = getChildNodes(checkedData, []);
+    role.shift()
+    console.log(role)
+    if (role.length == 0) {
+      layer.msg('请选择要推送的商户', { icon: 7 })
+      return;
+    }
+    popupShow('PushMandatory', 'MandatoryBox')
+    console.log(pushList)
+  });
+  $('.mandatroFooter div').click(function () {
+    var pushArray = [];
+    PType = $(this).attr('Ptype');
+    $('.mask').fadeIn();
+    $('.maskSpan').addClass('maskIcon');
+    pushList.data.forEach((item, index) => {
+      var pushObj = {
+        className: item.classify.classifyName,
+        goodsId: item.goods_Id,
+      }
+      pushArray.push(pushObj)
+    });
+    setTimeout(() => {
+      var pushData = JSON.stringify({
+        goods: pushArray,
+        merchantId: sessionStorage.machineID,
+        mid: role,
+        type: PType
+      })
+      loadingAjax('/api/goods/sendGoods', 'post', pushData, token, 'mask', 'chooseLower', 'chooseBox', layer).then((res) => {
+        console.log(res)
+        popupHide('PushMandatory','MandatoryBox')
+        layer.msg(res.message, { icon: 1 })
+      }).catch((err) => {
+        popupHide('PushMandatory','MandatoryBox')
+        layer.msg(res.message, { icon: 2 })
+      })
+    }, 1000)
+  })
+  // 取消
+  $('.chooseFooter .chooseCan').click(function () {
+    popupHide('chooseLower', 'chooseBox')
+  })
+
+
+  // 推送列表
+  $('.pushListBtn').click(function () {
+    popupShow('topGoodsList', 'topBox')
+    if (!parentGoods) {
+      parentGoodsList();
+    }
+  })
+  // 推送列表查询
+  $('.topBody .pushQueryBtn').click(function () {
+    parentGoods.reload({
+      where: {
+        conditionTwo: $('.topBody select[name="mandatory"]').val(), //是否强制
+        conditionThree: $('.topBody select[name="receiveStatus"]').val(),  //是否接收
+        conditionFour: $('.topBody select[name="receiveType"]').val(), //发送接收
+        goods_Name: $('.topBody input[name="KyeText"]').val()
+      }
+    })
+  })
+  //接收商品
+  $('.topBody .pushGoodsListBtn').click(function () {
+    var receiveList = table.checkStatus('parentTableId');
+    console.log(receiveList)
+    var receiveArray = [];
+    if (receiveList.data.length > 0) {
+      receiveList.data.forEach((item, index) => {
+        if (!(item.merchantId == sessionStorage.machineID || item.received == 1)) {
+          var receiveObj = {
+            className: item.classifyName,
+            goodsId: item.goods_Id,
+            merchantId: sessionStorage.machineID
+          }
+          receiveArray.push(receiveObj)
+        }
+      })
+      if (!(receiveArray.length > 0)) {
+        layer.msg('没有能接收的商品', { icon: 7 });
+        return;
+      }
+      $('.mask').fadeIn();
+      $('.maskSpan').addClass('maskIcon');
+      var receiveData = JSON.stringify({
+        goods: receiveArray,
+        merchantId: sessionStorage.machineID
+      })
+      setTimeout(() => {
+        loadingAjax('/api/goods/forwardGoods', 'post', receiveData, sessionStorage.token, 'mask', 'topGoodsList', 'topBox', layer).then((res) => {
+          console.log(res)
+          layer.msg(res.message, { icon: 1 });
+          tableIns.reload({
+            where: {}
+          })
+        }).catch((err) => {
+          layer.msg(err.message, { icon: 2 })
+        })
+      }, 1000)
+    } else {
+      layer.msg('请选择接收的商品', { icon: 7 })
+    }
+  })
+  // 推送列表部分tab切换
+  // $('.topPushNav li').click(function(){
+  //   $(this).addClass('active').siblings().removeClass('active');
+  //   $(this).addClass('active').siblings().removeClass('active');
+  //   let that = $(this);
+  //   console.log(that.parent().offset().left )
+  //   $('.navTabLine').animate({
+  //     left: (that.position().left+100) + 'px',
+  //     width:that.width()
+  //   }, 500);
+  // });  
+
+
 })

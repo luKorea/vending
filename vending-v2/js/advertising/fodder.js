@@ -193,14 +193,18 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     });
     // 收起左边账号事件
     $('.sidebar .layui-icon-left').click(function () {
-        $('.aside-left').slideUp(function () {
-            $('.layui-icon-right').show();
-        });
+        // $('.aside-left').slideUp(function () {
+        //     $('.layui-icon-right').show();
+        // });
+        $('.aside-left').hide();
+        $('.layui-icon-right').show();
     });
     $('.layui-icon-right').click(function () {
-        $('.aside-left').slideDown(function () {
-            $('.layui-icon-right').hide();
-        });
+        // $('.aside-left').slideDown(function () {
+        //     $('.layui-icon-right').hide();
+        // });
+        $('.aside-left').show();
+        $('.layui-icon-right').hide();
     });
     var indexFlag = null;
     valData = null;
@@ -219,7 +223,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             editDuration = valData.duration;
             console.log(valData)
             $('.anUp').slideUp();
-            if (indexFlag != valData.vId) {
+            if (indexFlag != valData.vid) { 
                 indexFlag = valData.vId;
                 $(this).siblings('.anUp').slideDown();
             } else {

@@ -20,6 +20,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       { field: 'name', width: 150, title: '姓名' },
       { field: 'phone', width: 150, title: '手机号' },
       { field: 'merchantName', width: 150, title: '所属商户' },
+      { field: 'alias', width: 150, title: '用户编号' },
       { field: 'addUser', width: 150, title: '创建人', },
       { field: 'addTime', width: 180, title: '创建时间', sort: true },
       { field: 'lastUser', width: 150, title: '最后操作人', },
@@ -217,7 +218,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       }
       console.log(roleListArray);
     }
-
+    var aliasText=null;
+    merchantsListData.forEach((item,index)=>{
+      if(informData.marchantsListname==item.id){
+        aliasText=item.alias
+      }
+    })
     var openStart = informData.startThe ? 1 : 0;
     var roleSignStart = informData.administrator ? 1 : 0;
     console.log(informData)
@@ -241,7 +247,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             open: openStart,
             roleSign: roleSignStart,
             roleId: informationType == 2 ? roleListArray : null,
-            merchantId: Number(informData.marchantsListname)
+            merchantId: Number(informData.marchantsListname),
+            alias:aliasText
           }),
           success: function (res) {
             $('.mask').fadeOut();
@@ -372,6 +379,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
   // 获取商户列表
   var merchantsListData = merchantsListMian('');
+  console.log(merchantsListData)
   // 左侧商户列表
   // leftMerchantsList(merchantsListData,'accountContnet');
   // $('.fixedAccount').click(function(){

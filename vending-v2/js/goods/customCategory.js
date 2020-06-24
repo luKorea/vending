@@ -1,23 +1,27 @@
-layui.use(['table', 'form', 'layer',], function () {
+layui.use(['table', 'form', 'layer','tree'], function () {
   var $ = layui.jquery;
-  var table = layui.table;
-  var layer = layui.layer;
+   table = layui.table,
+   layer = layui.layer,
+   tree =layui.tree,
+   sessionStorage.merchantIdData=sessionStorage.machineID,
+   rank=null,
   //数据表格
-  var token = sessionStorage.token;
-  var tableIns = table.render({
+   token = sessionStorage.token,
+   tableIns = table.render({
     elem: '#tableTest'
-    , url: `/api//classify/findAll`
+    , url: `/api/classify/findAll`
     , method: 'post'
     , contentType: 'application/json'
     , headers: {
       token,
     }
     , cols: [[
-      { field: 'rank', width: 150, title: '排序', sort: true },
+      { field: '1', width: 80, title: '',templet:"#imgtmp",event: 'rank'  },
+      { field: 'rank', width: 80, title: '排序', sort: true },
       { field: 'classifyName', width: 150, title: '类目名称', sort: true },
       { field: 'remark', width: 150, title: '备注' },
       // { field: 'type', width: 180, title: '使用机型'},
-      { field: 'userName', width: 200, title: '创建人', templet: function (d) {
+      { field: 'user', width: 200, title: '创建人', templet: function (d) {
         return d.user != null ? d.user.userName : ''
       }},  // { field: 'users', width: 180, title: '商户名', sort: true }, //templet: '<div>{{d.user.userName}}</div>'      
       { field: 'classifyTime', width: 200, title: '创建时间', sort: true },
@@ -57,6 +61,9 @@ layui.use(['table', 'form', 'layer',], function () {
     },
     response: {
       statusCode: 200 //规定成功的状态码，默认：0
+    },
+    done: function (res) {
+      rank=res.data;
     }
   });
 
@@ -82,7 +89,7 @@ layui.use(['table', 'form', 'layer',], function () {
   $('.determine-btn').click(function () {
     var addVal = form.val("aDDValData");
     if (addVal.addTypeName) {
-      if (addVal.sorting) {
+      // if (addVal.sorting) {
         $.ajax({
           type: 'post',
           url: `/api/classify/saveClassify`,
@@ -91,10 +98,11 @@ layui.use(['table', 'form', 'layer',], function () {
             token,
           },
           data: JSON.stringify({
-            type: addVal.terminalType,
+            // type: addVal.terminalType,
             classifyName: addVal.addTypeName,
             remark: addVal.addNote,
-            rank: addVal.sorting,
+            merchantId:Number(sessionStorage.machineID) 
+            // rank: addVal.sorting,
           }),
           success: function (res) {
             popupHide('addClass','addContent');
@@ -112,17 +120,21 @@ layui.use(['table', 'form', 'layer',], function () {
             }else{
               layer.msg(res.message,{icon:2});
             }
+          },error:function(err){
+            layer.msg('服务器请求超时',{icon:2});
           }
         })
-      } else {
-        layer.msg('请填写类目排序');
-      }
+      // } else {
+      //   layer.msg('请填写类目排序');
+      // }
     } else {
       layer.msg('请填写类型名称');
     }
   })
   // 监听操作
   var editData=null;
+  // 修改排序的商户id
+  
   table.on('tool(test)', function (obj) {
     // 操作事件
      editData = obj.data;
@@ -131,7 +143,7 @@ layui.use(['table', 'form', 'layer',], function () {
       form.val("editValData", {
         "addTypeName": editData.classifyName,
         "addNote": editData.remark,
-        "sorting":editData.rank
+        // "sorting":editData.rank
       })    
     } else if (obj.event === 'delete') {
       layer.confirm('确定删除？', function (index) {
@@ -140,13 +152,28 @@ layui.use(['table', 'form', 'layer',], function () {
         Goodsdel(editData.classifyId, 2, obj, index);
       });
 
+    }else if(obj.event=='rank'){
+      console.log(obj)
+      var rankObj=JSON.stringify({
+        topId:rank[obj.data.rank-1].classifyId,
+        bottomId:rank[obj.data.rank-2].classifyId,
+        merchantId: sessionStorage.merchantIdData
+      })
+      loadingAjax('/api/classify/sortClassify','post',rankObj,token,'','','',layer).then((res)=>{
+        layer.msg(res.message,{icon:1});
+        tableIns.reload({
+          where: { }
+        })
+      }).catch((err)=>{
+        layer.msg(err.message,{icon:2});
+      })
     }
   });
 // 确定修改
   $('.editDetermine-btn').click(function () {
     var editInputVal = form.val("editValData");
     if (editInputVal.addTypeName) {
-      if (editInputVal.sorting) {
+      // if (editInputVal.sorting) {
         $.ajax({
           type: 'post',
           url: `/api/classify/updateClassify`,
@@ -158,7 +185,8 @@ layui.use(['table', 'form', 'layer',], function () {
             classifyId: editData.classifyId,
             classifyName: editInputVal.addTypeName,
             remark: editInputVal.addNote,
-            rank:Number(editInputVal.sorting),
+            merchantId:Number(sessionStorage.machineID) 
+            // rank:Number(editInputVal.sorting),
           }),
           success: function (res) {
             popupHide('editClass','editContent');
@@ -178,9 +206,9 @@ layui.use(['table', 'form', 'layer',], function () {
             }
           }
         })
-      } else {
-        layer.msg('排序不能为空');
-      }
+      // } else {
+      //   layer.msg('排序不能为空');
+      // }
     } else {
       layer.msg('请填写类型名称');
     }
@@ -196,8 +224,20 @@ layui.use(['table', 'form', 'layer',], function () {
     $(this).parents('.maskContnet').fadeOut();
 }); 
 
+var dataList = treeList();
+treeFun(tree,'testGoods',tableIns,dataList,'merchantId')
+
  // 刷新页面
  $('.refreshBtn').click(function(){
   location.reload();
+});
+ // 收起
+ $('.sidebar i').click(function () {
+  $('.left-mian').hide();
+  $('.on-left').show()
+});
+$('.on-left').click(function () {
+  $('.left-mian').show();
+  $('.on-left').hide()
 })
 })                                                      

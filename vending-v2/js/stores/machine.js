@@ -77,7 +77,6 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
                 'limitName': 'pageSize'
             },
             parseData: function (res) {
-                // console.log(res)
                 //res 即为原始返回的数据
                 if (res.code == 200) {
                     return {
@@ -106,7 +105,6 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
     // 查询
     $('.machineListKeyBtn').click(function () {
         var machineData = form.val("machineData");
-        console.log(machineData);
         machineList.reload({
             where: {
                 onlineStatus: machineData.onlineStatus ? Number(machineData.onlineStatus) : '',
@@ -125,7 +123,6 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
     $('.setNav li').click(function () {
         $(this).addClass('active').siblings().removeClass('active');
         let that = $(this);
-        console.log(that.offset().left)
 
         $('.tabLine').animate({
             left: that.index() != 0 ? (that.offset().left) + 'px' : (that.offset().left - 20) + 'px',
@@ -136,7 +133,6 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
     // 监听售货机列表操作
     var machineSetData = null
     table.on('tool(machineTable)', function (obj) {
-        console.log(obj);
         machineSetData = obj.data;
         $('.maskHeader span').html(machineSetData.info+'详细信息')
         if (obj.event == 'set') {
@@ -200,7 +196,6 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
                     }),
                     success: function (res) {
                         layer.close(index);
-                        console.log(res)
                         if (res.code == 200) {
                             layer.msg('激活成功', { icon: 1 });
                             machineList.reload({
@@ -407,13 +402,18 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
     $('.listFlex input[name="mapVal"]').blur(function () {
         geoCode();
     })
-
+    // 手机号码正则判断
+    $('.listFlex input[name="userPhone"]').blur(function(){
+        phoneRegular(this,layer)
+    });
+    $('.listFlex input[name="headPhone"]').blur(function(){
+        phoneRegular(this,layer)
+    })
 
     // 修改售货机基本信息
     $('.editMachineCont .edittBtn').click(function () {
         var editMachineData = form.val("editmachine");
         if (editMachineData.sNumber && editMachineData.tName && editMachineData.number && editMachineData.province && editMachineData.city && editMachineData.district && editMachineData.mapVal && editMachineData.area && editMachineData.merchantsName && editMachineData.userPhone) {
-            console.log(editMachineData);
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon')
             $.ajax({
@@ -437,7 +437,6 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
                     description: editMachineData.describe,
                 }),
                 success: function (res) {
-                    console.log(res)
                     $('.mask').fadeOut();
                     $('.maskSpan').removeClass('maskIcon')
                     $('.editMachineCont').hide();
@@ -480,9 +479,8 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
         elem: '#test6',
         range: true,
         done: function (value, date, endDate) {
-            console.log(value); //得到日期生成的值，如：2017-08-18
+            // console.log(value); //得到日期生成的值，如：2017-08-18
             timerKey = value.split(' - ');
-            console.log(timerKey);
             selesStartTime = timerKey[0];
             selesEndTime = timerKey[1];
         }
@@ -721,7 +719,6 @@ layui.use(['table', 'form', 'layer','laydate','tree'], function () {
               success: function (res) {
                 if (res.code == 200) {
                   if (res.data[0].childMerchant.length > 0) {
-                    console.log(res)
                     obj.data.spread = true;
                     obj.data.children = [];
                     res.data[0].childMerchant.forEach((item, index) => {

@@ -11,32 +11,51 @@
 
 <body>
     <div class="custom-warp">
-        <div class="warp-margin">
-            <div class="header-query">
-                <button class="layui-btn layui-btn-normal  add-btn btn">
-                    <i class="layui-icon layui-icon-app"></i>
-                    <span>添加类目</span>
-                </button>
-                <div style="max-width: 330px;margin-left: 50px;" class="key-contnet">
-                    <div class="key-text">关键字</div>
-                    <input type="text" class="keyText">
+        <div style="width: 100%;display: flex;">
+            <!-- 左边部分 -->
+            <div class="left-mian">
+                <div class="accountContnet" style="margin-left:15px;">
+                    <!-- <div class="input-account">
+						  <input type="text" placeholder="输入用户账号">
+					  </div> -->
+                    <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
+                    <!-- <div class="fixed-account">
+						  <span> 粤宝商户-中邮广州</span>
+					  </div> -->
+                    <div id="testGoods" class="demo-tree demo-tree-box"></div>
                 </div>
-                <button class="layui-btn layui-btn-normal query-btn btn">
-                    <i class="layui-icon layui-icon-search"></i>
-                    <span>查询</span>
-                </button>
-                <button class="layui-btn layui-btn-normal query-btn btn refreshBtn" type="button">
-                    <i class="layui-icon layui-icon-refresh "></i>
-                    <span>刷新</span>
-                </button>
+                <!-- 右侧栏 -->
+                <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
             </div>
-            <div class="custom-data-list">
-                <div>
-                    <table class="layui-hide" id="tableTest" lay-filter="test"></table>
+            <i class="layui-icon layui-icon-right  on-left"></i>
+            <div class="warp-margin">
+                <div class="header-query">
+                    <button class="layui-btn layui-btn-normal  add-btn btn">
+                        <i class="layui-icon layui-icon-app"></i>
+                        <span>添加类目</span>
+                    </button>
+                    <div style="max-width: 330px;margin-left: 50px;" class="key-contnet">
+                        <div class="key-text">关键字</div>
+                        <input type="text" class="keyText">
+                    </div>
+                    <button class="layui-btn layui-btn-normal query-btn btn">
+                        <i class="layui-icon layui-icon-search"></i>
+                        <span>查询</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal  btn refreshBtn" type="button">
+                        <i class="layui-icon layui-icon-refresh "></i>
+                        <span>刷新</span>
+                    </button>
+                </div>
+                <div class="custom-data-list">
+                    <div>
+                        <table class="layui-hide" id="tableTest" lay-filter="test"></table>
 
+                    </div>
                 </div>
             </div>
         </div>
+
         <!-- 添加自定义类目 -->
         <div class="addClass maskContnet">
             <div class="addContent margin0">
@@ -65,12 +84,12 @@
                                     </form>
                                 </div>                      
                             </li> -->
-                            <li style="margin-bottom:22px">
+                            <!-- <li style="margin-bottom:22px">
                                 <label><span style="color: red;">*</span> 类目排序</label>
                                 <div style="margin-left:100px;">
                                     <input type="number" name="sorting" lay-verify="required">
                                 </div>
-                            </li>
+                            </li> -->
                             <li style="margin-bottom:22px">
                                 <label><span style="color: red;">*</span> 类型名称</label>
                                 <div style="margin-left:100px;">
@@ -125,12 +144,12 @@
                                     </form>
                                 </div>                      
                             </li> -->
-                            <li style="margin-bottom:22px">
+                            <!-- <li style="margin-bottom:22px">
                                 <label><span style="color: red;">*</span> 类目排序</label>
                                 <div style="margin-left:100px;">
                                     <input type="number" name="sorting" lay-verify="required">
                                 </div>
-                            </li>
+                            </li> -->
                             <li style="margin-bottom:22px">
                                 <label><span style="color: red;">*</span> 类目名称</label>
                                 <div style="margin-left:100px;">
@@ -172,6 +191,9 @@
             <span style="color:#fff;">删除</span>
         </button>
 </div>
+</script>
+<script type="text/html" id="imgtmp">
+<div><img class="{{d.rank==1?'hide':''}}" src="../../img/lift.png" style="width: 20px;cursor: pointer;" ><span></span></div>
 </script>
 <script src="../../js/goods/customCategory.js"></script>
 

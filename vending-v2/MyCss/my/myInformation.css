@@ -44,8 +44,8 @@
     border-radius: 4px;
 }
 .title-btn:hover{
-    border: 1px solid #409eff ;
-    color: #409eff;
+    border: 1px solid #be954a ;
+    color: #be954a;
 }
 .edit,.loginPaw,.independentPaw{
     width: 500px;
@@ -81,10 +81,10 @@
     color: #909399;
 }
 .eidtHeader button i:hover{
-    color: #409eff;
+    color: #be954a;
 }
 .pawHeader button i:hover{
-    color: #409eff;
+    color: #be954a;
 }
 .editBox,.pawBox{
     padding: 30px 20px;
@@ -135,7 +135,7 @@
     width: 100%;
 }
 .inputWidth input:hover{
-    border-color: #409eff;
+    border-color: #be954a;
 }
 .marginVh{
     margin-top: 0;
@@ -151,8 +151,8 @@
     color: #606266;
 }
 .cancel-btn:hover{
-    color:#409eff ;
-    border: 1px solid #409eff !important;
+    color:#be954a ;
+    border: 1px solid #be954a !important;
 }
 .pawHeader{
     padding: 20px 20px 10px;

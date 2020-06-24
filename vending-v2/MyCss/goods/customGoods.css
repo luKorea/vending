@@ -193,7 +193,7 @@
     text-align: right;
     box-sizing: border-box;
 }
-.cancel-btn,.cancel-btn2{
+.cancel-btn,.cancel-btn2,.chooseCan{
     display: inline-block !important;
     line-height: 1;
     white-space: nowrap;
@@ -211,7 +211,7 @@
     font-size: 14px;
     border-radius: 4px;
 }  
-.cancel-btn:hover{
+.cancel-btn:hover,.chooseCan:hover{
     border-color: #be954a !important ;
     color: #be954a !important;
 }
@@ -617,7 +617,7 @@
     .materialKeyCont,.materialVideoKeyCont{
         padding: 20px;
     }
-    .previewBox{
+    .previewBox,.chooseBox {
         width: 600px;
         position: relative;
         margin: 2vh auto 50px;
@@ -626,6 +626,42 @@
         box-shadow: 0 1px 3px rgba(0,0,0,.3);
         box-sizing: border-box;
         transition: all 0.5s;
+    }
+    .MandatoryBox{
+        width: 500px;
+        position: relative;
+        margin: 15vh auto 50px;
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 0 1px 3px rgba(0,0,0,.3);
+        box-sizing: border-box;
+        transition: all 0.5s;
+    }
+    .mandatorBody{
+        text-align: center;
+        margin-top: 20px;
+    }
+    .mandatorBody p{
+        font-size: 20px; 
+        color: #be954a;
+    }
+    .mandatroFooter{
+        margin-top: 30px;
+        display: flex;
+        justify-content: start;
+        border-top: 1px solid rgb(151, 154, 161,0.5);
+    }
+    .mandatroFooter div{
+        display: block;
+        width: 50%;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 20px 0;
+        color:#be954a ;
+        cursor: pointer;
+    }
+    .mandatroFooter div:nth-child(1){
+        border-right:1px solid rgb(151, 154, 161,0.5); 
     }
     .perviewBody{
         width: 100%;
@@ -651,11 +687,14 @@
     }
     .topBody{
         margin-top: 15px;
+        /* position: absolute;
+        top: 0;
+        left: 0; */
     }
     .topKey{
-        display: flex;
+        /* display: flex;
         justify-content: start;
-        align-items: center;
+        align-items: center; */
     }
     .topKey .btn{
         margin: 0;
@@ -664,4 +703,32 @@
     .topKey .key-contnet{
         width: auto;
         margin-left: 20px;
+    }
+    .topPushNav{
+        width: 100%;
+        padding: 20px 0;
+        border-bottom: 0.1em solid #c2c4c7;
+        position: relative;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+    }
+    .navTabLine{
+        position: absolute;
+        bottom: 0;
+        left: 100px;
+        height: 3px;
+        width: 90px;
+        border-radius: 10px;
+        background-color: #be954a;
+    }
+    .topPushNav li{
+        margin-left: 100px;
+        font-size: 15px;
+        color: #333333;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    .topPushNav .active{
+        color: #be954a;
     }

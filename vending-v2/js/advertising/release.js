@@ -1,6 +1,6 @@
-layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
+layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
     var token = sessionStorage.token,
-    tree=layui.tree;
+        tree = layui.tree;
     var startTime = '';
     //结束时间
     var endTime = '';
@@ -17,18 +17,15 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
             endTime = timerKey[1];
         }
     });
-  // 收起左边账号事件
-  $('.sidebar .layui-icon-left').click(function () {
-    $('.aside-left').slideUp(function () {
+    // 收起左边账号事件
+    $('.sidebar .layui-icon-left').click(function () {
+        $('.aside-left').hide();
         $('.layui-icon-right').show();
     });
     $('.layui-icon-right').click(function () {
-        $('.aside-left').slideDown(function () {
-            $('.layui-icon-right').hide();
-        });
+        $('.aside-left').show();
+        $('.layui-icon-right').hide();
     });
-    // $('.aside-left').width(0)
-});
     // 查询
     $('.keyBtn').click(function () {
         advertisingLis.reload({
@@ -63,7 +60,7 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
                     d.publicizeAdvert.forEach((item, index) => {
                         return advertisingTime += Number(item.time);
                     });
-                    
+
                     return advertisingTime
                 }
             },
@@ -74,7 +71,7 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
                         return advertisingSize += Number(item.size);
                     });
                     // console.log(advertisingSize)
-                    advertisingSize=advertisingSize.toFixed(2)
+                    advertisingSize = advertisingSize.toFixed(2)
                     return advertisingSize
                 }
             },
@@ -96,8 +93,8 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
             'pageName': 'pageNum',
             'limitName': 'pageSize'
         },
-        where:{
-            conditionThree:sessionStorage.machineID
+        where: {
+            conditionThree: sessionStorage.machineID
         },
         parseData: function (res) {
             // console.log(res)
@@ -135,6 +132,8 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
     var advertisingDetailsList = null;
     var numderID = null;
     var durationData = null;
+    // 查看购金机列表
+    var machineList1 = null;
     table.on('tool(machineListData)', function (obj) {
         console.log(obj)
         numderID = obj.data.number;
@@ -151,17 +150,19 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
             // ins.reload('swiperDetails');
         } else if (obj.event === 'toView') {
             machineDetailsFun(numderID)
+           
             popupShow('toViveCont', 'toViveBox')
         } else if (obj.event === 'details') {
             advertisingDetailsList = obj.data.publicizeAdvert;
             console.log(advertisingDetailsList);
             advertisingDetails(advertisingDetailsList, 'detailsListBox')
             popupShow('advertisingDetails', 'detailsBox');
-        }else if(obj.event){
+        } else if (obj.event) {
             popupShow('machineDetailsCont', 'machineDetailsBox')
         }
 
     });
+    
     // 关闭弹窗
     $('.playHeader .close').click(function () {
         $(this).parent().parent().addClass('margin0')
@@ -239,17 +240,16 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
             })
         }, 1000)
     })
-    // 查看购金机列表
-    var machineList=null;
-    function machineDetailsFun(id){
-         machineList = table.render({
-            elem: '#machine',
-            url: '/api//publicized/getPublicizedMachine',
+
+    function machineDetailsFun(id){ 
+        machineList1 = table.render({
+            elem: '#machine1',
+            url: '/api/publicized/getPublicizedMachine',
             method: 'post',
-                contentType: "application/json",
-                headers: {
-                    token,
-                },
+            contentType: "application/json",
+            headers: {
+                token,
+            },
             cols: [[
                 { field: 'number', width: 150, title: '售货机编号' },
                 { field: 'info', width: 180, title: '售货机名称', },
@@ -258,14 +258,14 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
     
             ]],
             page: true,
-            id: 'machineDataDetails',
+            id: 'machineDataDetail',
             skin: 'nob',
             request: {
                 'pageName': 'pageNum',
                 'limitName': 'pageSize'
             },
-            where:{
-                condition:id
+            where: {
+                condition:numderID
             },
             parseData: function (res) {
                 // console.log(res)
@@ -290,19 +290,17 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
             done: function (res) {
                 if (res.code == 403) {
                     window.parent.location.href = "../login/login.html";
-                } else {
-
                 }
             }
         });
     }
-   
-  
+
+
     // 高德地图
-    function ScottMethods() {
+    function ScottMethods(longitude,latitude,title) {
         var map = new AMap.Map('machineScottBody', {
             resizeEnable: true,
-            center: [113.27, 23.13],
+            center: [longitude, latitude],
             zoom: 13
         });
 
@@ -321,7 +319,7 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
         // label默认蓝框白底左上角显示，样式className为：amap-marker-label
         marker.setLabel({
             offset: new AMap.Pixel(20, 20), //设置文本标注偏移量
-            content: "<div class='info'>我是 marker 的 label 标签</div>", //设置文本标注内容
+            content: "<div class='info'>"+title+"</div>", //设置文本标注内容
             direction: 'right' //设置文本标注方位
         });
     };
@@ -367,7 +365,7 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
     // 添加素材列表
     var addMaterList = [];
     $('.setAdvertising .addBtn').click(function () {
-        popupShow('pubilshMaterialCont','pubilshMaterialBox');
+        popupShow('pubilshMaterialCont', 'pubilshMaterialBox');
         // 发布广告选择素材部分
         if (!ChooseMaterial) {
             ChooseMaterial = table.render({
@@ -523,7 +521,7 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
                                     </div>
                                 </div>
                                 <div class="SetType">
-                                    <div>${ele.advertisingAttribute==0?'图片':'视频'}</div>
+                                    <div>${ele.advertisingAttribute == 0 ? '图片' : '视频'}</div>
                                 </div>
                                 <div class="SetType">
                                     <div>${ele.advertisingType == 0 ? '横屏' : '竖屏'}</div>
@@ -540,7 +538,7 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
     };
     // 发布
     $('.publishCont .publishBtn').click(function () {
-        popupShow('pubilshSweet','sweetBox')
+        popupShow('pubilshSweet', 'sweetBox')
     });
     // 确定发布
     $('.pubilshSweet .confirmBtn').click(function () {
@@ -606,7 +604,7 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
         },
         cols: [[
             { type: 'checkbox', },
-            { field: 'info', width: 200, title: '售货机信息'},
+            { field: 'info', width: 200, title: '售货机信息' },
             { field: 'location', width: 300, title: '地址', },
             { field: 'userNum', width: 150, title: '商户账号', },
             { field: 'actionTime', width: 200, title: '激活时间', },
@@ -640,9 +638,9 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
         },
         where: {
             onlineStatus: '1',
-            openStatus:'1',
-            actionStatus:'1'
-          },
+            openStatus: '1',
+            actionStatus: '1'
+        },
         response: {
             statusCode: 200 //规定成功的状态码，默认：0
         },
@@ -653,14 +651,14 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
         }
         // skin: 'nob'
     });
-        //推送广告查询
-        $('.machineDetailsCont .machineKeyBtn').click(function(){
-            machineAdvertising.reload({
-                where:{
-                    conditionSix:$('.machineDetailsCont input[name="machineKey"]').val()
-                }
-            })
-        });
+    //推送广告查询
+    $('.machineDetailsCont .machineKeyBtn').click(function () {
+        machineAdvertising.reload({
+            where: {
+                conditionSix: $('.machineDetailsCont input[name="machineKey"]').val()
+            }
+        })
+    });
     // 发布广告弹窗事件
     $('.publicAdvertisingBtn').click(function () {
         $('.setAdvertising').css('left', 0);
@@ -773,7 +771,7 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
         }
     });
     // 审核通过
-    $('.approvedBtn').click(function(){
+    $('.approvedBtn').click(function () {
         var approveCheckStatus = table.checkStatus('advertisingData');
         approveList = [];
         if (approveCheckStatus.data.length > 0) {
@@ -789,8 +787,8 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
                     approveList.push(approveObj)
                 });
                 setTimeout(() => {
-                    auditMethods('0',approveList)
-                },1000)
+                    auditMethods('0', approveList)
+                }, 1000)
             })
 
         } else {
@@ -798,10 +796,10 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
         }
     });
     // 审核不通过
-    $('.noPassBtn').click(function(){
-        var noPassCheckStatus=table.checkStatus('advertisingData');
-        noPassList=[];
-        if (noPassCheckStatus.data.length > 0){
+    $('.noPassBtn').click(function () {
+        var noPassCheckStatus = table.checkStatus('advertisingData');
+        noPassList = [];
+        if (noPassCheckStatus.data.length > 0) {
             layer.confirm('确定审核不通过？', function (index) {
                 layer.close(index);
                 $('.mask').fadeIn();
@@ -813,10 +811,10 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
                     noPassList.push(noPassObj)
                 });
                 setTimeout(() => {
-                    auditMethods('0',noPassList)
-                },1000)
+                    auditMethods('0', noPassList)
+                }, 1000)
             })
-        }else{
+        } else {
             layer.msg('请选择需要不通过审核的素材', { icon: 7, anim: 1 });
         }
     })
@@ -829,11 +827,11 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
                 "Content-Type": "application/json",
                 token,
             },
-            data:JSON.stringify({
+            data: JSON.stringify({
                 data,
-                type:type
+                type: type
             }),
-            success:function(res){
+            success: function (res) {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
                 if (res.code == 200) {
@@ -841,7 +839,7 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
                     advertisingLis.reload({
                         where: {
                         }
-                    })                           
+                    })
                 } else if (res.code == 201) {
                     layer.msg(res.message, { icon: 2, anim: 1 });
                 } else if (res.code == 202) {
@@ -849,7 +847,7 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
                     advertisingLis.reload({
                         where: {
                         }
-                    });                           
+                    });
                 } else if (res.code == 403) {
                     window.parent.location.href = "../login/login.html";
                 }
@@ -859,60 +857,57 @@ layui.use(['element', 'laydate', 'table', 'carousel','tree'], function () {
     }
 
     // 广告推送
-    $('.machineDetailsCont .determineBtn').click(function(){
-        var pishList=table.checkStatus('machineAdvertisingList');
+    $('.machineDetailsCont .determineBtn').click(function () {
+        var pishList = table.checkStatus('machineAdvertisingList');
         console.log(pishList);
-        if(pishList.data.length>0){
+        if (pishList.data.length > 0) {
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon')
-            var pushStr=[];
-            pishList.data.forEach((item,index)=>{
+            var pushStr = [];
+            pishList.data.forEach((item, index) => {
                 pushStr.push(item.machineId)
-            })  
-            pushStr=pushStr.toString();
-            setTimeout(()=>{
+            })
+            pushStr = pushStr.toString();
+            setTimeout(() => {
                 $.ajax({
-                    type:'post',
+                    type: 'post',
                     headers: {
                         "Content-Type": "application/json",
                         token,
                     },
-                    url:'/api/pushAd',
-                    data:JSON.stringify({
-                        number:numderID,
-                        machine:pushStr
+                    url: '/api/pushAd',
+                    data: JSON.stringify({
+                        number: numderID,
+                        machine: pushStr
                     }),
-                    success:function(res){
+                    success: function (res) {
                         console.log(res)
                         $('.mask').fadeOut();
                         $('.maskSpan').removeClass('maskIcon');
-                        popupHide('machineDetailsCont','machineDetailsBox');
-                        if(res=='true'){
+                        popupHide('machineDetailsCont', 'machineDetailsBox');
+                        if (res == 'true') {
                             layer.msg('推送成功', { icon: 1 });
-                        }else{
+                        } else {
                             layer.msg('推送失败', { icon: 2 });
                         }
                     }
                 })
-            },1000)
-        }else{       
+            }, 1000)
+        } else {
             layer.msg('请选择售货机', { icon: 7 });
         }
-        
+
     });
 
 
     var dataList = treeList();
-    treeFun(tree,'test1',advertisingLis,dataList,'conditionThree');
-    table.on('tool(machine)',function(obj){
+    treeFun(tree, 'test1', advertisingLis, dataList, 'conditionThree');
+    
+    
+    
+    table.on('tool(machine1)', function (obj) {
         console.log(obj)
-    })
-      // 监听购金机点击地图事件
-    // 监听操作点击事件
-    $('.viewBtn').click(function () {
-        $('.ScottCont').fadeIn(function () {
-            ScottMethods();
-        });
-        $('.scottBox').removeClass('margin0')
-    })
+        ScottMethods(obj.data.longitude,obj.data.latitude,obj.data.location);
+        popupShow('ScottCont','scottBox')
+      })
 });
