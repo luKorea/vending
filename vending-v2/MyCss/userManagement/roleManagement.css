@@ -205,16 +205,27 @@
     font-weight: bold;
     color: #606266;
 }
-.permissionsData{
+.permissionsLeft{
     width: 90%;
+}
+.permissionsASF,.permissionsGClass,.permissionsGoods,.permissionsMachine,.permissionsASR,.permissionsGAF{
+    width: 100%;
     /* background-color: skyblue; */
     /* height: 100px; */
     display: flex;
     justify-self: start;
     flex-wrap: wrap;
 }
-.permissionsData>div{
+.permissionsASF>div,.permissionsGClass>div,.permissionsGoods>div,.permissionsMachine>div,.permissionsASR>div,.permissionsGAF>div{
     width: 33%;
     margin-bottom: 10px;
     overflow: hidden;
+}
+.permissionsLeft p:first-child{
+    margin-top: 0;
+}
+.permissionsLeft p{
+    margin: 20px 0 10px 0;
+    font-weight: bold;
+    color: #606266;
 }

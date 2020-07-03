@@ -16,6 +16,7 @@
     width: 100%;
     max-height: 700px;
     margin-top: 10px;
+    overflow: hidden;
 }
 .layui-table thead tr{
     background-color: #ffffff;
@@ -26,6 +27,11 @@
 .layui-form{
     border-left: none;
     border-right: none;
+    width: 100%;
+    overflow-x:auto ;
+}
+.layui-table-body{
+    overflow-x: auto;
 }
 .editor-btn,.del-btn {
     line-height: 28px;

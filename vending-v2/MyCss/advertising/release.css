@@ -602,3 +602,114 @@ video{
     display: none;
     opacity: 0;
 }
+.topBox{
+    width: 1300px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.5s;
+}
+.topBody{
+    margin-top: 15px;
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+}
+.topKey{
+    /* display: flex;
+    justify-content: start;
+    align-items: center; */
+}
+.topKey .btn{
+    margin: 0;
+    margin-left: 20px;
+}
+.topKey .key-contnet{
+    width: auto;
+    margin-left: 20px;
+}
+.sidebar{
+    max-height: 750px;
+}
+/* .PushTitle{
+    position: absolute;
+    width: 130;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.5);
+    left: 10px;
+    color: #fff;
+    z-index: 20;
+    text-align: center;
+    line-height: 100px;
+} */
+.chooseBox {
+    width: 600px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.5s;
+}
+.chooseCan{
+    display: inline-block !important;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff !important;
+    border: 1px solid #dcdfe6 !important;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    transition: .1s;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+.chooseCan:hover{
+    border-color: #be954a !important ;
+    color: #be954a !important;
+}
+.MandatoryBox{
+    width: 500px;
+    position: relative;
+    margin: 15vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.5s;
+}
+.mandatorBody{
+    text-align: center;
+    margin-top: 20px;
+}
+.mandatorBody p{
+    font-size: 20px; 
+    color: #be954a;
+}
+.mandatroFooter{
+    margin-top: 30px;
+    display: flex;
+    justify-content: start;
+    border-top: 1px solid rgb(151, 154, 161,0.5);
+}
+.mandatroFooter div{
+    display: block;
+    width: 50%;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 20px 0;
+    color:#be954a ;
+    cursor: pointer;
+}
+.mandatroFooter div:nth-child(1){
+    border-right:1px solid rgb(151, 154, 161,0.5); 
+}

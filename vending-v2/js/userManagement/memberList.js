@@ -47,6 +47,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       'pageName': 'pageNum',
       'limitName': 'pageSize'
     },
+    where:{
+      condition:sessionStorage.machineID
+    },
     parseData: function (res) {
       // console.log(res)
       //res 即为原始返回的数据
@@ -115,7 +118,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         "marchantsListname": data.merchantId
       })
       form.render('select');
-      userRoles(roleList, 'checkCont', data);
+      userRoles(roleList, 'checkCont', data,data.merchantId);
     } else if (obj.event === 'delete') {
 
       layer.confirm('确定删除？', function (index) {
@@ -126,7 +129,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
           },
           data: {
-            id: data.uuid + ''
+            id: data.uuid + '',
           },
           success: function (res) {
             if (res.code == 200) {
@@ -240,8 +243,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             uid: uuID,
             username: informData.userName,
             name: informData.name,
-            userPwd: informData.userPwd != '      ' ? informData.userPwd : '',
-            alonePwd: informData.alonePwd != '      ' ? informData.alonePwd : '',
+            userPwd: informData.userPwd != '      ' ?hex_md5(informData.userPwd)  : '',
+            alonePwd: informData.alonePwd != '      ' ?hex_md5(informData.alonePwd)  : '',
             phone: informData.phone,
             cardId: informData.cardId,
             open: openStart,
@@ -297,14 +300,18 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     if (phone) {
       if (!(/^1[3456789]\d{9}$/.test(phone))) {
         // alert("手机号码有误，请重填");  
-        layer.msg('请填写正确的手机号码');
+        layer.msg('请填写正确的手机号码',{icon:7});
         $(this).val('')
         return false;
       }
     }
-
   });
-
+  $('.listInput input[name="userPwd"]').blur(function(){
+    passRegular(this,layer)
+  });
+  $('.listInput input[name="alonePwd"]').blur(function(){
+    passRegular(this,layer)
+  })
   // 监听终端权限
   //   form.on('checkbox(permissions)', function(data){
   //     console.log(data.elem.checked); //是否被选中，true或者false
@@ -357,11 +364,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     }
   })
   // 渲染用户角色
-  function userRoles(list, elements, trueList) {
+  function userRoles(list, elements, trueList,dIndex) {
     var userList = '';
     list.forEach((ele, index) => {
       userList += `<div>
-                     <input type="checkbox"  name="${ele.id}" title="${ele.name}"lay-skin="primary" value="${ele.id}"></input>
+                     <input type="checkbox" ${dIndex!=0&&index==0?'disabled':''}  name="${ele.id}" title="${ele.name}"lay-skin="primary" value="${ele.id}"></input>
                    </div>`
     });
     $(`.${elements}`).empty();
@@ -376,7 +383,22 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     })
     form.render('checkbox');
   }
-
+  form.on('select(stateSelect)', function(data){
+    
+    // marchantsListname
+    console.log(data.value); //得到被选中的值
+    if(data.value==0){
+      
+      $('.checkCont input[name="100001"]').prop('disabled',false);
+    }else{
+      // form.val("information", {
+      //   'marchantsListname':''
+      // })
+      $('.checkCont input[name="100001"]').prop('checked',false)
+      $('.checkCont input[name="100001"]').prop('disabled',true);
+    }
+    form.render('checkbox');
+  });  
   // 获取商户列表
   var merchantsListData = merchantsListMian('');
   console.log(merchantsListData)
@@ -413,5 +435,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
   // 刷新页面
   $('.refreshBtn').click(function () {
     location.reload();
-  })
+  });
+
+  // 监听f5刷新
+  $("body").bind("keydown",function(event){
+    if (event.keyCode == 116) {
+      f5Fun()
+  }
+})
 });

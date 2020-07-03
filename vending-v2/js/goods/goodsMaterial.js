@@ -1,6 +1,6 @@
 layui.use(['form', 'layer', 'laydate', 'table'], function () {
   // tab切换
-  var index=0
+  var index = 0
   $('.navTab li').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
     let that = $(this);
@@ -8,37 +8,37 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
       left: (that.offset().left) + 'px'
     }, 500);
     if ($(this).index() == 0) {
-      if(index==0){
-        index=$(this).index();
-        return ;
-      }else if(index==1){
-        index=$(this).index();
-        onStep('details', 'ImgContnet');      
-      }else{
-        index=$(this).index();
-        onStep('VideoContnet', 'ImgContnet');  
+      if (index == 0) {
+        index = $(this).index();
+        return;
+      } else if (index == 1) {
+        index = $(this).index();
+        onStep('details', 'ImgContnet');
+      } else {
+        index = $(this).index();
+        onStep('VideoContnet', 'ImgContnet');
       }
     } else if ($(this).index() == 1) {
-      if(index==0){
-        index=$(this).index();
+      if (index == 0) {
+        index = $(this).index();
         nextStep('ImgContnet', 'details')
-      }else if(index==1){
-        index=$(this).index();
-        return ;
-      }else{
-        index=$(this).index();
-        onStep('VideoContnet', 'details');  
+      } else if (index == 1) {
+        index = $(this).index();
+        return;
+      } else {
+        index = $(this).index();
+        onStep('VideoContnet', 'details');
       }
-    }else{
-      if(index==0){
-        index=$(this).index();
+    } else {
+      if (index == 0) {
+        index = $(this).index();
         nextStep('ImgContnet', 'VideoContnet')
-      }else if(index=1){
-        index=$(this).index();
+      } else if (index = 1) {
+        index = $(this).index();
         nextStep('details', 'VideoContnet')
-      }else{
-        index=$(this).index();
-        return ;
+      } else {
+        index = $(this).index();
+        return;
       }
     }
   });
@@ -266,7 +266,7 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     })
   });
   // 详情图片查询
-  $('.detailsImgQueyuBtnClick').click(function(){
+  $('.detailsImgQueyuBtnClick').click(function () {
     detailsTable.reload({
       where: {
         conditionThree: $('.details input[name="KeyImgName"]').val(),
@@ -456,7 +456,7 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
             if (res.code == 200) {
               popupHide('addVideoCont', 'addVideoBox');
               $('.FlexInputWidth input[name="VideoName"]').val('');
-              videoSrc=null;
+              videoSrc = null;
               $('.uploadVideo').fadeIn();
               layer.msg(res.message, { icon: 1 });
               videoTable.reload({
@@ -487,12 +487,12 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     if ($(this).attr('typeId') == 0) {
       checkStatus = table.checkStatus('ImgListData');
       tableIV = advertisingLis;
-    } else if($(this).attr('typeId') == 1){
+    } else if ($(this).attr('typeId') == 1) {
       checkStatus = table.checkStatus('VideoListData');
       tableIV = videoTable;
-    }else{
-      checkStatus=table.checkStatus('detailsId');
-      tableIV=detailsTable;
+    } else {
+      checkStatus = table.checkStatus('detailsId');
+      tableIV = detailsTable;
     }
     console.log(checkStatus)
     if (checkStatus.data.length > 0) {
@@ -559,10 +559,10 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     if ($(this).attr('typeId') == 0) {
       checkStatusList = table.checkStatus('ImgListData');
       tableType = advertisingLis;
-    } else if($(this).attr('typeId') == 1) {
+    } else if ($(this).attr('typeId') == 1) {
       checkStatusList = table.checkStatus('VideoListData');
       tableType = videoTable;
-    }else{
+    } else {
       checkStatusList = table.checkStatus('detailsId');
       tableType = detailsTable;
     }
@@ -595,10 +595,10 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     if ($(this).attr('typeId') == 0) {
       checkStatusList = table.checkStatus('ImgListData');
       tableType = advertisingLis;
-    } else if($(this).attr('typeId') == 1){
+    } else if ($(this).attr('typeId') == 1) {
       checkStatusList = table.checkStatus('VideoListData');
       tableType = videoTable;
-    }else {
+    } else {
       checkStatusList = table.checkStatus('detailsId');
       tableType = detailsTable;
     }
@@ -857,12 +857,12 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     }
   });
 
-  $('.details .add-btn').click(function(){
-    popupShow('addDetailsImgCont','addDetailsImgBox');
+  $('.details .add-btn').click(function () {
+    popupShow('addDetailsImgCont', 'addDetailsImgBox');
   });
-  $('.addDetailsImgCont input[name="fileDetails"]').change(function(e){
-    var that=this;
-    var upDetails=new FormData();
+  $('.addDetailsImgCont input[name="fileDetails"]').change(function (e) {
+    var that = this;
+    var upDetails = new FormData();
     upDetails.append('file', e.target.files[0]);
     $.ajax({
       type: 'post',
@@ -887,9 +887,9 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     })
   });
   // 确定添加详情图片
-  $('.detailsImgBtn').click(function(){
-    if($('.addDetailsImgBody input[name="detailsImgNane"]').val()){
-      if( $('#GoodsDetailsImg').attr('src')){
+  $('.detailsImgBtn').click(function () {
+    if ($('.addDetailsImgBody input[name="detailsImgNane"]').val()) {
+      if ($('#GoodsDetailsImg').attr('src')) {
         $.ajax({
           type: 'post',
           url: '/api/good_material/saveGoodMaterial',
@@ -905,7 +905,7 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
           success: function (res) {
             console.log(res)
             if (res.code == 200) {
-              popupHide('addDetailsImgCont','addDetailsImgBox');
+              popupHide('addDetailsImgCont', 'addDetailsImgBox');
               $('.addDetailsImgBody input[name="detailsImgNane"]').val('')
               $('.upload-list2').fadeOut();
               $('#GoodsDetailsImg').attr('src', '')
@@ -920,10 +920,10 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
             }
           }
         })
-      }else{
+      } else {
         layer.msg('请上传图片', { icon: 7 });
       }
-    }else{
+    } else {
       layer.msg('请输入图片', { icon: 7 });
     }
   });
@@ -940,6 +940,12 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     } else {
       popupShow('videoPlay', 'playBox');
       $('.playBody div').html(`<img src="${ImgDAtaVal.img}" alt="">`)
+    }
+  });
+  // 监听f5刷新
+  $("body").bind("keydown", function (event) {
+    if (event.keyCode == 116) {
+      f5Fun()
     }
   })
 })

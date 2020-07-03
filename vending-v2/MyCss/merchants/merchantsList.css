@@ -7,6 +7,8 @@
 }
 .mian{
     margin: 10px 20px 0px 40px;
+    width: 100%;
+    overflow: hidden;
 }
 .addMember{
     display: flex;
@@ -15,7 +17,7 @@
 }
 .addMember button{
     padding: 9px 15px;
-    font-size: 12px;
+    font-size: 14px;
     border-radius: 3px;
     color: #fff;
     background-color: #be954a;
@@ -33,7 +35,7 @@
     border: none;
 }
 .add-member button span{
-    font-size: 12px;
+    font-size: 14px;
 }
 .data-list{
     width: 100%;
@@ -203,4 +205,7 @@
 input:hover{
     border-color: #be954a !important ;
     transition: all 0.3s;
+}
+.sidebar{
+    max-height: 750px;
 }

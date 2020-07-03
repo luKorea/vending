@@ -56,14 +56,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         done: function (res) {
             if (res.code == 403) {
                 // window.history.go(-1)
-                window.parent.location.href = "../login/login.html";
+                window.parent.location.href = "../login/login.html";
             }
         }
     });
 
 
-     // 关闭弹窗
-     $('.playHeader .close').click(function () {
+    // 关闭弹窗
+    $('.playHeader .close').click(function () {
         $(this).parent().parent().addClass('margin0')
         $(this).parents('.maskContnet').fadeOut();
     });
@@ -71,14 +71,26 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var indexFlag = null;
     //权限列表
     var permissionsDataList = null;
+    var permissions1=[],//广告素材
+        permissions2=[],//商品分类素材
+        permissions3=[],//商品管理权限
+        permissions4=[],//商品素材权限
+        permissions5=[],//售货机权限
+        permissions6=[];//广告权限
     //监听工具条
-    var objData=null;
+    var objData = null;
     table.on('tool(test)', function (obj) {
-         objData = obj.data;
+        objData = obj.data;
         $('.editInput input[name="userName"]').val(objData.name)
         if (obj.event === 'operation') {
             popupShow('editRold', 'editBox');
-            if(!permissionsDataList){
+            if (objData.id == '100001') {
+                $('.permissionsContList').hide();
+                return;
+            } else {
+                $('.permissionsContList').show();
+            }
+            if (!permissionsDataList) {
                 $.ajax({
                     type: 'post',
                     url: '/api/role/findPermission',
@@ -86,22 +98,54 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         "Content-Type": "application/json",
                         token,
                     },
-                    async:false,
+                    async: false,
                     data: JSON.stringify({
                         pageNum: '1',
                         pageSize: '1000'
                     }),
                     success: function (res) {
                         if (res.code == 200) {
-                            permissionsDataList = res.data.list;
-                        }else{
-                            return ;
+                            permissionsDataList = res.data.list.filter((item, index) => {
+                                return (item.classify != 6) && (item.classify != 8) && (item.classify != 9) ? item : ''
+                            });
+                            res.data.list.forEach((item,index)=>{
+                                switch(item.classify){
+                                    case 1:
+                                        permissions1.push(item)
+                                        break;
+                                    case 2:
+                                        permissions2.push(item)
+                                        break;
+                                    case 3:
+                                        permissions3.push(item)
+                                        break;
+                                    case 4:
+                                        permissions4.push(item)
+                                        break;
+                                    case 5:
+                                        permissions5.push(item)
+                                        break;
+                                    case 7:
+                                        permissions6.push(item)
+                                        break;    
+                                    // default:
+                                    //     console.log(index)
+                                }
+                            })
+                            permissionsList(permissions1,'permissionsASF',objData);
+                            permissionsList(permissions2,'permissionsGClass',objData);
+                            permissionsList(permissions3,'permissionsGoods',objData)
+                            permissionsList(permissions4,'permissionsGAF',objData)
+                            permissionsList(permissions5,'permissionsMachine',objData)
+                            permissionsList(permissions6,'permissionsASR',objData)
+                        } else {
+                            return;
                         }
                     }
                 });
             };
-            permissionsList(permissionsDataList,'permissionsData',objData);
-           
+            // permissionsList(permissionsDataList, 'permissionsAS', objData);
+
         } else if (obj.event === 'delete') {
             layer.confirm('确定删除？', function (index) {
                 $.ajax({
@@ -123,7 +167,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                                 where: {}
                             });
                         } else if (res.code == 403) {
-                           window.parent.location.href = "../login/login.html";
+                            window.parent.location.href = "../login/login.html";
                         } else {
                             layer.msg(res.message, { icon: 2 });
                         }
@@ -176,57 +220,56 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
 
     // 修改角色
-    $('.edittBtn').click(function(){
+    $('.edittBtn').click(function () {
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon')
-        var permissionsArray=[];
-        if($('.editInput input[name="userName"]').val()){
-            var datalll=form.val("editInformation");
-            for(let i in datalll){
-                permissionsDataList.forEach((item,index)=>{
-                    if(item.id==datalll[i]){
+        var permissionsArray = [];
+        if ($('.editInput input[name="userName"]').val()) {
+            var datalll = form.val("editInformation");
+            console.log(datalll)
+            for (let i in datalll) {
+                permissionsDataList.forEach((item, index) => {
+                    if (item.id == datalll[i]) {
                         permissionsArray.push(item)
                     }
                 })
             };
-            setTimeout(()=>{
-                $.ajax({
-                    type:'post',
-                    url: '/api/role/updateRole',
-                    headers: {
-                        "Content-Type": "application/json",
-                        token,
-                    },
-                    data:JSON.stringify({
-                        id:objData.id,
-                        name:$('.editInput input[name="userName"]').val(),
-                        permissions:permissionsArray
-                    }),
-                    success:function(res){
-                        $('.mask').fadeOut();
-                        $('.maskSpan').removeClass('maskIcon');
-                        popupHide('editRold', 'editBox');
-                        if(res.code==200){
-                            layer.msg(res.message, { icon: 1 });
-                            tableIns.reload({
-                                where: {
-                                }
-                            }) 
-                        }else if(res.code==403){
-                            window.parent.location.href = "login.html";
-                        }else{
-                            layer.msg(res.message, { icon: 2 });
-                        }
+            $.ajax({
+                type: 'post',
+                url: '/api/role/updateRole',
+                headers: {
+                    "Content-Type": "application/json",
+                    token,
+                },
+                data: JSON.stringify({
+                    id: objData.id,
+                    name: $('.editInput input[name="userName"]').val(),
+                    permissions: permissionsArray
+                }),
+                success: function (res) {
+                    $('.mask').fadeOut();
+                    $('.maskSpan').removeClass('maskIcon');
+                    popupHide('editRold', 'editBox');
+                    if (res.code == 200) {
+                        layer.msg(res.message, { icon: 1 });
+                        tableIns.reload({
+                            where: {
+                            }
+                        })
+                    } else if (res.code == 403) {
+                        window.parent.location.href = "login.html";
+                    } else {
+                        layer.msg(res.message, { icon: 2 });
                     }
-                })
-            },2000)
-            
-        }else{
+                }
+            })
+
+        } else {
             layer.msg('带*为必填', { icon: 7 });
         }
     });
     // 角色取消
-    $('.editCancelbtn').click(function(){
+    $('.editCancelbtn').click(function () {
         popupHide('editRold', 'editBox');
     })
 
@@ -261,7 +304,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     //       }
     //     }); 
     // 角色权限函数
-    function permissionsList(list, element,TrueData) {
+    function permissionsList(list, element, TrueData) {
         var ListData = '';
         list.forEach((ele, index) => {
             ListData += `<div>
@@ -271,18 +314,24 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         });
         $(`.${element}`).empty();
         $(`.${element}`).html(ListData);
-        TrueData.permissions.forEach((item,index)=>{
-            for(var i=0;i<$(`.${element} input`).length;i++){
-                if(item.id==list[i].id){
-                    $(`.${element} input`).eq(i).prop('checked',true)  
+        TrueData.permissions.forEach((item, index) => {
+            for (var i = 0; i < $(`.${element} input`).length; i++) {
+                if (item.id == list[i].id) {
+                    $(`.${element} input`).eq(i).prop('checked', true)
                 }
             }
         })
         form.render('checkbox');
     }
 
-     // 刷新页面
-     $('.refreshBtn').click(function(){
+    // 刷新页面
+    $('.refreshBtn').click(function () {
         location.reload();
-    })
+    });
+     // 监听f5刷新
+  $("body").bind("keydown",function(event){
+    if (event.keyCode == 116) {
+      f5Fun()
+  }
+})
 });

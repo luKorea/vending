@@ -17,13 +17,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             cols: [[
                 { field: 'name', width: 180, title: '商户名' },
-                { field: 'merchantName', width: 180, title: '隶属商户' },
+                { field: 'merchantName', width: 180, title: '上级商户' },
                 { field: 'alias', width: 180, title: '商户编号' },
                 { field: 'addUser', width: 150, title: '创建人', },
                 { field: 'addTime', width: 180, title: '创建时间', sort: true },
-                { field: '1', width: 150, title: '最后操作人', },
+                { field: 'lastName', width: 150, title: '最后操作人', },
                 { field: 'lastTime', width: 180, title: '最后操作时间', sort: true },
-                { field: 'operation', fixed: 'right', right: 0, width: 230, title: '操作', toolbar: '#barDemo' },
+                { field: 'operation',  width: 230, title: '操作', toolbar: '#barDemo' },
             ]]
             , id: 'tableId'
             , page: true
@@ -33,6 +33,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             request: {
                 'pageName': 'pageNum',
                 'limitName': 'pageSize'
+            },
+            where:{
+                conditionTwo:sessionStorage.machineID,
+                conditionThree:'0'
             },
             parseData: function (res) {
                 // console.log(res)
@@ -61,6 +65,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 }
             }
         });
+        // 左边商户列表显示隐藏事件
+  $('.sidebar i').click(function () {
+    $('.left-mian').hide()
+    $('.onLeft').show()
+  });
+  $('.onLeft').click(function () {
+    $(this).hide();
+    $('.left-mian').show()
+  })
     // 商户列表
     var marchantsList = null;
     //监听工具条
@@ -73,9 +86,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             popupShow('MemberOperation', 'MemberContent')
             // editMarchantsSelect();
             marchantsList = merchantsListMian(data.id);
-            mercantsSelectList(marchantsList, 'marchantsList', form);
+            mercantsSelectList(marchantsList, 'marchantsList',form);
+          
             $('.editMerchants select[name="marchantsListname"]').val(data.topMerchant);
+            if(data.id==0){
+                $('.editMerchants select[name="marchantsListname"]').attr('disabled',true);
+            }else{
+                $('.editMerchants select[name="marchantsListname"]').attr('disabled',false);
+            }
             form.render('select');
+            console.log(data.id)
+            
         } else if (obj.event === 'delete') {
 
             layer.confirm('确定删除？', function (index) {
@@ -87,7 +108,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         "Content-Type": "application/json",
                     },
                     data: JSON.stringify({
-                        id: data.id
+                        id: data.id,
+                        topMerchant:data.topMerchant
                     }),
                     success: function (res) {
                         console.log(res)
@@ -113,7 +135,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     $('.queryBtnClick').click(function () {
         tableIns.reload({
             where: {
-                condition: $('.addMember input[name="keyMerchants"]').val()
+                condition: $('.addMember input[name="keyMerchants"]').val(),
+                conditionThree:'1'
             }
         })
     })
@@ -184,8 +207,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 编辑商户事件
     $('.Medit .submit_btn').click(function () {
         console.log($('#marchantsList').val())
-
-        if ($('.marchantsList').val() && $('.editMerchants input[name="merchantsName"]').val()) {
+        if ($('.editMerchants input[name="merchantsName"]').val()) {
             var aliasText = null;
             marchantsList.forEach((item, index) => {
                 if (item.id == $('.marchantsList').val()) {
@@ -206,9 +228,20 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             }).catch((err) => {
                 layer.msg(err.message, { icon: 2 })
             })
-        } else {
+        } 
+        else {
             console.log()
-            layer.msg('带*未必填', { icon: 7 })
+            layer.msg('带*未填写', { icon: 7 })
         }
-    })
+    });
+    //树状图
+  var dataList = treeList();
+  treeFun(tree,'test1',tableIns,dataList,'conditionTwo');
+
+   // 监听f5刷新
+   $("body").bind("keydown", function (event) {
+    if (event.keyCode == 116) {
+      f5Fun()
+    }
+  })
 });

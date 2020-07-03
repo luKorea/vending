@@ -136,7 +136,7 @@ function dataURLtoFile(dataurl, filename) {//将base64转换为文件
   return new File([u8arr], filename, { type: mime });
 }
 
-function phoneRegular(that,layer) {
+function phoneRegular(that, layer) {
   var phone = $(that).val()
   if (phone) {
     if (!(/^1[3456789]\d{9}$/.test(phone))) {
@@ -147,6 +147,19 @@ function phoneRegular(that,layer) {
     }
   }
 }
+
+// 密码正则
+function passRegular(that, layer) {
+  var reg = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,.\/]).{6,64}$/;
+  var passwork = $(that).val();
+  if (passwork) {
+    if (!(reg.test(passwork))) {
+      layer.msg('密码必须包含英文和数字以及特殊字符且不少于6位数', { icon: 7 });
+      $(that).val('')
+      return false;
+    }
+  }
+};
 // / 获取商户列表
 function merchantsListMian(id) {
   var marchantsList = []
@@ -224,7 +237,7 @@ function treeList() {
   return dataList;
 }
 //树方法实列
-function treeFun(tree, element, tableID, data, key) {
+function treeFun(tree, element, tableID, data, key,goodsCLass,selectData,conditionThree) {
   tree.render({
     elem: `#${element}`,
     id: 'treelist',
@@ -234,15 +247,19 @@ function treeFun(tree, element, tableID, data, key) {
     data,
     text: {
       defaultNodeName: '无数据',
-      none: '加载数据失败！'
+      none: '您没有权限，请联系管理员授权!'
     },
     click: function (obj) {
-      sessionStorage.merchantIdData=obj.data.id;
-      varData=obj.data.id;
+      if(goodsCLass){
+        selectData(obj.data.id+'');
+      }
+      sessionStorage.merchantIdData = obj.data.id;
+      varData = obj.data.id;
       console.log(obj);
       tableID.reload({
         where: {
-          [key]: obj.data.id+''
+          [key]: obj.data.id + '',
+          [conditionThree?conditionThree:' ']:'0'
         }
       })
       var nodes = document.getElementsByClassName("layui-tree-txt");
@@ -291,13 +308,13 @@ function treeFun(tree, element, tableID, data, key) {
 }
 
 // 树复选方法
-function treeFunCheck(tree, element, tableID, data, key){
+function treeFunCheck(tree, element, tableID, data, key,layer) {
   tree.render({
     elem: `#${element}`,
     id: 'treelistCheck',
-    showCheckbox:true,
-    single:true,
-    ckall:true,
+    showCheckbox: true,
+    single: true,
+    ckall: true,
     onlyIconControl: true, //左侧图标控制展开收缩 
     data,
     text: {
@@ -305,7 +322,7 @@ function treeFunCheck(tree, element, tableID, data, key){
       none: '加载数据失败！'
     },
     click: function (obj) {
-      console.log(obj)
+      // console.log(obj)
       var nodes = document.getElementsByClassName("layui-tree-txt");
       for (var i = 0; i < nodes.length; i++) {
         if (nodes[i].innerHTML === obj.data.title)
@@ -343,12 +360,14 @@ function treeFunCheck(tree, element, tableID, data, key){
                 });
               }
             }
+          },error:function(err){
+            layer.msg('服务器请求超时',{icon:2})
           }
         })
 
       }
     },
-    oncheck:function(obj){
+    oncheck: function (obj) {
       console.log(obj);
 
     }
@@ -358,16 +377,16 @@ function treeFunCheck(tree, element, tableID, data, key){
 // 获取树选中id
 function getChildNodes(treeNode, result) {
   for (var i in treeNode) {
-      result.push(treeNode[i].id);
-      result = getChildNodes(treeNode[i].children, result);
+    result.push(treeNode[i].id);
+    result = getChildNodes(treeNode[i].children, result);
   }
   return result;
 }
 // 商户下拉框渲染
-function mercantsSelectList(list, element, form,) {
+function mercantsSelectList(list, element, form) {
   var merchantOption = ``;
   list.forEach((item, indx) => {
-    merchantOption += `<option value="${item.id}">${item.name}</option>`
+    merchantOption += `<option value="${item.id}" >${item.name}</option>`
   });
   $(`.${element}`).empty();
   $(`.${element}`).html(merchantOption);
@@ -502,4 +521,13 @@ function dataJudgeLength(checkStatusID, table, data) {
   //   // layer.msg('请选择',{icon:7})
 
   // }
+}
+
+// 监听f5刷新
+function f5Fun() {
+  event.preventDefault(); //阻止默认刷新
+  //location.reload();
+  //采用location.reload()在火狐下可能会有问题，火狐会保留上一次链接
+  location = location;
+
 }

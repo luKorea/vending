@@ -225,7 +225,7 @@
 	width: 100%;
 	min-height: 100%;
 }
-.content-tbas-iframe-html .iframe-show{
+.content-tbas-iframe-html .iframe_show,.iframe-show{
 	width: 100%;
 	height: 100%;
 	border: 0;

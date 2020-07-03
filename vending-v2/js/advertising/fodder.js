@@ -192,20 +192,14 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         }
     });
     // 收起左边账号事件
-    $('.sidebar .layui-icon-left').click(function () {
-        // $('.aside-left').slideUp(function () {
-        //     $('.layui-icon-right').show();
-        // });
-        $('.aside-left').hide();
-        $('.layui-icon-right').show();
-    });
-    $('.layui-icon-right').click(function () {
-        // $('.aside-left').slideDown(function () {
-        //     $('.layui-icon-right').hide();
-        // });
-        $('.aside-left').show();
-        $('.layui-icon-right').hide();
-    });
+    $('.sidebar i').click(function () {
+        $('.left-mian').hide();
+        $('.on-left').show()
+      });
+      $('.on-left').click(function () {
+        $('.left-mian').show();
+        $('.on-left').hide()
+      })
     var indexFlag = null;
     valData = null;
     // 素材内容
@@ -857,5 +851,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     //     });
     // }
     treeFun(tree,'test1',tableIns,dataList,'merchantId')
-
+     // 监听f5刷新
+   $("body").bind("keydown", function (event) {
+    if (event.keyCode == 116) {
+      f5Fun()
+    }
+  })
 });

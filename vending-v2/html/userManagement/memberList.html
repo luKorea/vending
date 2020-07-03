@@ -18,7 +18,7 @@
                         <!-- <div class="input-account">
                             <input type="text" placeholder="输入用户账号">
                         </div> -->
-                        <p style="margin:20px;color:#be954a;">商户</p>
+                        <p style="margin:20px;color:#be954a;">商户列表</p>
                         <!-- <div class="fixedAccount">
                             <span> 粤宝商户-中邮广州</span>
                         </div> -->
@@ -89,7 +89,7 @@
                                 </div>
                             </div>
                             <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
-                                <label><span style="color: red;">*</span> 确定登录密码</label>
+                                <label><span style="color: red;">*</span> 确认登录密码</label>
                                 <div class="inputWidth">
                                     <input type="password" name="DuserPwd">
                                 </div>
@@ -101,13 +101,13 @@
                                 </div>
                             </div>
                             <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
-                                <label> <span style="color: red;">*</span>确定独立密码</label>
+                                <label> <span style="color: red;">*</span>确认独立密码</label>
                                 <div class="inputWidth">
                                     <input type="password" name="DalonePwd">
                                 </div>
                             </div>
                             <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
-                                <label> <span style="color: red;">*</span>手机号码</label>
+                                <label> <span style="color: red;">*</span>手机号</label>
                                 <div class="inputWidth">
                                     <input type="number" name="phone" onkeyup="this.value=this.value.replace(/\D/g,'')">
                                 </div>
@@ -142,7 +142,7 @@
                             </div>
                         </div>
                         <div class="terminal" style="margin-top: 15px;">
-                            <span style="display: inline-block;width:10%;padding-right: 12px;">隶属商户：</span>
+                            <span style="display: inline-block;width:10%;padding-right: 12px;">所属商户：</span>
                             <div class="layui-form" lay-filter="">
                                 <select name="marchantsListname" class="marchantsList" lay-filter="stateSelect">
                                     <!-- <option value="">全部</option>
@@ -195,6 +195,7 @@
         <button class="layui-btn layui-btn-sm btn del-btn" lay-event="delete">删除</button>
     </div>
 </script>
+<script src="../../js/public/md5.js"></script>
 <script src="../../js/userManagement/memberList.js"></script>
 
 </html>

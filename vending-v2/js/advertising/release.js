@@ -18,14 +18,14 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
         }
     });
     // 收起左边账号事件
-    $('.sidebar .layui-icon-left').click(function () {
-        $('.aside-left').hide();
-        $('.layui-icon-right').show();
-    });
-    $('.layui-icon-right').click(function () {
-        $('.aside-left').show();
-        $('.layui-icon-right').hide();
-    });
+    $('.sidebar i').click(function () {
+        $('.left-mian').hide();
+        $('.on-left').show()
+      });
+      $('.on-left').click(function () {
+        $('.left-mian').show();
+        $('.on-left').hide()
+      })
     // 查询
     $('.keyBtn').click(function () {
         advertisingLis.reload({
@@ -53,7 +53,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
         },
         cols: [[
             { type: 'checkbox', },
-            { field: 'number', width: 210, title: '发布单号' },
+            { field: 'number', width: 300, title: '发布单号' },
             {
                 field: 'advertisingTime', width: 120, title: '广告时长(秒)', templet: function (d) {
                     var advertisingTime = 0;
@@ -65,7 +65,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
                 }
             },
             {
-                field: 'advertisingSize', width: 120, title: '广告大小(MB)', templet: function (d) {
+                field: 'advertisingSize', width: 160, title: '广告大小(MB)', templet: function (d) {
                     var advertisingSize = 0
                     d.publicizeAdvert.forEach((item, index) => {
                         return advertisingSize += Number(item.size);
@@ -76,14 +76,13 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
                 }
             },
             {
-                field: 'attribute', width: 150, title: '审核状态', templet: function (d) {
+                field: 'attribute', width: 180, title: '审核状态', templet: function (d) {
                     return d.attribute == 0 ? '未审核' : d.attribute == 1 ? '待审核' : d.attribute == 2 ? '审核通过' : '审核不通过'
                 }
             },
-            { field: 'amendTime', width: 130, title: '广告位', },
-            { field: 'creationTime', width: 210, title: '发布时间', sort: true },
-            { field: 'offTime', width: 210, title: '下架时间', sort: true },
-            { field: 'addUser', width: 150, title: '发布人', },
+            // { field: 'amendTime', width: 130, title: '广告位', },
+            { field: 'creationTime', width: 230, title: '发布时间', sort: true },
+            { field: 'addUser', width: 180, title: '发布人', },
             { field: 'operation', right: 0, width: 380, title: '操作', toolbar: '#barDemo', fixed: 'right' },
         ]],
         page: true,
@@ -229,7 +228,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
                     console.log(res)
                     if (res.code == 200) {
                         popupHide('advertisingDetails', 'detailsBox');
-                        layer.msg('修改成功', { icon: 1, anim: 1 });
+                        layer.msg('修改成功', { icon: 1, });
                         editDetailsList = [];
                     } else if (res.code == 403) {
                         window.parent.location.href = "../login/login.html";
@@ -401,7 +400,8 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
                 },
                 where: {
                     status: '1',
-                    checkStatus: '2'
+                    checkStatus: '2',
+                    merchantId:sessionStorage.machineID
                 },
                 parseData: function (res) {
                     // console.log(res)
@@ -439,7 +439,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
     $('.pubilshMaterialCont .determineBtn').click(function () {
         // addMaterList  = table.checkStatus('chooesId').data;
         addMaterList = addMaterList.concat(table.checkStatus('chooesId').data)
-        console.log(addMaterList);
+        // console.log(addMaterList);
         if (addMaterList.length > 0) {
             popupHide('pubilshMaterialCont', 'pubilshMaterialBox');
             materaialMethods(addMaterList, 'SetContList');
@@ -606,7 +606,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
             { type: 'checkbox', },
             { field: 'info', width: 200, title: '售货机信息' },
             { field: 'location', width: 300, title: '地址', },
-            { field: 'userNum', width: 150, title: '商户账号', },
+            { field: 'merchantName', width: 150, title: '所属账号', },
             { field: 'actionTime', width: 200, title: '激活时间', },
             { field: 'description', width: 180, title: '描述', sort: true },
         ]],
@@ -637,9 +637,8 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
 
         },
         where: {
-            onlineStatus: '1',
-            openStatus: '1',
-            actionStatus: '1'
+            actionStatus: '1',
+            merchantId:sessionStorage.machineID
         },
         response: {
             statusCode: 200 //规定成功的状态码，默认：0
@@ -767,7 +766,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
                 auditMethods('1', checkList);
             }, 1000)
         } else {
-            layer.msg('请选择需要提交审核的素材', { icon: 7, anim: 1 });
+            layer.msg('请选择需要提交审核的素材', { icon: 7, });
         }
     });
     // 审核通过
@@ -792,7 +791,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
             })
 
         } else {
-            layer.msg('请选择需要通过审核的素材', { icon: 7, anim: 1 });
+            layer.msg('请选择需要通过审核的素材', { icon: 7, });
         }
     });
     // 审核不通过
@@ -815,7 +814,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
                 }, 1000)
             })
         } else {
-            layer.msg('请选择需要不通过审核的素材', { icon: 7, anim: 1 });
+            layer.msg('请选择需要不通过审核的素材', { icon: 7 });
         }
     })
     // 提交审核，审核通过，审核不通过方法
@@ -841,7 +840,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
                         }
                     })
                 } else if (res.code == 201) {
-                    layer.msg(res.message, { icon: 2, anim: 1 });
+                    layer.msg(res.message, { icon: 2, });
                 } else if (res.code == 202) {
                     layer.msg(res.message, { icon: 7 });
                     advertisingLis.reload({
@@ -868,7 +867,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
                 pushStr.push(item.machineId)
             })
             pushStr = pushStr.toString();
-            setTimeout(() => {
                 $.ajax({
                     type: 'post',
                     headers: {
@@ -884,15 +882,12 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
                         console.log(res)
                         $('.mask').fadeOut();
                         $('.maskSpan').removeClass('maskIcon');
-                        popupHide('machineDetailsCont', 'machineDetailsBox');
-                        if (res == 'true') {
-                            layer.msg('推送成功', { icon: 1 });
-                        } else {
-                            layer.msg('推送失败', { icon: 2 });
-                        }
+                        popupHide('machineDetailsCont', 'machineDetailsBox');                        
+                            layer.msg('推送成功', { icon: 1 });                        
+                    },error:function(err){
+                        layer.msg('服务器请求超时', { icon: 2 });
                     }
                 })
-            }, 1000)
         } else {
             layer.msg('请选择售货机', { icon: 7 });
         }
@@ -909,5 +904,75 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree'], function () {
         console.log(obj)
         ScottMethods(obj.data.longitude,obj.data.latitude,obj.data.location);
         popupShow('ScottCont','scottBox')
-      })
+      });
+       // 刷新页面
+     $('.refreshBtn').click(function(){
+        location.reload();
+    });
+     // 监听f5刷新
+   $("body").bind("keydown", function (event) {
+    if (event.keyCode == 116) {
+      f5Fun()
+    }
+  });
+
+  var checkID=null,
+      pushList=null;   //推送广告列表
+  $('.pushReleaseBtn').click(function(){
+    pushList=[];
+    checkID=table.checkStatus('advertisingData');
+    checkID.data.forEach((item,index)=>{
+        if(item.attribute==2){
+            pushList.push(item.number) 
+        }
+    });
+    if(pushList.length==0){
+        layer.msg('请选择审核通过的广告,非审核通过的广告不能推送', { icon: 7 });
+        return ;
+    }else{
+        popupShow('chooseLower', 'chooseBox')
+    }
+  });
+
+
+  var dataList1 = treeList();
+  treeFunCheck(tree, 'testGoodsCheck', advertisingLis, dataList1, 'merchantId',layer)
+//   确定推送
+     var role=null;
+    $('.RdetermineBtn').click(function(){
+        var checkedData = tree.getChecked('treelistCheck');
+        role = getChildNodes(checkedData, []);
+        role.shift()
+        console.log(role)
+        if (role.length == 0) {
+          layer.msg('请选择要推送的商户', { icon: 7 })
+          return;
+        }
+        popupShow('PushMandatory', 'MandatoryBox')
+        console.log(pushList)
+    });
+
+
+    // 推送列表
+    $('.RpushListBtn').click(function(){
+        popupShow('topGoodsList','topBox')
+    })
+    $('.mandatroFooter div').click(function(){
+        PType = $(this).attr('Ptype');
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        var RData=JSON.stringify({
+            merchantId:sessionStorage.machineId,
+            merchantList:role,
+            numbers:pushList,
+            type:PType
+        })
+        loadingAjax('/api/publicized/sendMerchantAd','post',RData,sessionStorage.token,'mask','chooseLower','chooseBox',layer).then((res)=>{
+            popupHide('PushMandatory', 'MandatoryBox')
+        layer.msg(res.message, { icon: 1 })
+        }).catch((err)=>{
+            popupHide('PushMandatory', 'MandatoryBox')
+            layer.msg(res.message, { icon: 2 })
+        })
+    })
 });

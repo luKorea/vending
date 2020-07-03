@@ -14,21 +14,30 @@
     <div class="release-wrap">
         <div class="flex-contnet">
             <!-- 左边 -->
-            <div class="aside-left">
+            <!-- <div class="aside-left">
                 <div style="margin: 20px; min-height: 680px;">
-                    <p style="margin:10px;color:#be954a;">商户列表</p>
-                    <!-- <div class="account-list">
-                        <div>
-                            <span>粤宝商户-中邮广州</span>
-                        </div>
-                    </div> -->
+                    <p style="margin:15px;color:#be954a;font-size: 16px;font-weight: bold;">商户列表</p>
                     <div id="test1" class="demo-tree demo-tree-box"></div>
                 </div>
                 <div class="sidebar">
                     <i class="layui-icon layui-icon-left"></i>
                 </div>
+            </div> -->
+            <div class="left-mian">
+                <div class="accountContnet" style="margin-left:15px;">
+                    <!-- <div class="input-account">
+                      <input type="text" placeholder="输入用户账号">
+                  </div> -->
+                    <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
+                    <!-- <div class="fixed-account">
+                      <span> 粤宝商户-中邮广州</span>
+                  </div> -->
+                    <div id="test1" class="demo-tree demo-tree-box"></div>
+                </div>
+                <!-- 右侧栏 -->
+                <div class="sidebar" style="height: 750px;"><i class="layui-icon layui-icon-left" ></i></div>
             </div>
-            <i class="layui-icon layui-icon-right"></i>
+            <i class="layui-icon layui-icon-right  on-left"></i>
             <div class="right-contnet">
                 <div class="qeury-header">
                     <div class="layui-row">
@@ -42,38 +51,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- 大小范围(mb): -->
-                        <!-- <div class=" layui-col-sm6 layui-col-md8 layui-col-lg4 number">
-                            
-                            <div class="key-contnet" style="display: inline-table;;">
-                                <div class="key-text">大小范围(mb)</div>
-                                <form class="layui-form" action="" style="display: flex;justify-content: start;">
-                                    <div style="max-width: 100px;">
-                                        <input type="number" name="minSize">
-                                    </div>
-                                    <span style="line-height: 35px;">——</span>
-                                    <div style="max-width: 100px;">
-                                        <input type="number" name="maxSize">
-                                    </div>
-                                </form>
-                            </div>
-                        </div> -->
-                        <!-- 广告位: -->
-                        <!-- <div class=" layui-col-sm12 layui-col-md6 layui-col-lg3">
-                            <div class="key-contnet">
-                               
-                                <div class="key-text">广告位</div>
-                                <form class="layui-form" action="" style="max-width: 100%;">
-                                    <div class="layui-form" lay-filter="myDiv">
-                                        <select name="" id="" lay-filter="mySelect">
-                                            <option value="zhang">全部</option>
-                                            <option value="wang">首页广告位</option>
-                                            <option value="li">详情页广告位</option>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                        </div> -->
+                        </div>
                         <div class=" layui-col-sm7 layui-col-md3 layui-col-lg1">
                             <button class="layui-btn layui-btn-normal  btn keyBtn">
                                 <i class="layui-icon layui-icon-search"></i>
@@ -97,6 +75,30 @@
                             </button>
                             <button class="layui-btn layui-btn-normal noPassBtn btn">
                                 <span>审核不通过</span>
+                            </button>
+                        </div>
+                        <div class=" layui-col-sm7 layui-col-md3 layui-col-lg1">
+                            <button class="layui-btn layui-btn-normal  btn refreshBtn">
+                                <i class="layui-icon layui-icon-refresh"></i>
+                                <span>刷新</span>
+                            </button>
+                        </div>
+                        <div class=" layui-col-sm4 layui-col-md10 layui-col-lg4">
+                            <button style="margin-top: 0;position:relative" class="layui-btn layui-btn-normal pushReleaseBtn btn "
+                                type="button" buteType="1" title="只能推送审核通过的广告">
+                                <i class="layui-icon layui-icon-export "></i>
+                                <span>推送广告</span>
+                                <!-- <p  class="PushTitle">只能推送审核通过广告！</p> -->
+                            </button>
+                            <!-- <button style="margin-top: 0;" class="layui-btn layui-btn-normal pushGoodsBtn btn "
+                                type="button" buteType="0">
+                                <i class="layui-icon layui-icon-transfer "></i>
+                                <span>非强制推送商品</span>
+                            </button> -->
+                            <button style="margin-top: 0;" class="layui-btn layui-btn-normal RpushListBtn btn "
+                                type="button" buteType="1">
+                                <i class="layui-icon layui-icon-list "></i>
+                                <span>推送列表</span>
                             </button>
                         </div>
                     </div>
@@ -486,6 +488,9 @@
                         <button class="layui-btn layui-btn-normal determineBtn btn" style="margin-left: 20px;">
                             <span>确定推送</span>
                         </button>
+                        <button class="layui-btn layui-btn-normal  btn" style="margin-left: 20px;">
+                            <span>推送到所有售货机</span>
+                        </button>
                     </div>
                     <div class="machineDetailsList">
                         <div>
@@ -505,6 +510,129 @@
                 数据处理中，请稍候
             </div>
         </div>
+
+        	<!--上级商户商品列表 -->
+		<div class="topGoodsList maskContnet" >
+			<div class="topBox margin0">
+				<div class="playHeader">
+					<span>推送列表</span>
+					<button class="close" type="button">
+						<i class="layui-icon layui-icon-close"></i>
+					</button>
+				</div>
+					<div class="topBody">					
+						<div class="topKey">
+							<div>
+								<div class="key-contnet">
+									<div class="key-text">推送性质</div>
+									<form class="layui-form" action="" style="max-width: 240px;">
+										<div class="layui-form" lay-filter="">
+											<select name="mandatory" id="" lay-filter="">
+												<option value="">全部</option>
+												<option value="0">非强制</option>
+												<option value="1">强制</option>
+											</select>
+										</div>
+									</form>
+								</div>
+								<div  class="key-contnet">
+									<div class="key-text">关键字</div>
+									<input type="text" placeholder="商品名" class="KyeText" name="KyeText">
+								</div>
+							
+								<div class="key-contnet">
+									<div class="key-text">接收状态</div>
+									<form class="layui-form" action="" style="max-width: 240px;">
+										<div class="layui-form" lay-filter="">
+											<select name="receiveStatus" id="" lay-filter="">
+												<option value="">全部</option>
+												<option value="0">未接收</option>
+												<option value="1">已接收</option>
+											</select>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div style="margin-top: 10px;">
+								<div class="key-contnet">
+									<div class="key-text">推送类型</div>
+									<form class="layui-form" action="" style="max-width: 240px;">
+										<div class="layui-form" lay-filter="">
+											<select name="receiveType" id="" lay-filter="">
+												<option value="0">全部</option>
+												<option value="1">推送</option>
+												<option value="2">接收</option>
+											</select>
+										</div>
+									</form>
+								</div>
+								<button class="layui-btn layui-btn-normal pushQueryBtn btn">
+									<i class="layui-icon layui-icon-search"></i>
+									<span>查询</span>
+								</button>
+								<button class="layui-btn layui-btn-normal pushGoodsListBtn btn">
+									<i class="layui-icon layui-icon-download-circle"></i>
+									<span>接收</span>
+								</button>
+							</div>
+						
+						</div>
+						<!-- 数据列表内容 -->
+						<div>
+							<div class="data-list-contnet">
+								<div class="list_table1" style="margin-left: 20px;">
+									<table class="layui-hide" id="parentTableTest" lay-filter="parentTableTest"></table>
+								</div>
+							</div>
+						</div>
+					</div>
+				<!-- </div> -->
+				
+			</div>
+        </div>
+        <!-- 选择下级 -->
+		<div class="chooseLower maskContnet" >
+			<div class="chooseBox margin0">
+				<div class="playHeader">
+					<span>下级商户列表</span>
+					<button class="close" type="button">
+						<i class="layui-icon layui-icon-close"></i>
+					</button>
+				</div>
+				<div class="chooseBody" style="margin-left: 50px;">
+					<div id="testGoodsCheck" class="demo-tree demo-tree-box"></div>
+				</div>
+				<div class="chooseFooter" style="margin-top:30px;padding-bottom: 20px;">
+					<div style="text-align: center;">
+						<button class="layui-btn layui-btn-normal btn RdetermineBtn"
+							style="margin: 0 0 0 15px;">
+							<span>确定</span>
+						</button>
+						<button class="layui-btn layui-btn-normal btn chooseCan"  style="margin: 0 0 0 15px;">
+							<span>取消</span>
+						</button>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!-- 是否强制推送 -->
+        <div class="PushMandatory maskContnet" >
+			<div class="MandatoryBox margin0">
+				<div class="playHeader">
+					<!-- <span>下级商户列表</span> -->
+					<button class="close" type="button">
+						<i class="layui-icon layui-icon-close"></i>
+					</button>
+				</div>
+				<div class="mandatorBody">
+					<p>是否强制推送？</p>
+				</div>
+				<div class="mandatroFooter">
+					<div Ptype="1">是</div>
+					<div  Ptype="0" style="color: red;">否</div>
+				</div>
+			</div>
+		</div>
     </div>
 </body>
 <script type="text/html" id="barDemo">

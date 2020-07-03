@@ -101,11 +101,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
 
   // 商品状态下拉框数据请求
   var form = layui.form;
-  function selectData(IdClass) {
+  function selectData(merchantId,index) {
     $.ajax({
       type: 'post',
       url: `/api/classify/findAll`,
-      data: JSON.stringify({ pageNum: 1, pageSize: 10, merchantId: '0' }),
+      data: JSON.stringify({ pageNum: 1, pageSize: 10000, merchantId, }),
       headers: {
         "Content-Type": "application/json",
         token,
@@ -113,22 +113,27 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       success: function (res) {
         if (res.code == 200) {
           var optionList = `<option value="">全部</option>`;
-          $('#GoodsType').empty();
+          if(index==1){
+            
+            $('#addGoodsType').empty();
+          }        
           $('#EditGoodsType').empty();
-          $('#addGoodsType').empty();
+          $('#GoodsType').empty();
           $.each(res.data.list, function (index, ele) {
             optionList += `<option value="${ele.classifyId}">${ele.classifyName}</option>`
           });
           // $('#GoodsType').empty;
-          $('#GoodsType').append(optionList);
+          if(index==1){     
+            $('#addGoodsType').append(optionList);
+          }    
           $('#EditGoodsType').append(optionList);
-          $('#addGoodsType').append(optionList);
+          $('#GoodsType').append(optionList);
           form.render('select');
         }
       }
     })
   }
-  selectData();
+  selectData(sessionStorage.machineID,1);
   // 查询商品类型id
   var GoodsTypeID = '';
   // 监听商品类型下拉框
@@ -410,7 +415,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             goods_Param: addValData.goodsParam,  //规格
             goods_Status: addValData.goodsStatus, //状态
             goods_Images: addGoodsImg, //商品图片 不在form里
-            goods_Descript: addWangEditor.txt.html() //商品详情，编辑器里的内容
+            goods_Descript: addWangEditor.txt.html(), //商品详情，编辑器里的内容
+            merchantId: sessionStorage.machineID
           }), success: function (res) {
             console.log(res)
             if (res.code == 200) {
@@ -715,8 +721,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   });
   //树状图
   var dataList = treeList();
-  treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId')
-  treeFunCheck(tree, 'testGoodsCheck', tableIns, dataList, 'merchantId')
+  var dataList1 = treeList();
+  treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId','goodsClass',selectData)
+  treeFunCheck(tree, 'testGoodsCheck', tableIns, dataList1, 'merchantId',layer)
 
   // 接收列表非强制
   var parentGoods = null;
@@ -739,16 +746,18 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             return d.received == 0 ? '未接收' : '已接收'
           }
         },
-        { field: 'sendTime', width: 200, title: '推送时间 ', sort: true,templet:function(d){
-          var myDate=new Date(d.sendTime);
-          var y=myDate.getFullYear();
-          var m=myDate.getMonth()+1;
-          var d=myDate.getDate();
-          var h=myDate.getHours();
-          var min=myDate.getMinutes();
-          var s=myDate.getSeconds();
-          return y+'-'+m+'-'+d+' '+h+':'+min+':'+s
-        } },
+        {
+          field: 'sendTime', width: 200, title: '推送时间 ', sort: true, templet: function (d) {
+            var myDate = new Date(d.sendTime);
+            var y = myDate.getFullYear();
+            var m = myDate.getMonth() + 1;
+            var d = myDate.getDate();
+            var h = myDate.getHours();
+            var min = myDate.getMinutes();
+            var s = myDate.getSeconds();
+            return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
+          }
+        },
       ]]
       , id: 'parentTableId'
       , page: true
@@ -831,10 +840,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     }
   });
   // 确定推送
-  var role=null;
+  var role = null;
   $('.determineBtn').click(function () {
     var checkedData = tree.getChecked('treelistCheck');
-     role = getChildNodes(checkedData, []);
+    role = getChildNodes(checkedData, []);
     role.shift()
     console.log(role)
     if (role.length == 0) {
@@ -865,10 +874,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       })
       loadingAjax('/api/goods/sendGoods', 'post', pushData, token, 'mask', 'chooseLower', 'chooseBox', layer).then((res) => {
         console.log(res)
-        popupHide('PushMandatory','MandatoryBox')
+        popupHide('PushMandatory', 'MandatoryBox')
         layer.msg(res.message, { icon: 1 })
       }).catch((err) => {
-        popupHide('PushMandatory','MandatoryBox')
+        popupHide('PushMandatory', 'MandatoryBox')
         layer.msg(res.message, { icon: 2 })
       })
     }, 1000)
@@ -949,6 +958,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   //     width:that.width()
   //   }, 500);
   // });  
-
+  // 监听f5刷新
+  $("body").bind("keydown", function (event) {
+    if (event.keyCode == 116) {
+      f5Fun()
+    }
+  })
 
 })

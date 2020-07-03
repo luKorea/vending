@@ -262,3 +262,14 @@
 .layui-row>div{
     margin-bottom: 10px;
 }
+.listtable{
+    width: 100%;
+    overflow: hidden;
+}
+.layui-form{
+    width: 100%;
+    overflow-x: auto;
+}
+.itmes .layui-form{
+        display: block;
+}

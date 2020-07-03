@@ -29,7 +29,7 @@ window.onload = function () {
             element.tabAdd('demo', {
                 title,
                 // content: `<div class="content-tbas-iframe-html">
-                //             <iframe class="iframe-show" src="homePage.html"></iframe>
+                //             <iframe class="iframe_show" src="homePage.html"></iframe>
                 //         </div>`
                 content: `<div class="content-tbas-iframe-html">
                              ${navList[index]}
@@ -137,4 +137,22 @@ window.onload = function () {
         //   });
         //   $.post(`/api/goods/findAll`)
     });
+    $('.exitLogin').click(function(){
+        loadingAjax('/api//user/logout','post','',sessionStorage.token,'','','',layer).then((res)=>{
+            console.log(res)
+            // window.history.go(-1);
+            window.location.replace('../login/login.html')
+        }).catch((err)=>{
+            console.log(err)
+            layer.msg(err.message)
+        })
+    });
+
+$("body").bind("keydown",function(event){
+    if (event.keyCode == 116) {
+               event.preventDefault(); //阻止默认刷新
+        //  $(".iframe_show").attr("src",window.frames["iframe_show"].src);
+      
+   }
+})  
 }

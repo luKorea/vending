@@ -6,7 +6,6 @@ layui.use(['form', 'layer'], function () {
     function keppPass() {
         if (sessionStorage.accountPass) {
             var accountPass = JSON.parse(sessionStorage.accountPass);
-            console.log(accountPass);
             form.val("loginData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
                 "account": accountPass.account // "name": "value"
                 , "pass": accountPass.pass
@@ -19,6 +18,14 @@ layui.use(['form', 'layer'], function () {
     };
     keppPass();
     $('.login-btn').click(function () {
+        loginFUn()
+    });
+    $('#pass').keydown(function(e){
+        if(e.keyCode == 13){
+            loginFUn()
+        }
+    })
+    function loginFUn(){
         var logData = form.val("loginData")
         if (logData.account) {
             if (logData.pass) {
@@ -31,9 +38,11 @@ layui.use(['form', 'layer'], function () {
                     },
                     data: JSON.stringify({
                         username: logData.account,
-                        password: logData.pass
+                        password:hex_md5(logData.pass) 
+                        // password:logData.pass
                     }),
                     success: function (res) {
+                        console.log(hex_md5(logData.pass) )
                         if (res.code == 200) {
                             console.log(res)
                             sessionStorage.username = res.data.username;
@@ -47,9 +56,10 @@ layui.use(['form', 'layer'], function () {
                                 })
                             }
                             // return ;
-                            window.location.href="../index/index.html"
+                            // window.location.href="../index/index.html"
+                            location.replace('../index/index.html')
                         } else {
-                            layer.msg(res.data)
+                            layer.msg(res.data,{icon:2})
                         }
                     }
                 })
@@ -59,5 +69,6 @@ layui.use(['form', 'layer'], function () {
         } else {
             layer.msg('请输入账号')
         }
-    })
+    }
+    javascript:window.history.forward(1);
 })
