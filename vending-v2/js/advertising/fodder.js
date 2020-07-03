@@ -218,7 +218,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             console.log(valData)
             $('.anUp').slideUp();
             if (indexFlag != valData.vid) { 
-                indexFlag = valData.vId;
+                indexFlag = valData.vid;
                 $(this).siblings('.anUp').slideDown();
             } else {
                 indexFlag = null;

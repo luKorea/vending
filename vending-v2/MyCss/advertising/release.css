@@ -603,7 +603,7 @@ video{
     opacity: 0;
 }
 .topBox{
-    width: 1300px;
+    width: 1000px;
     position: relative;
     margin: 2vh auto 50px;
     background: #fff;
@@ -712,4 +712,7 @@ video{
 }
 .mandatroFooter div:nth-child(1){
     border-right:1px solid rgb(151, 154, 161,0.5); 
+}
+.preview  {
+    z-index: 9999;
 }

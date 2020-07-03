@@ -932,17 +932,18 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         goods: receiveArray,
         merchantId: sessionStorage.machineID
       })
-      setTimeout(() => {
         loadingAjax('/api/goods/forwardGoods', 'post', receiveData, sessionStorage.token, 'mask', 'topGoodsList', 'topBox', layer).then((res) => {
           console.log(res)
           layer.msg(res.message, { icon: 1 });
           tableIns.reload({
             where: {}
+          });
+          parentGoods.reload({
+            where:{}
           })
         }).catch((err) => {
           layer.msg(err.message, { icon: 2 })
         })
-      }, 1000)
     } else {
       layer.msg('请选择接收的商品', { icon: 7 })
     }
