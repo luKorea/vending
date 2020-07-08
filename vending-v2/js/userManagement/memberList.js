@@ -20,7 +20,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       { field: 'name', width: 150, title: '姓名' },
       { field: 'phone', width: 150, title: '手机号' },
       { field: 'merchantName', width: 150, title: '所属商户' },
-      { field: 'alias', width: 150, title: '用户编号' },
+      { field: 'alias', width: 200, title: '用户编号' },
       { field: 'addUser', width: 150, title: '创建人', },
       { field: 'addTime', width: 180, title: '创建时间', sort: true },
       { field: 'lastUser', width: 150, title: '最后操作人', },
@@ -66,7 +66,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       else {
         return {
           "code": res.code, //解析接口状态
-          "msg": res.msg,   //解析提示文本
+          "msg": res.message,   //解析提示文本
         }
       }
 
@@ -75,8 +75,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       statusCode: 200 //规定成功的状态码，默认：0
     },
     done: function (res) {
-      if (res.code == 403) {
-
+      if (res.code == 405) {
+        $('.hangContent').show();
       }
     }
   });
@@ -94,9 +94,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
   //监听工具条
   table.on('tool(test)', function (obj) {
     var data = obj.data;
-    uuID = data.uuid;
     console.log(data)
+    uuID = data.uuid;
     if (obj.event === 'edit') {
+      if(merchantsListData.length==0){
+        layer.msg('您没有编辑用户的权限',{icon:7})
+        return ;
+      }
       // layer.msg('ID：' + data.uuid + ' 的查看操作');
       // 点击编辑事件
       $('.OperationHeader span').html('编辑用户')
@@ -120,7 +124,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       form.render('select');
       userRoles(roleList, 'checkCont', data,data.merchantId);
     } else if (obj.event === 'delete') {
-
+      if(merchantsListData.length==0){
+        layer.msg('您没有删除用户的权限',{icon:7})
+        return ;
+      }
       layer.confirm('确定删除？', function (index) {
         $.ajax({
           type: 'get',
@@ -133,17 +140,29 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
           },
           success: function (res) {
             if (res.code == 200) {
-              layer.msg(res.message);
+              layer.msg(res.message,{icon:1});
               obj.del();
               layer.close(index);
             } else if (res.code == 403) {
               window.parent.location.href = "../login/login.html";
             } else {
-              layer.msg(res.message);
+              layer.msg(res.message,{icon:2});
             }
           }
         });
       });
+    }else if(obj.event === 'role'){
+      if(data.roles.length==0){
+        layer.msg('该用户没有配置角色',{icon:7});
+        return ;
+      }
+      var RoleListText='';
+      data.roles.forEach((item,index)=>{
+        RoleListText+=`<p>${item.name}</p>`
+      });
+      $('.RoleListBody>div').empty();
+      $('.RoleListBody>div').html(RoleListText)
+      popupShow('roleContList','RoleListBox')
     }
   });
 
@@ -153,6 +172,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
   // type 'add' edit 
   //点击添加成员事件
   $('.addBtn').click(function () {
+    if(merchantsListData.length==0){
+      layer.msg('您没有添加用户的权限',{icon:7})
+      return ;
+    }
     // $('.mask').fadeIn();
     // $('.maskSpan').addClass('maskIcon')
     popupShow('MemberOperation', 'MemberContent')
@@ -230,7 +253,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var openStart = informData.startThe ? 1 : 0;
     var roleSignStart = informData.administrator ? 1 : 0;
     console.log(informData)
-    setTimeout(() => {
       if (urlApi) {
         $.ajax({
           type: 'post',
@@ -292,7 +314,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
           }
         })
       }
-    }, 1000)
 
   })
   $('.listInput input[name="phone"]').blur(function () {
@@ -402,6 +423,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
   // 获取商户列表
   var merchantsListData = merchantsListMian('');
   console.log(merchantsListData)
+  // if(merchantsListData.length==0){
+  //   $('.left-mian').hide().next('.onLeft').hide();
+  // }
   // 左侧商户列表
   // leftMerchantsList(merchantsListData,'accountContnet');
   // $('.fixedAccount').click(function(){
@@ -431,6 +455,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
   //树状图
   var dataList = treeList();
+  console.log(dataList)
   treeFun(tree,'test1',tableIns,dataList,'condition')
   // 刷新页面
   $('.refreshBtn').click(function () {
@@ -442,5 +467,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     if (event.keyCode == 116) {
       f5Fun()
   }
-})
+});
+$('.playHeader .close').click(function () {
+  $(this).parent().parent().addClass('margin0')
+  $(this).parents('.maskContnet').fadeOut();
+});
 });

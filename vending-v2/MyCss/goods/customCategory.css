@@ -138,3 +138,6 @@
     border-color: #be954a !important ;
     color: #be954a !important;
 }
+.sidebar{
+    max-height: 770px;
+}

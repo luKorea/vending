@@ -57,11 +57,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             if (res.code == 403) {
                 // window.history.go(-1)
                 window.parent.location.href = "../login/login.html";
+            }else if(res.code==405){
+                $('.hangContent').show()
             }
         }
     });
-
-
     // 关闭弹窗
     $('.playHeader .close').click(function () {
         $(this).parent().parent().addClass('margin0')
@@ -77,6 +77,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         permissions4=[],//商品素材权限
         permissions5=[],//售货机权限
         permissions6=[];//广告权限
+        permissions7=[];//通用模块
     //监听工具条
     var objData = null;
     table.on('tool(test)', function (obj) {
@@ -127,23 +128,28 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                                         break;
                                     case 7:
                                         permissions6.push(item)
-                                        break;    
+                                        break;   
+                                    case 10:
+                                        permissions7.push(item)
+                                        break;        
                                     // default:
                                     //     console.log(index)
                                 }
                             })
-                            permissionsList(permissions1,'permissionsASF',objData);
-                            permissionsList(permissions2,'permissionsGClass',objData);
-                            permissionsList(permissions3,'permissionsGoods',objData)
-                            permissionsList(permissions4,'permissionsGAF',objData)
-                            permissionsList(permissions5,'permissionsMachine',objData)
-                            permissionsList(permissions6,'permissionsASR',objData)
+                           
                         } else {
                             return;
                         }
                     }
                 });
             };
+            permissionsList(permissions1,'permissionsASF',objData);
+            permissionsList(permissions2,'permissionsGClass',objData);
+            permissionsList(permissions3,'permissionsGoods',objData)
+            permissionsList(permissions4,'permissionsGAF',objData)
+            permissionsList(permissions5,'permissionsMachine',objData)
+            permissionsList(permissions6,'permissionsASR',objData)
+            permissionsList(permissions7,'permissionsGeneral',objData)
             // permissionsList(permissionsDataList, 'permissionsAS', objData);
 
         } else if (obj.event === 'delete') {

@@ -29,7 +29,6 @@ layui.use(['form', 'layer'], function () {
         var logData = form.val("loginData")
         if (logData.account) {
             if (logData.pass) {
-                // 
                 $.ajax({
                     type: 'post',
                     url: `/api/user/login`,

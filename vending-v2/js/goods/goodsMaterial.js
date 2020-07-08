@@ -1,4 +1,4 @@
-layui.use(['form', 'layer', 'laydate', 'table'], function () {
+layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   // tab切换
   var index = 0
   $('.navTab li').click(function () {
@@ -45,7 +45,8 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
   var startTime = '';
   //结束时间
   var endTime = '';
-  var form = layui.form;
+  var form = layui.form,
+  tree=layui.tree;
   //   时间选择器
   var laydate = layui.laydate;
   laydate.render({
@@ -165,13 +166,14 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
         } else {
           return {
             "code": res.code, //解析接口状态
-            "msg": res.msg, //解析提示文本
+            "msg": res.message, //解析提示文本
           }
         }
 
       },
       where: {
-        conditionFour: '0'
+        conditionFour: '0',
+        conditionSix:sessionStorage.machineID
       },
       response: {
         statusCode: 200 //规定成功的状态码，默认：0
@@ -229,7 +231,7 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
               tableData.reload({
                 where: {}
               })
-            }, 200)
+            }, 100)
           } else if (res.code == 403) {
             window.parent.location.href = "../login/login.html";
           } else {
@@ -250,7 +252,8 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
         conditionThree: $('.key-contnet input[name="KeyImgName"]').val(),
         conditionFour: '0',
         condition: startTime,
-        conditionTwo: endTime
+        conditionTwo: endTime,
+        conditionFive:$('.ImgContnet select[name="logoImgStatus"]').val()
       }
     })
   });
@@ -261,7 +264,8 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
         conditionThree: $('.key-contnet input[name="keyVideoName"]').val(),
         conditionFour: '1',
         condition: startTime2,
-        conditionTwo: endTime2
+        conditionTwo: endTime2,
+        conditionFive:$('.VideoContnet select[name="videoStatus"]').val()
       }
     })
   });
@@ -272,7 +276,8 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
         conditionThree: $('.details input[name="KeyImgName"]').val(),
         conditionFour: '2',
         condition: startTime3,
-        conditionTwo: endTime3
+        conditionTwo: endTime3,
+        conditionFive:$('.details select[name="detailsImgStatus"]').val()
       }
     })
   })
@@ -326,7 +331,8 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
 
     },
     where: {
-      conditionFour: '1'
+      conditionFour: '1',
+      conditionSix:sessionStorage.machineID
     },
     response: {
       statusCode: 200 //规定成功的状态码，默认：0
@@ -508,7 +514,6 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
           delID.push(numberList)
         });
         console.log(delID)
-        setTimeout(() => {
           $.ajax({
             type: 'post',
             url: '/api/good_material/deleteGoodMaterial',
@@ -544,7 +549,6 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
               }
             }
           })
-        }, 1000)
       })
     } else {
       layer.msg('请选择需要删除的图片或视频', { icon: 7 });
@@ -578,9 +582,7 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
         checkList.push(submiObj)
       });
       console.log(checkList)
-      setTimeout(() => {
-        goodsAudit('1', checkList, tableType, $(that).attr('typeId'));
-      }, 1000)
+        goodsAudit('1', checkList, tableType, $(that).attr('typeId'),'/api/good_material/submitGoodMaterial');
     } else {
       layer.msg('请选择需要提交审核的图片或视频', { icon: 7 });
     }
@@ -615,9 +617,7 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
           };
           auditList.push(submiObj)
         });
-        setTimeout(() => {
-          goodsAudit('0', auditList, tableType, $(that).attr('typeId'));
-        }, 1000)
+          goodsAudit('0', auditList, tableType, $(that).attr('typeId'),'/api/good_material/checkGoodMaterial');
       })
     } else {
       layer.msg('请选择需要提交审核的图片或视频', { icon: 7 });
@@ -625,10 +625,10 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
   })
 
   // 提交审核，审核通过，审核不通过方法
-  function goodsAudit(type, data, eleTable, conditionFour) {
+  function goodsAudit(type, data, eleTable, conditionFour,url) {
     $.ajax({
       type: 'post',
-      url: '/api/good_material/updateGoodMaterial',
+      url,
       headers: {
         "Content-Type": "application/json",
         token,
@@ -837,13 +837,14 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
       } else {
         return {
           "code": res.code, //解析接口状态
-          "msg": res.msg, //解析提示文本
+          "msg": res.message, //解析提示文本
         }
       }
 
     },
     where: {
-      conditionFour: '2'
+      conditionFour: '2',
+      conditionSix:sessionStorage.machineID
     },
     response: {
       statusCode: 200 //规定成功的状态码，默认：0
@@ -947,5 +948,25 @@ layui.use(['form', 'layer', 'laydate', 'table'], function () {
     if (event.keyCode == 116) {
       f5Fun()
     }
+  })
+  //树装图
+  var dataListGoodsImg = treeList();
+  treeFunMaterial(tree, 'LogoIMG', advertisingLis, dataListGoodsImg, 'conditionSix','treelistOne',);
+  var detailsIMGList = treeList();
+  treeFunMaterial(tree, 'detailsIMG', detailsTable, detailsIMGList, 'conditionSix','treelistTwo',);
+  var dataGoodsVideoList = treeList();
+  treeFunMaterial(tree, 'dataGoodsVideo', videoTable, dataGoodsVideoList, 'conditionSix','treelistThree',);
+  //左边商户列表部分显示隐藏
+  $('.sidebar i').click(function () {
+    console.log($(this).parent())
+    console.log($(this).parents());
+    $(this).parents('.left-mian').hide();
+    $(this).parents('.left-mian').siblings('.on-left').show();
+    // $('.left-mian').hide();
+    // $('.on-left').show()
+  });
+  $('.on-left').click(function () {
+    $('.left-mian').show();
+    $('.on-left').hide();0
   })
 })

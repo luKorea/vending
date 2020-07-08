@@ -13,6 +13,7 @@
 .margin{
     width: 100%;
     overflow: hidden;
+    margin-bottom: 0;
 }
 
 .fixed{
@@ -608,6 +609,9 @@
         width: 100%;
         overflow-x: auto;
 
+    }
+    .editor-content .layui-form{
+        width: 60%;
     }
     .layui-table-body{
         max-height: 500px !important;

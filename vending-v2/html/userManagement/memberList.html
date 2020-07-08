@@ -142,7 +142,7 @@
                             </div>
                         </div>
                         <div class="terminal" style="margin-top: 15px;">
-                            <span style="display: inline-block;width:10%;padding-right: 12px;">所属商户：</span>
+                            <span style="display: inline-block;width:10%;padding-right: 12px;"><span style="color: red;">*</span> 所属商户：</span>
                             <div class="layui-form" lay-filter="">
                                 <select name="marchantsListname" class="marchantsList" lay-filter="stateSelect">
                                     <!-- <option value="">全部</option>
@@ -182,6 +182,26 @@
                 数据处理中，请稍候
             </div>
         </div>
+        <!-- 用户角色列表 -->
+        <div class="roleContList maskContnet" >
+            <div class="RoleListBox margin0">
+                <div class="playHeader">
+                    <span>用户角色列表</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="RoleListBody">
+                    <div>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 没有权限时显示白屏 -->
+        <div class="hangContent">
+            <p>您没有访问用户管理的权限!</p>
+        </div>
     </div>
 </body>
 <script type="text/html" id="barDemo">
@@ -192,7 +212,11 @@
         <button class="layui-btn layui-btn-sm btn operation" typeID='2' lay-event="edit">
             <span style="color:#fff;">编辑</span>
         </button>
+        <button class="layui-btn layui-btn-sm btn "  lay-event="role">
+            <span style="color:#fff;">角色列表</span>
+        </button>
         <button class="layui-btn layui-btn-sm btn del-btn" lay-event="delete">删除</button>
+        
     </div>
 </script>
 <script src="../../js/public/md5.js"></script>

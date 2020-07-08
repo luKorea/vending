@@ -43,12 +43,16 @@
     position: absolute;
     top: 0;
     left: 0%;
+    display: flex;
+    justify-content: start;
 }
 .VideoContnet,.details{
     width: 100%;
     position: absolute;
     top: 0;
     left: 100%; 
+    display: flex;
+    justify-content: start;
 }
 .ImgFlex,.videoFlex{
     width: 100%;
@@ -268,8 +272,18 @@
 }
 .layui-form{
     width: 100%;
-    overflow-x: auto;
+    /* overflow-x: auto; */
 }
 .itmes .layui-form{
         display: block;
+}
+.sidebar i {
+    top: 300px; 
+}
+.on-left{
+    top: 300px;
+}
+.imgListBox{
+    width: 100%;
+    overflow: hidden;
 }

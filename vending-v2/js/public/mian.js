@@ -20,10 +20,11 @@ function Goodsdel(id, indexs, obj, index) {
         if (res.code == 200) {
           obj.del();
           layer.close(index);
+          layer.msg(res.message,{icon:1});
         } else if (res.code == 403) {
-          window.history.go(-1)
+          window.parent.location.href = "../login/login.html";
         } else {
-          layer.msg(res.message);
+          layer.msg(res.message,{icon:2});
         }
       }
     })
@@ -41,11 +42,11 @@ function Goodsdel(id, indexs, obj, index) {
         if (res.code == 200) {
           obj.del();
           layer.close(index);
-          layer.msg('删除成功');
+          layer.msg('删除成功',{icon:1});
         } else if (res.code == 403) {
           window.parent.location.href = "../login/login.html";
         } else {
-          layer.msg(res.message);
+          layer.msg(res.message,{icon:2});
         }
       }
     })
@@ -240,7 +241,7 @@ function treeList() {
 function treeFun(tree, element, tableID, data, key,goodsCLass,selectData,conditionThree) {
   tree.render({
     elem: `#${element}`,
-    id: 'treelist',
+    id:'treelist',
     showLine: !0 //连接线
     ,
     onlyIconControl: true, //左侧图标控制展开收缩 
@@ -319,7 +320,7 @@ function treeFunCheck(tree, element, tableID, data, key,layer) {
     data,
     text: {
       defaultNodeName: '无数据',
-      none: '加载数据失败！'
+      none: '您没有权限，请联系管理员授权!'
     },
     click: function (obj) {
       // console.log(obj)
@@ -530,4 +531,71 @@ function f5Fun() {
   //采用location.reload()在火狐下可能会有问题，火狐会保留上一次链接
   location = location;
 
+}
+
+function treeFunMaterial(tree, element, tableID, data, key,id) {
+  tree.render({
+    elem: `#${element}`,
+    id,
+    showLine: !0 //连接线
+    ,
+    onlyIconControl: true, //左侧图标控制展开收缩 
+    data,
+    text: {
+      defaultNodeName: '无数据',
+      none: '您没有权限，请联系管理员授权!'
+    },
+    click: function (obj) {
+      sessionStorage.merchantIdData = obj.data.id;
+      varData = obj.data.id;
+      console.log(obj);
+      tableID.reload({
+        where: {
+          [key]: obj.data.id + '',
+        }
+      })
+      // var nodes = document.getElementsByClassName("layui-tree-txt");
+      var nodes=$(`#${element} .layui-tree-txt`)
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].innerHTML === obj.data.title)
+          nodes[i].style.color = "#be954a";
+        else
+          nodes[i].style.color = "#555";
+      }
+      if (!obj.data.children) {
+        $.ajax({
+          type: 'post',
+          url: '/api/merchant/getMerchantGroup',
+          headers: {
+            token,
+            "Content-Type": "application/json",
+          },
+          async: false,
+          data: JSON.stringify({
+            topId: obj.data.id
+          }),
+          success: function (res) {
+            if (res.code == 200) {
+              if (res.data[0].childMerchant.length > 0) {
+                obj.data.spread = true;
+                obj.data.children = [];
+                res.data[0].childMerchant.forEach((item, index) => {
+
+                  var childrenObj = {
+                    id: item.id,
+                    title: item.name
+                  }
+                  obj.data.children.push(childrenObj)
+                });
+                tree.reload(id, {
+                });
+              }
+            }
+          }
+        })
+
+      }
+
+    },
+  });
 }

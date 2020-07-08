@@ -17,13 +17,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             cols: [[
                 { field: 'name', width: 180, title: '商户名' },
-                { field: 'merchantName', width: 180, title: '上级商户' },
-                { field: 'alias', width: 180, title: '商户编号' },
+                { field: 'merchantName', width: 150, title: '上级商户',templet:function(d){
+                  return  d.id==0?'':d.merchantName
+                } },
+                { field: 'alias', width: 160, title: '商户编号' },
                 { field: 'addUser', width: 150, title: '创建人', },
                 { field: 'addTime', width: 180, title: '创建时间', sort: true },
                 { field: 'lastName', width: 150, title: '最后操作人', },
                 { field: 'lastTime', width: 180, title: '最后操作时间', sort: true },
-                { field: 'operation',  width: 230, title: '操作', toolbar: '#barDemo' },
+                { field: 'operation',  width: 150, title: '操作', toolbar: '#barDemo' },
             ]]
             , id: 'tableId'
             , page: true
@@ -62,6 +64,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             done: function (res) {
                 if (res.code == 403) {
                     window.parent.location.href = "../login/login.html";
+                }else if(res.code==405){
+                   
+                    $('.hangContent').show();
                 }
             }
         });
@@ -75,13 +80,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     $('.left-mian').show()
   })
     // 商户列表
-    var marchantsList = null;
+    var marchantsList = merchantsListMian('');
     //监听工具条
     var data = null;
     table.on('tool(test)', function (obj) {
         data = obj.data;
         console.log(data)
         if (obj.event === 'edit') {
+            if(marchantsList.length==0){
+                layer.msg('您没有编辑商户的权限',{icon:7});
+                return ;
+            }
             $('.editMerchants input[name="merchantsName"]').val(data.name)
             popupShow('MemberOperation', 'MemberContent')
             // editMarchantsSelect();
@@ -98,7 +107,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             console.log(data.id)
             
         } else if (obj.event === 'delete') {
-
+            if(marchantsList.length==0){
+                layer.msg('您没有编辑商户的权限',{icon:7});
+                return ;
+            }
             layer.confirm('确定删除？', function (index) {
                 $.ajax({
                     type: 'post',
@@ -116,6 +128,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         layer.close(index);
                         if (res.code == 200) {
                             layer.msg('删除成功', { icon: 1 })
+                            dataList = treeList();
+                            treeFun(tree,'test1',tableIns,dataList,'conditionTwo','','','conditionThree');
                             tableIns.reload({
                                 where: {}
                             })
@@ -140,9 +154,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             }
         })
     })
-
     //点击添加成员事件
     $('.addBtn').click(function () {
+        if(marchantsList.length==0){
+            layer.msg('您没有添加商户的权限',{icon:7});
+            return ;
+        }
         marchantsList = merchantsListMian('');
         mercantsSelectList(marchantsList, 'addMarchantsList', form);
         form.render('select');
@@ -153,20 +170,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     $('.cancel_btn').click(function () {
         popupHide('MemberOperation', 'MemberContent')
     });
-
-    // 编辑商户
-    $('.submit_btn').click(function () {
-        // var informData = form.val("information");       
-        // $('.mask').fadeIn();
-        // $('.maskSpan').addClass('maskIcon')
-
-
-        // console.log(informData)
-        // setTimeout(() => {
-
-        // }, 1000)
-
-    })
     $('.playHeader .close').click(function () {
         $(this).parent().parent().addClass('margin0')
         $(this).parents('.maskContnet').fadeOut();
@@ -193,7 +196,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             })
             loadingAjax('/api/merchant/newMerchant', 'post', addMerchantsData, sessionStorage.token, '', 'addMerchants', 'addBox', layer).then((res) => {
                 $('.addBox input[name="merchantsName"]').val('');
-                layer.msg(res.message, { icon: 1 })
+                layer.msg(res.message, { icon: 1 });
+                dataList = treeList();
+                treeFun(tree,'test1',tableIns,dataList,'conditionTwo','','','conditionThree');
                 tableIns.reload({
                     where: {}
                 })
@@ -218,9 +223,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 id: data.id,
                 name: $('.editMerchants input[name="merchantsName"]').val(),
                 topMerchant: Number($('.marchantsList').val()),
-                alias: aliasText
+                alias: aliasText?aliasText:'M0'
             });
             loadingAjax('/api/merchant/updateMerchant', 'post', editdMerchantsData, sessionStorage.token, '', 'MemberOperation', 'MemberContent', layer).then((res) => {
+                dataList = treeList();
+                treeFun(tree,'test1',tableIns,dataList,'conditionTwo','','','conditionThree');
                 layer.msg(res.message, { icon: 1 })
                 tableIns.reload({
                     where: {}
@@ -236,7 +243,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
     //树状图
   var dataList = treeList();
-  treeFun(tree,'test1',tableIns,dataList,'conditionTwo');
+  treeFun(tree,'test1',tableIns,dataList,'conditionTwo','','','conditionThree');
 
    // 监听f5刷新
    $("body").bind("keydown", function (event) {

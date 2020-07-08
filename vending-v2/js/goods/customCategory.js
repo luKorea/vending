@@ -27,9 +27,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
           }
         },  // { field: 'users', width: 180, title: '商户名', sort: true }, //templet: '<div>{{d.user.userName}}</div>'      
         {
-          field: 'classifyTime', width: 200, title: '创建时间', sort: true, templet: function (d) {
-            return d.user != null ? d.user.addTime : ''
-          }
+          field: 'classifyTime', width: 200, title: '创建时间', sort: true
         },
         {
           field: 'users ', width: 160, title: '最后操作人', templet: function (d) {
@@ -37,9 +35,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
           }
         },
         {
-          field: 'users ', width: 200, title: '最后操作时间', sort: true, templet: function (d) {
-            return d.user != null ? d.user.lastTime : ''
-          }
+          field: 'lastTime ', width: 200, title: '最后操作时间', sort: true
         },
         { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' }
       ]]
@@ -216,7 +212,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             window.parent.location.href = "../login/login.html";
           }
           else {
-            layer.msg(res.msmessage, { icon: 2 });
+            layer.msg(res.message, { icon: 2 });
           }
         }
       })

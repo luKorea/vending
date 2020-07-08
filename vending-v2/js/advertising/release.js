@@ -139,7 +139,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         numderID = obj.data.number;
         if (obj.event === 'preview') {
             console.log(obj.data.publicizeAdvert)
-            durationData = obj.data.publicizeAdvert;        
+            durationData = obj.data.publicizeAdvert;
             publisSwiperCont(obj.data.publicizeAdvert, 'previewSwiperCont', 'swiperDetails', durationData);
             var options = {
                 'interval': durationData[0].time * 1000
@@ -565,7 +565,8 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                         token,
                     },
                     data: JSON.stringify({
-                        publicizeAdvert: confirmList
+                        publicizeAdvert: confirmList,
+                        merchantId: sessionStorage.machineID
                     }),
                     success: function (res) {
                         $('.mask').fadeOut();
@@ -986,15 +987,17 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 token,
             },
             cols: [[
-                { type: 'checkbox', }, 
+                { type: 'checkbox', },
                 { field: 'number', width: 190, title: '发布单号', templet: "#Listimgtmp" },
-                { field: 'duration', width: 160, title: '广告时长(秒)', templet:function(d){
-                    var advertisingTime = 0;
-                    d.advertising.forEach((item,index)=>{
-                        return advertisingTime += Number(item.time);
-                    });
-                     return advertisingTime
-                }},
+                {
+                    field: 'duration', width: 160, title: '广告时长(秒)', templet: function (d) {
+                        var advertisingTime = 0;
+                        d.advertising.forEach((item, index) => {
+                            return advertisingTime += Number(item.time);
+                        });
+                        return advertisingTime
+                    }
+                },
                 {
                     field: 'size', width: 160, title: '广告大小(MB)', templet: function (d) {
                         var advertisingSize = 0;
@@ -1006,8 +1009,10 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     }
 
                 },
+                { field: `topMerchant`, width: 140, title: '推送商户', },
+                { field: `targetMerchant`, width: 140, title: '接收商户', },
                 {
-                    field: 'received', width: 130, title: '接收状态 ', templet: function (d) {
+                    field: 'received', width: 100, title: '接收状态 ', templet: function (d) {
                         return d.received == 0 ? '未接收' : '已接收'
                     }
                 },
@@ -1108,7 +1113,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     where: {}
                 });
                 releaseHistoryList.reload({
-                    where:{}
+                    where: {}
                 })
             }).catch((err) => {
                 layer.msg(err.message, { icon: 2 })
@@ -1120,27 +1125,27 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
 
     // 查询
-    
-    // 推送列表查询
-  $('.topBody .pushQueryBtn').click(function () {
-    releaseHistoryList.reload({
-      where: {
-        condition:$('.topBody select[name="receiveStatus"]').val()||'0',  //是否接收
-        conditionTwo:$('.topBody select[name="receiveType"]').val()||'0',//发送接收
-        conditionThree:$('.topBody select[name="mandatory"]').val()||'0', //是否强制
-      }
-    })
-  });
 
-//   预览推送广告   
-table.on('tool(parentTableTest)',function(obj){
-    console.log(obj)
-    durationData = obj.data.advertising;        
-    publisSwiperCont(obj.data.advertising,'previewSwiperCont','swiperDetails',durationData);
-    var options = {
-        'interval': durationData[0].time * 1000
-    }
-    publis.reload(options);
-    popupShow('preview', 'previewContnet');
-})
+    // 推送列表查询
+    $('.topBody .pushQueryBtn').click(function () {
+        releaseHistoryList.reload({
+            where: {
+                condition: $('.topBody select[name="receiveStatus"]').val() || '0',  //是否接收
+                conditionTwo: $('.topBody select[name="receiveType"]').val() || '0',//发送接收
+                conditionThree: $('.topBody select[name="mandatory"]').val() || '0', //是否强制
+            }
+        })
+    });
+
+    //   预览推送广告   
+    table.on('tool(parentTableTest)', function (obj) {
+        console.log(obj)
+        durationData = obj.data.advertising;
+        publisSwiperCont(obj.data.advertising, 'previewSwiperCont', 'swiperDetails', durationData);
+        var options = {
+            'interval': durationData[0].time * 1000
+        }
+        publis.reload(options);
+        popupShow('preview', 'previewContnet');
+    })
 });

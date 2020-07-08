@@ -9,10 +9,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.left-mian').show();
         $('.on-left').hide()
     })
-    // 获取商户列表
+    // 获取上级商户列表
     var merchantsListData = merchantsListMian('');
-    // 左侧商户列表
-    // leftMerchantsList(merchantsListData, 'accountContnet');
+    console.log(merchantsListData)
     var table = layui.table,
         token = sessionStorage.token,
         layer = layui.layer,
@@ -32,7 +31,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     field: 'info', width: 200, title: '终端信息', align: 'center',
                     // templet: function (d) {  return `<div><span style="color:#be954a">${d.info}</span></div>` }  
                 },
-                { field: 'location', width: 230, title: '地址', },
+                { field: 'location', width: 350, title: '地址', },
                 {
                     field: 'CreationTime', width: 150, title: '缺货状态', sort: true, align: 'center', templet: function (d) {
                         return `<div><span class="${d.stockStatus == 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.stockStatus == 0 ? '正常' : d.stockStatus == 1 ? '一般' : '严重'}</span></div>`
@@ -137,6 +136,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     var machineSetData = null
     table.on('tool(machineTable)', function (obj) {
         machineSetData = obj.data;
+        console.log(machineSetData)
         $('.maskHeader span').html(machineSetData.info + '详细信息')
         if (obj.event == 'set') {
             $('.setUpCont').show();
@@ -159,8 +159,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (machineSetData.location) {
                 region = machineSetData.location.split(' ')
             }
-
-            mercantsSelectList(merchantsListData, 'merchantsName', form)
             $('.editMachineBox .layui-tree-txt').css({ color: '#555' })
             form.val("editmachine", {
                 'sNumber': machineSetData.number,
@@ -174,10 +172,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // 'userPhone': machineSetData.userPhone,
                 'headPhone': machineSetData.chargerPhone,
                 'describe': machineSetData.description,
-                'merchantsName': machineSetData.userNum
+                'merchantsName': machineSetData.userNum,
+                merchantsNametext:machineSetData.merchantName
             });
 
             provinceChange(region[0]);
+            console.log(region[0])
             $('.city').val(region[1]);
             cityChange(region[1]);
             $('.district').val(region[2]);
@@ -213,6 +213,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 })
             })
         } else if (obj.event == 'startThe') {
+            if(machineSetData.onlineStatus!=1){
+                layer.msg('售货机处于离线状态不可以操作此功能',{icon:7});
+                return ;
+            }
             if (machineSetData.openStatus != 1) {
                 layer.confirm('确定营业？', function (index) {
                     layer.close(index);
@@ -257,12 +261,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                                         action: 'true'
                                                     }),
                                                     success: function (res) {
+                                                        console.log(res)
                                                         $('.mask').fadeOut();
                                                         $('.maskSpan').removeClass('maskIcon');
-                                                        layer.msg('营业成功', { icon: 1 });
-                                                        machineList.reload({
-                                                            where: {}
-                                                        })
+                                                        if(true=='true'){
+                                                            layer.msg('营业成功', { icon: 1 });
+                                                            machineList.reload({
+                                                                where: {}
+                                                            })
+                                                        }else{
+                                                            layer.msg('营业失败', { icon: 2 });
+                                                        }                                                   
                                                     }
                                                 })
                                             } else {
@@ -278,7 +287,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                             } else {
                                 layer.msg(Dres.message, { icon: 2 })
                             }
-
                         }
                     })
                 })
@@ -384,6 +392,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         geocoder.getLocation(address, function (status, result) {
             if (status === 'complete' && result.geocodes.length) {
                 var lnglat = result.geocodes[0].location //经纬度
+                console.log(lnglat)
                 // console.log(lnglat) 
                 // lat 纬度 lng经度
                 // document.getElementById('lnglat').value = lnglat;
@@ -399,12 +408,47 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         });
     };
-
+    // 经纬度定位事件   
+    function coordinatesFun(){
+        var lnglat=[$('.listFlex input[name="longitude"]').val(),$('.listFlex input[name="latitude"]').val()]
+        map.add(marker);
+        marker.setPosition(lnglat);
+        map.setFitView(marker);
+        geocoder.getAddress(lnglat, function(status, result) {
+            if (status === 'complete'&&result.regeocode) {
+                var address = result.regeocode;
+                console.log(address)
+                $('.listFlex input[name="mapVal"]').val(address.addressComponent.street+address.addressComponent.streetNumber);
+                $('.listFlex select[name="province"]').val(address.addressComponent.province)
+                provinceChange(address.addressComponent.province);
+                $('.listFlex select[name="city"]').val(address.addressComponent.city);
+                cityChange(address.addressComponent.city);
+                $('.listFlex select[name="district"]').val(address.addressComponent.district);
+                form.render('select');
+            }else{
+                layer.msg('根据地址查询位置失败', { icon: 2 })
+            }
+        });
+    };
+    map.on('click',function(e){
+        // document.getElementById('lnglat').value = e.lnglat;
+        $('.listFlex input[name="longitude"]').val()
+        console.log(e)
+        // coordinatesFun();
+    })
 
     // 输入框失去焦点事件获取地图
     $('.listFlex input[name="mapVal"]').blur(function () {
         geoCode();
-    })
+    });
+    // 经纬度输入框失去焦点事件获取地图
+    $('.listFlex input[name="longitude"]').blur(function(){
+        coordinatesFun();
+    });
+    $('.listFlex input[name="latitude"]').blur(function(){
+        coordinatesFun();
+    });
+    
     // 手机号码正则判断
     $('.listFlex input[name="userPhone"]').blur(function () {
         phoneRegular(this, layer)
@@ -676,7 +720,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     //树状图
     var dataList = treeList();
-    var dataListEdit = treeList();
+    var dataListEdit =[];
+    if(merchantsListData.length==0){
+        dataListEdit=[]
+    }else{
+        dataListEdit = treeList();
+    }
     //售货机列表
     treeFun(tree, 'test1', machineList, dataList, 'merchantId')
     var nodesEdti = null;
@@ -695,12 +744,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         data: dataListEdit,
         text: {
             defaultNodeName: '无数据',
-            none: '加载数据失败！'
+            none: '您没有修改机器所属商户的权限。'
         },
         click: function (obj) {
             console.log(obj);
             form.val("editmachine", {
-                "merchantsName": obj.data.id
+                "merchantsName": obj.data.id,
+                'merchantsNametext':obj.data.title
             })
             nodesEdti = document.getElementsByClassName("layui-tree-txt");
             for (var i = 0; i < nodesEdti.length; i++) {

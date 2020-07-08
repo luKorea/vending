@@ -58,7 +58,8 @@
 }
 .data-left p{
     margin: 10px;
-    color: red;
+    color: #be954a ;
+    font-weight: bold;
 }
 .account{
     height: 430px;
@@ -90,19 +91,29 @@
     cursor: default;
     background: #fff;
     color: #606266;
-    
+    overflow: hidden;
 }
 .equipment>div{
     cursor: pointer;
-    display: flex;
+    /* display: flex;
     -webkit-box-align: center;
-    align-items: center;
-    height: 26px;
-    white-space: nowrap;
+    align-items: center; */
+    /* height: 26px; */
+    /* white-space: nowrap; */
+    white-space:nowrap;
+    flex: 1;
 }
 .data-right{
     width: 100%;
 }
 .layui-table-body{
     max-height: 391px;
+}
+.machineList{
+    padding-left:10px;
+    width: 100%;
+    overflow-x: auto;
+    height: 95%;
+    overflow-y: auto;
+    margin-top: 10px;
 }

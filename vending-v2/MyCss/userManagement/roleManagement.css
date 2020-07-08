@@ -208,7 +208,7 @@
 .permissionsLeft{
     width: 90%;
 }
-.permissionsASF,.permissionsGClass,.permissionsGoods,.permissionsMachine,.permissionsASR,.permissionsGAF{
+.permissionsASF,.permissionsGClass,.permissionsGeneral,.permissionsGoods,.permissionsMachine,.permissionsASR,.permissionsGAF{
     width: 100%;
     /* background-color: skyblue; */
     /* height: 100px; */
@@ -216,7 +216,7 @@
     justify-self: start;
     flex-wrap: wrap;
 }
-.permissionsASF>div,.permissionsGClass>div,.permissionsGoods>div,.permissionsMachine>div,.permissionsASR>div,.permissionsGAF>div{
+.permissionsASF>div,.permissionsGeneral>div,.permissionsGClass>div,.permissionsGoods>div,.permissionsMachine>div,.permissionsASR>div,.permissionsGAF>div{
     width: 33%;
     margin-bottom: 10px;
     overflow: hidden;

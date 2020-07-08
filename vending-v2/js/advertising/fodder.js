@@ -65,7 +65,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         page: true,
         id: 'tableId',
         loading: true,
-        height: 'full-200', 
+        height: 'full-200',
         request: {
             'pageName': 'pageNum',
             'limitName': 'pageSize'
@@ -151,7 +151,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         var listID = null;
         if (checkStatus.data.length > 0) {
             listID = checkStatus.data.map((item, index) => {
-                return item.vId;
+                return item.vid;
             });
             console.log(listID);
             layer.confirm('确定删除？', function (index) {
@@ -173,7 +173,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                                 }
                             })
                         } else if (res.code == 201) {
-                            layer.msg(res.message, { icon: 7, anim: 1 });
+                            layer.msg(res.message, { icon: 7});
                         } else if (res.code == 202) {
                             layer.msg(res.message, { icon: 7 });
                             tableIns.reload({
@@ -188,18 +188,18 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 })
             });
         } else {
-            layer.msg('请选择要删除的素材', { icon: 7, anim: 1 });
+            layer.msg('请选择要删除的素材', { icon: 7 });
         }
     });
     // 收起左边账号事件
     $('.sidebar i').click(function () {
         $('.left-mian').hide();
         $('.on-left').show()
-      });
-      $('.on-left').click(function () {
+    });
+    $('.on-left').click(function () {
         $('.left-mian').show();
         $('.on-left').hide()
-      })
+    })
     var indexFlag = null;
     valData = null;
     // 素材内容
@@ -217,7 +217,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             editDuration = valData.duration;
             console.log(valData)
             $('.anUp').slideUp();
-            if (indexFlag != valData.vid) { 
+            if (indexFlag != valData.vid) {
                 indexFlag = valData.vid;
                 $(this).siblings('.anUp').slideDown();
             } else {
@@ -281,16 +281,16 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             $('.maskSpan').addClass('maskIcon')
             submitCheckStatus.data.forEach((item, index) => {
                 var submitObj = {
-                    id: item.vId,
+                    id: item.vid,
                     status: '1'
                 }
-                checkList.push(submitObj)
+                checkList.push(submitObj);
+                console.log(checkList);
+                return ;
             });
-            setTimeout(() => {
-                auditMethods('1', checkList);
-            }, 1000)
+            auditMethods('1', checkList,'/api/advertising/submitAdvertisingStatus');
         } else {
-            layer.msg('请选择需要提交审核的素材', { icon: 7, anim: 1 });
+            layer.msg('请选择需要提交审核的素材', { icon: 7});
         }
     });
 
@@ -305,18 +305,16 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 $('.maskSpan').addClass('maskIcon')
                 approveCheckStatus.data.forEach((item, index) => {
                     var approveObj = {
-                        id: item.vId,
+                        id: item.vid,
                         status: '2'
                     }
                     approveList.push(approveObj)
                 });
-                setTimeout(() => {
-                    auditMethods('0', approveList)
-                }, 1000)
+                auditMethods('0', approveList,'/api/advertising/checkAdvertisingStatus')
             })
 
         } else {
-            layer.msg('请选择需要通过审核的素材', { icon: 7, anim: 1 });
+            layer.msg('请选择需要通过审核的素材', { icon: 7 });
         }
     });
 
@@ -331,17 +329,15 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 $('.maskSpan').addClass('maskIcon')
                 noPassCheckStatus.data.forEach((item, index) => {
                     var noPassObj = {
-                        id: item.vId,
+                        id: item.vid,
                         status: '3'
                     }
                     noPassList.push(noPassObj)
                 });
-                setTimeout(() => {
-                    auditMethods('0', noPassList)
-                }, 1000)
+                auditMethods('0', noPassList,'/api/advertising/checkAdvertisingStatus')
             })
         } else {
-            layer.msg('请选择需要不通过审核的素材', { icon: 7, anim: 1 });
+            layer.msg('请选择需要不通过审核的素材', { icon: 7 });
         }
     })
     // 
@@ -358,7 +354,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     token,
                 },
                 data: JSON.stringify({
-                    id: valData.vId
+                    id: valData.vid
                 }),
                 success: function (res) {
                     console.log(res)
@@ -366,7 +362,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         if (res.data == '0') {
                             if ((editImgVideo.indexOf('jpg') > 1 & editValDataConfirm.materiaAttribute == '0') || (editImgVideo.indexOf('mp4') > 1 & editValDataConfirm.materiaAttribute == '1')) {
                                 editMaterial(
-                                    valData.vId,
+                                    valData.vid,
                                     editValDataConfirm.materialName,
                                     editValDataConfirm.materiaAttribute,
                                     editValDataConfirm.materiaStatus,
@@ -382,7 +378,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         } else {
                             layer.confirm('检测到当前素材只能修改名称和状态，是否继续修改？', function (index) {
                                 editMaterial(
-                                    valData.vId,
+                                    valData.vid,
                                     editValDataConfirm.materialName,
                                     editValDataConfirm.materiaAttribute,
                                     editValDataConfirm.materiaStatus,
@@ -397,9 +393,11 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     }
                 }
             })
-        } else {
+        } 
+        else {
+            console.log()
             editMaterial(
-                valData.vId,
+                valData.vid,
                 editValDataConfirm.materialName,
                 editValDataConfirm.materiaAttribute,
                 editValDataConfirm.materiaStatus,
@@ -446,9 +444,9 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     $('.materiaImgEdit video').attr('src', '');
                     $(that).val();
                 } else if (res.code == 403) {
-                    window.history.go(-1)
+                    window.parent.location.href = "../login/login.html";
                 } else {
-                    layer.msg(res.message)
+                    layer.msg(res.message,{icon:2})
                 }
             }
         })
@@ -491,7 +489,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     })
 
     // 编辑素材            id 名字  属性                   是否启用         类别            时长    原图  大小 微缩图
-    function editMaterial(vId, name, advertisingAttribute, advertisingStatus, advertisingType, duration, img, size, url) {
+    function editMaterial(vid, name, advertisingAttribute, advertisingStatus, advertisingType, duration, img, size, url) {
         $.ajax({
             type: 'post',
             url: '/api/advertising/updateAdvertising',
@@ -500,7 +498,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 token,
             },
             data: JSON.stringify({
-                vId,
+                vid,
                 name,
                 advertisingAttribute,
                 advertisingStatus,
@@ -519,7 +517,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     });
                     layer.msg(editRes.message, { icon: 1, anim: 1 });
                 } else if (editRes.code == 403) {
-                    window.history.go(-1)
+                    window.parent.location.href = "../login/login.html";
                 } else {
                     layer.msg(editRes.message)
                 }
@@ -670,6 +668,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         img: imgVideoHttp,//素材
                         name: addList.materialName,//素材名
                         size: ImgVideoSize.slice(0, 4),//大小
+                        merchantId: sessionStorage.machineID
                     }),
                     success: function (res) {
                         console.log(res)
@@ -679,7 +678,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                                 where: {
                                 }
                             });
-                            layer.msg(res.message)
+                            layer.msg(res.message,{icon:1})
                             form.val("uploadValData", {
                                 "materialName": '',
                                 "materiaAttribute": '',
@@ -696,7 +695,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         } else if (res.code == 403) {
                             window.history.go(-1)
                         } else {
-                            layer.msg(res.message)
+                            layer.msg(res.message,{icon:2})
                         }
                     }
                 })
@@ -709,10 +708,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     })
 
     // 提交审核，审核通过，审核不通过方法
-    function auditMethods(type, data) {
+    function auditMethods(type, data,url) {
         $.ajax({
             type: 'post',
-            url: '/api/advertising/checkAdvertisingStatus',
+            url,
             headers: {
                 "Content-Type": "application/json",
                 token,
@@ -732,7 +731,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         }
                     })
                 } else if (res.code == 201) {
-                    layer.msg(res.message, { icon: 2, anim: 1 });
+                    layer.msg(res.message, { icon: 2});
                 } else if (res.code == 202) {
                     layer.msg(res.message, { icon: 7 });
                     tableIns.reload({
@@ -740,7 +739,9 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         }
                     });
                 } else if (res.code == 403) {
-                    window.history.go(-1)
+                    window.parent.location.href = "../login/login.html";
+                }else{
+                    layer.msg(res.message, { icon: 2 });
                 }
             },
         })
@@ -850,11 +851,11 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     //         },
     //     });
     // }
-    treeFun(tree,'test1',tableIns,dataList,'merchantId')
-     // 监听f5刷新
-   $("body").bind("keydown", function (event) {
-    if (event.keyCode == 116) {
-      f5Fun()
-    }
-  })
+    treeFun(tree, 'test1', tableIns, dataList, 'merchantId')
+    // 监听f5刷新
+    $("body").bind("keydown", function (event) {
+        if (event.keyCode == 116) {
+            f5Fun()
+        }
+    })
 });

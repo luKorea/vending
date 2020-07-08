@@ -83,7 +83,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       } else {
         return {
           "code": res.code, //解析接口状态
-          "msg": res.msg, //解析提示文本
+          "msg": res.message, //解析提示文本
         }
       }
 
@@ -741,6 +741,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         { field: 'goods_images', width: 120, title: '图片', templet: "#Listimgtmp" },
         { field: 'goods_Name', width: 150, title: '商品名称', color: '#409eff' },
         { field: `classifyName`, width: 160, title: '商品类目', },
+        { field: `topMerchant`, width: 160, title: '推送商户', },
+        { field: `targetMerchant`, width: 160, title: '接收商户', },
         {
           field: 'goods_Param', width: 130, title: '接收状态 ', templet: function (d) {
             return d.received == 0 ? '未接收' : '已接收'

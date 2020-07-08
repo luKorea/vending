@@ -23,7 +23,7 @@
 }
 .account-contnet{
     margin: 20px;
-    min-height: 750px;
+    /* min-height: 750px; */
 }
 .input-account{
     font-size: 14px;
@@ -75,7 +75,7 @@
     right: 0;
     width: 40px;
     height: 100%;
-    height: 800px;
+    height: 750px;
     box-sizing: border-box;
     border-right: 12px solid #eee;
     background-color: #fff;
