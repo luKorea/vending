@@ -4,7 +4,10 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<script src="../../js/public/documentWrite.js"></script>
+	<link rel="stylesheet" href="../../font/iconfont.css">
 	<link rel="stylesheet" href="../../MyCss/public/cropper.min.css">
 	<link rel="stylesheet" href="../../MyCss/public/ImgCropping.css">
 	<link rel="stylesheet" href="../../MyCss/goods/customGoods.css">
@@ -259,21 +262,9 @@
 														</select>
 													</div>
 												</form>
-												<!-- <button type="button" class="layui-btn layui-btn-normal  btn"
-													style="margin: 0;">
-													<span>刷新</span>
-												</button> -->
 											</div>
 										</div>
 									</li>
-									<!-- <li>
-										<div class="editor-list" style="margin-bottom:22px">
-											<label for=""><span style="color:red;">*</span> 品牌/商标</label>
-											<div class="editorWidthInput">
-												<input type="text" name="goodsBrand">
-											</div>
-										</div>
-									</li> -->
 									<li>
 										<div class="editor-list" style="margin-bottom:22px">
 											<label for=""><span style="color:red;">*</span> 统一销售价</label>
@@ -805,7 +796,8 @@
 					</button>
 				</div>
 				<div class="chooseBody" style="margin-left: 50px;">
-					<div id="testGoodsCheck" class="demo-tree demo-tree-box"></div>
+					<!-- <div id="testGoodsCheck" class="demo-tree demo-tree-box"></div> -->
+					<div id="testGoodsCheck" class="tree"></div>
 				</div>
 				<div class="chooseFooter" style="margin-top:30px;padding-bottom: 20px;">
 					<div style="text-align: center;">
@@ -838,6 +830,10 @@
 				</div>
 			</div>
 		</div>
+		<!-- 没有权限时显示白屏 -->
+        <div class="hangContent">
+            <p>您没有访问的权限!</p>
+        </div>
 	</div>
 </body>
 
@@ -886,6 +882,7 @@
 </script>
 <script src="../../js/public/wangEditor.min.js"></script>
 <script src="../../js/public/cropper.min.js"></script>
+<script src="../../js/public/leg-tree.js"></script>
 <script src="../../js/goods/cuntomGoods.js"></script>
 
 </html>

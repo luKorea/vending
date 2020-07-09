@@ -96,9 +96,9 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         },
         done: function (res) {
             if (res.code == 403) {
-                window.history.go(-1)
-            } else {
-
+                window.parent.location.href = "../login/login.html";
+            } else if(res.code==405){
+                $('.hangContent').show();
             }
 
         }
@@ -360,7 +360,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     console.log(res)
                     if (res.code == 200) {
                         if (res.data == '0') {
-                            if ((editImgVideo.indexOf('jpg') > 1 & editValDataConfirm.materiaAttribute == '0') || (editImgVideo.indexOf('mp4') > 1 & editValDataConfirm.materiaAttribute == '1')) {
+                            console.log(editImgVideo.indexOf('jpg'))
+                            if ((editImgVideo.indexOf('jpg') > 1 ||editImgVideo.indexOf('png') > 1||editImgVideo.indexOf('gif') > 1 && editValDataConfirm.materiaAttribute == '0') || (editImgVideo.indexOf('mp4') > 1 && editValDataConfirm.materiaAttribute == '1')) {
                                 editMaterial(
                                     valData.vid,
                                     editValDataConfirm.materialName,
@@ -409,7 +410,6 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         }
     });
     // 素材内容 editImgVideo
-
     // 监听 编辑素材属性选择
     form.on('select(EditSelect)', function (data) {
         console.log(data.value); //得到被选中的值
@@ -700,10 +700,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     }
                 })
             } else {
-                layer.msg('请上传图片或视频')
+                layer.msg('请上传图片或视频',{icon:7})
             }
         } else {
-            layer.msg('带*为必填')
+            layer.msg('带*为必填',{icon:7})
         }
     })
 

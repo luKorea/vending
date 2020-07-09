@@ -211,24 +211,26 @@ function treeList() {
     }),
     success: function (res) {
       if (res.code == 200) {
-        var tree = res.data[0]
-        var treeObj = {
-          id: tree.id,
-          title: tree.name,
-          children: [],
-          spread: true
-        }
-        dataList.push(treeObj)
-        tree.childMerchant.forEach((item, index) => {
-          var chidernObj = {
-            id: item.id,
-            title: item.name,
-            index,
-          }
-          dataList[0].children.push(chidernObj)
-        })
+        // var tree = res.data[0]
+        // var treeObj = {
+        //   id: tree.id,
+        //   title: tree.name,
+        //   children: [],
+        //   spread: true
+        // }
+        // dataList.push(treeObj)
+        // tree.childMerchant.forEach((item, index) => {
+        //   var chidernObj = {
+        //     id: item.id,
+        //     title: item.name,
+        //     index,
+        //   }
+        //   dataList[0].children.push(chidernObj)
+        // })
         // console.log(data)
+        dataList.push(res.data[0])
       }
+      // dataList=res.data[0]
     },
     error: function (err) {
       layer.msg('服务器超时', { icon: 2 });
@@ -263,46 +265,46 @@ function treeFun(tree, element, tableID, data, key,goodsCLass,selectData,conditi
           [conditionThree?conditionThree:' ']:'0'
         }
       })
-      var nodes = document.getElementsByClassName("layui-tree-txt");
+      var nodes=$(`#${element} .layui-tree-txt`)
       for (var i = 0; i < nodes.length; i++) {
         if (nodes[i].innerHTML === obj.data.title)
           nodes[i].style.color = "#be954a";
         else
           nodes[i].style.color = "#555";
       }
-      if (!obj.data.children) {
-        $.ajax({
-          type: 'post',
-          url: '/api/merchant/getMerchantGroup',
-          headers: {
-            token,
-            "Content-Type": "application/json",
-          },
-          async: false,
-          data: JSON.stringify({
-            topId: obj.data.id
-          }),
-          success: function (res) {
-            if (res.code == 200) {
-              if (res.data[0].childMerchant.length > 0) {
-                obj.data.spread = true;
-                obj.data.children = [];
-                res.data[0].childMerchant.forEach((item, index) => {
+      // if (!obj.data.children) {
+      //   $.ajax({
+      //     type: 'post',
+      //     url: '/api/merchant/getMerchantGroup',
+      //     headers: {
+      //       token,
+      //       "Content-Type": "application/json",
+      //     },
+      //     async: false,
+      //     data: JSON.stringify({
+      //       topId: obj.data.id
+      //     }),
+      //     success: function (res) {
+      //       if (res.code == 200) {
+      //         if (res.data[0].childMerchant.length > 0) {
+      //           obj.data.spread = true;
+      //           obj.data.children = [];
+      //           res.data[0].childMerchant.forEach((item, index) => {
 
-                  var childrenObj = {
-                    id: item.id,
-                    title: item.name
-                  }
-                  obj.data.children.push(childrenObj)
-                });
-                tree.reload('treelist', {
-                });
-              }
-            }
-          }
-        })
+      //             var childrenObj = {
+      //               id: item.id,
+      //               title: item.name
+      //             }
+      //             obj.data.children.push(childrenObj)
+      //           });
+      //           tree.reload('treelist', {
+      //           });
+      //         }
+      //       }
+      //     }
+      //   })
 
-      }
+      // }
 
     },
   });
@@ -324,7 +326,7 @@ function treeFunCheck(tree, element, tableID, data, key,layer) {
     },
     click: function (obj) {
       // console.log(obj)
-      var nodes = document.getElementsByClassName("layui-tree-txt");
+      var nodes=$(`#${element} .layui-tree-txt`)
       for (var i = 0; i < nodes.length; i++) {
         if (nodes[i].innerHTML === obj.data.title)
           nodes[i].style.color = "#be954a";
@@ -369,7 +371,9 @@ function treeFunCheck(tree, element, tableID, data, key,layer) {
       }
     },
     oncheck: function (obj) {
-      console.log(obj);
+      console.log(obj.data); //得到当前点击的节点数据
+    console.log(obj.checked); //得到当前节点的展开状态：open、close、normal
+    console.log(obj.elem); //得到当前节点元素
 
     }
   });
@@ -562,40 +566,6 @@ function treeFunMaterial(tree, element, tableID, data, key,id) {
         else
           nodes[i].style.color = "#555";
       }
-      if (!obj.data.children) {
-        $.ajax({
-          type: 'post',
-          url: '/api/merchant/getMerchantGroup',
-          headers: {
-            token,
-            "Content-Type": "application/json",
-          },
-          async: false,
-          data: JSON.stringify({
-            topId: obj.data.id
-          }),
-          success: function (res) {
-            if (res.code == 200) {
-              if (res.data[0].childMerchant.length > 0) {
-                obj.data.spread = true;
-                obj.data.children = [];
-                res.data[0].childMerchant.forEach((item, index) => {
-
-                  var childrenObj = {
-                    id: item.id,
-                    title: item.name
-                  }
-                  obj.data.children.push(childrenObj)
-                });
-                tree.reload(id, {
-                });
-              }
-            }
-          }
-        })
-
-      }
-
     },
   });
 }

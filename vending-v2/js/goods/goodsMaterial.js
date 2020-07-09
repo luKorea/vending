@@ -106,6 +106,8 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   // 0为添加 1为编辑
   // var ImgIndex = null;
   $('.ImgContnet .add-btn').click(function () {
+    $('.addImgCont input[name="ImgNane"]').val('');
+    addGoodsImg=null;
     popupShow('addImgCont', 'addImgBox')
   })
   // 关闭添加图片
@@ -114,6 +116,8 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   })
   // 添加视频弹出框
   $('.VideoContnet .add-btn').click(function () {
+    $('.addVideoCont input[name="VideoName"]').val('')
+    videoSrc=null;
     popupShow('addVideoCont', 'addVideoBox')
   });
   // 关闭添加视频
@@ -340,8 +344,8 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
     done: function (res) {
       if (res.code == 403) {
         window.parent.location.href = "../login/login.html";
-      } else {
-
+      } else if(res.code==405){
+        $('.hangContent').show();
       }
     }
   });
@@ -546,6 +550,8 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
                 })
               } else if (res.code == 403) {
                 window.parent.location.href = "login.html";
+              }else{
+                layer.msg(res.message, { icon: 2 });
               }
             }
           })
@@ -658,6 +664,8 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
           })
         } else if (res.code == 403) {
           window.parent.location.href = "login.html";
+        }else{
+          layer.msg(res.message, { icon: 2 });
         }
       }
     })
@@ -859,6 +867,8 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   });
 
   $('.details .add-btn').click(function () {
+    $('.addDetailsImgCont input[name="detailsImgNane"]').val('');
+    videoSrc=null;
     popupShow('addDetailsImgCont', 'addDetailsImgBox');
   });
   $('.addDetailsImgCont input[name="fileDetails"]').change(function (e) {

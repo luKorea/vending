@@ -556,6 +556,9 @@
                 数据处理中，请稍候
             </div>
         </div>
+        <div class="hangContent">
+            <p>您没有访问的权限!</p>
+        </div>
     </div>
 </body>
 <script type="text/html" id="barDemo">
@@ -570,7 +573,7 @@
             <span style="color:#fff;">激活</span>
         </button>
         <button class="layui-btn layui-btn-sm btn {{d.actionStatus==1?'':'hide'}}" lay-event="startThe">
-            <span style="color:#fff;">{{d.openStatus != 0 ? '不营业' : '营业'}}</span>
+            <span style="color:#fff;">{{d.openStatus != 0 ? '暂停营业' : '营业'}}</span>
         </button>
     </div>
 </script>

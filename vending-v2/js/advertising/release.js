@@ -119,8 +119,8 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         done: function (res) {
             if (res.code == 403) {
                 window.parent.location.href = "../login/login.html";
-            } else {
-
+            } else if(res.code==405){
+                $('.hangContent').show();
             }
 
         }
@@ -156,7 +156,11 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             console.log(advertisingDetailsList);
             advertisingDetails(advertisingDetailsList, 'detailsListBox')
             popupShow('advertisingDetails', 'detailsBox');
-        } else if (obj.event) {
+        } else if (obj.event=='push') {
+            if(obj.data.merchantId!=sessionStorage.machineID){
+                layer.msg('不能使用下级商户广告',{icon:7});
+                return ;
+            }
             popupShow('machineDetailsCont', 'machineDetailsBox')
         }
 
@@ -607,7 +611,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             { type: 'checkbox', },
             { field: 'info', width: 200, title: '售货机信息' },
             { field: 'location', width: 300, title: '地址', },
-            { field: 'merchantName', width: 150, title: '所属账号', },
+            { field: 'merchantName', width: 150, title: '所属商户', },
             { field: 'actionTime', width: 200, title: '激活时间', },
             { field: 'description', width: 180, title: '描述', sort: true },
         ]],
@@ -655,7 +659,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     $('.machineDetailsCont .machineKeyBtn').click(function () {
         machineAdvertising.reload({
             where: {
-                conditionSix: $('.machineDetailsCont input[name="machineKey"]').val()
+                keyword: $('.machineDetailsCont input[name="machineKey"]').val()
             }
         })
     });

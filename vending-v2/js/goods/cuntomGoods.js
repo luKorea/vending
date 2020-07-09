@@ -94,6 +94,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     done: function (res) {
       if (res.code == 403) {
         window.parent.location.href = "../login/login.html";
+      }else if(res.code==405){
+        $('.hangContent').show();
       }
     }
 
@@ -451,11 +453,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           }
         })
       } else {
-        layer.msg('请上传商品图片')
+        layer.msg('请上传商品图片',{icon:7})
       }
 
     } else {
-      layer.msg('带*为必填')
+      layer.msg('带*为必填',{icon:7})
     }
   });
 
@@ -535,13 +537,14 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         } else {
           return {
             "code": res.code, //解析接口状态
-            "msg": res.msg, //解析提示文本
+            "msg": res.message, //解析提示文本
           }
         }
       },
       where: {
         conditionFour: conditionFour,
-        conditionFive: '2'
+        conditionFive: '2',
+        conditionSix:sessionStorage.machineID
       },
       response: {
         statusCode: 200 //规定成功的状态码，默认：0
@@ -644,7 +647,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       },
       where: {
         conditionFour: '1',
-        conditionFive: '2'
+        conditionFive: '2',
+        conditionSix:sessionStorage.machineID,
       },
       parseData: function (res) {
         // console.log(res)
@@ -724,6 +728,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   var dataList1 = treeList();
   treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId','goodsClass',selectData)
   treeFunCheck(tree, 'testGoodsCheck', tableIns, dataList1, 'merchantId',layer)
+  // leg.tree({
+  //   ele:"#testGoodsCheck",//选者
+  //   data:dataList1,//数据
+  //   cascade:false,//级联
+  // });
 
   // 接收列表非强制
   var parentGoods = null;
@@ -732,6 +741,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       elem: '#parentTableTest'
       , url: `/api/goods/getSendHistory`
       , method: 'post',
+      height:500,
       contentType: "application/json",
       headers: {
         token,
@@ -787,7 +797,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         } else {
           return {
             "code": res.code, //解析接口状态
-            "msg": res.msg, //解析提示文本
+            "msg": res.message, //解析提示文本
           }
         }
       },
@@ -867,7 +877,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       }
       pushArray.push(pushObj)
     });
-    setTimeout(() => {
       var pushData = JSON.stringify({
         goods: pushArray,
         merchantId: sessionStorage.machineID,
@@ -879,10 +888,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         popupHide('PushMandatory', 'MandatoryBox')
         layer.msg(res.message, { icon: 1 })
       }).catch((err) => {
+        $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon');
         popupHide('PushMandatory', 'MandatoryBox')
-        layer.msg(res.message, { icon: 2 })
+        layer.msg(err.message, { icon: 2 })
       })
-    }, 1000)
   })
   // 取消
   $('.chooseFooter .chooseCan').click(function () {
@@ -944,6 +954,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             where:{}
           })
         }).catch((err) => {
+          $('.mask').fadeOut();
+          $('.maskSpan').removeClass('maskIcon');
           layer.msg(err.message, { icon: 2 })
         })
     } else {
@@ -962,10 +974,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   //   }, 500);
   // });  
   // 监听f5刷新
-  $("body").bind("keydown", function (event) {
+ $("body").bind("keydown", function (event) {
     if (event.keyCode == 116) {
       f5Fun()
     }
-  })
+  });
 
 })

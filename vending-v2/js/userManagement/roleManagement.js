@@ -82,6 +82,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var objData = null;
     table.on('tool(test)', function (obj) {
         objData = obj.data;
+        console.log(objData)
         $('.editInput input[name="userName"]').val(objData.name)
         if (obj.event === 'operation') {
             popupShow('editRold', 'editBox');

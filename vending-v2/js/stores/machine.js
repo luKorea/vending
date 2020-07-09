@@ -101,6 +101,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             done: function (res) {
                 if (res.code == 403) {
                     window.parent.location.href = "../login/login.html";
+                }else if(res.code==405){
+                    $('.hangContent').show();
                 }
             }
         });
@@ -155,6 +157,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             salesFun(machineSetData.machineId)
             recordFun(machineSetData.machineId)
         } else if (obj.event == 'edit') {
+            if(machineSetData.openStatus==1){
+                layer.msg('温馨提示！该售货机正在营业，不可进行编辑！',{icon:7})
+            }
             var region = null;
             if (machineSetData.location) {
                 region = machineSetData.location.split(' ')
@@ -207,8 +212,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         } else if (res.code == 403) {
                             window.parent.location.href = "../login/login.html";
                         } else {
-                            layer.msg(res.msg, { icon: 2 });
+                            layer.msg(res.message, { icon: 2 });
                         }
+                    },error:function(err){
+                        layer.msg('服务器请求超时', { icon: 2 });
                     }
                 })
             })
@@ -264,27 +271,37 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                                         console.log(res)
                                                         $('.mask').fadeOut();
                                                         $('.maskSpan').removeClass('maskIcon');
-                                                        if(true=='true'){
-                                                            layer.msg('营业成功', { icon: 1 });
+                                                        if(res=='true'){
+                                                            layer.msg('操作成功', { icon: 1 });
                                                             machineList.reload({
                                                                 where: {}
                                                             })
                                                         }else{
-                                                            layer.msg('营业失败', { icon: 2 });
+                                                            layer.msg('操作失败', { icon: 2 });
                                                         }                                                   
+                                                    },errpr:function(err){
+                                                        $('.mask').fadeOut();
+                                                        $('.maskSpan').removeClass('maskIcon');
+                                                        layer.msg('服务器请求超时', { icon: 2 });
                                                     }
                                                 })
                                             } else {
+                                                $('.mask').fadeOut();
+                                                $('.maskSpan').removeClass('maskIcon');
                                                 layer.msg(Sres.message, { icon: 2 })
                                             }
                                         }
                                     })
                                 } else {
+                                    $('.mask').fadeOut();
+                                    $('.maskSpan').removeClass('maskIcon');
                                     layer.msg('该设备未激活,无法营业', { icon: 7 })
                                 }
                             } else if (Dres.code == 403) {
                                 window.parent.location.href = "../login/login.html";
                             } else {
+                                $('.mask').fadeOut();
+                                $('.maskSpan').removeClass('maskIcon');
                                 layer.msg(Dres.message, { icon: 2 })
                             }
                         }
@@ -343,16 +360,22 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                                     }
                                                 })
                                             } else {
+                                                $('.mask').fadeOut();
+                                                $('.maskSpan').removeClass('maskIcon')
                                                 layer.msg(Sres.message, { icon: 2 })
                                             }
                                         }
                                     })
                                 } else {
+                                    $('.mask').fadeOut();
+                                $('.maskSpan').removeClass('maskIcon')
                                     layer.msg('该设备未激活,无法进行营业操作', { icon: 7 })
                                 }
                             } else if (Dres.code == 403) {
                                 window.parent.location.href = "../login/login.html";
                             } else {
+                                $('.mask').fadeOut();
+                                $('.maskSpan').removeClass('maskIcon')
                                 layer.msg(Dres.message, { icon: 2 })
                             }
 
@@ -459,6 +482,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 修改售货机基本信息
     $('.editMachineCont .edittBtn').click(function () {
+        if(machineSetData.openStatus==1){
+            layer.msg('正在营业的售货机不可进行编辑！',{icon:7});
+            return ;
+        }
         var editMachineData = form.val("editmachine");
         if (editMachineData.sNumber && editMachineData.tName && editMachineData.number && editMachineData.province && editMachineData.city && editMachineData.district && editMachineData.mapVal && editMachineData.area && editMachineData.merchantsName ) {
             $('.mask').fadeIn();
@@ -494,7 +521,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         })
                     } else if (res.code == 403) {
                         window.parent.location.href = "../login/login.html";
-                    } else {
+                    } else if(res.code){
+                        layer.msg(res.message, { icon: 1 });
+                    }else{
                         layer.msg(res.message, { icon: 2 });
                     }
                 }

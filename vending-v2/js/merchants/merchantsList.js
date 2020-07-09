@@ -16,14 +16,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 token,
             },
             cols: [[
-                { field: 'name', width: 180, title: '商户名' },
+                { field: 'title', width: 180, title: '商户名' },
                 { field: 'merchantName', width: 150, title: '上级商户',templet:function(d){
                   return  d.id==0?'':d.merchantName
                 } },
                 { field: 'alias', width: 160, title: '商户编号' },
                 { field: 'addUser', width: 150, title: '创建人', },
                 { field: 'addTime', width: 180, title: '创建时间', sort: true },
-                { field: 'lastName', width: 150, title: '最后操作人', },
+                // { field: 'lastName', width: 150, title: '最后操作人', },
                 { field: 'lastTime', width: 180, title: '最后操作时间', sort: true },
                 { field: 'operation',  width: 150, title: '操作', toolbar: '#barDemo' },
             ]]

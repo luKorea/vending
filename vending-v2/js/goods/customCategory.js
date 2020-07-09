@@ -30,12 +30,12 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
           field: 'classifyTime', width: 200, title: '创建时间', sort: true
         },
         {
-          field: 'users ', width: 160, title: '最后操作人', templet: function (d) {
+          field: 'users', width: 160, title: '最后操作人', templet: function (d) {
             return d.user != null ? d.user.lastUser : ''
           }
         },
         {
-          field: 'lastTime ', width: 200, title: '最后操作时间', sort: true
+          field: 'lastTime', width: 200, title: '最后操作时间', sort: true
         },
         { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' }
       ]]
@@ -74,6 +74,9 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       },
       done: function (res) {
         rank = res.data;
+        if(res.code==405){
+          $('.hangContent').show();
+        }
       }
     });
 
@@ -88,6 +91,8 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
   var indexFlag = null;
   var operationId = null;
   $('.add-btn').click(function () {
+    $('.addClass input[name="addTypeName"]').val('');
+    $('.addClass input[name="addNote"]').val('')
     popupShow('addClass', 'addContent');
   })
   $('.cancel-btn').click(function () {
