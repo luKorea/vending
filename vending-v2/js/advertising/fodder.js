@@ -515,7 +515,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         where: {
                         }
                     });
-                    layer.msg(editRes.message, { icon: 1, anim: 1 });
+                    layer.msg(editRes.message, { icon: 1 });
                 } else if (editRes.code == 403) {
                     window.parent.location.href = "../login/login.html";
                 } else {

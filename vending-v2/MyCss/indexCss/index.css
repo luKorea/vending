@@ -153,7 +153,8 @@
 	border-right: none;
 	margin: 0;
 } 
-.header-nav-tabs-switch .layui-tab-title{
+.header-nav-tabs-switch .layui-tab-title .layui-this{
+	font-weight: bold;
 	/* border-bottom: solid 15px rgba(238,238,238) ; */
 }
 .layui-tab-title li{

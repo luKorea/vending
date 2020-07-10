@@ -119,7 +119,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         done: function (res) {
             if (res.code == 403) {
                 window.parent.location.href = "../login/login.html";
-            } else if(res.code==405){
+            } else if (res.code == 405) {
                 $('.hangContent').show();
             }
 
@@ -156,10 +156,10 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             console.log(advertisingDetailsList);
             advertisingDetails(advertisingDetailsList, 'detailsListBox')
             popupShow('advertisingDetails', 'detailsBox');
-        } else if (obj.event=='push') {
-            if(obj.data.merchantId!=sessionStorage.machineID){
-                layer.msg('不能使用下级商户广告',{icon:7});
-                return ;
+        } else if (obj.event == 'push') {
+            if (obj.data.merchantId != sessionStorage.machineID) {
+                layer.msg('不能使用下级商户广告', { icon: 7 });
+                return;
             }
             popupShow('machineDetailsCont', 'machineDetailsBox')
         }
@@ -283,7 +283,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 } else {
                     return {
                         "code": res.code, //解析接口状态
-                        "msg": res.msg, //解析提示文本
+                        "msg": res.message, //解析提示文本
                     }
                 }
             },
@@ -420,7 +420,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     } else {
                         return {
                             "code": res.code, //解析接口状态
-                            "msg": res.msg, //解析提示文本
+                            "msg": res.message, //解析提示文本
                         }
                     }
                 },
@@ -941,14 +941,22 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
 
 
     var dataList1 = treeList();
-    treeFunCheck(tree, 'testGoodsCheck', advertisingLis, dataList1, 'merchantId', layer)
+    // treeFunCheck(tree, 'testGoodsCheck', advertisingLis, dataList1, 'merchantId', layer)
+    leg.tree({
+        ele: ".treeList",//选者
+        data: dataList1,//数据
+        cascade: false,//级联
+      });
     //   确定推送
     var role = null;
     $('.RdetermineBtn').click(function () {
-        var checkedData = tree.getChecked('treelistCheck');
-        role = getChildNodes(checkedData, []);
-        role.shift()
-        console.log(role)
+        role= leg.getCheckedNodes().map(Number)
+        console.log(leg.getCheckedNodes());
+        // return;
+        // var checkedData = tree.getChecked('treelistCheck');
+        // role = getChildNodes(checkedData, []);
+        // role.shift()
+        // console.log(role)
         if (role.length == 0) {
             layer.msg('请选择要推送的商户', { icon: 7 })
             return;
@@ -976,8 +984,10 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             popupHide('PushMandatory', 'MandatoryBox')
             layer.msg(res.message, { icon: 1 })
         }).catch((err) => {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
             popupHide('PushMandatory', 'MandatoryBox')
-            layer.msg(res.message, { icon: 2 })
+            layer.msg(err.message, { icon: 2 })
         })
     });
     var releaseHistoryList = null;
@@ -985,6 +995,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         releaseHistoryList = table.render({
             elem: '#parentTableTest',
             url: '/api/publicized/getAdHistory',
+            height: 500,
             method: 'post',
             contentType: "application/json",
             headers: {
@@ -1060,7 +1071,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 } else {
                     return {
                         "code": res.code, //解析接口状态
-                        "msg": res.msg, //解析提示文本
+                        "msg": res.message, //解析提示文本
                     }
                 }
             },
@@ -1120,6 +1131,8 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     where: {}
                 })
             }).catch((err) => {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
                 layer.msg(err.message, { icon: 2 })
 
             })
@@ -1151,5 +1164,8 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         }
         publis.reload(options);
         popupShow('preview', 'previewContnet');
+    });
+    $('.chooseLower .chooseCan').click(function () {
+        popupHide('chooseLower', 'chooseBox')
     })
 });

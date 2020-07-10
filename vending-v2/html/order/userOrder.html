@@ -4,15 +4,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../MyCss/public/pubilc.css">
-    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <!-- <script src="../../js/public/documentWrite.js"></script> -->
+    <link rel="stylesheet" href="../../font/iconfont.css">
     <link rel="stylesheet" href="../../MyCss/order/userOrder.css">
     <!-- 左侧公共部分 -->
     <link rel="stylesheet" href="../../MyCss/order/order.css">
     <title>订单管理</title>
 </head>
-
+<style>
+    .tree {
+        padding-left: 20px;
+    }
+    
+    a {
+        text-decoration: none;
+        color: #434b5a;
+    }
+    
+    .synTree .iconxiangyou{
+        cursor: pointer;
+    }
+    .synTree span{
+        position: relative;
+        top: -6px;
+        left: 10px;
+        color: #010102;
+        cursor: default;
+    }
+    .leg_tree li {
+        list-style-type: none;
+        margin-left: -10px;
+        position: relative;
+        line-height: 22px;
+    }
+    
+    .leg_tree li a{
+        position: absolute;
+        top: -4px;
+        padding: 0px 10px;
+    }
+    .iconxiangyou{
+        position: absolute;
+        top: -5px;
+        left: -10px;
+    }
+    .leg_tree li i{
+        font-size: 14px;
+    }
+    .leg_tree li i~i:before{
+        position: relative;
+        top: -3px;
+        left: 5px;
+    }
+    .tree input{cursor: pointer;}
+    .tree span {
+        font-size: 13px;
+        cursor: pointer;
+        display: inline-block;
+        border: 1px solid #e2e2e2;
+        width: 10px;
+        line-height: 8px;
+        text-align: center;
+        height: 10px;
+        background-color: whitesmoke;
+        position: absolute;
+        left: 8px;
+        top: 4px;
+    }
+    .tree ul span{
+        left: -16px;
+    }
+    .tree ul {
+        list-style-type: none;
+        margin-top: 0px;
+        position: relative;
+    }
+    
+    .label{
+        width: 14px;
+        height: 14px;
+        display: inline-flex;
+        border: 1px solid #a5a5a5;
+        border-radius: 3px;
+    }
+    .label i {
+        color: #0095ff;
+        position: absolute;
+        top: -2px;
+        left: -1px;
+        font-size: 18px!important;
+    }
+    .label:hover {
+        box-shadow: 0 0 4px 0px #a0aefb;
+    }
+    /*.label i:hover {
+        box-shadow: 0 0 4px 0px #a0aefb;
+    }*/
+    .isShow{
+        position: absolute;
+        top: -3px;
+        left: -20px;
+    }
+    input{
+        display: none;
+    }
+    .isShow{
+        width: 14px;
+        margin-right: 5px;
+    }
+    
+</style>
 <body>
+    <div class="tree">
+
+    </div>
+
     <div class="order-wrap">
         <div class="box-tab">
             <div class="layui-tab layui-tab-brief" lay-filter="demo">
@@ -245,15 +351,15 @@
                                 <div style="box-sizing: border-box;">
                                     <div class="layui-row">
                                         <div class=" layui-col-sm6 layui-col-md6">
-                                            <p >商户列表</p>
+                                            <p>商户列表</p>
                                             <div class="account">
                                                 <div style="padding-left:10px">
                                                     <!-- <span>粤宝商户-中邮广州</span> -->
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class=" layui-col-sm6 layui-col-md6" >
-                                            <p >售货机列表</p>
+                                        <div class=" layui-col-sm6 layui-col-md6">
+                                            <p>售货机列表</p>
                                             <div class="equipment">
                                                 <div style="padding-left:10px ">
                                                     <span>全部终端</span>
@@ -271,7 +377,7 @@
                             </div>
                             <div class="data-right">
                                 <div>
-                                        <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
+                                    <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
                                 </div>
                             </div>
                         </div>
@@ -282,89 +388,104 @@
         </div>
     </div>
 </body>
-<script src="../../layui/layui.js"></script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="../../js/public/leg-tree.js"></script>
 <script>
-    layui.use(['element', 'laydate','table'], function () {
-        var $ = layui.jquery
-            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
-
-        //触发事件
-        var active = {
-            tabAdd: function () {
-                //新增一个Tab项
-                element.tabAdd('demo', {
-                    title: '新选项' + (Math.random() * 1000 | 0) //用于演示
-                    , content: '内容' + (Math.random() * 1000 | 0)
-                    , id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
-                })
-            }
-            , tabDelete: function (othis) {
-                //删除指定Tab项
-                element.tabDelete('demo', '44'); //删除：“商品管理”
-
-
-                othis.addClass('layui-btn-disabled');
-            }
-            , tabChange: function () {
-                //切换到指定Tab项
-                element.tabChange('demo', '22'); //切换到：用户管理
-            }
-        };
-
-        $('.site-demo-active').on('click', function () {
-            var othis = $(this), type = othis.data('type');
-            active[type] ? active[type].call(this, othis) : '';
-        });
-
-        // 日期选择
-        var laydate = layui.laydate;
-        laydate.render({
-            elem: '#test6'
-            , range: true
-            , value: new Date(),
-        });
-
-
-        // 展开
-        var show = false;
-        $('.an-btn').click(function () {
-            $(".pack-up").slideToggle();
-        });
-        var table = layui.table;
-        table.render({
-            elem: '#moneyData'
-            , cols: [[
-                { field: 'username', width: 80, title: '序号' },
-                { field: 'phone', width: 220, title: '订单编号',  },
-                { field: 'CreationTime', width: 100, title: '订单来源',},
-                { field: 'amendTime', width: 100, title: '订单类型', },
-                { field: 'bili', width: 180, title: '下单时间', sort: true },
-                { field: 'bili', width: 100, title: '订单金额', sort: true },
-                { field: 'bili', width: 100, title: '支付状态',},
-                { field: 'bili', width: 160, title: '标签',  },
-                { field: 'jine', width: 180, title: '操作 ', toolbar: '#barDemo' },
-
-            ]],
-            data: [
-                {
-                    username: '2222'
-                    , phone: 'cs45121'
-                    , CreationTime: '支付宝'
-                    , amendTime: '99'
-                    , bili: '1:2'
-                },
-                {
-                    username: '2222'
-                    , phone: 'cs45121'
-                    , CreationTime: '支付宝'
-                    , amendTime: '99'
-                    , bili: '1:2'
-                }
-            ]
-            , page: true
-        });
-    });
-
+    var data = [{
+			"name": "所有权限123",
+			"id": 999,
+			"children": [{
+					"name": "储物柜管理",
+					"id": 99,
+					"children": [{
+							"name": "储物柜列表",
+							"id": 1,
+							'lastTime':'201302101',
+							"children": [{
+									"name": "详情",
+									"id": 7,
+									"ico": false,
+								},
+								{
+									"name": "修改价格",
+									"id": 43,
+									"ico": false,
+								}
+							]
+						},
+						{
+							"name": "计费类型",
+							"id": 36,
+							"children": [{
+									"name": "删除",
+									"id": 37,
+									"ico": false,
+									"checked": false
+								},
+								{
+									"name": "提交编辑",
+									"id": 52,
+									"ico": false,
+									"checked": false
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "广告业务",
+					"ico": false,
+					"id": 999,
+					"children": [{
+							"name": "广告列表",
+							"id": 22,
+							"ico": false,
+							"children": [{
+									"name": "编辑",
+									"id": 23,
+									"ico": false,
+								},
+								{
+									"name": "添加",
+									"id": 24,
+									"ico": false,
+								},
+								{
+									"name": "删除",
+									"id": 25,
+								}
+							]
+						},
+						{
+							"name": "广告资源",
+							"id": 26,
+							"children": [{
+									"name": "编辑",
+									"id": 27,
+									"checked": false
+								},
+								{
+									"name": "上传",
+									"id": 28,
+									"checked": false
+								},
+								{
+									"name": "删除",
+									"id": 29,
+								}
+							]
+						}
+					]
+				},
+				
+			]
+		}];
+		leg.tree({
+			ele:".tree",//选者
+			data:data,//数据    
+			cascade:false,//级联
+			onAsync:true//暂无此
+		});
 </script>
 
 </html>

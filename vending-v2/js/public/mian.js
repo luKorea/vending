@@ -61,11 +61,11 @@ function upPreferential(tableIns, keyGoodsName, GoodsTypeID, stateId, startingPr
 
   tableIns.reload({
     where: { //设定异步数据接口的额外参数，任意设     
-      goods_name: keyGoodsName, //关键字
-      classify_id: GoodsTypeID, //分类
-      goods_Status: stateId, //商品状态
-      startingPrice,  //开始价格
-      closingPrice,   //结束价格
+      conditionTwo: keyGoodsName, //关键字
+      conditionThree: GoodsTypeID, //分类
+      conditionFour: stateId, //商品状态
+      conditionFive:  startingPrice,  //开始价格
+      conditionSix: closingPrice,   //结束价格
       //…
     }
   })

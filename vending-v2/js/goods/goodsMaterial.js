@@ -145,8 +145,8 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
           }
         },
         { field: 'number', width: 200, title: '图片编号', },
-        { field: 'publishTime', width: 180, title: '发布时间', sort: true },
-        { field: 'addUser', width: 150, title: '发布人', },
+        { field: 'publishTime', width: 180, title: '创建时间', sort: true },
+        { field: 'addUser', width: 150, title: '创建人', },
         // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
         { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoImg', },
       ]]
@@ -303,8 +303,8 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
         }
       },
       { field: 'number', width: 200, title: '视频编号', },
-      { field: 'publishTime', width: 180, title: '发布时间', sort: true },
-      { field: 'addUser', width: 150, title: '发布人', },
+      { field: 'publishTime', width: 180, title: '创建时间', sort: true },
+      { field: 'addUser', width: 150, title: '创建人', },
       // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
       { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoVideo', },
 
@@ -820,8 +820,8 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
         }
       },
       { field: 'number', width: 200, title: '图片编号', },
-      { field: 'publishTime', width: 180, title: '发布时间', sort: true },
-      { field: 'addUser', width: 150, title: '发布人', },
+      { field: 'publishTime', width: 180, title: '创建时间', sort: true },
+      { field: 'addUser', width: 150, title: '创建人', },
       // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
       { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoImg', },
     ]]

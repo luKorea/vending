@@ -8,12 +8,11 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<script src="../../js/public/documentWrite.js"></script>
 	<link rel="stylesheet" href="../../font/iconfont.css">
-	<link rel="stylesheet" href="../../MyCss/public/cropper.min.css">
-	<link rel="stylesheet" href="../../MyCss/public/ImgCropping.css">
+	<!-- <link rel="stylesheet" href="../../MyCss/public/cropper.min.css">
+	<link rel="stylesheet" href="../../MyCss/public/ImgCropping.css"> -->
 	<link rel="stylesheet" href="../../MyCss/goods/customGoods.css">
 	<title>商品管理</title>
 </head>
-
 <body>
 	<!-- <img style="width: 100px;height: 100px;" src="ftp://172.16.68.199/yuebao/a2bbecf6-5991-4331-92d6-60cf9d865072.jpg" alt=""> -->
 	<div class="Goods-wrap">
@@ -795,9 +794,9 @@
 						<i class="layui-icon layui-icon-close"></i>
 					</button>
 				</div>
-				<div class="chooseBody" style="margin-left: 50px;">
+				<div class="chooseBody" style="padding-left: 50px;overflow: hidden;">
 					<!-- <div id="testGoodsCheck" class="demo-tree demo-tree-box"></div> -->
-					<div id="testGoodsCheck" class="tree"></div>
+					<div id="testGoodsCheck" class="treeList"></div>
 				</div>
 				<div class="chooseFooter" style="margin-top:30px;padding-bottom: 20px;">
 					<div style="text-align: center;">
@@ -872,7 +871,7 @@
 		</div>
 	</script>
 <script type="text/html" id="imgtmp">
-        <div><img src="{{d.goods_Images}}  " style="width: 40px; height: 40px;"></div>
+        <div><img src="{{d.goods_images}}  " style="width: 40px; height: 40px;"></div>
 </script>
 <script type="text/html" id="Listimgtmp">
 	<div><img src="{{d.goods_images}}  " style="width: 40px; height: 40px;"></div>
@@ -880,6 +879,7 @@
 <script type="text/html" id="materiaImgtmp">
 	<div><img src="{{d.img}}  " style="width: 40px;"></div>
 </script>
+<!-- <script src="../../js/public/wangEditor.min.js"></script> -->
 <script src="../../js/public/wangEditor.min.js"></script>
 <script src="../../js/public/cropper.min.js"></script>
 <script src="../../js/public/leg-tree.js"></script>

@@ -35,7 +35,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
           return d.roleSign == 0 ? '否' : '是'
         }
       },
-      { field: 'operation', fixed: 'right', right: 0, width: 230, title: '操作', toolbar: '#barDemo' },
+      { field: 'operation', fixed: 'right', right: 0, width: 350, title: '操作', toolbar: '#barDemo' },
     ]]
     , id: 'tableId'
     , page: true
@@ -100,7 +100,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       if(merchantsListData.length==0){
         layer.msg('您没有编辑用户的权限',{icon:7})
         return ;
-      }
+      };
+      $('.switchListStatus').hide();
       // layer.msg('ID：' + data.uuid + ' 的查看操作');
       // 点击编辑事件
       $('.OperationHeader span').html('编辑用户')
@@ -117,7 +118,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         'DalonePwd': '      ',
         "phone": data.phone,
         "cardId": data.cardId,
-        "startThe": data.open ? 'on' : '',
+        // "startThe": data.open ? 'on' : '',
         "administrator": data.roleSign ? 'on' : '',
         "marchantsListname": data.merchantId
       })

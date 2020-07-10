@@ -716,3 +716,103 @@ video{
 .preview  {
     z-index: 9999;
 }
+.treeList {
+    padding-left: 20px;
+}
+
+.treeList  a {
+    text-decoration: none;
+    color: #434b5a;
+}
+
+.treeList  .synTree .iconxiangyou{
+    cursor: pointer;
+}
+.treeList .synTree span{
+    position: relative;
+    top: -6px;
+    left: 10px;
+    color: #010102;
+    cursor: default;
+}
+.treeList  .leg_tree li {
+    list-style-type: none;
+    margin-left: 30px;
+    position: relative;
+    line-height: 30px;
+}
+
+.treeList .leg_tree li a{
+    position: absolute;
+    top: -4px;
+    padding: 0px 10px;
+}
+.treeList  .iconxiangyou{
+    position: absolute;
+    top: -5px;
+    left: -10px;
+}
+.treeList .leg_tree li i{
+    font-size: 14px;
+}
+.treeList  .leg_tree li i~i:before{
+    position: relative;
+    top: -3px;
+    left: 5px;
+}
+.treeList  .tree input{cursor: pointer;}
+.treeList   .tree span {
+    font-size: 13px;
+    cursor: pointer;
+    display: inline-block;
+    border: 1px solid #e2e2e2;
+    width: 10px;
+    line-height: 8px;
+    text-align: center;
+    height: 10px;
+    background-color: whitesmoke;
+    position: absolute;
+    left: 8px;
+    top: 4px;
+}
+.treeList  .tree ul span{
+    left: -16px;
+}
+.treeList .tree ul {
+    list-style-type: none;
+    margin-top: 0px;
+    position: relative;
+}
+
+.treeList .label{
+    width: 14px;
+    height: 14px;
+    display: inline-flex;
+    border: 1px solid #a5a5a5;
+    border-radius: 3px;
+}
+.treeList  .label i {
+    color: #be954a ;
+    position: absolute;
+    top: -2px;
+    left: -1px;
+    font-size: 18px!important;
+}
+.treeList  .label:hover {
+    box-shadow: 0 0 4px 0px #a0aefb;
+}
+/*.label i:hover {
+    box-shadow: 0 0 4px 0px #a0aefb;
+}*/
+.treeList .isShow{
+    position: absolute;
+    top: -3px;
+    left: -20px;
+}
+.treeList input{
+    display: none;
+}
+.treeList  .isShow{
+    width: 14px;
+    margin-right: 5px;
+}

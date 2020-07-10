@@ -29,11 +29,11 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         {
           field: 'classifyTime', width: 200, title: '创建时间', sort: true
         },
-        {
-          field: 'users', width: 160, title: '最后操作人', templet: function (d) {
-            return d.user != null ? d.user.lastUser : ''
-          }
-        },
+        // {
+        //   field: 'users', width: 160, title: '最后操作人', templet: function (d) {
+        //     return d.user != null ? d.user.lastUser : ''
+        //   }
+        // },
         {
           field: 'lastTime', width: 200, title: '最后操作时间', sort: true
         },
