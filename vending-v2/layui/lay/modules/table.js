@@ -94,7 +94,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 			defaultToolbar: ["filter", "exports", "print"],
 			autoSort: !0,
 			text: {
-				none: "无数据"
+				none: "查询无数据"
 			}
 		}, F.prototype.render = function() {
 			var e = this,

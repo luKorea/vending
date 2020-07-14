@@ -33,6 +33,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       { checkbox: true },
       { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp" },
       { field: 'goods_Name', width: 120, title: '商品名称', color: '#409eff' },
+      {
+        field: 'goods_Status', width: 120, title: '商品状态 ', templet: function (d) {
+          return d.goods_Status = 1 ? '启用' : '不启用'
+        }
+      },
       { field: `classifyName`, width: 120, title: '商品类目' },
       { field: 'goods_Core', width: 120, title: '商品编号', },
       { field: 'goods_Param', width: 120, title: '规格说明 ' },
@@ -77,11 +82,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           }
         }
       },
-      {
-        field: 'goods_Status', width: 120, title: '商品状态 ', templet: function (d) {
-          return d.goods_Status = 1 ? '启用' : '不启用'
-        }
-      },
+      
       { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
       // { fixed: 'right', width: 160, align: 'center', toolbar: '#barDemo' }
     ]]
@@ -248,7 +249,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       , 'goodsStatus': singleData.goods_Status //商品状态
     });
     console.log(singleData.goods_Images)
-    $('#editImg').attr("src", singleData.goods_Images)
+    $('#editImg').attr("src", singleData.goods_images)
     editWangEditor.txt.html(singleData.goods_Descript)
   });
 
@@ -756,105 +757,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   var dataList = treeList();
   var dataList1 = treeList();
   console.log(dataList)
-  var data234 = [{
-    "title": "所有权限123",
-    "id": 999,
-    "children": [{
-      "name": "储物柜管理",
-      "id": 99,
-      "children": [{
-        "name": "储物柜列表",
-        "id": 1,
-        'lastTime': '201302101',
-        "children": [{
-          "name": "详情",
-          "id": 7,
-          "ico": false,
-        },
-        {
-          "name": "修改价格",
-          "id": 43,
-          "ico": false,
-        }
-        ]
-      },
-      {
-        "name": "计费类型",
-        "id": 36,
-        "children": [{
-          "name": "删除",
-          "id": 37,
-          "ico": false,
-          "checked": false
-        },
-        {
-          "name": "提交编辑",
-          "id": 52,
-          "ico": false,
-          "checked": false
-        }
-        ]
-      }
-      ]
-    },
-    {
-      "name": "广告业务",
-      "ico": false,
-      "id": 999,
-      "children": [{
-        "name": "广告列表",
-        "id": 22,
-        "ico": false,
-        "children": [{
-          "name": "编辑",
-          "id": 23,
-          "ico": false,
-        },
-        {
-          "name": "添加",
-          "id": 24,
-          "ico": false,
-        },
-        {
-          "name": "删除",
-          "id": 25,
-          "ico": false,
-        }
-        ]
-      },
-      {
-        "name": "广告资源",
-        "id": 26,
-        "children": [{
-          "name": "编辑",
-          "id": 27,
-          "ico": false,
-          "checked": false
-        },
-        {
-          "name": "上传",
-          "id": 28,
-          "ico": false,
-          "checked": false
-        },
-        {
-          "name": "删除",
-          "id": 29,
-        }
-        ]
-      }
-      ]
-    },
-
-    ]
-  }]
   treeFun(tree, 'testGoods', tableIns, dataList, 'condition','goodsClass',selectData)
   // treeFunCheck(tree, 'testGoodsCheck', tableIns, dataList1, 'merchantId',layer)
-  leg.tree({
-    ele: ".treeList",//选者
-    data: dataList1,//数据
-    cascade: false,//级联
-  });
+
 
   // 接收列表非强制
   var parentGoods = null;
@@ -935,7 +840,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
 
         for (var i in res.data) {
           var item = res.data[i];
-          if (item.merchantId == sessionStorage.machineID || item.received == 1) {// 这里是判断需要禁用的条件（如：状态为0的）
+          if (item.childMerchantId != sessionStorage.machineID || item.received == 1) {// 这里是判断需要禁用的条件（如：状态为0的）
             // checkbox 根据条件设置不可选中
             $('.list_table1 tr[data-index=' + i + '] input[type="checkbox"]').prop('disabled', true);
             state = "1";// 隐藏表头全选判断状态
@@ -969,7 +874,18 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     pushList = table.checkStatus('tableId');
     console.log(pushList)
     if (pushList.data.length > 0) {
-      popupShow('chooseLower', 'chooseBox')
+      leg.tree({
+        ele: ".treeList",//选者
+        data: dataList1,//数据
+        cascade: false,//级联
+      });
+      popupShow('chooseLower', 'chooseBox');
+      $.each($(".treeList input"), function() {
+        if(pushList.data[0].merchantId==$(this).val()){
+          $(this).prop('disabled',true);
+          return ;
+        }
+      })
     } else {
       layer.msg('请选择需要推送的商品', { icon: 7 })
     }
@@ -988,8 +904,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       layer.msg('请选择要推送的商户', { icon: 7 })
       return;
     }
+    
     popupShow('PushMandatory', 'MandatoryBox')
     console.log(pushList)
+    
   });
   $('.mandatroFooter div').click(function () {
     var pushArray = [];
@@ -1051,7 +969,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     var receiveArray = [];
     if (receiveList.data.length > 0) {
       receiveList.data.forEach((item, index) => {
-        if (!(item.merchantId == sessionStorage.machineID || item.received == 1)) {
+        if (item.childMerchantId == sessionStorage.machineID && item.received == 0) {
           var receiveObj = {
             className: item.classifyName,
             goodsId: item.goods_Id,

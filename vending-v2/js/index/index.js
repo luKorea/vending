@@ -115,27 +115,50 @@ window.onload = function () {
         $('#nav .layui-nav-item>a').click(function () {
             $(this).parent().siblings().removeClass('layui-nav-itemed')
         });
-        var d = {
-            pageSize: 1,
-            pageNum: 10
+        var socket;
+        function openSocket(){
+            if(typeof(WebSocket) == "undefined") {
+                console.log("您的浏览器不支持WebSocket");
+            }else{
+                console.log("您的浏览器支持WebSocket");
+                //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+                //等同于socket = new WebSocket("ws://localhost:8888/xxxx/im/25");
+                //var socketUrl="${request.contextPath}/im/"+$("#userId").val();
+    //          var socketUrl="http://172.16.71.142:8086/push?machine=8fc9d742bd0772c6&message=123456";
+                var socketUrl=`ws://172.16.71.142:8086/pushServer/${sessionStorage.UserId}`;
+                socketUrl=socketUrl.replace("https","ws").replace("http","ws");
+                console.log(socketUrl);
+                if(socket!=null){
+                    socket.close();
+                    socket=null;
+                }
+                socket = new WebSocket(socketUrl);
+                //打开事件
+                socket.onopen = function() {
+                    console.log("websocket已打开");
+                    //socket.send("这是来自客户端的消息" + location.href + new Date());
+                };
+                //获得消息事件
+                socket.onmessage = function(msg) {
+                    console.log(msg.data);
+                    //发现消息进入    开始处理前端触发逻辑
+                };
+                //关闭事件
+                socket.onclose = function() {
+                    console.log("websocket已关闭");
+    //              websocket.close();
+                };
+                //发生了错误事件
+                socket.onerror = function() {
+                    console.log("websocket发生了错误");
+                }
+            }
         };
-        // $.ajax({
-        //     type: 'post',
-        //     url: `/api/goods/findAll`,
-        //     dataType:'jsonp',
-        //     data: JSON.stringify(d),
+        if(sessionStorage.token){
+            openSocket();
+        }
+       
 
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     success: function (res) {
-        //         console.log(res)
-        //     }
-        // })
-        //   $.get('/api/user/findUser',function(res){
-        //     console.log(res)
-        //   });
-        //   $.post(`/api/goods/findAll`)
     });
     $('.exitLogin').click(function(){
         loadingAjax('/api//user/logout','post','',sessionStorage.token,'','','',layer).then((res)=>{
@@ -154,5 +177,24 @@ $("body").bind("keydown",function(event){
         //  $(".iframe_show").attr("src",window.frames["iframe_show"].src);
       
    }
-})  
+}) ;
+// var  pageVisibility = document.visibilityState;
+// // 监听 visibility change 事件 
+// document.addEventListener('visibilitychange', function () {
+//     if (document.visibilityState == 'hidden') {
+//         // 页面变为不可见时触发 
+//         $(".musicBg_close").show();
+//         $(".musicBg_on").hide();
+//         audio.pause();
+//     }else{
+//         // 页面变为可见时触发 
+//     }
+// });
+
+
+
 }
+// $(window).unload(function(){
+//     //响应事件
+//     console.log("获取到了页面要关闭的事件了！"); 
+// });

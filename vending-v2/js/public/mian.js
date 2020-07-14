@@ -4,7 +4,7 @@
 // 传id
 var token = sessionStorage.token;
 var machineId = sessionStorage.machineID;
-function Goodsdel(id, indexs, obj, index) {
+function Goodsdel(id, indexs, obj, index,tableID) {
   // index 1为自定义商品 2为自定义类目 3为通用商品 
   if (indexs == 1) {
     $.ajax({
@@ -21,6 +21,7 @@ function Goodsdel(id, indexs, obj, index) {
           obj.del();
           layer.close(index);
           layer.msg(res.message,{icon:1});
+         
         } else if (res.code == 403) {
           window.parent.location.href = "../login/login.html";
         } else {
@@ -30,19 +31,24 @@ function Goodsdel(id, indexs, obj, index) {
     })
   } else if (indexs == 2) {
     $.ajax({
-      type: 'get',
+      type: 'post',
       url: `/api/classify/deleteById`,
       headers: {
         "Content-Type": "application/json",
         token,
       },
-      data: {
-        id,
-      }, success: function (res) {
+      data: JSON.stringify({
+        id:id.classifyId,
+        rank:id.rank
+      }),
+       success: function (res) {
         if (res.code == 200) {
           obj.del();
           layer.close(index);
           layer.msg('删除成功',{icon:1});
+          tableID.reload({
+            where:{}
+          })
         } else if (res.code == 403) {
           window.parent.location.href = "../login/login.html";
         } else {
@@ -156,6 +162,17 @@ function passRegular(that, layer) {
   if (passwork) {
     if (!(reg.test(passwork))) {
       layer.msg('密码必须包含英文和数字以及特殊字符且不少于6位数', { icon: 7 });
+      $(that).val('')
+      return false;
+    }
+  }
+};
+// 检测中文正则
+function ChineseREgular(that,layer){
+  var reg= /[\u4E00-\u9FA5]/g;
+  if($(that).val()){
+    if(reg.test($(that).val())){
+      layer.msg('用户名不能含中文', { icon: 7 });
       $(that).val('')
       return false;
     }

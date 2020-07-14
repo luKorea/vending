@@ -428,10 +428,12 @@ transition: all 0.3s;
 .accountContnet p{
     font-size: 16px;
     font-weight: bold;
+    
 }
 .accountContnet{
     margin: 10px;
-    
+    width: 100%;
+    overflow-x: auto;
 }
 .hangContent{
     position: fixed;
@@ -450,4 +452,7 @@ transition: all 0.3s;
     margin-top: 20px;
     color: #be954a;
     font-weight: bold;
+}
+input:disabled{
+    cursor: not-allowed;
 }

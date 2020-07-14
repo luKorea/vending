@@ -22,20 +22,20 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         { field: 'remark', width: 150, title: '备注' },
         // { field: 'type', width: 180, title: '使用机型'},
         {
-          field: 'user', width: 200, title: '创建人', templet: function (d) {
+          field: 'user', width: 150, title: '创建人', templet: function (d) {
             return d.user != null ? d.user.userName : ''
           }
         },  // { field: 'users', width: 180, title: '商户名', sort: true }, //templet: '<div>{{d.user.userName}}</div>'      
         {
           field: 'classifyTime', width: 200, title: '创建时间', sort: true
         },
-        // {
-        //   field: 'users', width: 160, title: '最后操作人', templet: function (d) {
-        //     return d.user != null ? d.user.lastUser : ''
-        //   }
-        // },
         {
-          field: 'lastTime', width: 200, title: '最后操作时间', sort: true
+          field: 'users', width: 150, title: '最后操作人', templet: function (d) {
+            return d.user != null ? d.user.lastUser : ''
+          }
+        },
+        {
+          field: 'lastTime', width: 190, title: '最后操作时间', sort: true
         },
         { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' }
       ]]
@@ -161,10 +161,11 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         // "sorting":editData.rank
       })
     } else if (obj.event === 'delete') {
+      console.log(obj)
       layer.confirm('确定删除？', function (index) {
         // obj.del();
         // layer.close(index);
-        Goodsdel(editData.classifyId, 2, obj, index);
+        Goodsdel(editData, 2, obj, index,tableIns);
       });
 
     } else if (obj.event == 'rank') {

@@ -73,7 +73,7 @@
                             <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
                                 <label> <span style="color: red;">*</span>用户名</label>
                                 <div class="inputWidth">
-                                    <input type="text" name="userName">
+                                    <input type="text" name="userName" >
                                 </div>
                             </div>
                             <div class="layui-col-sm6  layui-col-md4 layui-col-lg4 listInput">
@@ -215,7 +215,7 @@
         <button class="layui-btn layui-btn-sm btn "  lay-event="role">
             <span style="color:#fff;">角色列表</span>
         </button>
-        <button class="layui-btn layui-btn-sm btn del-btn {{d.userName=='sysadmin'?'':'hide'}}" lay-event="role">
+        <button class="layui-btn layui-btn-sm btn del-btn {{d.userName=='sysadmin'?'':'hide'}}" lay-event="Status">
             <span style="color:#fff;">{{d.open==1?'禁用':'启用'}}</span>
         </button>
         <button class="layui-btn layui-btn-sm btn del-btn {{d.userName=='sysadmin'?'hide':''}}" lay-event="delete">

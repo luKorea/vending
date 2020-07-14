@@ -276,14 +276,14 @@ input{
     margin-right: 20px;
 }
 .setNav .active{
-    color: #409eff;
+    color: #be954a ;
 }
 .setNav .tabLine{
     position: absolute;
     bottom: 0;
     left: 0;
     height: 2px;
-    background-color: #409eff;
+    background-color: #be954a;
     z-index: 1;
     width: 56px;
 }

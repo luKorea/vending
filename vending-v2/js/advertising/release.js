@@ -898,7 +898,30 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         }
 
     });
-
+    // 广告推送到所有售货机
+    $('.machineDetailsCont .allDetermineBtn').click(function(){
+        layer.confirm('确认推送广告到所有售货机？', function (index) {
+            layer.close(index);
+            $.ajax({
+                type: 'post',
+                headers: {
+                    "Content-Type": "application/json",
+                    token,
+                },
+                url: '/api/pushAd',
+                data: JSON.stringify({
+                    number: numderID,
+                }),
+                success: function (res) {
+                    console.log(res)
+                    popupHide('machineDetailsCont', 'machineDetailsBox');
+                    layer.msg('推送成功', { icon: 1 });
+                }, error: function (err) {
+                    layer.msg('服务器请求超时', { icon: 2 });
+                }
+            })
+        })
+    })
 
     var dataList = treeList();
     treeFun(tree, 'test1', advertisingLis, dataList, 'conditionThree');
@@ -917,7 +940,8 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     // 监听f5刷新
     $("body").bind("keydown", function (event) {
         if (event.keyCode == 116) {
-            f5Fun()
+            event.preventDefault(); //阻止默认刷新
+      location.reload();
         }
     });
 
@@ -926,6 +950,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     $('.pushReleaseBtn').click(function () {
         pushList = [];
         checkID = table.checkStatus('advertisingData');
+        console.log(checkID)
         checkID.data.forEach((item, index) => {
             if (item.attribute == 2) {
                 pushList.push(item.number)
@@ -935,18 +960,26 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             layer.msg('请选择审核通过的广告,非审核通过的广告不能推送', { icon: 7 });
             return;
         } else {
-            popupShow('chooseLower', 'chooseBox')
+            popupShow('chooseLower', 'chooseBox');
+            leg.tree({
+                ele: ".treeList",//选者
+                data: dataList1,//数据
+                cascade: false,//级联
+              });
+            $.each($(".treeList input"), function() {
+                console.log($(this).val());
+                if(checkID.data[0].merchantId==$(this).val()){
+                    $(this).prop('disabled',true);
+                    return ;
+                }
+            })
         }
     });
 
 
     var dataList1 = treeList();
     // treeFunCheck(tree, 'testGoodsCheck', advertisingLis, dataList1, 'merchantId', layer)
-    leg.tree({
-        ele: ".treeList",//选者
-        data: dataList1,//数据
-        cascade: false,//级联
-      });
+   
     //   确定推送
     var role = null;
     $('.RdetermineBtn').click(function () {
@@ -1084,7 +1117,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 };
                 for (var i in res.data) {
                     var item = res.data[i];
-                    if (item.merchantId == sessionStorage.machineID || item.received == 1) {// 这里是判断需要禁用的条件（如：状态为0的）
+                    if (item.childMerchantId != sessionStorage.machineID || item.received == 1) {// 这里是判断需要禁用的条件（如：状态为0的）
                         // checkbox 根据条件设置不可选中
                         $('.list_table1 tr[data-index=' + i + '] input[type="checkbox"]').prop('disabled', true);
                         form.render();// 重新渲染一下
@@ -1106,7 +1139,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         var receiveArray = [];
         if (receiveList.data.length > 0) {
             receiveList.data.forEach((item, index) => {
-                if (!(item.merchantId == sessionStorage.machineID || item.received == 1)) {
+                if (item.childMerchantId == sessionStorage.machineID && item.received == 0) {
 
                     receiveArray.push(item.tempNumber)
                 }

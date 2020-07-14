@@ -23,7 +23,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 { field: 'alias', width: 160, title: '商户编号' },
                 { field: 'addUser', width: 150, title: '创建人', },
                 { field: 'addTime', width: 180, title: '创建时间', sort: true },
-                // { field: 'lastName', width: 150, title: '最后操作人', },
+                { field: 'lastUser', width: 150, title: '最后操作人', },
                 { field: 'lastTime', width: 180, title: '最后操作时间', sort: true },
                 { field: 'operation',  width: 150, title: '操作', toolbar: '#barDemo' },
             ]]
@@ -85,26 +85,29 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var data = null;
     table.on('tool(test)', function (obj) {
         data = obj.data;
-        console.log(data)
         if (obj.event === 'edit') {
             if(marchantsList.length==0){
                 layer.msg('您没有编辑商户的权限',{icon:7});
                 return ;
             }
-            $('.editMerchants input[name="merchantsName"]').val(data.name)
+            $('.editMerchants input[name="merchantsName"]').val(data.title)
             popupShow('MemberOperation', 'MemberContent')
             // editMarchantsSelect();
-            marchantsList = merchantsListMian(data.id);
-            mercantsSelectList(marchantsList, 'marchantsList',form);
-          
-            $('.editMerchants select[name="marchantsListname"]').val(data.topMerchant);
+            // marchantsList = merchantsListMian(data.id);
+            // mercantsSelectList(marchantsList, 'marchantsList',form);         
+            // $('.editMerchants select[name="marchantsListname"]').val(data.topMerchant);
+            // if(data.id==0){
+            //     $('.editMerchants select[name="marchantsListname"]').attr('disabled',true);
+            // }else{
+            //     $('.editMerchants select[name="marchantsListname"]').attr('disabled',false);
+            // }
             if(data.id==0){
-                $('.editMerchants select[name="marchantsListname"]').attr('disabled',true);
+                $('.listInput input[name="marchantsText"]').val('');
             }else{
-                $('.editMerchants select[name="marchantsListname"]').attr('disabled',false);
+                $('.listInput input[name="marchantsText"]').val(data.merchantName);
             }
-            form.render('select');
-            console.log(data.id)
+            $('.marchantsList').val(data.topMerchant);
+            
             
         } else if (obj.event === 'delete') {
             if(marchantsList.length==0){
@@ -182,17 +185,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 添加商户事件
     $('.addBody .addSubmiBtn').click(function () {
         console.log(marchantsList);
-        var aliasText = null;
-        marchantsList.forEach((item, index) => {
-            if (item.id == $('.addMarchantsList').val()) {
-                aliasText = item.alias
-            }
-        })
+        // var aliasText = null;
+        // marchantsList.forEach((item, index) => {
+        //     if (item.id == $('.addMarchantsList').val()) {
+        //         aliasText = item.alias
+        //     }
+        // })
         if ($('.addBox input[name="merchantsName"]').val()) {
             var addMerchantsData = JSON.stringify({
                 name: $('.addBox input[name="merchantsName"]').val(),
                 topMerchant: Number($('.addMarchantsList').val()),
-                alias: aliasText
+                alias: data.alias
             })
             loadingAjax('/api/merchant/newMerchant', 'post', addMerchantsData, sessionStorage.token, '', 'addMerchants', 'addBox', layer).then((res) => {
                 $('.addBox input[name="merchantsName"]').val('');
@@ -211,19 +214,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     })
     // 编辑商户事件
     $('.Medit .submit_btn').click(function () {
-        console.log($('#marchantsList').val())
         if ($('.editMerchants input[name="merchantsName"]').val()) {
-            var aliasText = null;
-            marchantsList.forEach((item, index) => {
-                if (item.id == $('.marchantsList').val()) {
-                    aliasText = item.alias
-                }
-            })
             var editdMerchantsData = JSON.stringify({
                 id: data.id,
                 name: $('.editMerchants input[name="merchantsName"]').val(),
                 topMerchant: Number($('.marchantsList').val()),
-                alias: aliasText?aliasText:'M0'
             });
             loadingAjax('/api/merchant/updateMerchant', 'post', editdMerchantsData, sessionStorage.token, '', 'MemberOperation', 'MemberContent', layer).then((res) => {
                 dataList = treeList();

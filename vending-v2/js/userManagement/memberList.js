@@ -17,6 +17,16 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     },
     cols: [[
       { field: 'userName', width: 180, title: '用户名' },
+      {
+        field: 'open', width: 150, title: '状态', templet: function (d) {
+          return d.open == 0 ? '不启用' : '启用'
+        }
+      },
+      {
+        field: 'roleSign', width: 150, title: '终端管理员', templet: function (d) {
+          return d.roleSign == 0 ? '否' : '是'
+        }
+      },
       { field: 'name', width: 150, title: '姓名' },
       { field: 'phone', width: 150, title: '手机号' },
       { field: 'merchantName', width: 150, title: '所属商户' },
@@ -25,16 +35,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       { field: 'addTime', width: 180, title: '创建时间', sort: true },
       { field: 'lastUser', width: 150, title: '最后操作人', },
       { field: 'lastTime', width: 180, title: '最后操作时间', sort: true },
-      {
-        field: 'open', width: 150, title: '状态', templet: function (d) {
-          return d.open == 0 ? '不启用' : '启用'
-        }
-      },
-      {
-        field: 'roleSign', width: 100, title: '终端管理员', templet: function (d) {
-          return d.roleSign == 0 ? '否' : '是'
-        }
-      },
+      
       { field: 'operation', fixed: 'right', right: 0, width: 350, title: '操作', toolbar: '#barDemo' },
     ]]
     , id: 'tableId'
@@ -90,7 +91,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         // condition:2
       }
     })
-  })
+  });
   //监听工具条
   table.on('tool(test)', function (obj) {
     var data = obj.data;
@@ -101,7 +102,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         layer.msg('您没有编辑用户的权限',{icon:7})
         return ;
       };
-      $('.switchListStatus').hide();
+      if(data.userName=='sysadmin'){
+        $('.switchListStatus').hide();
+      }else{
+        $('.switchListStatus').show();
+      }
+      $('.inputWidth input[name="userName"]').prop('disabled',true)
       // layer.msg('ID：' + data.uuid + ' 的查看操作');
       // 点击编辑事件
       $('.OperationHeader span').html('编辑用户')
@@ -118,7 +124,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         'DalonePwd': '      ',
         "phone": data.phone,
         "cardId": data.cardId,
-        // "startThe": data.open ? 'on' : '',
+        "startThe": data.open ? 'on' : '',
         "administrator": data.roleSign ? 'on' : '',
         "marchantsListname": data.merchantId
       })
@@ -164,6 +170,25 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       $('.RoleListBody>div').empty();
       $('.RoleListBody>div').html(RoleListText)
       popupShow('roleContList','RoleListBox')
+    }else if(obj.event=='Status'){
+      
+        layer.confirm(data.open==1?'确定禁用？':'确定启用？', function (index) {
+            var status=data.open==1?0:1;
+            layer.close(index);
+            var statusData=JSON.stringify({
+              id:data.uuid,
+              status,
+            })
+            loadingAjax('/api/user/switchById','post',statusData,sessionStorage.token,'','','',layer).then((res)=>{
+              layer.msg(res.message,{icon:1});
+              tableIns.reload({
+                where:{}
+              })
+            }).catch((err)=>{
+              layer.msg(err.message,{icon:7})
+            })
+        });
+     
     }
   });
 
@@ -177,6 +202,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       layer.msg('您没有添加用户的权限',{icon:7})
       return ;
     }
+    $('.inputWidth input[name="userName"]').prop('disabled',false)
     // $('.mask').fadeIn();
     // $('.maskSpan').addClass('maskIcon')
     popupShow('MemberOperation', 'MemberContent')
@@ -473,4 +499,7 @@ $('.playHeader .close').click(function () {
   $(this).parent().parent().addClass('margin0')
   $(this).parents('.maskContnet').fadeOut();
 });
+  $('.inputWidth input[name="userName"]').blur(function(){
+    ChineseREgular(this,layer)
+  })
 });
