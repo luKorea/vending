@@ -213,7 +213,7 @@ function merchantsListMian(id) {
 
 
 // 树装列表数据
-function treeList() {
+function treeList(marchantName) {
   var dataList = []
   $.ajax({
     type: 'post',
@@ -246,6 +246,9 @@ function treeList() {
         // })
         // console.log(data)
         dataList.push(res.data[0])
+        if(marchantName){
+          sessionStorage.marchantName=res.data[0].title;
+        }
       }
       // dataList=res.data[0]
     },
@@ -265,6 +268,7 @@ function treeFun(tree, element, tableID, data, key,goodsCLass,selectData,conditi
     ,
     onlyIconControl: true, //左侧图标控制展开收缩 
     data,
+    spread:true,
     text: {
       defaultNodeName: '无数据',
       none: '您没有权限，请联系管理员授权!'
@@ -458,8 +462,7 @@ function ajaxFun(url, type, data, userToken) {
 // })
 function loadingAjax(url, type, data, userToken, mask, element, elementChild, layer) {
   return new Promise(function (resolve, reject) {
-    ajaxFun(url, type, data, userToken, resolve, reject).then(function (res) {
-      console.log(res);
+    ajaxFun(url, type, data, userToken, resolve, reject).then( (res)=> {
       if (res.code == 200) {
         if (mask) {
           $('.mask').fadeOut();
@@ -477,7 +480,7 @@ function loadingAjax(url, type, data, userToken, mask, element, elementChild, la
         // return $.Deferred().reject(res.message);
         reject(res)
       }
-    }).catch(function (err) {
+    }).catch( (err)=> {
       if (mask) {
         $('.mask').fadeOut();
         $('.maskSpan').removeClass('maskIcon');

@@ -4,121 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <script src="../../js/public/documentWrite.js"></script> -->
-    <link rel="stylesheet" href="../../font/iconfont.css">
+    <script src="../../js/public/documentWrite.js"></script>
     <link rel="stylesheet" href="../../MyCss/order/userOrder.css">
     <!-- 左侧公共部分 -->
     <link rel="stylesheet" href="../../MyCss/order/order.css">
     <title>订单管理</title>
 </head>
-<style>
-    .tree {
-        padding-left: 20px;
-    }
-    
-    a {
-        text-decoration: none;
-        color: #434b5a;
-    }
-    
-    .synTree .iconxiangyou{
-        cursor: pointer;
-    }
-    .synTree span{
-        position: relative;
-        top: -6px;
-        left: 10px;
-        color: #010102;
-        cursor: default;
-    }
-    .leg_tree li {
-        list-style-type: none;
-        margin-left: -10px;
-        position: relative;
-        line-height: 22px;
-    }
-    
-    .leg_tree li a{
-        position: absolute;
-        top: -4px;
-        padding: 0px 10px;
-    }
-    .iconxiangyou{
-        position: absolute;
-        top: -5px;
-        left: -10px;
-    }
-    .leg_tree li i{
-        font-size: 14px;
-    }
-    .leg_tree li i~i:before{
-        position: relative;
-        top: -3px;
-        left: 5px;
-    }
-    .tree input{cursor: pointer;}
-    .tree span {
-        font-size: 13px;
-        cursor: pointer;
-        display: inline-block;
-        border: 1px solid #e2e2e2;
-        width: 10px;
-        line-height: 8px;
-        text-align: center;
-        height: 10px;
-        background-color: whitesmoke;
-        position: absolute;
-        left: 8px;
-        top: 4px;
-    }
-    .tree ul span{
-        left: -16px;
-    }
-    .tree ul {
-        list-style-type: none;
-        margin-top: 0px;
-        position: relative;
-    }
-    
-    .label{
-        width: 14px;
-        height: 14px;
-        display: inline-flex;
-        border: 1px solid #a5a5a5;
-        border-radius: 3px;
-    }
-    .label i {
-        color: #0095ff;
-        position: absolute;
-        top: -2px;
-        left: -1px;
-        font-size: 18px!important;
-    }
-    .label:hover {
-        box-shadow: 0 0 4px 0px #a0aefb;
-    }
-    /*.label i:hover {
-        box-shadow: 0 0 4px 0px #a0aefb;
-    }*/
-    .isShow{
-        position: absolute;
-        top: -3px;
-        left: -20px;
-    }
-    input{
-        display: none;
-    }
-    .isShow{
-        width: 14px;
-        margin-right: 5px;
-    }
-    
-</style>
 <body>
-    <div class="tree">
-
-    </div>
-
     <div class="order-wrap">
         <div class="box-tab">
             <div class="layui-tab layui-tab-brief" lay-filter="demo">
@@ -135,33 +27,33 @@
                         <!-- 头部查询部分 -->
                         <div class="query-contnet margin">
                             <div class="layui-row">
-                                <div class="layui-col-sm3 layui-col-md3">
+                                <div class="layui-col-sm3 layui-col-md6 layui-col-lg3">
                                     <div class="itmes">
                                         <div class="layui-inline">
                                             <div class="layui-input-inline">
-                                                <input type="text" class="layui-input" id="test6" placeholder=" - ">
+                                                <input style="text-align: center;" type="text" class="layui-input" id="test6" autocomplete="off" placeholder=" - ">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="layui-col-sm3 layui-col-md3">
+                                <div class="layui-col-sm3 layui-col-md6 layui-col-lg3">
                                     <div style="max-width: 280px;margin-left: 50px;" class="key-contnet">
                                         <div class="key-text">订单编号</div>
                                         <input type="text" placeholder="请输入订单编号">
                                     </div>
                                 </div>
-                                <div class="layui-col-sm3 layui-col-md3">
+                                <!-- <div class="layui-col-sm3 layui-col-md3">
                                     <div style="max-width: 280px;margin-left: 50px;" class="key-contnet">
                                         <div class="key-text">输入会员号码</div>
                                         <input type="text" placeholder="请输入会员号码">
                                     </div>
-                                </div>
-                                <div class="layui-col-sm2 layui-col-md2 quert-export">
+                                </div> -->
+                                <div class="layui-col-sm2 layui-col-md4 layui-col-lg2 quert-export">
                                     <button class="layui-btn layui-btn-normal query-btn btn">
                                         <i class="layui-icon layui-icon-search"></i>
                                         <span>查询</span>
                                     </button>
-                                    <button class="layui-btn layui-btn-normal query-btn btn" style="margin-left: 10px;">
+                                    <button class="layui-btn layui-btn-normal pushBtn btn" style="margin-left: 10px;">
                                         <i class="layui-icon layui-icon-print"></i>
                                         <span>导出</span>
                                     </button>
@@ -189,7 +81,7 @@
                                 </div>
                             </div>
                             <!-- 标签选择 -->
-                            <div class="tag-data">
+                            <!-- <div class="tag-data">
                                 <ul class="data-list">
                                     <li>
                                         <span class="width100">订单来源：</span>
@@ -267,14 +159,14 @@
                                         <span class="span-title">售卖订单</span>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="an-btn">
+                        <!-- <div class="an-btn">
                             <div class="an-btn-title">
                                 筛选条件
                                 <i class="layui-icon layui-icon-down"></i>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- 禁止输入框输入 -->
                         <div class="flexTwo">
                             <div class="ban-input">
@@ -304,7 +196,7 @@
 
                                 </div>
                             </div>
-                            <div class="ban-input">
+                            <!-- <div class="ban-input">
                                 <div class="input-contnet">
                                     <div>
                                         结算金额
@@ -312,7 +204,7 @@
                                     <input type="text" placeholder="6" disabled>
 
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="ban-input">
                                 <div class="input-contnet">
                                     <div>
@@ -331,7 +223,7 @@
 
                                 </div>
                             </div>
-                            <div class="ban-input">
+                            <!-- <div class="ban-input">
                                 <div class="input-contnet">
                                     <div>
                                         手续费金额
@@ -339,7 +231,7 @@
                                     <input type="text" placeholder="6" disabled>
 
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- 间隙部分 -->
@@ -355,17 +247,17 @@
                                             <div class="account">
                                                 <div style="padding-left:10px">
                                                     <!-- <span>粤宝商户-中邮广州</span> -->
+                                                    <div id="test1" class="demo-tree demo-tree-box"></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class=" layui-col-sm6 layui-col-md6">
                                             <p>售货机列表</p>
                                             <div class="equipment">
-                                                <div style="padding-left:10px ">
-                                                    <span>全部终端</span>
+                                                <div style="padding-left:10px;padding: 13px 0 0 0; ">
+                                                    <span class="allmachine active" >全部终端</span>
                                                 </div>
-                                                <div class="machineList">
-                                                    <span>Y2019118966荔湾西堤邮政支局</span>
+                                                <div class="machineList" id="demo">
                                                 </div>
                                             </div>
                                         </div>
@@ -374,118 +266,134 @@
                                 <div class="sidebar">
                                     <i class="layui-icon layui-icon-left"></i>
                                 </div>
+                                
                             </div>
+                            <i class="layui-icon layui-icon-right  onLeft"></i>
                             <div class="data-right">
-                                <div>
+                                <div style="overflow: hidden;">
                                     <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
                                 </div>
                             </div>
                         </div>
-
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="orderDetails maskContnet" style="overflow-y: auto;">
+            <div class="orderDetailsBox margin0">
+                <div class="playHeader">
+                    <span>订单详情</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="detailsBody">
+                    <div class="orderInformation">
+                        <div class="detailsHeader flexSb">
+                            <h2>订单信息</h2>
+                            <button class="  btn">
+                                <span>出货成功</span>
+                            </button>
+                        </div>
+                        <div class="informmationBody flexTwo">
+                            <div>
+                                <span>订单编号：</span>
+                                <span>118999qr159488391830</span>
+                            </div>
+                            <div>
+                                <span>交易单号：</span>
+                                <span>118999qr159488391830</span>
+                            </div>
+                            <div>
+                                 <span>下单时间：</span>
+                                 <span>2020-07-16 15:18:38</span>
+                            </div>
+                            <div>
+                                <span>支付时间：</span>
+                                <span>2020-07-16 15:18:38</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collection">
+                        <div class="detailsHeader flexSb">
+                            <h2>收款信息</h2>
+                            <button class="  btn">
+                                <span>已支付</span>
+                            </button>
+                        </div>
+                        <div class="collectionBody flexTwo">
+                            <div>
+                                <span>支付类型 ：</span>
+                                <span>微信</span>
+                            </div>
+                            <div>
+                                <span>购买数量 ：</span>
+                                <span>1</span>
+                            </div>
+                            <div>
+                                <span>订单价格 ：</span>
+                                <span>￥100</span>
+                            </div>
+                            <div>
+                                <span>用户实付金额 ：</span>
+                                <span>￥100</span>
+                            </div>
+                            <div>
+                                <span>商户实收金额 ：</span>
+                                <span>￥100</span>
+                            </div>
+                            <div>
+                                <span>退款金额 ：</span>
+                                <span>￥100</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goodsLIst">
+                        <div class="detailsHeader flexSb">
+                            <h2>订单商品列表</h2>
+                            <button class="layui-btn layui-btn-normal delBtn  btn" style="padding: 0 18px;">
+                                <span>退款</span>
+                            </button>
+                        </div>
+                        <div class="goodsListBody">
+                            <div>
+                                <table class="layui-hide" id="GooodsData" lay-filter="GooodsData"></table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="merchants">
+                        <div class="detailsHeader flexSb">
+                            <h2>商户信息</h2>
+                        </div>
+                        <div class="merchantsBody flexTwo">
+                            <div>
+                                <span>商户名：</span>
+                                <span>粤宝网络科技</span>
+                            </div>
+                            <div>
+                                <span>商户编号：</span>
+                                <span>M0-28</span>
+                            </div>
+                            <div>
+                                <span>终端编号：</span>
+                                <span>test</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-<script src="../../js/public/leg-tree.js"></script>
-<script>
-    var data = [{
-			"name": "所有权限123",
-			"id": 999,
-			"children": [{
-					"name": "储物柜管理",
-					"id": 99,
-					"children": [{
-							"name": "储物柜列表",
-							"id": 1,
-							'lastTime':'201302101',
-							"children": [{
-									"name": "详情",
-									"id": 7,
-									"ico": false,
-								},
-								{
-									"name": "修改价格",
-									"id": 43,
-									"ico": false,
-								}
-							]
-						},
-						{
-							"name": "计费类型",
-							"id": 36,
-							"children": [{
-									"name": "删除",
-									"id": 37,
-									"ico": false,
-									"checked": false
-								},
-								{
-									"name": "提交编辑",
-									"id": 52,
-									"ico": false,
-									"checked": false
-								}
-							]
-						}
-					]
-				},
-				{
-					"name": "广告业务",
-					"ico": false,
-					"id": 999,
-					"children": [{
-							"name": "广告列表",
-							"id": 22,
-							"ico": false,
-							"children": [{
-									"name": "编辑",
-									"id": 23,
-									"ico": false,
-								},
-								{
-									"name": "添加",
-									"id": 24,
-									"ico": false,
-								},
-								{
-									"name": "删除",
-									"id": 25,
-								}
-							]
-						},
-						{
-							"name": "广告资源",
-							"id": 26,
-							"children": [{
-									"name": "编辑",
-									"id": 27,
-									"checked": false
-								},
-								{
-									"name": "上传",
-									"id": 28,
-									"checked": false
-								},
-								{
-									"name": "删除",
-									"id": 29,
-								}
-							]
-						}
-					]
-				},
-				
-			]
-		}];
-		leg.tree({
-			ele:".tree",//选者
-			data:data,//数据    
-			cascade:false,//级联
-			onAsync:true//暂无此
-		});
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="details">
+            <span style="color:#fff;">订单详情</span>
+        </button> 
+    </div>
 </script>
-
+<script type="text/html" id="imgtmp">
+    <div><img src="{{d.goods_images}}  " style="width: 40px; height: 40px;"></div>
+</script>
+<script src="../../js/order/order.js"></script>
 </html>

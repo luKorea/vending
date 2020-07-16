@@ -268,30 +268,13 @@
         });
         var table = layui.table;
         table.render({
-            elem: '#moneyData'
+            elem: '#GooodsData'
             , cols: [[
                 { field: 'username', width: 80, title: '终端名称' },
                 { field: 'phone', width: 220, title: '设备编号', },
                 { field: 'CreationTime', width: 100, title: '下单时间', },
                 { field: 'amendTime', width: 100, title: '支付时间', },
                 { field: 'bili', width: 180, title: '订单编号', sort: true },
-                { field: 'bili', width: 100, title: '购买数量', sort: true },
-                { field: 'bili', width: 100, title: '订单金额', },
-                { field: 'bili', width: 160, title: '支付金额', },
-                { field: 'bili', width: 160, title: '成本', },
-                { field: 'bili', width: 160, title: '利润', },
-                { field: 'bili', width: 160, title: '手续费', },
-                { field: 'bili', width: 160, title: '退款金额', },
-                { field: 'bili', width: 160, title: '优惠金额', },
-                { field: 'bili', width: 160, title: '优惠券金额', },
-                { field: 'bili', width: 160, title: '活动类型', },
-                { field: 'bili', width: 160, title: '结算状态', },
-                { field: 'bili', width: 160, title: '交易状态', },
-                { field: 'bili', width: 160, title: '支付类型', },
-                { field: 'bili', width: 160, title: '出货状态', },
-                { field: 'bili', width: 160, title: '第三方订单号', },
-                { field: 'bili', width: 160, title: '收款方', },
-                { field: 'jine', width: 180, title: '详情 ', toolbar: '#barDemo' },
             ]],
             data: [
                 {
@@ -311,105 +294,8 @@
             ]
             , page: true
         });
-        var dataList = treeList();
-        var data234 = [{
-            "title": "所有权限123",
-            "id": 999,
-            "children": [{
-                "name": "储物柜管理",
-                "id": 99,
-                "children": [{
-                    "name": "储物柜列表",
-                    "id": 1,
-                    'lastTime': '201302101',
-                    "children": [{
-                        "name": "详情",
-                        "id": 7,
-                        "ico": false,
-                    },
-                    {
-                        "name": "修改价格",
-                        "id": 43,
-                        "ico": false,
-                    }
-                    ]
-                },
-                {
-                    "name": "计费类型",
-                    "id": 36,
-                    "children": [{
-                        "name": "删除",
-                        "id": 37,
-                        "ico": false,
-                        "checked": false
-                    },
-                    {
-                        "name": "提交编辑",
-                        "id": 52,
-                        "ico": false,
-                        "checked": false
-                    }
-                    ]
-                }
-                ]
-            },
-            {
-                "name": "广告业务",
-                "ico": false,
-                "id": 999,
-                "children": [{
-                    "name": "广告列表",
-                    "id": 22,
-                    "ico": false,
-                    "children": [{
-                        "name": "编辑",
-                        "id": 23,
-                        "ico": false,
-                    },
-                    {
-                        "name": "添加",
-                        "id": 24,
-                        "ico": false,
-                    },
-                    {
-                        "name": "删除",
-                        "id": 25,
-                        "ico": false,
-                    }
-                    ]
-                },
-                {
-                    "name": "广告资源",
-                    "id": 26,
-                    "children": [{
-                        "name": "编辑",
-                        "id": 27,
-                        "ico": false,
-                        "checked": false
-                    },
-                    {
-                        "name": "上传",
-                        "id": 28,
-                        "ico": false,
-                        "checked": false
-                    },
-                    {
-                        "name": "删除",
-                        "id": 29,
-                    }
-                    ]
-                }
-                ]
-            },
-
-            ]
-        }]
-        leg.tree({
-            ele: ".tree111",//选者
-            data: data234,//数据
-            cascade: false,//级联
-        });
-
+    
+    
     });
 
 

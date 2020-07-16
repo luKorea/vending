@@ -73,10 +73,11 @@
     cursor: default;
     background: #fff;
     color: #606266;
-    text-align: center
+    /* text-align: center; */
+    overflow: auto;
 }
 .account span{
-    color: #409EFF;
+    /* color: #409EFF; */
     font-size: 14px;
 }
 .equipment{
@@ -105,15 +106,89 @@
 }
 .data-right{
     width: 100%;
+    overflow: hidden;
 }
-.layui-table-body{
+.data-right .layui-table-body{
     max-height: 391px;
+}
+.goodsListBody .layui-table-body{
+    max-height: 120px;
+    min-height: 60px;
+}
+.goodsListBody .layui-table-view{
+    border-bottom: none !important;
 }
 .machineList{
     padding-left:10px;
     width: 100%;
     overflow-x: auto;
     height: 95%;
-    overflow-y: auto;
+    overflow: auto;
     margin-top: 10px;
+}
+.machineList span{
+    display: block;
+    padding: 5px 0;
+}
+.equipment .active{
+    color: #be954a;
+    font-weight: bold;
+}
+.orderDetailsBox {
+    width: 800px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    padding-bottom: 15px;
+}
+.detailsBody{
+    width: 96%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.orderDetails .detailsHeader{
+    padding: 15px 0;
+    border-bottom: 1px solid rgb(233, 233, 233);
+
+}
+.detailsHeader h2{
+    color: #606266;
+    font-size: 16px;
+    font-weight: bold;
+}
+.detailsHeader .btn{
+    padding: 10px 15px;
+}
+.informmationBody{
+    flex-wrap: wrap;
+    margin: 0;
+    border-bottom: 3px solid rgb(233, 233, 233);
+
+}
+.informmationBody>div{
+    width: 50%;
+    line-height: 50px;
+    color: #606266;
+    font-size: 14px;
+}
+.collectionBody{
+    flex-wrap: wrap;
+    margin: 0;
+    border-bottom: 3px solid rgb(233, 233, 233);
+}
+.collectionBody>div,.merchantsBody>div{
+    width: 33.333%;
+    line-height: 50px;
+    color: #606266;
+    font-size: 14px;
+}
+.merchantsBody{
+    flex-wrap: wrap;
+    margin: 0;
+    border-bottom: 3px solid rgb(233, 233, 233);
 }

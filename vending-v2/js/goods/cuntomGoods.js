@@ -88,10 +88,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     ]]
     , id: 'tableId'
     , page: true
-    , loading: true
+    , loading: true,
     // ,method:'post'
     // ,limits: [10,20,50]
-    ,
+  
     request: {
       'pageName': 'pageNum',
       'limitName': 'pageSize'

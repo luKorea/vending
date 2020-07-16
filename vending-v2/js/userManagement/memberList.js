@@ -1,5 +1,4 @@
 layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
-  var $ = layui.jquery;
   var table = layui.table;
   var layer = layui.layer,
     layer = layui.layer,
@@ -95,7 +94,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
   //监听工具条
   table.on('tool(test)', function (obj) {
     var data = obj.data;
-    console.log(data)
+    console.log(obj)
     uuID = data.uuid;
     if (obj.event === 'edit') {
       if(merchantsListData.length==0){
