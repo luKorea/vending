@@ -116,6 +116,7 @@ window.onload = function () {
             $(this).parent().siblings().removeClass('layui-nav-itemed')
         });
         var socket;
+        var socketFlag=true;
         function openSocket(){
             if(typeof(WebSocket) == "undefined") {
                 console.log("您的浏览器不支持WebSocket");
@@ -127,7 +128,7 @@ window.onload = function () {
     //          var socketUrl="http://172.16.71.142:8086/push?machine=8fc9d742bd0772c6&message=123456";
                 var socketUrl=`ws://172.16.71.142:8086/pushServer/${sessionStorage.UserId}`;
                 socketUrl=socketUrl.replace("https","ws").replace("http","ws");
-                console.log(socketUrl);
+                // console.log(socketUrl);
                 if(socket!=null){
                     socket.close();
                     socket=null;
@@ -136,29 +137,41 @@ window.onload = function () {
                 //打开事件
                 socket.onopen = function() {
                     console.log("websocket已打开");
+                    socketFlag=true;
                     //socket.send("这是来自客户端的消息" + location.href + new Date());
                 };
                 //获得消息事件
                 socket.onmessage = function(msg) {
-                    console.log(msg.data);
+                    // console.log(msg.data);
+                    console.log(msg)
                     //发现消息进入    开始处理前端触发逻辑
                 };
                 //关闭事件
                 socket.onclose = function() {
                     console.log("websocket已关闭");
+                    socketFlag=false
     //              websocket.close();
                 };
                 //发生了错误事件
                 socket.onerror = function() {
                     console.log("websocket发生了错误");
+                    socketFlag=false
                 }
             }
         };
         if(sessionStorage.token){
             openSocket();
         }
-       
-
+        setInterval(()=>{
+            if(sessionStorage.token){
+                if(!socketFlag){
+                    socketFlag=true;
+                    openSocket()
+                }
+            }
+            console.log(999)
+        },10000)
+        
     });
     $('.exitLogin').click(function(){
         loadingAjax('/api//user/logout','post','',sessionStorage.token,'','','',layer).then((res)=>{
@@ -190,7 +203,24 @@ $("body").bind("keydown",function(event){
 //         // 页面变为可见时触发 
 //     }
 // });
-
+// setTimeout(()=>{
+//     $.ajax({
+//         type:'post',
+//         url:'/api/pushWebMsg',
+//         headers: {
+//             "Content-Type": "application/json",
+//             token,
+//         },
+//         data:JSON.stringify({
+//             uid:1594017686796,
+//             msg:'角色权限发生更改',
+//             tag:1,
+//         }),
+//         success:function(res){
+//             console.log(res)
+//         }
+//     })
+// },1000)
 
 
 }

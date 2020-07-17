@@ -154,6 +154,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             // permissionsList(permissionsDataList, 'permissionsAS', objData);
 
         } else if (obj.event === 'delete') {
+            socketQuery(objData.id)
             layer.confirm('确定删除？', function (index) {
                 $.ajax({
                     type: 'post',
@@ -169,10 +170,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         layer.close(index);
                         console.log(res)
                         if (res.code == 200) {
+                            
                             layer.msg(res.message, { icon: 1 });
                             tableIns.reload({
                                 where: {}
                             });
+
                         } else if (res.code == 403) {
                             window.parent.location.href = "../login/login.html";
                         } else {
@@ -241,6 +244,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }
                 })
             };
+            console.log(permissionsArray)
             $.ajax({
                 type: 'post',
                 url: '/api/role/updateRole',
@@ -264,12 +268,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                             }
                         })
                     } else if (res.code == 403) {
-                        window.parent.location.href = "login.html";
+                        window.parent.location.href = "../login/login.html";
                     } else {
                         layer.msg(res.message, { icon: 2 });
                     }
                 }
             })
+
 
         } else {
             layer.msg('带*为必填', { icon: 7 });
@@ -340,5 +345,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     if (event.keyCode == 116) {
       f5Fun()
   }
-})
+});
+var userPushId=[];
+    function socketQuery(roleId){
+        var dataVal=JSON.stringify({
+            roleId:Number(roleId)
+        })
+        loadingAjax('/api/role/getRoleUser','post',dataVal,token).then(res=>{
+            console.log(res)
+            userPushId=res.data;
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
 });

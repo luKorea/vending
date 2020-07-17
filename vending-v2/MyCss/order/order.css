@@ -115,7 +115,16 @@
     max-height: 120px;
     min-height: 60px;
 }
+.goodsListBody{
+    width: 100%;
+    overflow: hidden;
+}
+.goodsListBody .layui-form{
+    width: 100%;
+    overflow-x: auto;
+}
 .goodsListBody .layui-table-view{
+    
     border-bottom: none !important;
 }
 .machineList{

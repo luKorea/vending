@@ -36,29 +36,25 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer'], function () {
         token,
       },
       cols: [[
-        { field: 'username', width: 150, title: '终端名称' },
-        { field: 'machineId', width: 220, title: '设备编号', },
+        { field: 'info', width: 210, title: '终端名称',align:'center' },
+        // { field: 'machineId', width: 220, title: '设备编号', },
         // { field: 'CreationTime', width: 100, title: '下单时间', },
+       
+        { field: 'number', width: 180, title: '订单编号' },
+        // { field: 'bili', width: 100, title: '购买数量', sort: true },
+        // { field: 'bili', width: 120, title: '订单金额', },
+        // { field: 'bili', width: 120, title: '支付金额', },
+        // { field: 'hah', width: 160, title: '成本', },
+        // { field: '2', width: 160, title: '利润', },
+        // { field: 'bili', width: 160, title: '退款金额', },
+        { field: 'payStatus', width: 130, title: '支付状态',templet:function(d){
+            return d.payStatus==0?'已支付':d.payStatus==1?'未支付':'取消支付'
+        } },
         { field: 'time', width: 180, title: '支付时间', },
-        { field: 'bili', width: 180, title: '订单编号', sort: true },
-        { field: 'bili', width: 100, title: '购买数量', sort: true },
-        { field: 'bili', width: 120, title: '订单金额', },
-        { field: 'bili', width: 120, title: '支付金额', },
-        { field: 'hah', width: 160, title: '成本', },
-        { field: '2', width: 160, title: '利润', },
-        // { field: '3', width: 160, title: '手续费', },
-        { field: 'bili', width: 160, title: '退款金额', },
-        // { field: 'bili', width: 160, title: '优惠金额', },
-        // { field: 'bili', width: 160, title: '优惠券金额', },
-        // { field: 'bili', width: 160, title: '活动类型', },
-        // { field: 'bili', width: 160, title: '结算状态', },
-        { field: 'bili', width: 160, title: '交易编号', },
-        { field: 'bili', width: 160, title: '交易状态', },
-        { field: 'bili', width: 160, title: '支付类型', },
-        { field: 'bili', width: 160, title: '出货状态', },
-        // { field: 'bili', width: 160, title: '第三方订单号', },
-        { field: 'bili', width: 160, title: '收款方', },
-        { field: 'operation', fixed: 'right', width: 110, title: '详情 ', toolbar: '#barDemo' },
+        // { field: 'bili', width: 160, title: '支付类型', },
+        // { field: 'bili', width: 160, title: '出货状态', },
+        { field: 'payee', width: 160, title: '收款方', },
+        { field: 'operation', width: 110, title: '详情 ', toolbar: '#barDemo' },
       ]],
       page: true,
       loading: true,
@@ -66,6 +62,9 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer'], function () {
       request: {
         'pageName': 'pageNum',
         'limitName': 'pageSize'
+      },
+      where:{
+        conditionFive:sessionStorage.machineID
       },
       parseData: function (res) {
         // console.log(res)
@@ -92,7 +91,20 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer'], function () {
         statusCode: 200 //规定成功的状态码，默认：0
       },
       done: function (res) {
-        if (res.code == 405) {
+        if(res.code==200){
+          console.log(res)
+          orderAllSumVal=0,
+          profitsSum=0;
+          $('.ban-input input[name="orderNumVal"]').val(res.data.length);
+          res.data.forEach((item,index)=>{
+            orderAllSumVal+=item.amount;
+            item.goodsList.forEach((v,i)=>{
+              profitsSum+=(v.goods_Price-v.goods_Cost);
+            })
+          });
+          $('.ban-input input[name="orderAllSumVal"]').val(orderAllSumVal);
+          $('.ban-input input[name="profitsSum"]').val(profitsSum);
+        }else  if (res.code == 405) {
           //   $('.hangContent').show();
         }
       }
@@ -103,7 +115,6 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer'], function () {
   var merchantId = sessionStorage.machineID,
     dataList = treeList(marchantName);
     marchantName=sessionStorage.marchantName;
-  console.log(dataList)
   orderTreeFun(tree, 'test1', dataList);
   function getFlow() {
     flow.load({
@@ -112,7 +123,6 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer'], function () {
       scrollElem: '#demo',
       end: '已展示全部',
       done: function (page, next) { //执行下一页的回调
-        console.log(page)
         //模拟数据插入
         setTimeout(function () {
           var lis = [];
@@ -126,7 +136,6 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer'], function () {
             merchantId,
           })
           loadingAjax('/api/machine/getMachineList', 'post', machineData, sessionStorage.token).then(res => {
-            console.log(res)
             res.data.list.forEach((item, index) => {
               lis.push(`<span machineID="${item.machineId}">${item.info}</span>`)
             })
@@ -144,13 +153,28 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer'], function () {
     });
   }
   getFlow();
+
+  //售货机编号
+  var machineCode='';
   $('body').on('click', '.machineList span', function () {
     $('.allmachine').removeClass('active')
     $(this).addClass('active').siblings().removeClass('active');
+    machineCode=$(this).attr('machineID');
+    orderTable.reload({
+      where:{
+        conditionFour:machineCode
+      }
+    })
   })
   $('.allmachine').click(function () {
     $(this).addClass('active');
-    $('.machineList span').removeClass('active')
+    $('.machineList span').removeClass('active');
+    machineCode='';
+    orderTable.reload({
+      where:{
+        conditionFour:machineCode
+      }
+    })
   })
   // 树方法
   function orderTreeFun(tree, element,  data, ) {
@@ -184,6 +208,15 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer'], function () {
         $(document).unbind();
         $('.equipment').append(`<div class="machineList" id="demo"></div>`);
         getFlow();
+        $('.allmachine').addClass('active');
+        $('.machineList span').removeClass('active');
+        machineCode='';
+        orderTable.reload({
+          where:{
+            conditionFour:machineCode,
+            conditionFive:merchantId
+          }
+        })
       },
     });
   };
@@ -223,7 +256,8 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer'], function () {
     xhr.send(JSON.stringify({
       condition:startTime,
       conditionTwo:endTime,
-      // conditionFour:
+      conditionFour:machineCode,
+      conditionFive:merchantId
     }));
   });
   // 关闭弹窗
@@ -242,22 +276,69 @@ function goodsDetails(){
       { field: 'goods_images', width: 120, title: '图片', templet: "#imgtmp" },
       { field: 'goods_Name', width: 140, title: '商品名称', },
       { field: 'goods_Core', width: 140, title: '商品编号', },
+      { field: 'count', width: 140, title: '数量', },
       { field: 'goods_Price', width: 140, title: '销售价 ',  },
       { field: 'goods_Cost', width: 140, title: '成本价 ',  },
+      { field: 'goods_Cost', align:'center', width: 140, title: '退款状态 ',templet:function(d){
+        return d.refund==0?'-':d.refund==1?'退款中':'已退款'
+      }  },
     ]],
     data:[
       
     ],
     id:'goodsLIstTable',
     loading: true,
-    // height: 'full-10',
   })
 }
-goodsDetails();
+
+// 监听操作
 table.on('tool(moneyData)', function (obj) {
+  console.log(obj)
+  if(!orderGoods){
+    goodsDetails();
+  }
+  $('.detailsOrderCode').html(obj.data.number);//订单编号
+  $('.payTime').html(obj.data.time);//支付时间
+  $('.orderInformation button span').html((obj.data.shipStatus==0?'出货失败':'出货成功'))
+  var payNum=0;
+  obj.data.goodsList.forEach((item,index)=>{
+    payNum+=item.count
+  })
+   $('.payType').html((obj.data.payType==0?'支付宝':'微信'))
+   $('.payNUmber').html(payNum);
+   $('.orderSum').html('￥'+obj.data.amount);
+   var childProfits=0;
+  obj.data.goodsList.forEach((item,index)=>{
+    childProfits+=item.goods_Price-item.goods_Cost
+  })
+  $('.profitsSum').html('￥'+childProfits)
+   $('.collection button span').html((obj.data.payStatus==0?'已支付':obj.data.payStatus==1?'未支付':'取消支付'));
+   $('.machineCode').html(obj.data.machineId);
+   $('.merchantName').html(obj.data.merchantName);
+   $('.merchantCode ').html(obj.data.alias)
   popupShow('orderDetails','orderDetailsBox')
   orderGoods.reload({
     data:obj.data.goodsList
   })
+});
+//查询
+$('.queryBtn').click(function(){
+  orderTable.reload({
+    where:{
+      condition:startTime,
+      conditionTwo:endTime,
+      conditionThree:$('.key-contnet input[name="orderCode"]').val(),
+    }
+  })
+});
+// 刷新页面
+$('.refreshBtn').click(function(){
+  location.reload();
+});
+// 监听f5刷新
+$("body").bind("keydown", function (event) {
+  if (event.keyCode == 116) {
+      f5Fun()
+  }
 })
 })

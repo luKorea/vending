@@ -27,35 +27,43 @@
                         <!-- 头部查询部分 -->
                         <div class="query-contnet margin">
                             <div class="layui-row">
-                                <div class="layui-col-sm3 layui-col-md6 layui-col-lg3">
-                                    <div class="itmes">
-                                        <div class="layui-inline">
-                                            <div class="layui-input-inline">
-                                                <input style="text-align: center;" type="text" class="layui-input" id="test6" autocomplete="off" placeholder=" - ">
+                                <div class="layui-col-sm3 layui-col-md6 layui-col-lg4">
+                                    <div class="key-contnet">
+                                        <div class="key-text">订单时间</div>
+                                        <div class="itmes">
+                                            <div class="layui-inline">
+                                                <div class="layui-input-inline">
+                                                    <input style="text-align: center;" type="text" class="layui-input" id="test6" autocomplete="off" value=" - ">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                  
                                 </div>
                                 <div class="layui-col-sm3 layui-col-md6 layui-col-lg3">
                                     <div style="max-width: 280px;margin-left: 50px;" class="key-contnet">
                                         <div class="key-text">订单编号</div>
-                                        <input type="text" placeholder="请输入订单编号">
+                                        <input type="text" name="orderCode" placeholder="请输入订单编号">
                                     </div>
                                 </div>
                                 <!-- <div class="layui-col-sm3 layui-col-md3">
                                     <div style="max-width: 280px;margin-left: 50px;" class="key-contnet">
                                         <div class="key-text">输入会员号码</div>
-                                        <input type="text" placeholder="请输入会员号码">
+                                        <input type="text" value="请输入会员号码">
                                     </div>
                                 </div> -->
-                                <div class="layui-col-sm2 layui-col-md4 layui-col-lg2 quert-export">
-                                    <button class="layui-btn layui-btn-normal query-btn btn">
+                                <div class="layui-col-sm2 layui-col-md6 layui-col-lg3 quert-export">
+                                    <button class="layui-btn layui-btn-normal queryBtn btn">
                                         <i class="layui-icon layui-icon-search"></i>
                                         <span>查询</span>
                                     </button>
                                     <button class="layui-btn layui-btn-normal pushBtn btn" style="margin-left: 10px;">
                                         <i class="layui-icon layui-icon-print"></i>
                                         <span>导出</span>
+                                    </button>
+                                    <button class="layui-btn layui-btn-normal refreshBtn btn" style="margin-left: 10px;">
+                                        <i class="layui-icon layui-icon-refresh"></i>
+                                        <span>刷新</span>
                                     </button>
                                 </div>
                             </div>
@@ -174,7 +182,7 @@
                                     <div>
                                         订单数量
                                     </div>
-                                    <input type="text" placeholder="6" disabled>
+                                    <input type="text" name="orderNumVal" value="0" disabled>
 
                                 </div>
                             </div>
@@ -183,7 +191,7 @@
                                     <div>
                                         订单总金额
                                     </div>
-                                    <input type="text" placeholder="6" disabled>
+                                    <input type="text" name="orderAllSumVal" value="0" disabled>
 
                                 </div>
                             </div>
@@ -192,7 +200,7 @@
                                     <div>
                                         实付总金额
                                     </div>
-                                    <input type="text" placeholder="6" disabled>
+                                    <input type="text" name="orderAllSumVal" value="0" disabled>
 
                                 </div>
                             </div>
@@ -201,7 +209,7 @@
                                     <div>
                                         结算金额
                                     </div>
-                                    <input type="text" placeholder="6" disabled>
+                                    <input type="text" value="6" disabled>
 
                                 </div>
                             </div> -->
@@ -210,7 +218,7 @@
                                     <div>
                                         利润金额
                                     </div>
-                                    <input type="text" placeholder="6" disabled>
+                                    <input type="text" name="profitsSum" value="0" disabled>
 
                                 </div>
                             </div>
@@ -219,7 +227,7 @@
                                     <div>
                                         退款总金额
                                     </div>
-                                    <input type="text" placeholder="6" disabled>
+                                    <input type="text" value="0" disabled>
 
                                 </div>
                             </div>
@@ -228,7 +236,7 @@
                                     <div>
                                         手续费金额
                                     </div>
-                                    <input type="text" placeholder="6" disabled>
+                                    <input type="text" value="6" disabled>
 
                                 </div>
                             </div> -->
@@ -268,7 +276,7 @@
                                 </div>
                                 
                             </div>
-                            <i class="layui-icon layui-icon-right  onLeft"></i>
+                            <i class="layui-icon layui-icon-right  onLeft" style="z-index: 888;"></i>
                             <div class="data-right">
                                 <div style="overflow: hidden;">
                                     <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
@@ -291,60 +299,76 @@
                     <div class="orderInformation">
                         <div class="detailsHeader flexSb">
                             <h2>订单信息</h2>
-                            <button class="  btn">
+                            <button class="  btn" style="cursor:default ">
                                 <span>出货成功</span>
                             </button>
                         </div>
                         <div class="informmationBody flexTwo">
                             <div>
                                 <span>订单编号：</span>
-                                <span>118999qr159488391830</span>
+                                <span class="detailsOrderCode"></span>
                             </div>
-                            <div>
-                                <span>交易单号：</span>
-                                <span>118999qr159488391830</span>
-                            </div>
-                            <div>
+                            <!-- <div>
                                  <span>下单时间：</span>
                                  <span>2020-07-16 15:18:38</span>
-                            </div>
+                            </div> -->
                             <div>
                                 <span>支付时间：</span>
-                                <span>2020-07-16 15:18:38</span>
+                                <span class="payTime"></span>
                             </div>
                         </div>
                     </div>
                     <div class="collection">
                         <div class="detailsHeader flexSb">
                             <h2>收款信息</h2>
-                            <button class="  btn">
+                            <button class="  btn" style="cursor:default ">
                                 <span>已支付</span>
                             </button>
                         </div>
                         <div class="collectionBody flexTwo">
                             <div>
                                 <span>支付类型 ：</span>
-                                <span>微信</span>
+                                <span class="payType"></span>
                             </div>
                             <div>
                                 <span>购买数量 ：</span>
-                                <span>1</span>
+                                <span class="payNUmber">1</span>
                             </div>
                             <div>
                                 <span>订单价格 ：</span>
-                                <span>￥100</span>
+                                <span class="orderSum">￥0</span>
                             </div>
-                            <div>
-                                <span>用户实付金额 ：</span>
-                                <span>￥100</span>
-                            </div>
+                            
                             <div>
                                 <span>商户实收金额 ：</span>
-                                <span>￥100</span>
+                                <span class="orderSum">￥0</span>
+                            </div>
+                            <div>
+                                <span>利润 ：</span>
+                                <span class="profitsSum">￥0</span>
                             </div>
                             <div>
                                 <span>退款金额 ：</span>
-                                <span>￥100</span>
+                                <span>￥0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="merchants">
+                        <div class="detailsHeader flexSb">
+                            <h2>商户信息</h2>
+                        </div>
+                        <div class="merchantsBody flexTwo">
+                            <div>
+                                <span>商户名：</span>
+                                <span class="merchantName">粤宝网络科技</span>
+                            </div>
+                            <div>
+                                <span>商户编号：</span>
+                                <span class="merchantCode">M0-28</span>
+                            </div>
+                            <div>
+                                <span>终端编号：</span>
+                                <span class="machineCode">test</span>
                             </div>
                         </div>
                     </div>
@@ -361,25 +385,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="merchants">
-                        <div class="detailsHeader flexSb">
-                            <h2>商户信息</h2>
-                        </div>
-                        <div class="merchantsBody flexTwo">
-                            <div>
-                                <span>商户名：</span>
-                                <span>粤宝网络科技</span>
-                            </div>
-                            <div>
-                                <span>商户编号：</span>
-                                <span>M0-28</span>
-                            </div>
-                            <div>
-                                <span>终端编号：</span>
-                                <span>test</span>
-                            </div>
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
         </div>
