@@ -33,7 +33,7 @@
                                         <div class="itmes">
                                             <div class="layui-inline">
                                                 <div class="layui-input-inline">
-                                                    <input style="text-align: center;" type="text" class="layui-input" id="test6" autocomplete="off" value=" - ">
+                                                    <input style="text-align: center;" type="text" class="layui-input" id="test6" autocomplete="off" placeholder=" - ">
                                                 </div>
                                             </div>
                                         </div>
@@ -180,9 +180,9 @@
                             <div class="ban-input">
                                 <div class="input-contnet">
                                     <div>
-                                        订单数量
+                                        订单总数量
                                     </div>
-                                    <input type="text" name="orderNumVal" value="0" disabled>
+                                    <input type="text" name="orderNumVal" value="" disabled>
 
                                 </div>
                             </div>
@@ -191,16 +191,16 @@
                                     <div>
                                         订单总金额
                                     </div>
-                                    <input type="text" name="orderAllSumVal" value="0" disabled>
+                                    <input type="text" name="orderAllSumVal" value="" disabled>
 
                                 </div>
                             </div>
                             <div class="ban-input">
                                 <div class="input-contnet">
                                     <div>
-                                        实付总金额
+                                        实收总金额
                                     </div>
-                                    <input type="text" name="orderAllSumVal" value="0" disabled>
+                                    <input type="text" name="orderPaidInSum" value="" disabled>
 
                                 </div>
                             </div>
@@ -216,9 +216,9 @@
                             <div class="ban-input">
                                 <div class="input-contnet">
                                     <div>
-                                        利润金额
+                                        利润总  金额
                                     </div>
-                                    <input type="text" name="profitsSum" value="0" disabled>
+                                    <input type="text" name="profitsSum" value="" disabled>
 
                                 </div>
                             </div>
@@ -227,7 +227,7 @@
                                     <div>
                                         退款总金额
                                     </div>
-                                    <input type="text" value="0" disabled>
+                                    <input type="text" name="orderRefundSum" value="" disabled>
 
                                 </div>
                             </div>
@@ -335,13 +335,13 @@
                                 <span class="payNUmber">1</span>
                             </div>
                             <div>
-                                <span>订单价格 ：</span>
+                                <span>订单金额 ：</span>
                                 <span class="orderSum">￥0</span>
                             </div>
                             
                             <div>
-                                <span>商户实收金额 ：</span>
-                                <span class="orderSum">￥0</span>
+                                <span>实收金额 ：</span>
+                                <span class="paidInSum">￥0</span>
                             </div>
                             <div>
                                 <span>利润 ：</span>
@@ -349,7 +349,7 @@
                             </div>
                             <div>
                                 <span>退款金额 ：</span>
-                                <span>￥0</span>
+                                <span class="refundSum">￥0</span>
                             </div>
                         </div>
                     </div>
@@ -375,9 +375,14 @@
                     <div class="goodsLIst">
                         <div class="detailsHeader flexSb">
                             <h2>订单商品列表</h2>
-                            <button class="layui-btn layui-btn-normal delBtn  btn" style="padding: 0 18px;">
+                            <div class="flexTwo" style="width: 70%;margin: 0;">
+                                <span style="color: red;width: 75%;">温馨提示：退款请认真核对信息！</span>
+                                <!-- <p style="float: right;width: 25%;">退款金额：<span class="refundNum">0</span></p> -->
+                            </div>
+                           
+                            <!-- <button class="layui-btn layui-btn-normal delBtn refundBtn  btn" style="padding: 0 18px;">
                                 <span>退款</span>
-                            </button>
+                            </button> -->
                         </div>
                         <div class="goodsListBody">
                             <div>
@@ -389,12 +394,47 @@
                 </div>
             </div>
         </div>
+        <div class="mask maskContnet" >
+            <div class="TitleContentWith">
+                <span class="maskSpan"  style="display: inline-block;"> 
+                    <i class="layui-icon layui-icon-loading "></i>
+                </span>
+                数据处理中，请稍候
+            </div>
+        </div>
+        <div class="refundNUmCont maskContnet" >
+            <div class="refundBox margin0">
+                <div class="twoPoles" style="text-align: center;font-size: 14px;">请输入需要退款商品的数量（最少为1,最多为<span></span>）</div>
+                <div class="refundNumber">
+                    <input type="number" value="1" min="1">
+                </div>
+                <div style="text-align: center;margin-top: 15px;">
+                    <button class="layui-btn layui-btn-normal btn determineBtn"
+                        style="margin: 0 0 0 15px;">
+                        <span>确定</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn chooseCan"  style="margin: 0 0 0 15px;">
+                        <span>取消</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hangContent">
+            <p>您没有访问的权限!</p>
+        </div>
     </div>
 </body>
 <script type="text/html" id="barDemo">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm btn operation" lay-event="details">
             <span style="color:#fff;">订单详情</span>
+        </button> 
+    </div>
+</script>
+<script type="text/html" id="refundDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="refund">
+            <span style="color:#fff;">退款</span>
         </button> 
     </div>
 </script>

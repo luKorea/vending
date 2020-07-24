@@ -167,18 +167,18 @@
 			<div class="layui-side-scroll">
 				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 				<ul class="layui-nav layui-nav-tree my-nav-tab" lay-filter="testNav" id="nav">
-					<li class="layui-nav-item ">
-						<!-- layui-nav-itemed -->
+					<!--<li class="layui-nav-item ">
+						 layui-nav-itemed 
 						<a href="javascript:;">
 							<i class="layui-icon layui-icon-chart-screen"></i>
 							<label>数据中心</label>
 						</a>
 						<dl class="layui-nav-child">
-							<!-- <dd>
+							 <dd>
 								<a href="javascript:;" class="navClick" navId="0">统计报表</a>
-							</dd> -->
+							</dd>
 						</dl>
-					</li>
+					</li>-->
 					<li class="layui-nav-item">
 						<a href="javascript:;">
 							<i class="layui-icon layui-icon-app"></i>
@@ -261,12 +261,12 @@
 							<label>账目管理</label>
 						</a>
 						<dl class="layui-nav-child">
-							<!-- <dd>
+							 <!-- <dd>
 								<a href="javascript:;" class="navClick" navId="14">售货机账目</a>
-							</dd>
-							<dd>
-								<a href="javascript:;" class="navClick" navId="15">类目账目</a>
 							</dd> -->
+							<dd>
+								<a href="javascript:;" class="navClick" navId="15">商户账目</a>
+							</dd>
 						</dl>
 					</li>
 					<li class="layui-nav-item">
@@ -331,6 +331,21 @@
 				</ul>
 			</div>
 		</div>
+	</div>
+	<!-- style="display: block;z-index: 999999;" -->
+	<div class="maskContnet socketCont" style="z-index: 9999999;">
+			<div class="sockotBox margin0">
+				<div class="playHeader">
+                    <span>提示</span>    
+				</div>
+				<div class="sockotTitle">
+					<p>角色权限发生改变，请重新登录！</p>
+				</div>
+				<div class="determineBtn">
+					<button type="button">确定</button>
+				</div>
+				
+			</div>
 	</div>
 	<script src="../../js/index/navData.js"></script>
 	<script src="../../js/index/index.js"></script>	

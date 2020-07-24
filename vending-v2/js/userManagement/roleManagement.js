@@ -76,8 +76,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         permissions3=[],//商品管理权限
         permissions4=[],//商品素材权限
         permissions5=[],//售货机权限
-        permissions6=[];//广告权限
-        permissions7=[];//通用模块
+        permissions6=[],//广告权限
+        permissions10=[],//通用模块
+        permissions11=[];//订单与账目权限
     //监听工具条
     var objData = null;
     table.on('tool(test)', function (obj) {
@@ -131,8 +132,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                                         permissions6.push(item)
                                         break;   
                                     case 10:
-                                        permissions7.push(item)
-                                        break;        
+                                        permissions10.push(item)
+                                        break;  
+                                    case 11:
+                                        permissions11.push(item)      
                                     // default:
                                     //     console.log(index)
                                 }
@@ -146,11 +149,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             };
             permissionsList(permissions1,'permissionsASF',objData);
             permissionsList(permissions2,'permissionsGClass',objData);
-            permissionsList(permissions3,'permissionsGoods',objData)
-            permissionsList(permissions4,'permissionsGAF',objData)
-            permissionsList(permissions5,'permissionsMachine',objData)
-            permissionsList(permissions6,'permissionsASR',objData)
-            permissionsList(permissions7,'permissionsGeneral',objData)
+            permissionsList(permissions3,'permissionsGoods',objData);
+            permissionsList(permissions4,'permissionsGAF',objData);
+            permissionsList(permissions5,'permissionsMachine',objData);
+            permissionsList(permissions6,'permissionsASR',objData);
+            permissionsList(permissions10,'permissionsGeneral',objData);
+            permissionsList(permissions11,'permissionsOrder',objData);
             // permissionsList(permissionsDataList, 'permissionsAS', objData);
 
         } else if (obj.event === 'delete') {
@@ -170,7 +174,20 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         layer.close(index);
                         console.log(res)
                         if (res.code == 200) {
-                            
+                            // userPushId.forEach((item,index)=>{
+                            //     console.log(item)
+                            //     var socketQuery=JSON.stringify({
+                            //         uid:item,
+                            //         msg:'用户角色权限发生变更,请重新登录！',
+                            //         tag:1
+                            //     })
+                            //     loadingAjax('/api/pushWebMsg','post',socketQuery,sessionStorage.token).then(res=>{
+                            //         console.log(res)
+                            //     }).catch(err=>{
+                            //         console.log(err)
+                            //     })
+                            // })
+                            socketPush(userPushId)
                             layer.msg(res.message, { icon: 1 });
                             tableIns.reload({
                                 where: {}
@@ -236,7 +253,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         var permissionsArray = [];
         if ($('.editInput input[name="userName"]').val()) {
             var datalll = form.val("editInformation");
-            console.log(datalll)
+            // console.log(datalll)
             for (let i in datalll) {
                 permissionsDataList.forEach((item, index) => {
                     if (item.id == datalll[i]) {
@@ -244,7 +261,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }
                 })
             };
-            console.log(permissionsArray)
             $.ajax({
                 type: 'post',
                 url: '/api/role/updateRole',
@@ -259,14 +275,21 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 }),
                 success: function (res) {
                     $('.mask').fadeOut();
-                    $('.maskSpan').removeClass('maskIcon');
-                    popupHide('editRold', 'editBox');
-                    if (res.code == 200) {
+                    $('.maskSpan').removeClass('maskIcon');            
+                    popupHide('editRold', 'editBox'); 
+                    if (res.code == 200) {                    
                         layer.msg(res.message, { icon: 1 });
                         tableIns.reload({
                             where: {
                             }
                         })
+                        if(objData.id!='100001'){
+                            socketQuery(objData.id,'true');
+                            // sleep(1)
+                            // setTimeout(()=>{
+                            //     socketPush(userPushId)
+                            // },800)          
+                        }
                     } else if (res.code == 403) {
                         window.parent.location.href = "../login/login.html";
                     } else {
@@ -347,15 +370,34 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
   }
 });
 var userPushId=[];
-    function socketQuery(roleId){
+    function socketQuery(roleId,type){
         var dataVal=JSON.stringify({
             roleId:Number(roleId)
         })
         loadingAjax('/api/role/getRoleUser','post',dataVal,token).then(res=>{
-            console.log(res)
-            userPushId=res.data;
+            // console.log(res)
+            userPushId=res.data.map(Number);
+            console.log(userPushId)
+            if(type){
+                socketPush(userPushId);
+            }
         }).catch(err=>{
             console.log(err)
+        })
+    };
+    function socketPush(userData){
+        userData.forEach((item,index)=>{
+            console.log(item)
+            var socketQuery=JSON.stringify({
+                uid:item,
+                msg:'用户角色权限发生变更,请重新登录！',
+                tag:1
+            })
+            loadingAjax('/api/pushWebMsg','post',socketQuery,sessionStorage.token).then(res=>{
+                console.log(res)
+            }).catch(err=>{
+                console.log(err)
+            })
         })
     }
 });

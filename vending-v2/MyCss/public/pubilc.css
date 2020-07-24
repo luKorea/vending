@@ -462,3 +462,6 @@ transition: all 0.3s;
 input:disabled{
     cursor: not-allowed;
 }
+.layui-tree-setHide>div:nth-child(1) span{
+    color: #be954a ;
+}

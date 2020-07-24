@@ -149,6 +149,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
               layer.msg(res.message,{icon:1});
               obj.del();
               layer.close(index);
+              socketFun(data.uuid)
             } else if (res.code == 403) {
               window.parent.location.href = "../login/login.html";
             } else {
@@ -169,8 +170,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       $('.RoleListBody>div').empty();
       $('.RoleListBody>div').html(RoleListText)
       popupShow('roleContList','RoleListBox')
-    }else if(obj.event=='Status'){
-      
+    }else if(obj.event=='Status'){     
         layer.confirm(data.open==1?'确定禁用？':'确定启用？', function (index) {
             var status=data.open==1?0:1;
             layer.close(index);
@@ -183,6 +183,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
               tableIns.reload({
                 where:{}
               })
+              if(status==0){
+                socketFun(data.uuid)
+              }
             }).catch((err)=>{
               layer.msg(err.message,{icon:7})
             })
@@ -307,6 +310,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             console.log(res)
             if (res.code == 200) {
               if(informationType==2){
+                socketFun(uuID)
                 if(UserId==uuID){
                   sessionStorage.machineID=informData.marchantsListname
                 }
@@ -500,5 +504,20 @@ $('.playHeader .close').click(function () {
 });
   $('.inputWidth input[name="userName"]').blur(function(){
     ChineseREgular(this,layer)
-  })
+  });
+
+  // 推送方法
+  function socketFun(uid){
+    var funData=JSON.stringify({
+      uid,
+      msg:'用户信息发生变更，请重新登录！',
+      tag:2
+    })
+    loadingAjax('/api/pushWebMsg','post',funData,sessionStorage.token).then(res={
+
+    }).catch(err=>{
+
+    })
+  }
 });
+

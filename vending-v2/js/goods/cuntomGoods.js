@@ -10,9 +10,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     $('.left-mian').show();
     $('.on-left').hide()
   })
-  // $.post('http://172.16.68.199:8086/goods/findAll', { map: 1 }, function (res) {
-  //     console.log(res)
-  // })
   var table = layui.table;
   // wangEditor 获取全局属性
   var E = window.wangEditor;
@@ -307,7 +304,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
               }
             })
             $('.editor').fadeOut();
-
+            loadingAjax('/api/refreshGoods','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
           } else if (res.code == 403) {
             window.parent.location.href = "../login/login.html";
           } else {
@@ -465,7 +462,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                 , "goodsParam": ''
               });
               layer.msg('添加成功', { icon: 1 });
-
+              loadingAjax('/api/refreshGoods','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
 
               // 重新加载数据
               tableIns.reload({

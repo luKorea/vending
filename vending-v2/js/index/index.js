@@ -1,6 +1,6 @@
 //JavaScript代码区域
 window.onload = function () {
-    var userName=sessionStorage.username;
+    var userName = sessionStorage.username;
     $('#userLogin .userName').html(userName)
     var navStr = []; //判断tba选项卡有没有这个参数;
     layui.use(['layer', 'form', 'element', 'carousel'], function () {
@@ -116,115 +116,140 @@ window.onload = function () {
             $(this).parent().siblings().removeClass('layui-nav-itemed')
         });
         var socket;
-        var socketFlag=true;
-        function openSocket(){
-            if(typeof(WebSocket) == "undefined") {
+        var socketFlag = true;
+        function openSocket() {
+            if (typeof (WebSocket) == "undefined") {
                 console.log("您的浏览器不支持WebSocket");
-            }else{
+            } else {
                 console.log("您的浏览器支持WebSocket");
                 //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
                 //等同于socket = new WebSocket("ws://localhost:8888/xxxx/im/25");
                 //var socketUrl="${request.contextPath}/im/"+$("#userId").val();
-    //          var socketUrl="http://172.16.71.142:8086/push?machine=8fc9d742bd0772c6&message=123456";
-                var socketUrl=`ws://172.16.71.142:8086/pushServer/${sessionStorage.UserId}`;
-                socketUrl=socketUrl.replace("https","ws").replace("http","ws");
+                //          var socketUrl="http://172.16.71.142:8086/push?machine=8fc9d742bd0772c6&message=123456";
+                var socketUrl = `ws://172.16.71.142:8086/pushServer/${sessionStorage.UserId}`;
+                socketUrl = socketUrl.replace("https", "ws").replace("http", "ws");
                 // console.log(socketUrl);
-                if(socket!=null){
+                if (socket != null) {
                     socket.close();
-                    socket=null;
+                    socket = null;
                 }
                 socket = new WebSocket(socketUrl);
                 //打开事件
-                socket.onopen = function() {
+                socket.onopen = function () {
                     console.log("websocket已打开");
-                    socketFlag=true;
+                    socketFlag = true;
                     //socket.send("这是来自客户端的消息" + location.href + new Date());
                 };
                 //获得消息事件
-                socket.onmessage = function(msg) {
+                socket.onmessage = function (msg) {
                     // console.log(msg.data);
-                    console.log(msg)
+                    var gainData = JSON.parse(msg.data)
+                    //type 1角色编辑或者删除 2用户编辑
+                    if (gainData.type == 1) {
+                        console.log(gainData);
+                        // layer.msg(gainData.data,{icon:7})
+                        $('.sockotTitle p').html(gainData.data)
+                        popupShow('socketCont', 'sockotBox');
+                        setTimeout(()=>{
+                            loginOut();
+                        },3500)
+                    } else if (gainData.type == 2) {
+                        $('.sockotTitle p').html(gainData.data)
+                        popupShow('socketCont', 'sockotBox');
+                        setTimeout(()=>{
+                            loginOut();
+                        },3500)
+                    }
+
+                    // console.log(msg)
                     //发现消息进入    开始处理前端触发逻辑
                 };
                 //关闭事件
-                socket.onclose = function() {
+                socket.onclose = function () {
                     console.log("websocket已关闭");
-                    socketFlag=false
-    //              websocket.close();
+                    socketFlag = false
+                    //              websocket.close();
                 };
                 //发生了错误事件
-                socket.onerror = function() {
+                socket.onerror = function () {
                     console.log("websocket发生了错误");
-                    socketFlag=false
+                    socketFlag = false
                 }
             }
         };
-        if(sessionStorage.token){
+        if (sessionStorage.token) {
             openSocket();
         }
-        setInterval(()=>{
-            if(sessionStorage.token){
-                if(!socketFlag){
-                    socketFlag=true;
+        setInterval(() => {
+            if (sessionStorage.token) {
+                if (!socketFlag) {
+                    socketFlag = true;
                     openSocket()
                 }
             }
             console.log(999)
-        },10000)
+        }, 10000)
+
+        //退出登录
+        function loginOut() {
+            loadingAjax('/api//user/logout', 'post', '', sessionStorage.token, '', '', '', layer).then((res) => {
+                console.log(res)
+                // window.history.go(-1);
+                sessionStorage.token = '';
+                window.location.replace('../login/login.html')
+            }).catch((err) => {
+                console.log(err)
+                layer.msg(err.message)
+            })
+        }
         
-    });
-    $('.exitLogin').click(function(){
-        loadingAjax('/api//user/logout','post','',sessionStorage.token,'','','',layer).then((res)=>{
-            console.log(res)
-            // window.history.go(-1);
-            window.location.replace('../login/login.html')
-        }).catch((err)=>{
-            console.log(err)
-            layer.msg(err.message)
+        $('.exitLogin').click(function () {
+            loginOut();
+        });
+        $('.determineBtn button').click(function(){
+            popupHide('socketCont','sockotBox')
+            loginOut();
         })
     });
+    
 
-$("body").bind("keydown",function(event){
-    if (event.keyCode == 116) {
-               event.preventDefault(); //阻止默认刷新
-        //  $(".iframe_show").attr("src",window.frames["iframe_show"].src);
-      
-   }
-}) ;
-// var  pageVisibility = document.visibilityState;
-// // 监听 visibility change 事件 
-// document.addEventListener('visibilitychange', function () {
-//     if (document.visibilityState == 'hidden') {
-//         // 页面变为不可见时触发 
-//         $(".musicBg_close").show();
-//         $(".musicBg_on").hide();
-//         audio.pause();
-//     }else{
-//         // 页面变为可见时触发 
-//     }
-// });
-// setTimeout(()=>{
-//     $.ajax({
-//         type:'post',
-//         url:'/api/pushWebMsg',
-//         headers: {
-//             "Content-Type": "application/json",
-//             token,
-//         },
-//         data:JSON.stringify({
-//             uid:1594017686796,
-//             msg:'角色权限发生更改',
-//             tag:1,
-//         }),
-//         success:function(res){
-//             console.log(res)
-//         }
-//     })
-// },1000)
+    $("body").bind("keydown", function (event) {
+        if (event.keyCode == 116) {
+            event.preventDefault(); //阻止默认刷新
+            //  $(".iframe_show").attr("src",window.frames["iframe_show"].src);
+
+        }
+    });
+    // var  pageVisibility = document.visibilityState;
+    // // 监听 visibility change 事件 
+    // document.addEventListener('visibilitychange', function () {
+    //     if (document.visibilityState == 'hidden') {
+    //         // 页面变为不可见时触发 
+    //         $(".musicBg_close").show();
+    //         $(".musicBg_on").hide();
+    //         audio.pause();
+    //     }else{
+    //         // 页面变为可见时触发 
+    //     }
+    // });
+    // setTimeout(()=>{
+    //     $.ajax({
+    //         type:'post',
+    //         url:'/api/pushWebMsg',
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             token,
+    //         },
+    //         data:JSON.stringify({
+    //             uid:1594017686796,
+    //             msg:'角色权限发生更改',
+    //             tag:1,
+    //         }),
+    //         success:function(res){
+    //             console.log(res)
+    //         }
+    //     })
+    // },1000)
 
 
 }
-// $(window).unload(function(){
-//     //响应事件
-//     console.log("获取到了页面要关闭的事件了！"); 
-// });

@@ -11,9 +11,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         elem: '#test6',
         range: true,
         done: function (value, date, endDate) {
-            console.log(value); //得到日期生成的值，如：2017-08-18
+            // console.log(value); //得到日期生成的值，如：2017-08-18
             timerKey = value.split(' - ');
-            console.log(timerKey);
+            // console.log(timerKey);
             startTime = timerKey[0];
             endTime = timerKey[1];
         }
@@ -71,7 +71,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     d.publicizeAdvert.forEach((item, index) => {
                         return advertisingSize += Number(item.size);
                     });
-                    // console.log(advertisingSize)
                     advertisingSize = advertisingSize.toFixed(2)
                     return advertisingSize
                 }
@@ -97,7 +96,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             conditionThree: sessionStorage.machineID
         },
         parseData: function (res) {
-            // console.log(res)
             //res 即为原始返回的数据
             if (res.code == 200) {
                 return {
@@ -135,10 +133,8 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     // 查看购金机列表
     var machineList1 = null;
     table.on('tool(machineListData)', function (obj) {
-        console.log(obj)
         numderID = obj.data.number;
         if (obj.event === 'preview') {
-            console.log(obj.data.publicizeAdvert)
             durationData = obj.data.publicizeAdvert;
             publisSwiperCont(obj.data.publicizeAdvert, 'previewSwiperCont', 'swiperDetails', durationData);
             var options = {
@@ -153,7 +149,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             popupShow('toViveCont', 'toViveBox')
         } else if (obj.event === 'details') {
             advertisingDetailsList = obj.data.publicizeAdvert;
-            console.log(advertisingDetailsList);
             advertisingDetails(advertisingDetailsList, 'detailsListBox')
             popupShow('advertisingDetails', 'detailsBox');
         } else if (obj.event == 'push') {
@@ -185,7 +180,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
     // 广告详情修改排序
     $('.detailsListBox').on('click', '.listLift img', function () {
-        console.log($(this).attr('ImgIndex'));
         var ImgIndex = $(this).attr('ImgIndex');
         var ImgList_1 = advertisingDetailsList[ImgIndex - 1];
         advertisingDetailsList[ImgIndex - 1] = advertisingDetailsList[ImgIndex];
@@ -229,7 +223,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     publicizeAdvert: editDetailsList
                 }),
                 success: function (res) {
-                    console.log(res)
                     if (res.code == 200) {
                         popupHide('advertisingDetails', 'detailsBox');
                         layer.msg('修改成功', { icon: 1, });
@@ -271,7 +264,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 condition: numderID
             },
             parseData: function (res) {
-                // console.log(res)
                 //res 即为原始返回的数据
                 if (res.code == 200) {
                     return {
@@ -342,9 +334,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         elem: '#itemrs1',
         range: true,
         done: function (value, date, endDate) {
-            console.log(value); //得到日期生成的值，如：2017-08-18
+            // console.log(value); //得到日期生成的值，如：2017-08-18
             timerKey = value.split(' - ');
-            console.log(timerKey);
+            // console.log(timerKey);
             keyStartTiem = timerKey[0];
             keyEndTiem = timerKey[1];
         }
@@ -408,7 +400,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     merchantId: sessionStorage.machineID
                 },
                 parseData: function (res) {
-                    // console.log(res)
                     //res 即为原始返回的数据
                     if (res.code == 200) {
                         return {
@@ -443,7 +434,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     $('.pubilshMaterialCont .determineBtn').click(function () {
         // addMaterList  = table.checkStatus('chooesId').data;
         addMaterList = addMaterList.concat(table.checkStatus('chooesId').data)
-        // console.log(addMaterList);
         if (addMaterList.length > 0) {
             popupHide('pubilshMaterialCont', 'pubilshMaterialBox');
             materaialMethods(addMaterList, 'SetContList');
@@ -457,23 +447,19 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     // 发布广告排序
     $('.SetContList').on('click', '.sortingImg', function () {
         var sortingIndex = $(this).attr('index');
-        console.log(sortingIndex - 1)
         var list_1 = addMaterList[sortingIndex - 1];
         addMaterList[sortingIndex - 1] = addMaterList[sortingIndex];
         addMaterList[sortingIndex] = list_1;
-        console.log(addMaterList);
         materaialMethods(addMaterList, 'SetContList');
     });
     // 删除广告素材
     $('.SetContList').on('click', '.setMateraialList .delBtn', function () {
-        console.log($(this).attr('delindex'));
         addMaterList.splice($(this).attr('delindex'), 1);
         materaialMethods(addMaterList, 'SetContList');
     })
     // 输入框失去焦点事件
     $('.SetContList').on('blur', '.duration input', function () {
         addMaterList[$(this).attr('index')].inputVal = $(this).val();
-        console.log(addMaterList);
     });
 
     // 发布广告删除删除事件
@@ -503,7 +489,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
 
     // 广告设置素材列表
     function materaialMethods(addList, theElement) {
-        console.log(addList)
         var materaiaList = '';
         $.each(addList, function (index, ele) {
             materaiaList += ` <li class="setMateraialList">
@@ -553,7 +538,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             var confirmObj = {
                 sort: index + 1,
                 time: item.inputVal,
-                vid: item.vId
+                vid: item.vid
             }
             confirmList.push(confirmObj)
         });
@@ -624,7 +609,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             'limitName': 'pageSize'
         },
         parseData: function (res) {
-            // console.log(res)
             //res 即为原始返回的数据
             if (res.code == 200) {
                 return {
@@ -739,12 +723,11 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         });
         var options = null;
         carousel.on(`change(${IdELement})`, function (obj) { //test1来源于对应HTML容器的 lay-filter="test1" 属性值
-            console.log(obj.index); //当前条目的索引
+            // console.log(obj.index); //当前条目的索引
             setTimeout(() => {
                 options = {
                     'interval': durationData[obj.index].time * 1000 || durationData[obj.index].inputVal * 1000
                 }
-                console.log(options)
                 publis.reload(options);
             }, 500)
 
@@ -755,7 +738,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     // 提交审核
     $('.submitAuditBtn').click(function () {
         var submitCheckStatus = table.checkStatus('advertisingData');
-        console.log(submitCheckStatus)
         checkList = [];
         if (submitCheckStatus.data.length > 0) {
             $('.mask').fadeIn();
@@ -863,7 +845,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     // 广告推送
     $('.machineDetailsCont .determineBtn').click(function () {
         var pishList = table.checkStatus('machineAdvertisingList');
-        console.log(pishList);
         if (pishList.data.length > 0) {
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon')
@@ -884,7 +865,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     machine: pushStr
                 }),
                 success: function (res) {
-                    console.log(res)
                     $('.mask').fadeOut();
                     $('.maskSpan').removeClass('maskIcon');
                     popupHide('machineDetailsCont', 'machineDetailsBox');
@@ -913,7 +893,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     number: numderID,
                 }),
                 success: function (res) {
-                    console.log(res)
                     popupHide('machineDetailsCont', 'machineDetailsBox');
                     layer.msg('推送成功', { icon: 1 });
                 }, error: function (err) {
@@ -929,7 +908,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
 
 
     table.on('tool(machine1)', function (obj) {
-        console.log(obj)
         ScottMethods(obj.data.longitude, obj.data.latitude, obj.data.location);
         popupShow('ScottCont', 'scottBox')
     });
@@ -950,7 +928,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     $('.pushReleaseBtn').click(function () {
         pushList = [];
         checkID = table.checkStatus('advertisingData');
-        console.log(checkID)
         checkID.data.forEach((item, index) => {
             if (item.attribute == 2) {
                 pushList.push(item.number)
@@ -967,7 +944,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 cascade: false,//级联
               });
             $.each($(".treeList input"), function() {
-                console.log($(this).val());
                 if(checkID.data[0].merchantId==$(this).val()){
                     $(this).prop('disabled',true);
                     return ;
@@ -984,18 +960,15 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     var role = null;
     $('.RdetermineBtn').click(function () {
         role= leg.getCheckedNodes().map(Number)
-        console.log(leg.getCheckedNodes());
         // return;
         // var checkedData = tree.getChecked('treelistCheck');
         // role = getChildNodes(checkedData, []);
         // role.shift()
-        // console.log(role)
         if (role.length == 0) {
             layer.msg('请选择要推送的商户', { icon: 7 })
             return;
         }
         popupShow('PushMandatory', 'MandatoryBox')
-        console.log(pushList)
     });
 
 
@@ -1092,7 +1065,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 conditionThree: '0'
             },
             parseData: function (res) {
-                // console.log(res)
                 //res 即为原始返回的数据
                 if (res.code == 200) {
                     return {
@@ -1135,7 +1107,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     // 接收
     $('.pushReleaseListBtn').click(function () {
         var receiveList = table.checkStatus('parentTableId');
-        console.log(receiveList);
         var receiveArray = [];
         if (receiveList.data.length > 0) {
             receiveList.data.forEach((item, index) => {
@@ -1144,7 +1115,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     receiveArray.push(item.tempNumber)
                 }
             });
-            console.log(receiveArray);
             if (receiveArray.length == 0) {
                 layer.msg('没有能接收的广告', { icon: 7 });
                 return;
@@ -1154,7 +1124,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             var numberArr = JSON.stringify({
                 numbers: receiveArray
             })
-            console.log(numberArr)
             loadingAjax('/api/publicized/getMerchantAd', 'post', numberArr, sessionStorage.token, 'mask', 'topGoodsList', 'topBox', layer).then((res) => {
                 layer.msg(res.message, { icon: 1 });
                 advertisingLis.reload({
@@ -1189,7 +1158,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
 
     //   预览推送广告   
     table.on('tool(parentTableTest)', function (obj) {
-        console.log(obj)
         durationData = obj.data.advertising;
         publisSwiperCont(obj.data.advertising, 'previewSwiperCont', 'swiperDetails', durationData);
         var options = {

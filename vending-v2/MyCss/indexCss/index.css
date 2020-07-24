@@ -234,3 +234,37 @@
 #userLogin .layui-nav-more{
 	display: none;
 }
+.sockotBox{
+	width: 500px;
+    position: relative;
+    margin: 30vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+	transition: all 0.3s;
+	border-radius: 5px;
+}
+.sockotTitle{
+	padding: 20px;
+	text-align: center;
+}
+.sockotTitle p{
+	font-size: 18px;
+	color: #be954a;
+}
+.determineBtn{
+	border-top: 1px solid #E2E2E2;
+	padding: 10px 0;
+	text-align: center;
+	cursor: pointer;
+}
+.determineBtn button{
+	font-size: 16px;
+	border: none;
+	outline: none;
+	background-color: #fff;
+	line-height: 30px;
+	color:#be954a;
+	cursor: pointer;
+}

@@ -3,7 +3,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
   table = layui.table,
     layer = layui.layer,
     tree = layui.tree,
-    sessionStorage.merchantIdData = sessionStorage.machineID,
+    sessionStorage.classTag = sessionStorage.machineID,
     rank = null,
     //数据表格
     token = sessionStorage.token,
@@ -129,7 +129,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
               }
             })
             // $('.addClass').fadeOut();
-
+            loadingAjax('/refreshGoods','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
           } else if (res.code == 403) {
             window.parent.location.href = "../login/login.html";
           } else {
@@ -165,7 +165,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       layer.confirm('确定删除？', function (index) {
         // obj.del();
         // layer.close(index);
-        Goodsdel(editData, 2, obj, index,tableIns);
+        Goodsdel(editData, 2, obj, index,tableIns,sessionStorage.classTag);
       });
 
     } else if (obj.event == 'rank') {
@@ -173,7 +173,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       var rankObj = JSON.stringify({
         topId: rank[obj.data.rank - 1].classifyId,
         bottomId: rank[obj.data.rank - 2].classifyId,
-        merchantId: sessionStorage.merchantIdData
+        merchantId: sessionStorage.classTag
       })
       loadingAjax('/api/classify/sortClassify', 'post', rankObj, token, '', '', '', layer).then((res) => {
         layer.msg(res.message, { icon: 1 });
@@ -213,7 +213,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
 
               }
             })
-
+            loadingAjax('/refreshGoods','post','',sessionStoragetoken).then(res=>{}).catch(err=>{})
           } else if (res.code == 403) {
             window.parent.location.href = "../login/login.html";
           }
@@ -241,7 +241,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
   });
 
   var dataList = treeList();
-  treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId')
+  treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId','','','','true');
 
   // 刷新页面
   $('.refreshBtn').click(function () {

@@ -4,105 +4,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../MyCss/public/pubilc.css">
-    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <script src="../../js/public/documentWrite.js"></script>
     <link rel="stylesheet" href="../../MyCss/accounts/categoryAccounts.css">
-    <title>类目账目</title>
+    <title>商户账目</title>
 </head>
-
 <body>
+    
     <div class="caregoryAccunts-wrap">
-        <div class="margin">
-            <div class="header-query flexTwo">
-                <div class="itmes">
-                    <div class="layui-form">
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="text" class="layui-input" id="itemrs1">
-                            </div>
-                        </div>
-                    </div>
-                    至
-                    <div class="layui-form">
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="text" class="layui-input" id="itemrs2">
-                            </div>
-                        </div>
-                    </div>
+        <div  style="display:flex">
+            <div class="left-mian">
+                <div class="accountContnet">
+                    <p style="margin:20px;color:#be954a;">商户列表</p>
+                    <div id="test1" class="demo-tree demo-tree-box"></div>
                 </div>
-                <div style="max-width: 250px;margin-left: 80px;" class="key-contnet">
-                    <div class="key-text">关键字</div>
-                    <input type="text" placeholder="类目名">
-                </div>
-                <div style="margin-left:100px;">
-                    <button class="layui-btn layui-btn-normal query-btn btn" >
-                        <i class="layui-icon layui-icon-search"></i>
-                        <span>查询</span>
-                    </button>
-                    <button class="layui-btn layui-btn-normal export-btn btn"style="margin-left:5px;" >
-                        <span>导出excel</span>
-                    </button>
-                </div>
+                <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
             </div>
-            <div class="caregory-data-lis">
-                <div>
-                    <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
+             <i class="layui-icon layui-icon-right  onLeft" style="z-index: 888;"></i>
+            <div class="margin" >
+                <div class="dataListCont flexTwo">
+                    <div class="turnover dataList">
+                        <header>总营业额(元)</header>
+                        <p>0</p>
+                    </div>
+                    <div class="guestOrders dataList">
+                        <header>总客单量(笔)</header>
+                        <p>0</p>
+                    </div>
+                    <div class="goodsNumber dataList">
+                        <header>总商品销量(件)</header>
+                        <p>0</p>
+                    </div>
+                    <p id="aa"></p>
+                </div>
+                <div class="header-query flexTwo " >
+                    <div style="width: 350px;">
+                        <div class="itmes key-contnet">
+                            <div class="key-text">月份</div>
+                            <div class="layui-form">
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" id="itemrs1" autocomplete="off" style="width: 100%;text-align: center;" placeholder="-">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <!-- <div style="max-width: 250px;margin-left: 80px;" class="key-contnet">
+                        <div class="key-text">关键字</div>
+                        <input type="text" placeholder="类目名">
+                    </div> -->
+                    <div style="margin-left:50px;">
+                        <button class="layui-btn layui-btn-normal queryBtn btn" >
+                            <i class="layui-icon layui-icon-search"></i>
+                            <span>查询</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal refreshBtn btn"style="margin-left:5px;" >
+                            <i class="layui-icon layui-icon-refresh"></i>
+                            <span>刷新</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="caregory-data-lis">
+                    <div>
+                        <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
+                    </div>
+                </div>
+            </div>       
+        </div>
+        <!-- 月份账目详情 -->
+        <div class="accountsDetailsCont maskContnet">
+            <div class="accountsDetailsBox margin0">
+                <div class="playHeader">
+                    <span>账目详情</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="accountBody">
+                    <div class="detailsTable">
+                        <div>
+                            <table class="layui-hide" id="dateDetails" lay-filter="dateDetails"></table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-<script src="../../layui/layui.js"></script>
-<script>
-    layui.use(['table', 'laydate'], function () {
-        var $ = layui.jquery;
-        // 时间选择器
-        var laydate = layui.laydate;
-        laydate.render({
-            elem: '#itemrs1',
-            value: new Date(),
-            max: '0'
-        });
-        laydate.render({
-            elem: '#itemrs2',
-            value: new Date(),
-            max: '0'
-        });
-
-        var table = layui.table;
-        table.render({
-            elem: '#moneyData'
-            , cols: [[
-                { field: 'username', width: 160, title: '类目' },
-                { field: 'phone', width: 160, title: '订单数量', sort: true },
-                { field: 'CreationTime', width: 160, title: '成本总额', sort: true },
-                { field: 'amendTime', width: 160, title: '预计销售额', sort: true },
-                { field: 'bili', width: 160, title: '销售总额', sort: true },
-                { field: 'jine', width: 160, title: '操作 ', toolbar: '#barDemo' },
-
-            ]],
-            data: [
-                {
-                    username: '2222'
-                    , phone: 'cs45121'
-                    , CreationTime: '支付宝'
-                    , amendTime: '99'
-                    , bili: '1:2'
-                },
-                {
-                    username: '2222'
-                    , phone: 'cs45121'
-                    , CreationTime: '支付宝'
-                    , amendTime: '99'
-                    , bili: '1:2'
-                }
-            ]
-            , page: true
-        });
-
-    })
-
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="details">
+            <span style="color:#fff;">详情</span>
+        </button> 
+    </div>
 </script>
-
+<script src="../../js/accounts/merchantsAcconuts.js"></script>
 </html>

@@ -28,10 +28,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'info', width: 200, title: '终端信息', align: 'center',
-                    // templet: function (d) {  return `<div><span style="color:#be954a">${d.info}</span></div>` }  
+                    field: 'info', width: 200, title: '终端信息', align: 'center',templet: function (d) {  
+                        return d.info?d.info:' - '
+                    }  
                 },
-                { field: 'location', width: 350, title: '地址', },
+                { field: 'location', width: 350, title: '地址',templet:function(d){
+                    return d.location?d.location:' - '
+                } },
                 {
                     field: 'CreationTime', width: 150, title: '缺货状态', sort: true, align: 'center', templet: function (d) {
                         return `<div><span class="${d.stockStatus == 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.stockStatus == 0 ? '正常' : d.stockStatus == 1 ? '一般' : '严重'}</span></div>`
@@ -169,8 +172,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 'sNumber': machineSetData.number,
                 'tName': machineSetData.info,
                 'number': machineSetData.machineId,
-                'province': region[0],
-                'mapVal': region[3],
+                'province': machineSetData.location?region[0]:'',
+                'mapVal':machineSetData.location?region[3]:'',
                 'area': machineSetData.area,
                 'longitude': machineSetData.longitude,
                 'latitude': machineSetData.latitude,
@@ -180,13 +183,15 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 'merchantsName': machineSetData.userNum,
                 merchantsNametext:machineSetData.merchantName
             });
-
-            provinceChange(region[0]);
-            console.log(region[0])
-            $('.city').val(region[1]);
-            cityChange(region[1]);
-            $('.district').val(region[2]);
-            form.render('select');
+            if(machineSetData.location){
+                provinceChange(region[0]);
+                console.log(region[0])
+                $('.city').val(region[1]);
+                cityChange(region[1]);
+                $('.district').val(region[2]);
+                form.render('select');
+            }
+         
             $('.editMachineCont').show();
             geoCode();
         } else if (obj.event == 'activate') {

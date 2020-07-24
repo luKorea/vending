@@ -1,10 +1,10 @@
 // 公共方法
-
+document.write("<script type='text/javascript' src='../../js/public/jquery.animateNumber.min.js'></script>");
 // 删除商品数据列表数据
 // 传id
 var token = sessionStorage.token;
 var machineId = sessionStorage.machineID;
-function Goodsdel(id, indexs, obj, index,tableID) {
+function Goodsdel(id, indexs, obj, index, tableID,classTag) {
   // index 1为自定义商品 2为自定义类目 3为通用商品 
   if (indexs == 1) {
     $.ajax({
@@ -20,12 +20,12 @@ function Goodsdel(id, indexs, obj, index,tableID) {
         if (res.code == 200) {
           obj.del();
           layer.close(index);
-          layer.msg(res.message,{icon:1});
-         
+          layer.msg(res.message, { icon: 1 });
+          loadingAjax('/api/refreshGoods', 'post', '', sessionStoragetoken).then(res => { }).catch(err => { })
         } else if (res.code == 403) {
           window.parent.location.href = "../login/login.html";
         } else {
-          layer.msg(res.message,{icon:2});
+          layer.msg(res.message, { icon: 2 });
         }
       }
     })
@@ -38,21 +38,23 @@ function Goodsdel(id, indexs, obj, index,tableID) {
         token,
       },
       data: JSON.stringify({
-        id:id.classifyId,
-        rank:id.rank
+        id: id.classifyId,
+        rank: id.rank,
+        merchantId:classTag
       }),
-       success: function (res) {
+      success: function (res) {
         if (res.code == 200) {
           obj.del();
           layer.close(index);
-          layer.msg('删除成功',{icon:1});
+          layer.msg('删除成功', { icon: 1 });
           tableID.reload({
-            where:{}
-          })
+            where: {}
+          });
+          loadingAjax('/api/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
         } else if (res.code == 403) {
           window.parent.location.href = "../login/login.html";
         } else {
-          layer.msg(res.message,{icon:2});
+          layer.msg(res.message, { icon: 2 });
         }
       }
     })
@@ -70,7 +72,7 @@ function upPreferential(tableIns, keyGoodsName, GoodsTypeID, stateId, startingPr
       conditionTwo: keyGoodsName, //关键字
       conditionThree: GoodsTypeID, //分类
       conditionFour: stateId, //商品状态
-      conditionFive:  startingPrice,  //开始价格
+      conditionFive: startingPrice,  //开始价格
       conditionSix: closingPrice,   //结束价格
       //…
     }
@@ -168,10 +170,10 @@ function passRegular(that, layer) {
   }
 };
 // 检测中文正则
-function ChineseREgular(that,layer){
-  var reg= /[\u4E00-\u9FA5]/g;
-  if($(that).val()){
-    if(reg.test($(that).val())){
+function ChineseREgular(that, layer) {
+  var reg = /[\u4E00-\u9FA5]/g;
+  if ($(that).val()) {
+    if (reg.test($(that).val())) {
       layer.msg('用户名不能含中文', { icon: 7 });
       $(that).val('')
       return false;
@@ -246,9 +248,11 @@ function treeList(marchantName) {
         // })
         // console.log(data)
         dataList.push(res.data[0])
-        if(marchantName){
-          sessionStorage.marchantName=res.data[0].title;
+        if (marchantName) {
+          sessionStorage.marchantName = res.data[0].title;
         }
+      } else if (res.code == 403) {
+        window.parent.location.href = "../login/login.html";
       }
       // dataList=res.data[0]
     },
@@ -260,33 +264,36 @@ function treeList(marchantName) {
   return dataList;
 }
 //树方法实列
-function treeFun(tree, element, tableID, data, key,goodsCLass,selectData,conditionThree) {
+function treeFun(tree, element, tableID, data, key, goodsCLass, selectData, conditionThree,flag) {
   tree.render({
     elem: `#${element}`,
-    id:'treelist',
+    id: 'treelist',
     showLine: !0 //连接线
     ,
     onlyIconControl: true, //左侧图标控制展开收缩 
     data,
-    spread:true,
+    spread: true,
     text: {
       defaultNodeName: '无数据',
       none: '您没有权限，请联系管理员授权!'
     },
     click: function (obj) {
-      if(goodsCLass){
-        selectData(obj.data.id+'');
+      if (goodsCLass) {
+        selectData(obj.data.id + '');
       }
-      sessionStorage.merchantIdData = obj.data.id;
+      if(flag){
+        sessionStorage.classTag=obj.data.id
+      }
+      // sessionStorage.merchantIdData = obj.data.id;
       varData = obj.data.id;
       console.log(obj);
       tableID.reload({
         where: {
           [key]: obj.data.id + '',
-          [conditionThree?conditionThree:' ']:'0'
+          [conditionThree ? conditionThree : ' ']: '0'
         }
       })
-      var nodes=$(`#${element} .layui-tree-txt`)
+      var nodes = $(`#${element} .layui-tree-txt`)
       for (var i = 0; i < nodes.length; i++) {
         if (nodes[i].innerHTML === obj.data.title)
           nodes[i].style.color = "#be954a";
@@ -332,7 +339,7 @@ function treeFun(tree, element, tableID, data, key,goodsCLass,selectData,conditi
 }
 
 // 树复选方法
-function treeFunCheck(tree, element, tableID, data, key,layer) {
+function treeFunCheck(tree, element, tableID, data, key, layer) {
   tree.render({
     elem: `#${element}`,
     id: 'treelistCheck',
@@ -347,7 +354,7 @@ function treeFunCheck(tree, element, tableID, data, key,layer) {
     },
     click: function (obj) {
       // console.log(obj)
-      var nodes=$(`#${element} .layui-tree-txt`)
+      var nodes = $(`#${element} .layui-tree-txt`)
       for (var i = 0; i < nodes.length; i++) {
         if (nodes[i].innerHTML === obj.data.title)
           nodes[i].style.color = "#be954a";
@@ -384,8 +391,8 @@ function treeFunCheck(tree, element, tableID, data, key,layer) {
                 });
               }
             }
-          },error:function(err){
-            layer.msg('服务器请求超时',{icon:2})
+          }, error: function (err) {
+            layer.msg('服务器请求超时', { icon: 2 })
           }
         })
 
@@ -393,8 +400,8 @@ function treeFunCheck(tree, element, tableID, data, key,layer) {
     },
     oncheck: function (obj) {
       console.log(obj.data); //得到当前点击的节点数据
-    console.log(obj.checked); //得到当前节点的展开状态：open、close、normal
-    console.log(obj.elem); //得到当前节点元素
+      console.log(obj.checked); //得到当前节点的展开状态：open、close、normal
+      console.log(obj.elem); //得到当前节点元素
 
     }
   });
@@ -462,12 +469,12 @@ function ajaxFun(url, type, data, userToken) {
 // })
 function loadingAjax(url, type, data, userToken, mask, element, elementChild, layer) {
   return new Promise(function (resolve, reject) {
-    ajaxFun(url, type, data, userToken, resolve, reject).then( (res)=> {
+    ajaxFun(url, type, data, userToken, resolve, reject).then((res) => {
+      if (mask) {
+        $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon');
+      }
       if (res.code == 200) {
-        if (mask) {
-          $('.mask').fadeOut();
-          $('.maskSpan').removeClass('maskIcon');
-        }
         if (element) {
           popupHide(element, elementChild)
         }
@@ -480,7 +487,7 @@ function loadingAjax(url, type, data, userToken, mask, element, elementChild, la
         // return $.Deferred().reject(res.message);
         reject(res)
       }
-    }).catch( (err)=> {
+    }).catch((err) => {
       if (mask) {
         $('.mask').fadeOut();
         $('.maskSpan').removeClass('maskIcon');
@@ -557,7 +564,7 @@ function f5Fun() {
 
 }
 
-function treeFunMaterial(tree, element, tableID, data, key,id) {
+function treeFunMaterial(tree, element, tableID, data, key, id, index) {
   tree.render({
     elem: `#${element}`,
     id,
@@ -570,16 +577,25 @@ function treeFunMaterial(tree, element, tableID, data, key,id) {
       none: '您没有权限，请联系管理员授权!'
     },
     click: function (obj) {
-      sessionStorage.merchantIdData = obj.data.id;
+      if (index == 1) {
+        // sessionStorage.merchantIdData = obj.data.id;
+        sessionStorage.acconutsID = obj.data.id;
+      } 
+      // else {
+      //   //账目商户id
+        
+      // }
+
+
       varData = obj.data.id;
       console.log(obj);
       tableID.reload({
         where: {
-          [key]: obj.data.id + '',
+          [key]: index != 1 ? obj.data.id + '' : obj.data.id,
         }
       })
       // var nodes = document.getElementsByClassName("layui-tree-txt");
-      var nodes=$(`#${element} .layui-tree-txt`)
+      var nodes = $(`#${element} .layui-tree-txt`)
       for (var i = 0; i < nodes.length; i++) {
         if (nodes[i].innerHTML === obj.data.title)
           nodes[i].style.color = "#be954a";
@@ -588,4 +604,25 @@ function treeFunMaterial(tree, element, tableID, data, key,id) {
       }
     },
   });
+}
+
+// 数字变化函数
+function animateNumberFun(ele, num, type) {
+  console.log(num)
+  $(ele).animateNumber(
+    {
+      number: num,
+      numberStep: function (now, tween) {
+        var floored_number = Number(now.toFixed(2)),
+          target = $(tween.elem);
+        var c = (floored_number.toString().indexOf('.') !== -1) ? floored_number.toLocaleString() : floored_number.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+        var str = c.split('.');
+        if (type == 1) {
+          if (str.length == 1) { c = c + '.00'; } else { if (str[1].length == 1) { c = c + '0'; } }
+        }
+        target.text(c);
+      }
+    },
+    1100
+  )
 }
