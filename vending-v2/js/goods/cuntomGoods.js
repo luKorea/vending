@@ -1,3 +1,4 @@
+import '../../MyCss/goods/customGoods.css'
 layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   var $ = layui.jquery,
     tree = layui.tree;

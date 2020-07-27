@@ -1,3 +1,4 @@
+import '../../MyCss/userManagement/roleManagement.css'
 layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var form = layui.form;
     var $ = layui.jquery;
@@ -56,7 +57,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         done: function (res) {
             if (res.code == 403) {
                 // window.history.go(-1)
-                window.parent.location.href = "../login/login.html";
+                window.parent.location.href = "login.html";
             }else if(res.code==405){
                 $('.hangContent').show()
             }
@@ -194,7 +195,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                             });
 
                         } else if (res.code == 403) {
-                            window.parent.location.href = "../login/login.html";
+                            window.parent.location.href = "login.html";
                         } else {
                             layer.msg(res.message, { icon: 2 });
                         }
@@ -291,7 +292,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                             // },800)          
                         }
                     } else if (res.code == 403) {
-                        window.parent.location.href = "../login/login.html";
+                        window.parent.location.href = "login.html";
                     } else {
                         layer.msg(res.message, { icon: 2 });
                     }

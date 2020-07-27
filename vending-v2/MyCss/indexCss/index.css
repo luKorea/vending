@@ -145,17 +145,17 @@
 	margin-left:200px ;
 	z-index: 9999999999;
 	box-sizing: border-box;
-	/* border: solid 15px rgba(238,238,238); */
+	/* border: solid 15px rgb(238,238,238); */
 	overflow: hidden;
 }
 .header-nav-tabs-switch .layui-tab{
-	border: solid 15px rgba(238,238,238); 
+	border: solid 15px rgb(238,238,238); 
 	border-right: none;
 	margin: 0;
 } 
 .header-nav-tabs-switch .layui-tab-title .layui-this{
 	font-weight: bold;
-	/* border-bottom: solid 15px rgba(238,238,238) ; */
+	/* border-bottom: solid 15px rgb(238,238,238) ; */
 }
 .layui-tab-title li{
 	font-size: 14px;
@@ -203,12 +203,12 @@
 	position: fixed;
 	top: 145px;
 	bottom: 0px;
-	border: 15px solid rgba(238,238,238);
+	border: 15px solid rgb(238,238,238);
 	right: 0;
 	left: 200px;
 	box-sizing: border-box;
 	border-top: 0;
-	border-right: 10px solid rgba(238,238,238);
+	border-right: 10px solid rgb(238,238,238);
 	overflow:auto ;
 	padding-left: 0;
 	padding-right: 0;

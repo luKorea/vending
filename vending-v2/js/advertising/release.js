@@ -1,3 +1,4 @@
+import '../../MyCss/advertising/release.css'
 layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function () {
     var token = sessionStorage.token,
         tree = layui.tree,

@@ -1,3 +1,4 @@
+import '../../MyCss/accounts/merchantsAcconuts.css'
 layui.use(['table', 'laydate', 'tree', 'layer'], function () {
     // 时间选择器
     var laydate = layui.laydate,
@@ -100,7 +101,7 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
         if (!dateDetailsTable) {
             monthDetails();
         }
-        merchantId = sessionStorage.acconutsID
+        var  merchantId = sessionStorage.acconutsID
         dateDetailsTable.reload({
             where: {
                 condition,
@@ -225,8 +226,8 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
                 animateNumberFun('.guestOrders p',res.data.order_count,2);
                 animateNumberFun('.goodsNumber p',res.data.good_count,2)
             }
-        }).catch(ree => {
-            lay
+        }).catch(err => {
+            layer.msg(err.message,{icon:2})
         })
     };
     // totalityNumber();
@@ -242,6 +243,13 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
         })
     });
 
+
+     // 监听f5刷新
+  $("body").bind("keydown", function (event) {
+    if (event.keyCode == 116) {
+      f5Fun()
+    }
+  })
 })
 
 

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../assets/public/documentWrite.js"></script>
+    <title>自定义类目</title>
+</head>
+
+<body>
+    <div class="custom-warp">
+        <div style="width: 100%;display: flex;">
+            <!-- 左边部分 -->
+            <div class="left-mian">
+                <div class="accountContnet" style="margin-left:15px;">
+                    <!-- <div class="input-account">
+						  <input type="text" placeholder="输入用户账号">
+					  </div> -->
+                    <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
+                    <!-- <div class="fixed-account">
+						  <span> 粤宝商户-中邮广州</span>
+					  </div> -->
+                    <div id="testGoods" class="demo-tree demo-tree-box"></div>
+                </div>
+                <!-- 右侧栏 -->
+                <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
+            </div>
+            <i class="layui-icon layui-icon-right  on-left"></i>
+            <div class="warp-margin">
+                <div class="header-query">
+                    <button class="layui-btn layui-btn-normal  add-btn btn">
+                        <i class="layui-icon layui-icon-app"></i>
+                        <span>添加类目</span>
+                    </button>
+                    <div style="max-width: 330px;margin-left: 50px;" class="key-contnet">
+                        <div class="key-text">关键字</div>
+                        <input type="text" class="keyText">
+                    </div>
+                    <button class="layui-btn layui-btn-normal query-btn btn">
+                        <i class="layui-icon layui-icon-search"></i>
+                        <span>查询</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal  btn refreshBtn" type="button">
+                        <i class="layui-icon layui-icon-refresh "></i>
+                        <span>刷新</span>
+                    </button>
+                </div>
+                <div class="custom-data-list">
+                    <div>
+                        <table class="layui-hide" id="tableTest" lay-filter="test"></table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 添加自定义类目 -->
+        <div class="addClass maskContnet">
+            <div class="addContent margin0">
+                <!-- <div class="content-header">
+                    <span>添加类目</span>
+                </div> -->
+                <div class="playHeader">
+                    <span>添加类目</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div>
+                    <form action="" class="layui-form" lay-filter="aDDValData"
+                        style="width: 460px;display: block;margin: 0 auto ;">
+                        <ul class="addList">
+                            <li style="margin-bottom:22px">
+                                <label><span style="color: red;">*</span> 类型名称</label>
+                                <div style="margin-left:100px;">
+                                    <input type="text" name="addTypeName" lay-verify="required">
+                                </div>
+                            </li>
+                            <li style="margin-bottom:22px">
+                                <label>备注</label>
+                                <div style="margin-left:100px;">
+                                    <input type="text" name="addNote" lay-filter="required">
+                                </div>
+                            </li>
+                        </ul>
+                        <div style="text-align: right;padding-bottom: 22px;margin-right: 22px;">
+                            <button class="layui-btn layui-btn-normal btn determine-btn" type="button">
+                                <span>确定</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal btn cancel-btn" type="button">
+                                <span>取消</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 编辑 -->
+        <div class="editClass maskContnet">
+            <div class="editContent margin0">
+                <!-- <div class="content-header">
+                    <span>编辑类目</span>
+                </div> -->
+                <div class="playHeader">
+                    <span>编辑类目</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div>
+                    <form action="" class="layui-form" lay-filter="editValData"
+                        style="width: 460px;display: block;margin: 0 auto ;">
+                        <ul class="addList">
+                            <!-- <li style="margin-bottom:22px">
+                                <label>终端类型</label>
+                                <div style="margin-left:100px;">
+                                    <form class="layui-form" action="" style="max-width: 240px;">
+                                        <div class="layui-form" lay-filter="myDiv">
+                                            <select name="terminalType" id="" lay-filter="mySelect" disabled="disabled">
+                                                <option value="通用机">通用机</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>                      
+                            </li> -->
+                            <!-- <li style="margin-bottom:22px">
+                                <label><span style="color: red;">*</span> 类目排序</label>
+                                <div style="margin-left:100px;">
+                                    <input type="number" name="sorting" lay-verify="required">
+                                </div>
+                            </li> -->
+                            <li style="margin-bottom:22px">
+                                <label><span style="color: red;">*</span> 类目名称</label>
+                                <div style="margin-left:100px;">
+                                    <input type="text" name="addTypeName" lay-verify="required">
+                                </div>
+                            </li>
+                            <li style="margin-bottom:22px">
+                                <label>备注</label>
+                                <div style="margin-left:100px;">
+                                    <input type="text" name="addNote" lay-filter="required">
+                                </div>
+                            </li>
+                        </ul>
+                        <div style="text-align: right;padding-bottom: 22px;margin-right: 22px;">
+                            <button class="layui-btn layui-btn-normal btn editDetermine-btn" type="button">
+                                <span>确定</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal btn editCancel-btn" type="button">
+                                <span>取消</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- 没有权限时显示白屏 -->
+        <div class="hangContent">
+            <p>您没有访问的权限!</p>
+        </div>
+    </div>
+
+</body>
+<!-- <scrip type="tex" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script> -->
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="edit">
+            <span style="color:#fff;">编辑</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn noPassBtn" lay-event="delete">
+            <span style="color:#fff;">删除</span>
+        </button>
+</div>
+</script>
+<script type="text/html" id="imgtmp">
+<div><img class="{{d.rank==1?'hide':''}}" src="../img/lift.png" style="width: 15px;cursor: pointer;" ><span></span></div>
+</script>
+
+</html>

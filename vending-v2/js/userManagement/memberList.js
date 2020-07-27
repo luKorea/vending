@@ -1,3 +1,4 @@
+import '../../MyCss/userManagement/memberList.css'
 layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
   var table = layui.table;
   var layer = layui.layer,
@@ -61,7 +62,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
           "data": res.data.list //解析数据列表
         };
       } else if (res.code == 403) {
-        window.parent.location.href = "../login/login.html";
+        window.parent.location.href = "login.html";
       }
       else {
         return {
@@ -151,7 +152,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
               layer.close(index);
               socketFun(data.uuid)
             } else if (res.code == 403) {
-              window.parent.location.href = "../login/login.html";
+              window.parent.location.href = "login.html";
             } else {
               layer.msg(res.message,{icon:2});
             }
@@ -332,7 +333,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
               $('.MemberOperation').fadeOut();
               layer.msg(res.message, { icon: 1 })
             } else if (res.code == 403) {
-              window.parent.location.href = "../login/login.html";
+              window.parent.location.href = "login.html";
             } else {
               layer.msg(res.message, { icon: 2 })
             }
@@ -513,7 +514,7 @@ $('.playHeader .close').click(function () {
       msg:'用户信息发生变更，请重新登录！',
       tag:2
     })
-    loadingAjax('/api/pushWebMsg','post',funData,sessionStorage.token).then(res={
+    loadingAjax('/api/pushWebMsg','post',funData,sessionStorage.token).then(res=>{
 
     }).catch(err=>{
 

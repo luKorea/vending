@@ -1,3 +1,4 @@
+import '../../MyCss/merchants/merchantsList.css'
 layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var $ = layui.jquery,
         table = layui.table,
@@ -6,8 +7,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         util = layui.util,
         tree = layui.tree,
         form = layui.form;
-    token = sessionStorage.token,
-        tableIns = table.render({
+        token = sessionStorage.token;
+    var   tableIns = table.render({
             elem: '#tableTest',
             url: `/api/merchant/getMerchantList`,
             method: 'post',

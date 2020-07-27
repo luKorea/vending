@@ -1,5 +1,7 @@
 //JavaScript代码区域
-window.onload = function () {
+import '../../MyCss/indexCss/index.css'
+import {navList} from '../../assets/public/navData.js'
+window.onload = function () {   
     var userName = sessionStorage.username;
     $('#userLogin .userName').html(userName)
     var navStr = []; //判断tba选项卡有没有这个参数;
@@ -66,18 +68,19 @@ window.onload = function () {
         });
 
         // 监听tab切换事件
+        var Indexs=null;
         element.on('tab(demo)', function (data) {
             var Len = $(".navClick").length;
             for (var i = 0; i < Len; i++) {
                 if ($(this).attr('lay-id') == $(".navClick").eq(i).attr('navId')) {
-                    Index = i;
+                    Indexs = i;
                 }
             };
             // 左侧菜单初始化
             $('.layui-nav-item').removeClass('layui-nav-itemed');
-            $(".navClick").eq(Index).parent().parent().parent().addClass('layui-nav-itemed');
+            $(".navClick").eq(Indexs).parent().parent().parent().addClass('layui-nav-itemed');
             $(".navClick").parent().removeClass('layui-this');
-            $(".navClick").eq(Index).parent().addClass('layui-this')
+            $(".navClick").eq(Indexs).parent().addClass('layui-this')
             if ($(this).attr('lay-id') == 999) {
                 $('.layui-nav-item').removeClass('layui-nav-itemed');
                 $(".navClick").parent().removeClass('layui-this');
@@ -196,7 +199,7 @@ window.onload = function () {
                 console.log(res)
                 // window.history.go(-1);
                 sessionStorage.token = '';
-                window.location.replace('../login/login.html')
+                window.location.replace('login.html')
             }).catch((err) => {
                 console.log(err)
                 layer.msg(err.message)
@@ -220,36 +223,6 @@ window.onload = function () {
 
         }
     });
-    // var  pageVisibility = document.visibilityState;
-    // // 监听 visibility change 事件 
-    // document.addEventListener('visibilitychange', function () {
-    //     if (document.visibilityState == 'hidden') {
-    //         // 页面变为不可见时触发 
-    //         $(".musicBg_close").show();
-    //         $(".musicBg_on").hide();
-    //         audio.pause();
-    //     }else{
-    //         // 页面变为可见时触发 
-    //     }
-    // });
-    // setTimeout(()=>{
-    //     $.ajax({
-    //         type:'post',
-    //         url:'/api/pushWebMsg',
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             token,
-    //         },
-    //         data:JSON.stringify({
-    //             uid:1594017686796,
-    //             msg:'角色权限发生更改',
-    //             tag:1,
-    //         }),
-    //         success:function(res){
-    //             console.log(res)
-    //         }
-    //     })
-    // },1000)
 
 
 }

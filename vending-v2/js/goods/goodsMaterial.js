@@ -1,3 +1,4 @@
+import '../../MyCss/goods/goodsMaterial.css'
 layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   // tab切换
   var index = 0

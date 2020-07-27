@@ -1,3 +1,4 @@
+import '../../MyCss/login/login.css'
 layui.use(['form', 'layer'], function () {
     // window.history.forward(1);
     // websocket.close();
@@ -57,7 +58,7 @@ layui.use(['form', 'layer'], function () {
                             }
                             // return ;
                             // window.location.href="../index/index.html"
-                            location.replace('../index/index.html')
+                            location.replace('index.html')
                         } else {
                             layer.msg(res.data,{icon:2})
                         }

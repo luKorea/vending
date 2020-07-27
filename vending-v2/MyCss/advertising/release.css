@@ -699,7 +699,7 @@ video{
     margin-top: 30px;
     display: flex;
     justify-content: start;
-    border-top: 1px solid rgb(151, 154, 161,0.5);
+    border-top: 1px solid rgba(151, 154, 161,0.5);
 }
 .mandatroFooter div{
     display: block;
@@ -711,7 +711,7 @@ video{
     cursor: pointer;
 }
 .mandatroFooter div:nth-child(1){
-    border-right:1px solid rgb(151, 154, 161,0.5); 
+    border-right:1px solid rgba(151, 154, 161,0.5); 
 }
 .preview  {
     z-index: 9999;

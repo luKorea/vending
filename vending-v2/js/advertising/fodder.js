@@ -1,3 +1,4 @@
+import '../../MyCss/advertising/fodder.css'
 layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     var token = sessionStorage.token,
         layer = layui.layer,
@@ -201,7 +202,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         $('.on-left').hide()
     })
     var indexFlag = null;
-    valData = null;
+    var valData = null;
     // 素材内容
     var editImgVideo = null;
     // 素材大小

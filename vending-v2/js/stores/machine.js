@@ -1,5 +1,8 @@
-
+import '../../MyCss/stores/machine.css'
+import {provinceChange,cityChange} from '../../assets/public/selectMore'
+// console.log()
 layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
+    // console.log(provinceChange)
     // 收起
     $('.sidebar i').click(function () {
         $('.left-mian').hide();
@@ -103,7 +106,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             done: function (res) {
                 if (res.code == 403) {
-                    window.parent.location.href = "../login/login.html";
+                    window.parent.location.href = "login.html";
                 }else if(res.code==405){
                     $('.hangContent').show();
                 }
@@ -215,7 +218,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                 where: {}
                             })
                         } else if (res.code == 403) {
-                            window.parent.location.href = "../login/login.html";
+                            window.parent.location.href = "login.html";
                         } else {
                             layer.msg(res.message, { icon: 2 });
                         }
@@ -303,7 +306,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                     layer.msg('该设备未激活,无法营业', { icon: 7 })
                                 }
                             } else if (Dres.code == 403) {
-                                window.parent.location.href = "../login/login.html";
+                                window.parent.location.href = "login.html";
                             } else {
                                 $('.mask').fadeOut();
                                 $('.maskSpan').removeClass('maskIcon');
@@ -377,7 +380,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                     layer.msg('该设备未激活,无法进行营业操作', { icon: 7 })
                                 }
                             } else if (Dres.code == 403) {
-                                window.parent.location.href = "../login/login.html";
+                                window.parent.location.href = "login.html";
                             } else {
                                 $('.mask').fadeOut();
                                 $('.maskSpan').removeClass('maskIcon')
@@ -449,8 +452,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 $('.listFlex input[name="mapVal"]').val(address.addressComponent.street+address.addressComponent.streetNumber);
                 $('.listFlex select[name="province"]').val(address.addressComponent.province)
                 provinceChange(address.addressComponent.province);
-                $('.listFlex select[name="city"]').val(address.addressComponent.city);
-                cityChange(address.addressComponent.city);
+                if(address.addressComponent.province=='北京市'||address.addressComponent.province=='天津'||address.addressComponent.province=='上海市'||address.addressComponent.province=='重庆市'){
+                    $('.listFlex select[name="city"]').val('市辖区');
+                    cityChange('市辖区');
+                }else{
+                    $('.listFlex select[name="city"]').val(address.addressComponent.city);
+                    cityChange(address.addressComponent.city);
+                }
                 $('.listFlex select[name="district"]').val(address.addressComponent.district);
                 form.render('select');
             }else{
@@ -525,7 +533,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                             where: {}
                         })
                     } else if (res.code == 403) {
-                        window.parent.location.href = "../login/login.html";
+                        window.parent.location.href = "login.html";
                     } else if(res.code){
                         layer.msg(res.message, { icon: 1 });
                     }else{
@@ -650,7 +658,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             done: function (res) {
                 if (res.code == 403) {
-                    window.parent.location.href = "../login/login.html";
+                    window.parent.location.href = "login.html";
                 }
             }
         });
@@ -739,7 +747,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             done: function (res) {
                 if (res.code == 403) {
-                    window.parent.location.href = "../login/login.html";
+                    window.parent.location.href = "login.html";
                 }
             }
         });

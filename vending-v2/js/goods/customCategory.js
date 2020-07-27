@@ -60,7 +60,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             "data": res.data.list //解析数据列表
           };
         } else if (res.code == 403) {
-          window.parent.location.href = "../login/login.html";
+          window.parent.location.href = "login.html";
         } else {
           return {
             "code": res.code, //解析接口状态
@@ -131,7 +131,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             // $('.addClass').fadeOut();
             loadingAjax('/refreshGoods','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
           } else if (res.code == 403) {
-            window.parent.location.href = "../login/login.html";
+            window.parent.location.href = "login.html";
           } else {
             layer.msg(res.message, { icon: 2 });
           }
@@ -215,7 +215,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             })
             loadingAjax('/refreshGoods','post','',sessionStoragetoken).then(res=>{}).catch(err=>{})
           } else if (res.code == 403) {
-            window.parent.location.href = "../login/login.html";
+            window.parent.location.href = "login.html";
           }
           else {
             layer.msg(res.message, { icon: 2 });
