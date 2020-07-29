@@ -98,18 +98,22 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       done: function (res) {
         if (res.code == 200) {
           console.log(res)
-          orderAllSumVal = 0,
+       var orderAllSumVal = 0,
             profitsSum = 0,
             PaidInSum=0,
-            refundSum=0;
+            refundSum=0,
+            orderNUm=0;
           $('.ban-input input[name="orderNumVal"]').val(res.data.length);
           res.data.forEach((item, index) => {
-            orderAllSumVal += item.amount;
-            item.goodsList.forEach((v, i) => {
-              profitsSum += (v.goods_Price - v.goods_Cost)*(v.count-v.refund_count);
-              PaidInSum+=v.goods_Price*(v.count-v.refund_count);
-              refundSum+=(v.goods_Price*v.refund_count)
-            })
+            if(item.payStatus==1){
+              orderAllSumVal += item.amount;
+              item.goodsList.forEach((v, i) => {
+                profitsSum += (v.goods_Price - v.goods_Cost)*(v.count-v.refund_count);
+                PaidInSum+=v.goods_Price*(v.count-v.refund_count);
+                refundSum+=(v.goods_Price*v.refund_count)
+              })
+            }
+           
           });
           // animateNumberFun('.ban-input input[name="orderAllSumVal"]',orderAllSumVal,2);
           // animateNumberFun('.ban-input input[name="profitsSum"]',profitsSum,1);
@@ -152,7 +156,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
           })
           loadingAjax('/api/machine/getMachineList', 'post', machineData, sessionStorage.token).then(res => {
             res.data.list.forEach((item, index) => {
-              lis.push(`<span machineID="${item.machineId}">${item.info}</span>`)
+              lis.push(`<span machineID="${item.machineId}">${item.info?item.info:'未命名售货机'}</span>`)
             })
             next(lis.join(''), res.data.list >= 10);
           }).catch(err => {

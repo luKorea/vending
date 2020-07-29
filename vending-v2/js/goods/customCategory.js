@@ -9,7 +9,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     token = sessionStorage.token,
     tableIns = table.render({
       elem: '#tableTest'
-      , url: `/api/classify/findAll`
+      , url: '/api/classify/findAll'
       , method: 'post'
       , contentType: 'application/json'
       , headers: {
@@ -30,9 +30,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
           field: 'classifyTime', width: 200, title: '创建时间', sort: true
         },
         {
-          field: 'users', width: 150, title: '最后操作人', templet: function (d) {
-            return d.user != null ? d.user.lastUser : ''
-          }
+          field: 'lastUser', width: 150, title: '最后操作人', 
         },
         {
           field: 'lastTime', width: 190, title: '最后操作时间', sort: true

@@ -97,7 +97,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         },
         done: function (res) {
             if (res.code == 403) {
-                window.parent.location.href = "../login/login.html";
+                window.parent.location.href = "login.html";
             } else if(res.code==405){
                 $('.hangContent').show();
             }
@@ -183,7 +183,9 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                             });
 
                         } else if (res.code == 403) {
-                            window.history.go(-1)
+                            window.parent.location.href = "login.html";
+                        }else{
+                            layer.msg(res.message, { icon: 7});
                         }
                     }
                 })
@@ -276,7 +278,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     $('.submitAuditBtn').click(function () {
         var submitCheckStatus = table.checkStatus('tableId');
         console.log(submitCheckStatus);
-        checkList = [];
+        var  checkList= [];
         if (submitCheckStatus.data.length > 0) {
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon')
@@ -298,7 +300,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     // 审核通过
     $('.approvedBtn').click(function () {
         var approveCheckStatus = table.checkStatus('tableId');
-        approveList = [];
+      var  approveList = [];
         if (approveCheckStatus.data.length > 0) {
             layer.confirm('确定审核通过？', function (index) {
                 layer.close(index);
@@ -322,7 +324,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     // 审核不通过
     $('.noPassBtn').click(function () {
         var noPassCheckStatus = table.checkStatus('tableId');
-        noPassList = [];
+       var  noPassList = [];
         if (noPassCheckStatus.data.length > 0) {
             layer.confirm('确定审核不通过？', function (index) {
                 layer.close(index);
@@ -445,7 +447,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     $('.materiaImgEdit video').attr('src', '');
                     $(that).val();
                 } else if (res.code == 403) {
-                    window.parent.location.href = "../login/login.html";
+                    window.parent.location.href = "login.html";
                 } else {
                     layer.msg(res.message,{icon:2})
                 }
@@ -518,7 +520,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     });
                     layer.msg(editRes.message, { icon: 1 });
                 } else if (editRes.code == 403) {
-                    window.parent.location.href = "../login/login.html";
+                    window.parent.location.href = "login.html";
                 } else {
                     layer.msg(editRes.message)
                 }
@@ -740,7 +742,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         }
                     });
                 } else if (res.code == 403) {
-                    window.parent.location.href = "../login/login.html";
+                    window.parent.location.href = "login.html";
                 }else{
                     layer.msg(res.message, { icon: 2 });
                 }

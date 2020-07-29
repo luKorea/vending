@@ -78,8 +78,10 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
             },
             done: function (res) {
                 if (res.code == 200) {
-                    // console.log
-                    totalityNumber();
+                    if(flagNUmber!=1){
+                        totalityNumber();
+                    }
+                    flagNUmber=0;
                 } else if (res.code == 403) {
                     window.parent.location.href = "../login/login.html";
                 } else if (res.code == 405) {
@@ -233,8 +235,9 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
     // totalityNumber();
 
     // 查询
-    // var flagNUmber=null;
+    var flagNUmber=0;
     $('.queryBtn').click(function () {
+        flagNUmber=1
         accountsTable.reload({
             where: {
                 start,

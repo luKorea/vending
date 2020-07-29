@@ -213,3 +213,6 @@ input:hover{
     width: 100%;
     overflow-x: auto;
 } */
+.listInput .layui-tree-setHide>div:nth-child(1) span{
+    color: rgb(85, 85, 85);
+}

@@ -126,8 +126,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         "cardId": data.cardId,
         "startThe": data.open ? 'on' : '',
         "administrator": data.roleSign ? 'on' : '',
-        "marchantsListname": data.merchantId
-      })
+        "marchantsListname": data.merchantName
+      });
+      tree.reload('treelistEdit', {
+      });
+      $('.terminal input[name="topmachantsVal"]').val(data.merchantId);
       form.render('select');
       userRoles(roleList, 'checkCont', data,data.merchantId);
     } else if (obj.event === 'delete') {
@@ -143,7 +146,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
           },
           data: {
-            id: data.uuid + '',
+            id:Number(data.uuid) ,
           },
           success: function (res) {
             if (res.code == 200) {
@@ -205,6 +208,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       layer.msg('您没有添加用户的权限',{icon:7})
       return ;
     }
+    tree.reload('treelistEdit', {
+    });
     $('.inputWidth input[name="userName"]').prop('disabled',false)
     // $('.mask').fadeIn();
     // $('.maskSpan').addClass('maskIcon')
@@ -223,6 +228,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       'marchantsListname': '',
       'DalonePwd': '',
       "DuserPwd": '',
+      'topmachantsVal':'',
     });
     form.render('select');
     $('.checkCont').empty();
@@ -276,7 +282,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     }
     var aliasText=null;
     merchantsListData.forEach((item,index)=>{
-      if(informData.marchantsListname==item.id){
+      if(informData.topmachantsVal==item.id){
         aliasText=item.alias
       }
     })
@@ -302,7 +308,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             open: openStart,
             roleSign: roleSignStart,
             roleId: informationType == 2 ? roleListArray : null,
-            merchantId: Number(informData.marchantsListname),
+            merchantId: Number(informData.topmachantsVal),
             alias:aliasText
           }),
           success: function (res) {
@@ -486,7 +492,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
   //树状图
   var dataList = treeList();
-  console.log(dataList)
+  var addEditData=treeList();
   treeFun(tree,'test1',tableIns,dataList,'condition')
   // 刷新页面
   $('.refreshBtn').click(function () {
@@ -519,6 +525,38 @@ $('.playHeader .close').click(function () {
     }).catch(err=>{
 
     })
-  }
+  };
+
+
+
+  var inst2 = tree.render({
+    elem: '#test2',
+    id: 'treelistEdit',
+    showLine: !0 //连接线
+    ,
+    onlyIconControl: true //左侧图标控制展开收缩
+    ,
+    isJump: !1 //弹出新窗口跳转
+    ,
+    edit: false //开启节点的操作
+    ,
+    data: addEditData,
+    text: {
+        defaultNodeName: '无数据',
+        none: ''
+    },
+    click: function (obj) {
+        console.log(obj);
+        $('.terminal input[name="marchantsListname"]').val(obj.data.title);
+        $('.terminal input[name="topmachantsVal"]').val(obj.data.id)
+      var  nodesEdti = $(`.terminal .layui-tree-txt`);
+        for (var i = 0; i < nodesEdti.length; i++) {
+            if (nodesEdti[i].innerHTML === obj.data.title)
+                nodesEdti[i].style.color = "#be954a";
+            else
+                nodesEdti[i].style.color = "#555";
+        }
+    },
+});
 });
 

@@ -92,16 +92,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 return ;
             }
             $('.editMerchants input[name="merchantsName"]').val(data.title)
-            popupShow('MemberOperation', 'MemberContent')
-            // editMarchantsSelect();
-            // marchantsList = merchantsListMian(data.id);
-            // mercantsSelectList(marchantsList, 'marchantsList',form);         
-            // $('.editMerchants select[name="marchantsListname"]').val(data.topMerchant);
-            // if(data.id==0){
-            //     $('.editMerchants select[name="marchantsListname"]').attr('disabled',true);
-            // }else{
-            //     $('.editMerchants select[name="marchantsListname"]').attr('disabled',false);
-            // }
+            popupShow('MemberOperation', 'MemberContent');
             if(data.id==0){
                 $('.listInput input[name="marchantsText"]').val('');
             }else{
@@ -164,9 +155,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             layer.msg('您没有添加商户的权限',{icon:7});
             return ;
         }
-        marchantsList = merchantsListMian('');
-        mercantsSelectList(marchantsList, 'addMarchantsList', form);
-        form.render('select');
+        // marchantsList = merchantsListMian('');
+        // mercantsSelectList(marchantsList, 'addMarchantsList', form);
+        // form.render('select');
+        tree.reload('treelistEdit', {
+                      });
+        $('.addBox input[name="marchantsListname"]').val('');
+        $('.addBox input[name="addmarchantsVal"]').val('')
         popupShow('addMerchants', 'addBox')
 
     });
@@ -185,18 +180,18 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     })
     // 添加商户事件
     $('.addBody .addSubmiBtn').click(function () {
-        console.log(marchantsList);
-        // var aliasText = null;
+        var topVal=$('.addBox input[name="addmarchantsVal"]').val().split(' ');
+        var aliasText = null;
         // marchantsList.forEach((item, index) => {
         //     if (item.id == $('.addMarchantsList').val()) {
         //         aliasText = item.alias
         //     }
         // })
-        if ($('.addBox input[name="merchantsName"]').val()) {
+        if ($('.addBox input[name="merchantsName"]').val()&&$('.addBox input[name="addmarchantsVal"]').val()) {
             var addMerchantsData = JSON.stringify({
                 name: $('.addBox input[name="merchantsName"]').val(),
-                topMerchant: Number($('.addMarchantsList').val()),
-                alias: data.alias
+                topMerchant: Number(topVal[0]),
+                alias:topVal[1]
             })
             loadingAjax('/api/merchant/newMerchant', 'post', addMerchantsData, sessionStorage.token, '', 'addMerchants', 'addBox', layer).then((res) => {
                 $('.addBox input[name="merchantsName"]').val('');
@@ -210,7 +205,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 layer.msg(err.message, { icon: 2 })
             })
         } else {
-            layer.msg('商户名不能为空', { icon: 7 })
+            layer.msg('带*号为必填', { icon: 7 })
         }
     })
     // 编辑商户事件
@@ -239,6 +234,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
     //树状图
   var dataList = treeList();
+  var addEditData=treeList();
   treeFun(tree,'test1',tableIns,dataList,'conditionTwo','','','conditionThree');
 
    // 监听f5刷新
@@ -246,5 +242,34 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     if (event.keyCode == 116) {
       f5Fun()
     }
-  })
+  });
+  var inst2 = tree.render({
+    elem: '#test2',
+    id: 'treelistEdit',
+    showLine: !0 //连接线
+    ,
+    onlyIconControl: true //左侧图标控制展开收缩
+    ,
+    isJump: !1 //弹出新窗口跳转
+    ,
+    edit: false //开启节点的操作
+    ,
+    data: addEditData,
+    text: {
+        defaultNodeName: '无数据',
+        none: ''
+    },
+    click: function (obj) {
+        console.log(obj);
+        $('.addBox input[name="marchantsListname"]').val(obj.data.title);
+        $('.addBox input[name="addmarchantsVal"]').val(obj.data.id +' '+obj.data.alias)
+      var  nodesEdti = $(`#listInputTree .layui-tree-txt`);
+        for (var i = 0; i < nodesEdti.length; i++) {
+            if (nodesEdti[i].innerHTML === obj.data.title)
+                nodesEdti[i].style.color = "#be954a";
+            else
+                nodesEdti[i].style.color = "#555";
+        }
+    },
+});
 });

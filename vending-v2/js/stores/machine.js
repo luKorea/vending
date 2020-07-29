@@ -31,8 +31,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'info', width: 200, title: '终端信息', align: 'center',templet: function (d) {  
-                        return d.info?d.info:' - '
+                    field: 'info', width: 330, title: '终端信息', align: 'center',templet: function (d) {  
+                        return d.info? `<div>${d.info}</div>`:`<div><span style="color:red;">*</span>(售货机未新上线机器，请编辑售货机基本信息！)</div>`
                     }  
                 },
                 { field: 'location', width: 350, title: '地址',templet:function(d){
@@ -800,39 +800,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     nodesEdti[i].style.color = "#be954a";
                 else
                     nodesEdti[i].style.color = "#555";
-            }
-            if (!obj.data.children) {
-                $.ajax({
-                    type: 'post',
-                    url: '/api/merchant/getMerchantGroup',
-                    headers: {
-                        token,
-                        "Content-Type": "application/json",
-                    },
-                    async: false,
-                    data: JSON.stringify({
-                        topId: obj.data.id
-                    }),
-                    success: function (res) {
-                        if (res.code == 200) {
-                            if (res.data[0].childMerchant.length > 0) {
-                                obj.data.spread = true;
-                                obj.data.children = [];
-                                res.data[0].childMerchant.forEach((item, index) => {
-                                    var childrenObj = {
-                                        id: item.id,
-                                        title: item.name
-                                    }
-                                    obj.data.children.push(childrenObj)
-                                });
-                                tree.reload('treelistEdit', {
-                                });
-                            }
-                        }
-                    }
-                })
-
-            }
+            } 
 
         },
     });

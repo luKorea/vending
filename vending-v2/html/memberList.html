@@ -144,12 +144,14 @@
                         <div class="terminal" style="margin-top: 15px;">
                             <span style="display: inline-block;width:10%;padding-right: 12px;"><span style="color: red;">*</span> 所属商户：</span>
                             <div class="layui-form" lay-filter="">
-                                <select name="marchantsListname" class="marchantsList" lay-filter="stateSelect">
-                                    <!-- <option value="">全部</option>
-                                    <option value="0">不启用</option>
-                                    <option disabled value="1">启用</option> -->
-                                </select>
+                                <!-- <select name="marchantsListname" class="marchantsList" lay-filter="stateSelect">
+                                </select> -->
+                                <input type="text" name="marchantsListname" disabled>
+                                <input type="text" name="topmachantsVal" disabled style="display: none;">
                             </div>
+                        </div>
+                        <div class="terminal" >                    
+                             <div id="test2" class="demo-tree demo-tree-box" style="margin-left: 130px;"></div>
                         </div>
                     </form>
                     <div style="margin-top: 10px; border-bottom: 1px solid rgb(204, 204, 204);" class="roleCont">
