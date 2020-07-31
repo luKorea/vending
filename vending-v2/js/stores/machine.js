@@ -32,29 +32,29 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             cols: [[
                 {
                     field: 'info', width: 330, title: '终端信息', align: 'center',templet: function (d) {  
-                        return d.info? `<div>${d.info}</div>`:`<div><span style="color:red;">*</span>(售货机未新上线机器，请编辑售货机基本信息！)</div>`
+                        return d.info? `<div>${d.info}</div>`:`<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>`
                     }  
                 },
                 { field: 'location', width: 350, title: '地址',templet:function(d){
                     return d.location?d.location:' - '
                 } },
                 {
-                    field: 'CreationTime', width: 150, title: '缺货状态', sort: true, align: 'center', templet: function (d) {
+                    field: 'CreationTime', width: 130, title: '缺货状态', sort: true, align: 'center', templet: function (d) {
                         return `<div><span class="${d.stockStatus == 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.stockStatus == 0 ? '正常' : d.stockStatus == 1 ? '一般' : '严重'}</span></div>`
                     }
                 },
                 {
-                    field: 'onlineStatus', width: 150, title: '在线状态', sort: true, align: 'center', templet: function (d) {
+                    field: 'onlineStatus', width: 130, title: '在线状态', sort: true, align: 'center', templet: function (d) {
                         return `<div><span class="${d.onlineStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.onlineStatus == 0 ? '离线' : '在线'}</span></div>`
                     }
                 },
                 {
-                    field: 'actionStatus', width: 150, title: '是否激活', sort: true, align: 'center', templet: function (d) {
+                    field: 'actionStatus', width: 130, title: '是否激活', sort: true, align: 'center', templet: function (d) {
                         return `<div><span class="${d.actionStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.actionStatus == 0 ? '未激活' : '已激活'}</span></div>`
                     }
                 },
                 {
-                    field: 'openStatus', width: 150, title: '营业状态', sort: true, align: 'center', templet: function (d) {
+                    field: 'openStatus', width: 130, title: '营业状态', sort: true, align: 'center', templet: function (d) {
                         return `<div><span class="${d.openStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.openStatus == 0 ? '不营业' : '营业'}</span></div>`
                     }
                 },
@@ -63,12 +63,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         return `<div><span class="${d.wayStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.wayStatus == 0 ? '不正常' : '正常'}</span></div>`
                     }
                 },
-                { field: 'dealTime', width: 150, title: '最后交易时间', sort: true, },
+                { field: 'dealTime', width: 170, title: '最后交易时间', sort: true, },
                 { field: 'merchantName', width: 150, title: '所属商户', },
                 { field: 'appVersion', width: 135, title: '软件版本', },
-                { field: 'controllerVersion', width: 135, title: '控制器版本', sort: true, },
-                { field: 'connectTime', width: 150, title: '联机时间', sort: true, },
-                { field: 'actionTime', width: 150, title: '激活时间', sort: true, },
+                // { field: 'controllerVersion', width: 135, title: '控制器版本', sort: true, },
+                { field: 'connectTime', width: 170, title: '联机时间', sort: true, },
+                { field: 'actionTime', width: 170, title: '激活时间', sort: true, },
                 { field: 'description', width: 250, title: '描述', },
                 { field: 'operation', fixed: 'right', right: 0, width: 250, title: '操作', toolbar: '#barDemo', align: 'left' },
             ]]
@@ -165,6 +165,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         } else if (obj.event == 'edit') {
             if(machineSetData.openStatus==1){
                 layer.msg('温馨提示！该售货机正在营业，不可进行编辑！',{icon:7})
+            }else{
+                if(!editFlag){
+                    layer.msg('温馨提示！您没有编辑售货机的权限！',{icon:7})
+                }
             }
             var region = null;
             if (machineSetData.location) {
@@ -198,6 +202,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             $('.editMachineCont').show();
             geoCode();
         } else if (obj.event == 'activate') {
+            if(!activateFlag){
+                layer.msg('您没有激活售货机的权限!');
+                return ;
+            }
             layer.confirm('确定激活该设备？', function (index) {
                 $.ajax({
                     type: 'post',
@@ -231,6 +239,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if(machineSetData.onlineStatus!=1){
                 layer.msg('售货机处于离线状态不可以操作此功能',{icon:7});
                 return ;
+            }else{
+                if(!activateFlag){
+                    layer.msg('您没有更改营业状态的权限!');
+                    return ;
+                }
             }
             if (machineSetData.openStatus != 1) {
                 layer.confirm('确定营业？', function (index) {
@@ -761,12 +774,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
     });
     //树状图
-    var dataList = treeList();
-    var dataListEdit =[];
+    var dataListEdit=null;
+    var dataList = dataListEdit=treeList();
     if(merchantsListData.length==0){
         dataListEdit=[]
-    }else{
-        dataListEdit = treeList();
     }
     //售货机列表
     treeFun(tree, 'test1', machineList, dataList, 'merchantId')
@@ -800,7 +811,39 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     nodesEdti[i].style.color = "#be954a";
                 else
                     nodesEdti[i].style.color = "#555";
-            } 
+            }
+            if (!obj.data.children) {
+                $.ajax({
+                    type: 'post',
+                    url: '/api/merchant/getMerchantGroup',
+                    headers: {
+                        token,
+                        "Content-Type": "application/json",
+                    },
+                    async: false,
+                    data: JSON.stringify({
+                        topId: obj.data.id
+                    }),
+                    success: function (res) {
+                        if (res.code == 200) {
+                            if (res.data[0].childMerchant.length > 0) {
+                                obj.data.spread = true;
+                                obj.data.children = [];
+                                res.data[0].childMerchant.forEach((item, index) => {
+                                    var childrenObj = {
+                                        id: item.id,
+                                        title: item.name
+                                    }
+                                    obj.data.children.push(childrenObj)
+                                });
+                                tree.reload('treelistEdit', {
+                                });
+                            }
+                        }
+                    }
+                })
+
+            }
 
         },
     });
@@ -814,5 +857,18 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         if (event.keyCode == 116) {
             f5Fun()
         }
+    });
+    var editFlag=false,
+    activateFlag=false;
+    permissionsFun('/api/role/findUserPermission','post',sessionStorage.token,layer).then(res=>{
+        console.log(res.data)
+        editFlag=res.data.some((item,index)=>{
+            return item.id=='396'
+        });
+        activateFlag=res.data.some((item,index)=>{
+            return item.id=='392'
+        })
+    }).catch(err=>{
+        layer.msg(err.message,{icon:2})
     })
 });

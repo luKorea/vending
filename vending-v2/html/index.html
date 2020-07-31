@@ -21,11 +21,11 @@
 			<div class="layui-logo">购金机管理系统</div>
 			<!-- 头部区域（可配合layui已有的水平导航） -->
 			<div class="content-header-title">
-				<div class="transform-nav-tab">
+				<!-- <div class="transform-nav-tab">
 					<i class="layui-icon layui-icon-menu-fill"></i>
-				</div>
+				</div> -->
 				<!-- 公告 -->
-				<div class="swipe-header-notice">
+				<!-- <div class="swipe-header-notice">
 					<div class="layui-form">
 						<div class="layui-input-block" id="test">
 							<input type="checkbox" name="switch" lay-skin="switch" id="Isuse" value="1" checked>
@@ -45,11 +45,11 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 
 			<ul class="layui-nav layui-layout-right nav-header-information">
-				<li class="layui-nav-item header-message">
+				<!-- <li class="layui-nav-item header-message">
 					<a href="javascript:;">
 						<i class="layui-icon layui-icon-notice"></i>
 						<span>消息</span>
@@ -64,7 +64,7 @@
 							<a href="javascript:;">安全设置</a>
 						</dd>
 					</dl>
-				</li>
+				</li> -->
 				<li class="layui-nav-item uers-message" id="userLogin">
 					<a href="javascript:;">
 						<span class="userName">C201912131127</span>
@@ -86,13 +86,13 @@
 			<div>
 				<div class="layui-tab" lay-filter="demo" lay-allowclose="true">
 					<ul class="layui-tab-title">
-						<li class="layui-this" lay-id="999">首页</li>
+						<li class="layui-this" lay-id="22">个人信息</li>
 					</ul>
 					<div class="layui-tab-content">
 						<div class="layui-tab-item layui-show">
 							<div class="content-tbas-iframe-html">
 								<!-- 首页 -->
-								<iframe class="iframe_show" src="homePage.html"></iframe>
+								<iframe class="iframe_show" src="myInformation.html"></iframe>
 								<!-- 大分类 数据中心 -->
 								<!-- 统计报表 -->
 								<!-- <iframe class="iframe-show" src="../dataCenter/report.html"></iframe> -->
@@ -297,7 +297,7 @@
 							</dd>
 						</dl>
 					</li>
-					<li class="layui-nav-item">
+					<li class="layui-nav-item layui-nav-itemed">
 						<a href="javascript:;">
 							<i class="layui-icon layui-icon-notice"></i>
 							<label>个人中心</label>
@@ -309,7 +309,7 @@
 							<dd>
 								<a href="javascript:;" class="navClick" navId="21">绑定实时分账</a>
 							</dd> -->
-							<dd>
+							<dd class="layui-this">
 								<a href="javascript:;" class="navClick" navId="22">个人信息</a>
 							</dd>
 							<!-- <dd>
@@ -317,17 +317,29 @@
 							</dd> -->
 						</dl>
 					</li>
-					<li class="layui-nav-item">
+					<!-- <li class="layui-nav-item">
+						<a href="javascript:;">
+							<i class="layui-icon layui-icon-util"></i>
+							<label>公告管理</label>
+						</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;" class="navClick" navId="24">AT端登陆记录</a>
+							</dd>
+						</dl>
+					</li> -->
+					<!-- <li class="layui-nav-item">
 						<a href="javascript:;">
 							<i class="layui-icon layui-icon-util"></i>
 							<label>操作记录</label>
 						</a>
 						<dl class="layui-nav-child">
-							<!-- <dd>
+							<dd>
 								<a href="javascript:;" class="navClick" navId="24">AT端登陆记录</a>
-							</dd> -->
+							</dd>
 						</dl>
-					</li>
+					</li> -->
+					
 				</ul>
 			</div>
 		</div>

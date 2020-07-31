@@ -107,6 +107,10 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   // 0为添加 1为编辑
   // var ImgIndex = null;
   $('.ImgContnet .add-btn').click(function () {
+    if(!addFlag){
+      layer.msg('您没有添加商品素材的权限',{icon:7});
+      return;
+    }
     $('.addImgCont input[name="ImgNane"]').val('');
     addGoodsImg=null;
     popupShow('addImgCont', 'addImgBox')
@@ -117,6 +121,10 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   })
   // 添加视频弹出框
   $('.VideoContnet .add-btn').click(function () {
+    if(!addFlag){
+      layer.msg('您没有添加商品素材的权限',{icon:7});
+      return;
+    }
     $('.addVideoCont input[name="VideoName"]').val('')
     videoSrc=null;
     popupShow('addVideoCont', 'addVideoBox')
@@ -185,7 +193,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
       },
       done: function (res) {
         if (res.code == 403) {
-          window.parent.location.href = "../login/login.html";
+          window.parent.location.href = "login.html";
         } else {
 
         }
@@ -198,6 +206,10 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
     console.log(obj)
     ImgDAtaVal = obj.data;
     if (obj.event == 'edit') {
+      if(!editFlag){
+        layer.msg('您没有编辑商品素材的权限',{icon:7});
+        return;
+      }
       popupShow('editImgCont', 'editBox');
       $('.editImgCont .playHeader span').html('编辑商品图片')
       $('.editBody label').html('图片名称：')
@@ -238,7 +250,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
               })
             }, 100)
           } else if (res.code == 403) {
-            window.parent.location.href = "../login/login.html";
+            window.parent.location.href = "login.html";
           } else {
             popupHide('editImgCont', 'editBox');
             layer.msg(res.message, { icon: 2 });
@@ -344,7 +356,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
     },
     done: function (res) {
       if (res.code == 403) {
-        window.parent.location.href = "../login/login.html";
+        window.parent.location.href = "login.html";
       } else if(res.code==405){
         $('.hangContent').show();
       }
@@ -355,6 +367,10 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
     console.log(obj);
     ImgDAtaVal = obj.data;
     if (obj.event == 'edit') {
+      if(!editFlag){
+        layer.msg('您没有编辑商品素材的权限',{icon:7});
+        return;
+      }
       popupShow('editImgCont', 'editBox');
       $('.editImgCont .playHeader span').html('编辑商品视频');
       $('.editBody label').html('视频名称：');
@@ -370,7 +386,9 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   $('.editCancelBtn').click(function () {
     popupHide('editImgCont', 'editBox')
   });
-
+  $('.addDetailsImgCont .detalisCancelBtn').click(function(){
+    popupHide('addDetailsImgCont','addDetailsImgBox')
+  })
   // 剪切图片弹出
   $('.uploadBtn').click(function () {
     $('.ImgCropping').fadeIn();
@@ -404,7 +422,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
                 where: {}
               })
             } else if (res.code == 403) {
-              window.parent.location.href = "../login/login.html";
+              window.parent.location.href = "login.html";
             } else {
               layer.msg(res.message, { icon: 2 });
             }
@@ -474,7 +492,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
                 where: {}
               })
             } else if (res.code == 403) {
-              window.parent.location.href = "../login/login.html";
+              window.parent.location.href = "login.html";
             } else {
               layer.msg(res.message, { icon: 2 });
             }
@@ -491,6 +509,10 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   // 批量删除
   // 1为图片2为视频
   $('.delBtn').click(function () {
+    if(!delFlag){
+      layer.msg('您没有删除商品素材的权限',{icon:7});
+      return ;
+    }
     console.log($(this).attr('typeId'))
     var typeID = $(this).attr('typeId')
     var checkStatus = null;
@@ -597,6 +619,10 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
 
   // 审核通过和审核不通过
   $('.auditBtn').click(function () {
+    if(!auditFlag){
+      layer.msg('您没有审核商品素材的权限!',{icon:7});
+      return ;
+    }
     var checkStatusList = null;
     var tableType = null;
     var that = this;
@@ -860,7 +886,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
     },
     done: function (res) {
       if (res.code == 403) {
-        window.parent.location.href = "../login/login.html";
+        window.parent.location.href = "login.html";
       } else {
 
       }
@@ -868,6 +894,10 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   });
 
   $('.details .add-btn').click(function () {
+    if(!addFlag){
+      layer.msg('您没有添加商品素材的权限',{icon:7});
+      return;
+    }
     $('.addDetailsImgCont input[name="detailsImgNane"]').val('');
     videoSrc=null;
     popupShow('addDetailsImgCont', 'addDetailsImgBox');
@@ -926,7 +956,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
                 where: {}
               })
             } else if (res.code == 403) {
-              window.parent.location.href = "../login/login.html";
+              window.parent.location.href = "login.html";
             } else {
               layer.msg(res.message, { icon: 2 });
             }
@@ -944,6 +974,10 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
     console.log(obj)
     ImgDAtaVal = obj.data;
     if (obj.event == 'edit') {
+      if(!editFlag){
+        layer.msg('您没有编辑商品素材的权限',{icon:7});
+        return;
+      }
       popupShow('editImgCont', 'editBox');
       $('.editImgCont .playHeader span').html('编辑详情图片')
       $('.editBody label').html('图片名称：')
@@ -961,11 +995,14 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
     }
   })
   //树装图
-  var dataListGoodsImg = treeList();
+  var dataListGoodsImg,
+      detailsIMGList,
+      dataGoodsVideoList;
+   dataListGoodsImg = detailsIMGList=dataGoodsVideoList=treeList();
   treeFunMaterial(tree, 'LogoIMG', advertisingLis, dataListGoodsImg, 'conditionSix','treelistOne',);
-  var detailsIMGList = treeList();
+  // var  = treeList();
   treeFunMaterial(tree, 'detailsIMG', detailsTable, detailsIMGList, 'conditionSix','treelistTwo',);
-  var dataGoodsVideoList = treeList();
+  // var dataGoodsVideoList = treeList();
   treeFunMaterial(tree, 'dataGoodsVideo', videoTable, dataGoodsVideoList, 'conditionSix','treelistThree',);
   //左边商户列表部分显示隐藏
   $('.sidebar i').click(function () {
@@ -979,5 +1016,28 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   $('.on-left').click(function () {
     $('.left-mian').show();
     $('.on-left').hide();0
+  });
+
+
+  var addFlag=false,
+    editFlag=false,
+    delFlag=false,
+    auditFlag=false;
+permissionsFun('/api/role/findUserPermission','post',sessionStorage.token,layer).then(res=>{
+    console.log(res.data)
+    addFlag=res.data.some((item,index)=>{
+        return item.id=='380'
+    });
+    editFlag=res.data.some((item,index)=>{
+        return item.id=='381'
+    });
+    delFlag=res.data.some((item,index)=>{
+        return item.id=='379'
+    })
+    auditFlag=res.data.some((item,index)=>{
+      return item.id=='382'
   })
+}).catch(err=>{
+    layer.msg(err.message,{icon:2})
+})
 })

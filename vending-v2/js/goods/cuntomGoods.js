@@ -120,7 +120,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     },
     done: function (res) {
       if (res.code == 403) {
-        window.parent.location.href = "../login/login.html";
+        window.parent.location.href = "login.html";
       } else if (res.code == 405) {
         $('.hangContent').show();
       }
@@ -212,8 +212,12 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       })
 
     } else if (obj.event === 'delete') {
-      console.log(obj)
+      if(!delFlag){
+        layer.msg('您没有删除商品的权限',{icon:7})
+        return ;
+      }
       layer.confirm('确定删除？', function (index) {
+        
         // obj.del();
         // layer.close(index);
         Goodsdel(obj.data.goods_Id, 1, obj, index);
@@ -233,7 +237,12 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   });
   // 点击商品信息事件
   $('body').on('click', '.GoodsInformation', function () {
+    
     $('.anUp').slideUp();
+    if(!editFlag){
+      layer.msg('您没有编辑商品的权限',{icon:7});
+      return ;
+    }
     // $('.editor').fadeIn();
     popupShow('editor', 'editor-content');
     form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
@@ -307,7 +316,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             $('.editor').fadeOut();
             loadingAjax('/api/refreshGoods','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
           } else if (res.code == 403) {
-            window.parent.location.href = "../login/login.html";
+            window.parent.location.href = "login.html";
           } else {
             layer.msg(res.message, { icon: 2 })
           }
@@ -352,6 +361,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   // 1为logo 2为内容
   var logoCont = null;
   $('.add-btn').click(function () {
+    if(!addFlag){
+      layer.msg('您没有添加商品的权限!',{icon:7});
+      return ;
+    }
     // $('.addGoods').fadeIn();
     popupShow('addGoods', 'editor-content');
     $('.tailoring-container').fadeIn();
@@ -473,7 +486,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
               // 添加成功清空wangEditor文本内容
               addWangEditor.txt.clear();
             } else if (res.code == 403) {
-              window.parent.location.href = "../login/login.html";
+              window.parent.location.href = "login.html";
             }
             else {
               layer.msg(res.message, { icon: 2 })
@@ -579,7 +592,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       },
       done: function (res) {
         if (res.code == 403) {
-          window.parent.location.href = "../login/login.html";
+          window.parent.location.href = "login.html";
         } else {
 
         }
@@ -701,7 +714,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       },
       done: function (res) {
         if (res.code == 403) {
-          window.parent.location.href = "../login/login.html";
+          window.parent.location.href = "login.html";
         } else {
 
         }
@@ -752,8 +765,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     location.reload();
   });
   //树状图
-  var dataList = treeList();
-  var dataList1 = treeList();
+  var dataList1=null;
+  var dataList = dataList1=treeList();
+  // var dataList1 = treeList();
   console.log(dataList)
   treeFun(tree, 'testGoods', tableIns, dataList, 'condition','goodsClass',selectData)
   // treeFunCheck(tree, 'testGoodsCheck', tableIns, dataList1, 'merchantId',layer)
@@ -832,7 +846,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       },
       done: function (res) {
         if (res.code == 403) {
-          window.parent.location.href = "../login/login.html";
+          window.parent.location.href = "login.html";
         };
         var statusList = res.data.list;
 
@@ -869,6 +883,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   var pushList = null;
   var checkID = null;
   $('.pushGoodsBtn').click(function () {
+    if(!pushFlag){
+      layer.msg('您没有推送商品给下级的权限!',{icon:7});
+      return ;
+    }
     pushList = table.checkStatus('tableId');
     console.log(pushList)
     if (pushList.data.length > 0) {
@@ -1025,4 +1043,25 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     }
   });
 
+  var addFlag=false,
+  editFlag=false,
+  delFlag=false,
+  pushFlag=false;
+  permissionsFun('/api/role/findUserPermission','post',sessionStorage.token,layer).then(res=>{
+    console.log(res.data)
+    addFlag=res.data.some((item,index)=>{
+        return item.id=='377'
+    });
+    editFlag=res.data.some((item,index)=>{
+        return item.id=='378'
+    });
+    delFlag=res.data.some((item,index)=>{
+        return item.id=='375'
+    })
+    pushFlag=res.data.some((item,index)=>{
+      return item.id=='416'
+  })
+}).catch(err=>{
+    layer.msg(err.message,{icon:2})
+})
 })

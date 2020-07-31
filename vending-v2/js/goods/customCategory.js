@@ -1,9 +1,9 @@
+import '../../MyCss/goods/customCategory.css'
 layui.use(['table', 'form', 'layer', 'tree'], function () {
-  var $ = layui.jquery;
-  table = layui.table,
+  sessionStorage.classTag = sessionStorage.machineID;
+   var  table = layui.table,
     layer = layui.layer,
     tree = layui.tree,
-    sessionStorage.classTag = sessionStorage.machineID,
     rank = null,
     //数据表格
     token = sessionStorage.token,
@@ -89,6 +89,10 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
   var indexFlag = null;
   var operationId = null;
   $('.add-btn').click(function () {
+    if(!addFlag){
+      layer.msg('您没有添加商品类目的权限',{icon:7});
+      return
+    }
     $('.addClass input[name="addTypeName"]').val('');
     $('.addClass input[name="addNote"]').val('')
     popupShow('addClass', 'addContent');
@@ -127,7 +131,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
               }
             })
             // $('.addClass').fadeOut();
-            loadingAjax('/refreshGoods','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+            loadingAjax('/api/refreshGoods','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
           } else if (res.code == 403) {
             window.parent.location.href = "login.html";
           } else {
@@ -152,6 +156,10 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     // 操作事件
     editData = obj.data;
     if (obj.event === 'edit') {
+      if(!editFlag){
+        layer.msg('您没有编辑商品类目的权限!',{icon:7});
+        return ;
+      }
       popupShow('editClass', 'editContent');
       form.val("editValData", {
         "addTypeName": editData.classifyName,
@@ -159,6 +167,10 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         // "sorting":editData.rank
       })
     } else if (obj.event === 'delete') {
+      if(!delFlag){
+        layer.msg('您没有删除商品类目的权限!',{icon:7});
+        return ;
+      }
       console.log(obj)
       layer.confirm('确定删除？', function (index) {
         // obj.del();
@@ -211,7 +223,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
 
               }
             })
-            loadingAjax('/refreshGoods','post','',sessionStoragetoken).then(res=>{}).catch(err=>{})
+            loadingAjax('/api/refreshGoods','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
           } else if (res.code == 403) {
             window.parent.location.href = "login.html";
           }
@@ -259,5 +271,22 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     if (event.keyCode == 116) {
       f5Fun()
     }
-  })
+  });
+  var addFlag=false,
+    editFlag=false,
+    delFlag=false;
+permissionsFun('/api/role/findUserPermission','post',sessionStorage.token,layer).then(res=>{
+    console.log(res.data)
+    addFlag=res.data.some((item,index)=>{
+        return item.id=='373'
+    });
+    editFlag=res.data.some((item,index)=>{
+        return item.id=='374'
+    });
+    delFlag=res.data.some((item,index)=>{
+        return item.id=='372'
+    })
+}).catch(err=>{
+    layer.msg(err.message,{icon:2})
+})
 })                                                      

@@ -195,7 +195,7 @@ window.onload = function () {
 
         //退出登录
         function loginOut() {
-            loadingAjax('/api//user/logout', 'post', '', sessionStorage.token, '', '', '', layer).then((res) => {
+            loadingAjax('/api/user/logout', 'post', '', sessionStorage.token, '', '', '', layer).then((res) => {
                 console.log(res)
                 // window.history.go(-1);
                 sessionStorage.token = '';
@@ -224,5 +224,5 @@ window.onload = function () {
         }
     });
 
-
+    javascript:window.history.forward(1);
 }

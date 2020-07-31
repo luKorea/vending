@@ -64,7 +64,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             done: function (res) {
                 if (res.code == 403) {
-                    window.parent.location.href = "../login/login.html";
+                    window.parent.location.href = "login.html";
                 }else if(res.code==405){
                    
                     $('.hangContent').show();
@@ -81,14 +81,19 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     $('.left-mian').show()
   })
     // 商户列表
-    var marchantsList = merchantsListMian('');
+    // var marchantsList = merchantsListMian('');
     //监听工具条
     var data = null;
     table.on('tool(test)', function (obj) {
         data = obj.data;
+        console.log(data)
         if (obj.event === 'edit') {
-            if(marchantsList.length==0){
+            if(!editFlag){
                 layer.msg('您没有编辑商户的权限',{icon:7});
+                return ;
+            }
+            if(addEditData.length==0){
+                layer.msg('服务器请求超时',{icon:7});
                 return ;
             }
             $('.editMerchants input[name="merchantsName"]').val(data.title)
@@ -102,8 +107,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             
             
         } else if (obj.event === 'delete') {
-            if(marchantsList.length==0){
-                layer.msg('您没有编辑商户的权限',{icon:7});
+            if(!delFlag){
+                layer.msg('您没有删除商户的权限',{icon:7});
+                return ;
+            }
+            if(data.id==1){
+                layer.msg(data.title+'不能进行删除操作',{icon:7});
                 return ;
             }
             layer.confirm('确定删除？', function (index) {
@@ -129,7 +138,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                                 where: {}
                             })
                         } else if (res.code == 403) {
-                            window.parent.location.href = "../login/login.html";
+                            window.parent.location.href = "login.html";
                         } else if (res.code == 405) {
                             layer.msg(res.msg, { icon: 7 })
                         } else {
@@ -151,8 +160,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     })
     //点击添加成员事件
     $('.addBtn').click(function () {
-        if(marchantsList.length==0){
+        if(!addFlag){
             layer.msg('您没有添加商户的权限',{icon:7});
+            return ;
+        }
+        if(addEditData.length==0){
+            layer.msg('服务器请求超时',{icon:7});
             return ;
         }
         // marchantsList = merchantsListMian('');
@@ -232,9 +245,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             layer.msg('带*未填写', { icon: 7 })
         }
     });
-    //树状图
-  var dataList = treeList();
-  var addEditData=treeList();
+    //树状图 
+    var addEditData=null;
+  var dataList = addEditData=treeList();
   treeFun(tree,'test1',tableIns,dataList,'conditionTwo','','','conditionThree');
 
    // 监听f5刷新
@@ -272,4 +285,21 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         }
     },
 });
+var addFlag=false,
+    editFlag=false,
+    delFlag=false;
+permissionsFun('/api/role/findUserPermission','post',sessionStorage.token,layer).then(res=>{
+    console.log(res.data)
+    addFlag=res.data.some((item,index)=>{
+        return item.id=='393'
+    });
+    editFlag=res.data.some((item,index)=>{
+        return item.id=='394'
+    });
+    delFlag=res.data.some((item,index)=>{
+        return item.id=='395'
+    })
+}).catch(err=>{
+    layer.msg(err.message,{icon:2})
+})
 });

@@ -117,7 +117,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         },
         done: function (res) {
             if (res.code == 403) {
-                window.parent.location.href = "../login/login.html";
+                window.parent.location.href = "login.html";
             } else if (res.code == 405) {
                 $('.hangContent').show();
             }
@@ -156,6 +156,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             if (obj.data.merchantId != sessionStorage.machineID) {
                 layer.msg('不能使用下级商户广告', { icon: 7 });
                 return;
+            }
+            if(!machineAdvertising){
+                machineAdvertisingFun();
             }
             popupShow('machineDetailsCont', 'machineDetailsBox')
         }
@@ -200,6 +203,10 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
 
     // 广告详情确定修改事件
     $('.detailsFooter .confirmBtn').click(function () {
+        if(!editFlag){
+            layer.msg('您没有编辑广告的权限',{icon:7});
+            return ;
+        }
         var editDetailsList = [];
         advertisingDetailsList.forEach((item, index) => {
             var editObj = {
@@ -229,7 +236,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                         layer.msg('修改成功', { icon: 1, });
                         editDetailsList = [];
                     } else if (res.code == 403) {
-                        window.parent.location.href = "../login/login.html";
+                        window.parent.location.href = "login.html";
                     } else {
                         layer.msg(res.message, { icon: 7 });
                     }
@@ -285,7 +292,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             },
             done: function (res) {
                 if (res.code == 403) {
-                    window.parent.location.href = "../login/login.html";
+                    window.parent.location.href = "login.html";
                 }
             }
         });
@@ -421,7 +428,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 },
                 done: function (res) {
                     if (res.code == 403) {
-                        window.parent.location.href = "../login/login.html";
+                        window.parent.location.href = "login.html";
                     } else {
 
                     }
@@ -570,7 +577,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                                 where: {}
                             })
                         } else if (res.code == 403) {
-                            window.parent.location.href = "../login/login.html";
+                            window.parent.location.href = "login.html";
                         } else {
                             layer.msg(res.message, { icon: 7 });
                         }
@@ -585,61 +592,65 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
 
 
     // 推送广告部分
-    var machineAdvertising = table.render({
-        elem: '#machineDetailsList',
-        url: `/api/machine/getMachineList`,
-        method: 'post',
-        contentType: "application/json",
-        headers: {
-            token,
-        },
-        cols: [[
-            { type: 'checkbox', },
-            { field: 'info', width: 200, title: '售货机信息' },
-            { field: 'location', width: 300, title: '地址', },
-            { field: 'merchantName', width: 150, title: '所属商户', },
-            { field: 'actionTime', width: 200, title: '激活时间', },
-            { field: 'description', width: 180, title: '描述', sort: true },
-        ]],
-        page: true,
-        id: 'machineAdvertisingList',
-        loading: true,
-        limits: [10, 20, 50],
-        request: {
-            'pageName': 'pageNum',
-            'limitName': 'pageSize'
-        },
-        parseData: function (res) {
-            //res 即为原始返回的数据
-            if (res.code == 200) {
-                return {
-                    "code": res.code, //解析接口状态
-                    "msg": res.message, //解析提示文本
-                    "count": res.data.total, //解析数据长度
-                    "data": res.data.list //解析数据列表
-                };
-            } else {
-                return {
-                    "code": res.code, //解析接口状态
-                    "msg": res.message,   //解析提示文本
+    var machineAdvertising=null;
+    function machineAdvertisingFun(){
+         machineAdvertising = table.render({
+            elem: '#machineDetailsList',
+            url: `/api/machine/getMachineList`,
+            method: 'post',
+            contentType: "application/json",
+            headers: {
+                token,
+            },
+            cols: [[
+                { type: 'checkbox', },
+                { field: 'info', width: 200, title: '售货机信息' },
+                { field: 'location', width: 300, title: '地址', },
+                { field: 'merchantName', width: 150, title: '所属商户', },
+                { field: 'actionTime', width: 200, title: '激活时间', },
+                { field: 'description', width: 180, title: '描述', sort: true },
+            ]],
+            page: true,
+            id: 'machineAdvertisingList',
+            loading: true,
+            limits: [10, 20, 50],
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            parseData: function (res) {
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+    
+            },
+            where: {
+                actionStatus: '1',
+                merchantId: sessionStorage.machineID
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    window.parent.location.href = "login.html";
                 }
             }
-
-        },
-        where: {
-            actionStatus: '1',
-            merchantId: sessionStorage.machineID
-        },
-        response: {
-            statusCode: 200 //规定成功的状态码，默认：0
-        },
-        done: function (res) {
-            if (res.code == 403) {
-                window.parent.location.href = "../login/login.html";
-            }
-        }
-        // skin: 'nob'
-    });
+            // skin: 'nob'
+        });
+    }
+    
     //推送广告查询
     $('.machineDetailsCont .machineKeyBtn').click(function () {
         machineAdvertising.reload({
@@ -650,6 +661,10 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
     // 发布广告弹窗事件
     $('.publicAdvertisingBtn').click(function () {
+        if(!addFlag){
+            layer.msg('您没有添加广告的权限',{icon:7});
+            return ;
+        }
         $('.setAdvertising').css('left', 0);
         $('.stepsTwo').css('borderColor', '#909399');
         $('.stepsTwo>div').css('color', '#909399');
@@ -739,7 +754,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     // 提交审核
     $('.submitAuditBtn').click(function () {
         var submitCheckStatus = table.checkStatus('advertisingData');
-        checkList = [];
+      var  checkList = [];
         if (submitCheckStatus.data.length > 0) {
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon')
@@ -758,7 +773,11 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         }
     });
     // 审核通过
-    $('.approvedBtn').click(function () {
+    $('.approvedBtn').click(function () { 
+        if(!addFlag){
+        layer.msg('您没有审核广告的权限',{icon:7});
+        return ;
+    }
         var approveCheckStatus = table.checkStatus('advertisingData');
         approveList = [];
         if (approveCheckStatus.data.length > 0) {
@@ -784,6 +803,10 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
     // 审核不通过
     $('.noPassBtn').click(function () {
+        if(!addFlag){
+            layer.msg('您没有审核广告的权限',{icon:7});
+            return ;
+        }
         var noPassCheckStatus = table.checkStatus('advertisingData');
         noPassList = [];
         if (noPassCheckStatus.data.length > 0) {
@@ -836,7 +859,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                         }
                     });
                 } else if (res.code == 403) {
-                    window.parent.location.href = "../login/login.html";
+                    window.parent.location.href = "login.html";
                 }
             }
         })
@@ -880,7 +903,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
 
     });
     // 广告推送到所有售货机
-    $('.machineDetailsCont .allDetermineBtn').click(function(){
+    $('.machineDetailsCont .allDetermineBtn').click(function () {
         layer.confirm('确认推送广告到所有售货机？', function (index) {
             layer.close(index);
             $.ajax({
@@ -902,12 +925,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             })
         })
     })
-
-    var dataList = treeList();
+    var dataList1 = null;
+    var dataList = dataList1 = treeList();
     treeFun(tree, 'test1', advertisingLis, dataList, 'conditionThree');
-
-
-
     table.on('tool(machine1)', function (obj) {
         ScottMethods(obj.data.longitude, obj.data.latitude, obj.data.location);
         popupShow('ScottCont', 'scottBox')
@@ -920,13 +940,17 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     $("body").bind("keydown", function (event) {
         if (event.keyCode == 116) {
             event.preventDefault(); //阻止默认刷新
-      location.reload();
+            location.reload();
         }
     });
 
     var checkID = null,
         pushList = null;   //推送广告列表
     $('.pushReleaseBtn').click(function () {
+        if(!pushFlag){
+            layer.msg('您没有推送广告到下级的权限',{icon:7});
+            return ;
+        }
         pushList = [];
         checkID = table.checkStatus('advertisingData');
         checkID.data.forEach((item, index) => {
@@ -943,24 +967,24 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 ele: ".treeList",//选者
                 data: dataList1,//数据
                 cascade: false,//级联
-              });
-            $.each($(".treeList input"), function() {
-                if(checkID.data[0].merchantId==$(this).val()){
-                    $(this).prop('disabled',true);
-                    return ;
+            });
+            $.each($(".treeList input"), function () {
+                if (checkID.data[0].merchantId == $(this).val()) {
+                    $(this).prop('disabled', true);
+                    return;
                 }
             })
         }
     });
 
 
-    var dataList1 = treeList();
+
     // treeFunCheck(tree, 'testGoodsCheck', advertisingLis, dataList1, 'merchantId', layer)
-   
+
     //   确定推送
     var role = null;
     $('.RdetermineBtn').click(function () {
-        role= leg.getCheckedNodes().map(Number)
+        role = leg.getCheckedNodes().map(Number)
         // return;
         // var checkedData = tree.getChecked('treelistCheck');
         // role = getChildNodes(checkedData, []);
@@ -1086,7 +1110,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             },
             done: function (res) {
                 if (res.code == 403) {
-                    window.parent.location.href = "../login/login.html";
+                    window.parent.location.href = "login.html";
                 };
                 for (var i in res.data) {
                     var item = res.data[i];
@@ -1169,5 +1193,28 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
     $('.chooseLower .chooseCan').click(function () {
         popupHide('chooseLower', 'chooseBox')
+    });
+
+
+    var addFlag=false,
+    pushFlag=false,
+    audit=false,
+    editFlag=false;
+permissionsFun('/api/role/findUserPermission','post',sessionStorage.token,layer).then(res=>{
+    console.log(res.data)
+    addFlag=res.data.some((item,index)=>{
+        return item.id=='383'
+    });
+    pushFlag=res.data.some((item,index)=>{
+        return item.id=='404'
+    });
+    audit=res.data.some((item,index)=>{
+        return item.id=='386'
+    });
+    editFlag=res.data.some((item,index)=>{
+        return item.id=='384'
     })
+}).catch(err=>{
+    layer.msg(err.message,{icon:2})
+})
 });

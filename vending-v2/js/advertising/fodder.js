@@ -61,7 +61,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             { field: 'creationTime', width: 160, title: '上传时间', },
             { field: 'addUser', width: 150, title: '上传人 ', },
             // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo',fixed: 'right',right: 0 },
-            { field: 'operation', right: 0, width: 200, title: '操作', toolbar: '#barDemo', align: 'center', },
+            { field: 'operation', right: 0, width: 200, title: '操作', toolbar: '#barDemo', align: 'center', fixed: 'right'},
         ]],
         page: true,
         id: 'tableId',
@@ -126,6 +126,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     })
     // 上传素材弹出说明框
     $('.uploadBtn').click(function () {
+        if(!addFlag){
+            layer.msg('您没有上传广告素材权限!',{iocn:7});
+            return
+        }
         $('.uploadTitle').fadeIn();
         $('.titleBox').removeClass('margin0')
     });
@@ -146,6 +150,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     })
     //   删除文件
     $('.del-btn').click(function () {
+        if(!delFlag){
+            layer.msg('您没有删除广告素材权限!',{iocn:7});
+            return
+        }
         var checkStatus = table.checkStatus('tableId');
         console.log(checkStatus)
         console.log
@@ -213,69 +221,115 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     var editDuration = null;
     var numberOf = 1;
     table.on('tool(moneyData)', function (obj) {
-        if (obj.event == numberOf) {
-            valData = obj.data;
-            editImgVideo = valData.img;
-            editSize = valData.size;
-            editDuration = valData.duration;
-            console.log(valData)
-            $('.anUp').slideUp();
-            if (indexFlag != valData.vid) {
-                indexFlag = valData.vid;
-                $(this).siblings('.anUp').slideDown();
+        valData = obj.data;
+        if(obj.event=='preview'){
+            if (valData.img.indexOf('mp4') > -1) {
+                $('.imgCont video').attr('src', valData.img).show().siblings().hide();
             } else {
-                indexFlag = null;
+                $('.imgCont img').attr('src', valData.img).show().siblings().hide();
+            }
+            popupShow('materialPreview', 'previewBox');
+        }else if(obj.event=='edit'){
+            if(!editFlag){
+                layer.msg('您没有编辑广告素材权限!',{iocn:7});
+                return
+            }
+            popupShow('editMaterialCont', 'uploadMateriaBox');
+            form.val("editValData", {
+                "materialName": valData.name,
+                "materiaAttribute": valData.advertisingAttribute,
+                "materiaType": valData.advertisingType,
+                "materiaStatus": valData.advertisingStatus
+            })
+            if (valData.checkStatus == '0') {
+                $('.editCont select[name="materiaAttribute"]').prop("disabled", '');
+                $('.editCont select[name="materiaType"]').prop("disabled", '');
+                form.render();
+                $('.materiaDowEdit').show().children().show();
+                if (valData.advertisingAttribute == '0') {
+                    $('.editImgBtn').show().siblings('.editVideoBtn').hide();
+                    $('.materiaImgEdit img').attr('src', valData.img).show().siblings().hide();
+                } else {
+                    $('.editVideoBtn').show().siblings('.editImgBtn').hide();
+                    $('.materiaImgEdit video').attr('src', valData.img).show().siblings().hide();
+                }
+            } else {
+                $('.editCont select[name="materiaAttribute"]').prop("disabled", true);
+                $('.editCont select[name="materiaType"]').prop("disabled", true);
+                form.render();
+                $('.editImgBtn').hide();
+                $('.editVideoBtn').hide();
+                $('.materiaDowEdit').hide().children().hide();
+                $('.materiaImgEdit img').hide().siblings().hide();
             }
         }
+        // if (obj.event == numberOf) {
+        //     valData = obj.data;
+        //     editImgVideo = valData.img;
+        //     editSize = valData.size;
+        //     editDuration = valData.duration;
+        //     console.log(valData)
+        //     $('.anUp').slideUp();
+        //     if (indexFlag != valData.vid) {
+        //         indexFlag = valData.vid;
+        //         $(this).siblings('.anUp').slideDown();
+        //     } else {
+        //         indexFlag = null;
+        //     }
+        // }
     });
 
     // 预览素材
-    $('body').on('click', '.previewDetails', function () {
-        $('.anUp').slideUp();
-        if (valData.img.indexOf('mp4') > -1) {
-            $('.imgCont video').attr('src', valData.img).show().siblings().hide();
-        } else {
-            $('.imgCont img').attr('src', valData.img).show().siblings().hide();
-        }
-        indexFlag = null;
-        popupShow('materialPreview', 'previewBox');
-    });
+    // $('body').on('click', '.previewDetails', function () {
+    //     $('.anUp').slideUp();
+    //     if (valData.img.indexOf('mp4') > -1) {
+    //         $('.imgCont video').attr('src', valData.img).show().siblings().hide();
+    //     } else {
+    //         $('.imgCont img').attr('src', valData.img).show().siblings().hide();
+    //     }
+    //     indexFlag = null;
+    //     popupShow('materialPreview', 'previewBox');
+    // });
     // 编辑素材
-    $('body').on('click', '.GoodsInformation', function () {
-        $('.anUp').slideUp();
-        indexFlag = null;
-        popupShow('editMaterialCont', 'uploadMateriaBox');
-        form.val("editValData", {
-            "materialName": valData.name,
-            "materiaAttribute": valData.advertisingAttribute,
-            "materiaType": valData.advertisingType,
-            "materiaStatus": valData.advertisingStatus
-        })
-        if (valData.checkStatus == '0') {
-            $('.editCont select[name="materiaAttribute"]').prop("disabled", '');
-            $('.editCont select[name="materiaType"]').prop("disabled", '');
-            form.render();
-            $('.materiaDowEdit').show().children().show();
-            if (valData.advertisingAttribute == '0') {
-                $('.editImgBtn').show().siblings('.editVideoBtn').hide();
-                $('.materiaImgEdit img').attr('src', valData.img).show().siblings().hide();
-            } else {
-                $('.editVideoBtn').show().siblings('.editImgBtn').hide();
-                $('.materiaImgEdit video').attr('src', valData.img).show().siblings().hide();
-            }
-        } else {
-            $('.editCont select[name="materiaAttribute"]').prop("disabled", true);
-            $('.editCont select[name="materiaType"]').prop("disabled", true);
-            form.render();
-            $('.editImgBtn').hide();
-            $('.editVideoBtn').hide();
-            $('.materiaDowEdit').hide().children().hide();
-            $('.materiaImgEdit img').hide().siblings().hide();
-        }
-    })
+    // $('body').on('click', '.GoodsInformation', function () {
+    //     $('.anUp').slideUp();
+    //     indexFlag = null;
+    //     popupShow('editMaterialCont', 'uploadMateriaBox');
+    //     form.val("editValData", {
+    //         "materialName": valData.name,
+    //         "materiaAttribute": valData.advertisingAttribute,
+    //         "materiaType": valData.advertisingType,
+    //         "materiaStatus": valData.advertisingStatus
+    //     })
+    //     if (valData.checkStatus == '0') {
+    //         $('.editCont select[name="materiaAttribute"]').prop("disabled", '');
+    //         $('.editCont select[name="materiaType"]').prop("disabled", '');
+    //         form.render();
+    //         $('.materiaDowEdit').show().children().show();
+    //         if (valData.advertisingAttribute == '0') {
+    //             $('.editImgBtn').show().siblings('.editVideoBtn').hide();
+    //             $('.materiaImgEdit img').attr('src', valData.img).show().siblings().hide();
+    //         } else {
+    //             $('.editVideoBtn').show().siblings('.editImgBtn').hide();
+    //             $('.materiaImgEdit video').attr('src', valData.img).show().siblings().hide();
+    //         }
+    //     } else {
+    //         $('.editCont select[name="materiaAttribute"]').prop("disabled", true);
+    //         $('.editCont select[name="materiaType"]').prop("disabled", true);
+    //         form.render();
+    //         $('.editImgBtn').hide();
+    //         $('.editVideoBtn').hide();
+    //         $('.materiaDowEdit').hide().children().hide();
+    //         $('.materiaImgEdit img').hide().siblings().hide();
+    //     }
+    // })
 
     // 提交审核
     $('.submitAuditBtn').click(function () {
+        if(!auditFla){
+            layer.msg('您没有审核广告素材权限!',{iocn:7});
+            return
+        }
         var submitCheckStatus = table.checkStatus('tableId');
         console.log(submitCheckStatus);
         var  checkList= [];
@@ -323,6 +377,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
 
     // 审核不通过
     $('.noPassBtn').click(function () {
+        if(!auditFla){
+            layer.msg('您没有审核广告素材权限!',{iocn:7});
+            return
+        }
         var noPassCheckStatus = table.checkStatus('tableId');
        var  noPassList = [];
         if (noPassCheckStatus.data.length > 0) {
@@ -785,80 +843,33 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
 
 
     var dataList = treeList();
-    // function treeFun() {
-    //     var inst1 = tree.render({
-    //         elem: '#test1',
-    //         id: 'treelist',
-    //         showLine: !0 //连接线
-    //         ,
-    //         onlyIconControl: true //左侧图标控制展开收缩
-    //         ,
-    //         isJump: !1 //弹出新窗口跳转
-    //         ,
-    //         edit: false //开启节点的操作
-    //         ,
-    //         data: dataList,
-    //         text: {
-    //             defaultNodeName: '无数据',
-    //             none: '加载数据失败！'
-    //         },
-    //         click: function (obj) {
-    //             console.log(999)
-    //             tableIns.reload({
-    //                 where: {
-    //                     merchantId: obj.data.id
-    //                 }
-    //             })
-    //             var nodes = document.getElementsByClassName("layui-tree-txt");
-    //             for (var i = 0; i < nodes.length; i++) {
-    //                 if (nodes[i].innerHTML === obj.data.title)
-    //                     nodes[i].style.color = "#be954a";
-    //                 else
-    //                     nodes[i].style.color = "#555";
-    //             }
-    //             if (!obj.data.children) {
-    //                 $.ajax({
-    //                     type: 'post',
-    //                     url: '/api/merchant/getMerchantGroup',
-    //                     headers: {
-    //                         token,
-    //                         "Content-Type": "application/json",
-    //                     },
-    //                     async: false,
-    //                     data: JSON.stringify({
-    //                         topId: obj.data.id
-    //                     }),
-    //                     success: function (res) {
-    //                         if (res.code == 200) {
-    //                             if (res.data[0].childMerchant.length > 0) {
-    //                                 console.log(res)
-    //                                 obj.data.spread = true;
-    //                                 obj.data.children = [];
-    //                                 res.data[0].childMerchant.forEach((item, index) => {
-
-    //                                     var childrenObj = {
-    //                                         id: item.id,
-    //                                         title: item.name
-    //                                     }
-    //                                     obj.data.children.push(childrenObj)
-    //                                 });
-    //                                 tree.reload('treelist', {
-    //                                 });
-    //                             }
-    //                         }
-    //                     }
-    //                 })
-
-    //             }
-
-    //         },
-    //     });
-    // }
     treeFun(tree, 'test1', tableIns, dataList, 'merchantId')
     // 监听f5刷新
     $("body").bind("keydown", function (event) {
         if (event.keyCode == 116) {
             f5Fun()
         }
+    });
+
+    var addFlag=false,
+    editFlag=false,
+    delFlag=false,
+    auditFla=false;
+permissionsFun('/api/role/findUserPermission','post',sessionStorage.token,layer).then(res=>{
+    console.log(res.data)
+    addFlag=res.data.some((item,index)=>{
+        return item.id=='362'
+    });
+    editFlag=res.data.some((item,index)=>{
+        return item.id=='371'
+    });
+    delFlag=res.data.some((item,index)=>{
+        return item.id=='369'
     })
+    auditFla=res.data.some((item,index)=>{
+        return item.id=='387'
+    })
+}).catch(err=>{
+    layer.msg(err.message,{icon:2})
+})
 });

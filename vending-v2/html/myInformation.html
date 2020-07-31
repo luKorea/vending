@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../../js/public/documentWrite.js"></script>
-    <link rel="stylesheet" href="../../MyCss/my/myInformation.css">
+    <script src="../assets/public/documentWrite.js"></script>
+    <script src="../assets/public/md5.js"></script>
     <title>个人信息</title>
 </head>
 
@@ -15,32 +14,32 @@
             <div>
                 <div>
                     <div style="font-size: 24px;">基本信息</div>
-                    <div class="center">
+                    <div class="center basicInformation">
                         <div class="linehei">
-                            <span class="names">*用户名：</span>
-                            <span class="mytitle">C201912131127</span>
+                            <span class="names"><span>*</span>用户名：</span>
+                            <span class="mytitle"></span>
                         </div>
                         <div class="linehei">
-                            <span class="names">*联系人：</span>
-                            <span class="mytitle">粤宝商户-中邮广州</span>
+                            <span class="names"><span>*</span>姓名</span>
+                            <span class="mytitle"></span>
                         </div>
                         <div class="linehei">
-                            <span class="names">*联系电话：</span>
-                            <span class="mytitle">13570581411彭龙-微邮筒产品</span>
+                            <span class="names"><span>*</span>联系电话：</span>
+                            <span class="mytitle"></span>
                         </div>
                         <div class="linehei">
-                            <span class="names">*联系地址：</span>
-                            <span class="mytitle">中国邮政集团公司广州市分公司</span>
+                            <span class="names"><span>*</span>所属商户</span>
+                            <span class="mytitle"></span>
                         </div>
                     </div>
                 </div>
-                <div>
+                <!-- <div>
                     <div style="font-size: 24px;">微信信息</div>
                     <div class="center">
                         <div class="linehei" style="height: 80px;">
                             <span class="names">微信头像：</span>
                             <span class="mytitle">
-                                <img src="../../img/header.png" alt="">
+                                <img src="../img/header.png" alt="">
                             </span>
                         </div>
                         <div class="linehei">
@@ -52,10 +51,10 @@
                             <span class="mytitle">oSpXos2WPD5LCrnPFZisxiyWA5pE</span>
                         </div>
                     </div>
-                </div>
-                <div style="width: 100%; margin-top: 30px; position: relative;">
+                </div> -->
+                <!-- <div style="width: 100%; margin-top: 30px; position: relative;">
                     <div style="width: 250px; position: relative; text-align: center; margin: auto;">
-                        <img src="../../img/qrCode.png" alt="">
+                        <img src="../img/qrCode.png" alt="">
                         <div style="height: 180px; width: 250px;  position: absolute; top: 0%; left: 0%; background: rgba(255, 255, 255, 0.9);text-align: center;">
                             <h4 style="margin-top: 20%;margin-bottom: 10%;">二维码已失效</h4>
                             <button class="btn" style="margin: 0 auto;">
@@ -66,18 +65,18 @@
                     <div style="height: 50px; line-height: 50px;text-align: center;">
                         扫码绑定支付宝 *
                     </div>
-                </div>
-                <div style="margin-top: 30px; display: flex; justify-content: space-around;">
-                    <button class="title-btn editBtnClcick">
+                </div> -->
+                <div style="margin-top: 30px; display: flex;justify-content: center;">
+                    <!-- <button class="title-btn editBtnClcick">
                         <span>编辑基本信息</span>
                     </button>
                     <button class="title-btn">
                         <span>解除微信绑定</span>
-                    </button>
-                    <button class="title-btn loginPawClick">
+                    </button> -->
+                    <button class="title-btn loginPawClick" style="margin-right: 20px;">
                         <span>修改登陆密码</span>
                     </button>
-                    <button class="title-btn independentPawClick">
+                    <button class="title-btn independentPawClick" style="margin-left: 20px;">
                         <span>修改独立密码</span>
                     </button>
                 </div>
@@ -145,9 +144,9 @@
         </div>
         <!-- 修改登录密码 -->
         <div class="maskContnet loginPawCont">
-            <div class="loginPaw marginVh">
+            <div class="loginPaw marginVh passEdit">
                 <div class="pawHeader">
-                    <span>修改密码</span>
+                    <span>修改登录密码</span>
                     <button type="button" class="loginPawCancel">
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
@@ -159,7 +158,7 @@
                                 <label for=""><span style="color: red;">*</span>旧密码</label>
                                 <div>
                                     <div class="inputWidth">
-                                        <input type="password">
+                                        <input type="password" name="oldPass">
                                     </div>
                                 </div>
                             </div>
@@ -167,15 +166,15 @@
                                 <label for=""><span style="color: red;">*</span>新密码</label>
                                 <div>
                                     <div class="inputWidth">
-                                        <input type="password">
+                                        <input type="password" name="newPass">
                                     </div>
                                 </div>
                             </div>
                             <div class="pawList">
-                                <label for=""><span style="color: red;">*</span>确人新密码</label>
+                                <label for=""><span style="color: red;">*</span>确认新密码</label>
                                 <div>
                                     <div class="inputWidth">
-                                        <input type="password">
+                                        <input type="password" name="newPassTwo">
                                     </div>
                                 </div>
                             </div>
@@ -184,22 +183,23 @@
                 </div>
                 <div class="pawBtn">
                     <div>
+                        <button class="layui-btn layui-btn-normal btn editPassBtn"
+                        style="margin: 0 0 0 15px;" editType="login">
+                        <span>确定</span>
+                    </button>
                         <button class="layui-btn layui-btn-normal btn cancel-btn loginPawCancel">
                             <span>取消</span>
                         </button>
-                        <button class="layui-btn layui-btn-normal btn determine-btn"
-                            style="margin: 0 0 0 15px;">
-                            <span>确定</span>
-                        </button>
+                      
                     </div>
                 </div>
             </div>
         </div>
          <!-- 修改独立密码 -->
          <div class="maskContnet independentPawCont" >
-            <div class="independentPaw marginVh">
+            <div class="independentPaw marginVh passEdit">
                 <div class="pawHeader">
-                    <span>修改密码</span>
+                    <span>修改独立密码</span>
                     <button type="button" class="independentPawCancel">
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
@@ -211,7 +211,7 @@
                                 <label for=""><span style="color: red;">*</span>用户密码</label>
                                 <div>
                                     <div class="inputWidth">
-                                        <input type="password">
+                                        <input type="password" name="oldPass">
                                     </div>
                                 </div>
                             </div>
@@ -219,7 +219,15 @@
                                 <label for=""><span style="color: red;">*</span>新独立密码</label>
                                 <div>
                                     <div class="inputWidth">
-                                        <input type="password">
+                                        <input type="password" name="newPass">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pawList">
+                                <label for=""><span style="color: red;">*</span>确认新独立密码</label>
+                                <div>
+                                    <div class="inputWidth">
+                                        <input type="password" name="newPassTwo">
                                     </div>
                                 </div>
                             </div>
@@ -228,12 +236,13 @@
                 </div>
                 <div class="pawBtn">
                     <div>
+                      
+                        <button class="layui-btn layui-btn-normal btn editPassBtn"
+                            style="margin: 0 0 0 15px;" editType="independent">
+                            <span>确定</span>
+                        </button>
                         <button class="layui-btn layui-btn-normal btn cancel-btn independentPawCancel">
                             <span>取消</span>
-                        </button>
-                        <button class="layui-btn layui-btn-normal btn determine-btn"
-                            style="margin: 0 0 0 15px;">
-                            <span>确定</span>
                         </button>
                     </div>
                 </div>
@@ -241,5 +250,4 @@
         </div>
     </div>
 </body>
-<script src="../../js/my/myInformation.js"></script>
 </html>

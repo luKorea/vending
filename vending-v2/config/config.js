@@ -14,7 +14,8 @@ var entry = {
         merchantsAcconuts:'./js/accounts/merchantsAcconuts.js',
         order:'./js/order/order.js',
         fodder:'./js/advertising/fodder.js',
-        release:'./js/advertising/release.js'
+        release:'./js/advertising/release.js',
+        myInformation:'./js/my/myInformation.js'
     }
     //页面配置
 var htmlConfig = [
@@ -60,6 +61,9 @@ var htmlConfig = [
     },
     {
         name: "release",
+    },
+    {
+        name: "myInformation",
     },
 ];
 module.exports = {

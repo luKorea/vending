@@ -257,7 +257,7 @@ function treeList(marchantName) {
       // dataList=res.data[0]
     },
     error: function (err) {
-      layer.msg('服务器超时', { icon: 2 });
+      layer.msg('服务器请求超时', { icon: 2 });
       return;
     }
   })
@@ -448,6 +448,7 @@ function ajaxFun(url, type, data, userToken) {
   return $.ajax({
     type,
     url,
+    timeout:10000,
     data,
     headers: {
       token: userToken,
@@ -485,7 +486,7 @@ function loadingAjax(url, type, data, userToken, mask, element, elementChild, la
         window.parent.location.href = "login.html";
       } else {
         // return $.Deferred().reject(res.message);
-        reject(res)
+        reject(res);
       }
     }).catch((err) => {
       if (mask) {
@@ -625,4 +626,22 @@ function animateNumberFun(ele, num, type) {
     },
     500
   )
+}
+
+//获取用户权限
+function permissionsFun(url,type,userToken,layer){
+  return new Promise(function(resolve,reject){
+    ajaxFun(url, type, '', userToken, resolve, reject).then(res=>{
+      if(res.code==200){
+        resolve(res)
+      }else if(res.code==403){
+        // window.parent.location.href = "login.html";
+      }else{
+        reject(res)
+      }
+    }).catch((err) => {
+      layer.msg('服务器请求超时', { icon: 2 })
+      return;
+    })
+  })
 }

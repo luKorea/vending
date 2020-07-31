@@ -52,7 +52,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         // { field: 'bili', width: 160, title: '退款金额', },
         {
           field: 'payStatus', width: 130, title: '支付状态', templet: function (d) {
-            return d.payStatus == 0 ? '已支付' : d.payStatus == 1 ? '未支付' : '取消支付'
+            return d.payStatus == 1 ? '已支付' : '未支付'
           }
         },
         { field: 'time', width: 180, title: '支付时间', },
@@ -82,7 +82,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             "data": res.data.list //解析数据列表
           };
         } else if (res.code == 403) {
-          window.parent.location.href = "../login/login.html";
+          window.parent.location.href = "login.html";
         }
         else {
           return {
@@ -242,6 +242,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
 
   // 导出excel表
   $('.pushBtn').click(function () {
+    if(!exportFlag){
+      layer.msg('您没有导出订单的权限',{icon:7});
+      return ;
+    }
     var myDate = new Date(),
       dataOf = myDate.getFullYear() + '' + myDate.getMonth() + '' + myDate.getDate(),
       xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
@@ -353,7 +357,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     $('.paidInSum').html(paindSum)
     $('.orderSum').html('￥' + obj.data.amount);
     $('.profitsSum').html('￥' + childProfits)
-    $('.collection button span').html((obj.data.payStatus == 0 ? '已支付' : obj.data.payStatus == 1 ? '未支付' : '取消支付'));
+    $('.collection button span').html((obj.data.payStatus == 1 ? '已支付':'未支付'));
     $('.machineCode').html(obj.data.machineId);
     $('.merchantName').html(obj.data.merchantName);
     $('.merchantCode ').html(obj.data.alias);
@@ -396,41 +400,51 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
   //   $('.refundNum').html(refundSym)
   // });
   // 退款
-  $('.refundBtn').click(function () {
-    var RcheckStatus = table.checkStatus('goodsLIstTable');
-    console.log(RcheckStatus)
-    if (RcheckStatus.data.length > 0) {
-      layer.confirm('是否进行退款操作？', function (index) {
-        layer.close(index);
-        refundGoodeId = [];
-        RcheckStatus.data.forEach((item, index) => {
-          if (item.refund == 0) {
-            refundGoodeId.push(item.goods_Id + '')
-          }
+  // $('.refundBtn').click(function () {
+  //   var RcheckStatus = table.checkStatus('goodsLIstTable');
+  //   console.log(RcheckStatus)
+  //   if (RcheckStatus.data.length > 0) {
+  //     layer.confirm('是否进行退款操作？', function (index) {
+  //       layer.close(index);
+  //       refundGoodeId = [];
+  //       RcheckStatus.data.forEach((item, index) => {
+  //         if (item.refund == 0) {
+  //           refundGoodeId.push(item.goods_Id + '')
+  //         }
 
-        })
-        if (refundGoodeId.length == 0) {
-          layer.msg('请选择没有进行过退款操作的商品', { icon: 7 })
-          return;
-        }
-        var refundData = JSON.stringify({
-          number: orderData.number,
-          goods: refundGoodeId
-        });
-        loadingAjax('/api/order/refund', 'post', refundData, sessionStorage.token, 'mask', 'orderDetails', 'orderDetailsBox', layer).then(res => {
-          console.log(res)
-        }).catch(err => {
-          layer.msg(err.message, { icon: 2 })
-        })
-      })
-    } else {
-      layer.msg('请选择需要退款的商品', { icon: 7 })
-    }
-  })
+  //       })
+  //       if (refundGoodeId.length == 0) {
+  //         layer.msg('请选择没有进行过退款操作的商品', { icon: 7 })
+  //         return;
+  //       }
+  //       var refundData = JSON.stringify({
+  //         number: orderData.number,
+  //         goods: refundGoodeId
+  //       });
+  //       loadingAjax('/api/order/refund', 'post', refundData, sessionStorage.token, 'mask', 'orderDetails', 'orderDetailsBox', layer).then(res => {
+  //         console.log(res)
+  //       }).catch(err => {
+  //         layer.msg(err.message, { icon: 2 })
+  //       })
+  //     })
+  //   } else {
+  //     layer.msg('请选择需要退款的商品', { icon: 7 })
+  //   }
+  // })
 
   // 监听退款
   var goodsData = null;
   table.on('tool(GooodsData)', function (obj) {
+    if(orderData.payStatus!=1){
+      layer.msg('订单未支付，不能进行退款操作',{icon:7});
+      return ;
+    }
+    
+      if(!refundFlag){
+        layer.msg('您没有退款的权限',{icon:7});
+        return ;
+      }
+  
     goodsData = obj.data;
     if (obj.data.count != obj.data.refund_count) {
       $('.twoPoles span').html(obj.data.count - obj.data.refund_count);
@@ -484,5 +498,18 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       console.log(reduction)
     }
 
-  })
+  });
+  var exportFlag=false,
+      refundFlag=false;
+  permissionsFun('/api/role/findUserPermission','post',sessionStorage.token,layer).then(res=>{
+    console.log(res.data)
+    exportFlag=res.data.some((item,index)=>{
+        return item.id=='420'
+    });
+    refundFlag=res.data.some((item,index)=>{
+        return item.id=='421'
+    });
+}).catch(err=>{
+    layer.msg(err.message,{icon:2})
+})
 })

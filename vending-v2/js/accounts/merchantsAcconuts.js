@@ -83,7 +83,7 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
                     }
                     flagNUmber=0;
                 } else if (res.code == 403) {
-                    window.parent.location.href = "../login/login.html";
+                    window.parent.location.href = "login.html";
                 } else if (res.code == 405) {
                     $('.hangContent').show()
                 }
@@ -170,7 +170,7 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
                         "data": res.data.list //解析数据列表
                     };
                 } else if (res.code == 403) {
-                    window.parent.location.href = "../login/login.html";
+                    window.parent.location.href = "login.html";
                 }
                 else {
                     return {
@@ -254,7 +254,10 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
     }
   })
 })
-
+// 刷新页面
+$('.refreshBtn').click(function () {
+    location.reload();
+});
 
 // function numFormat1(num) {
 //         var oldNum = num;

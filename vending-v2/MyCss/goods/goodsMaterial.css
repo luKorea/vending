@@ -234,7 +234,7 @@
     border: 1px solid #dcdfe6 !important;
     color: #606266;
 }
-.cancel-btn:hover,.editCancelBtn:hover{
+.cancel-btn:hover,.editCancelBtn:hover,.detalisCancelBtn:hover{
     border-color: #be954a !important;
     color: #be954a !important;
 }

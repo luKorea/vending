@@ -98,10 +98,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     console.log(obj)
     uuID = data.uuid;
     if (obj.event === 'edit') {
-      if(merchantsListData.length==0){
+      if(!editFlag){
         layer.msg('您没有编辑用户的权限',{icon:7})
         return ;
       };
+      if(addEditData.length==0){
+        layer.msg('服务器请求超时',{icon:7});
+        return ;
+      }
       if(data.userName=='sysadmin'){
         $('.switchListStatus').hide();
       }else{
@@ -134,7 +138,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       form.render('select');
       userRoles(roleList, 'checkCont', data,data.merchantId);
     } else if (obj.event === 'delete') {
-      if(merchantsListData.length==0){
+      if(!delFlag){
         layer.msg('您没有删除用户的权限',{icon:7})
         return ;
       }
@@ -204,8 +208,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
   // type 'add' edit 
   //点击添加成员事件
   $('.addBtn').click(function () {
-    if(merchantsListData.length==0){
+    if(!addFlag){
       layer.msg('您没有添加用户的权限',{icon:7})
+      return ;
+    }
+    if(addEditData.length==0){
+      layer.msg('服务器请求超时',{icon:7});
       return ;
     }
     tree.reload('treelistEdit', {
@@ -491,8 +499,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
 
   //树状图
-  var dataList = treeList();
-  var addEditData=treeList();
+  var addEditData=null;
+  var dataList = addEditData=treeList();
+  console.log(addEditData);
+  console.log(dataList)
+  // var addEditData=treeList();
   treeFun(tree,'test1',tableIns,dataList,'condition')
   // 刷新页面
   $('.refreshBtn').click(function () {
@@ -527,8 +538,36 @@ $('.playHeader .close').click(function () {
     })
   };
 
-
-
+  
+    var inst2 = tree.render({
+      elem: '#test2',
+      id: 'treelistEdit',
+      showLine: !0 //连接线
+      ,
+      onlyIconControl: true //左侧图标控制展开收缩
+      ,
+      isJump: !1 //弹出新窗口跳转
+      ,
+      edit: false //开启节点的操作
+      ,
+      data: addEditData,
+      text: {
+          defaultNodeName: '无数据',
+          none: ''
+      },
+      click: function (obj) {
+          console.log(obj);
+          $('.terminal input[name="marchantsListname"]').val(obj.data.title);
+          $('.terminal input[name="topmachantsVal"]').val(obj.data.id)
+        var  nodesEdti = $(`.terminal .layui-tree-txt`);
+          for (var i = 0; i < nodesEdti.length; i++) {
+              if (nodesEdti[i].innerHTML === obj.data.title)
+                  nodesEdti[i].style.color = "#be954a";
+              else
+                  nodesEdti[i].style.color = "#555";
+          }
+      },
+  });
   var inst2 = tree.render({
     elem: '#test2',
     id: 'treelistEdit',
@@ -558,5 +597,22 @@ $('.playHeader .close').click(function () {
         }
     },
 });
+var addFlag=false,
+    editFlag=false,
+    delFlag=false;
+permissionsFun('/api/role/findUserPermission','post',sessionStorage.token,layer).then(res=>{
+  console.log(res.data)
+  addFlag=res.data.some((item,index)=>{
+      return item.id=='389'
+  });
+  editFlag=res.data.some((item,index)=>{
+      return item.id=='390'
+  });
+  delFlag=res.data.some((item,index)=>{
+      return item.id=='397'
+  })
+}).catch(err=>{
+  layer.msg(err.message,{icon:2})
+})
 });
 
