@@ -14,7 +14,7 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
             range: true,
             done: function (value) {
 
-                timerKey = value.split(' - ');
+               var timerKey = value.split(' - ');
                 start = timerKey[0];
                 end = timerKey[1];
             }

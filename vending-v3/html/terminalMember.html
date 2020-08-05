@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>终端管理员</title>
+    <script src="../../js/public/documentWrite.js"></script>
+    <link rel="stylesheet" href="../../MyCss/userManagement/terminalMember.css">
+
+</head>
+
+<body>
+    <div class="teminal-wrap">
+        <div class="content-body">
+            <div>
+                <div class="header-search-part">
+                    <div style="width:25%;">
+                        <div class="search-kay">
+                            <div class="key-text">关键字</div>
+                            <input type="text" class="key-input" placeholder="输入关键字">
+                        </div>
+                        <button class="key-button">
+                            <i class="layui-icon layui-icon-search"></i>
+                            <span>查询 </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- 内容部分 -->
+            <div>
+                <div class="list-content">
+                    <table id="demo" lay-filter="test"></table>
+                </div>
+            </div>
+        </div>
+        <!-- 编辑部分 -->
+        <div class="editCont maskContnet">
+            <div class="editBox margin0">
+                <div class="editHeader">
+                    <span>编辑终端管理员</span>
+                </div>
+                <div class="editBody">
+                    <div style="width: 460px;margin: 0 auto;">
+                        <form class="layui-form" lay-filter="editData">
+                            <div class="listFlex">
+                                <label style="text-align: left;"><span style="color: red;">*</span>用户名</label>
+                                <div class="FlexInputWidth">
+                                    <input type="text">
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label style="text-align: left;"><span style="color: red;">*</span>登录密码</label>
+                                <div class="FlexInputWidth">
+                                    <input type="text">
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label style="text-align: left;"><span style="color: red;">*</span>独立密码</label>
+                                <div class="FlexInputWidth">
+                                    <input type="text">
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label style="text-align: left;">手机号码</label>
+                                <div class="FlexInputWidth">
+                                    <input type="text">
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label style="text-align: left;">身份证号</label>
+                                <div class="FlexInputWidth">
+                                    <input type="text">
+                                </div>
+                            </div>
+                            <div class="listFlex" style="align-items: flex-start;">
+                                <label style="text-align: left;">用户权限</label>
+                                <div class="FlexInputWidth">
+                                    <input type="checkbox" name="" title="管理员权限" lay-skin="primary" checked>
+                                    <input type="checkbox" name="" title="商品管理权限" lay-skin="primary">
+                                    <input type="checkbox" name="" title="货道管理权限" lay-skin="primary" disabled>
+                                    <input type="checkbox" name="" title="广告管理权限" lay-skin="primary">
+                                    <input type="checkbox" name="" title="wifi权限(仅AT端)" lay-skin="primary" disabled>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="editFooter">
+                    <div>
+                        <button class="layui-btn layui-btn-normal btn cancel-btn">
+                            <span>取消</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn determine-btn2"
+                            style="margin: 0 0 0 15px;">
+                            <span>确定</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 机器归属 -->
+        <div class="machineCont maskContnet">
+            <div class="machineBox margin0">
+                <div class="machineHeader">
+                    <span>机器所属</span>
+                    <button>
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="machineBody">
+                    <div class="keySearch">
+                        <div style="max-width: 220px;" class="key-contnet">
+							<div class="key-text">关键字</div>
+							<input type="text" class="KyeText">
+                        </div>
+                        <button class="layui-btn layui-btn-normal query-btnClick btn" style="margin-left: 15px;">
+							<i class="layui-icon layui-icon-search"></i>
+							<span>查询</span>
+						</button>
+                    </div>
+                    <div class="listFlex">
+                        <div style="width: 48%;">
+                            <h4>用户的售货机</h4>
+                        </div>
+                        <div style="width: 48%;">
+                            <h4>补货员的售货机</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="add">
+            <span>操作</span>
+            <i class="layui-icon layui-icon-down" style="font-size:12px !important;"></i>
+        </button>
+        <div class="anUp">
+            <ul>
+                <li class="GoodsInformation">编辑</li>
+                <li class="previewDetails">机器归属</li>
+                <li class="previewDetails">解除微信绑定</li>
+                <li class="previewDetails">解除支付宝绑定</li>
+                <li class="previewDetails">删除</li>
+            </ul>
+        </div>
+    </div>
+</script>
+<script src="../../js/userManagement/terminalMember.js"></script>
+
+</html>

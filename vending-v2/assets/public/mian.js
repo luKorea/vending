@@ -4,7 +4,7 @@ document.write("<script type='text/javascript' src='../../assets/public/jquery.a
 // 传id
 var token = sessionStorage.token;
 var machineId = sessionStorage.machineID;
-function Goodsdel(id, indexs, obj, index, tableID,classTag) {
+function Goodsdel(id, indexs, obj, index, tableID, classTag) {
   // index 1为自定义商品 2为自定义类目 3为通用商品 
   if (indexs == 1) {
     $.ajax({
@@ -40,7 +40,7 @@ function Goodsdel(id, indexs, obj, index, tableID,classTag) {
       data: JSON.stringify({
         id: id.classifyId,
         rank: id.rank,
-        merchantId:classTag
+        merchantId: classTag
       }),
       success: function (res) {
         if (res.code == 200) {
@@ -264,7 +264,7 @@ function treeList(marchantName) {
   return dataList;
 }
 //树方法实列
-function treeFun(tree, element, tableID, data, key, goodsCLass, selectData, conditionThree,flag) {
+function treeFun(tree, element, tableID, data, key, goodsCLass, selectData, conditionThree, flag) {
   tree.render({
     elem: `#${element}`,
     id: 'treelist',
@@ -281,8 +281,8 @@ function treeFun(tree, element, tableID, data, key, goodsCLass, selectData, cond
       if (goodsCLass) {
         selectData(obj.data.id + '');
       }
-      if(flag){
-        sessionStorage.classTag=obj.data.id
+      if (flag) {
+        sessionStorage.classTag = obj.data.id
       }
       // sessionStorage.merchantIdData = obj.data.id;
       varData = obj.data.id;
@@ -448,7 +448,7 @@ function ajaxFun(url, type, data, userToken) {
   return $.ajax({
     type,
     url,
-    timeout:10000,
+    timeout: 10000,
     data,
     headers: {
       token: userToken,
@@ -581,10 +581,10 @@ function treeFunMaterial(tree, element, tableID, data, key, id, index) {
       if (index == 1) {
         // sessionStorage.merchantIdData = obj.data.id;
         sessionStorage.acconutsID = obj.data.id;
-      } 
+      }
       // else {
       //   //账目商户id
-        
+
       // }
 
 
@@ -629,14 +629,14 @@ function animateNumberFun(ele, num, type) {
 }
 
 //获取用户权限
-function permissionsFun(url,type,userToken,layer){
-  return new Promise(function(resolve,reject){
-    ajaxFun(url, type, '', userToken, resolve, reject).then(res=>{
-      if(res.code==200){
+function permissionsFun(url, type, userToken, layer) {
+  return new Promise(function (resolve, reject) {
+    ajaxFun(url, type, '', userToken, resolve, reject).then(res => {
+      if (res.code == 200) {
         resolve(res)
-      }else if(res.code==403){
+      } else if (res.code == 403) {
         // window.parent.location.href = "login.html";
-      }else{
+      } else {
         reject(res)
       }
     }).catch((err) => {
@@ -645,3 +645,4 @@ function permissionsFun(url,type,userToken,layer){
     })
   })
 }
+

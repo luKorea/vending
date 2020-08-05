@@ -10,7 +10,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     elem: '#test6',
     range: true,
     done: function (value) {
-      timerKey = value.split(' - ');
+     var timerKey = value.split(' - ');
       startTime = timerKey[0];
       endTime = timerKey[1];
     }
@@ -140,7 +140,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       elem: '#demo',
       isAuto: true, //流加载容器
       scrollElem: '#demo',
-      end: '已展示全部',
+      end: ' ',
       done: function (page, next) { //执行下一页的回调
         //模拟数据插入
         setTimeout(function () {
@@ -502,7 +502,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
   var exportFlag=false,
       refundFlag=false;
   permissionsFun('/api/role/findUserPermission','post',sessionStorage.token,layer).then(res=>{
-    console.log(res.data)
+    // console.log(res.data)
     exportFlag=res.data.some((item,index)=>{
         return item.id=='420'
     });

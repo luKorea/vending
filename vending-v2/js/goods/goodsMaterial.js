@@ -55,7 +55,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
     range: true,
     done: function (value, date, endDate) {
       console.log(value); //得到日期生成的值，如：2017-08-18
-      timerKey = value.split(' - ');
+     var timerKey = value.split(' - ');
       console.log(timerKey);
       startTime = timerKey[0];
       endTime = timerKey[1];
@@ -70,7 +70,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
     range: true,
     done: function (value, date, endDate) {
       console.log(value); //得到日期生成的值，如：2017-08-18
-      timerKey = value.split(' - ');
+     var timerKey = value.split(' - ');
       console.log(timerKey);
       startTime2 = timerKey[0];
       endTime2 = timerKey[1];
@@ -84,7 +84,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
     range: true,
     done: function (value, date, endDate) {
       console.log(value); //得到日期生成的值，如：2017-08-18
-      timerKey = value.split(' - ');
+     var timerKey = value.split(' - ');
       console.log(timerKey);
       startTime3 = timerKey[0];
       endTime3 = timerKey[1];
@@ -416,11 +416,14 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
             console.log(res)
             if (res.code == 200) {
               popupHide('addImgCont', 'addImgBox');
-              $('.FlexInputWidth ingpu[name="ImgNane"]').val('')
+              $('.FlexInputWidth input[name="ImgNane"]').val('')
               layer.msg(res.message, { icon: 1 });
               advertisingLis.reload({
                 where: {}
-              })
+              });
+              addGoodsImg=null;
+              $('.upload-list').fadeOut();
+              $('#GoodsImg').attr('src','')
             } else if (res.code == 403) {
               window.parent.location.href = "login.html";
             } else {

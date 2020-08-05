@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../assets/public/documentWrite.js"></script>
+    <title>商户列表</title>
+</head>
+
+<body>
+    <div class="list-wrap">
+        <div class="list-body" style="margin-top: 0;">
+            <div style="display: flex;">
+                <div class="left-mian" >
+                    <div class="accountContnet" style="margin-top: 20px;">
+                        <!-- <div class="input-account">
+                            <input type="text" placeholder="输入用户账号">
+                        </div> -->
+                        <p style="margin:20px;color:#be954a;">商户列表</p>
+                        <!-- <div class="fixedAccount">
+                            <span> 粤宝商户-中邮广州</span>
+                        </div> -->
+                        <div id="test1" class="demo-tree demo-tree-box"></div>
+                    </div>
+                    <!-- 右侧栏 -->
+                    <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
+                </div>
+                <i class="layui-icon layui-icon-right  onLeft"></i>
+                <div class="mian" style="margin-top: 20px;">
+                    <div class="addMember">
+                        <button class="layui-btn layui-btn-normal btn addBtn hide" style="margin-right: 25px;">
+                            <span>添加商户</span>
+                        </button>
+                        <div style="max-width: 350px;" class="key-contnet">
+							<div class="key-text">关键字</div>
+							<input type="text" placeholder="商户名" name="keyMerchants" class="KyeText">
+                        </div>
+                        <button class="layui-btn layui-btn-normal queryBtnClick btn" style="margin: 0 0 0 25px;">
+							<i class="layui-icon layui-icon-search"></i>
+							<span>查询</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal refreshBtn  btn" style="margin: 0 0 0 25px;">
+							<i class="layui-icon layui-icon-refresh"></i>
+							<span>刷新</span>
+						</button>
+                    </div>
+                    <div>
+                        <div class="data-list">
+                            <div class="list-table">
+                                <table class="layui-hide" id="tableTest" lay-filter="test"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  编辑商户 -->
+        <div class="MemberOperation" style="overflow-y: auto;">
+            <div class="MemberContent margin0">
+                <div class="OperationHeader">
+                    <span>编辑商户</span>
+                    <button class="cancel_btn">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div style="text-align: initial;padding: 25px 25px 30px;">
+                    <div class="editMerchants">
+                        <div class="listInput">
+                            <label for=""><span style="color: red;">*</span> 商户名:</label>
+                            <input type="text" name="merchantsName">
+                        </div>
+                        <div class="listInput">
+                            <label for=""><span style="color: red;">*</span> 上级商户:</label>
+									<!-- <select name="marchantsListname" class="marchantsList" lay-filter="stateSelect">
+                                    </select> -->
+                                    <input type="text" name="marchantsListname" class="marchantsList" style="display: none;">
+                                    <input type="text" disabled name="marchantsText">
+								
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;" class="Medit">
+                        <button class="layui-btn layui-btn-normal btn submit_btn" type="button">
+                            <span>提交</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
+                            <span>取消</span>
+                        </button>                       
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- 添加商户 -->
+        <div  class="addMerchants maskContnet" style="overflow-y: auto;">
+            <div class="addBox margin0">
+                <div class="playHeader">
+                    <span>添加商户</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="addBody">
+                    <div class="listInput">
+                        <label for=""><span style="color: red;">*</span> 商户名:</label>
+                        <input type="text" name="merchantsName">
+                    </div>
+                    <div class="listInput">
+                        <label for=""><span style="color: red;">*</span> 上级商户:</label>
+                        <!-- <form class="layui-form" action="" >
+                            <div class="layui-form" lay-filter="">
+                                <select name="marchantsListname" class="addMarchantsList" lay-filter="stateSelect">
+                                    <option disabled value="1">启用</option> 
+                                </select>
+                            </div>
+                        </form> -->
+                        <input type="text" name="marchantsListname" disabled>
+                        <input type="text" name="addmarchantsVal" disabled style="display: none;">
+                    </div>
+                    <div class="listInput" id="listInputTree">
+                        <div id="test2" class="demo-tree demo-tree-box" style="margin-left: 110px;"></div>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <button class="layui-btn layui-btn-normal btn addSubmiBtn" type="button">
+                            <span>提交</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn addCancelBtn cancel_btn" type="button">
+                            <span>取消</span>
+                        </button>                       
+                    </div>
+                </div>           
+            </div>
+        </div>
+        <div class="mask maskContnet">
+            <div class="TitleContentWith">
+                <span class="maskSpan" style="display: inline-block;"> 
+                    <i class="layui-icon layui-icon-loading "></i>
+                </span>
+               
+                数据处理中，请稍候
+            </div>
+        </div>
+        <!-- 没有权限时显示白屏 -->
+        <div class="hangContent">
+            <p>您没有访问的权限!</p>
+        </div>
+    </div>
+</body>
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <!-- <button class="layui-btn layui-btn-sm btn operation" lay-event="editRole">
+            <span style="color:#fff;">编辑角色</span>
+        </button> -->
+        <button class="layui-btn layui-btn-sm btn operation editBtn" typeID='2' lay-event="edit">
+            <span style="color:#fff;">编辑</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn del-btn" lay-event="delete">删除</button>
+    </div>
+</script>
+
+</html>

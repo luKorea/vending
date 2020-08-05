@@ -13,7 +13,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         range: true,
         done: function (value, date, endDate) {
             // console.log(value); //得到日期生成的值，如：2017-08-18
-            timerKey = value.split(' - ');
+         var timerKey = value.split(' - ');
             // console.log(timerKey);
             startTime = timerKey[0];
             endTime = timerKey[1];
@@ -370,7 +370,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     $('.setAdvertising .addBtn').click(function () {
         popupShow('pubilshMaterialCont', 'pubilshMaterialBox');
         // 发布广告选择素材部分
-        if (!ChooseMaterial) {
+        // if (!ChooseMaterial) {
             ChooseMaterial = table.render({
                 elem: '#chooseData',
                 url: '/api/advertising/selectAdvertising',
@@ -435,7 +435,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
 
                 }
             });
-        }
+        // }
 
     });
     // 添加素材到发布广告

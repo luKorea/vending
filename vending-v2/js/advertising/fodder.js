@@ -15,7 +15,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         range: true,
         done: function (value, date, endDate) {
             console.log(value); //得到日期生成的值，如：2017-08-18
-            timerKey = value.split(' - ');
+           var timerKey = value.split(' - ');
             console.log(timerKey);
             startTime = timerKey[0];
             endTime = timerKey[1];
@@ -327,7 +327,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     // 提交审核
     $('.submitAuditBtn').click(function () {
         if(!auditFla){
-            layer.msg('您没有审核广告素材权限!',{iocn:7});
+            layer.msg('您没有提交广告素材权限!',{icon:7});
             return
         }
         var submitCheckStatus = table.checkStatus('tableId');
@@ -353,6 +353,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
 
     // 审核通过
     $('.approvedBtn').click(function () {
+        if(!auditFla){
+            layer.msg('您没有审核广告素材权限!',{icon:7});
+            return
+        }
         var approveCheckStatus = table.checkStatus('tableId');
       var  approveList = [];
         if (approveCheckStatus.data.length > 0) {
@@ -378,7 +382,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     // 审核不通过
     $('.noPassBtn').click(function () {
         if(!auditFla){
-            layer.msg('您没有审核广告素材权限!',{iocn:7});
+            layer.msg('您没有审核广告素材权限!',{icon:7});
             return
         }
         var noPassCheckStatus = table.checkStatus('tableId');
