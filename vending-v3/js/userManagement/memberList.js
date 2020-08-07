@@ -36,7 +36,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         { field: 'lastUser', width: 150, title: '最后操作人', },
         { field: 'lastTime', width: 180, title: '最后操作时间', sort: true },
 
-        { field: 'operation', fixed: 'right', right: 0, width: 350, title: '操作', toolbar: '#barDemo' },
+        { field: 'operation', fixed: 'right', right: 0, width: 250, title: '操作', toolbar: '#barDemo' },
       ]]
       , id: 'tableId'
       , page: true

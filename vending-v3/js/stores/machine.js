@@ -148,11 +148,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.maskHeader span').html(machineSetData.info + '详细信息')
         if (obj.event == 'set') {
             $('.setUpCont').show();
-            $('.setNav li').eq(0).addClass('active').siblings().removeClass('active');
-            $('.tabLine').css({
-                left: '0'
-            })
-            $('.setCoreListOne').show().siblings().hide();
+            // $('.setNav li').eq(0).addClass('active').siblings().removeClass('active');
+            // $('.tabLine').css({
+            //     left: '0'
+            // })
+            // $('.setCoreListOne').show().siblings().hide();
             form.val("setDataVal", {
                 'info': machineSetData.info,
                 'appVersion': machineSetData.appVersion,
@@ -635,12 +635,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 { field: 'payee', width: 150, title: '收款方', sort: true, },
                 { field: 'amount', width: 150, title: '金额', },
-            ]]
-            , id: 'salesId'
-            , page: true
-            , loading: true
-            , limits: [10, 20, 50, 100]
-            ,
+            ]],
+             id: 'salesId',
+             page: true,
+             loading: true,
+            height: 'full-200',
+            limits: [10, 20, 50, 100],     
             request: {
                 'pageName': 'pageNum',
                 'limitName': 'pageSize'

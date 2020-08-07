@@ -129,7 +129,7 @@ window.onload = function () {
                 //等同于socket = new WebSocket("ws://localhost:8888/xxxx/im/25");
                 //var socketUrl="${request.contextPath}/im/"+$("#userId").val();
                 //          var socketUrl="http://172.16.71.142:8086/push?machine=8fc9d742bd0772c6&message=123456";
-                var socketUrl = `ws://172.16.71.142:8086/pushServer/${sessionStorage.UserId}`;
+                var socketUrl = `ws://119.29.104.217:8086/pushServer/${sessionStorage.UserId}`;
                 socketUrl = socketUrl.replace("https", "ws").replace("http", "ws");
                 // console.log(socketUrl);
                 if (socket != null) {

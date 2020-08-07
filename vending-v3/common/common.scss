@@ -1,0 +1,62 @@
+
+@charset "UTF-8";
+$col: #B18E5D;
+
+/*css 初始化 */
+
+html,
+body,
+ul,
+li,
+ol,
+dl,
+dd,
+dt,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+fieldset,
+legend,
+img,
+input {
+    margin: 0;
+    padding: 0;
+}
+
+input:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+select:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+textarea:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+body {
+    font-family: Microsoft YaHei;
+}
+
+input {
+    border: 0;
+    outline: none;
+}
+
+div,
+input,
+textarea,
+button {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+a {
+    text-decoration: none;
+}

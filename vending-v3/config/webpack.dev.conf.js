@@ -11,7 +11,7 @@ module.exports = merge(base, {
     devServer: {
         contentBase: "./dist", //本地服务器所加载的页面所在的目录
         port: "8888", //设置默认监听端口，如果省略，默认为"8080"
-        inline: false, //实时刷新
+        inline: true, //实时刷新
         historyApiFallback: true, //不跳转
         host: '172.16.68.254',
         //代理转发接口
@@ -19,8 +19,8 @@ module.exports = merge(base, {
             //把/api/t转发到target，但是转发的是http://xxx/api/t
             //不要/api,用pathRewrite
             '/api': {
-                // target: 'http://172.16.71.142:8086', //(跨域的地址)
-                target: 'http://119.29.104.217:8086', //(跨域的地址)
+                target: 'http://172.16.71.142:8086', //(跨域的地址)
+                // target: 'http://119.29.104.217:8086', //(跨域的地址)
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': ''

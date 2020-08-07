@@ -15,7 +15,10 @@ var entry = {
         order:'./js/order/order.js',
         fodder:'./js/advertising/fodder.js',
         release:'./js/advertising/release.js',
-        myInformation:'./js/my/myInformation.js'
+        myInformation:'./js/my/myInformation.js',
+        notice:'./js/notice/notice.js',
+        //移动端版本
+        M_login:'./js/mobile/login/login.js'
     }
     //页面配置
 var htmlConfig = [
@@ -64,6 +67,13 @@ var htmlConfig = [
     },
     {
         name: "myInformation",
+    },
+    {
+        name: "notice",
+    },
+    //移动端部分
+    {
+        name: "M_login",
     },
 ];
 module.exports = {
