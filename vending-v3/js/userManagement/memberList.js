@@ -76,6 +76,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         statusCode: 200 //规定成功的状态码，默认：0
       },
       done: function (res) {
+        permissions();
         if (res.code == 405) {
           $('.hangContent').show();
         }
@@ -93,8 +94,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     })
   });
   //监听工具条
+  var memData=null;
   table.on('tool(test)', function (obj) {
     var data = obj.data;
+    memData=obj.data;
     console.log(obj)
     uuID = data.uuid;
     if (obj.event === 'edit') {
@@ -420,7 +423,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var userList = '';
     list.forEach((ele, index) => {
       userList += `<div>
-                     <input type="checkbox" ${dIndex != 0 && index == 0 ? 'disabled' : ''}  name="${ele.id}" title="${ele.name}"lay-skin="primary" value="${ele.id}"></input>
+                     <input type="checkbox" ${dIndex !=1 && index == 0 ? 'disabled' : ''}  name="${ele.id}" title="${ele.name}"lay-skin="primary" value="${ele.id}"></input>
                    </div>`
     });
     $(`.${elements}`).empty();
@@ -556,6 +559,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       console.log(obj);
       $('.terminal input[name="marchantsListname"]').val(obj.data.title);
       $('.terminal input[name="topmachantsVal"]').val(obj.data.id)
+
+      if (obj.data.id == 1) {
+        $('.checkCont input[name="100001"]').prop('disabled', false);
+      } else {
+        $('.checkCont input[name="100001"]').prop('checked', false)
+        $('.checkCont input[name="100001"]').prop('disabled', true);
+      }
+      form.render('checkbox');
       var nodesEdti = $(`.terminal .layui-tree-txt`);
       for (var i = 0; i < nodesEdti.length; i++) {
         if (nodesEdti[i].innerHTML === obj.data.title)
@@ -565,18 +576,22 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       }
     },
   });
+
+  var addFlag=true,
+  editFlag=true,
+  delFlag=true;
   permissionsVal(389, 390, 397).then(res => {
-    res.addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-    res.editFlag ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
-    res.delFlag ? $('.del-btn').removeClass('hides') : $('.del-btn').addClass('hides');
-    // if(!res.editFlag){
-    //   $('.listEdit').addClass('hide')
-    // }
-    // if(!res.delFlag)(
-    //   $('.del-btn').addClass('show')
-    // )
+    addFlag= res.addFlag ;
+    editFlag= res.editFlag ;
+    delFlag=  res.delFlag;
+    permissions();
   }).catch(err => {
     layer.msg('服务器请求超时', { icon: 7 })
-  })
+  });
+  function permissions(){
+    addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+    editFlag ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
+    delFlag ? $('.del-btn').removeClass('hides') : $('.del-btn').addClass('hides');
+  };
 });
 

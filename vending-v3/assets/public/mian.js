@@ -1,5 +1,5 @@
 // 公共方法
-document.write("<script type='text/javascript' src='../../assets/public/jquery.animateNumber.min.js'></script>");
+document.write("<script type='text/javascript' src='../assets/public/jquery.animateNumber.min.js'></script>");
 // 删除商品数据列表数据
 // 传id
 var token = sessionStorage.token;
@@ -66,7 +66,6 @@ function Goodsdel(id, indexs, obj, index, tableID, classTag) {
 // tableIns --数据表格实例对象
 //                                  1关键字 2商品类型ID 3状态ID 4开始价格 5结束价格
 function upPreferential(tableIns, keyGoodsName, GoodsTypeID, stateId, startingPrice, closingPrice) {
-
   tableIns.reload({
     where: { //设定异步数据接口的额外参数，任意设     
       conditionTwo: keyGoodsName, //关键字
@@ -282,7 +281,8 @@ function treeFun(tree, element, tableID, data, key, goodsCLass, selectData, cond
         selectData(obj.data.id + '');
       }
       if (flag) {
-        sessionStorage.classTag = obj.data.id
+        sessionStorage.classTag = obj.data.id,
+        sessionStorage.machineGoodsId=obj.data.id
       }
       // sessionStorage.merchantIdData = obj.data.id;
       varData = obj.data.id;
@@ -645,16 +645,16 @@ function permissionsFun(url, type, userToken, layer) {
     })
   })
 }
-
+//权限判断
 async function permissionsVal(addIndex, editIndex, delIndex,four,five) {
   var dataFlag = {
-    addFlag: true,
-    editFlag: true,
-    delFlag: true,
-    fourFlag:true,
-    fiveFlag:true,
+    addFlag: false,
+    editFlag: false,
+    delFlag: false,
+    fourFlag:false,
+    fiveFlag:false,
   }
-  await permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token).then(res => {
+  await permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token,layer).then(res => {
     // console.log(res.data)
     dataFlag.addFlag = res.data.some((item, index) => {
       return item.id == addIndex
@@ -672,7 +672,7 @@ async function permissionsVal(addIndex, editIndex, delIndex,four,five) {
       return item.id == five
     })
   }).catch(err => {
-    layer.msg(err.message, { icon: 2 })
+    // layer.msg(err.message, { icon: 2 })
   })
   return dataFlag
 }

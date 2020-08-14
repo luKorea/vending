@@ -31,8 +31,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo' },
         ]]
         , id: 'tableId'
-        , page: true
-        , loading: true
+        , page: true,
+        // height: 'full-2000',
+         loading: true
         , limits: [10, 20, 50]
         ,
         request: {
@@ -65,6 +66,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             statusCode: 200 //规定成功的状态码，默认：0
         },
         done: function (res) {
+            permissions();
             if (res.code == 403) {
                 window.parent.location.href = "login.html";
             } else if (res.code == 405) {
@@ -275,13 +277,23 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             }
         },
     });
+    var addFlag = false,
+        editFlag = false,
+        delFlag = false;
     permissionsVal(393, 394, 395).then(res => {
-        res.addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-        res.editFlag ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
-        res.delFlag ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
+        addFlag = res.addFlag;
+        editFlag = res.editFlag;
+        delFlag = res.delFlag;
+        permissions();
     }).catch(err => {
         layer.msg('服务器请求超时', { icon: 7 })
     });
+
+    function permissions() {
+        addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+        editFlag ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
+        delFlag ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
+    };
 
     // 刷新页面
     $('.refreshBtn').click(function () {

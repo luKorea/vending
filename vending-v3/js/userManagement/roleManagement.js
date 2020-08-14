@@ -17,7 +17,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
         },
         cols: [[
-            { field: 'name', width: 180, title: '用户名' },
+            { field: 'name', width: 180, title: '角色名' },
             { field: 'addUser', width: 150, title: '添加人' },
             { field: 'addTime', width: 200, title: '添加时间' },
             { field: 'lastUser', width: 180, title: '最后修改人', },
@@ -254,7 +254,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         var permissionsArray = [];
         if ($('.editInput input[name="userName"]').val()) {
             var datalll = form.val("editInformation");
-            // console.log(datalll)
+            console.log(datalll)
             for (let i in datalll) {
                 permissionsDataList.forEach((item, index) => {
                     if (item.id == datalll[i]) {

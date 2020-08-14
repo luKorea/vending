@@ -1,6 +1,6 @@
 
 @charset "UTF-8";
-$col: #B18E5D;
+$color: #be954a;
 
 /*css 初始化 */
 
@@ -27,7 +27,9 @@ input {
     margin: 0;
     padding: 0;
 }
-
+body{
+    background-color: #ffffff;
+}
 input:-webkit-autofill {
     box-shadow: 0 0 0px 1000px white inset !important;
 }
@@ -59,4 +61,14 @@ button {
 
 a {
     text-decoration: none;
+}
+.flex{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.flexCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -30,14 +30,14 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     cols: [[
       { checkbox: true },
       { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp" },
+      { field: 'goods_Core', width: 120, title: '商品编号', },
       { field: 'goods_Name', width: 120, title: '商品名称', color: '#409eff' },
       {
         field: 'goods_Status', width: 120, title: '商品状态 ', templet: function (d) {
           return d.goods_Status = 1 ? '启用' : '不启用'
         }
       },
-      { field: `classifyName`, width: 120, title: '商品类目' },
-      { field: 'goods_Core', width: 120, title: '商品编号', },
+      { field: `classifyName`, width: 120, title: '商品类目' }, 
       { field: 'goods_Param', width: 120, title: '规格说明 ' },
       { field: 'goods_Price', width: 120, title: '销售价 ', sort: true },
       { field: 'goods_Cost', width: 120, title: '成本价 ', sort: true },
@@ -80,7 +80,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           }
         }
       },
-      
+
       { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
       // { fixed: 'right', width: 160, align: 'center', toolbar: '#barDemo' }
     ]]
@@ -89,7 +89,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     , loading: true,
     // ,method:'post'
     // ,limits: [10,20,50]
-  
+
     request: {
       'pageName': 'pageNum',
       'limitName': 'pageSize'
@@ -119,6 +119,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       statusCode: 200 //规定成功的状态码，默认：0
     },
     done: function (res) {
+      permissions();
       if (res.code == 403) {
         window.parent.location.href = "login.html";
       } else if (res.code == 405) {
@@ -213,7 +214,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
 
     } else if (obj.event === 'delete') {
       layer.confirm('确定删除？', function (index) {
-        
+
         // obj.del();
         // layer.close(index);
         Goodsdel(obj.data.goods_Id, 1, obj, index);
@@ -247,7 +248,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       , "goodsParam": singleData.goods_Param //规格描述
       , 'goodsStatus': singleData.goods_Status //商品状态
     });
-    console.log(singleData.goods_Images)
+    console.log(singleData.goods_images)
     $('#editImg').attr("src", singleData.goods_images)
     editWangEditor.txt.html(singleData.goods_Descript)
   });
@@ -307,7 +308,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
               }
             })
             $('.editor').fadeOut();
-            loadingAjax('/api/refreshGoods','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+            loadingAjax('/api/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
           } else if (res.code == 403) {
             window.parent.location.href = "login.html";
           } else {
@@ -465,7 +466,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                 , "goodsParam": ''
               });
               layer.msg('添加成功', { icon: 1 });
-              loadingAjax('/api/refreshGoods','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+              loadingAjax('/api/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
 
               // 重新加载数据
               tableIns.reload({
@@ -754,11 +755,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     location.reload();
   });
   //树状图
-  var dataList1=null;
-  var dataList = dataList1=treeList();
+  var dataList1 = null;
+  var dataList = dataList1 = treeList();
   // var dataList1 = treeList();
   console.log(dataList)
-  treeFun(tree, 'testGoods', tableIns, dataList, 'condition','goodsClass',selectData)
+  treeFun(tree, 'testGoods', tableIns, dataList, 'condition', 'goodsClass', selectData)
   // treeFunCheck(tree, 'testGoodsCheck', tableIns, dataList1, 'merchantId',layer)
 
 
@@ -880,10 +881,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         cascade: false,//级联
       });
       popupShow('chooseLower', 'chooseBox');
-      $.each($(".treeList input"), function() {
-        if(pushList.data[0].merchantId==$(this).val()){
-          $(this).prop('disabled',true);
-          return ;
+      $.each($(".treeList input"), function () {
+        if (pushList.data[0].merchantId == $(this).val()) {
+          $(this).prop('disabled', true);
+          return;
         }
       })
     } else {
@@ -893,7 +894,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   // 确定推送
   var role = null;
   $('.determineBtn').click(function () {
-    role=  leg.getCheckedNodes().map(Number)
+    role = leg.getCheckedNodes().map(Number)
     console.log(leg.getCheckedNodes());
     // return;
     // var checkedData = tree.getChecked('treelistCheck');
@@ -904,10 +905,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       layer.msg('请选择要推送的商户', { icon: 7 })
       return;
     }
-    
+
     popupShow('PushMandatory', 'MandatoryBox')
     console.log(pushList)
-    
+
   });
   $('.mandatroFooter div').click(function () {
     var pushArray = [];
@@ -1015,14 +1016,26 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       // location = location;
     }
   });
-permissionsVal(377, 378, 375,416,415).then(res => {
-  console.log(res)
-  res.addFlag ? $('.add-btn').removeClass('hide') : $('.add-btn').addClass('hide');
-  res.editFlag ? $('.GoodsInformation').removeClass('hide') : $('.GoodsInformation').addClass('hide');
-  res.delFlag ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
-  res.fourFlag ? $('.pushGoodsBtn').removeClass('hide') : $('.pushGoodsBtn').addClass('hide');
-  res.fourFlag ? $('.pushListBtn').removeClass('hide') : $('.pushListBtn').addClass('hide');
-}).catch(err => {
-  layer.msg('服务器请求超时', { icon: 7 })
-})
+  var addFlag = true,
+    editFlag = true,
+    delFlag = true,
+    fourFlag = true,
+    fiveFlag = true;
+    permissionsVal(377, 378, 375, 416, 415).then(res => {
+      addFlag = res.addFlag;
+      editFlag = res.editFlag;
+      delFlag = res.delFlag;
+      fourFlag = res.fourFlag;
+      fiveFlag = res.fiveFlag;
+      permissions();
+    }).catch(err => {
+      layer.msg('服务器请求超时', { icon: 7 })
+    });
+  function permissions() {
+    addFlag ? $('.add-btn').removeClass('hide') : $('.add-btn').addClass('hide');
+    editFlag ? $('.GoodsInformation').removeClass('hide') : $('.GoodsInformation').addClass('hide');
+    delFlag ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
+    fourFlag ? $('.pushGoodsBtn').removeClass('hide') : $('.pushGoodsBtn').addClass('hide');
+    fiveFlag ? $('.pushListBtn').removeClass('hide') : $('.pushListBtn').addClass('hide');
+  };
 })

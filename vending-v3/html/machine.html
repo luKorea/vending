@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的售货机</title>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=4b78c5cee1f0f8c37a2a2f8283e256b9&plugin=AMap.Geocoder"></script>
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.15&key=4b78c5cee1f0f8c37a2a2f8283e256b9&plugin=AMap.Geocoder"></script>
     <script src="../assets/public/documentWrite.js"></script>
+    <script src="../../assets/public/md5.js"></script>
 </head>
 
 <body>
@@ -168,7 +170,7 @@
                 <!-- <div style="width: 100%;position: relative;"> -->
                 <ul class="navSetCont">
                     <!-- 终端详情 -->
-                    <li class="setCoreListOne" style="display: block;" >
+                    <li class="setCoreListOne" style="display: block;">
                         <div class="terminalState">
                             <h1 style="color:#606266;font-size:16px;line-height:24px;font-weight:bold;">终端状态</h1>
                             <!-- 基本信息 -->
@@ -200,24 +202,24 @@
                                             <div class="key-contnet">
                                                 <div class="key-text">省市区</div>
                                                 <div>
-                                                    <input type="text" class="notAllowed" disabled name=""
+                                                    <input type="text" class="notAllowed" disabled name="setProvince"
                                                         class="KyeText" style="width: 231px;">
-                                                    <input type="text" class="notAllowed" disabled name=""
+                                                    <input type="text" class="notAllowed" disabled name="setCity"
                                                         class="KyeText" style="width: 231px;">
-                                                    <input type="text" class="notAllowed" disabled name=""
+                                                    <input type="text" class="notAllowed" disabled name="setArea"
                                                         class="KyeText" style="width: 231px;">
                                                 </div>
                                             </div>
                                             <div style="max-width: 370px;" class="key-contnet">
                                                 <div class="key-text">地区</div>
-                                                <input type="text" class="notAllowed" disabled name="" class="KyeText">
+                                                <input type="text" class="notAllowed" disabled name="setRegion" class="KyeText">
                                             </div>
                                             <div style="max-width: 370px;" class="key-contnet">
                                                 <div class="key-text">终端地址</div>
                                                 <input type="text" class="notAllowed" disabled name="location"
                                                     class="KyeText">
                                             </div>
-                                            <div style="max-width: 370px;" class="key-contnet">
+                                            <!-- <div style="max-width: 370px;" class="key-contnet">
                                                 <div class="key-text">配置购物车最大件数</div>
                                                 <div style="width: 100%;" class="layui-form" lay-filter="">
                                                     <select name="" id="" lay-filter="stateSelect">
@@ -241,13 +243,13 @@
                                                         <option value="0">开启自动退款</option>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             <!-- 支付方式状态 -->
-                            <div class="playState">
+                            <!-- <div class="playState">
                                 <p>支付方式状态</p>
                                 <div class="FormCont">
                                     <form class="layui-form" lay-filter="" style="width: 100%;">
@@ -297,24 +299,42 @@
                                         </button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </li>
                     <!-- 货道详情 -->
                     <li class="aisleDetails" style="display: none;">
+                        <form action="" class="layui-form" style="width: 100%;">
                         <div class="aisleGoodsCont">
                             <div class="aisleListCont flexTwo">
                                 <div class="listIndex">
                                     <span>1</span>
                                 </div>
                                 <div class="aisleNumderGoods">
+                                    <div class="aisleNumderClick">
+                                        <div class="numderTop">
+                                            <img src="../img/failure.png" alt="">
+                                            <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
+                                            <span>1</span>
+                                        </div>
+                                        <div class="numderBottom">
+                                            <div class="status1">正常</div>
+                                            <div>数量:5</div>
+                                        </div>
+                                    </div>                                 
+                                    <div class="chooseCheck">
+                                        <input type="checkbox" name="" lay-skin="primary">
+                                        <span title="红包牛红包牛">红包牛红包牛</span>
+                                    </div>
+                                </div>
+                                <div class="aisleNumderGoods">
                                     <div class="numderTop">
                                         <img src="../img/failure.png" alt="">
                                         <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
-                                        <span>1</span>
+
                                     </div>
                                     <div class="numderBottom">
-                                        <div class="status1">正常</div>
+                                        <div class="status2">禁用</div>
                                         <div>数量:5</div>
                                     </div>
                                 </div>
@@ -322,22 +342,14 @@
                                     <div class="numderTop">
                                         <img src="../img/failure.png" alt="">
                                         <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
-                                       
                                     </div>
                                     <div class="numderBottom">
                                         <div class="status1">正常</div>
                                         <div>数量:5</div>
                                     </div>
                                 </div>
-                                <div class="aisleNumderGoods">
-                                    <div class="numderTop">
-                                        <img src="../img/failure.png" alt="">
-                                        <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
-                                    </div>
-                                    <div class="numderBottom">
-                                        <div class="status1">正常</div>
-                                        <div>数量:5</div>
-                                    </div>
+                                <div class="addAisle">
+                                    <span>+</span>
                                 </div>
                             </div>
                             <div class="aisleListCont flexTwo">
@@ -369,15 +381,17 @@
                                     <div class="numderTop">
                                         <img src="../img/failure.png" alt="">
                                         <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
-                                        
+
                                     </div>
                                     <div class="numderBottom">
                                         <div class="status1">正常</div>
                                         <div>数量:5</div>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
+                    </form>
                     </li>
                     <!-- 销售详情 -->
                     <li class="salesTwo details" style="display: none;">
@@ -424,9 +438,8 @@
                                             <div class="layui-form" lay-filter="" style="width: 260px;">
                                                 <select name="payStatus" id="" lay-filter="mySelect">
                                                     <option value="">全部</option>
-                                                    <option value="0">已支付</option>
-                                                    <option value="1">未支付</option>
-                                                    <option value="2">取消支付</option>
+                                                    <option value="1">已支付</option>
+                                                    <option value="0">未支付</option>
                                                 </select>
                                             </div>
                                         </form>
@@ -440,8 +453,8 @@
                                             <div class="layui-form" lay-filter="" style="width: 260px;">
                                                 <select name="payType" id="" lay-filter="mySelect">
                                                     <option value="">全部</option>
-                                                    <option value="0">微信</option>
-                                                    <option value="1">支付宝</option>
+                                                    <option value="1">微信</option>
+                                                    <option value="0">支付宝</option>
                                                 </select>
                                             </div>
                                         </form>
@@ -567,17 +580,19 @@
                                 <li class="listFlex">
                                     <div class="listFlex" style="width: 50%;">
                                         <label for=""><span style="color: red;">*</span>经度</label>
-                                        <input type="text" name="longitude"  >
+                                        <input type="text" name="longitude">
                                     </div>
                                     <div class="listFlex" style="width: 50%;">
                                         <label for=""><span style="color: red;">*</span>纬度</label>
-                                        <input type="text"  name="latitude" >
+                                        <input type="text" name="latitude">
                                     </div>
                                 </li>
                                 <li class="listFlex">
                                     <label for=""><span style="color: red;">*</span>所属商户</label>
-                                    <input type="text" name="merchantsName" class="merchantsName" disabled style="cursor: not-allowed;display: none;">
-                                    <input type="text" name="merchantsNametext" class="merchantsNametext" disabled style="cursor: not-allowed;">
+                                    <input type="text" name="merchantsName" class="merchantsName" disabled
+                                        style="cursor: not-allowed;display: none;">
+                                    <input type="text" name="merchantsNametext" class="merchantsNametext" disabled
+                                        style="cursor: not-allowed;">
                                     <!-- <div class="layui-input-inline" style="width: 100%;">
                                         <select name="merchantsName" class="merchantsName" disabled>
                                         </select>
@@ -628,6 +643,156 @@
                 </div>
             </div>
         </div>
+       
+        <div class="hangContent">
+            <p>您没有访问的权限!</p>
+        </div>
+        <!-- 输入独立密码 -->
+        <div class=" iPasswprd maskContnet">
+            <div class="passwordCont margin0">
+                <div class="playHeader">
+                    <span>验证独立密码</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="passBody">
+                    <div class="listFlex">
+                        <label for="">独立密码：</label>
+                        <input type="password" name="iPassword">
+                    </div>
+                    <div class="content-footer" style="margin-top:30px;">
+                        <div style="text-align: center;">
+                            <button class="layui-btn layui-btn-normal btn passBtn" style="margin: 0 0 0 15px;">
+                                <span>确定</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal btn cancelBtn">
+                                <span>取消</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 编辑货道 -->
+        <div class="editAisle maskContnet" style="overflow-y: auto;">
+            <div class="editAisleBox margin0">
+                <div class="playHeader">
+                    <span>编辑货道</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="aisleList">
+                    <div class="listFlex relative">
+                        <label for=""><span style="color: red;">*</span>在售商品</label>
+                        <input type="text" disabled class="goodsName" name="goodsName">
+                        <button><span style="color: #b7b8bb;">V</span></button>
+                    </div>
+                    <div class="listFlex ">
+                        <label for="">在售价格：</label>
+                        <input type="text" name="price" disabled>
+                    </div>
+                    <div class="listFlex ">
+                        <label for="">当前数量：</label>
+                        <input type="text" name="count">
+                    </div>
+                    <div class="listFlex ">
+                        <label for="">货道容量：</label>
+                        <input type="text" name="total">
+                    </div>
+                    <div class="listFlex ">
+                        <label for="">是否启用：</label>
+                        <div class="layui-form" lay-filter="myDiv">
+                            <form class="layui-form" style="width: 100%;" lay-filter="testVal">
+                                <select name="testSele" id="" lay-filter="">
+                                    <option value="1">是</option>
+                                    <option value="0">否</option>
+
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-footer" style="margin-top:30px;padding-bottom: 25px;">
+                    <div style="text-align: center;">
+                        <button class="layui-btn layui-btn-normal btn ediaisleBtn" style="margin: 0 0 0 15px;">
+                            <span>确定</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn cancelBtn">
+                            <span>取消</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- 商品列表 -->
+        <div class="goodsCont maskContnet" style="overflow-y: auto;">
+            <div class="goodsBox margin0">
+                <div class="playHeader">
+                    <span>商品信息</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="goodsBody">
+                    <p style="color: red;">温馨提示：商品没同步更新可以按查询键进行同步!</p>
+                    <div class="materialKeyCont">
+                        <div style="max-width: 350px;" class="key-contnet">
+                            <div class="key-text">关键字</div>
+                            <input type="text" placeholder="商品名称" class="KyeText" name="GoodsKyeText">
+                        </div>
+                        <div class="key-contnet">
+                            <!-- 商品类目: -->
+                            <div class="key-text">商品类目</div>
+                            <form class="layui-form" action="" style="width: 85%;">
+                                <div class="layui-form" lay-filter="myDiv" style="width: 100%;">
+                                    <select name="" id="GoodsType" lay-filter="mySelect">
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <button class="layui-btn layui-btn-normal queryBtnClick btn" style="margin: 0 0 0 15px;">
+                            <i class="layui-icon layui-icon-search"></i>
+                            <span>查询</span>
+                        </button>
+                    </div>
+                    <div class="data-list-contnet">
+                        <div class="list-table">
+                            <table class="layui-hide" id="goodsTable" lay-filter="goodsTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 添加货道详情数量 -->
+            <div class=" addDetalis maskContnet" >
+                <div class="addCont margin0">
+                    <div class="playHeader">
+                        <span>添加货道数量</span>
+                        <button class="close" type="button">
+                            <i class="layui-icon layui-icon-close"></i>
+                        </button>
+                    </div>
+                    <div class="passBody">
+                        <div class="listFlex">
+                            <label for="">数量：</label>
+                            <input type="number" name="addNum">
+                        </div>
+                        <div class="content-footer" style="margin-top:30px;">
+                            <div style="text-align: center;">
+                                <button class="layui-btn layui-btn-normal btn addDetalisBtn" style="margin: 0 0 0 15px;">
+                                    <span>确定</span>
+                                </button>
+                                <button class="layui-btn layui-btn-normal btn addCancelBtn">
+                                    <span>取消</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="mask maskContnet">
             <div class="TitleContentWith">
                 <span class="maskSpan" style="display: inline-block;">
@@ -635,9 +800,6 @@
                 </span>
                 数据处理中，请稍候
             </div>
-        </div>
-        <div class="hangContent">
-            <p>您没有访问的权限!</p>
         </div>
     </div>
 </body>
@@ -657,7 +819,16 @@
         </button>
     </div>
 </script>
+<script type="text/html" id="GoodsbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn  " lay-event="choose">
+            <span style="color:#fff;">选择</span>
+        </button>
+    </div>
+</script>
+<script type="text/html" id="imgtmp">
+    <div><img src="{{d.goods_images}}  " style="width: 40px; height: 40px;"></div>
+</script>
 <script src="../assets/public/area.js"></script>
-
 
 </html>

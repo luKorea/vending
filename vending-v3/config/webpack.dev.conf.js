@@ -11,7 +11,7 @@ module.exports = merge(base, {
     devServer: {
         contentBase: "./dist", //本地服务器所加载的页面所在的目录
         port: "8888", //设置默认监听端口，如果省略，默认为"8080"
-        inline: true, //实时刷新
+        inline: false, //实时刷新
         historyApiFallback: true, //不跳转
         host: '172.16.68.254',
         //代理转发接口

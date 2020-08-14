@@ -5,23 +5,51 @@
     <link rel="icon" type="image/png" sizes="144x144" href="../../img/icon.png"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../../assets/public/documentMobile.js"></script>
-    <title>Document</title>
+   
+    <title>登录 </title>
 </head>
 <body>
-    <div class="box">
-        <div>
-            <div style="padding:10px;">
-                <div class="hui-swipe" id="swipe">
-                    <div class="hui-swipe-items">
-                       <div class="hui-swipe-item">轮播项目</div>
-                       <div class="hui-swipe-item">轮播项目</div>
+    <div class="loginWrap">
+        <div class="loginSwiper">
+            <div class="hui-swipe" id="swipe">
+                <div class="hui-swipe-items">
+                    <div class="hui-swipe-item"><img src="../../img/1.jpg" /></div>
+                    <div class="hui-swipe-item"><img src="../../img/2.jpg" /></div>
+                    <div class="hui-swipe-item"><img src="../../img/3.jpg" /></div>
+                    <div class="hui-swipe-item"><img src="../../img/4.jpg" /></div>
+                    <div class="hui-swipe-item"><img src="../../img/5.jpg" /></div>       
+                </div>
+            </div>
+        </div>
+        <div class="headerTitle flexCenter">
+            <img src="../../img/icon.png" alt="">
+            <p>购金机管理系统</p>
+        </div>
+        <!-- 账号密码 -->
+        <div class="information">
+            <div class="flex">
+                <span class=" hui-icons hui-icons-my"></span>
+                <input type="text" placeholder="请输入账号">
+            </div>
+            <div class="flex">
+                <span class=" hui-icons hui-icons-check"></span>
+                <input type="password" placeholder="请输入密码">
+            </div>
+            <div class="keep">
+                <div class="hui-form-items">
+                    <div class="hui-form-radios">
+                        <input type="checkbox" value="1" name="aihao[]" id="c1"  /><label for="c1">记住密码</label>
                     </div>
                 </div>
             </div>
         </div>
-        
+        <div class="loginBtn">
+            登录
+        </div>
     </div>
+    <script src="../../assets/public/md5.js"></script>
+    <!-- <script src="../../assets/public/hui.js"></script> -->
+    <script src="../../assets/public/hui-swipe.js"></script>
 </body>
-<script src="../../assets/public/hui.js"></script>
-<script src="../../assets/public/hui-swipe.js"></script>
+
 </html>

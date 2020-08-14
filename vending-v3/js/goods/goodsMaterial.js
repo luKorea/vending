@@ -1,5 +1,5 @@
 import '../../MyCss/goods/goodsMaterial.css'
-layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
+layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   // tab切换
   var index = 0
   $('.navTab li').click(function () {
@@ -47,7 +47,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   //结束时间
   var endTime = '';
   var form = layui.form,
-  tree=layui.tree;
+    tree = layui.tree;
   //   时间选择器
   var laydate = layui.laydate;
   laydate.render({
@@ -108,7 +108,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   // var ImgIndex = null;
   $('.ImgContnet .add-btn').click(function () {
     $('.addImgCont input[name="ImgNane"]').val('');
-    addGoodsImg=null;
+    addGoodsImg = null;
     popupShow('addImgCont', 'addImgBox')
   })
   // 关闭添加图片
@@ -118,7 +118,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   // 添加视频弹出框
   $('.VideoContnet .add-btn').click(function () {
     $('.addVideoCont input[name="VideoName"]').val('')
-    videoSrc=null;
+    videoSrc = null;
     popupShow('addVideoCont', 'addVideoBox')
   });
   // 关闭添加视频
@@ -178,12 +178,13 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
       },
       where: {
         conditionFour: '0',
-        conditionSix:sessionStorage.machineID
+        conditionSix: sessionStorage.machineID
       },
       response: {
         statusCode: 200 //规定成功的状态码，默认：0
       },
       done: function (res) {
+        permissions();
         if (res.code == 403) {
           window.parent.location.href = "login.html";
         } else {
@@ -258,7 +259,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
         conditionFour: '0',
         condition: startTime,
         conditionTwo: endTime,
-        conditionFive:$('.ImgContnet select[name="logoImgStatus"]').val()
+        conditionFive: $('.ImgContnet select[name="logoImgStatus"]').val()
       }
     })
   });
@@ -270,7 +271,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
         conditionFour: '1',
         condition: startTime2,
         conditionTwo: endTime2,
-        conditionFive:$('.VideoContnet select[name="videoStatus"]').val()
+        conditionFive: $('.VideoContnet select[name="videoStatus"]').val()
       }
     })
   });
@@ -282,7 +283,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
         conditionFour: '2',
         condition: startTime3,
         conditionTwo: endTime3,
-        conditionFive:$('.details select[name="detailsImgStatus"]').val()
+        conditionFive: $('.details select[name="detailsImgStatus"]').val()
       }
     })
   })
@@ -337,15 +338,16 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
     },
     where: {
       conditionFour: '1',
-      conditionSix:sessionStorage.machineID
+      conditionSix: sessionStorage.machineID
     },
     response: {
       statusCode: 200 //规定成功的状态码，默认：0
     },
     done: function (res) {
+      permissions();
       if (res.code == 403) {
         window.parent.location.href = "login.html";
-      } else if(res.code==405){
+      } else if (res.code == 405) {
         $('.hangContent').show();
       }
     }
@@ -370,8 +372,8 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   $('.editCancelBtn').click(function () {
     popupHide('editImgCont', 'editBox')
   });
-  $('.addDetailsImgCont .detalisCancelBtn').click(function(){
-    popupHide('addDetailsImgCont','addDetailsImgBox')
+  $('.addDetailsImgCont .detalisCancelBtn').click(function () {
+    popupHide('addDetailsImgCont', 'addDetailsImgBox')
   })
   // 剪切图片弹出
   $('.uploadBtn').click(function () {
@@ -521,43 +523,43 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
           delID.push(numberList)
         });
         console.log(delID)
-          $.ajax({
-            type: 'post',
-            url: '/api/good_material/deleteGoodMaterial',
-            headers: {
-              "Content-Type": "application/json",
-              token,
-            },
-            data: JSON.stringify({
-              data: delID
-            }),
-            success: function (res) {
-              console.log(res)
-              $('.mask').fadeOut();
-              $('.maskSpan').removeClass('maskIcon')
-              if (res.code == 200) {
-                layer.msg(res.message, { icon: 1 });
-                tableIV.reload({
-                  where: {
-                    conditionFour: typeID
-                  }
-                })
-              } else if (res.code == 201) {
-                layer.msg(res.message, { icon: 2 });
-              } else if (res.code == 202) {
-                layer.msg(res.message, { icon: 7 });
-                tableIV.reload({
-                  where: {
-                    conditionFour: typeID
-                  }
-                })
-              } else if (res.code == 403) {
-                window.parent.location.href = "login.html";
-              }else{
-                layer.msg(res.message, { icon: 2 });
-              }
+        $.ajax({
+          type: 'post',
+          url: '/api/good_material/deleteGoodMaterial',
+          headers: {
+            "Content-Type": "application/json",
+            token,
+          },
+          data: JSON.stringify({
+            data: delID
+          }),
+          success: function (res) {
+            console.log(res)
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon')
+            if (res.code == 200) {
+              layer.msg(res.message, { icon: 1 });
+              tableIV.reload({
+                where: {
+                  conditionFour: typeID
+                }
+              })
+            } else if (res.code == 201) {
+              layer.msg(res.message, { icon: 2 });
+            } else if (res.code == 202) {
+              layer.msg(res.message, { icon: 7 });
+              tableIV.reload({
+                where: {
+                  conditionFour: typeID
+                }
+              })
+            } else if (res.code == 403) {
+              window.parent.location.href = "login.html";
+            } else {
+              layer.msg(res.message, { icon: 2 });
             }
-          })
+          }
+        })
       })
     } else {
       layer.msg('请选择需要删除的图片或视频', { icon: 7 });
@@ -591,7 +593,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
         checkList.push(submiObj)
       });
       console.log(checkList)
-        goodsAudit('1', checkList, tableType, $(that).attr('typeId'),'/api/good_material/submitGoodMaterial');
+      goodsAudit('1', checkList, tableType, $(that).attr('typeId'), '/api/good_material/submitGoodMaterial');
     } else {
       layer.msg('请选择需要提交审核的图片或视频', { icon: 7 });
     }
@@ -626,7 +628,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
           };
           auditList.push(submiObj)
         });
-          goodsAudit('0', auditList, tableType, $(that).attr('typeId'),'/api/good_material/checkGoodMaterial');
+        goodsAudit('0', auditList, tableType, $(that).attr('typeId'), '/api/good_material/checkGoodMaterial');
       })
     } else {
       layer.msg('请选择需要提交审核的图片或视频', { icon: 7 });
@@ -634,7 +636,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   })
 
   // 提交审核，审核通过，审核不通过方法
-  function goodsAudit(type, data, eleTable, conditionFour,url) {
+  function goodsAudit(type, data, eleTable, conditionFour, url) {
     $.ajax({
       type: 'post',
       url,
@@ -667,7 +669,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
           })
         } else if (res.code == 403) {
           window.parent.location.href = "login.html";
-        }else{
+        } else {
           layer.msg(res.message, { icon: 2 });
         }
       }
@@ -855,12 +857,13 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
     },
     where: {
       conditionFour: '2',
-      conditionSix:sessionStorage.machineID
+      conditionSix: sessionStorage.machineID
     },
     response: {
       statusCode: 200 //规定成功的状态码，默认：0
     },
     done: function (res) {
+      permissions();
       if (res.code == 403) {
         window.parent.location.href = "login.html";
       } else {
@@ -871,7 +874,7 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
 
   $('.details .add-btn').click(function () {
     $('.addDetailsImgCont input[name="detailsImgNane"]').val('');
-    videoSrc=null;
+    videoSrc = null;
     popupShow('addDetailsImgCont', 'addDetailsImgBox');
   });
   $('.addDetailsImgCont input[name="fileDetails"]').change(function (e) {
@@ -964,14 +967,14 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   })
   //树装图
   var dataListGoodsImg,
-      detailsIMGList,
-      dataGoodsVideoList;
-   dataListGoodsImg = detailsIMGList=dataGoodsVideoList=treeList();
-  treeFunMaterial(tree, 'LogoIMG', advertisingLis, dataListGoodsImg, 'conditionSix','treelistOne',);
+    detailsIMGList,
+    dataGoodsVideoList;
+  dataListGoodsImg = detailsIMGList = dataGoodsVideoList = treeList();
+  treeFunMaterial(tree, 'LogoIMG', advertisingLis, dataListGoodsImg, 'conditionSix', 'treelistOne',);
   // var  = treeList();
-  treeFunMaterial(tree, 'detailsIMG', detailsTable, detailsIMGList, 'conditionSix','treelistTwo',);
+  treeFunMaterial(tree, 'detailsIMG', detailsTable, detailsIMGList, 'conditionSix', 'treelistTwo',);
   // var dataGoodsVideoList = treeList();
-  treeFunMaterial(tree, 'dataGoodsVideo', videoTable, dataGoodsVideoList, 'conditionSix','treelistThree',);
+  treeFunMaterial(tree, 'dataGoodsVideo', videoTable, dataGoodsVideoList, 'conditionSix', 'treelistThree',);
   //左边商户列表部分显示隐藏
   $('.sidebar i').click(function () {
     console.log($(this).parent())
@@ -983,18 +986,30 @@ layui.use(['form', 'layer', 'laydate', 'table','tree'], function () {
   });
   $('.on-left').click(function () {
     $('.left-mian').show();
-    $('.on-left').hide();0
+    $('.on-left').hide(); 0
   });
-// 刷新
-$('.refreshBtn').click(function () {
-  location.reload();
-});
-permissionsVal(380, 381, 379,382).then(res => {
-  res.addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-  res.editFlag ? $('.editBtn').removeClass('hide') : $('.listEdit').addClass('hide');
-  res.delFlag ? $('.dleBtn').removeClass('hide') : $('.dleBtn').addClass('hide');
-  res.fourFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
-}).catch(err => {
-  layer.msg('服务器请求超时', { icon: 7 })
-})
+  // 刷新
+  $('.refreshBtn').click(function () {
+    location.reload();
+  });
+  var addFlag = false,
+    editFlag = false,
+    delFlag = false,
+    fourFlag = false;
+  permissionsVal(380, 381, 379, 382).then(res => {
+    console.log(res)
+    addFlag = res.addFlag;
+    editFlag = res.editFlag;
+    delFlag = res.delFlag;
+    fourFlag = res.fourFlag;
+    permissions();
+  }).catch(err => {
+    layer.msg('服务器请求超时', { icon: 7 })
+  });
+  function permissions() {
+    addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+    editFlag ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
+    delFlag ? $('.dleBtn').removeClass('hide') : $('.dleBtn').addClass('hide');
+    fourFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
+  };
 })

@@ -72,6 +72,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       },
       done: function (res) {
         rank = res.data;
+        permissions();
         if(res.code==405){
           $('.hangContent').show();
         }
@@ -260,13 +261,35 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       f5Fun()
     }
   });
-permissionsVal(373,374,372,403).then(res=>{
-  console.log(res);
-  res.addFlag?$('.add-btn').removeClass('hide'):$('.add-btn').addClass('hide');
-  res.editFlag?$('.TEdit').removeClass('hide'):$('.TEdit').addClass('hide');
-  res.delFlag?$('.TDel').removeClass('hide'):$('.TDel').addClass('hide');
-  res.fourFlag?$('.rankImg').removeClass('hide'):$('.rankImg').addClass('hide');
-}).catch(err=>{
-  layer.msg('服务器请求超时',{icon:7})
-})
+ 
+  // function permissions(){
+  //   permissionsVal(373,374,372,403).then(res=>{
+  //     console.log(res);
+  //     res.addFlag?$('.add-btn').removeClass('hide'):$('.add-btn').addClass('hide');
+  //     res.editFlag?$('.TEdit').removeClass('hide'):$('.TEdit').addClass('hide');
+  //     res.delFlag?$('.TDel').removeClass('hide'):$('.TDel').addClass('hide');
+  //     res.fourFlag?$('.rankImg').removeClass('hide'):$('.rankImg').addClass('hide');
+  //   }).catch(err=>{
+  //     layer.msg('服务器请求超时',{icon:7})
+  //   })
+  // };
+  var addFlag=false,
+  editFlag=false,
+  delFlag=false,
+  fourFlag=false;
+  permissionsVal(373,374,372,403).then(res=>{
+    addFlag=res.addFlag;
+    editFlag=res.editFlag;
+    delFlag=res.delFlag;
+    fourFlag=res.fourFlag;
+    permissions();
+  }).catch(err=>{
+    layer.msg('服务器请求超时',{icon:7})
+  })
+  function permissions(){
+    addFlag?$('.add-btn').removeClass('hide'):$('.add-btn').addClass('hide');
+    editFlag?$('.TEdit').removeClass('hide'):$('.TEdit').addClass('hide');
+    delFlag?$('.TDel').removeClass('hide'):$('.TDel').addClass('hide');
+    fourFlag?$('.rankImg').removeClass('hide'):$('.rankImg').addClass('hide');
+  };
 })                                                      

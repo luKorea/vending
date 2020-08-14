@@ -61,7 +61,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             { field: 'creationTime', width: 160, title: '上传时间', },
             { field: 'addUser', width: 150, title: '上传人 ', },
             // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo',fixed: 'right',right: 0 },
-            { field: 'operation', right: 0, width: 200, title: '操作', toolbar: '#barDemo', align: 'center', fixed: 'right'},
+            { field: 'operation', right: 0, width: 200, title: '操作', toolbar: '#barDemo', align: 'center', fixed: 'right' },
         ]],
         page: true,
         id: 'tableId',
@@ -96,9 +96,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             statusCode: 200 //规定成功的状态码，默认：0
         },
         done: function (res) {
+            permissions();
             if (res.code == 403) {
                 window.parent.location.href = "login.html";
-            } else if(res.code==405){
+            } else if (res.code == 405) {
                 $('.hangContent').show();
             }
 
@@ -126,8 +127,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     })
     // 上传素材弹出说明框
     $('.uploadBtn').click(function () {
-        if(!addFlag){
-            layer.msg('您没有上传广告素材权限!',{iocn:7});
+        if (!addFlag) {
+            layer.msg('您没有上传广告素材权限!', { iocn: 7 });
             return
         }
         $('.uploadTitle').fadeIn();
@@ -150,8 +151,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     })
     //   删除文件
     $('.del-btn').click(function () {
-        if(!delFlag){
-            layer.msg('您没有删除广告素材权限!',{iocn:7});
+        if (!delFlag) {
+            layer.msg('您没有删除广告素材权限!', { iocn: 7 });
             return
         }
         var checkStatus = table.checkStatus('tableId');
@@ -182,7 +183,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                                 }
                             })
                         } else if (res.code == 201) {
-                            layer.msg(res.message, { icon: 7});
+                            layer.msg(res.message, { icon: 7 });
                         } else if (res.code == 202) {
                             layer.msg(res.message, { icon: 7 });
                             tableIns.reload({
@@ -192,8 +193,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
 
                         } else if (res.code == 403) {
                             window.parent.location.href = "login.html";
-                        }else{
-                            layer.msg(res.message, { icon: 7});
+                        } else {
+                            layer.msg(res.message, { icon: 7 });
                         }
                     }
                 })
@@ -222,16 +223,16 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     var numberOf = 1;
     table.on('tool(moneyData)', function (obj) {
         valData = obj.data;
-        if(obj.event=='preview'){
+        if (obj.event == 'preview') {
             if (valData.img.indexOf('mp4') > -1) {
                 $('.imgCont video').attr('src', valData.img).show().siblings().hide();
             } else {
                 $('.imgCont img').attr('src', valData.img).show().siblings().hide();
             }
             popupShow('materialPreview', 'previewBox');
-        }else if(obj.event=='edit'){
-            if(!editFlag){
-                layer.msg('您没有编辑广告素材权限!',{iocn:7});
+        } else if (obj.event == 'edit') {
+            if (!editFlag) {
+                layer.msg('您没有编辑广告素材权限!', { iocn: 7 });
                 return
             }
             popupShow('editMaterialCont', 'uploadMateriaBox');
@@ -326,13 +327,13 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
 
     // 提交审核
     $('.submitAuditBtn').click(function () {
-        if(!auditFla){
-            layer.msg('您没有审核广告素材权限!',{iocn:7});
+        if (!auditFla) {
+            layer.msg('您没有审核广告素材权限!', { iocn: 7 });
             return
         }
         var submitCheckStatus = table.checkStatus('tableId');
         console.log(submitCheckStatus);
-        var  checkList= [];
+        var checkList = [];
         if (submitCheckStatus.data.length > 0) {
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon')
@@ -343,18 +344,18 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 }
                 checkList.push(submitObj);
                 console.log(checkList);
-                return ;
+                return;
             });
-            auditMethods('1', checkList,'/api/advertising/submitAdvertisingStatus');
+            auditMethods('1', checkList, '/api/advertising/submitAdvertisingStatus');
         } else {
-            layer.msg('请选择需要提交审核的素材', { icon: 7});
+            layer.msg('请选择需要提交审核的素材', { icon: 7 });
         }
     });
 
     // 审核通过
     $('.approvedBtn').click(function () {
         var approveCheckStatus = table.checkStatus('tableId');
-      var  approveList = [];
+        var approveList = [];
         if (approveCheckStatus.data.length > 0) {
             layer.confirm('确定审核通过？', function (index) {
                 layer.close(index);
@@ -367,7 +368,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     }
                     approveList.push(approveObj)
                 });
-                auditMethods('0', approveList,'/api/advertising/checkAdvertisingStatus')
+                auditMethods('0', approveList, '/api/advertising/checkAdvertisingStatus')
             })
 
         } else {
@@ -377,12 +378,12 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
 
     // 审核不通过
     $('.noPassBtn').click(function () {
-        if(!auditFla){
-            layer.msg('您没有审核广告素材权限!',{iocn:7});
+        if (!auditFla) {
+            layer.msg('您没有审核广告素材权限!', { iocn: 7 });
             return
         }
         var noPassCheckStatus = table.checkStatus('tableId');
-       var  noPassList = [];
+        var noPassList = [];
         if (noPassCheckStatus.data.length > 0) {
             layer.confirm('确定审核不通过？', function (index) {
                 layer.close(index);
@@ -395,7 +396,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     }
                     noPassList.push(noPassObj)
                 });
-                auditMethods('0', noPassList,'/api/advertising/checkAdvertisingStatus')
+                auditMethods('0', noPassList, '/api/advertising/checkAdvertisingStatus')
             })
         } else {
             layer.msg('请选择需要不通过审核的素材', { icon: 7 });
@@ -422,7 +423,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     if (res.code == 200) {
                         if (res.data == '0') {
                             console.log(editImgVideo.indexOf('jpg'))
-                            if ((editImgVideo.indexOf('jpg') > 1 ||editImgVideo.indexOf('png') > 1||editImgVideo.indexOf('gif') > 1 && editValDataConfirm.materiaAttribute == '0') || (editImgVideo.indexOf('mp4') > 1 && editValDataConfirm.materiaAttribute == '1')) {
+                            if ((editImgVideo.indexOf('jpg') > 1 || editImgVideo.indexOf('png') > 1 || editImgVideo.indexOf('gif') > 1 && editValDataConfirm.materiaAttribute == '0') || (editImgVideo.indexOf('mp4') > 1 && editValDataConfirm.materiaAttribute == '1')) {
                                 editMaterial(
                                     valData.vid,
                                     editValDataConfirm.materialName,
@@ -455,7 +456,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     }
                 }
             })
-        } 
+        }
         else {
             console.log()
             editMaterial(
@@ -507,7 +508,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 } else if (res.code == 403) {
                     window.parent.location.href = "login.html";
                 } else {
-                    layer.msg(res.message,{icon:2})
+                    layer.msg(res.message, { icon: 2 })
                 }
             }
         })
@@ -739,7 +740,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                                 where: {
                                 }
                             });
-                            layer.msg(res.message,{icon:1})
+                            layer.msg(res.message, { icon: 1 })
                             form.val("uploadValData", {
                                 "materialName": '',
                                 "materiaAttribute": '',
@@ -756,20 +757,20 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         } else if (res.code == 403) {
                             window.history.go(-1)
                         } else {
-                            layer.msg(res.message,{icon:2})
+                            layer.msg(res.message, { icon: 2 })
                         }
                     }
                 })
             } else {
-                layer.msg('请上传图片或视频',{icon:7})
+                layer.msg('请上传图片或视频', { icon: 7 })
             }
         } else {
-            layer.msg('带*为必填',{icon:7})
+            layer.msg('带*为必填', { icon: 7 })
         }
     })
 
     // 提交审核，审核通过，审核不通过方法
-    function auditMethods(type, data,url) {
+    function auditMethods(type, data, url) {
         $.ajax({
             type: 'post',
             url,
@@ -792,7 +793,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         }
                     })
                 } else if (res.code == 201) {
-                    layer.msg(res.message, { icon: 2});
+                    layer.msg(res.message, { icon: 2 });
                 } else if (res.code == 202) {
                     layer.msg(res.message, { icon: 7 });
                     tableIns.reload({
@@ -801,7 +802,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     });
                 } else if (res.code == 403) {
                     window.parent.location.href = "login.html";
-                }else{
+                } else {
                     layer.msg(res.message, { icon: 2 });
                 }
             },
@@ -851,39 +852,48 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         }
     });
 
-    var addFlag=false,
-    editFlag=false,
-    delFlag=false,
-    auditFla=false;
-permissionsFun('/api/role/findUserPermission','post',sessionStorage.token,layer).then(res=>{
-    console.log(res.data)
-    addFlag=res.data.some((item,index)=>{
-        return item.id=='362'
+    var addFlag = false,
+        editFlag = false,
+        delFlag = false,
+        auditFla = false;
+    permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
+        console.log(res.data)
+        addFlag = res.data.some((item, index) => {
+            return item.id == '362'
+        });
+        editFlag = res.data.some((item, index) => {
+            return item.id == '371'
+        });
+        delFlag = res.data.some((item, index) => {
+            return item.id == '369'
+        })
+        auditFla = res.data.some((item, index) => {
+            return item.id == '387'
+        })
+    }).catch(err => {
+        layer.msg(err.message, { icon: 2 })
     });
-    editFlag=res.data.some((item,index)=>{
-        return item.id=='371'
+    var addFlag = false,
+        editFlag = false,
+        delFlag = false,
+        fourFlag = false;
+    permissionsVal(362, 371, 369, 387).then(res => {
+        addFlag = res.addFlag;
+        editFlag = res.editFlag;
+        delFlag = res.delFlag;
+        fourFlag = res.fourFlag;
+        permissions();
+    }).catch(err => {
+        layer.msg('服务器请求超时', { icon: 7 })
     });
-    delFlag=res.data.some((item,index)=>{
-        return item.id=='369'
-    })
-    auditFla=res.data.some((item,index)=>{
-        return item.id=='387'
-    })
-}).catch(err=>{
-    layer.msg(err.message,{icon:2})
-});
-
-permissionsVal(362, 371, 369,387).then(res => {
-    console.log(res)
-    res.addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-    res.editFlag ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
-    res.delFlag ? $('.del-Btn').removeClass('hide') : $('.del-Btn').addClass('hide');
-    res.fourFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
-}).catch(err => {
-    layer.msg('服务器请求超时', { icon: 7 })
-});
-//刷新
-$('.refreshBtn').click(function () {
-    location.reload();
-});
+    function permissions() {
+        addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+        editFlag ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
+        delFlag ? $('.del-Btn').removeClass('hide') : $('.del-Btn').addClass('hide');
+        fourFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
+    };
+    //刷新
+    $('.refreshBtn').click(function () {
+        location.reload();
+    });
 });

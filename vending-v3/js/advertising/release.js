@@ -116,6 +116,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             statusCode: 200 //规定成功的状态码，默认：0
         },
         done: function (res) {
+            permissions();
             if (res.code == 403) {
                 window.parent.location.href = "login.html";
             } else if (res.code == 405) {
@@ -157,7 +158,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 layer.msg('不能使用下级商户广告', { icon: 7 });
                 return;
             }
-            if(!machineAdvertising){
+            if (!machineAdvertising) {
                 machineAdvertisingFun();
             }
             popupShow('machineDetailsCont', 'machineDetailsBox')
@@ -203,9 +204,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
 
     // 广告详情确定修改事件
     $('.detailsFooter .confirmBtn').click(function () {
-        if(!editFlag){
-            layer.msg('您没有编辑广告的权限',{icon:7});
-            return ;
+        if (!editFlag) {
+            layer.msg('您没有编辑广告的权限', { icon: 7 });
+            return;
         }
         var editDetailsList = [];
         advertisingDetailsList.forEach((item, index) => {
@@ -592,9 +593,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
 
 
     // 推送广告部分
-    var machineAdvertising=null;
-    function machineAdvertisingFun(){
-         machineAdvertising = table.render({
+    var machineAdvertising = null;
+    function machineAdvertisingFun() {
+        machineAdvertising = table.render({
             elem: '#machineDetailsList',
             url: `/api/machine/getMachineList`,
             method: 'post',
@@ -633,7 +634,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                         "msg": res.message,   //解析提示文本
                     }
                 }
-    
+
             },
             where: {
                 actionStatus: '1',
@@ -650,7 +651,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             // skin: 'nob'
         });
     }
-    
+
     //推送广告查询
     $('.machineDetailsCont .machineKeyBtn').click(function () {
         machineAdvertising.reload({
@@ -661,9 +662,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
     // 发布广告弹窗事件
     $('.publicAdvertisingBtn').click(function () {
-        if(!addFlag){
-            layer.msg('您没有添加广告的权限',{icon:7});
-            return ;
+        if (!addFlag) {
+            layer.msg('您没有添加广告的权限', { icon: 7 });
+            return;
         }
         $('.setAdvertising').css('left', 0);
         $('.stepsTwo').css('borderColor', '#909399');
@@ -754,7 +755,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     // 提交审核
     $('.submitAuditBtn').click(function () {
         var submitCheckStatus = table.checkStatus('advertisingData');
-      var  checkList = [];
+        var checkList = [];
         if (submitCheckStatus.data.length > 0) {
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon')
@@ -773,11 +774,11 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         }
     });
     // 审核通过
-    $('.approvedBtn').click(function () { 
-        if(!addFlag){
-        layer.msg('您没有审核广告的权限',{icon:7});
-        return ;
-    }
+    $('.approvedBtn').click(function () {
+        if (!addFlag) {
+            layer.msg('您没有审核广告的权限', { icon: 7 });
+            return;
+        }
         var approveCheckStatus = table.checkStatus('advertisingData');
         approveList = [];
         if (approveCheckStatus.data.length > 0) {
@@ -803,9 +804,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
     // 审核不通过
     $('.noPassBtn').click(function () {
-        if(!addFlag){
-            layer.msg('您没有审核广告的权限',{icon:7});
-            return ;
+        if (!addFlag) {
+            layer.msg('您没有审核广告的权限', { icon: 7 });
+            return;
         }
         var noPassCheckStatus = table.checkStatus('advertisingData');
         noPassList = [];
@@ -947,9 +948,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     var checkID = null,
         pushList = null;   //推送广告列表
     $('.pushReleaseBtn').click(function () {
-        if(!pushFlag){
-            layer.msg('您没有推送广告到下级的权限',{icon:7});
-            return ;
+        if (!pushFlag) {
+            layer.msg('您没有推送广告到下级的权限', { icon: 7 });
+            return;
         }
         pushList = [];
         checkID = table.checkStatus('advertisingData');
@@ -1196,34 +1197,27 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
 
 
-    var editFlag=false;
-// permissionsFun('/api/role/findUserPermission','post',sessionStorage.token,layer).then(res=>{
-//     console.log(res.data)
-//     addFlag=res.data.some((item,index)=>{
-//         return item.id=='383'
-//     });
-//     pushFlag=res.data.some((item,index)=>{
-//         return item.id=='404'
-//     });
-//     audit=res.data.some((item,index)=>{
-//         return item.id=='386'
-//     });
-//     editFlag=res.data.some((item,index)=>{
-//         return item.id=='384'
-//     })
-// }).catch(err=>{
-//     layer.msg(err.message,{icon:2})
-// });
-
-            //增,改,审,发,接
-permissionsVal(383, 384, 386,404,406).then(res => {
-    console.log(res)
-    res.addFlag ? $('.publicBtn').removeClass('hide') : $('.publicBtn').addClass('hide');
-    editFlag=res.editFlag
-    res.delFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
-    res.fourFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
-    res.fiveFlag ? $('.pushListBtn').removeClass('hide') : $('.pushListBtn').addClass('hide');
-  }).catch(err => {
-    layer.msg('服务器请求超时', { icon: 7 })
-  });
+    var addFlag = false,
+        editFlag = false,
+        delFlag = false,
+        fourFlag = false,
+        fiveFlag = false;
+    //增,改,审,发,接
+    permissionsVal(383, 384, 386, 404, 406).then(res => {
+        console.log(res)
+        addFlag = res.addFlag;
+        editFlag = res.editFlag
+        delFlag = res.delFlag;
+        fourFlag = res.fourFlag;
+        fiveFlag = res.fiveFlag;
+        permissions();
+    }).catch(err => {
+        layer.msg('服务器请求超时', { icon: 7 })
+    });
+    function permissions() {
+        addFlag ? $('.publicBtn').removeClass('hide') : $('.publicBtn').addClass('hide');
+        delFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
+        fourFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
+        fiveFlag ? $('.pushListBtn').removeClass('hide') : $('.pushListBtn').addClass('hide');
+    };
 });

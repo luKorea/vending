@@ -315,6 +315,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       loading: true,
       done: function (res) {
         console.log(res)
+        permissions();
         for (var i in res.data) {
           var item = res.data[i];
           if (item.refund == 1) {
@@ -487,13 +488,19 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       reduction = $(this).val();
       console.log(reduction)
     }
-
   });
+  var addFlag=false,
+  editFlag=false;
+
   permissionsVal(420, 421).then(res => {
-    console.log(res)
-    res.addFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
-    res.editFlag ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
+    addFlag= res.addFlag;
+    editFlag= res.editFlag;
+    permissions();
   }).catch(err => {
     layer.msg('服务器请求超时', { icon: 7 })
   });
+  function permissions(){
+    addFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
+    editFlag ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
+  };
 })

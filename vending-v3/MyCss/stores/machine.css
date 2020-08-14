@@ -337,8 +337,19 @@ input{
 .tableStateCellFalse{
     display: inline-block;
     background-color: rgba(194, 162, 58, 0.2);
-    border-color: rgba(194, 162, 58, 0.2);
+    border-color: rgba(58, 140, 194, 0.2);
     color: #ff9800;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: 1px solid rgba(64,158,255,.2);
+    padding: 0 10px;
+    line-height: 30px;
+}
+.tableStateCellAli{
+    display: inline-block;
+    background-color: rgba(86, 155, 211, 0.2);
+    border-color: rgba(87, 161, 211, 0.2);
+    color: #20b4da;
     border-radius: 4px;
     box-sizing: border-box;
     border: 1px solid rgba(64,158,255,.2);
@@ -409,19 +420,42 @@ input:hover{
 .aisleDetails{
     width: 100%;
     max-height: 605px;
+    overflow: hidden;
+    overflow-y: auto;
 }
 .aisleGoodsCont{
     width: 100%;
+    
 }
 .aisleListCont{
-    width: 100%;
+    /* width: 100%; */
     margin-bottom: 10px;
-    background-color: rgba(236, 214, 173,0.5);
+    background-color: rgba(236, 214, 173,0.5);  
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+.aisleListCont::-webkit-scrollbar{
+    width: 3px;
+    height: 5px;
+    background-color: #F5F5F5;
+}
+.aisleListCont::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+    background-color: #2c84f8;
+  }
+.aisleListCont::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #88a5f5;
 }
 .listIndex{
     width: 100px;
     /* line-height: 130px; */
     text-align: center;
+    flex-shrink:0;
 }
 .listIndex span{
     font-size: 60px;
@@ -430,11 +464,31 @@ input:hover{
 .aisleNumderGoods{
     margin: 0 10px;
     width: 120px;
-    height: 125px;
+    height: 150px;
     background: #fff;
     border: 1px solid #787c80;
     border-radius: 2px;
     position: relative;
+    flex-shrink:0;
+    cursor: pointer;
+}
+.addAisle{
+    margin: 0 10px;
+    width: 120px;
+    height: 150px;
+    line-height: 150px;
+    background: #fff;
+    border: 1px solid #787c80;
+    border-radius: 2px;
+    flex-shrink:0;
+    text-align: center;
+    cursor: pointer;
+}
+.addAisle span{
+    font-size: 70px;
+    color: #8f8a8a;
+    font-weight: 700;
+    opacity: 0.5;
 }
 .numderTop{
     width: 100%;
@@ -448,6 +502,25 @@ input:hover{
     display: flex;
     justify-self: start;
     align-items: center;
+    border-bottom: 1px solid rgba(120, 124, 128,0.3);
+}
+.chooseCheck{
+    width: 92%;
+    margin:0 auto ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chooseCheck input{
+    display: inline-block;
+    width: 50%;
+}
+.chooseCheck span{
+    display: inline-block;
+    width: 50%;
+    overflow: hidden;/*内容超出后隐藏*/
+    text-overflow: ellipsis;/* 超出内容显示为省略号*/
+    white-space: nowrap;/*文本不进行换行*/
 }
 .status1{
     background-color: #67c23a;
@@ -463,9 +536,6 @@ input:hover{
     line-height: 35px;
     text-align: center;
 }
-.numderBottom div:nth-child(1){
-    cursor: pointer;
-}
 .numderTop span{
     display: inline-block;
     width: 24px;
@@ -480,4 +550,104 @@ input:hover{
     border-radius: 0px 0px 200px;
     background-color: rgb(108, 109, 113);
     font-size: 12px;
+}
+.passwordCont,.editAisleBox,.addCont{
+    width: 600px;
+    position: relative;
+    margin: 10vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.listFlex label {
+    width: 120px;
+    text-align: right;
+    float: left;
+    font-size: 14px;
+    color: #606266;
+    line-height: 40px;
+    padding: 0 12px 0 0;
+    box-sizing: border-box;
+}
+.listFlex input {
+    width: 80%;
+}
+.passBody{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+}
+.cancelBtn,.addCancelBtn{
+    background: #fff !important;
+    border: 1px solid #dcdfe6 !important;
+    color: rgb(96, 98, 102);
+}
+.cancelBtn:hover,.addCancelBtn:hover{
+    color: #be954a;
+    border: 1px solid #be954a !important;
+}
+.aisleList{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+}
+.aisleList .goodsName{
+    border-color: #e4e7ed;
+    color: #c0c4cc;
+    background-color: #f5f7fa;
+}
+.aisleList .goodsName:hover{
+    border-color: #e4e7ed;
+}
+.goodsBox{
+    width: 1000px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.goodsBody{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+}
+.goodsBody .key-contnet{
+    width: 40%;
+    margin-left: 10px;
+}
+.materialKeyCont{
+    margin-top: 20px;
+}
+.goodsCont .layui-form{
+    width: 100%;
+}
+.relative{
+    position: relative;
+}
+.relative input[name="goodsName"]{
+    cursor: pointer !important;
+}
+.relative button{
+    border: 1px solid #dcdfe6;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: .1s;
+    padding: 10px 20px;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border-color: transparent;
+    cursor: pointer;
+}
+.listFlex .layui-form{
+    width: 80%;
+}
+.listFlex .layui-form input{
+    width: 100%;
 }
