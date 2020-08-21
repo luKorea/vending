@@ -3,45 +3,47 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   // tab切换
   var index = 0
   $('.navTab li').click(function () {
+    console.log($(this).index())
     $(this).addClass('active').siblings().removeClass('active');
     let that = $(this);
     $('.tabLine').animate({
       left: (that.offset().left) + 'px'
     }, 500);
-    if ($(this).index() == 0) {
-      if (index == 0) {
-        index = $(this).index();
-        return;
-      } else if (index == 1) {
-        index = $(this).index();
-        onStep('details', 'ImgContnet');
-      } else {
-        index = $(this).index();
-        onStep('VideoContnet', 'ImgContnet');
-      }
-    } else if ($(this).index() == 1) {
-      if (index == 0) {
-        index = $(this).index();
-        nextStep('ImgContnet', 'details')
-      } else if (index == 1) {
-        index = $(this).index();
-        return;
-      } else {
-        index = $(this).index();
-        onStep('VideoContnet', 'details');
-      }
-    } else {
-      if (index == 0) {
-        index = $(this).index();
-        nextStep('ImgContnet', 'VideoContnet')
-      } else if (index = 1) {
-        index = $(this).index();
-        nextStep('details', 'VideoContnet')
-      } else {
-        index = $(this).index();
-        return;
-      }
-    }
+    $('.tabBox>div').eq($(this).index()).fadeIn().siblings().fadeOut();
+    // if ($(this).index() == 0) {
+    //   if (index == 0) {
+    //     index = $(this).index();
+    //     return;
+    //   } else if (index == 1) {
+    //     index = $(this).index();
+    //     onStep('details', 'ImgContnet');
+    //   } else {
+    //     index = $(this).index();
+    //     onStep('VideoContnet', 'ImgContnet');
+    //   }
+    // } else if ($(this).index() == 1) {
+    //   if (index == 0) {
+    //     index = $(this).index();
+    //     nextStep('ImgContnet', 'details')
+    //   } else if (index == 1) {
+    //     index = $(this).index();
+    //     return;
+    //   } else {
+    //     index = $(this).index();
+    //     onStep('VideoContnet', 'details');
+    //   }
+    // } else {
+    //   if (index == 0) {
+    //     index = $(this).index();
+    //     nextStep('ImgContnet', 'VideoContnet')
+    //   } else if (index = 1) {
+    //     index = $(this).index();
+    //     nextStep('details', 'VideoContnet')
+    //   } else {
+    //     index = $(this).index();
+    //     return;
+    //   }
+    // }
   });
   var startTime = '';
   //结束时间
@@ -138,7 +140,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       cols: [[
         { type: 'checkbox', },
         { field: 'img', width: 150, title: '图片', templet: "#imgtmp" },
-        { field: 'name', width: 180, title: '图片名称', },
+        { field: 'name', width: 180, title: '图片名', },
         {
           field: 'status', width: 180, title: '审核状态', templet: function (d) {
             return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
@@ -146,9 +148,10 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
           }
         },
         { field: 'number', width: 200, title: '图片编号', },
-        { field: 'publishTime', width: 180, title: '创建时间', sort: true },
         { field: 'addUser', width: 150, title: '创建人', },
-        // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
+        { field: 'publishTime', width: 180, title: '创建时间' },
+        
+        // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
         { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoImg', },
       ]]
       , page: true
@@ -201,7 +204,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     if (obj.event == 'edit') {
       popupShow('editImgCont', 'editBox');
       $('.editImgCont .playHeader span').html('编辑商品图片')
-      $('.editBody label').html('图片名称：')
+      $('.editBody label').html('图片名：')
       $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
       tableData = advertisingLis;
     } else {
@@ -247,7 +250,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         }
       })
     } else {
-      layer.msg('名称不能为空', { icon: 7 });
+      layer.msg('名不能为空', { icon: 7 });
     }
   })
 
@@ -298,16 +301,17 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     cols: [[
       // { field: 'Img', width: 150, title: '素材图',templet: "" },
       { type: 'checkbox', },
-      { field: 'name', width: 180, title: '视频名称', },
+      { field: 'name', width: 180, title: '视频名', },
       {
         field: 'name', width: 180, title: '审核状态', templet: function (d) {
           return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
         }
       },
       { field: 'number', width: 200, title: '视频编号', },
-      { field: 'publishTime', width: 180, title: '创建时间', sort: true },
       { field: 'addUser', width: 150, title: '创建人', },
-      // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
+      { field: 'publishTime', width: 180, title: '创建时间' },
+      
+      // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
       { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoVideo', },
 
     ]]
@@ -359,7 +363,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     if (obj.event == 'edit') {
       popupShow('editImgCont', 'editBox');
       $('.editImgCont .playHeader span').html('编辑商品视频');
-      $('.editBody label').html('视频名称：');
+      $('.editBody label').html('视频名：');
       $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
       tableData = videoTable;
     } else {
@@ -418,7 +422,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         layer.msg('图片不能为空', { icon: 7 });
       }
     } else {
-      layer.msg('图片名称不能为空', { icon: 7 });
+      layer.msg('图片名不能为空', { icon: 7 });
     }
   });
 
@@ -488,7 +492,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         layer.msg('请上传视频', { icon: 7 });
       }
     } else {
-      layer.msg('视频名称不能为空', { icon: 7 });
+      layer.msg('视频名不能为空', { icon: 7 });
     }
   });
 
@@ -817,7 +821,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     cols: [[
       { type: 'checkbox', },
       { field: 'img', width: 150, title: '图片', templet: "#detailsImgtmp" },
-      { field: 'name', width: 180, title: '图片名称', },
+      { field: 'name', width: 180, title: '图片名', },
       {
         field: 'status', width: 180, title: '审核状态', templet: function (d) {
           return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
@@ -825,9 +829,10 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         }
       },
       { field: 'number', width: 200, title: '图片编号', },
-      { field: 'publishTime', width: 180, title: '创建时间', sort: true },
       { field: 'addUser', width: 150, title: '创建人', },
-      // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
+      { field: 'publishTime', width: 180, title: '创建时间' },
+     
+      // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
       { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoImg', },
     ]]
     , page: true
@@ -951,7 +956,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     if (obj.event == 'edit') {
       popupShow('editImgCont', 'editBox');
       $('.editImgCont .playHeader span').html('编辑详情图片')
-      $('.editBody label').html('图片名称：')
+      $('.editBody label').html('图片名：')
       $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
       tableData = detailsTable;
     } else {

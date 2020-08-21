@@ -1,7 +1,7 @@
 //JavaScript代码区域
 import '../../MyCss/indexCss/index.css'
-import {navList} from '../../assets/public/navData.js'
-window.onload = function () {   
+import { navList } from '../../assets/public/navData.js'
+window.onload = function () {
     var userName = sessionStorage.username;
     $('#userLogin .userName').html(userName)
     var navStr = []; //判断tba选项卡有没有这个参数;
@@ -68,7 +68,7 @@ window.onload = function () {
         });
 
         // 监听tab切换事件
-        var Indexs=null;
+        var Indexs = null;
         element.on('tab(demo)', function (data) {
             var Len = $(".navClick").length;
             for (var i = 0; i < Len; i++) {
@@ -153,15 +153,15 @@ window.onload = function () {
                         // layer.msg(gainData.data,{icon:7})
                         $('.sockotTitle p').html(gainData.data)
                         popupShow('socketCont', 'sockotBox');
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             loginOut();
-                        },3500)
+                        }, 3500)
                     } else if (gainData.type == 2) {
                         $('.sockotTitle p').html(gainData.data)
                         popupShow('socketCont', 'sockotBox');
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             loginOut();
-                        },3500)
+                        }, 3500)
                     }
 
                     // console.log(msg)
@@ -205,85 +205,139 @@ window.onload = function () {
                 layer.msg(err.message)
             })
         }
-        
+
         $('.exitLogin').click(function () {
             loginOut();
         });
-        $('.determineBtn button').click(function(){
-            popupHide('socketCont','sockotBox')
+        $('.determineBtn button').click(function () {
+            popupHide('socketCont', 'sockotBox')
             loginOut();
         });
 
 
 
-        permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token,layer).then(res => {
+        permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
             // console.log(res.data)
             // 用户模块
-          var userListFlag = res.data.some((item, index) => {
-              return item.id == 408
+            var userListFlag=false,
+                roleListFlag=false,
+                machineListFlag=false,
+                goodsClassFlag=false,
+                goodsListFlag=false,
+                materialListFlag=false,
+                merchantsListFlag=false,
+                paySetFlag=false,
+                accountsListFlag=false,
+                orderListFlag=false,
+                RMListFlag=false,
+                ReListFlag=false;
+            res.data.forEach(item=>{
+                if(item.id==408){
+                    userListFlag=true
+                }
+                if(item.id==407){
+                    roleListFlag=true
+                }
+                if(item.id==413){
+                    machineListFlag=true
+                }
+                if(item.id==414){
+                    goodsClassFlag=true
+                }
+                if(item.id==409){
+                    goodsListFlag=true
+                }
+                if(item.id==410){
+                    materialListFlag=true
+                }
+                if(item.id==400){
+                    merchantsListFlag=true
+                }
+                if(item.id==431){
+                    paySetFlag=true
+                }
+                if(item.id==423){
+                    accountsListFlag=true
+                }
+                if(item.id==419){
+                    orderListFlag=true
+                }
+                if(item.id==412){
+                    RMListFlag=true
+                }
+                if(item.id==411){
+                    ReListFlag=true
+                }
             })
-            userListFlag?$('.userListFlag').removeClass('hide'):$('.userListFlag').addClass('hide');
-            var roleListFlag = res.data.some((item, index) => {
-                return item.id == 407
-              });
-              roleListFlag?$('.roleListFlag').removeClass('hide'):$('.roleListFlag').addClass('hide');  
-              (userListFlag||roleListFlag)?$('.userCont').removeClass('hide'):$('.userCont').addClass('hide');  
-              //售货机模块
-              var machineListFlag = res.data.some((item, index) => {
-                return item.id == 413
-              });
-              machineListFlag?$('.machineListFlag').removeClass('hide').parents('.machineCont').removeClass('hide'):$('.machineListFlag').addClass('hide').parents('.machineCont').addClass('hide');
-              //商品管理模块
-              var goodsClassFlag = res.data.some((item, index) => {
-                return item.id == 414
-              });
-              goodsClassFlag?$('.goodsClassFlag').removeClass('hide'):$('.goodsClassFlag').addClass('hide');  
+            // console.log(a) 
+            // var userListFlag = res.data.some((item, index) => {
+            //     return item.id == 408
+            // })
+            userListFlag ? $('.userListFlag').removeClass('hide') : $('.userListFlag').addClass('hide');
+            // var roleListFlag = res.data.some((item, index) => {
+            //     return item.id == 407
+            // });
+            roleListFlag ? $('.roleListFlag').removeClass('hide') : $('.roleListFlag').addClass('hide');
+            (userListFlag || roleListFlag) ? $('.userCont').removeClass('hide') : $('.userCont').addClass('hide');
+            //售货机模块
+            // var machineListFlag = res.data.some((item, index) => {
+            //     return item.id == 413
+            // });
+            machineListFlag ? $('.machineListFlag').removeClass('hide').parents('.machineCont').removeClass('hide') : $('.machineListFlag').addClass('hide').parents('.machineCont').addClass('hide');
+            //商品管理模块
+            // var goodsClassFlag = res.data.some((item, index) => {
+            //     return item.id == 414
+            // });
+            goodsClassFlag ? $('.goodsClassFlag').removeClass('hide') : $('.goodsClassFlag').addClass('hide');
 
-              var goodsListFlag = res.data.some((item, index) => {
-                return item.id == 409
-              });
-              goodsListFlag?$('.goodsListFlag').removeClass('hide'):$('.goodsListFlag').addClass('hide');
+            // var goodsListFlag = res.data.some((item, index) => {
+            //     return item.id == 409
+            // });
+            goodsListFlag ? $('.goodsListFlag').removeClass('hide') : $('.goodsListFlag').addClass('hide');
 
-              var materialListFlag = res.data.some((item, index) => {
-                return item.id == 410
-              });
-              materialListFlag?$('.materialListFlag').removeClass('hide'):$('.materialListFlag').addClass('hide');
-              (goodsClassFlag||goodsListFlag||materialListFlag)?$('.goodsCont').removeClass('hide'):$('.goodsCont').addClass('hide');
+            // var materialListFlag = res.data.some((item, index) => {
+            //     return item.id == 410
+            // });
+            materialListFlag ? $('.materialListFlag').removeClass('hide') : $('.materialListFlag').addClass('hide');
+            (goodsClassFlag || goodsListFlag || materialListFlag) ? $('.goodsCont').removeClass('hide') : $('.goodsCont').addClass('hide');
 
             //   商户模块
-            var merchantsListFlag = res.data.some((item, index) => {
-                return item.id == 400
-              });
-              merchantsListFlag?$('.merchantsListFlag').removeClass('hide').parents('.merchantsCont').removeClass('hide'):$('.merchantsListFlag').addClass('hide').parents('.merchantsCont').addClass('hide');
+            // var merchantsListFlag = res.data.some((item, index) => {
+            //     return item.id == 400
+            // });
+            merchantsListFlag ? $('.merchantsListFlag').removeClass('hide').parents('.merchantsCont').removeClass('hide') : $('.merchantsListFlag').addClass('hide').parents('.merchantsCont').addClass('hide');
+            // var paySetFlag=res.data.some((item,index)=>{
+            //     return item.id == 431
+            // })
+            paySetFlag?$('.merchantsPay').removeClass('hide'):$('.merchantsPay').addClass('hide');
+            //账目模块
+            // var accountsListFlag = res.data.some((item, index) => {
+            //     return item.id == 423
+            // });
+            accountsListFlag ? $('.accountsListFlag').removeClass('hide').parents('.accountsCont').removeClass('hide') : $('.accountsListFlag').addClass('hide').parents('.accountsCont').addClass('hide');
 
-              //账目模块
-              var accountsListFlag = res.data.some((item, index) => {
-                return item.id == 423
-              });
-              accountsListFlag?$('.accountsListFlag').removeClass('hide').parents('.accountsCont').removeClass('hide'):$('.accountsListFlag').addClass('hide').parents('.accountsCont').addClass('hide');
-
-              //订单模块
-              var orderListFlag = res.data.some((item, index) => {
-                return item.id == 419
-              });
-              orderListFlag?$('.orderListFlag').removeClass('hide').parents('.orderCont').removeClass('hide'):$('.orderListFlag').addClass('hide').parents('.orderCont').addClass('hide');
-              //广告模块
-              var RMListFlag = res.data.some((item, index) => {
-                return item.id == 412
-              });
-              RMListFlag?$('.RMListFlag').removeClass('hide'):$('.RMListFlag').addClass('hide');
-              var ReListFlag = res.data.some((item, index) => {
-                return item.id == 411
-              });
-              ReListFlag?$('.ReListFlag').removeClass('hide'):$('.ReListFlag').addClass('hide');
-              (RMListFlag||ReListFlag)?$('.releaseCont').removeClass('hide'):$('.releaseCont').addClass('hide');
-          }).catch(err => {
-              console.log(err)
+            //订单模块
+            // var orderListFlag = res.data.some((item, index) => {
+            //     return item.id == 419
+            // });
+            orderListFlag ? $('.orderListFlag').removeClass('hide').parents('.orderCont').removeClass('hide') : $('.orderListFlag').addClass('hide').parents('.orderCont').addClass('hide');
+            //广告模块
+            // var RMListFlag = res.data.some((item, index) => {
+            //     return item.id == 412
+            // });
+            RMListFlag ? $('.RMListFlag').removeClass('hide') : $('.RMListFlag').addClass('hide');
+            // var ReListFlag = res.data.some((item, index) => {
+            //     return item.id == 411
+            // });
+            ReListFlag ? $('.ReListFlag').removeClass('hide') : $('.ReListFlag').addClass('hide');
+            (RMListFlag || ReListFlag) ? $('.releaseCont').removeClass('hide') : $('.releaseCont').addClass('hide');
+        }).catch(err => {
+            console.log(err)
             layer.msg(err.message, { icon: 2 })
-          })
+        })
 
     });
-    
+
 
     $("body").bind("keydown", function (event) {
         if (event.keyCode == 116) {
@@ -293,5 +347,5 @@ window.onload = function () {
         }
     });
 
-    javascript:window.history.forward(1);
+    javascript: window.history.forward(1);
 }

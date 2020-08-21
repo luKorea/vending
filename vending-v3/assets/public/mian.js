@@ -290,7 +290,8 @@ function treeFun(tree, element, tableID, data, key, goodsCLass, selectData, cond
       tableID.reload({
         where: {
           [key]: obj.data.id + '',
-          [conditionThree ? conditionThree : ' ']: '0'
+          [conditionThree ? conditionThree : ' ']: '0',
+          [conditionThree ? 'condition' : ' ']: ''
         }
       })
       var nodes = $(`#${element} .layui-tree-txt`)

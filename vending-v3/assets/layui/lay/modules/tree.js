@@ -92,7 +92,7 @@ layui.define("form", function(e) {
 			var l = r.children && r.children.length > 0,
 				o = i('<div class="layui-tree-pack" ' + (r.alias ? 'style="display: block;"' : "") + '"></div>'),
 				h = i(['<div data-id="' + r.id + '" class="layui-tree-set' + (r.alias ? " layui-tree-spread" : "") + (r.checked ? " layui-tree-checkedFirst" : "") + '">', '<div class="layui-tree-entry">', '<div class="layui-tree-main">', function() {
-					return t.showLine ? l ? '<span class="layui-tree-iconClick layui-tree-icon"><i class="layui-icon ' + (r.alias ? "layui-icon-subtraction" : "layui-icon-addition") + '"></i></span>' : '<span class="layui-tree-iconClick"><i class="layui-icon layui-icon-form"></i></span>' : '<span class="layui-tree-iconClick"><i class="layui-tree-iconArrow ' + (l ? "" : c) + '"></i></span>'
+					return t.showLine ? l ? '<span class="layui-tree-iconClick layui-tree-icon"><i class="layui-icon ' + (r.alias ? "layui-icon-subtraction" : "layui-icon-addition") + '"></i></span>' : '<span class="layui-tree-iconClick"><i class="layui-icon layui-icon-user"></i></span>' : '<span class="layui-tree-iconClick"><i class="layui-tree-iconArrow ' + (l ? "" : c) + '"></i></span>'
 				}(), function() {
 					return t.showCheckbox ? '<input type="checkbox" name="' + (r.field || "layuiTreeCheck_" + r.id) + '" same="layuiTreeCheck" lay-skin="primary" ' + (r.disabled ? "disabled" : "") + ' value="' + r.id + '">' : ""
 				}(), function() {
@@ -190,7 +190,7 @@ layui.define("form", function(e) {
 					elem: e
 				};
 			if("add" == f) {
-				b[0] || (r.showLine ? (d.find("." + o).addClass("layui-tree-icon"), d.find("." + o).children(".layui-icon").addClass(h).removeClass("layui-icon-form")) : d.find(".layui-tree-iconArrow").removeClass(c), e.append('<div class="layui-tree-pack"></div>'));
+				b[0] || (r.showLine ? (d.find("." + o).addClass("layui-tree-icon"), d.find("." + o).children(".layui-icon").addClass(h).removeClass("layui-icon-user")) : d.find(".layui-tree-iconArrow").removeClass(c), e.append('<div class="layui-tree-pack"></div>'));
 				var w = r.operate && r.operate(g),
 					N = {};
 				if(N.title = r.text.defaultNodeName, N.id = w, t.tree(e.children("." + v), [N]), r.showLine)
@@ -253,7 +253,7 @@ layui.define("form", function(e) {
 				} else {
 					var y = e.parent("." + v).prev();
 					if(r.showLine) {
-						y.find("." + o).removeClass("layui-tree-icon"), y.find("." + o).children(".layui-icon").removeClass(u).addClass("layui-icon-form");
+						y.find("." + o).removeClass("layui-tree-icon"), y.find("." + o).children(".layui-icon").removeClass(u).addClass("layui-icon-user");
 						var w = y.parents("." + v).eq(0);
 						w.addClass(x), w.children("." + s).each(function() {
 							i(this).children("." + v).children("." + s).last().addClass(k)

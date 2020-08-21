@@ -34,25 +34,26 @@
 .tabBox{
     width: 100%;
     margin-top: 10px;
-    min-height: 90vh;
+    /* min-height: 90vh;
     overflow: hidden;
-    position: relative;
+    position: relative; */
 }
 .ImgContnet{
     width: 100%;
-    position: absolute;
+    /* position: absolute;
     top: 0;
-    left: 0%;
+    left: 0%; */
     display: flex;
     justify-content: start;
 }
 .VideoContnet,.details{
     width: 100%;
-    position: absolute;
+    /* position: absolute;
     top: 0;
-    left: 100%; 
+    left: 100%;  */
     display: flex;
     justify-content: start;
+    display: none;
 }
 .ImgFlex,.videoFlex{
     width: 100%;

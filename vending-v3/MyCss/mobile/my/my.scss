@@ -1,0 +1,29 @@
+@import '../../../common/common.scss';
+.Wrap{
+    min-height: 100vh;
+    background-color: rgb(240,239,245);
+}
+.changeLoginPass{
+    position: fixed;
+    z-index: 23;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    display: none;
+    transition: all 0.3s;
+    display: none;
+    .changeBox{
+        position: absolute;
+        left: 50%;
+        top: -100%;
+        transform: translate(-50%, -30%);
+        font-weight: bold;
+        width: 50%;
+        background: red;
+        height: 2rem;
+        transition: all 0.3s;
+        z-index: 25;
+    }
+}

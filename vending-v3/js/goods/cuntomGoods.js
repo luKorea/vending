@@ -31,24 +31,24 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       { checkbox: true },
       { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp" },
       { field: 'goods_Core', width: 120, title: '商品编号', },
-      { field: 'goods_Name', width: 120, title: '商品名称', color: '#409eff' },
+      { field: 'goods_Name', width: 120, title: '商品名', color: '#409eff' },
       {
         field: 'goods_Status', width: 120, title: '商品状态 ', templet: function (d) {
           return d.goods_Status = 1 ? '启用' : '不启用'
         }
       },
       { field: `classifyName`, width: 120, title: '商品类目' }, 
+      { field: 'goods_Price', width: 120, title: '销售价 ' },
+      { field: 'goods_Cost', width: 120, title: '成本价 ' },
       { field: 'goods_Param', width: 120, title: '规格说明 ' },
-      { field: 'goods_Price', width: 120, title: '销售价 ', sort: true },
-      { field: 'goods_Cost', width: 120, title: '成本价 ', sort: true },
-      // { field: 'vipPrice', width: 120, title: '会员价 ', sort: true },
+      // { field: 'vipPrice', width: 120, title: '会员价 ' },
       // { field: 'strategy', width: 120, title: '优惠价策略 ' },
       // { field: 'goodsActivity', width: 120, title: '其他活动 ' },
       {
         field: 'create_user', width: 130, title: '创建人 '
       },
       {
-        field: 'goods_Time', width: 200, title: '创建时间 ', sort: true, templet: function (d) {
+        field: 'goods_Time', width: 200, title: '创建时间 ', templet: function (d) {
           if (d.goods_Time) {
             var myDate = new Date(d.goods_Time);
             var y = myDate.getFullYear();
@@ -65,7 +65,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       },
       { field: 'update_user', width: 130, title: '最后操作人 ' },
       {
-        field: 'update_time', width: 200, title: '最后操作时间 ', sort: true, templet: function (d) {
+        field: 'update_time', width: 200, title: '最后操作时间 ', templet: function (d) {
           if (d.update_time) {
             var myDate = new Date(d.update_time);
             var y = myDate.getFullYear();
@@ -240,7 +240,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     popupShow('editor', 'editor-content');
     form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
       "goodsBarcode": singleData.goods_Core // "商品条码
-      , "goodsName": singleData.goods_Name //商品名称
+      , "goodsName": singleData.goods_Name //商品名
       , "goodsType": singleData.classify_Id //商品类型
       // , "goodsBrand": singleData.brand  //品牌
       , "goodsPrice": singleData.goods_Price //零售价
@@ -289,7 +289,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         data: JSON.stringify({
           goods_Id: singleData.goods_Id,
           goods_Core: EditValData.goodsBarcode, //商品条码
-          goods_Name: EditValData.goodsName,   //商品名称
+          goods_Name: EditValData.goodsName,   //商品名
           classify_Id: EditValData.goodsType,     //商品类型
           brand: EditValData.goodsBrand,        //品牌
           goods_Price: EditValData.goodsPrice,  //同意零售价
@@ -440,7 +440,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           },
           data: JSON.stringify({
             goods_Core: addValData.goodsBarcode, //商品条码
-            goods_Name: addValData.goodsName,   //商品名称
+            goods_Name: addValData.goodsName,   //商品名
             classify_Id: addValData.goodsType,     //商品类型
             brand: addValData.goodsBrand,        //品牌
             goods_Price: addValData.goodsPrice,  //同意零售价
@@ -544,7 +544,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         { field: 'img', width: 100, title: '图片', templet: "#materiaImgtmp" },
         { field: 'name', width: 120, title: '图片名', },
         // { field: 'number', width: 200, title: '图片编号', },
-        { field: 'publishTime', width: 180, title: '发布时间', sort: true },
+        { field: 'publishTime', width: 180, title: '发布时间' },
         { field: 'addUser', width: 150, title: '发布人', },
         { field: 'operationa', right: 0, width: 150, title: '操作', toolbar: '#materiaImg', fixed: 'right' },
       ]]
@@ -663,9 +663,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         // { field: 'Img', width: 150, title: '素材图',templet: "" },
         // { type: 'checkbox', },
         { field: 'name', width: 120, title: '视频名', },
-        { field: 'publishTime', width: 180, title: '发布时间', sort: true },
+        { field: 'publishTime', width: 180, title: '发布时间' },
         { field: 'addUser', width: 150, title: '发布人', },
-        // {field:'operation', width:120, title: 'caozuo', sort: true, fixed: 'right'}
+        // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
         { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoVideo', },
 
       ]]
@@ -778,7 +778,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       cols: [[
         { type: 'checkbox', },
         { field: 'goods_images', width: 80, title: '图片', templet: "#Listimgtmp" },
-        { field: 'goods_Name', width: 150, title: '商品名称', color: '#409eff' },
+        { field: 'goods_Name', width: 150, title: '商品名', color: '#409eff' },
         { field: `classifyName`, width: 160, title: '商品类目', },
         { field: `tempMerchant`, width: 160, title: '商品所属商户', },
         { field: `topMerchant`, width: 160, title: '推送商户', },
@@ -789,7 +789,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           }
         },
         {
-          field: 'sendTime', width: 200, title: '推送时间 ', sort: true, templet: function (d) {
+          field: 'sendTime', width: 200, title: '推送时间 ', templet: function (d) {
             var myDate = new Date(d.sendTime);
             var y = myDate.getFullYear();
             var m = myDate.getMonth() + 1;

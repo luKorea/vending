@@ -2,11 +2,8 @@
     width: 100%;
 }
 .content-wrapper{
-    width: 98%;
     background-color: #fff;
     box-sizing: border-box;
-    margin: 15px;
-    margin-top: 0;
 }
 .contnet-flex{
     display: flex;
@@ -225,7 +222,7 @@ input{
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 59;
+    z-index: 999;
     background-color: #fff;
     margin-top:0;
     display: none;
@@ -513,11 +510,13 @@ input:hover{
 }
 .chooseCheck input{
     display: inline-block;
-    width: 50%;
+    width: 20%;
+    
 }
 .chooseCheck span{
+    cursor: default;
     display: inline-block;
-    width: 50%;
+    width: 80%;
     overflow: hidden;/*内容超出后隐藏*/
     text-overflow: ellipsis;/* 超出内容显示为省略号*/
     white-space: nowrap;/*文本不进行换行*/
@@ -650,4 +649,16 @@ input:hover{
 }
 .listFlex .layui-form input{
     width: 100%;
+}
+.paySet{
+    height: 500px;
+}
+.paySet header{
+    color: #606266;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: bold;
+}
+.payChoose{
+    margin-top: 35px;
 }

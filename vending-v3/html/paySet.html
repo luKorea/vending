@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支付参数配置</title>
+    <script src="../assets/public/documentWrite.js"></script>
+</head>
+<body>
+    <div class="payWrap">
+        <div class="margin" style="margin: 0;">
+            <div style="display: flex;">
+                <div class="left-mian" >
+                    <div class="accountContnet" style="margin-left: 15px;">
+                        <p style="margin:20px 20px 10px;color:#be954a;">商户列表</p>
+                        <div id="test1" class="demo-tree demo-tree-box"></div>
+                    </div>
+                    <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
+                </div>
+                <i class="layui-icon layui-icon-right  onLeft"></i>
+                <div class="main">
+                    <div class="listHeader">
+                        <!-- <button class="layui-btn layui-btn-normal queryBtnClick btn" >
+							<span>添加支付类型</span>
+                        </button> -->
+                        <button class="layui-btn layui-btn-normal refreshBtn  btn" >
+							<i class="layui-icon layui-icon-refresh"></i>
+							<span>刷新</span>
+						</button>
+                    </div>
+                    <div>
+                        <div class="data-list">
+                            <div class="list-table">
+                                <table class="layui-hide" id="payList" lay-filter="payList"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 编辑 --> 
+        <div class="changePay maskContnet" style="overflow-y: auto;"> 
+            <div class="changeBox margin0">
+                <div class="playHeader">
+                    <span>编辑支付参数配置</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="changeBody">
+                    <form action="" class="layui-form" lay-filter="SetPay">
+                        <div class="listFlex">
+                            <label><span style="color: red;">*</span>支付类型：</label>
+                            <input type="text" name="typeIndex" disabled>
+                            <!-- <div class="layui-form" lay-filter="" style="width: 100%;">
+                                <select name="typeIndex" id="" lay-filter="mySelect">
+                                    <option value="1">微信支付</option>
+                                    <option value="2">阿里支付</option>
+                                </select>
+                            </div> -->
+                        </div>
+                        <div class="WeChat">
+                            <div class="listFlex ">
+                                <label><span style="color: red;">*</span>微信公众号ID：</label>
+                                <input type="text" name="officialId">
+                            </div>
+                        </div>
+                        <div class="WeChat">
+                            <div class="listFlex ">
+                                <label><span style="color: red;">*</span>商户号ID：</label>
+                                <input type="text" name="MerchantsId">
+                            </div>
+                        </div>
+                      <div class="WeChat">
+                        <div class="listFlex  ">
+                            <label><span style="color: red;">*</span>公众号密钥：</label>
+                            <!-- <input type="text" name="app_key"> -->
+                            <textarea name="app_key"  rows="5"></textarea>
+                        </div>
+                      </div>
+                        <div class="Alipay">
+                            <div class="listFlex ">
+                                <label><span style="color: red;">*</span>支付宝商户ID：</label>
+                                <input type="text" name="aliPayId">
+                            </div>
+                        </div>
+                        <div class="Alipay">
+                            <div class="listFlex ">
+                                <label><span style="color: red;">*</span>支付宝公钥：</label>
+                                <!-- <input type="text" name="alipay_public_key">  -->
+                                <textarea name="alipay_public_key"  rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="Alipay">
+                            <div class="listFlex ">
+                                <label><span style="color: red;">*</span>应用私钥：</label>
+                                <!-- <input type="text" name="app_private_key"> -->
+                                <textarea name="app_private_key"  rows="5"></textarea>
+                            </div>
+                        </div>
+                        
+                    </form>
+                    <div style="text-align: center; margin-top: 15px;" class="Medit">
+                        <button class="layui-btn layui-btn-normal btn submit_btn" type="button">
+                            <span>提交</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
+                            <span>取消</span>
+                        </button>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mask maskContnet">
+            <div class="TitleContentWith">
+                <span class="maskSpan" style="display: inline-block;"> 
+                    <i class="layui-icon layui-icon-loading "></i>
+                </span>
+               
+                数据处理中，请稍候
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn  editBtn"  lay-event="edit">
+            <span style="color:#fff;">编辑</span>
+        </button>
+    </div>
+</script>
+</html>

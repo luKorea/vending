@@ -1,5 +1,5 @@
-import '../../MyCss/stores/machine.css'
-import { provinceChange, cityChange } from '../../assets/public/selectMore'
+import '../../MyCss/stores/machine.css';
+import { provinceChange, cityChange } from '../../assets/public/selectMore';
 // console.log()
 layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // console.log(provinceChange)
@@ -45,22 +45,22 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'CreationTime', width: 130, title: '缺货状态', sort: true, align: 'center', templet: function (d) {
+                    field: 'CreationTime', width: 130, title: '缺货状态', align: 'center', templet: function (d) {
                         return `<div><span class="${d.stockStatus == 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.stockStatus == 0 ? '正常' : d.stockStatus == 1 ? '一般' : '严重'}</span></div>`
                     }
                 },
                 {
-                    field: 'onlineStatus', width: 130, title: '在线状态', sort: true, align: 'center', templet: function (d) {
+                    field: 'onlineStatus', width: 130, title: '在线状态', align: 'center', templet: function (d) {
                         return `<div><span class="${d.onlineStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.onlineStatus == 0 ? '离线' : '在线'}</span></div>`
                     }
                 },
                 {
-                    field: 'actionStatus', width: 130, title: '是否激活', sort: true, align: 'center', templet: function (d) {
+                    field: 'actionStatus', width: 130, title: '是否激活', align: 'center', templet: function (d) {
                         return `<div><span class="${d.actionStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.actionStatus == 0 ? '未激活' : '已激活'}</span></div>`
                     }
                 },
                 {
-                    field: 'openStatus', width: 130, title: '营业状态', sort: true, align: 'center', templet: function (d) {
+                    field: 'openStatus', width: 130, title: '营业状态', align: 'center', templet: function (d) {
                         return `<div><span class="${d.openStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.openStatus == 0 ? '不营业' : '营业'}</span></div>`
                     }
                 },
@@ -69,12 +69,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         return `<div><span class="${d.wayStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.wayStatus == 0 ? '不正常' : '正常'}</span></div>`
                     }
                 },
-                { field: 'dealTime', width: 170, title: '最后交易时间', sort: true, },
+                { field: 'dealTime', width: 170, title: '最后交易时间', },
                 { field: 'merchantName', width: 150, title: '所属商户', },
                 { field: 'appVersion', width: 135, title: '软件版本', },
-                // { field: 'controllerVersion', width: 135, title: '控制器版本', sort: true, },
-                { field: 'connectTime', width: 170, title: '联机时间', sort: true, },
-                { field: 'actionTime', width: 170, title: '激活时间', sort: true, },
+                // { field: 'controllerVersion', width: 135, title: '控制器版本', },
+                { field: 'connectTime', width: 170, title: '联机时间', },
+                { field: 'actionTime', width: 170, title: '激活时间', },
                 { field: 'description', width: 250, title: '描述', },
                 { field: 'operation', fixed: 'right', right: 0, width: 250, title: '操作', toolbar: '#barDemo', align: 'left' },
             ]]
@@ -156,7 +156,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         if (obj.event == 'set') {
             x = obj.data.wayX;
             y = obj.data.wayY;
-            getGoodsWay(obj.data.machineId);
+            if(AisleDetailsFlag){
+                getGoodsWay(obj.data.machineId);
+            }
+            
             $('.setUpCont').show();
             // $('.setNav li').eq(0).addClass('active').siblings().removeClass('active');
             // $('.tabLine').css({
@@ -178,8 +181,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 'setArea': setAddress ? setAddress[3] : '',
                 'setRegion': machineSetData.area
             })
-            salesFun(machineSetData.machineId)
-            recordFun(machineSetData.machineId)
+            if (salesListFlag) {
+                salesFun(machineSetData.machineId);
+            }
+            if (shipmentListFlag) {
+                recordFun(machineSetData.machineId);
+            }
+            if (paySetFlag) {
+                //支付方式
+                payTypeFun(Number(sessionStorage.machineGoodsId));
+            }
+
         } else if (obj.event == 'edit') {
             if (machineSetData.openStatus == 1) {
                 layer.msg('温馨提示！该售货机正在营业，不可进行编辑！', { icon: 7 })
@@ -633,25 +645,25 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'time', width: 200, title: '时间', sort: true
+                    field: 'time', width: 200, title: '时间'
                 },
                 { field: 'number', width: 250, title: '订单号', },
                 {
-                    field: 'shipStatus', width: 150, title: '出货状态', sort: true, templet: function (d) {
+                    field: 'shipStatus', width: 150, title: '出货状态', templet: function (d) {
                         return `<div><span class="${d.shipStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.shipStatus == 0 ? '出货失败' : '出货成功'}</span></div>`
                     }
                 },
                 {
-                    field: 'payStatus', width: 150, title: '支付状态', sort: true, templet: function (d) {
+                    field: 'payStatus', width: 150, title: '支付状态', templet: function (d) {
                         return `<div><span class="${d.payStatus == 1 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payStatus == 1 ? '已支付' : '未支付'}</span></div>`
                     }
                 },
                 {
-                    field: 'payType', width: 150, title: '支付方式', sort: true, templet: function (d) {
-                        return `<div><span class="${d.payType != 0 ? 'tableStateCellTrue' : 'tableStateCellAli'}">${d.payType == 0 ? '支付宝' : '微信'}</span></div>`
+                    field: 'payType', width: 150, title: '支付方式', templet: function (d) {
+                        return `<div><span class="${d.payType != 0 ? 'tableStateCellTrue' : 'tableStateCellAli'}">${d.payType != 0 ? '微信' : '支付宝'}</span></div>`
                     }
                 },
-                { field: 'payee', width: 150, title: '收款方', sort: true, },
+                { field: 'payee', width: 150, title: '收款方', },
                 { field: 'amount', width: 150, title: '金额', },
             ]],
             id: 'salesId',
@@ -723,24 +735,24 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             cols: [[
                 { field: 'time', width: 200, title: '出货时间', },
                 {
-                    field: 'source', width: 120, title: '操作来源', sort: true,
+                    field: 'source', width: 120, title: '操作来源',
                 },
                 {
-                    field: 'goodName', width: 150, title: '商品名', sort: true,
+                    field: 'goodName', width: 150, title: '商品名',
                 },
                 {
-                    field: 'way', width: 130, title: '货道名', sort: true,
+                    field: 'way', width: 130, title: '货道名',
                 },
                 {
-                    field: 'cabinetName', width: 130, title: '机柜名', sort: true,
+                    field: 'cabinetName', width: 130, title: '机柜名',
                 },
-                { field: 'cabinetType', width: 100, title: '机柜类型', sort: true, },
+                { field: 'cabinetType', width: 100, title: '机柜类型', },
                 {
                     field: 'countNum', width: 100, title: '出货时数量(个)', templet: function (d) {
                         return d.stock + d.count
                     }
                 },
-                { field: 'stock', width: 100, title: '出货后数量(个)', sort: true, },
+                { field: 'stock', width: 100, title: '出货后数量(个)', },
                 { field: 'count', width: 100, title: '出货数量(个)', },
             ]]
             , id: 'shipmentId'
@@ -848,19 +860,51 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     var editFlag = false,
         activateFlag = false,
-        editAisleFlag = false;
+        editAisleFlag = false,
+        paySetFlag = false,
+        delAisleFlag = false,
+        addAisleFlag = false,
+        AisleDetailsFlag = false,//货道详情
+        salesListFlag = false,//销售记录
+        shipmentListFlag = false;//出货记录
     function permissions() {
         permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
-            editFlag = res.data.some((item, index) => {
-                return item.id == '396'
-            });
-            activateFlag = res.data.some((item, index) => {
-                return item.id == '392'
+            res.data.forEach(item => {
+                if (item.id == '396') {
+                    editFlag = true;
+                }
+                if (item.id == '392') {
+                    activateFlag = true;
+                }
+                if (item.id == '424') {
+                    editAisleFlag = true;
+                }
+                if (item.id == '432') {
+                    paySetFlag = true;
+                }
+                if (item.id == '426') {
+                    delAisleFlag = true;
+                }
+                if (item.id == '425') {
+                    addAisleFlag = true;
+                }
+                if (item.id == '427') {
+                    AisleDetailsFlag = true;
+                }
+                if (item.id == '401') {
+                    salesListFlag = true;
+                }
+                if (item.id == '402') {
+                    shipmentListFlag = true;
+                }
             })
+
             activateFlag ? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
-            editAisleFlag = res.data.some((item, index) => {
-                return item.id == '424'
-            })
+            paySetFlag ? $('.payTypeSet').removeClass('hide') : $('.payTypeSet').addClass('hide');
+            delAisleFlag ? $('.detailsDel').removeClass('hide') : $('.detailsDel').addClass('hide');
+            AisleDetailsFlag ? $('.aisleDetailsTab').removeClass('hide') : $('.aisleDetailsTab').addClass('hide');
+            salesListFlag ? $('.salesDetails').removeClass('hide') : $('.salesDetails').addClass('hide');
+            shipmentListFlag ? $('.shipmentDetails').removeClass('hide') : $('.shipmentDetails').addClass('hide');
         }).catch(err => {
             layer.msg(err.message, { icon: 2 })
         });
@@ -911,7 +955,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp" },
-                { field: 'goods_Name', width: 200, title: '商品名称', color: '#409eff' },
+                { field: 'goods_Name', width: 200, title: '商品名', color: '#409eff' },
                 { field: `classifyName`, width: 250, title: '商品类目' },
                 { field: 'goods_Core', width: 300, title: '商品编号', },
                 { field: 'operation', position: 'absolute', right: 0, width: 80, title: '操作', toolbar: '#GoodsbarDemo' },
@@ -998,7 +1042,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     //     })
     // }
     var wayList = [];
-    var wayitem=[];
+    var wayitem = [];
     function getGoodsWay(machineId) {
         wayList = [];
         wayitem = [];
@@ -1008,15 +1052,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         loadingAjax('/api//machine/getGoodWay', 'post', aisleData, sessionStorage.token, '', '', '', layer).then(res => {
             againFun(res);
         }).catch(err => {
-            wayList=[];
-            var titleHtml=`<div style="text-align: center;">您没有权限访问货道详情！</div>`
-            $('.aisleGoodsCont').html(titleHtml)
             console.log(err)
-            layer.msg(err.message, { icon: 2 })
+            wayList = [];
+            var titleHtml = `<div style="text-align: center;">您没有权限访问货道详情！</div>`
+            $('.aisleGoodsCont').html(titleHtml)
+            // console.log(err)
+            // layer.msg(err.message, { icon: 2 })
         })
     };
     // 渲染方法
-    function againFun(res){
+    function againFun(res) {
         wayList = [];
         wayitem = [];
         for (var i = 0; i < res.data.length; i++) {
@@ -1120,7 +1165,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // }
     function aisleHtml(strList) {
         var aisleStr = '';
-        console.log(strList)
         strList.forEach((item, index) => {
             aisleStr += `<div class="aisleListCont flexTwo">
                             <div class="listIndex">
@@ -1128,47 +1172,51 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                             </div>`
             item.forEach((child, Cindex) => {
                 if (child.open != 0) {
-                    aisleStr += `<div class="aisleNumderGoods" fireIndex="${index + ',' + Cindex}">
-                    <div class="numderTop">                                   
-                        <img src="${child.goods_images}" alt=""> 
-                       <span>${Cindex + 1}</span>
-                    </div>
-                   <div class="numderBottom">
-                        <div class="status1">正常</div>
-                       <div>数量:${child.count}</div>
-                    </div>
-                    <div class="chooseCheck">
-                        <input type="checkbox" value="${child.id}" name="${child.id}" lay-skin="primary">
-                        <span title="红包牛红包牛">红包牛红包牛</span>
-                    </div>
-                </div>`
+                    aisleStr += `<div class="aisleNumderGoods" >
+                                    <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
+                                    <div class="numderTop">                                   
+                                        <img src="${child.goods_images}" alt=""> 
+                                    <span>${Cindex + 1}</span>
+                                    </div>
+                                <div class="numderBottom">
+                                        <div class="status1">正常</div>
+                                    <div>数量:${child.count}</div>
+                                    </div>
+                                    </div>  
+                                    <div class="chooseCheck">
+                                        <input type="checkbox" value="${child.id}" ${delAisleFlag ? '' : 'disabled'} name="${child.id}" lay-skin="primary">
+                                        <span title="${child.goods_Name ? child.goods_Name : '-'}">${child.goods_Name ? child.goods_Name : '-'}</span>
+                                    </div>
+                                </div>`
                 } else {
-                    aisleStr += `<div class="aisleNumderGoods" fireIndex="${index + ',' + Cindex}">
-                     <div class="numderTop">
-                     <img src="../img/failure.png" alt="">
-                         <span>${Cindex + 1}</span>
-                     </div>
-                    <div class="numderBottom">
-                         <div class="status2">禁用</div>
-                         <div>数量:${child.count}</div>
-                     </div>
-                     <div class="chooseCheck">
-                         <input type="checkbox" value="${child.id}" name="${child.id}" lay-skin="primary">
-                        <span title="红包牛红包牛">红包牛红包牛</span>
-                     </div>
-                 </div>`
+                    aisleStr += `<div class="aisleNumderGoods" >
+                                    <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
+                                    <div class="numderTop">
+                                    <img src="http://172.16.71.142:8087/image/127b55b9-da32-4569-b740-3adf5e5524af.png" alt="">
+                                        <span>${Cindex + 1}</span>
+                                    </div>
+                                    <div class="numderBottom">
+                                        <div class="status2">禁用</div>
+                                        <div>数量:${child.count}</div>
+                                    </div>
+                                    </div>  
+                                    <div class="chooseCheck">
+                                        <input type="checkbox" value="${child.id}" ${delAisleFlag ? '' : 'disabled'} name="${child.id}" lay-skin="primary">
+                                        <span title="${child.goods_Name ? child.goods_Name : '-'}">${child.goods_Name ? child.goods_Name : '-'}</span>
+                                    </div>
+                                </div>`
                 }
             });
-            aisleStr += `<div class="addAisle" indexVal="${index + 1}">
+            aisleStr += `<div class="addAisle ${addAisleFlag ? '' : 'hide'}" indexVal="${index + 1}">
                              <span>+</span>
                          </div>
                          </div>`
         });
-        aisleStr += `<div class="aisleListCont flexTwo">
+        aisleStr += `<div class="aisleListCont flexTwo ${addAisleFlag ? '' : 'hide'}">
         <div class="listIndex">
-                                <span>${ strList.length+ 1}</span>
+                                <span>${ strList.length + 1}</span>
                             </div>
-                        <div class="addAisle" indexVal="${strList.length+1}">
+                        <div class="addAisle" indexVal="${strList.length + 1}">
                             <span>+</span>
                         </div>
                     </div>`
@@ -1200,15 +1248,22 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
         loadingAjax('/api/user/verifyAlonePwd', 'post', IPassWord, sessionStorage.token, 'mask', 'iPasswprd', 'passwordCont', layer).then(res => {
             sessionStorage.independentPass = 'true';
-            if(!addIndex){
+            if (delIndex == 1) {
+                var delData = JSON.stringify({
+                    machineId: machineSetData.machineId,
+                    ways: delArr
+                });
+                delFun(delData)
+            } else if (!addIndex) {
+                console.log(1)
                 aisleEdit();
                 popupHide('iPasswprd', 'passwordCont')
                 popupShow('editAisle', 'editAisleBox')
-            }else{
+            } else {
                 popupHide('iPasswprd', 'passwordCont')
-                popupShow('addDetalis','addCont')
+                popupShow('addDetalis', 'addCont')
             }
-            
+
         }).catch(err => {
             console.log(err)
             layer.msg(err.message, { icon: 2 });
@@ -1279,42 +1334,41 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
     });
     // 增加详情;
-    var addIndex=null;
-    $('.aisleGoodsCont').on('click','.addAisle',function(){
-        console.log($(this).attr('indexVal'));
-        addIndex=$(this).attr('indexVal');
+    var addIndex = null;
+    $('.aisleDetails').on('click', '.addAisle', function () {
+        addIndex = $(this).attr('indexVal');
         if (sessionStorage.independentPass) {
-            popupShow('addDetalis','addCont')
-        }else{
+            popupShow('addDetalis', 'addCont');
+        } else {
             popupShow('iPasswprd', 'passwordCont')
         }
-       
-        
+
+
     });
     // 取消
-    $('.addCancelBtn').click(function(){
-        popupHide('addDetalis','addCont')
+    $('.addCancelBtn').click(function () {
+        popupHide('addDetalis', 'addCont')
     });
     // 确定
-    $('.addDetalisBtn').click(function(){
-        if($('.addDetalis input[name="addNum"]').val()!=''&&$('.addDetalis input[name="addNum"]').val()>0){
+    $('.addDetalisBtn').click(function () {
+        if ($('.addDetalis input[name="addNum"]').val() != '' && $('.addDetalis input[name="addNum"]').val() > 0) {
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon')
-            var addAisleData=JSON.stringify({
+            var addAisleData = JSON.stringify({
                 machineId: machineSetData.machineId,
-                way:Number(addIndex),
+                way: Number(addIndex),
                 count: Number($('.addDetalis input[name="addNum"]').val())
             });
-            loadingAjax('/api/machine/insertGoodWay','post',addAisleData,sessionStorage.token,'mask','addDetalis','addCont',layer).then(res=>{
+            loadingAjax('/api/machine/insertGoodWay', 'post', addAisleData, sessionStorage.token, 'mask', 'addDetalis', 'addCont', layer).then(res => {
                 console.log(res)
-                layer.msg(res.message,{icon:1});
+                layer.msg(res.message, { icon: 1 });
                 againFun(res);
                 $('.addDetalis input[name="addNum"]').val(' ')
-            }).catch(err=>{
-                layer.msg(err.message,{icon:2})
+            }).catch(err => {
+                layer.msg(err.message, { icon: 2 })
             })
-        }else{
-            layer.msg('数量必须大于0',{icon:7})
+        } else {
+            layer.msg('数量必须大于0', { icon: 7 })
         }
     });
 
@@ -1322,13 +1376,95 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     var reduction = 1;
     $('.addDetalis input[name="addNum"]').keyup(function () {
         var num = $(this).val(),
-          re = /^\d*$/;
+            re = /^\d*$/;
         if (!re.test(num)) {
-          layer.msg('只能输入正整数', { icon: 7 });
-          $(this).val(reduction)
+            layer.msg('只能输入正整数', { icon: 7 });
+            $(this).val(reduction)
         } else {
-          reduction = $(this).val();
-          console.log(reduction)
+            reduction = $(this).val();
+            console.log(reduction)
         }
-      });
+    });
+    var delArr = [];
+    var delIndex = null;
+    $('.delBtn').click(function () {
+        delArr = [];
+        delIndex = 1;
+        var delAll = form.val("delDetalis");
+        console.log(delAll);
+        if (JSON.stringify(delAll) == '{}') {
+            layer.msg('请选择需要删除的货道', { icon: 7 });
+            return;
+        }
+        layer.confirm('确定删除？', function (index) {
+            layer.close(index);
+            for (let i in delAll) {
+                delArr.push(Number(delAll[i]))
+            };
+            if (!(sessionStorage.independentPass)) {
+                popupShow('iPasswprd', 'passwordCont');
+                return;
+            }
+            console.log(delArr);
+            var delData = JSON.stringify({
+                machineId: machineSetData.machineId,
+                ways: delArr
+            });
+            delFun(delData)
+        })
+    });
+
+    function delFun(delDataVal) {
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        loadingAjax('api/machine/deleteGoodWay', 'post', delDataVal, sessionStorage.token, 'mask', '', '', layer).then(res => {
+            console.log(res);
+            layer.msg(res.message, { icon: 1 });
+            againFun(res)
+        }).catch(err => {
+            layer.msg(err.message, { icon: 2 })
+        })
+    };
+
+    function payTypeFun(id) {
+        var chooseStr = '<option value="0">全部</option>';
+        var payList = JSON.stringify({
+            merchantId: id,
+        })
+        loadingAjax('/api/merchant/getPayType', 'post', payList, sessionStorage.token).then(res => {
+            console.log(res)
+            res.data.forEach((item, index) => {
+                chooseStr += `<option value="${item.id}">${item.payType}</option>`
+            });
+            $('#payTypeChoose').empty();
+            $('#payTypeChoose').append(chooseStr);
+
+            $('#payTypeChoose').val(Number(machineSetData.payType));
+            form.render('select');
+        }).catch(err => {
+            $('#payTypeChoose').empty();
+            // layer.msg(err.message,{icon:2})
+        })
+    }
+    // payTypeFun(Number(sessionStorage.machineID));
+    $('.paySetBtn').click(function () {
+        console.log($('#payTypeChoose').val());
+        if ($('#payTypeChoose').val() == 0) {
+            layer.msg('请选择支付类型', { icon: 7 });
+            return;
+        }
+        var payData = JSON.stringify({
+            machineId: machineSetData.machineId,
+            payId: Number($('#payTypeChoose').val())
+        });
+        loadingAjax('api/machine/configMachinePay', 'post', payData, sessionStorage.token, 'mask', '', '', layer).then(res => {
+            console.log(res);
+            layer.msg(res.message, { icon: 1 })
+            machineList.reload({
+                where: {}
+            })
+        }).catch(err => {
+            layer.msg(err.message, { icon: 2 })
+        })
+    })
 });

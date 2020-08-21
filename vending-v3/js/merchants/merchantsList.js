@@ -25,9 +25,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             { field: 'alias', width: 160, title: '商户编号' },
             { field: 'addUser', width: 150, title: '创建人', },
-            { field: 'addTime', width: 180, title: '创建时间', sort: true },
+            { field: 'addTime', width: 180, title: '创建时间'},
             { field: 'lastUser', width: 150, title: '最后操作人', },
-            { field: 'lastTime', width: 180, title: '最后操作时间', sort: true },
+            { field: 'lastTime', width: 180, title: '最后操作时间'},
             { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo' },
         ]]
         , id: 'tableId'
@@ -98,7 +98,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             }
             $('.editMerchants input[name="merchantsName"]').val(data.title)
             popupShow('MemberOperation', 'MemberContent');
-            if (data.id == 0) {
+            if (data.id == 1) {
                 $('.listInput input[name="marchantsText"]').val('');
             } else {
                 $('.listInput input[name="marchantsText"]').val(data.merchantName);

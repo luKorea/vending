@@ -13,7 +13,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         range: true,
         done: function (value, date, endDate) {
             // console.log(value); //得到日期生成的值，如：2017-08-18
-            timerKey = value.split(' - ');
+        var timerKey = value.split(' - ');
             // console.log(timerKey);
             startTime = timerKey[0];
             endTime = timerKey[1];
@@ -82,13 +82,15 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 }
             },
             // { field: 'amendTime', width: 130, title: '广告位', },
-            { field: 'creationTime', width: 230, title: '发布时间', sort: true },
             { field: 'addUser', width: 180, title: '发布人', },
+            { field: 'creationTime', width: 230, title: '发布时间' },
+            
             { field: 'operation', right: 0, width: 380, title: '操作', toolbar: '#barDemo', fixed: 'right' },
         ]],
         page: true,
         id: 'advertisingData',
         loading: true,
+        height: 'full-210',
         request: {
             'pageName': 'pageNum',
             'limitName': 'pageSize'
@@ -217,7 +219,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             }
             editDetailsList.push(editObj)
         });
-        setTimeout(() => {
             $.ajax({
                 type: 'post',
                 url: '/api/publicized/updatePublicize',
@@ -243,7 +244,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     }
                 }
             })
-        }, 1000)
     })
 
     function machineDetailsFun(id) {
@@ -257,7 +257,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             },
             cols: [[
                 { field: 'number', width: 150, title: '售货机编号' },
-                { field: 'info', width: 180, title: '售货机名称', },
+                { field: 'info', width: 180, title: '售货机名', },
                 { field: 'location', width: 250, title: '机售货机地址', },
                 { field: 'operatio', width: 120, title: '操作', toolbar: '#machineDemo', },
 
@@ -383,7 +383,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 cols: [[
                     { type: 'checkbox', },
                     { field: 'img', width: 80, title: '微缩图', templet: "#imgtmp" },
-                    { field: 'name', width: 150, title: '素材名称', },
+                    { field: 'name', width: 150, title: '素材名', },
                     { field: 'size', width: 100, title: '大小(MB)', },
                     { field: 'duration', width: 120, title: '播放时长(秒)', },
                     {
@@ -391,7 +391,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                             return d.advertisingAttribute == 0 ? '图片' : '视频'
                         }
                     },
-                    { field: 'creationTime', width: 160, title: '上传时间', sort: true },
+                    { field: 'creationTime', width: 160, title: '上传时间' },
                     { field: 'addUser', width: 150, title: '上传人 ', },
                 ]],
                 page: true,
@@ -551,7 +551,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             }
             confirmList.push(confirmObj)
         });
-        setTimeout(() => {
             if (confirmList.length == addMaterList.length) {
                 $.ajax({
                     type: 'post',
@@ -588,7 +587,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             } else {
                 layer.msg('出错！请重新发布', { icon: 7 });
             }
-        }, 1000);
     });
 
 
@@ -609,7 +607,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 { field: 'location', width: 300, title: '地址', },
                 { field: 'merchantName', width: 150, title: '所属商户', },
                 { field: 'actionTime', width: 200, title: '激活时间', },
-                { field: 'description', width: 180, title: '描述', sort: true },
+                { field: 'description', width: 180, title: '描述' },
             ]],
             page: true,
             id: 'machineAdvertisingList',
@@ -766,9 +764,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 }
                 checkList.push(submitObj)
             });
-            setTimeout(() => {
-                auditMethods('1', checkList);
-            }, 1000)
+                auditMethods('1', checkList,'/api/publicized/checkStatus');
         } else {
             layer.msg('请选择需要提交审核的素材', { icon: 7, });
         }
@@ -780,7 +776,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             return;
         }
         var approveCheckStatus = table.checkStatus('advertisingData');
-        approveList = [];
+      var  approveList = [];
         if (approveCheckStatus.data.length > 0) {
             layer.confirm('确定审核通过？', function (index) {
                 layer.close(index);
@@ -793,9 +789,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     }
                     approveList.push(approveObj)
                 });
-                setTimeout(() => {
-                    auditMethods('0', approveList)
-                }, 1000)
+                    auditMethods('0', approveList,'/api/publicized/updateStatus')
             })
 
         } else {
@@ -809,7 +803,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             return;
         }
         var noPassCheckStatus = table.checkStatus('advertisingData');
-        noPassList = [];
+      var  noPassList = [];
         if (noPassCheckStatus.data.length > 0) {
             layer.confirm('确定审核不通过？', function (index) {
                 layer.close(index);
@@ -821,19 +815,17 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     }
                     noPassList.push(noPassObj)
                 });
-                setTimeout(() => {
-                    auditMethods('0', noPassList)
-                }, 1000)
+                    auditMethods('0', noPassList,'/api/publicized/updateStatus')
             })
         } else {
             layer.msg('请选择需要不通过审核的素材', { icon: 7 });
         }
     })
     // 提交审核，审核通过，审核不通过方法
-    function auditMethods(type, data) {
+    function auditMethods(type, data,url) {
         $.ajax({
             type: 'post',
-            url: '/api/publicized/updateStatus',
+            url,
             headers: {
                 "Content-Type": "application/json",
                 token,
@@ -948,10 +940,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     var checkID = null,
         pushList = null;   //推送广告列表
     $('.pushReleaseBtn').click(function () {
-        if (!pushFlag) {
-            layer.msg('您没有推送广告到下级的权限', { icon: 7 });
-            return;
-        }
         pushList = [];
         checkID = table.checkStatus('advertisingData');
         checkID.data.forEach((item, index) => {
@@ -1003,7 +991,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         popupShow('topGoodsList', 'topBox')
     })
     $('.mandatroFooter div').click(function () {
-        PType = $(this).attr('Ptype');
+      var  PType = $(this).attr('Ptype');
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         var RData = JSON.stringify({
@@ -1057,14 +1045,14 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
 
                 },
                 { field: `topMerchant`, width: 140, title: '推送商户', },
-                { field: `targetMerchant`, width: 140, title: '接收商户', },
+                { field: `targetMerchant`, width: 160, title: '接收商户', },
                 {
                     field: 'received', width: 100, title: '接收状态 ', templet: function (d) {
                         return d.received == 0 ? '未接收' : '已接收'
                     }
                 },
                 {
-                    field: 'sendTime', width: 200, title: '推送时间 ', sort: true, templet: function (d) {
+                    field: 'sendTime', width: 200, title: '推送时间 ', templet: function (d) {
                         var myDate = new Date(d.sendTime);
                         var y = myDate.getFullYear();
                         var m = myDate.getMonth() + 1;

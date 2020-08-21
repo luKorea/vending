@@ -1,0 +1,38 @@
+.addBox{
+    width: 500px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.addBody{
+    padding: 30px 20px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.listFlex label{
+    width: 120px;
+}
+.uploadBtn{
+    position: relative;
+}
+.uploadBtn input[name="uploadImg"]{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+.addCancelBtn{
+    background-color: #fff !important;
+    border: 1px solid #dcdfe6 !important;
+    color: #606266;
+}
+.addCancelBtn:hover{
+    color: #be954a;
+    border: 1px solid #be954a !important;
+    border-color:#be954a ;
+}

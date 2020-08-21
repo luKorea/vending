@@ -17,6 +17,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       },
       cols: [[
         { field: 'userName', width: 180, title: '用户名' },
+        { field: 'name', width: 150, title: '姓名' },
         {
           field: 'open', width: 150, title: '状态', templet: function (d) {
             return d.open == 0 ? '不启用' : '启用'
@@ -27,14 +28,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             return d.roleSign == 0 ? '否' : '是'
           }
         },
-        { field: 'name', width: 150, title: '姓名' },
+        { field: 'alias', width: 200, title: '用户编号' },
         { field: 'phone', width: 150, title: '手机号' },
         { field: 'merchantName', width: 150, title: '所属商户' },
-        { field: 'alias', width: 200, title: '用户编号' },
+       
         { field: 'addUser', width: 150, title: '创建人', },
-        { field: 'addTime', width: 180, title: '创建时间', sort: true },
+        { field: 'addTime', width: 180, title: '创建时间' },
         { field: 'lastUser', width: 150, title: '最后操作人', },
-        { field: 'lastTime', width: 180, title: '最后操作时间', sort: true },
+        { field: 'lastTime', width: 180, title: '最后操作时间'},
 
         { field: 'operation', fixed: 'right', right: 0, width: 250, title: '操作', toolbar: '#barDemo' },
       ]]
@@ -508,8 +509,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     })
   };
-
-
   var inst2 = tree.render({
     elem: '#test2',
     id: 'treelistEdit',
@@ -530,36 +529,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       console.log(obj);
       $('.terminal input[name="marchantsListname"]').val(obj.data.title);
       $('.terminal input[name="topmachantsVal"]').val(obj.data.id)
-      var nodesEdti = $(`.terminal .layui-tree-txt`);
-      for (var i = 0; i < nodesEdti.length; i++) {
-        if (nodesEdti[i].innerHTML === obj.data.title)
-          nodesEdti[i].style.color = "#be954a";
-        else
-          nodesEdti[i].style.color = "#555";
-      }
-    },
-  });
-  var inst2 = tree.render({
-    elem: '#test2',
-    id: 'treelistEdit',
-    showLine: !0 //连接线
-    ,
-    onlyIconControl: true //左侧图标控制展开收缩
-    ,
-    isJump: !1 //弹出新窗口跳转
-    ,
-    edit: false //开启节点的操作
-    ,
-    data: addEditData,
-    text: {
-      defaultNodeName: '无数据',
-      none: ''
-    },
-    click: function (obj) {
-      console.log(obj);
-      $('.terminal input[name="marchantsListname"]').val(obj.data.title);
-      $('.terminal input[name="topmachantsVal"]').val(obj.data.id)
-
       if (obj.data.id == 1) {
         $('.checkCont input[name="100001"]').prop('disabled', false);
       } else {

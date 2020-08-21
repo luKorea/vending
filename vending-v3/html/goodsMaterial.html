@@ -37,12 +37,12 @@
                     <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
                 </div>
                 <i class="layui-icon layui-icon-right  on-left"></i>
-                <div style="padding: 0 20px;width: 100%;overflow: hidden;">
+                <div style="padding: 0 20px;width: 100%;">
                     <div class="layui-row">
                         <div class=" layui-col-sm5 layui-col-md6 layui-col-lg3">
                             <div style="max-width: 280px;" class="key-contnet">
                                 <div class="key-text">关键字</div>
-                                <input type="text" placeholder="图片名称" name="KeyImgName" class="KyeText">
+                                <input type="text" placeholder="图片名" name="KeyImgName" class="KyeText">
                             </div>
                         </div>
                         <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
@@ -101,7 +101,8 @@
                                 <span>审核通过</span>
                             </button>
                         </div>
-                        <div class=" layui-col-sm3 layui-col-md6 layui-col-lg1 auditBtnTwo hide" style="margin-right: 15px;">
+                        <div class=" layui-col-sm3 layui-col-md6 layui-col-lg1 auditBtnTwo hide"
+                            style="margin-right: 15px;">
                             <button class="layui-btn layui-btn-normal auditBtn btn noPassBtn" typeId="0" type="3">
                                 <span>审核不通过</span>
                             </button>
@@ -151,236 +152,247 @@
             </div>
             <!-- 详情图片 -->
             <div class="details">
-                <div class="left-mian">
-                    <div class="accountContnet" style="margin-left:15px;">
-                        <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
-                        <div id="detailsIMG" class="demo-tree demo-tree-box"></div>
-                    </div>
-                    <!-- 右侧栏 -->
-                    <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
-                </div>
-                <i class="layui-icon layui-icon-right  on-left"></i>
-                <div style="padding: 0 20px;width: 100%;overflow: hidden;">
-                    <div class="layui-row">
-                        <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
-                            <div style="max-width: 280px;" class="key-contnet">
-                                <div class="key-text">关键字</div>
-                                <input type="text" placeholder="图片名称" name="KeyImgName" class="KyeText">
-                            </div>
+                <div style="display: flex;justify-content: start;">
+                    <div class="left-mian">
+                        <div class="accountContnet" style="margin-left:15px;">
+                            <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
+                            <div id="detailsIMG" class="demo-tree demo-tree-box"></div>
                         </div>
-                        <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
-                            <div class="key-contnet">
-                                <div class="key-text">发布时间</div>
-                                <div class="itmes">
-                                    <div class="layui-form">
-                                        <div class="layui-inline">
-                                            <div class="layui-input-inline">
-                                                <input style="text-align: center;" type="text" class="layui-input"
-                                                    id="itemrs3" placeholder=" - " autocomplete="off">
+                        <!-- 右侧栏 -->
+                        <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
+                    </div>
+                    <i class="layui-icon layui-icon-right  on-left"></i>
+                    <div style="padding: 0 20px;width: 100%;">
+                        <div class="layui-row">
+                            <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
+                                <div style="max-width: 280px;" class="key-contnet">
+                                    <div class="key-text">关键字</div>
+                                    <input type="text" placeholder="图片名" name="KeyImgName" class="KyeText">
+                                </div>
+                            </div>
+                            <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
+                                <div class="key-contnet">
+                                    <div class="key-text">发布时间</div>
+                                    <div class="itmes">
+                                        <div class="layui-form">
+                                            <div class="layui-inline">
+                                                <div class="layui-input-inline">
+                                                    <input style="text-align: center;" type="text" class="layui-input"
+                                                        id="itemrs3" placeholder=" - " autocomplete="off">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
-                            <div class="key-contnet">
-                                <!-- 状态: -->
-                                <div class="key-text">审核状态</div>
-                                <form class="layui-form" action="">
-                                    <div class="layui-form">
-                                        <select name="detailsImgStatus" id="" lay-filter="">
-                                            <option value="">全部</option>
-                                            <option value="0">未审核</option>
-                                            <option value="1">待审核</option>
-                                            <option value="2">审核通过</option>
-                                            <option value="3">审核不通过</option>
-                                        </select>
-                                    </div>
-                                </form>
+                            <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
+                                <div class="key-contnet">
+                                    <!-- 状态: -->
+                                    <div class="key-text">审核状态</div>
+                                    <form class="layui-form" action="">
+                                        <div class="layui-form">
+                                            <select name="detailsImgStatus" id="" lay-filter="">
+                                                <option value="">全部</option>
+                                                <option value="0">未审核</option>
+                                                <option value="1">待审核</option>
+                                                <option value="2">审核通过</option>
+                                                <option value="3">审核不通过</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="layui-row">
-                        <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1 addBtn hide" style="margin-right: 25px;">
-                            <button class="layui-btn layui-btn-normal  add-btn btn" style="margin: 0;">
-                                <i class="layui-icon layui-icon-app"></i>
-                                <span>添加图片</span>
-                            </button>
+                        <div class="layui-row">
+                            <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1 addBtn hide"
+                                style="margin-right: 25px;">
+                                <button class="layui-btn layui-btn-normal  add-btn btn" style="margin: 0;">
+                                    <i class="layui-icon layui-icon-app"></i>
+                                    <span>添加图片</span>
+                                </button>
+                            </div>
+                            <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1 dleBtn hide">
+                                <button class="layui-btn layui-btn-normal delBtn btn" style="margin-top: 0;" typeId="2">
+                                    <span>删除图片</span>
+                                </button>
+                            </div>
+                            <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1">
+                                <button class="layui-btn layui-btn-normal  btn submitAuditBtn" typeId="2">
+                                    <span>提交审核</span>
+                                </button>
+                            </div>
+                            <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1 auditBtnTwo hide">
+                                <button class="layui-btn layui-btn-normal  btn auditBtn" typeId="2" type="2">
+                                    <span>审核通过</span>
+                                </button>
+                            </div>
+                            <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1 auditBtnTwo hide"
+                                style="margin-right: 15px;">
+                                <button class="layui-btn layui-btn-normal auditBtn btn noPassBtn" typeId="2" type="3">
+                                    <span>审核不通过</span>
+                                </button>
+                            </div>
+                            <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1" style="margin-right: 15px;">
+                                <button class="layui-btn layui-btn-normal detailsImgQueyuBtnClick btn"
+                                    style="margin-top: 0;">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                    <span>查询</span>
+                                </button>
+                            </div>
+                            <!-- <div class=" layui-col-sm4 layui-col-md5 layui-col-lg2">
+                                <button class="layui-btn layui-btn-normal detailsImgQueyuBtnClick btn"
+                                    style="margin-top: 0;">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                    <span>查询</span>
+                                </button>
+                                <button class="layui-btn layui-btn-normal delBtn btn" style="margin-top: 0;" typeId="2">
+                                    <span>删除图片</span>
+                                </button>
+                            </div>
+                            <div class=" layui-col-sm12 layui-col-md7 layui-col-lg4">
+                                <button class="layui-btn layui-btn-normal  btn submitAuditBtn" typeId="2">
+                                    <span>提交审核</span>
+                                </button>
+                                <button class="layui-btn layui-btn-normal  btn auditBtn" style="margin-left: 10px;"
+                                    typeId="2" type="2">
+                                    <span>审核通过</span>
+                                </button>
+                                <button class="layui-btn layui-btn-normal auditBtn btn noPassBtn" typeId="2" type="3">
+                                    <span>审核不通过</span>
+                                </button>
+                            </div> -->
                         </div>
-                        <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1 dleBtn hide">
-                            <button class="layui-btn layui-btn-normal delBtn btn" style="margin-top: 0;" typeId="2">
-                                <span>删除图片</span>
-                            </button>
-                        </div>
-                        <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1">
-                            <button class="layui-btn layui-btn-normal  btn submitAuditBtn" typeId="2">
-                                <span>提交审核</span>
-                            </button>
-                        </div>
-                        <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1 auditBtnTwo hide">
-                            <button class="layui-btn layui-btn-normal  btn auditBtn" typeId="2" type="2">
-                                <span>审核通过</span>
-                            </button>
-                        </div>
-                        <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1 auditBtnTwo hide" style="margin-right: 15px;">
-                            <button class="layui-btn layui-btn-normal auditBtn btn noPassBtn" typeId="2" type="3">
-                                <span>审核不通过</span>
-                            </button>
-                        </div>
-                        <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1" style="margin-right: 15px;">
-                            <button class="layui-btn layui-btn-normal detailsImgQueyuBtnClick btn"
-                                style="margin-top: 0;">
-                                <i class="layui-icon layui-icon-search"></i>
-                                <span>查询</span>
-                            </button>
-                        </div>
-                        <!-- <div class=" layui-col-sm4 layui-col-md5 layui-col-lg2">
-                            <button class="layui-btn layui-btn-normal detailsImgQueyuBtnClick btn"
-                                style="margin-top: 0;">
-                                <i class="layui-icon layui-icon-search"></i>
-                                <span>查询</span>
-                            </button>
-                            <button class="layui-btn layui-btn-normal delBtn btn" style="margin-top: 0;" typeId="2">
-                                <span>删除图片</span>
-                            </button>
-                        </div>
-                        <div class=" layui-col-sm12 layui-col-md7 layui-col-lg4">
-                            <button class="layui-btn layui-btn-normal  btn submitAuditBtn" typeId="2">
-                                <span>提交审核</span>
-                            </button>
-                            <button class="layui-btn layui-btn-normal  btn auditBtn" style="margin-left: 10px;"
-                                typeId="2" type="2">
-                                <span>审核通过</span>
-                            </button>
-                            <button class="layui-btn layui-btn-normal auditBtn btn noPassBtn" typeId="2" type="3">
-                                <span>审核不通过</span>
-                            </button>
-                        </div> -->
-                    </div>
-                    <div class="imgListBox">
-                        <div class="data-list">
-                            <div class="listtable">
-                                <table class="layui-hide" id="detailsImgData" lay-filter="detailsImgData"></table>
+                        <div class="imgListBox">
+                            <div class="data-list">
+                                <div class="listtable">
+                                    <table class="layui-hide" id="detailsImgData" lay-filter="detailsImgData"></table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
             <!-- 视频列表部分 -->
             <div class="VideoContnet">
-                <div class="left-mian">
-                    <div class="accountContnet" style="margin-left:15px;">
-                        <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
-                        <div id="dataGoodsVideo" class="demo-tree demo-tree-box"></div>
-                    </div>
-                    <!-- 右侧栏 -->
-                    <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
-                </div>
-                <div style="padding: 0 20px;width: 100%;overflow: hidden;">
-                    <div class="layui-row">
-                        <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
-                            <div style="max-width: 280px;" class="key-contnet">
-                                <div class="key-text">关键字</div>
-                                <input type="text" placeholder="视频名称" name="keyVideoName" class="KyeText">
-                            </div>
+                <div style="display: flex;justify-content: start;">
+                    <div class="left-mian">
+                        <div class="accountContnet" style="margin-left:15px;">
+                            <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
+                            <div id="dataGoodsVideo" class="demo-tree demo-tree-box"></div>
                         </div>
-                        <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
-                            <div class="key-contnet">
-                                <div class="key-text">发布时间</div>
-                                <div class="itmes">
-                                    <div class="layui-form">
-                                        <div class="layui-inline">
-                                            <div class="layui-input-inline">
-                                                <input style="text-align: center;" type="text" class="layui-input"
-                                                    placeholder=" - " id="itemrs2" autocomplete="off">
+                        <!-- 右侧栏 -->
+                        <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
+                    </div>
+                    <div style="padding: 0 20px;width: 100%;">
+                        <div class="layui-row">
+                            <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
+                                <div style="max-width: 280px;" class="key-contnet">
+                                    <div class="key-text">关键字</div>
+                                    <input type="text" placeholder="视频名" name="keyVideoName" class="KyeText">
+                                </div>
+                            </div>
+                            <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
+                                <div class="key-contnet">
+                                    <div class="key-text">发布时间</div>
+                                    <div class="itmes">
+                                        <div class="layui-form">
+                                            <div class="layui-inline">
+                                                <div class="layui-input-inline">
+                                                    <input style="text-align: center;" type="text" class="layui-input"
+                                                        placeholder=" - " id="itemrs2" autocomplete="off">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
-                            <div class="key-contnet">
-                                <!-- 状态: -->
-                                <div class="key-text">审核状态</div>
-                                <form class="layui-form" action="">
-                                    <div class="layui-form">
-                                        <select name="videoStatus" id="" lay-filter="">
-                                            <option value="">全部</option>
-                                            <option value="0">未审核</option>
-                                            <option value="1">待审核</option>
-                                            <option value="2">审核通过</option>
-                                            <option value="3">审核不通过</option>
-                                        </select>
-                                    </div>
-                                </form>
+                            <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
+                                <div class="key-contnet">
+                                    <!-- 状态: -->
+                                    <div class="key-text">审核状态</div>
+                                    <form class="layui-form" action="">
+                                        <div class="layui-form">
+                                            <select name="videoStatus" id="" lay-filter="">
+                                                <option value="">全部</option>
+                                                <option value="0">未审核</option>
+                                                <option value="1">待审核</option>
+                                                <option value="2">审核通过</option>
+                                                <option value="3">审核不通过</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="layui-row">
-                        <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1  addBtn hide" style="margin-right: 25px;">
-                            <button class="layui-btn layui-btn-normal  add-btn btn" style="margin: 0;">
-                                <i class="layui-icon layui-icon-app"></i>
-                                <span>添加视频</span>
-                            </button>
+                        <div class="layui-row">
+                            <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1  addBtn hide"
+                                style="margin-right: 25px;">
+                                <button class="layui-btn layui-btn-normal  add-btn btn" style="margin: 0;">
+                                    <i class="layui-icon layui-icon-app"></i>
+                                    <span>添加视频</span>
+                                </button>
+                            </div>
+                            <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1 dleBtn hide">
+                                <button class="layui-btn layui-btn-normal delBtn btn" style="margin-top: 0;" typeId="1">
+                                    <span>删除视频</span>
+                                </button>
+                            </div>
+                            <div class=" layui-col-sm3 layui-col-md6 layui-col-lg1">
+                                <button class="layui-btn layui-btn-normal  btn submitAuditBtn" typeId="1">
+                                    <span>提交审核</span>
+                                </button>
+                            </div>
+                            <div class=" layui-col-sm3 layui-col-md6 layui-col-lg1 auditBtnTwo hide">
+                                <button class="layui-btn layui-btn-normal  btn auditBtn" typeId="1" type="2">
+                                    <span>审核通过</span>
+                                </button>
+                            </div>
+                            <div class=" layui-col-sm3 layui-col-md6 layui-col-lg1 auditBtnTwo hide"
+                                style="margin-right: 15px;">
+                                <button class="layui-btn layui-btn-normal auditBtn btn noPassBtn" typeId="1" type="3">
+                                    <span>审核不通过</span>
+                                </button>
+                            </div>
+                            <div class=" layui-col-sm3 layui-col-md6 layui-col-lg1">
+                                <button class="layui-btn layui-btn-normal VideoQueryBtnClick btn"
+                                    style="margin-top: 0;">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                    <span>查询</span>
+                                </button>
+                            </div>
+                            <!-- <div class=" layui-col-sm4 layui-col-md5 layui-col-lg2">
+                                <button class="layui-btn layui-btn-normal VideoQueryBtnClick btn" style="margin-top: 0;">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                    <span>查询</span>
+                                </button>
+                                <button class="layui-btn layui-btn-normal delBtn btn" style="margin-top: 0;" typeId="1">
+                                    <span>删除视频</span>
+                                </button>
+                            </div>
+                            <div class=" layui-col-sm12 layui-col-md7 layui-col-lg4">
+                                <button class="layui-btn layui-btn-normal  btn submitAuditBtn" typeId="1">
+                                    <span>提交审核</span>
+                                </button>
+                                <button class="layui-btn layui-btn-normal  btn auditBtn" style="margin-left: 10px;"
+                                    typeId="1" type="2">
+                                    <span>审核通过</span>
+                                </button>
+                                <button class="layui-btn layui-btn-normal auditBtn btn noPassBtn" typeId="1" type="3">
+                                    <span>审核不通过</span>
+                                </button>
+                            </div> -->
                         </div>
-                        <div class=" layui-col-sm6 layui-col-md3 layui-col-lg1 dleBtn hide">
-                            <button class="layui-btn layui-btn-normal delBtn btn" style="margin-top: 0;" typeId="1">
-                                <span>删除视频</span>
-                            </button>
-                        </div>
-                        <div class=" layui-col-sm3 layui-col-md6 layui-col-lg1">
-                            <button class="layui-btn layui-btn-normal  btn submitAuditBtn" typeId="1">
-                                <span>提交审核</span>
-                            </button>
-                        </div>
-                        <div class=" layui-col-sm3 layui-col-md6 layui-col-lg1 auditBtnTwo hide">
-                            <button class="layui-btn layui-btn-normal  btn auditBtn" typeId="1" type="2">
-                                <span>审核通过</span>
-                            </button>
-                        </div>
-                        <div class=" layui-col-sm3 layui-col-md6 layui-col-lg1 auditBtnTwo hide" style="margin-right: 15px;">
-                            <button class="layui-btn layui-btn-normal auditBtn btn noPassBtn" typeId="1" type="3">
-                                <span>审核不通过</span>
-                            </button>
-                        </div>
-                        <div class=" layui-col-sm3 layui-col-md6 layui-col-lg1">
-                            <button class="layui-btn layui-btn-normal VideoQueryBtnClick btn" style="margin-top: 0;">
-                                <i class="layui-icon layui-icon-search"></i>
-                                <span>查询</span>
-                            </button>
-                        </div>
-                        <!-- <div class=" layui-col-sm4 layui-col-md5 layui-col-lg2">
-                            <button class="layui-btn layui-btn-normal VideoQueryBtnClick btn" style="margin-top: 0;">
-                                <i class="layui-icon layui-icon-search"></i>
-                                <span>查询</span>
-                            </button>
-                            <button class="layui-btn layui-btn-normal delBtn btn" style="margin-top: 0;" typeId="1">
-                                <span>删除视频</span>
-                            </button>
-                        </div>
-                        <div class=" layui-col-sm12 layui-col-md7 layui-col-lg4">
-                            <button class="layui-btn layui-btn-normal  btn submitAuditBtn" typeId="1">
-                                <span>提交审核</span>
-                            </button>
-                            <button class="layui-btn layui-btn-normal  btn auditBtn" style="margin-left: 10px;"
-                                typeId="1" type="2">
-                                <span>审核通过</span>
-                            </button>
-                            <button class="layui-btn layui-btn-normal auditBtn btn noPassBtn" typeId="1" type="3">
-                                <span>审核不通过</span>
-                            </button>
-                        </div> -->
-                    </div>
-                    <div class="videoListBox">
-                        <div class="data-list">
-                            <div class="listtable">
-                                <table class="layui-hide" id="VideoData" lay-filter="VideoData"></table>
+                        <div class="videoListBox">
+                            <div class="data-list">
+                                <div class="listtable">
+                                    <table class="layui-hide" id="VideoData" lay-filter="VideoData"></table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <!-- 视频弹窗播放 -->
@@ -415,7 +427,7 @@
                 <div class="addImgBody">
                     <form class="layui-form" action="" lay-filter="ImgData" style="width: 100%;">
                         <div class="listFlex">
-                            <label for="">图片名称：</label>
+                            <label for="">图片名：</label>
                             <div class="FlexInputWidth">
                                 <input type="text" name=ImgNane>
                             </div>
@@ -462,7 +474,7 @@
                 <div class="addDetailsImgBody">
                     <form class="layui-form" action="" lay-filter="ImgData" style="width: 100%;">
                         <div class="listFlex">
-                            <label for="">图片名称：</label>
+                            <label for="">图片名：</label>
                             <div class="FlexInputWidth">
                                 <input type="text" name=detailsImgNane>
                             </div>
@@ -501,7 +513,7 @@
                 </div>
                 <div class="editBody">
                     <div class="listFlex">
-                        <label for="">图片名称：</label>
+                        <label for="">图片名：</label>
                         <div class="FlexInputWidth">
                             <input type="text" name=EidtImgNane>
                         </div>
@@ -530,7 +542,7 @@
                 </div>
                 <div class="addVideoBody">
                     <div class="listFlex">
-                        <label style="text-align: left;" for="">视频名称:</label>
+                        <label style="text-align: left;" for="">视频名:</label>
                         <div class="FlexInputWidth">
                             <input type="text" name="VideoName">
                         </div>

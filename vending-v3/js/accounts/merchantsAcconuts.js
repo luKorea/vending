@@ -40,11 +40,11 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
                         return d.year + '年' + d.month + '月'
                     }
                 },
-                { field: 'total', width: 160, title: '营业额(元)', sort: true ,templet:function(d){
+                { field: 'total', width: 160, title: '营业额(元)' ,templet:function(d){
                     return Number(d.total.toFixed(2)).toLocaleString()
                 }},
-                { field: 'order_count', width: 160, title: '客单量(笔)', sort: true },
-                { field: 'good_count', width: 160, title: '商品销量(件)', sort: true },
+                { field: 'order_count', width: 160, title: '客单量(笔)' },
+                { field: 'good_count', width: 160, title: '商品销量(件)' },
                 { field: 'operation', width: 160, title: '详情', toolbar: '#barDemo' },
 
             ]],
@@ -128,12 +128,12 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
             },
             cols: [[
                 { field: 'time', width: 200, title: '支付时间' },
-                { field: 'number', width: 200, title: '订单号', sort: true },
-                { field: 'amount', width: 160, title: '金额(元)', sort: true,templet:function(d){
+                { field: 'number', width: 200, title: '订单号' },
+                { field: 'amount', width: 160, title: '金额(元)',templet:function(d){
                     return Number(d.amount.toFixed(2)).toLocaleString()
                 }},
-                // { field: 'guestOrders', width: 160, title: '客单量(笔)', sort: true },
-                { field: 'ofNumber', width: 160, title: '商品销量(件)', sort: true ,templet:function(d){
+                // { field: 'guestOrders', width: 160, title: '客单量(笔)' },
+                { field: 'ofNumber', width: 160, title: '商品销量(件)' ,templet:function(d){
                     var NUM=0;
                     d.goodsList.forEach((item,index)=>{
                         NUM+=item.count
@@ -141,7 +141,7 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
                     return NUM
                 }
               },
-              { field: 'refund', width: 160, title: '退款数(件)', sort: true,templet:function(d){
+              { field: 'refund', width: 160, title: '退款数(件)',templet:function(d){
                 var NUM=0;
                 d.goodsList.forEach((item,index)=>{
                     NUM+=item.refund_count

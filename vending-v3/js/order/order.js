@@ -39,12 +39,12 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         token,
       },
       cols: [[
-        { field: 'info', width: 210, title: '终端名称', align: 'center' },
+        { field: 'info', width: 210, title: '终端名', align: 'center' },
         // { field: 'machineId', width: 220, title: '设备编号', },
         // { field: 'CreationTime', width: 100, title: '下单时间', },
 
         { field: 'number', width: 180, title: '订单编号' },
-        // { field: 'bili', width: 100, title: '购买数量', sort: true },
+        // { field: 'bili', width: 100, title: '购买数量' },
         // { field: 'bili', width: 120, title: '订单金额', },
         // { field: 'bili', width: 120, title: '支付金额', },
         // { field: 'hah', width: 160, title: '成本', },
@@ -293,7 +293,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       cols: [[
         // { checkbox: true },
         { field: 'goods_images', width: 120, title: '图片', templet: "#imgtmp" },
-        { field: 'goods_Name', width: 140, title: '商品名称', },
+        { field: 'goods_Name', width: 140, title: '商品名', },
         { field: 'goods_Core', width: 140, title: '商品编号', },
         { field: 'count', width: 120, title: '购买数量', align: 'center' },
         { field: 'refund_count', width: 120, title: '已退款数量', align: 'center' },

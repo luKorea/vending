@@ -25,15 +25,9 @@
                         </div>
                         <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
                     </div> -->
-                    <div class="left-mian" style="margin-left: -10px;">
-                        <div class="accountContnet">
-                            <!-- <div class="input-account">
-                              <input type="text" placeholder="输入用户账号">
-                          </div> -->
-                            <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
-                            <!-- <div class="fixed-account">
-                              <span> 粤宝商户-中邮广州</span>
-                          </div> -->
+                    <div class="left-mian">
+                        <div class="accountContnet" style="margin-left: 15px;">
+                            <p style="margin:20px 20px 10px;color:#be954a;">商户列表</p>
                             <div id="test1" class="demo-tree demo-tree-box"></div>
                         </div>
                         <!-- 右侧栏 -->
@@ -161,9 +155,10 @@
             <div class="setMaskBox">
                 <ul class="setNav">
                     <li class="active">终端详情</li>
-                    <li>货道详情</li>
-                    <li>销售详情</li>
-                    <li>出货记录</li>
+                    <li class="aisleDetailsTab">货道详情</li>
+                    <li class="salesDetails">销售详情</li>
+                    <li class="shipmentDetails">出货记录</li>
+                    <li class="payTypeSet">支付类型设置</li>
                     <div class="tabLine">
                     </div>
                 </ul>
@@ -180,7 +175,7 @@
                                     <form class="layui-form" lay-filter="setDataVal" style="width: 100%;">
                                         <div class="formFlex">
                                             <div style="max-width: 370px;" class="key-contnet">
-                                                <div class="key-text">终端名称</div>
+                                                <div class="key-text">终端名</div>
                                                 <input type="text" class="notAllowed" disabled name="info"
                                                     class="KyeText">
                                             </div>
@@ -247,6 +242,19 @@
                                         </div>
                                     </form>
                                 </div>
+                                <!-- <div>
+                                    <form class="layui-form" lay-filter="setDataVal" style="width: 100%;">
+                                        <div style="max-width: 370px;" class="key-contnet">
+                                            <div class="key-text">自动退款设置</div>
+                                            <div style="width: 100%;" class="layui-form" lay-filter="">
+                                                <select name="" id="" lay-filter="stateSelect">
+                                                    <option value="">关闭自动退款</option>
+                                                    <option value="0">开启自动退款</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div> -->
                             </div>
                             <!-- 支付方式状态 -->
                             <!-- <div class="playState">
@@ -304,7 +312,13 @@
                     </li>
                     <!-- 货道详情 -->
                     <li class="aisleDetails" style="display: none;">
-                        <form action="" class="layui-form" style="width: 100%;">
+                        <div class="detailsDel" style="margin-bottom: 10px;">
+                            <button class="layui-btn layui-btn-normal  delBtn  btn "
+                            type="button">
+                            <span>删除</span>
+                        </button>
+                        </div>
+                        <form action="" class="layui-form" lay-filter="delDetalis" style="width: 100%;">
                         <div class="aisleGoodsCont">
                             <div class="aisleListCont flexTwo">
                                 <div class="listIndex">
@@ -381,7 +395,6 @@
                                     <div class="numderTop">
                                         <img src="../img/failure.png" alt="">
                                         <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
-
                                     </div>
                                     <div class="numderBottom">
                                         <div class="status1">正常</div>
@@ -508,6 +521,29 @@
                             </div>
                         </div>
                     </li>
+                    <!-- 设置支付类型 -->
+                    <li class="paySet" style="display: none;"> 
+                        <div>
+                            <header>售货机支付设置</header>
+                        </div>
+                        <div class="payChoose">
+                            <form class="layui-form" lay-filter="setDataVal" style="width: 100%;">
+                                <div style="max-width: 370px;" class="key-contnet">
+                                    <div class="key-text">支付类型</div>
+                                    <div style="width: 100%;" class="layui-form" lay-filter="">
+                                        <select name="payTypeChoose" id="payTypeChoose" lay-filter="payTypeChoose">
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="setFooter" style="margin-top: 35px;">
+                            <button class="layui-btn layui-btn-normal paySetBtn btn"
+                                style="margin-top: 0;">
+                                <span>确定</span>
+                            </button>
+                        </div>
+                    </li>
                 </ul>
                 <!-- </div> -->
 
@@ -531,7 +567,7 @@
                                     <input type="text" name="sNumber">
                                 </li>
                                 <li class="listFlex">
-                                    <label for=""><span style="color: red;">*</span>终端名称</label>
+                                    <label for=""><span style="color: red;">*</span>终端名</label>
                                     <input type="text" name="tName">
                                 </li>
                                 <li class="listFlex">
@@ -741,7 +777,7 @@
                     <div class="materialKeyCont">
                         <div style="max-width: 350px;" class="key-contnet">
                             <div class="key-text">关键字</div>
-                            <input type="text" placeholder="商品名称" class="KyeText" name="GoodsKyeText">
+                            <input type="text" placeholder="商品名" class="KyeText" name="GoodsKyeText">
                         </div>
                         <div class="key-contnet">
                             <!-- 商品类目: -->

@@ -17,23 +17,23 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       }
       , cols: [[
         { field: '1', width: 80, title: '', templet: "#imgtmp", event: 'rank' },
-        { field: 'rank', width: 80, title: '排序', sort: true },
-        { field: 'classifyName', width: 150, title: '类目名称', sort: true },
+        { field: 'rank', width: 80, title: '排序' },
+        { field: 'classifyName', width: 150, title: '类目名' },
         { field: 'remark', width: 150, title: '备注' },
         // { field: 'type', width: 180, title: '使用机型'},
         {
           field: 'user', width: 150, title: '创建人', templet: function (d) {
             return d.user != null ? d.user.userName : ''
           }
-        },  // { field: 'users', width: 180, title: '商户名', sort: true }, //templet: '<div>{{d.user.userName}}</div>'      
+        },  // { field: 'users', width: 180, title: '商户名' }, //templet: '<div>{{d.user.userName}}</div>'      
         {
-          field: 'classifyTime', width: 200, title: '创建时间', sort: true
+          field: 'classifyTime', width: 200, title: '创建时间'
         },
         {
           field: 'lastUser', width: 150, title: '最后操作人', 
         },
         {
-          field: 'lastTime', width: 190, title: '最后操作时间', sort: true
+          field: 'lastTime', width: 190, title: '最后操作时间'
         },
         { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' }
       ]]
@@ -142,7 +142,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       //   layer.msg('请填写类目排序');
       // }
     } else {
-      layer.msg('请填写类型名称');
+      layer.msg('请填写类型名');
     }
   })
   // 监听操作
@@ -225,7 +225,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       //   layer.msg('排序不能为空');
       // }
     } else {
-      layer.msg('请填写类型名称');
+      layer.msg('请填写类型名');
     }
   })
 

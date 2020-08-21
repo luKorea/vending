@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../assets/public/documentWrite.js"></script>
+    <title>支付类型设置</title>
+</head>
+
+<body>
+    <div class="payTypeWrap">
+        <div class="margin">
+            <div class="header">
+                <button class="layui-btn layui-btn-normal  btn addTypeBtn">
+                    <span>添加支付类型</span>
+                </button>
+                <button class="layui-btn layui-btn-normal  btn refreshBtn">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    <span>刷新</span>
+                </button>
+            </div>
+            <div class="dataList">
+                <div class="listTable">
+                    <table class="layui-hide" id="payTypeList" lay-filter="payTypeList"></table>
+                </div>
+            </div>
+        </div>
+        <!--添加  -->
+        <div class="addpayType maskContnet" >
+            <div class="addBox margin0">
+                <div class="playHeader">
+                    <span>添加支付类型</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="addBody">
+                    <div class="listFlex">
+                        <label for=""><span style="color: red;">*</span>支付类型名:</label>
+                        <input type="text">
+                    </div>
+                    <div class="listFlex">
+                        <button class="layui-btn layui-btn-normal uploadBtn  btn">
+                            <span>点击上传支付类型图标</span>
+                            <input type="file" accept="image/*" name="uploadImg">
+                        </button>
+                    </div>
+                </div>
+                <div style="text-align: center;padding-bottom: 20px;">
+                    <button class="layui-btn layui-btn-normal btn RdetermineBtn" style="margin: 0 0 0 15px;">
+                        <span>确定</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn addCancelBtn" style="margin: 0 0 0 15px;">
+                        <span>取消</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

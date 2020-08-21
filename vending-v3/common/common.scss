@@ -72,3 +72,27 @@ a {
     justify-content: center;
     align-items: center;
 }
+.backgroundBlack{
+    background:rgba(0,0,0,0.4) ;
+
+}
+.Wrap{
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    font-size: 0.28rem;
+}
+// .mask{
+//     position: fixed;
+//     z-index: 23;
+//     width: 100%;
+//     left: 0px;
+//     top: 0px;
+//     height: 100%;
+//     background: rgba(0,0,0,0.3);
+//     display: none;
+//     transition: all 0.3s;
+// }
+.top30{
+    top: 30% !important;
+}

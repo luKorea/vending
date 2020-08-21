@@ -17,8 +17,11 @@ var entry = {
         release:'./js/advertising/release.js',
         myInformation:'./js/my/myInformation.js',
         notice:'./js/notice/notice.js',
+        paySet:'./js/merchants/paySet.js',
+        payType:'./js/merchants/payType.js',
         //移动端版本
-        M_login:'./js/mobile/login/login.js'
+        M_login:'./js/mobile/login/login.js',
+        M_my:'./js/mobile/my/my.js'
     }
     //页面配置
 var htmlConfig = [
@@ -71,9 +74,18 @@ var htmlConfig = [
     {
         name: "notice",
     },
+    {
+        name: "paySet",
+    },
+    {
+        name: "payType",
+    },
     //移动端部分
     {
         name: "M_login",
+    },
+    {
+        name: "M_my",
     },
 ];
 module.exports = {

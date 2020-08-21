@@ -199,6 +199,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         } else {
                             layer.msg(res.message, { icon: 2 });
                         }
+                    },
+                    error:function(err){
+                        layer.msg('服务器请求超时', { icon: 2 });
                     }
                 })
             })
@@ -238,6 +241,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     } else {
                         layer.msg(res.message, { icon: 2 });
                     }
+                },
+                error:function(err){
+                    layer.msg('服务器请求超时',{icon:2})
                 }
             })
         } else {
@@ -296,6 +302,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     } else {
                         layer.msg(res.message, { icon: 2 });
                     }
+                },
+                error:function(err){
+                    layer.msg('服务器请求超时',{icon:2})
                 }
             })
 
