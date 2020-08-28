@@ -9,7 +9,7 @@
 .layui-table-view{
     border-bottom: none;
 }
-.changeBox{
+.changeBox,.addBox{
     width: 1000px;
     position: relative;
     margin: 2vh auto 50px;
@@ -19,12 +19,12 @@
     box-sizing: border-box;
     transition: all 0.3s;
 }
-.changeBody{
+.changeBody,.addBody{
     width: 100%;
     box-sizing: border-box;
     padding: 25px 25px 30px;
 }
-.changeBody>form{
+.changeBody>form,.addBody>form{
     width: 100%;
 }
 .listFlex label{
@@ -66,3 +66,4 @@ input:hover,textarea:hover{
 .sidebar{
     max-height: 750px;
 }
+textarea{resize:none}

@@ -73,8 +73,8 @@ layui.use(['form', 'layer'], function () {
                                 sessionStorage.accountPass=''
                             }
                             // return ;
-                            // window.location.href="../index/index.html"
-                            location.replace('M_login.html')
+                            window.location.href="index.html"
+                            // location.replace('M_login.html')
                         } else {
                             layer.msg(res.message,{icon:2})
                         }

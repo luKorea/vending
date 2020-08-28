@@ -21,7 +21,12 @@ var entry = {
         payType:'./js/merchants/payType.js',
         //移动端版本
         M_login:'./js/mobile/login/login.js',
-        M_my:'./js/mobile/my/my.js'
+        M_my:'./js/mobile/my/my.js',
+        M_managementCenter:'./js/mobile/my/managementCenter.js',
+        M_machine:'./js/mobile/machine/machine.js',
+        M_machine:'./js/mobile/machine/machine.js',
+        M_machineChild:'./js/mobile/machine/machineChild.js',//移动端售货机子页面
+        // M_machine
     }
     //页面配置
 var htmlConfig = [
@@ -86,6 +91,18 @@ var htmlConfig = [
     },
     {
         name: "M_my",
+    },
+    {
+        name: "M_footerNav",
+    },
+    {
+        name: "M_managementCenter",
+    },
+    {
+        name: "M_machine",
+    },
+    {
+        name: "M_machineChild",
     },
 ];
 module.exports = {

@@ -27,7 +27,7 @@
             </div>
         </div>
         <!--添加  -->
-        <div class="addpayType maskContnet" >
+        <div class="addpayType maskContnet" style="overflow-y: auto;" >
             <div class="addBox margin0">
                 <div class="playHeader">
                     <span>添加支付类型</span>
@@ -38,13 +38,50 @@
                 <div class="addBody">
                     <div class="listFlex">
                         <label for=""><span style="color: red;">*</span>支付类型名:</label>
-                        <input type="text">
+                        <input type="text" name="name">
                     </div>
                     <div class="listFlex">
                         <button class="layui-btn layui-btn-normal uploadBtn  btn">
                             <span>点击上传支付类型图标</span>
                             <input type="file" accept="image/*" name="uploadImg">
                         </button>
+                    </div>
+                    <div class="logiImg">
+                        <img src="" alt="">
+                    </div>
+                </div>
+                <div style="text-align: center;padding-bottom: 20px;">
+                    <button class="layui-btn layui-btn-normal btn RdetermineBtn" style="margin: 0 0 0 15px;">
+                        <span>确定</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn addCancelBtn" style="margin: 0 0 0 15px;">
+                        <span>取消</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- 编辑 -->
+        <div class="editpayType maskContnet" style="overflow-y: auto;" >
+            <div class="editBox margin0">
+                <div class="playHeader">
+                    <span>添加支付类型</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="editBody">
+                    <div class="listFlex">
+                        <label for=""><span style="color: red;">*</span>支付类型名:</label>
+                        <input type="text" name="name">
+                    </div>
+                    <div class="listFlex">
+                        <button class="layui-btn layui-btn-normal uploadBtn  btn">
+                            <span>点击上传支付类型图标</span>
+                            <input type="file" accept="image/*" name="uploadImg">
+                        </button>
+                    </div>
+                    <div class="logiImg">
+                        <img src="" alt="">
                     </div>
                 </div>
                 <div style="text-align: center;padding-bottom: 20px;">
@@ -59,5 +96,23 @@
         </div>
     </div>
 </body>
-
+<script type="text/html" id="imgtmp">
+    <div>
+        <img src="{{d.name=='支付宝'?'http://119.29.104.217:8087//image/e308231b-fce5-4b2d-9161-56aa0fa0a02e.jpg':d.name=='微信'?'http://119.29.104.217:8087//image/c4dbfd4e-9f68-4f6a-b240-5f0644b1410b.jpg':d.logo}}  " style="width: 40px; height: 40px;">
+        
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn {{d.name=='支付宝'?'hide':''}} {{d.name=='微信'?'hide':''}} " lay-event="edit">
+            <span style="color:#fff;">编辑</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn  " lay-event="status">
+            <span style="color:#fff;">{{d.status==1?'禁用':'启用'}}</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn {{d.name=='支付宝'?'hide':''}} {{d.name=='微信'?'hide':''}}  del-btn" lay-event="del">
+            <span style="color:#fff;">删除</span>
+        </button>
+    </div>
+</script>
 </html>

@@ -82,12 +82,12 @@ textarea{resize:none; background:inherit;}
 .hui-img-list h1{font-size:16px; line-height:1.8em; font-weight:400;}
 .hui-img-list p{font-size:13px; line-height:1.6em; color:#999999; word-break:break-word;}
 /* 按钮 */
-.hui-button{-webkit-appearance:none; -moz-appearance:none; appearance:none; border-radius:3px; border:0; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; display:block; font-size:15px; height:42px; line-height:42px; outline:0; overflow: hidden; position:relative; text-align:center; color:#656B79; background-color:#F6F8F9; box-shadow:0 0 1px #B8BBBF; padding:0px 16px;}
+.hui-button{-webkit-appearance:none; -moz-appearance:none; appearance:none; border-radius:3px; border:0; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; display:block; font-size:15px; height:42px; line-height:42px; outline:0; overflow: hidden; position:relative; text-align:center; color:#606266; background-color:#fff; box-shadow:0 0 1px #B8BBBF; padding:0px 16px;}
 .hui-button *{color:inherit;}
 .hui-button:active{background:#C8C8C8;}
 .hui-button-large{width:100%;}
 .hui-primary{background:#be954a !important; color:#FFFFFF !important;}
-.hui-primary:active{background:#0066CC !important;}
+.hui-primary:active{background:#ccb385 !important;}
 .hui-danger{background:#EF4F4F !important; color:#FFFFFF !important;}
 .hui-danger:active{background:#FF0000 !important;}
 .hui-button-small{height:30px; line-height:30px; padding:0px 15px; text-align:center; font-size:14px; border-radius:3px;}
@@ -206,7 +206,7 @@ textarea{resize:none; background:inherit;}
 #hui-loading-in > div:nth-child(4){-webkit-animation:hui-line-scale 1s 0.4s infinite cubic-bezier(.2, .68, .18, 1.08); animation:hui-line-scale 1s 0.4s infinite cubic-bezier(.2, .68, .18, 1.08);}
 #hui-loading-in > div:nth-child(5){-webkit-animation:hui-line-scale 1s 0.5s infinite cubic-bezier(.2, .68, .18, 1.08); animation:hui-line-scale 1s 0.5s infinite cubic-bezier(.2, .68, .18, 1.08);}
 #hui-loading-in > div{background-color:#be954a; width:4px; height:25px; border-radius:2px; margin:2px; -webkit-animation-fill-mode:both; animation-fill-mode:both; display:inline-block;}
-#hui-loading-text{line-height:30px; text-align:center; padding-top:5px; font-size:12px; color:#be954a;}
+#hui-loading-text{line-height:30px; text-align:center; padding-top:5px; font-size:12px; color:#fff;}
 /* action sheet */
 @keyframes hui-a-down{0%{bottom:-100px;} 100%{bottom:0}}
 @-moz-keyframes hui-a-down{0%{bottom:-35px;} 100%{bottom:0}}

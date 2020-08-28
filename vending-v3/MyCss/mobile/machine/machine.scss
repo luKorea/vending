@@ -1,0 +1,159 @@
+@import '../../../common/common.scss';
+.wrap{
+    background-color: #f0eff5;
+    min-height: 100vh;
+}
+body{
+    background-color: #f0eff5;
+}
+.machineContnet{
+    width: 100%;
+    .machineLenght{
+        width: 100%;
+        background: $color;
+        padding: 0.1rem 4% 0;
+        box-sizing: border-box;
+        overflow: hidden;
+        // height: 1rem;    
+        font-family:PingFang SC;
+        img{
+            display: inline-block;
+            margin-top: 0.01rem;
+            width: 100%;
+        }
+        .allmachine{
+            text-align: center;
+            margin-top: -2rem;
+            p{
+                font-size:0.26rem;
+                font-weight:500;
+                color:rgba(255,255,255,1);
+                margin-bottom: 0.4rem;
+            }
+            span{
+                font-size:0.72rem;
+                font-weight:500;
+                color:rgba(255,255,255,1);
+            }
+        }
+    }
+    .machineList{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.3rem 3% 0;
+        .list{
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 0.2rem;
+            border-radius: 0.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+            background: #ffffff;
+            padding-left: 0.15rem;
+            .info{
+                color: rgb(51, 51, 51);
+                font-size: 0.36rem;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                line-height: 0.6rem;
+            }
+            .address{
+                line-height: 0.8rem;
+                color: rgb(153, 153, 153);
+                font-size: 0.28rem;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            .status{
+                li{
+                    flex: 1;
+                    line-height: 0.6rem;
+                    margin-bottom: 0.15rem;
+                }
+            }
+        }
+    }
+}
+.conditionsHalf{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 4%;
+    height: 60vh;
+    overflow-y: auto ;
+    background: #ffffff;
+    border-radius: 0 0 .266667rem .266667rem;
+    position: absolute;
+    top: -60vh;
+    transition: all 0.5s;
+    .conditionList{
+        margin-bottom: 0.2rem;
+        header{
+            font-size: .32rem;
+            line-height: 0.8rem;
+            font-weight: 500;
+        }
+        li{
+            display: inline-block;
+            width: 1.4rem;
+            height: .6rem;
+            line-height: .6rem;
+            text-align: center;
+            background: #f1f1f1;
+            opacity: 1;
+            border-radius: 5px;
+            color: #666;
+            margin-right: .36rem;
+        }
+    }
+    .conditionFooter{
+        width: 92%;
+        margin: .4rem auto 0;
+        button{
+            width: 45%;
+        }
+    }
+}
+.operationBox{
+    position: absolute;
+    overflow-y: auto;
+    background: #ffffff;
+    // padding: 0 4%;
+    width: 100%;
+    height: 100vh;
+    transition: all 0.5s;
+    top: -100%;
+}
+.operationBody{
+    margin-top: 0.94rem;
+    .operationNav{
+        flex-wrap: wrap;
+        padding-top: 0.3rem;
+        li{
+            width: 33.3%;
+            text-align: center; 
+            box-sizing: border-box;    
+            padding: 0 4%;
+            margin-bottom: 0.5rem;
+            img{
+                width: 50%;
+            }
+            p{
+                color: #333;
+                font-size: .28rem;
+                text-align: center;
+                padding-top: 0.1rem;
+            }
+        }
+    }
+}
+.collectionBox{
+    top: -100%;
+}
+.childConten{
+    width: 100%;
+    height: 100%;
+    .childBox{
+        top: 0;
+    }
+}

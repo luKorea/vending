@@ -328,10 +328,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
 
     // 提交审核
     $('.submitAuditBtn').click(function () {
-        if (!auditFla) {
-            layer.msg('您没有审核广告素材权限!', { iocn: 7 });
-            return
-        }
+        // if (!auditFla) {
+        //     layer.msg('您没有审核广告素材权限!', { iocn: 7 });
+        //     return
+        // }
         var submitCheckStatus = table.checkStatus('tableId');
         console.log(submitCheckStatus);
         var checkList = [];

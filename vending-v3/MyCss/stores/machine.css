@@ -662,3 +662,12 @@ input:hover{
 .payChoose{
     margin-top: 35px;
 }
+.selectInput input{
+    width: 100% !important;
+}
+.layui-input-block>div{
+    display: block;
+}
+.layui-input-block{
+    padding: 3px 15px;
+}

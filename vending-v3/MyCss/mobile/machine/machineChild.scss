@@ -1,0 +1,48 @@
+@import '../../../common/common.scss';
+.aisleCont{
+    width: 92%;
+    margin: 0.2rem auto ;
+}
+.aisleList{
+    flex-wrap: wrap;
+    background-color: rgba(236, 214, 173, 0.5);
+    margin-bottom: 0.3rem;
+    li{
+        width: 30%;
+        // padding:0 4%;
+        margin: 0.15rem 1.5% 0;
+        margin-bottom: 0.2rem;
+    }
+    .listIndex{
+        text-align: center;
+        flex-shrink: 0;
+    }
+    .aisleNumderGoods{
+        height: 150px;
+        background: #fff;
+        border: 1px solid #787c80;
+        border-radius: 2px;
+        position: relative;
+        flex-shrink: 0;
+        .numberTop{
+            // width: 100%;
+            border-bottom: 1px solid #787c80;
+            img{
+                width: 100%;
+            }
+        }
+        .numderBottom{
+            border-bottom: 1px solid rgba(120, 124, 128, 0.3);
+            .status1{
+                background-color: #67c23a;
+                color: #fff;
+            }
+            div{
+                width: 50%;
+                text-align: center;;
+            }
+        }
+    }
+}
+
+

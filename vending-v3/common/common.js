@@ -13,15 +13,17 @@ function ajaxFun(url,type,userToken,data){
       })
 }
 // 请求方法
-function loadAjax(url,type,userToken,data,mask,element,elementChild){
+function loadAjax(url,type,userToken,data,mask,element){
     return new Promise(function(resolve,reject){
         ajaxFun(url,type,userToken,data).then(res=>{
             if(mask){
-                loadingOut();
+                setTimeout(_=>{
+                    loadingOut();
+                },300)       
             }
             if(res.code==200){
                 if(element){
-
+                    closeWindow(element)
                 }
                 resolve(res)
             }else if(res.code==403){
@@ -50,4 +52,46 @@ function loadingOut(){
 function toastTitle(title,icon){
     hui.iconToast(title, icon)
 }
-export {loadAjax,loadingWith,loadingOut,toastTitle}
+// 关闭父弹窗
+function closeParents(that,top){
+    $(that).parents('.maskBox').removeClass(top).parents('.maskContent').fadeOut()
+}
+// 弹窗
+function showPopup(ele,eleChild,top){
+    $(ele).fadeIn(100).children(eleChild).addClass(top);
+}
+// 关闭本身
+function closeWindow(that,top){
+    $(that).fadeOut().children('.maskBox').removeClass(top)
+}
+// 正则判断密码是否符合规定
+function passRegular(that) {
+    var reg = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,.\/]).{6,64}$/;
+    var passwork = $(that).val();
+    if (passwork) {
+      if (!(reg.test(passwork))) {
+        toastTitle('密码必须包含英文和数字以及特殊字符且不少于6位数','warn')
+        $(that).val('')
+        return false;
+      }
+    }
+  };
+  function outLogin(){
+    loadAjax('/api/user/logout', 'post',sessionStorage.token).then(res=>{
+        sessionStorage.token = '';
+        location.replace('M_login.html');
+    }).catch(err=>{
+        toastTitle(err.message,'error')
+    })
+  }
+export {
+    loadAjax,
+    loadingWith,
+    loadingOut,
+    toastTitle,
+    showPopup,
+    closeParents,
+    closeWindow,
+    passRegular,
+    outLogin
+}

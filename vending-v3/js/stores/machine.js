@@ -61,7 +61,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {
                     field: 'openStatus', width: 130, title: '营业状态', align: 'center', templet: function (d) {
-                        return `<div><span class="${d.openStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.openStatus == 0 ? '不营业' : '营业'}</span></div>`
+                        return `<div><span class="${d.openStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.openStatus == 0 ? '无营业' : '营业'}</span></div>`
                     }
                 },
                 {
@@ -156,10 +156,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         if (obj.event == 'set') {
             x = obj.data.wayX;
             y = obj.data.wayY;
-            if(AisleDetailsFlag){
+            if (AisleDetailsFlag) {
                 getGoodsWay(obj.data.machineId);
             }
-            
+
             $('.setUpCont').show();
             // $('.setNav li').eq(0).addClass('active').siblings().removeClass('active');
             // $('.tabLine').css({
@@ -189,7 +189,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
             if (paySetFlag) {
                 //支付方式
-                payTypeFun(Number(sessionStorage.machineGoodsId));
+                // payTypeFun(Number(sessionStorage.machineGoodsId));
+                supportpay(machineSetData.machineId,machineSetData.userNum);
             }
 
         } else if (obj.event == 'edit') {
@@ -296,53 +297,60 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                 if (statusType.actionStatus == 1) {
                                     $.ajax({
                                         type: 'post',
-                                        url: '/api/machine/activeMachine',
+                                        url: '/api/pushActive',
                                         headers: {
                                             "Content-Type": "application/json",
                                             token,
                                         },
                                         data: JSON.stringify({
-                                            machineId: machineSetData.machineId,
-                                            openStatus: '1'
+                                            machine: machineSetData.machineId,
+                                            action: 'true'
                                         }),
-                                        success: function (Sres) {
-                                            if (Sres.code == 200) {
+                                        success: function (res) {
+                                            // console.log(res)
+                                            // $('.mask').fadeOut();
+                                            // $('.maskSpan').removeClass('maskIcon');
+                                            if (res == 'true') {
+                                                // layer.msg('操作成功', { icon: 1 });
+                                                // machineList.reload({
+                                                //     where: {}
+                                                // })
                                                 $.ajax({
                                                     type: 'post',
-                                                    url: '/api/pushActive',
+                                                    url: '/api/machine/activeMachine',
                                                     headers: {
                                                         "Content-Type": "application/json",
                                                         token,
                                                     },
                                                     data: JSON.stringify({
-                                                        machine: machineSetData.machineId,
-                                                        action: 'true'
+                                                        machineId: machineSetData.machineId,
+                                                        openStatus: '1'
                                                     }),
-                                                    success: function (res) {
-                                                        console.log(res)
+                                                    success: function (Sres) {
                                                         $('.mask').fadeOut();
                                                         $('.maskSpan').removeClass('maskIcon');
-                                                        if (res == 'true') {
+                                                        if (Sres.code == 200) {
                                                             layer.msg('操作成功', { icon: 1 });
                                                             machineList.reload({
                                                                 where: {}
                                                             })
                                                         } else {
-                                                            layer.msg('操作失败', { icon: 2 });
+                                                            layer.msg(Sres.message, { icon: 2 })
                                                         }
-                                                    }, errpr: function (err) {
-                                                        $('.mask').fadeOut();
-                                                        $('.maskSpan').removeClass('maskIcon');
-                                                        layer.msg('服务器请求超时', { icon: 2 });
                                                     }
                                                 })
                                             } else {
                                                 $('.mask').fadeOut();
                                                 $('.maskSpan').removeClass('maskIcon');
-                                                layer.msg(Sres.message, { icon: 2 })
+                                                layer.msg('操作失败', { icon: 2 });
                                             }
+                                        }, errpr: function (err) {
+                                            $('.mask').fadeOut();
+                                            $('.maskSpan').removeClass('maskIcon');
+                                            layer.msg('服务器请求超时', { icon: 2 });
                                         }
                                     })
+
                                 } else {
                                     $('.mask').fadeOut();
                                     $('.maskSpan').removeClass('maskIcon');
@@ -379,44 +387,56 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                 if (statusType.actionStatus == 1) {
                                     $.ajax({
                                         type: 'post',
-                                        url: '/api/machine/activeMachine',
+                                        url: '/api/pushActive',
                                         headers: {
                                             "Content-Type": "application/json",
                                             token,
                                         },
                                         data: JSON.stringify({
-                                            machineId: machineSetData.machineId,
-                                            openStatus: '0'
+                                            machine: machineSetData.machineId,
+                                            action: 'false'
                                         }),
-                                        success: function (Sres) {
-                                            if (Sres.code == 200) {
+                                        success: function (res) {
+                                            // $('.mask').fadeOut();
+                                            // $('.maskSpan').removeClass('maskIcon');
+                                            // layer.msg('暂停营业成功', { icon: 1 });
+                                            // machineList.reload({
+                                            //     where: {}
+                                            // })
+                                            if (res == 'true') {
                                                 $.ajax({
                                                     type: 'post',
-                                                    url: '/api/pushActive',
+                                                    url: '/api/machine/activeMachine',
                                                     headers: {
                                                         "Content-Type": "application/json",
                                                         token,
                                                     },
                                                     data: JSON.stringify({
-                                                        machine: machineSetData.machineId,
-                                                        action: 'false'
+                                                        machineId: machineSetData.machineId,
+                                                        openStatus: '0'
                                                     }),
-                                                    success: function (res) {
+                                                    success: function (Sres) {
                                                         $('.mask').fadeOut();
-                                                        $('.maskSpan').removeClass('maskIcon');
-                                                        layer.msg('取消营业成功', { icon: 1 });
-                                                        machineList.reload({
-                                                            where: {}
-                                                        })
+                                                        $('.maskSpan').removeClass('maskIcon')
+                                                        if (Sres.code == 200) {
+                                                            layer.msg('暂停营业成功', { icon: 1 });
+                                                            machineList.reload({
+                                                                where: {}
+                                                            })
+                                                        } else {
+
+                                                            layer.msg(Sres.message, { icon: 2 })
+                                                        }
                                                     }
                                                 })
                                             } else {
                                                 $('.mask').fadeOut();
-                                                $('.maskSpan').removeClass('maskIcon')
-                                                layer.msg(Sres.message, { icon: 2 })
+                                                $('.maskSpan').removeClass('maskIcon');
+                                                layer.msg('操作失败', { icon: 2 });
                                             }
                                         }
                                     })
+
                                 } else {
                                     $('.mask').fadeOut();
                                     $('.maskSpan').removeClass('maskIcon')
@@ -1315,6 +1335,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('数量和容量为为必填', { icon: 7 });
             return;
         }
+        if(!(Number($('.aisleList input[name="total"]').val())>=Number($('.aisleList input[name="count"]').val()))){
+            layer.msg('货道容量不能小于当前数量', { icon: 7 });
+            return;
+        }
         var editData = JSON.stringify({
             machineId: machineSetData.machineId,
             id: goodsDetails.id,
@@ -1385,6 +1409,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             console.log(reduction)
         }
     });
+    $('.testNumdev input').keyup(function () {
+        var num = $(this).val(),
+            re = /^\d*$/;
+        if (!re.test(num)) {
+            layer.msg('只能输入正整数', { icon: 7 });
+            $(this).val('')
+        } else {
+            // reduction = $(this).val();
+            // console.log(reduction)
+        }
+    });
     var delArr = [];
     var delIndex = null;
     $('.delBtn').click(function () {
@@ -1425,46 +1460,115 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg(err.message, { icon: 2 })
         })
     };
+    //支付类型设置
+    // function payTypeFun(id) {
+    //     var chooseStr = '<option value="0">全部</option>';
+    //     var payList = JSON.stringify({
+    //         merchantId: id,
+    //     })
+    //     loadingAjax('/api/merchant/getPayType', 'post', payList, sessionStorage.token).then(res => {
+    //         console.log(res)
+    //         res.data.forEach((item, index) => {
+    //             chooseStr += `<option value="${item.id}">${item.payType}</option>`
+    //         });
+    //         $('#payTypeChoose').empty();
+    //         $('#payTypeChoose').append(chooseStr);
 
-    function payTypeFun(id) {
-        var chooseStr = '<option value="0">全部</option>';
+    //         $('#payTypeChoose').val(Number(machineSetData.payType));
+    //         form.render('select');
+    //     }).catch(err => {
+    //         $('#payTypeChoose').empty();
+    //         // layer.msg(err.message,{icon:2})
+    //     })
+    // }
+    //支付类型设置
+    // 获取支付参数
+    function supportpay(machindID, merchantsID) {
         var payList = JSON.stringify({
-            merchantId: id,
+            machineId: machindID,
         })
-        loadingAjax('/api/merchant/getPayType', 'post', payList, sessionStorage.token).then(res => {
+        loadingAjax('/api/pay/getMachinePayParam', 'post', payList, sessionStorage.token).then(res => {
             console.log(res)
-            res.data.forEach((item, index) => {
-                chooseStr += `<option value="${item.id}">${item.payType}</option>`
-            });
-            $('#payTypeChoose').empty();
-            $('#payTypeChoose').append(chooseStr);
 
-            $('#payTypeChoose').val(Number(machineSetData.payType));
-            form.render('select');
-        }).catch(err => {
-            $('#payTypeChoose').empty();
-            // layer.msg(err.message,{icon:2})
-        })
-    }
-    // payTypeFun(Number(sessionStorage.machineID));
-    $('.paySetBtn').click(function () {
-        console.log($('#payTypeChoose').val());
-        if ($('#payTypeChoose').val() == 0) {
-            layer.msg('请选择支付类型', { icon: 7 });
-            return;
-        }
-        var payData = JSON.stringify({
-            machineId: machineSetData.machineId,
-            payId: Number($('#payTypeChoose').val())
-        });
-        loadingAjax('api/machine/configMachinePay', 'post', payData, sessionStorage.token, 'mask', '', '', layer).then(res => {
-            console.log(res);
-            layer.msg(res.message, { icon: 1 })
-            machineList.reload({
-                where: {}
+            loadingAjax('/api/pay/getPayParam', 'post', JSON.stringify({merchantId:Number(merchantsID)}), sessionStorage.token).then(pres => {
+                var setPayStr=''
+                res.data.forEach((item,index)=>{
+                    if(item.status==1){
+                        setPayStr+=`<div class="layui-form-item">
+                                        <label class="layui-form-label">${item.tName}：</label>
+                                    <div class="layui-input-block">`
+                    if(item.selectPay.length==0){
+                        setPayStr+=`<input type="radio" lay-filter="radioTest" name="${item.id}" value="${0+'-'+0}" title="无" checked>`
+                    }else{
+                        setPayStr+=`<input type="radio" lay-filter="radioTest" name="${item.id}" value="${item.selectPay[0].mpId+'-'+0}" title="无" >`
+                    }
+                        pres.data.forEach((e,i)=>{
+                            if(item.id==e.payType){
+                                setPayStr+=`<input type="radio" lay-filter="radioTest" name="${item.id}" value="${(item.selectPay.length>0?item.selectPay[0].mpId:0)+'-'+e.id}" title="${e.payee}" ${item.selectPay.length<=0?'':item.selectPay[0].paramId==e.id?'checked':''} >`
+                            }     
+                        })
+                        setPayStr+=`</div>
+                        </div>`
+                    }
+                })
+                $('#setPayList').html(setPayStr)
+                form.render('radio');
+            }).catch(err => {
+                console.log(err)
+                layer.msg(err.message, { icon: 2 })
             })
         }).catch(err => {
             layer.msg(err.message, { icon: 2 })
         })
+    }
+    $('.paySet .paySetBtn').click(function(){
+        var payFormData = form.val("paySetData");
+        console.log(payFormData)
+    })
+    form.on('radio(radioTest)', function(data){
+        console.log(data); //被点击的radio的value值;
+        var dataID=data.value.split('-');
+        console.log(dataID)
+        var setMachinePay=JSON.stringify({
+            machineId:machineSetData.machineId,
+            paramId:Number(dataID[1]) ,
+            mpId:Number(dataID[0])
+        });
+        loadingAjax('/api/pay/updateMachinePayParam','post',setMachinePay,sessionStorage.token).then(res=>{
+            layer.msg(res.message,{icon:1 })
+            supportpay(machineSetData.machineId,machineSetData.userNum);
+        }).catch(err=>{
+            layer.msg(err.message,{icon:2   })
+        })
+      }); 
+    // payTypeFun(Number(sessionStorage.machineID));
+    // $('.paySetBtn').click(function () {
+    //     console.log($('#payTypeChoose').val());
+    //     if ($('#payTypeChoose').val() == 0) {
+    //         layer.msg('请选择支付类型', { icon: 7 });
+    //         return;
+    //     }
+    //     var payData = JSON.stringify({
+    //         machineId: machineSetData.machineId,
+    //         payId: Number($('#payTypeChoose').val())
+    //     });
+    //     loadingAjax('api/machine/configMachinePay', 'post', payData, sessionStorage.token, 'mask', '', '', layer).then(res => {
+    //         console.log(res);
+    //         layer.msg(res.message, { icon: 1 })
+    //         machineList.reload({
+    //             where: {}
+    //         })
+    //     }).catch(err => {
+    //         layer.msg(err.message, { icon: 2 })
+    //     })
+    // })
+    var adda=JSON.stringify({
+        typeId:2,
+        merchantId:56
+    })
+    loadingAjax('/api/pay/getMachineMerchantPay','post',adda,sessionStorage.token).then(res=>{
+        console.log(res);
+    }).catch(err=>{
+        layer.msg(err.message,{icon:2   })
     })
 });

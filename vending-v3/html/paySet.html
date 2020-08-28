@@ -20,9 +20,9 @@
                 <i class="layui-icon layui-icon-right  onLeft"></i>
                 <div class="main">
                     <div class="listHeader">
-                        <!-- <button class="layui-btn layui-btn-normal queryBtnClick btn" >
-							<span>添加支付类型</span>
-                        </button> -->
+                        <button class="layui-btn layui-btn-normal addBtnClick btn" >
+							<span>添加收款账户</span>
+                        </button>
                         <button class="layui-btn layui-btn-normal refreshBtn  btn" >
 							<i class="layui-icon layui-icon-refresh"></i>
 							<span>刷新</span>
@@ -51,51 +51,130 @@
                     <form action="" class="layui-form" lay-filter="SetPay">
                         <div class="listFlex">
                             <label><span style="color: red;">*</span>支付类型：</label>
-                            <input type="text" name="typeIndex" disabled>
-                            <!-- <div class="layui-form" lay-filter="" style="width: 100%;">
-                                <select name="typeIndex" id="" lay-filter="mySelect">
-                                    <option value="1">微信支付</option>
-                                    <option value="2">阿里支付</option>
+                            <!-- <input type="text" name="typeIndex" disabled> -->
+                            <div class="layui-form" lay-filter="" style="width: 100%;">
+                                <select name="typeIndex" id="editTypeSelect" lay-filter="mySelect" disabled>
+                                    <!-- <option value="1">微信支付</option>
+                                    <option value="2">阿里支付</option> -->
                                 </select>
-                            </div> -->
+                            </div>
+                        </div>
+                        <div class="listFlex ">
+                            <label><span style="color: red;">*</span>收款方</label>
+                            <input type="text" name="payee" autocomplete="off">
                         </div>
                         <div class="WeChat">
                             <div class="listFlex ">
                                 <label><span style="color: red;">*</span>微信公众号ID：</label>
-                                <input type="text" name="officialId">
+                                <input type="text" name="officialId" autocomplete="off">
                             </div>
                         </div>
                         <div class="WeChat">
                             <div class="listFlex ">
                                 <label><span style="color: red;">*</span>商户号ID：</label>
-                                <input type="text" name="MerchantsId">
+                                <input type="text" name="MerchantsId" autocomplete="off">
                             </div>
                         </div>
                       <div class="WeChat">
                         <div class="listFlex  ">
                             <label><span style="color: red;">*</span>公众号密钥：</label>
                             <!-- <input type="text" name="app_key"> -->
-                            <textarea name="app_key"  rows="5"></textarea>
+                            <textarea name="app_key"  rows="5"></textarea autocomplete="off">
                         </div>
                       </div>
                         <div class="Alipay">
                             <div class="listFlex ">
                                 <label><span style="color: red;">*</span>支付宝商户ID：</label>
-                                <input type="text" name="aliPayId">
+                                <input type="text" name="aliPayId" autocomplete="off">
                             </div>
                         </div>
                         <div class="Alipay">
                             <div class="listFlex ">
                                 <label><span style="color: red;">*</span>支付宝公钥：</label>
                                 <!-- <input type="text" name="alipay_public_key">  -->
-                                <textarea name="alipay_public_key"  rows="5"></textarea>
+                                <textarea name="alipay_public_key"  rows="5" autocomplete="off"></textarea>
                             </div>
                         </div>
                         <div class="Alipay">
                             <div class="listFlex ">
                                 <label><span style="color: red;">*</span>应用私钥：</label>
                                 <!-- <input type="text" name="app_private_key"> -->
-                                <textarea name="app_private_key"  rows="5"></textarea>
+                                <textarea name="app_private_key"  rows="5" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+                        
+                    </form>
+                    <div style="text-align: center; margin-top: 15px;" class="Medit">
+                        <button class="layui-btn layui-btn-normal btn submit_btn" type="button">
+                            <span>提交</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
+                            <span>取消</span>
+                        </button>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 添加 -->
+        <div class="addePay maskContnet" style="overflow-y: auto;"> 
+            <div class="addBox margin0">
+                <div class="playHeader">
+                    <span>添加支付参数配置</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="addBody">
+                    <form action="" class="layui-form" lay-filter="addPay">
+                        <div class="listFlex">
+                            <label><span style="color: red;">*</span>支付类型：</label>
+                            <!-- <input type="text" name="typeIndex" disabled> -->
+                            <div class="layui-form" lay-filter="" style="width: 100%;">
+                                <select name="typeIndex" id="addTypeSelect" lay-filter="addSelect" >
+                                </select>
+                            </div>
+                        </div>
+                        <div class="listFlex ">
+                            <label><span style="color: red;">*</span>收款方</label>
+                            <input type="text" name="payee" autocomplete="off">
+                        </div>
+                        <div class="WeChat">
+                            <div class="listFlex ">
+                                <label><span style="color: red;">*</span>微信公众号ID：</label>
+                                <input type="text" name="officialId" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="WeChat">
+                            <div class="listFlex ">
+                                <label><span style="color: red;">*</span>商户号ID：</label>
+                                <input type="text" name="MerchantsId" autocomplete="off">
+                            </div>
+                        </div>
+                      <div class="WeChat">
+                        <div class="listFlex  ">
+                            <label><span style="color: red;">*</span>公众号密钥：</label>
+                            <!-- <input type="text" name="app_key"> -->
+                            <textarea name="app_key"  rows="5"></textarea autocomplete="off">
+                        </div>
+                      </div>
+                        <div class="Alipay">
+                            <div class="listFlex ">
+                                <label><span style="color: red;">*</span>支付宝商户ID：</label>
+                                <input type="text" name="aliPayId" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="Alipay">
+                            <div class="listFlex ">
+                                <label><span style="color: red;">*</span>支付宝公钥：</label>
+                                <!-- <input type="text" name="alipay_public_key">  -->
+                                <textarea name="alipay_public_key"  rows="5" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+                        <div class="Alipay">
+                            <div class="listFlex ">
+                                <label><span style="color: red;">*</span>应用私钥：</label>
+                                <!-- <input type="text" name="app_private_key"> -->
+                                <textarea name="app_private_key"  rows="5" autocomplete="off"></textarea>
                             </div>
                         </div>
                         
@@ -126,6 +205,9 @@
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm btn  editBtn"  lay-event="edit">
             <span style="color:#fff;">编辑</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn  del-btn"  lay-event="del">
+            <span style="color:#fff;">删除</span>
         </button>
     </div>
 </script>

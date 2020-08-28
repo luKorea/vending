@@ -61,7 +61,7 @@ function loginFUn(){
         toastTitle(err.message,'error')
     })
 }
-loadingWith('数据加载中请稍后!')
+// loadingWith('数据加载中请稍后!')
 // setTimeout(function(){hui.loading(false,true);}, 2000);
 // hui.iconToast('服务器请求超时', 'error')
 // hui.loading('数据加载中');
