@@ -10,15 +10,19 @@
     li{
         width: 30%;
         // padding:0 4%;
-        margin: 0.15rem 1.5% 0;
+        margin: 0.15rem 1.2% 0;
         margin-bottom: 0.2rem;
     }
     .listIndex{
         text-align: center;
         flex-shrink: 0;
+        span{
+            font-size: 1.2rem;
+            color: #be954a;
+        }
     }
     .aisleNumderGoods{
-        height: 150px;
+        // height: 150px;
         background: #fff;
         border: 1px solid #787c80;
         border-radius: 2px;
@@ -36,11 +40,45 @@
             .status1{
                 background-color: #67c23a;
                 color: #fff;
-            }
-            div{
-                width: 50%;
-                text-align: center;;
-            }
+            };
+            .status2{
+                background-color: gray;
+                color: #fff;
+            };
+            div:nth-child(1) {
+                width: 40%;
+                text-align: center;
+                line-height: 0.7rem;
+            };
+            div:nth-child(2) {
+                width: 60%;
+                text-align: center;
+                line-height: 0.7rem;
+            };     
+        }
+        p{
+            width: 90%;
+            margin: 0 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+    .addAisle{
+        height: 100%;
+        // line-height: 150px;
+        background: #fff;
+        border: 1px solid #787c80;
+        border-radius: 2px;
+        flex-shrink: 0;
+        text-align: center;
+        padding: 0.71rem 0;
+        span{
+            font-size: 1.4rem;
+            color: #8f8a8a;
+            font-weight: 700;
+            opacity: 0.5;
+           
         }
     }
 }

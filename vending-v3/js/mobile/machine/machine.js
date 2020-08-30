@@ -177,3 +177,19 @@ $('.collectionContent').click(function(){
 $('.collectionBox').click(function(){
     event.stopPropagation(); 
 })
+
+// 点击货到详情事件
+var frameWin=null;
+$('.aisleDetalis').click(function(){
+    $('.childConten').show();
+    $('.childData').prop('src','M_machineChild.html');
+    frameWin = $('#childData')[0].contentWindow;
+    setTimeout(()=>{
+        frameWin.ccc();
+    },90)
+  
+    // console.log($('#childData'))
+})
+function machindID(){
+    re
+}
