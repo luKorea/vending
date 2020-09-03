@@ -1,7 +1,7 @@
 @import '../../../common/common.scss';
 .aisleCont{
     width: 92%;
-    margin: 0.2rem auto ;
+    margin: 0.2rem auto 1rem;
 }
 .aisleList{
     flex-wrap: wrap;
@@ -12,6 +12,7 @@
         // padding:0 4%;
         margin: 0.15rem 1.2% 0;
         margin-bottom: 0.2rem;
+        height: 2.78rem;
     }
     .listIndex{
         text-align: center;
@@ -19,6 +20,7 @@
         span{
             font-size: 1.2rem;
             color: #be954a;
+            line-height: 2.78rem;
         }
     }
     .aisleNumderGoods{
@@ -28,11 +30,29 @@
         border-radius: 2px;
         position: relative;
         flex-shrink: 0;
+        position: relative  ;
         .numberTop{
             // width: 100%;
             border-bottom: 1px solid #787c80;
+            height: 1.6rem;
             img{
                 width: 100%;
+                height: 1.6rem;
+            }
+            span{
+                display: inline-block;
+                width: 0.4rem;
+                height: 0.4rem;
+                color: #fff;
+                right: 5px;
+                text-align: left;
+                z-index: 10;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                border-radius: 0px 0px 200px;
+                background-color: #6c6d71;
+                font-size: 12px;
             }
         }
         .numderBottom{
@@ -46,12 +66,12 @@
                 color: #fff;
             };
             div:nth-child(1) {
-                width: 40%;
+                width: 35%;
                 text-align: center;
                 line-height: 0.7rem;
             };
             div:nth-child(2) {
-                width: 60%;
+                width: 65%;
                 text-align: center;
                 line-height: 0.7rem;
             };     
@@ -62,17 +82,57 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            text-align: center;
+        }
+        .delList{
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0;
+            border: 0;
+            display: none;
+            label{
+                // margin: 0 !important;
+            }
+        };
+        .delCheckbox{
+            position: absolute;
+            top: 0;
+            left:-0.03rem ; 
+            display: none;
+            z-index: 6;
+            >div{
+                position: relative;
+                line-height: 0.4rem;
+                input{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    // z-index: 19;
+                    opacity: 0;
+                    padding: 0.1rem;
+                    display: none;
+                }
+                span{
+                    padding: 0;
+                    line-height: 0.21rem;
+                    font-size: 0.4rem;
+                    z-index: 5;
+                }
+            }
+            .delCheckboxTrue{
+                color: $color;
+            }
         }
     }
     .addAisle{
-        height: 100%;
         // line-height: 150px;
         background: #fff;
         border: 1px solid #787c80;
         border-radius: 2px;
         flex-shrink: 0;
         text-align: center;
-        padding: 0.71rem 0;
+        line-height: 2.78rem;
         span{
             font-size: 1.4rem;
             color: #8f8a8a;
@@ -82,5 +142,66 @@
         }
     }
 }
-
-
+.topHeader {
+    z-index: 10;
+}
+.delFooter{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    // overflow: hidden;
+    width: 100%;
+    border-top: 1px solid #f0f0f0;
+    z-index: 15;
+    background: #fff;
+    height: 0;
+    transition: all 0.3s;
+    .delBtnList{
+        display: flex;
+        justify-content:flex-end;
+        align-content: center;
+        padding: 0.15rem 0;
+        button{
+            margin-right: 0.15rem;
+        }
+    }
+}
+.height{
+    height: initial;
+    transition: all 0.3s;
+}
+#hui-dialog-input-in input:focus{
+    border: 0 !important;
+}
+.addNumBox{
+    // top: 50%;
+    .inputList label{
+        width: 1.2rem;
+        text-align: center;
+    }
+}
+.addNumFooter{
+    text-align: center;
+    .confirmBtn{
+        margin: 0.15rem auto 0.3rem;
+    }
+}
+.validationBox{
+    // top: 50%;
+    .inputList label{
+        text-align: center;
+    }
+}
+.validationFooter{
+    text-align: center;
+    .confirmBtn{
+        margin: 0.15rem auto 0.3rem;
+    }
+}
+.editAisleBox{
+    top: 30%;
+    .inputList label{
+        width: 1.6rem;
+        text-align: center;
+    }
+}

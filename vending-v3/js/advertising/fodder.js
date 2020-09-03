@@ -36,7 +36,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             { field: 'img', width: 120, title: '微缩图', templet: "#imgtmp" },
             { field: 'name', width: 150, title: '素材名', },
             { field: 'size', width: 100, title: '大小(MB)', },
-            { field: 'amendTime', width: 130, title: '分辨率', },
+            // { field: 'amendTime', width: 130, title: '分辨率', },
             {
                 field: 'advertisingAttribute', width: 150, title: '素材属性', templet: function (d) {
                     return d.advertisingAttribute == 0 ? '图片' : '视频'
@@ -58,8 +58,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     return d.advertisingStatus == '1' ? '启用' : '不启用'
                 }
             },
-            { field: 'addUser', width: 150, title: '上传人 ', },
-            { field: 'creationTime', width: 160, title: '上传时间', },
+            { field: 'addUser', width: 150, title: '创建人 ', },
+            { field: 'creationTime', width: 160, title: '创建时间', },
            
             // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo',fixed: 'right',right: 0 },
             { field: 'operation', right: 0, width: 200, title: '操作', toolbar: '#barDemo', align: 'center', fixed: 'right' },
@@ -490,6 +490,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         editSize = e.target.files[0].size / 1024 / 1024 + ''
         var EditImgFile = new FormData();
         EditImgFile.append('file', e.target.files[0]);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon')
         $.ajax({
             type: 'post',
             url: `/api/fileUpload`,
@@ -501,6 +503,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             data: EditImgFile,
             success: function (res) {
                 console.log(res)
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon')
                 if (res.code == 0) {
                     editImgVideo = res.data.src;
                     $('.materiaImgEdit img').attr('src', editImgVideo);
@@ -511,6 +515,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 } else {
                     layer.msg(res.message, { icon: 2 })
                 }
+            },error:function(err){
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon')
+                layer.msg('图片上传失败',{icon:2})
             }
         })
     });
@@ -520,6 +528,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         let that2 = this;
         var EditVideoFile = new FormData();
         EditVideoFile.append('file', e.target.files[0]);
+        $('.mask').fadeIn();
+                $('.maskSpan').addClass('maskIcon')
         $.ajax({
             type: 'post',
             url: `/api/fileUpload`,
@@ -530,6 +540,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             },
             data: EditVideoFile,
             success: function (res) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon')
                 console.log(res);
                 if (res.code == 0) {
                     editImgVideo = res.data.src;
@@ -546,6 +558,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 } else {
                     layer.msg(res.message)
                 }
+            },error:function(err){
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('视频上传失败',{icon:2})
             }
         })
 
@@ -653,7 +669,9 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         var VideoData = new FormData();
         VideoData.append('file', e.target.files[0]);
         ImgVideoSize = e.target.files[0].size / 1024 / 1024 + '';
-        console.log(ImgVideoSize)
+        console.log(ImgVideoSize);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon')
         $.ajax({
             type: 'post',
             url: '/api/fileUpload',
@@ -664,6 +682,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             },
             data: VideoData,
             success: function (res) {
+                $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon')
                 console.log(res);
                 if (res.code == 0) {
                     $('.materiaDow').show();
@@ -678,6 +698,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 } else {
                     layer.msg(res.msg)
                 }
+            },error:function(err){
+                $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon')
+                layer.msg('上传视频失败',{icon:2})
             }
         })
     });
@@ -689,79 +713,96 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         //   return false
         if (addList.materiaAttribute && addList.materiaType && addList.materialName) {
             if (imgVideoHttp || ImgFile) {
+                $('.mask').fadeIn();
+                $('.maskSpan').addClass('maskIcon');
                 var imgFileData = new FormData();
-                imgFileData.append('file', ImgFile)
-                if (addList.materiaAttribute == '0') {
-                    // 上传图片
+                imgFileData.append('file', ImgFile)       
+                console.log(222)
+                setTimeout(()=>{
+                    if (addList.materiaAttribute == '0') {
+                        // 上传图片       
+                        $.ajax({
+                            type: 'post',
+                            url: '/api/fileUpload',
+                            async: false,
+                            processData: false,
+                            contentType: false,
+                            headers: {
+                                token,
+                            },
+                            data: imgFileData,
+                            success: function (res) {
+                                console.log(res)
+                                if (res.code == 0) {
+                                    imgVideoHttp = res.data.src;
+                                } else {
+                                    layer.msg(res.message);
+                                    return false;
+                                }
+                            },error:function(err){
+                                $('.mask').fadeOut();
+                                $('.maskSpan').removeClass('maskIcon')
+                                layer.msg('上传图片失败',{icon})
+                            }
+                        })
+                    };
+                    // 提交
                     $.ajax({
                         type: 'post',
-                        url: '/api/fileUpload',
-                        async: false,
-                        processData: false,
-                        contentType: false,
+                        url: '/api/advertising/saveAdvertising',
                         headers: {
+                            "Content-Type": "application/json",
                             token,
                         },
-                        data: imgFileData,
+                        async: false,
+                        data: JSON.stringify({
+                            advertisingAttribute: addList.materiaAttribute,//属性
+                            advertisingStatus: addList.materiaStatus,//是否启用
+                            advertisingType: addList.materiaType,//横竖屏
+                            duration: tol,//播放时长
+                            img: imgVideoHttp,//素材
+                            name: addList.materialName,//素材名
+                            size: ImgVideoSize.slice(0, 4),//大小
+                            merchantId: sessionStorage.machineID
+                        }),
                         success: function (res) {
                             console.log(res)
-                            if (res.code == 0) {
-                                imgVideoHttp = res.data.src;
+                            $('.mask').fadeOut();
+                         $('.maskSpan').removeClass('maskIcon')
+                            if (res.code == 200) {
+                                
+                                popupHide('uploadMaterialCont', 'uploadMateriaBox');
+                                tableIns.reload({
+                                    where: {
+                                    }
+                                });
+                                layer.msg(res.message, { icon: 1 })
+                                form.val("uploadValData", {
+                                    "materialName": '',
+                                    "materiaAttribute": '',
+                                    "materiaType": '',
+                                    "materiaStatus": '',
+                                });
+                                $('.uploadMaterialCont .materiaImg video').hide();
+                                $('.uploadMaterialCont .materiaDow').hide();
+                                $('.uploadMaterialCont .materiaDow img').hide();
+                                $('.uploadMaterialCont .ImgBtn').hide();
+                                $('.uploadMaterialCont .VideoBtn').hide();
+                                imgVideoHttp = null;
+                                ImgFile = null;
+                            } else if (res.code == 403) {
+                                window.history.go(-1)
                             } else {
-                                layer.msg(res.message);
-                                return false;
+                                layer.msg(res.message, { icon: 2 })
                             }
+                        },error:function(err){
+                            $('.mask').fadeOut();
+                            $('.maskSpan').removeClass('maskIcon')
+                            layer.msg('服务器请求超时',{icon:2})
                         }
                     })
-                };
-                // 提交
-                $.ajax({
-                    type: 'post',
-                    url: '/api/advertising/saveAdvertising',
-                    headers: {
-                        "Content-Type": "application/json",
-                        token,
-                    },
-                    async: false,
-                    data: JSON.stringify({
-                        advertisingAttribute: addList.materiaAttribute,//属性
-                        advertisingStatus: addList.materiaStatus,//是否启用
-                        advertisingType: addList.materiaType,//横竖屏
-                        duration: tol,//播放时长
-                        img: imgVideoHttp,//素材
-                        name: addList.materialName,//素材名
-                        size: ImgVideoSize.slice(0, 4),//大小
-                        merchantId: sessionStorage.machineID
-                    }),
-                    success: function (res) {
-                        console.log(res)
-                        if (res.code == 200) {
-                            popupHide('uploadMaterialCont', 'uploadMateriaBox');
-                            tableIns.reload({
-                                where: {
-                                }
-                            });
-                            layer.msg(res.message, { icon: 1 })
-                            form.val("uploadValData", {
-                                "materialName": '',
-                                "materiaAttribute": '',
-                                "materiaType": '',
-                                "materiaStatus": '',
-                            });
-                            $('.uploadMaterialCont .materiaImg video').hide();
-                            $('.uploadMaterialCont .materiaDow').hide();
-                            $('.uploadMaterialCont .materiaDow img').hide();
-                            $('.uploadMaterialCont .ImgBtn').hide();
-                            $('.uploadMaterialCont .VideoBtn').hide();
-                            imgVideoHttp = null;
-                            ImgFile = null;
-                        } else if (res.code == 403) {
-                            window.history.go(-1)
-                        } else {
-                            layer.msg(res.message, { icon: 2 })
-                        }
-                    }
-                })
+                },300)
+                
             } else {
                 layer.msg('请上传图片或视频', { icon: 7 })
             }

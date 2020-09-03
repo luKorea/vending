@@ -38,8 +38,30 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         }
       },
       { field: `classifyName`, width: 120, title: '商品类目' }, 
-      { field: 'goods_Price', width: 120, title: '销售价 ' },
-      { field: 'goods_Cost', width: 120, title: '成本价 ' },
+      { field: 'goods_Price', width: 120, title: '销售价 ' ,templet:function(d){
+        var oldNum =d.goods_Price;
+        d.goods_Price= Number(Number(d.goods_Price).toFixed(2));
+            if (!isNaN(d.goods_Price)) {
+                var c = (d.goods_Price.toString().indexOf('.') !== -1) ?d.goods_Price.toLocaleString() :d.goods_Price.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+                var str = c.split(".");
+                if (str.length == 1) { c = c + '.00'; } else { if (str[1].length == 1) { c = c + '0'; } }
+                return c;
+            } else {
+                return oldNum;
+            }
+      }},
+      { field: 'goods_Cost', width: 120, title: '成本价 ',templet:function(d){
+        var oldNum =d.goods_Cost;
+        d.goods_Cost= Number(Number(d.goods_Cost).toFixed(2));
+            if (!isNaN(d.goods_Cost)) {
+                var c = (d.goods_Cost.toString().indexOf('.') !== -1) ?d.goods_Cost.toLocaleString() :d.goods_Cost.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+                var str = c.split(".");
+                if (str.length == 1) { c = c + '.00'; } else { if (str[1].length == 1) { c = c + '0'; } }
+                return c;
+            } else {
+                return oldNum;
+            }
+      } },
       { field: 'goods_Param', width: 120, title: '规格说明 ' },
       // { field: 'vipPrice', width: 120, title: '会员价 ' },
       // { field: 'strategy', width: 120, title: '优惠价策略 ' },
@@ -63,9 +85,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           }
         }
       },
-      { field: 'update_user', width: 130, title: '最后操作人 ' },
+      { field: 'update_user', width: 130, title: '最后修改人 ' },
       {
-        field: 'update_time', width: 200, title: '最后操作时间 ', templet: function (d) {
+        field: 'update_time', width: 200, title: '最后修改时间 ', templet: function (d) {
           if (d.update_time) {
             var myDate = new Date(d.update_time);
             var y = myDate.getFullYear();
@@ -264,6 +286,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       'top': $('.reading-contnet').offset().top + 'px',
     });
     $('.reading-box').html(singleData.goods_Descript)
+    console.log(singleData.goods_Descript)
   })
   // wangEditor 富文本编辑器创建
   var editWangEditor = new E('#editWangEditor')
@@ -723,16 +746,16 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       console.log(materialType);
       if (materialType == 2) {
         if (addWangEditor.txt.html().length > 11) {
-          addWangEditor.txt.append(`<p><iframe src="${obj.data.img}"></iframe></p>`);
+          addWangEditor.txt.append(`<div><video src="${obj.data.img}"></video></div>`);
         } else {
-          addWangEditor.txt.html(`<p><iframe src="${obj.data.img}"></iframe></p>`);
+          addWangEditor.txt.html(`<div><video src="${obj.data.img}"></video></div>`);
         }
         popupHide('goodsmaterialVideo', 'materialBox');
       } else {
         if (editWangEditor.txt.html().length > 11) {
-          editWangEditor.txt.append(`<p><iframe src="${obj.data.img}"></iframe></p>`);
+          editWangEditor.txt.append(`<div><video src="${obj.data.img}"></video></div>`);
         } else {
-          editWangEditor.txt.html(`<p><iframe src="${obj.data.img}"></iframe></p>`);
+          editWangEditor.txt.html(`<div><video src="${obj.data.img}"></video></div>`);
         }
         popupHide('goodsmaterialVideo', 'materialBox');
       }

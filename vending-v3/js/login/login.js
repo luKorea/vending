@@ -1,5 +1,6 @@
 import '../../MyCss/login/login.css'
 layui.use(['form', 'layer'], function () {
+   
     // window.history.forward(1);
     // websocket.close();
     var $ = layui.jquery;

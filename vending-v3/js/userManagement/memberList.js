@@ -34,8 +34,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
        
         { field: 'addUser', width: 150, title: '创建人', },
         { field: 'addTime', width: 180, title: '创建时间' },
-        { field: 'lastUser', width: 150, title: '最后操作人', },
-        { field: 'lastTime', width: 180, title: '最后操作时间'},
+        { field: 'lastUser', width: 150, title: '最后修改人', },
+        { field: 'lastTime', width: 180, title: '最后修改时间'},
 
         { field: 'operation', fixed: 'right', right: 0, width: 250, title: '操作', toolbar: '#barDemo' },
       ]]
@@ -111,7 +111,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       } else {
         $('.switchListStatus').show();
       }
-      $('.inputWidth input[name="userName"]').prop('disabled', true)
+      $('.inputWidth input[name="userName"]').prop('disabled', true);
+      $('.treeTest').show();
       // layer.msg('ID：' + data.uuid + ' 的查看操作');
       // 点击编辑事件
       $('.OperationHeader span').html('编辑用户')
@@ -209,7 +210,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     }
     tree.reload('treelistEdit', {
     });
-    $('.inputWidth input[name="userName"]').prop('disabled', false)
+    $('.inputWidth input[name="userName"]').prop('disabled', false);
+    $('.treeTest').hide();
     // $('.mask').fadeIn();
     // $('.maskSpan').addClass('maskIcon')
     popupShow('MemberOperation', 'MemberContent')
@@ -223,12 +225,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       "alonePwd": '',
       "phone": '',
       "cardId": '',
-      'marchantsListname': '',
+      // 'marchantsListname': '',
       'DalonePwd': '',
       "DuserPwd": '',
-      'topmachantsVal': '',
+      // 'topmachantsVal': '',
     });
-    form.render('select');
+    // form.render('select');
     $('.checkCont').empty();
     $('.roleCont').hide();
 
@@ -476,7 +478,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
   var addEditData = null;
   var dataList = addEditData = treeList();
   // var addEditData=treeList();
-  treeFun(tree, 'test1', tableIns, dataList, 'condition')
+  // treeFun(tree, 'test1', tableIns, dataList, 'condition');
+  $('.terminal input[name="marchantsListname"]').val(dataList[0].title);
+      $('.terminal input[name="topmachantsVal"]').val(dataList[0].id)
   // 刷新页面
   $('.refreshBtn').click(function () {
     location.reload();
@@ -509,6 +513,40 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     })
   };
+  var inst1 = tree.render({
+    elem: '#test1',
+    id: 'treelistAdd',
+    showLine: !0 //连接线
+    ,
+    onlyIconControl: true //左侧图标控制展开收缩
+    ,
+    isJump: !1 //弹出新窗口跳转
+    ,
+    edit: false //开启节点的操作
+    ,
+    data: addEditData,
+    text: {
+      defaultNodeName: '无数据',
+      none: ''
+    },
+    click: function (obj) {
+      console.log(obj);
+      $('.terminal input[name="marchantsListname"]').val(obj.data.title);
+      $('.terminal input[name="topmachantsVal"]').val(obj.data.id);
+      tableIns.reload({
+        where:{
+          condition:obj.data.id + '',
+        }
+      })
+      var nodesEdti = $(`#test1 .layui-tree-txt`);
+      for (var i = 0; i < nodesEdti.length; i++) {
+        if (nodesEdti[i].innerHTML === obj.data.title)
+          nodesEdti[i].style.color = "#be954a";
+        else
+          nodesEdti[i].style.color = "#555";
+      }
+    },
+  });
   var inst2 = tree.render({
     elem: '#test2',
     id: 'treelistEdit',

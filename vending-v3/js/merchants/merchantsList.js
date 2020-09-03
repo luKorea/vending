@@ -26,8 +26,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             { field: 'alias', width: 160, title: '商户编号' },
             { field: 'addUser', width: 150, title: '创建人', },
             { field: 'addTime', width: 180, title: '创建时间'},
-            { field: 'lastUser', width: 150, title: '最后操作人', },
-            { field: 'lastTime', width: 180, title: '最后操作时间'},
+            { field: 'lastUser', width: 150, title: '最后修改人', },
+            { field: 'lastTime', width: 180, title: '最后修改时间'},
             { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo' },
         ]]
         , id: 'tableId'
@@ -163,10 +163,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         // marchantsList = merchantsListMian('');
         // mercantsSelectList(marchantsList, 'addMarchantsList', form);
         // form.render('select');
-        tree.reload('treelistEdit', {
-        });
+        // tree.reload('treelistEdit', {
+        // });
         $('.addBox input[name="marchantsListname"]').val('');
-        $('.addBox input[name="addmarchantsVal"]').val('')
+        // $('.addBox input[name="addmarchantsVal"]').val('')
         popupShow('addMerchants', 'addBox')
 
     });
@@ -177,7 +177,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     $('.playHeader .close').click(function () {
         $(this).parent().parent().addClass('margin0')
         $(this).parents('.maskContnet').fadeOut();
-        indexFlag = null;
     });
     //   关闭添加
     $('.addBox .addCancelBtn').click(function () {
@@ -185,6 +184,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     })
     // 添加商户事件
     $('.addBody .addSubmiBtn').click(function () {
+        console.log($('.addBox input[name="addmarchantsVal"]').val())  ;
         var topVal = $('.addBox input[name="addmarchantsVal"]').val().split(' ');
         var aliasText = null;
         // marchantsList.forEach((item, index) => {
@@ -210,6 +210,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 layer.msg(err.message, { icon: 2 })
             })
         } else {
+          
             layer.msg('带*号为必填', { icon: 7 })
         }
     })
@@ -240,8 +241,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     //树状图 
     var addEditData = null;
     var dataList = addEditData = treeList();
-    treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
-
+    console.log(addEditData)
+    // treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
+    $('.addBox input[name="marchantsListname"]').prop('placeholder',addEditData[0].title)
+    $('.addBox input[name="addmarchantsVal"]').val(addEditData[0].id+' '+addEditData[0].alias);
+    console.log($('.addBox input[name="addmarchantsVal"]').val())
     // 监听f5刷新
     $("body").bind("keydown", function (event) {
         if (event.keyCode == 116) {
@@ -249,7 +253,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         }
     });
     var inst2 = tree.render({
-        elem: '#test2',
+        elem: '#test1',
         id: 'treelistEdit',
         showLine: !0 //连接线
         ,
@@ -261,14 +265,25 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         ,
         data: addEditData,
         text: {
-            defaultNodeName: '无数据',
+            defaultNodeName: '您没有权限，请联系管理员授权!',
             none: ''
         },
         click: function (obj) {
             console.log(obj);
-            $('.addBox input[name="marchantsListname"]').val(obj.data.title);
-            $('.addBox input[name="addmarchantsVal"]').val(obj.data.id + ' ' + obj.data.alias)
-            var nodesEdti = $(`#listInputTree .layui-tree-txt`);
+            console.log(obj.data.id)
+            tableIns.reload({
+                where:{
+                    conditionTwo:obj.data.id +'',
+                    conditionThree:'0'
+                }
+              
+            })
+            // $('.addBox input[name="marchantsListname"]').val(obj.data.title);
+            
+            $('.addBox input[name="marchantsListname"]').prop('placeholder',obj.data.title)
+            $('.addBox input[name="addmarchantsVal"]').val(obj.data.id + ' ' + obj.data.alias);
+            console.log( $('.addBox input[name="marchantsListname"]').val());
+            var nodesEdti = $(`#test1 .layui-tree-txt`);
             for (var i = 0; i < nodesEdti.length; i++) {
                 if (nodesEdti[i].innerHTML === obj.data.title)
                     nodesEdti[i].style.color = "#be954a";

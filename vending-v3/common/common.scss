@@ -152,12 +152,7 @@ a {
     position: relative;
     font-size: 0.28rem;
 }
-.top30{
-    top: 30% !important;
-}
-.top0{
-    top: 0 !important;
-}
+
 .header{
     position: relative;
     box-sizing: border-box;
@@ -293,6 +288,19 @@ iframe{
     color: #606266;
     border-radius: 0.08rem;
     transition: all 0.3s;
+}
+.top30{
+    top: 30% !important;
+    transform: translate(-50%, -30%);
+    transition: all 0.3s;
+}
+.top0{
+    top: 0 !important;
+    transition: all 0.3s;
+}
+.top50{
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
 }
 .maskHeight100vh{
     width: 100%;

@@ -15,11 +15,27 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 token: sessionStorage.token,
             },
             cols: [[
-                { field: 'payName', width: 160, title: '支付类型' },
-                { field: 'app_id', width: 300, title: '微信公众号id/支付宝商户id', },
-                { field: 'merchantName', width: 220, title: '所属商户' },
-                { field: 'payee', width: 220, title: '收款账号' },
-                { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo' },
+                { field: 'payName', width: 180, title: '支付类型' },
+                { field: 'app_id', width: 350, title: '微信公众号id/支付宝商户id', },
+                { field: 'merchantName', width: 280, title: '所属商户' },
+                { field: 'payee', width: 280, title: '收款账号' },
+                { field: 'update_user', width: 200, title: '最后修改人' },
+                { field: 'update_time', width: 250, title: '最后修改时间',templet:function(d){
+                    if (d.update_time) {
+                        var myDate = new Date(d.update_time);
+                        var y = myDate.getFullYear();
+                        var m = myDate.getMonth() + 1;
+                        var d = myDate.getDate();
+                        var h = myDate.getHours();
+                        var min = myDate.getMinutes();
+                        var s = myDate.getSeconds();
+                        return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
+                      } else {
+                        return '';
+                      }
+                }},
+                // { field: 'operation',right: 0, width: 150, title: '操作', toolbar: '#barDemo' ,fixed: 'right'},
+                { field: 'operation', right: 0, width: 150, title: '操作', toolbar: '#barDemo', fixed: 'right' },
             ]],
             id: 'tablePayId',
             // page:true,

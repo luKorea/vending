@@ -82,8 +82,8 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 }
             },
             // { field: 'amendTime', width: 130, title: '广告位', },
-            { field: 'addUser', width: 180, title: '发布人', },
-            { field: 'creationTime', width: 230, title: '发布时间' },
+            { field: 'addUser', width: 180, title: '创建人', },
+            { field: 'creationTime', width: 230, title: '创建时间' },
             
             { field: 'operation', right: 0, width: 380, title: '操作', toolbar: '#barDemo', fixed: 'right' },
         ]],
@@ -391,8 +391,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                             return d.advertisingAttribute == 0 ? '图片' : '视频'
                         }
                     },
-                    { field: 'creationTime', width: 160, title: '上传时间' },
-                    { field: 'addUser', width: 150, title: '上传人 ', },
+                    { field: 'addUser', width: 150, title: '创建人 ', },
+                    { field: 'creationTime', width: 160, title: '创建时间' },
+                    
                 ]],
                 page: true,
                 id: 'chooesId',

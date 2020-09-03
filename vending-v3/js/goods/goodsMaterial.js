@@ -406,7 +406,10 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
             console.log(res)
             if (res.code == 200) {
               popupHide('addImgCont', 'addImgBox');
-              $('.FlexInputWidth ingpu[name="ImgNane"]').val('')
+              $('.FlexInputWidth ingpu[name="ImgNane"]').val('');
+              $('#GoodsImg').attr("src", '');
+              addGoodsImg=null;
+              $('.upload-list').hide()
               layer.msg(res.message, { icon: 1 });
               advertisingLis.reload({
                 where: {}
@@ -433,6 +436,8 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     var that = this;
     var uploadVideo = new FormData();
     uploadVideo.append('file', e.target.files[0]);
+    $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon')
     $.ajax({
       type: 'post',
       url: '/api/fileUpload',
@@ -444,6 +449,8 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       data: uploadVideo,
       success: function (res) {
         console.log(res)
+        $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon')
         if (res.code == 0) {
           videoSrc = res.data.src
           $('.uploadVideo').fadeIn();
@@ -451,6 +458,10 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         } else {
           layer.msg(res.message, { icon: 7 });
         }
+      },error:function(err){
+        $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon')
+        layer.msg('上传失败',{icon:2})
       }
     })
   })
@@ -771,6 +782,8 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       var editImg = new FormData();
       editImg.append("file", editImgfile);
       console.log(editImg)
+      $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon')
       $.ajax({
         type: 'post',
         url: '/api/fileUpload',
@@ -781,6 +794,8 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         },
         data: editImg,
         success: function (res) {
+          $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon')
           console.log(res)
           if (res.code == 0) {
             // addGoodsImgIndex 1为编辑 2为添加
@@ -788,9 +803,15 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
             $('#GoodsImg').attr("src", addGoodsImg);
             $('.ImgCropping').fadeOut();
             $('.upload-list').fadeIn();
+            // $('.cropper-container cropper-bg').css('background-image','')
+            // $('.previewImg img').attr('src', '');
           } else {
             layer.msg(res.msg)
           }
+        },error:function(err){
+          $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon');
+        layer.msg('上传失败',{icon:2})
         }
       });
     }
@@ -886,6 +907,8 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     var that = this;
     var upDetails = new FormData();
     upDetails.append('file', e.target.files[0]);
+    $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon')
     $.ajax({
       type: 'post',
       url: '/api/fileUpload',
@@ -896,6 +919,8 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       },
       data: upDetails,
       success: function (res) {
+        $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon')
         console.log(res)
         $(that).val('');
         if (res.code == 0) {
@@ -905,6 +930,11 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         } else {
           layer.msg(res.message, { icon: 7 });
         }
+      },
+      error:function(err){
+        $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon')
+        layer.msg('上传失败',{icon:2})
       }
     })
   });

@@ -30,10 +30,10 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
           field: 'classifyTime', width: 200, title: '创建时间'
         },
         {
-          field: 'lastUser', width: 150, title: '最后操作人', 
+          field: 'lastUser', width: 150, title: '最后修改人', 
         },
         {
-          field: 'lastTime', width: 190, title: '最后操作时间'
+          field: 'lastTime', width: 190, title: '最后修改时间'
         },
         { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' }
       ]]

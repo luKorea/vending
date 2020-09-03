@@ -1,5 +1,5 @@
 import '../../../MyCss/mobile/machine/machine.scss';
-import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow, passRegular } from '../../../common/common.js'
+import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow } from '../../../common/common.js';
 // loadingWith('正在加载');
 //条件筛选数据、事件
 var pageNum = 1,
@@ -35,9 +35,10 @@ function getMachineList() {
 }
 //    售货机渲染方法
 function machineDrawing(mData) {
+    
     var mstr = '';
     mData.forEach((item, index) => {
-        mstr += `<div class="list myScale3d">
+        mstr += `<div class="list myScale3d" machineid="${item.machineId}">
                     <p class="info">${item.info}</p>
                     <p class="address">${item.location}</p>
                     <ul class="status flex">
@@ -184,12 +185,7 @@ $('.aisleDetalis').click(function(){
     $('.childConten').show();
     $('.childData').prop('src','M_machineChild.html');
     frameWin = $('#childData')[0].contentWindow;
-    setTimeout(()=>{
-        frameWin.ccc();
-    },90)
-  
     // console.log($('#childData'))
 })
-function machindID(){
-    re
-}
+// 每次进入页面独立密码为空
+sessionStorage.independentPass = '';

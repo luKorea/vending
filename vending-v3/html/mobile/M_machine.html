@@ -177,9 +177,6 @@
             </div>
         </div>
     </div>
-    <div class="hah">
-        haha
-    </div>
     <!-- 货道详情 -->
     <div class="childConten maskContent">
         <div class="childBox maskHeight100vh mask">
@@ -194,6 +191,16 @@
             $('.childConten').hide();
             $('.childData').prop('src', '')
         }
+        $
+        var machineChildID = 123;
+        function machindID() {
+            return machineChildID;
+        }
+        // 点击售货机列表获取售货机id
+        $('.machineList').on('click','.list',function(){
+            // console.log($(this).attr('machineid'))
+            machineChildID=$(this).attr('machineid')
+        })
     </script>
 </body>
 

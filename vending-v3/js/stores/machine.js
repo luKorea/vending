@@ -1212,7 +1212,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     aisleStr += `<div class="aisleNumderGoods" >
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">
-                                    <img src="http://172.16.71.142:8087/image/127b55b9-da32-4569-b740-3adf5e5524af.png" alt="">
+                                    <img src="${child.goods_images?child.goods_images:'http://172.16.71.142:8087/image/127b55b9-da32-4569-b740-3adf5e5524af.png'}" alt="">
                                         <span>${Cindex + 1}</span>
                                     </div>
                                     <div class="numderBottom">
@@ -1525,21 +1525,28 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         var payFormData = form.val("paySetData");
         console.log(payFormData)
     })
+   
     form.on('radio(radioTest)', function(data){
-        console.log(data); //被点击的radio的value值;
-        var dataID=data.value.split('-');
-        console.log(dataID)
-        var setMachinePay=JSON.stringify({
-            machineId:machineSetData.machineId,
-            paramId:Number(dataID[1]) ,
-            mpId:Number(dataID[0])
-        });
-        loadingAjax('/api/pay/updateMachinePayParam','post',setMachinePay,sessionStorage.token).then(res=>{
-            layer.msg(res.message,{icon:1 })
-            supportpay(machineSetData.machineId,machineSetData.userNum);
-        }).catch(err=>{
-            layer.msg(err.message,{icon:2   })
+        layer.confirm('确定修改收款账户？', function (index) {
+            layer.close(index);
+            console.log(data); //被点击的radio的value值;
+            var dataID=data.value.split('-');
+            console.log(dataID)
+            var setMachinePay=JSON.stringify({
+                machineId:machineSetData.machineId,
+                paramId:Number(dataID[1]) ,
+                mpId:Number(dataID[0])
+            });
+            loadingAjax('/api/pay/updateMachinePayParam','post',setMachinePay,sessionStorage.token).then(res=>{
+                layer.msg(res.message,{icon:1 })
+                supportpay(machineSetData.machineId,machineSetData.userNum);
+            }).catch(err=>{
+                layer.msg(err.message,{icon:2   })
+            })
+        },function(){
+            supportpay(machineSetData.machineId,machineSetData.userNum)
         })
+        
       }); 
     // payTypeFun(Number(sessionStorage.machineID));
     // $('.paySetBtn').click(function () {
@@ -1562,13 +1569,4 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     //         layer.msg(err.message, { icon: 2 })
     //     })
     // })
-    var adda=JSON.stringify({
-        typeId:2,
-        merchantId:56
-    })
-    loadingAjax('/api/pay/getMachineMerchantPay','post',adda,sessionStorage.token).then(res=>{
-        console.log(res);
-    }).catch(err=>{
-        layer.msg(err.message,{icon:2   })
-    })
 });

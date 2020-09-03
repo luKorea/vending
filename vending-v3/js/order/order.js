@@ -10,7 +10,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     elem: '#test6',
     range: true,
     done: function (value) {
-      timerKey = value.split(' - ');
+     var timerKey = value.split(' - ');
       startTime = timerKey[0];
       endTime = timerKey[1];
     }
@@ -52,12 +52,14 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         // { field: 'bili', width: 160, title: '退款金额', },
         {
           field: 'payStatus', width: 130, title: '支付状态', templet: function (d) {
-            return d.payStatus == 1 ? '已支付' : '未支付'
+            return d.payStatus == 1 ? '等待支付' : d.payStatus == 2?'已支付':'未支付'
           }
         },
         { field: 'time', width: 180, title: '支付时间', },
         // { field: 'bili', width: 160, title: '支付类型', },
-        // { field: 'bili', width: 160, title: '出货状态', },
+        { field: 'bili', width: 160, title: '出货状态', templet:function(d){
+          
+        }},
         { field: 'payee', width: 160, title: '收款方', },
         { field: 'operation', width: 110, title: '详情 ', toolbar: '#barDemo' },
       ]],
@@ -113,16 +115,12 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 refundSum += (v.goods_Price * v.refund_count)
               })
             }
-
           });
-          // animateNumberFun('.ban-input input[name="orderAllSumVal"]',orderAllSumVal,2);
-          // animateNumberFun('.ban-input input[name="profitsSum"]',profitsSum,1);
-          // animateNumberFun('.ban-input input[name="orderPaidInSum"]',PaidInSum,1);
-          // animateNumberFun('.ban-input input[name="orderRefundSum"]',refundSum,1);
-          $('.ban-input input[name="orderAllSumVal"]').val(Number(orderAllSumVal.toFixed(2)).toLocaleString());
-          $('.ban-input input[name="profitsSum"]').val(Number(profitsSum.toFixed(2)).toLocaleString());
-          $('.ban-input input[name="orderPaidInSum"]').val(Number(PaidInSum.toFixed(2)).toLocaleString());
-          $('.ban-input input[name="orderRefundSum"]').val(Number(refundSum.toFixed(2)).toLocaleString());
+          // $('.ban-input input[name="orderAllSumVal"]').val(Number(orderAllSumVal.toFixed(2)).toLocaleString());
+          $('.ban-input input[name="orderAllSumVal"]').val(numFormat1(orderAllSumVal));
+          $('.ban-input input[name="profitsSum"]').val(numFormat1(profitsSum));
+          $('.ban-input input[name="orderPaidInSum"]').val(numFormat1(PaidInSum));
+          $('.ban-input input[name="orderRefundSum"]').val(numFormat1(refundSum));
         } else if (res.code == 405) {
           $('.hangContent').show();
         }
@@ -243,7 +241,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
   // 导出excel表
   $('.pushBtn').click(function () {
     var myDate = new Date(),
-      dataOf = myDate.getFullYear() + '' + myDate.getMonth() + '' + myDate.getDate(),
+      dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
       xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
     xhr.open("POST", '/api/order/exportExcel', true);
     xhr.setRequestHeader("token", sessionStorage.token);
@@ -257,7 +255,8 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
           return
         } else {
           var content = xhr.response;
-          var fileName = `${marchantName}(${dataOf}).xls`; // 保存的文件名
+          // var fileName = `${marchantName}(${dataOf}).xls`; // 保存的文件名
+          var fileName=`${marchantName}订单${dataOf}`
           var elink = document.createElement('a');
           elink.download = fileName;
           elink.style.display = 'none';
@@ -354,7 +353,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     $('.paidInSum').html(paindSum)
     $('.orderSum').html('￥' + obj.data.amount);
     $('.profitsSum').html('￥' + childProfits)
-    $('.collection button span').html((obj.data.payStatus == 1 ? '已支付' : '未支付'));
+    $('.collection button span').html((obj.data.payStatus == 1 ? '等待支付' : obj.data.payStatus == 2?'支付成功':'未支付'));
     $('.machineCode').html(obj.data.machineId);
     $('.merchantName').html(obj.data.merchantName);
     $('.merchantCode ').html(obj.data.alias);
@@ -384,55 +383,11 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       f5Fun()
     }
   })
-  // table.on('checkbox(GooodsData)', function (obj) {
-  //   var checkStatus = table.checkStatus('goodsLIstTable');
-  //   console.log(checkStatus)
-  //   var refundSym = 0;
-  //   checkStatus.data.forEach((item, index) => {
-  //     if (item.refund == 0) {
-  //       refundSym += item.goods_Price
-  //     }
-
-  //   })
-  //   $('.refundNum').html(refundSym)
-  // });
-  // 退款
-  // $('.refundBtn').click(function () {
-  //   var RcheckStatus = table.checkStatus('goodsLIstTable');
-  //   console.log(RcheckStatus)
-  //   if (RcheckStatus.data.length > 0) {
-  //     layer.confirm('是否进行退款操作？', function (index) {
-  //       layer.close(index);
-  //       refundGoodeId = [];
-  //       RcheckStatus.data.forEach((item, index) => {
-  //         if (item.refund == 0) {
-  //           refundGoodeId.push(item.goods_Id + '')
-  //         }
-
-  //       })
-  //       if (refundGoodeId.length == 0) {
-  //         layer.msg('请选择没有进行过退款操作的商品', { icon: 7 })
-  //         return;
-  //       }
-  //       var refundData = JSON.stringify({
-  //         number: orderData.number,
-  //         goods: refundGoodeId
-  //       });
-  //       loadingAjax('/api/order/refund', 'post', refundData, sessionStorage.token, 'mask', 'orderDetails', 'orderDetailsBox', layer).then(res => {
-  //         console.log(res)
-  //       }).catch(err => {
-  //         layer.msg(err.message, { icon: 2 })
-  //       })
-  //     })
-  //   } else {
-  //     layer.msg('请选择需要退款的商品', { icon: 7 })
-  //   }
-  // })
 
   // 监听退款
   var goodsData = null;
   table.on('tool(GooodsData)', function (obj) {
-    if (orderData.payStatus != 1) {
+    if (orderData.payStatus != 2) {
       layer.msg('订单未支付，不能进行退款操作', { icon: 7 });
       return;
     }
