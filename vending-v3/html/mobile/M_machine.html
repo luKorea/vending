@@ -192,14 +192,19 @@
             $('.childData').prop('src', '')
         }
         $
-        var machineChildID = 123;
+        var machineChildID = null,
+        merchantsId=null;
         function machindID() {
             return machineChildID;
+        }
+        function merchantsID(){
+            return merchantsId;
         }
         // 点击售货机列表获取售货机id
         $('.machineList').on('click','.list',function(){
             // console.log($(this).attr('machineid'))
-            machineChildID=$(this).attr('machineid')
+            machineChildID=$(this).attr('machineid');
+            merchantsId=$(this).attr('merchantsId');
         })
     </script>
 </body>

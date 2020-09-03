@@ -6,8 +6,9 @@ var parentWin = window.parent;
 $('.topHeader .back').click(function () {
     parentWin.hideChild();
 })
-var requestId = parentWin.machindID()
-
+var requestId = parentWin.machindID();
+var merchantsID=parentWin.merchantsID();
+// console.log(merchantsID)
 function loadChild(machine) {
     loadingWith('加载中...')
     var requestIdData = JSON.stringify({
@@ -338,3 +339,73 @@ $('.addNumBox').click(function(){
 $('.addNumContent').click(function(){
     closeWindow(this,'top50')
 })
+
+var picker1 = new huiPicker('.pickerChoose', function(){
+    var val = picker1.getVal(0);
+    var txt = picker1.getText(0);
+    // hui('#btn1').html(txt + '[' + val + ']');
+    console.log(val,txt)
+    $('.pickerChoose input[name="openVal"]').val(val);
+    $('.pickerChoose input[name="openText"]').val(txt);
+});
+picker1.bindData(0, [{value:1, text:'是'},{value:0, text:'否'}]);
+
+// 商品部分
+var pageNum=1,
+    pageSize=10,
+    conditionTwo='';
+    // 下拉刷新方法
+function goodsRefresh(){
+    pageNum=1;
+    loadingWith('加载中...');
+    var goodsObj=JSON.stringify({
+        pageNum,
+        pageSize,
+        condition:merchantsID,
+        conditionFour:'1',
+        conditionTwo,
+    });
+    loadAjax('/api/goods/findAll','post',sessionStorage.token,goodsObj,'mask').then(res=>{
+        // console.log(res)
+        $('.goodsList').empty();
+        // $('.goodsList').html('<div class="hui-refresh-icon"></div>');
+        if(res.data.list.length>0){
+            goodsDrawing(res.data.list);
+        }else{
+            $('.goodsList').append('<div class="empty">查询无数据</div>');
+        }
+
+
+    }).catch(err=>{
+        console.log(err)
+    })
+};
+// 下拉刷新
+hui.refresh('#goodsList', goodsRefresh);
+
+// 上拉加载方法
+function goodsLoad(){
+
+}
+
+// 商品渲染方法
+function goodsDrawing(gData){
+    var goodsStr='';
+    gData.forEach((item,index)=>{
+        goodsStr+=`<div class="chooseList myScale3d">
+                        <div class="goodsImg">
+                            <img src="${item.goods_images}"
+                                alt="">
+                        </div>
+                        <div class="goodsInformation">
+                            <p>${item.goods_Name}</p>
+                            <p>${item.classifyName}</p>
+                            <div class="flexThree">
+                                <p>编号</p>
+                                <span>${item.goods_Core}</span>
+                            </div>
+                        </div>
+                    </div>`
+    });
+    $('.goodsList').append(goodsStr)
+}

@@ -129,7 +129,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         if (res.code == 200) {
                             layer.msg('删除成功', { icon: 1 })
                             dataList = treeList();
-                            treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
+                            // treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
+                            // inst2.reload('treelistEdit', {
+                            
+                            // });
+                            var  addEditData = treeList();
+                            tree.reload('treelistEdit', {
+                                data:addEditData
+                            });
                             tableIns.reload({
                                 where: {}
                             })
@@ -202,7 +209,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 $('.addBox input[name="merchantsName"]').val('');
                 layer.msg(res.message, { icon: 1 });
                 dataList = treeList();
-                treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
+                // treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
+                // inst2.reload('treelistEdit', {
+                            
+                // });
+                var  addEditData = treeList();
+                            tree.reload('treelistEdit', {
+                                data:addEditData
+                            });
                 tableIns.reload({
                     where: {}
                 })
@@ -223,8 +237,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 topMerchant: Number($('.marchantsList').val()),
             });
             loadingAjax('/api/merchant/updateMerchant', 'post', editdMerchantsData, sessionStorage.token, '', 'MemberOperation', 'MemberContent', layer).then((res) => {
-                dataList = treeList();
-                treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
+                var  addEditData = treeList();
+                tree.reload('treelistEdit', {
+                    data:addEditData
+                });
                 layer.msg(res.message, { icon: 1 })
                 tableIns.reload({
                     where: {}
@@ -277,19 +293,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     conditionThree:'0'
                 }
               
-            })
-            // $('.addBox input[name="marchantsListname"]').val(obj.data.title);
-            
-            $('.addBox input[name="marchantsListname"]').prop('placeholder',obj.data.title)
-            $('.addBox input[name="addmarchantsVal"]').val(obj.data.id + ' ' + obj.data.alias);
-            console.log( $('.addBox input[name="marchantsListname"]').val());
+            })  
             var nodesEdti = $(`#test1 .layui-tree-txt`);
             for (var i = 0; i < nodesEdti.length; i++) {
                 if (nodesEdti[i].innerHTML === obj.data.title)
                     nodesEdti[i].style.color = "#be954a";
                 else
                     nodesEdti[i].style.color = "#555";
-            }
+            };
+            $('.addBox input[name="marchantsListname"]').prop('placeholder',obj.data.title)
+            $('.addBox input[name="addmarchantsVal"]').val(obj.data.id + ' ' + obj.data.alias);
+            console.log( $('.addBox input[name="marchantsListname"]').val());
         },
     });
     var addFlag = false,

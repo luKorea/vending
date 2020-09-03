@@ -323,3 +323,11 @@ iframe{
 .hui-form-items{
     align-items: center;
 }
+input:disabled{
+    border-color: rgb(228, 231, 237);
+    color: rgb(192, 196, 204);
+    background-color: rgb(245, 247, 250);
+}
+.relative{
+    position: relative;
+}

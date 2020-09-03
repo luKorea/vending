@@ -6,6 +6,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         util = layui.util,
         tree = layui.tree,
         form = layui.form,
+        rank=null,
         tableIns = table.render({
             elem: '#payList',
             url: `/api/pay/getPayParam`,
@@ -15,9 +16,11 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 token: sessionStorage.token,
             },
             cols: [[
+                { field: '1', width: 80, title: '', templet: "#imgtmp", event: 'rank' },
+                 { field: 'rank', width: 80, title: '排序' },
                 { field: 'payName', width: 180, title: '支付类型' },
-                { field: 'app_id', width: 350, title: '微信公众号id/支付宝商户id', },
-                { field: 'merchantName', width: 280, title: '所属商户' },
+                { field: 'app_id', width: 300, title: '微信公众号id/支付宝商户id', },
+                { field: 'merchantName', width: 250, title: '所属商户' },
                 { field: 'payee', width: 280, title: '收款账号' },
                 { field: 'update_user', width: 200, title: '最后修改人' },
                 { field: 'update_time', width: 250, title: '最后修改时间',templet:function(d){
@@ -69,6 +72,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 statusCode: 200 //规定成功的状态码，默认：0
             },
             done: function (res) {
+                rank=res.data;
                 if (res.code == 403) {
                     window.parent.location.href = "login.html";
                 }
@@ -92,7 +96,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     var payData = null;
     table.on('tool(payList)', function (obj) {
         payData = obj.data;
-        console.log(obj)
+        // console.log(obj)
         if(obj.event=="edit"){
             if (payData.payName == '微信') {
                 $('.changePay .WeChat').show();
@@ -131,6 +135,26 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 }).catch(err => {
                     layer.msg(err.message, { icon: 2 })
                 })
+            })
+        }else if(obj.event=='rank'){         
+            if(obj.data.rank==1){      
+                return ;
+            }
+            console.log(obj)
+            console.log(rank)
+            var rankObj=JSON.stringify({
+                merchantId:merchantsPay,
+                topId:obj.data.id,
+                bottomId:rank[obj.data.rank - 2].id
+            })
+            loadingAjax('/api/pay/sortPayParam','post',rankObj,sessionStorage.token,'','','',layer).then(res=>{
+                layer.msg('修改成功',{icon:1});
+                tableIns.reload({
+                    where: {}
+                })
+            }).catch(err=>{
+                console.log(res)
+                layer.msg('修改失败',{icon:1})
             })
         }
         

@@ -10,6 +10,7 @@ var pageNum = 1,
     CreationIndex='';//缺货状态
 // 请求售货机列表
 function getMachineList() {
+    pageNum++;
     var machineData = JSON.stringify({
         pageNum,
         pageSize,
@@ -25,7 +26,7 @@ function getMachineList() {
             hui.endLoadMore(true, '已加载全部数据');
             return false;
         }
-        pageNum++;
+        
         hui.endLoadMore();
         machineDrawing(res.data.list);
     }).catch(err => {
@@ -38,7 +39,7 @@ function machineDrawing(mData) {
     
     var mstr = '';
     mData.forEach((item, index) => {
-        mstr += `<div class="list myScale3d" machineid="${item.machineId}">
+        mstr += `<div class="list myScale3d" machineid="${item.machineId}" merchantsId="${item.userNum}">
                     <p class="info">${item.info}</p>
                     <p class="address">${item.location}</p>
                     <ul class="status flex">

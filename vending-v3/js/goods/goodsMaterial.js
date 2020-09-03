@@ -381,6 +381,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   })
   // 剪切图片弹出
   $('.uploadBtn').click(function () {
+    $('#tailoringImg').cropper("destroy");
     $('.ImgCropping').fadeIn();
     $('.tailoring-container').fadeIn();
   });
@@ -803,7 +804,8 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
             $('#GoodsImg').attr("src", addGoodsImg);
             $('.ImgCropping').fadeOut();
             $('.upload-list').fadeIn();
-            // $('.cropper-container cropper-bg').css('background-image','')
+            
+            // $('.cropper-bg').css('background','transparent')
             // $('.previewImg img').attr('src', '');
           } else {
             layer.msg(res.msg)

@@ -34,7 +34,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       { field: 'goods_Name', width: 120, title: '商品名', color: '#409eff' },
       {
         field: 'goods_Status', width: 120, title: '商品状态 ', templet: function (d) {
-          return d.goods_Status = 1 ? '启用' : '不启用'
+          return d.goods_Status ==1 ? '启用' : '不启用'
         }
       },
       { field: `classifyName`, width: 120, title: '商品类目' }, 
