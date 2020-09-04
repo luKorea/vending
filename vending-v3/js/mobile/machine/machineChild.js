@@ -23,10 +23,10 @@ function loadChild(machine) {
 }
 loadChild(requestId);
 // 渲染数据处理
-
+var wayList=null;
 function againFun(res) {
-    var wayList = [],
-        wayitem = [];
+        wayList = [];
+      var  wayitem = [];
     for (var i = 0; i < res.data.length; i++) {
         wayitem.push([])
     }
@@ -97,25 +97,6 @@ function aisleHtml(machieList) {
     $('.aisleCont input').attr('checked', false)
 }
 
-// 验证独立密码
-// function OPass(){
-//     hui.prompt('验证独立密码', ['取消','确定'], function(name){
-//         if(name){
-//             var IPassWord=JSON.stringify({
-//                 alonePwd: hex_md5(name)
-//             });
-//             loadingWith('正在验证，请稍后');
-//             loadAjax('/api/user/verifyAlonePwd','post',sessionStorage.token,IPassWord,'mask').then(res=>{
-//                 console.log(res)
-//             }).catch(err=>{
-//                 toastTitle(err.message,'error')
-//             })
-//         }else{
-//             toastTitle('独立密码不能为空','warn')
-//         }
-//     }, '', '',function(){
-//     });
-// };
 // OPass();
 // 关闭独立独立密码验证
 $('.validationContent .close').click(function(){
@@ -152,6 +133,9 @@ $('.validationContent .confirmBtn').click(function(){
                     ways:delArr
                 })
                 delAisle(delAisleObj);
+        }else if(editFlag){
+            aisleEdit();
+            showPopup('.editAisleContent','.editAisleBox','top50');
         }
     }).catch(err=>{
         toastTitle(err.message,'error')
@@ -170,7 +154,9 @@ $('input').attr('autocomplete','off')
 // sessionStorage.independentPass = '';
 // 判断点击是不是在长按之后
 var LongPress = 1;//2为长按，1为正常点击
-var timeOutEvent = null;
+var timeOutEvent = null,
+    ArrIndex = null,
+    editFlag=null;
 $(".aisleCont").on({
     touchstart: function (e) {
         // 长按事件触发  
@@ -209,6 +195,19 @@ $(".aisleCont").on({
                     delNum++
                     $('.delBtn').text('删除(' + delNum + ')')
                 }
+            }else if(LongPress==1){
+                console.log($(this).attr('fireIndex'));
+                ArrIndex = $(this).attr("fireIndex").split(',');
+                editFlag=1;
+                addFlag=null;
+                delFlag=null;
+                
+                if(sessionStorage.independentPass){
+                    aisleEdit()
+                    showPopup('.editAisleContent','.editAisleBox','top50');
+                }else{
+                    showPopup('.validationContent','.validationBox','top50') 
+                }
             }
         }
         return false;
@@ -218,11 +217,12 @@ $(".aisleCont").on({
 var delNum = 0;
 
 // 取消删除
-$('.cancelBtn').click(function () {
-    delNum = 0;
+$('.cancelBtn').click(function () {   
     cancelFun();
 });
 function cancelFun(){
+    LongPress=1
+    delNum = 0;
     $('.numberTop span').show();
     $('.delCheckbox').hide();
     $('.delFooter').removeClass('height');
@@ -240,17 +240,11 @@ $('.delFooter .delBtn').click(function () {
           });
     }else{
         delArr=[];
-        // console.log($('.aisleCont input[type="checkbox"]'))
-        
-        // console.log(domArr)
-        // domArr.forEach((item,index)=>{
-        //     console.log(item)
-        // })
-      
         hui.confirm('确定删除？', ['取消','确定'], function(){
             // console.log('确认后执行...');
             delFlag=1;
             addFlag=null;
+            editFlag=null;
             if(sessionStorage.independentPass){
                 loadingWith('正在删除，请稍后！');
                 var domArr=$('.aisleCont input[type="checkbox"]');
@@ -296,6 +290,7 @@ var addFlag=null,
 $('.aisleCont').on('click','.addAisle',function(){
     addFlag=1;
     delFlag=null;
+    editFlag=null;
     // console.log($(this).attr('indexVal'))
      addIndex=$(this).attr('indexVal');
     if(sessionStorage.independentPass){
@@ -339,6 +334,31 @@ $('.addNumBox').click(function(){
 $('.addNumContent').click(function(){
     closeWindow(this,'top50')
 })
+// 编辑货道部分
+// 关闭编辑
+$('.editAisleContent .close').click(function(){
+    closeParents(this,'top50')
+});
+$('.editAisleBox').click(function(){
+    event.stopPropagation();
+});
+$('.editAisleContent').click(function(){
+    closeWindow(this,'top50')
+})
+// 渲染货道信息
+var goodsDetails=null;
+function aisleEdit(){
+    goodsDetails = wayList[ArrIndex[0]][ArrIndex[1]];
+    console.log(goodsDetails);
+    $('.editiAsleBody input[name="goodsName"]').val(goodsDetails.goods_Name);
+    $('.editiAsleBody input[name="goodsName"]').attr('IVal', goodsDetails.goods_Id);
+    $('.editiAsleBody input[name="price"]').val( goodsDetails.goods_Price);
+    $('.editiAsleBody input[name="count"]').val( goodsDetails.count);
+    $('.editiAsleBody input[name="total"]').val( goodsDetails.total);
+    $('.editiAsleBody input[name="openText"]').val( goodsDetails.open==1?'是':'否');
+    $('.editiAsleBody input[name="openVal"]').val( goodsDetails.open);
+    // console.log($('.editiAsleBody input[name="goodsName"]').attr('IVal'))
+};
 
 var picker1 = new huiPicker('.pickerChoose', function(){
     var val = picker1.getVal(0);
@@ -349,15 +369,31 @@ var picker1 = new huiPicker('.pickerChoose', function(){
     $('.pickerChoose input[name="openText"]').val(txt);
 });
 picker1.bindData(0, [{value:1, text:'是'},{value:0, text:'否'}]);
-
+// 点击选择商品
+$('.editAisleContent .goodsChoose').click(function(){
+    tabLoadEndArray=false;
+    pageNum=1;
+    $('.goodsWrap').html(`<div class="goodsList flexThree" id="goodsList"></div>`)
+    $('.goodsList').empty();
+    showPopup('.goodsContnet','.goodsBox','top50');
+    goodsLoad();
+});
+// 关闭选择商品
+$('.goodsContnet .close').click(function(){
+    closeParents(this,'top50')
+});
+$('.goodsBox').click(function(){
+    event.stopPropagation();
+});
+$('.goodsContnet').click(function(){
+    closeWindow(this,'top50')
+})
 // 商品部分
 var pageNum=1,
     pageSize=10,
     conditionTwo='';
     // 下拉刷新方法
-function goodsRefresh(){
-    pageNum=1;
-    loadingWith('加载中...');
+function goodsRefresh(resetload){
     var goodsObj=JSON.stringify({
         pageNum,
         pageSize,
@@ -366,33 +402,53 @@ function goodsRefresh(){
         conditionTwo,
     });
     loadAjax('/api/goods/findAll','post',sessionStorage.token,goodsObj,'mask').then(res=>{
-        // console.log(res)
-        $('.goodsList').empty();
-        // $('.goodsList').html('<div class="hui-refresh-icon"></div>');
+        // pageNum++
+        if(res.data.list.length!=10){
+            tabLoadEndArray=true;
+        }
         if(res.data.list.length>0){
             goodsDrawing(res.data.list);
-        }else{
-            $('.goodsList').append('<div class="empty">查询无数据</div>');
         }
-
-
+       
     }).catch(err=>{
-        console.log(err)
+        // console.log(999)
+        resetload();
+        tabLoadEndArray=true;
+        return ;
     })
 };
-// 下拉刷新
-hui.refresh('#goodsList', goodsRefresh);
 
-// 上拉加载方法
+var tabLoadEndArray = false;
 function goodsLoad(){
-
+	var dropload = $('.goodsWrap').dropload({
+        scrollArea:  $('.goodsWrap'),
+        // scrollArea:  window,
+		domDown: {
+			domClass: 'dropload-down',
+			domRefresh: '<div class="dropload-refresh">上拉加载更多</div>',
+			domLoad: '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+			domNoData: '<div class="dropload-noData">已加载全部数据</div>'
+		},
+		loadDownFn: function(me) {
+			setTimeout(function() {
+				if(tabLoadEndArray) {
+					me.resetload();
+					me.lock();
+					me.noData();
+					me.resetload();
+					return;
+                }
+                goodsRefresh(me.resetload);
+                me.resetload();
+			}, 500);
+		}
+	});
 }
-
 // 商品渲染方法
 function goodsDrawing(gData){
     var goodsStr='';
     gData.forEach((item,index)=>{
-        goodsStr+=`<div class="chooseList myScale3d">
+        goodsStr+=`<div class="chooseList myScale3d" gID="${item.goods_Id}" gName="${item.goods_Name}" gPrice="${item.goods_Price}" >
                         <div class="goodsImg">
                             <img src="${item.goods_images}"
                                 alt="">
@@ -407,5 +463,57 @@ function goodsDrawing(gData){
                         </div>
                     </div>`
     });
-    $('.goodsList').append(goodsStr)
-}
+    $('.goodsList').append(goodsStr);
+};
+
+// 点击选择商品
+$('.goodsWrap').on('click','.chooseList',function(){
+    console.log($(this).attr('gName'))
+    $('.editiAsleBody input[name="goodsName"]').val($(this).attr('gName'));
+    $('.editiAsleBody input[name="goodsName"]').attr('IVal', $(this).attr('gID'));
+    $('.editiAsleBody input[name="price"]').val( $(this).attr('gPrice'));
+    closeParents(this,'top50')
+});
+
+// 确认修改
+$('.editAisleContent .confirmBtn').click(function(){
+    if(!$('.editiAsleBody input[name="goodsName"]').attr('IVal')){
+        toastTitle('请选择商品','warn');
+        return ;
+    }
+    if(!($('.editiAsleBody input[name="count"]').val()&&$('.editiAsleBody input[name="total"]').val())){
+        toastTitle('数量和容量为为必填','warn');
+         return ;
+    }
+    if(!(Number($('.editiAsleBody input[name="total"]').val())>=Number($('.editiAsleBody input[name="count"]').val()))){
+        // layer.msg('货道容量不能小于当前数量', { icon: 7 });
+        toastTitle('货道容量不能小于当前数量','warn');
+        return;
+    };
+    loadingWith('正在修改，请稍后！')
+    var editObj=JSON.stringify({
+        machineId:requestId,
+        id:goodsDetails.id,
+        goodId: $('.editiAsleBody input[name="goodsName"]').attr('IVal'),
+        count: $('.editiAsleBody input[name="count"]').val(),
+        total: $('.editiAsleBody input[name="total"]').val(),
+        open: $('.editAisle input[name="openVal"]').val()
+    });
+    loadAjax('/api/machine/updateGoodWay','post',sessionStorage.token,editObj,'mask','.editAisleContent','top50').then(res=>{
+        // console.log(res);
+        loadChild(requestId)
+    }).catch(err=>{
+        // console.log(err)
+        toastTitle(err.message,'error')
+    })
+});
+// 筛选商品搜索
+$('.goodsContnet .confirmBtn').click(function(){
+    loadingWith('正在加载，请稍后！')
+    conditionTwo=$('.goodsContnet input[name="editName"]').val();
+    tabLoadEndArray=false;
+    pageNum=1;
+    $('.goodsWrap').html(`<div class="goodsList flexThree" id="goodsList"></div>`)
+    $('.goodsList').empty();
+    goodsLoad();
+})
