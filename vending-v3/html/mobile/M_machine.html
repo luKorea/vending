@@ -12,7 +12,7 @@
 <body>
     <div class="wrap ">
         <div class="topHeader flexThree">
-            <span class="hui-icons hui-icons-left"></span>
+            <span class="hui-icons hui-icons-left back"></span>
             <h2>售货机列表</h2>
             <span class="hui-icons hui-icons-menu-point"></span>
         </div>
@@ -102,7 +102,7 @@
             </div>
             <div class="operationBody">
                 <ul class="operationNav flex">
-                    <li>
+                    <li class="info">
                         <img src="../../img/info.png" alt="">
                         <p>终端信息</p>
                     </li>
@@ -140,40 +140,18 @@
                     <span class="hui-icons hui-icons-close"></span>
                 </button>
             </div>
-            <div class="collectionBody  ">
-                <div class="hui-form-items">
-                    <div class="hui-form-items-title">性别</div>
-                    <div class="hui-form-radios" style="line-height:38px;">
-                        <input type="radio" value="1" name="gender" id="" checked="checked" /><label
-                            for="g1">粤宝网络科技</label><br />
-                        <input type="radio" value="2" name="gender" id="" /><label for="g1">粤宝文化科技</label>
-                        <input type="radio" value="1" name="gender" id="" checked="checked" /><label
-                            for="g1">粤宝文化科技</label><br />
-                        <input type="radio" value="2" name="gender" id="" /><label for="g1">粤宝文化科技</label>
+            <div class="collectionBody">
+                <form style="padding:28px 10px;" class="hui-form" id="form1">
+                    <div class="hui-form-items">
+                        <div class="hui-form-items-title">性别</div>
+                        <div class="hui-form-radios" style="line-height:38px;">
+                            <input type="radio" value="1" name="gender" id="23" checked="checked" /><label
+                                for="23">粤宝网络科技</label><br />
+                            <input type="radio" value="2" name="gender" id="34" /><label for="34">粤宝文化科技</label>
+
+                        </div>
                     </div>
-                </div>
-                <div class="hui-form-items">
-                    <div class="hui-form-items-title">性别</div>
-                    <div class="hui-form-radios" style="line-height:38px;">
-                        <input type="radio" value="1" name="gender" id="" checked="checked" /><label
-                            for="g1">粤宝网络科技</label><br />
-                        <input type="radio" value="2" name="gender" id="" /><label for="g1">粤宝文化科技</label>
-                        <input type="radio" value="1" name="gender" id="" checked="checked" /><label
-                            for="g1">粤宝文化科技</label><br />
-                        <input type="radio" value="2" name="gender" id="" /><label for="g1">粤宝文化科技</label>
-                    </div>
-                </div>
-                <div class="hui-form-items">
-                    <div class="hui-form-items-title">性别</div>
-                    <div class="hui-form-radios" style="line-height:38px;">
-                        <input type="radio" value="1" name="gender" id="" checked="checked" /><label
-                            for="g1">粤宝网络科技</label><br />
-                        <input type="radio" value="2" name="gender" id="" /><label for="g1">粤宝文化科技</label>
-                        <input type="radio" value="1" name="gender" id="" checked="checked" /><label
-                            for="g1">粤宝文化科技</label><br />
-                        <input type="radio" value="2" name="gender" id="" /><label for="g1">粤宝文化科技</label>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -185,26 +163,83 @@
         </div>
 
     </div>
+
+    <!-- 终端信息 -->
+    <div class="terminalContent maskContent">
+        <div class="terminalBox maskBox">
+            <div class="topHeader  flexThree">
+                <span class="hui-icons hui-icons-left"></span>
+                <h2>text2终端信息</h2>
+                <!-- <span class="hui-icons hui-icons-menu-point"></span> -->
+                <span></span>
+            </div>
+            <div class="terminalBody">
+                <form style="padding:28px 0px;" class="hui-form" id="form2">
+                    <div class="flex inputList">
+                        <label><span style="color: red;">*</span>终端名:</label>
+                        <input type="password" name="sNumber">
+                    </div>
+                    <div class="flex inputList">
+                        <label>终端序列号:</label>
+                        <input type="password" name="1">
+                    </div>
+                    <div class="flex inputList">
+                        <label><span style="color: red;">*</span>地址:</label>
+                        <input type="password" name="2">
+                    </div>
+                    <div class="flex inputList">
+                        <label><span style="color: red;">*</span>地区:</label>
+                        <input type="password" name="3">
+                    </div>
+                    <div class="flex inputList">
+                        <label><span style="color: red;">*</span>经度:</label>
+                        <input type="password" name="4">
+                    </div>
+                    <div class="flex inputList">
+                        <label><span style="color: red;">*</span>纬度:</label>
+                        <input type="password" name="5">
+                    </div>
+                    <div class="flex inputList">
+                        <label>负责人手机:</label>
+                        <input type="password" name="6">
+                    </div>
+                    <div class="flex inputList">
+                        <label>描述:</label>
+                        <input type="password" name="7">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../../assets/public/hui-form.js"></script>
     <script src="../../assets/public/hui-refresh-load-more.js"></script>
     <script>
+      
+        //         function showSelectRes(_selfBtn){
+        //     var val;
+        //     hui(_selfBtn).parent().find('input').each(function(cObj){
+        //         if(cObj.checked){val = cObj.value;}
+        //     });
+        //     console.log(val);
+        // }
         function hideChild() {
             $('.childConten').hide();
             $('.childData').prop('src', '')
         }
         $
         var machineChildID = null,
-        merchantsId=null;
+            merchantsId = null;
         function machindID() {
             return machineChildID;
         }
-        function merchantsID(){
+        function merchantsID() {
             return merchantsId;
         }
         // 点击售货机列表获取售货机id
-        $('.machineList').on('click','.list',function(){
+        $('.machineList').on('click', '.list', function () {
             // console.log($(this).attr('machineid'))
-            machineChildID=$(this).attr('machineid');
-            merchantsId=$(this).attr('merchantsId');
+            machineChildID = $(this).attr('machineid');
+            merchantsId = $(this).attr('merchantsId');
         })
     </script>
 </body>
