@@ -19,6 +19,7 @@ var entry = {
         notice:'./js/notice/notice.js',
         paySet:'./js/merchants/paySet.js',
         payType:'./js/merchants/payType.js',
+        remote:'./js/stores/remote.js',
         //移动端版本
         M_login:'./js/mobile/login/login.js',
         M_my:'./js/mobile/my/my.js',
@@ -27,6 +28,8 @@ var entry = {
         M_machine:'./js/mobile/machine/machine.js',
         M_machineChild:'./js/mobile/machine/machineChild.js',//移动端售货机子页面
         // M_machine
+        // 移动端商品模块
+        M_class:'./js/mobile/goods/class.js'
     }
     //页面配置
 var htmlConfig = [
@@ -85,6 +88,9 @@ var htmlConfig = [
     {
         name: "payType",
     },
+    {
+        name: "remote",
+    },
     //移动端部分
     {
         name: "M_login",
@@ -103,6 +109,9 @@ var htmlConfig = [
     },
     {
         name: "M_machineChild",
+    },
+    {
+        name: "M_class",
     },
 ];
 module.exports = {

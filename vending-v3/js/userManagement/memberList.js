@@ -1,10 +1,11 @@
 import '../../MyCss/userManagement/memberList.css'
-layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
+layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
   var table = layui.table;
   var layer = layui.layer,
     layer = layui.layer,
     util = layui.util,
-    tree = layui.tree
+    tree = layui.tree,
+    transfer = layui.transfer;
   var token = sessionStorage.token,
     UserId = sessionStorage.UserId,
     tableIns = table.render({
@@ -31,13 +32,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         { field: 'alias', width: 200, title: '用户编号' },
         { field: 'phone', width: 150, title: '手机号' },
         { field: 'merchantName', width: 150, title: '所属商户' },
-       
+
         { field: 'addUser', width: 150, title: '创建人', },
         { field: 'addTime', width: 180, title: '创建时间' },
         { field: 'lastUser', width: 150, title: '最后修改人', },
-        { field: 'lastTime', width: 180, title: '最后修改时间'},
+        { field: 'lastTime', width: 180, title: '最后修改时间' },
 
-        { field: 'operation', fixed: 'right', right: 0, width: 250, title: '操作', toolbar: '#barDemo' },
+        { field: 'operation', fixed: 'right', right: 0, width: 320, title: '操作', toolbar: '#barDemo' },
       ]]
       , id: 'tableId'
       , page: true
@@ -95,10 +96,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     })
   });
   //监听工具条
-  var memData=null;
+  var memData = null;
   table.on('tool(test)', function (obj) {
     var data = obj.data;
-    memData=obj.data;
+    memData = obj.data;
     console.log(obj)
     uuID = data.uuid;
     if (obj.event === 'edit') {
@@ -195,6 +196,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         })
       });
 
+    }else if(obj.event=='stores'){
+      storesFun(obj.data.uuid)
     }
   });
 
@@ -426,7 +429,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var userList = '';
     list.forEach((ele, index) => {
       userList += `<div>
-                     <input type="checkbox" ${dIndex !=1 && index == 0 ? 'disabled' : ''}  name="${ele.id}" title="${ele.name}"lay-skin="primary" value="${ele.id}"></input>
+                     <input type="checkbox" ${dIndex != 1 && index == 0 ? 'disabled' : ''}  name="${ele.id}" title="${ele.name}"lay-skin="primary" value="${ele.id}"></input>
                    </div>`
     });
     $(`.${elements}`).empty();
@@ -480,7 +483,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
   // var addEditData=treeList();
   // treeFun(tree, 'test1', tableIns, dataList, 'condition');
   $('.terminal input[name="marchantsListname"]').val(dataList[0].title);
-      $('.terminal input[name="topmachantsVal"]').val(dataList[0].id)
+  $('.terminal input[name="topmachantsVal"]').val(dataList[0].id)
   // 刷新页面
   $('.refreshBtn').click(function () {
     location.reload();
@@ -534,8 +537,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
       $('.terminal input[name="marchantsListname"]').val(obj.data.title);
       $('.terminal input[name="topmachantsVal"]').val(obj.data.id);
       tableIns.reload({
-        where:{
-          condition:obj.data.id + '',
+        where: {
+          condition: obj.data.id + '',
         }
       })
       var nodesEdti = $(`#test1 .layui-tree-txt`);
@@ -584,21 +587,98 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     },
   });
 
-  var addFlag=true,
-  editFlag=true,
-  delFlag=true;
+  var addFlag = true,
+    editFlag = true,
+    delFlag = true;
   permissionsVal(389, 390, 397).then(res => {
-    addFlag= res.addFlag ;
-    editFlag= res.editFlag ;
-    delFlag=  res.delFlag;
+    addFlag = res.addFlag;
+    editFlag = res.editFlag;
+    delFlag = res.delFlag;
     permissions();
   }).catch(err => {
     layer.msg('服务器请求超时', { icon: 7 })
   });
-  function permissions(){
+  function permissions() {
     addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
     editFlag ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
     delFlag ? $('.del-btn').removeClass('hides') : $('.del-btn').addClass('hides');
   };
+
+  var transferArr = [],
+    transferListArr = [],
+    transferVal = [];
+  function storesFun(uid) {
+    loadingAjax('/api/user/getUserMachine', 'post', JSON.stringify({ UUId: uid }), sessionStorage.token).then(res => {
+
+      transferListArr = [];
+      transferVal=[]
+      // transferVal = res.data.select;
+      res.data.select.forEach((item,index)=>{
+        transferVal.push(item.machineId)
+      })
+      transferArr = res.data.unSelect.concat(res.data.select);
+      transferArr.forEach((item, index) => {
+        var transferObj = ({
+          value: item.machineId,
+          title: item.info ? item.info : '(此为未命名的新售货机)'
+        });
+        transferListArr.push(transferObj)
+        transferFun(transferListArr, transferVal)
+      });
+      console.log(transferListArr)
+      popupShow('storesCont','storesBox');
+    }).catch(err => {
+      layer.msg(err.message, { icon: 2 })
+
+    });
+  }
+  // storesFun();
+
+  //穿梭时的回调
+  function transferFun(data, value) {
+    transfer.render({
+      elem: '#test6',
+      data,
+      title: ['未配置的售货机', '已配置的售货机'],
+      width: 380,
+      height: 500, //定义高度
+      value,
+      onchange: function (obj, indexs) {
+        console.log(indexs)
+        var machineId=[];  
+        layer.confirm('确定修改配置？', function (index) {
+          obj.forEach((item, index) => {
+            transferVal.push(item.value);
+            machineId.push(item.value)
+          });
+          layer.close(index);
+          console.log(indexs)
+          var editStores=JSON.stringify({
+            UUID:memData.uuid,
+            machineId,
+            select:(indexs==0?1:0)
+          });
+          loadingAjax('/api/user/configUserMachine','post',editStores,sessionStorage.token,'mask','','',layer).then(res=>{
+            layer.msg(res.message,{icon:1});
+            storesFun(memData.uuid);
+          }).catch(err=>{
+            layer.msg(err.message,{icon:2});
+            transferFun(transferListArr,transferVal)
+          })
+          console.log(editStores)
+        }, function (index) {
+          transferFun(transferListArr,transferVal)
+        });
+        // var arr = ['左边', '右边'];
+        // // layer.alert('来自 <strong>'+ arr[index] + '</strong> 的数据：'+ JSON.stringify(obj)); //获得被穿梭时的数据
+        // console.log(obj);
+        // // console.log(transferListArr)
+        // obj.forEach((item, index) => {
+        //   transferVal.push(item.value)
+        // })
+      }
+    });
+  }
+
 });
 

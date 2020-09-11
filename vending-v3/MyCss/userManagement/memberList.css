@@ -85,6 +85,16 @@
     box-sizing: border-box;
     transition: all 0.3s;
 }
+.storesBox{
+    width: 900px;
+    position: relative;
+    margin: 10vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
 .RoleListBody>div{
     width: 92%;
     margin: 0 auto;
@@ -352,4 +362,14 @@
 }
 .hides{
     display: none;
+}
+.storesbody{
+    padding-bottom: 30px;
+}
+.storesbody .layui-transfer-box{
+    overflow: auto;
+}
+#test6{
+    width: 94%;
+    margin: 0 auto;
 }

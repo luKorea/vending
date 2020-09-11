@@ -56,9 +56,11 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
           }
         },
         { field: 'time', width: 180, title: '支付时间', },
-        // { field: 'bili', width: 160, title: '支付类型', },
-        { field: 'bili', width: 160, title: '出货状态', templet:function(d){
-          
+        { field: 'bili', width: 160, title: '支付类型',templet:function(d){
+          return d.payType==0?'支付宝':'微信'
+        } },
+        { field: 'shipStatus', width: 160, title: '出货状态', templet:function(d){
+          return d.shipStatus==0?'未出货':d.shipStatus==1?'出货失败':'出货成功'
         }},
         { field: 'payee', width: 160, title: '收款方', },
         { field: 'operation', width: 110, title: '详情 ', toolbar: '#barDemo' },
@@ -285,6 +287,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
   });
 
   // 订单商品列表
+  var refundTatol=0;
   var orderGoods = null;
   function goodsDetails() {
     orderGoods = table.render({
@@ -314,6 +317,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       loading: true,
       done: function (res) {
         console.log(res)
+        res.data.forEach(item=>{
+          refundTatol+=item.goods_Price;
+        })
+        console.log(refundTatol)
         permissions();
         for (var i in res.data) {
           var item = res.data[i];
@@ -335,7 +342,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     }
     $('.detailsOrderCode').html(obj.data.number);//订单编号
     $('.payTime').html(obj.data.time);//支付时间
-    $('.orderInformation button span').html((obj.data.shipStatus == 0 ? '出货失败' : '出货成功'))
+    $('.orderInformation button span').html((obj.data.shipStatus == 0 ? '未出货' :obj.data.shipStatus == 1?'出货失败':'出货成功'))
     var payNum = 0,
       paindSum = 0,
       childProfits = 0,
@@ -392,10 +399,12 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       return;
     }
     goodsData = obj.data;
+    console.log(goodsData)
     if (obj.data.count != obj.data.refund_count) {
       $('.twoPoles span').html(obj.data.count - obj.data.refund_count);
       $('.refundNumber input').val(1)
-      $('.refundNumber input').prop('max', obj.data.count - obj.data.refund_count)
+      $('.refundNumber input').prop('max', obj.data.count - obj.data.refund_count);
+      $('.sumInput input[name="sum"]').val(goodsData.goods_Price);
       popupShow('refundNUmCont', 'refundBox')
     } else {
       layer.msg('该商品已全部退款', { icon: 7 })
@@ -412,20 +421,46 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         layer.close(index);
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        var refundData = JSON.stringify({
-          number: orderData.number,
-          goods: goodsData.goods_Id,
-          count: Number($('.refundNumber input').val())
-        });
-        loadingAjax('/api/order/refund', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
-          layer.msg(res.message, { icon: 1 });
-          popupHide('orderDetails', 'orderDetailsBox');
-          orderTable.reload({
-            where: {}
+       
+        if(orderData.payType==0){
+          var refundData = JSON.stringify({
+            machineId:orderData.machineId,
+            orderId: orderData.number,
+            goodId: goodsData.goods_Id,
+            count: Number($('.refundNumber input').val()),
+            amount:Number($('.sumInput input[name="sum"]').val())
+          });
+          loadingAjax('/api/pay/refund_alipay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
+            layer.msg(res.message, { icon: 1 });
+            popupHide('orderDetails', 'orderDetailsBox');
+            orderTable.reload({
+              where: {}
+            })
+          }).catch(err => {
+            layer.msg(err.message, { icon: 2 });
           })
-        }).catch(err => {
-          layer.msg(err.message, { icon: 2 });
-        })
+        }else if(orderData.payType==1){
+          var refundData = JSON.stringify({
+            machineId:orderData.machineId,
+            orderId: orderData.number,
+            goodId: goodsData.goods_Id,
+            count: Number($('.refundNumber input').val()),
+            amount:Number($('.sumInput input[name="sum"]').val()),
+            transaction_id:orderData.transaction_id,
+            total:refundTatol
+          });
+          loadingAjax('/api/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
+            layer.msg(res.message, { icon: 1 });
+            popupHide('orderDetails', 'orderDetailsBox');
+            orderTable.reload({
+              where: {}
+            })
+          }).catch(err => {
+            layer.msg(err.message, { icon: 2 });
+          })
+        }
+       
+       
       })
     } else {
       layer.msg('请按照提示填写数量', { icon: 7 })
@@ -438,12 +473,18 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       re = /^\d*$/;
     if (!re.test(num)) {
       layer.msg('只能输入正整数', { icon: 7 });
-      $(this).val(reduction)
+      $(this).val(reduction);
+      $('.sumInput input[name="sum"]').val(Number($(this).val()*goodsData.goods_Price));
     } else {
       reduction = $(this).val();
-      console.log(reduction)
+      console.log(reduction);
+      $('.sumInput input[name="sum"]').val(Number($(this).val()*goodsData.goods_Price));
     }
+    $('.sumInput input[name="sum"]').val(Number($(this).val()*goodsData.goods_Price));
   });
+  $('.refundNumber input').change(function(){
+    $('.sumInput input[name="sum"]').val(Number($(this).val()*goodsData.goods_Price));
+  })
   var addFlag=false,
   editFlag=false;
 

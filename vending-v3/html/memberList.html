@@ -200,6 +200,21 @@
                 </div>
             </div>
         </div>
+
+        <!-- 门店数据部分 -->
+        <div class="storesCont maskContnet" style="overflow-y: auto;">
+            <div class="storesBox margin0">
+                <div class="playHeader">
+                    <span>售货机数据</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="storesbody">
+                      <div id="test6" class="demo-transfer"></div>
+                </div>
+            </div>
+        </div>
         <!-- 没有权限时显示白屏 -->
         <div class="hangContent">
             <p>您没有访问的权限!</p>
@@ -213,6 +228,9 @@
         </button> -->
         <button class="layui-btn layui-btn-sm btn operation listEdit " typeID='2' lay-event="edit">
             <span style="color:#fff;">编辑</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn operation listEdit " typeID='2' lay-event="stores">
+            <span style="color:#fff;">门店数据</span>
         </button>
         <button class="layui-btn layui-btn-sm btn "  lay-event="role">
             <span style="color:#fff;">角色列表</span>

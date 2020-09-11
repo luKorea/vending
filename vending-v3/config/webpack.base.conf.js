@@ -114,7 +114,6 @@ module.exports = config;
 configReq.htmlConfig.forEach((val, i) => {
     console.log(val)
     if(val.name.indexOf('M_')>-1){
-        console.log(1)
         var hcoging = {
             template: "./html/mobile/" + val.name + ".html", //new 一个这个插件的实例，并传入相关的参数
             filename: val.name + ".html",

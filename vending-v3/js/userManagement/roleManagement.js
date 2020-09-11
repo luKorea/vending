@@ -29,6 +29,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         , loading: true
         , limits: [10, 20, 50]
         ,
+        // where:{
+        //     // condition:'系统'
+        // },
         request: {
             'pageName': 'pageNum',
             'limitName': 'pageSize'
@@ -410,4 +413,12 @@ var userPushId=[];
             })
         })
     }
+    // 查询
+    $('.queryBtnClick').click(function(){
+        tableIns.reload({
+            where:{
+                condition:$('.KyeText').val()
+            }
+        })
+    })
 });

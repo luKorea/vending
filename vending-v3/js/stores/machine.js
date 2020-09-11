@@ -219,7 +219,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 'headPhone': machineSetData.chargerPhone,
                 'describe': machineSetData.description,
                 'merchantsName': machineSetData.userNum,
-                merchantsNametext: machineSetData.merchantName
+                'merchantsNametext': machineSetData.merchantName
             });
             if (machineSetData.location) {
                 provinceChange(region[0]);

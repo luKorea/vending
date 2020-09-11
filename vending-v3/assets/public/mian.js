@@ -260,6 +260,7 @@ function treeList(marchantName) {
       return;
     }
   })
+  // console.log(JSON.stringify(dataList))
   return dataList;
 }
 //树方法实列
@@ -634,7 +635,7 @@ function numFormat1(num) {
         if (!isNaN(num)) {
             var c = (num.toString().indexOf('.') !== -1) ? num.toLocaleString() : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
             var str = c.split(".");
-    console.log(str)
+    // console.log(str)
             if (str.length == 1) { c = c + '.00'; } else { if (str[1].length == 1) { c = c + '0'; } }
             return c;
         } else {

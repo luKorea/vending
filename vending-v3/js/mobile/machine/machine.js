@@ -1,10 +1,60 @@
 import '../../../MyCss/mobile/machine/machine.scss';
-import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow } from '../../../common/common.js';
+import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow,permissionsFun } from '../../../common/common.js';
 // loadingWith('正在加载');
 //返回上一页
-$('.topHeader .back').click(function () {
-    window.history.go(-1)
+$('#topHeader .back').click(function () {
+    window.history.go(-1);
+    window.location.href='M_managementCenter.html'
 })
+// 获取权限
+var editFlag = false,//修改设备
+activateFlag = false,//启动设备
+// editAisleFlag = false,//修改货道
+paySetFlag = false,//配置机器支付方式
+// delAisleFlag = false,//删除货道
+// addAisleFlag = false,//增加货道
+AisleDetailsFlag = false,//货道详情
+salesListFlag = false,//销售记录
+shipmentListFlag = false;//出货记录
+function permissions(){
+    permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token).then(res=>{
+        res.data.forEach(item => {
+            if (item.id == '396') {
+                editFlag = true;
+            }
+            if (item.id == '392') {
+                activateFlag = true;
+            }
+            // if (item.id == '424') {
+            //     editAisleFlag = true;
+            // }
+            if (item.id == '432') {
+                paySetFlag = true;
+            }
+            // if (item.id == '426') {
+            //     delAisleFlag = true;
+            // }
+            // if (item.id == '425') {
+            //     addAisleFlag = true;
+            // }
+            if (item.id == '427') {
+                AisleDetailsFlag = true;
+            }
+            if (item.id == '401') {
+                salesListFlag = true;
+            }
+            if (item.id == '402') {
+                shipmentListFlag = true;
+            }
+        });
+        activateFlag?$('.actionStatusBtn').show():$('.actionStatusBtn').hide();
+        AisleDetailsFlag?$('.aisleDetalis').show():$('.aisleDetalis').hide();
+        paySetFlag?$('.paySetBtn').show():$('.paySetBtn').hide();
+    }).catch(err=>{
+        console.log(err)
+    })
+}
+permissions();
 //条件筛选数据、事件
 var pageNum = 1,
     pageSize = 10,
@@ -27,14 +77,18 @@ function getMachineList() {
     });
     loadAjax('/api/machine/getMachineList', 'post', sessionStorage.token, machineData, 'mask').then(res => {
         $('.allmachine span').html(res.data.total)
-        machineArr1=res.data.list;
+        machineArr1=machineArr1.concat(res.data.list)
+        // machineArr1=res.data.list;
+        if(loadFlag){
+            machineDrawing(res.data.list);
+        }
         if (res.data.list.length < 10) {
             hui.endLoadMore(true, '已加载全部数据');
             return false;
         }
 
         hui.endLoadMore();
-        machineDrawing(res.data.list);
+        
     }).catch(err => {
         toastTitle(err.message, 'error');
         hui.endLoadMore(true, '已加载全部数据');
@@ -46,7 +100,6 @@ var machineArr1 = [],
     machineArr2 = [],
     machineListIndex = 0;
 function machineDrawing(mData) {
-    console.log(machineArr1)
     var mstr = '';
     mData.forEach((item, index) => {
         mstr += `<div class="list myScale3d" machineid="${item.machineId}" machineListIndex="${machineListIndex}" merchantsId="${item.userNum}">
@@ -64,15 +117,16 @@ function machineDrawing(mData) {
     $('.machineList').append(mstr)
 }
 // 上拉加载
-// getMachineList();
 hui.loadMore(getMachineList, '正在加载');
 
 // 下拉刷新部分
+var loadFlag=false;
 function getMachineListTwo() {
     hui.loading('加载中...');
     machineArr1=[];
     machineArr2=[];
     pageNum = 1;
+    machineListIndex=0;
     var machineData = JSON.stringify({
         pageNum,
         pageSize,
@@ -80,7 +134,8 @@ function getMachineListTwo() {
         onlineStatus: onlineIndex ? Number(onlineIndex) : '',
         actionStatus: actionIndex ? Number(actionIndex) : '',
         openStatus: permissionsIndex ? Number(permissionsIndex) : '',
-        stockStatus: CreationIndex ? Number(CreationIndex) : ''
+        stockStatus: CreationIndex ? Number(CreationIndex) : '',
+        keyword,
     });
     var arrFlag = false;
     loadAjax('/api/machine/getMachineList', 'post', sessionStorage.token, machineData, 'mask').then(res => {
@@ -90,6 +145,11 @@ function getMachineListTwo() {
         machineArr1=res.data.list;
         if (res.data.list.length > 0) {
             arrFlag = true
+        }
+        if(res.data.list.length <10){
+            loadFlag=false
+        }else{
+            loadFlag=true;
         }
         if (!arrFlag) {
             $('.machineList').append('<div class="empty">查询无数据</div>');
@@ -114,7 +174,8 @@ hui.refresh('#machineList', getMachineListTwo);
 var actionIndex0 = '',
     onlineIndex0 = '',
     permissionsIndex0 = '',
-    CreationIndex0 = '';
+    CreationIndex0 = '',
+    keyword='';
 $('.actionStatus li').click(function () {
     $(this).addClass('green').siblings().removeClass('green');
     actionIndex0 = $(this).attr('actionIndex');
@@ -165,18 +226,22 @@ $('.conditionFooter .confirmBtn').click(function () {
     onlineIndex = onlineIndex0;
     permissionsIndex = permissionsIndex0;
     CreationIndex = CreationIndex0;
-    console.log(actionIndex)
+    keyword=$('.KeyInput input[name="key"]').val();
+    // console.log($('.KeyInput input[name="key"]').val())
     getMachineListTwo();
     closeParents(this, 'top0')
 });
 
 // 点击售货机事件
 var machineListId = null;//机器id;
-var machineIndex=null;
+var machineIndex=null;//售货机数组下标
 $('.machineList').on('click', '.list', function () {
     showPopup('.operationList', '.operationBox', 'top0');
     machineListId = $(this).attr('machineid');
-    machineIndex=$(this).attr('machinelistindex')
+    machineIndex=$(this).attr('machinelistindex');
+    console.log(machineIndex);
+    $('.machineTitle').html(machineArr1[machineIndex].info+'终端信息')
+    machineDetails=machineArr1[machineIndex];
 });
 // 关闭操作详情
 $('.operationList .topHeader span').click(function () {
@@ -186,6 +251,7 @@ $('.operationList .topHeader span').click(function () {
 // 收款账户部分
 $('.paySetBtn').click(function () {
     // supportpay(machineListId,sessionStorage.machindID)
+    supportpay(machineDetails.machineId, machineDetails.userNum);
     showPopup('.collectionContent', '.collectionBox', 'top30')
 })
 $('.collectionContent .close').click(function () {
@@ -233,7 +299,6 @@ function supportpay(machindID, merchantsID) {
                             setPayStr += `<input type="radio" value="${(item.selectPay.length > 0 ? item.selectPay[0].mpId : 0) + '-' + e.id}" name="${item.id}"  id="${e.id}" ${item.selectPay.length <= 0 ? '' : item.selectPay[0].paramId == e.id ? 'checked' : ''} /><label for="${e.id}">${e.payee}</label>`
                         }
                     })
-
                     setPayStr += ` </div>
                     </div>`
                 }
@@ -247,38 +312,226 @@ function supportpay(machindID, merchantsID) {
         layer.msg(err.message, { icon: 2 })
     })
 }
-supportpay("6241739031f5ad41", 58);
-$('.collectionBody input[type="radio"]').change(function () {
-    console.log(990990);
-    alert(1)
-});
+// supportpay("6241739031f5ad41", 58);
 // 修改收款账户
+// 机器信息
+var machineDetails=null;
 $('#form1').on('change', 'input[type="radio"]', function () {
+    if(!paySetFlag){
+        toastTitle('您没有修改收款账户得权限','warn');
+        return ;
+    }
     console.log($(this).val());
     var that = this;
     hui.confirm('确定修改收款账户？', ['取消', '确定'], function () {
         loadingWith('正在修改，请稍后！');
         var dataID = $(that).val().split('-');
         var setMachinePay = JSON.stringify({
-            setMachinePay: machineListId,
+            machineId: machineListId,
             paramId: Number(dataID[1]),
             mpId: Number(dataID[0])
         });
         loadAjax('/api/pay/updateMachinePayParam', 'post', sessionStorage.token, setMachinePay, 'mask').then(res => {
             console.log(res);
-            toastTitle(res.message, 'success')
+            toastTitle(res.message, 'success');
+            supportpay(machineDetails.machineId, machineDetails.userNum);
         }).catch(err => {
-            toastTitle(err.message, 'error')
+            toastTitle(err.message, 'error');
+            // supportpay("6241739031f5ad41", 58);/
+            supportpay(machineDetails.machineId, machineDetails.userNum);
         })
     }, function () {
-        supportpay("6241739031f5ad41", 58);
+        supportpay(machineDetails.machineId, machineDetails.userNum);
     });
 })
 
 // 终端信息部分
-hui.formInit();
+// hui.formInit();
+
 $('.operationNav .info').click(function(){
+    // console.log()
     showPopup('.terminalContent', '.terminalBox', 'top0');
-    var data = hui.getFormData('#form2');
-    console.log(data)
+    // var data = hui.getFormData('#form2');
+    console.log(machineArr1[machineIndex]);
+    if(machineDetails.openStatus==1||(!editFlag)){
+        toastTitle(editFlag?'温馨提示！该售货机正在营业，不可进行编辑！':'您没有编辑设备的权限','warn');
+        $('.terminalContent input').prop('disabled',true);
+        $('.terminalContent .terminalFooter').hide()
+    }else{
+        $('.terminalContent input').prop('disabled',false);
+        $('.terminalContent .terminalFooter').show();
+        $('.terminalContent input[name="merchantsNametext"]').prop('disabled',true);
+        $('.terminalContent input[name="number"]').prop('disabled',true);
+        $('.terminalContent input[name="merchantsName"]').prop('disabled',true);
+    }
+    $('.terminalContent input[name="sNumber"]').val(machineDetails.number);
+    $('.terminalContent input[name="name"]').val(machineDetails.info);
+    $('.terminalContent input[name="number"]').val(machineDetails.machineId);
+    var region=machineDetails.location.split(' ')
+    $('.province').html(region[0]+' '+region[1]+' '+region[2]);
+    $('.terminalContent input[name="mapVal"]').val(region[3]);
+    $('.terminalContent input[name="area"]').val(machineDetails.area);
+    $('.terminalContent input[name="longitude"]').val(machineDetails.longitude);
+    $('.terminalContent input[name="latitude"]').val(machineDetails.latitude);
+    $('.terminalContent input[name="headPhone"]').val(machineDetails.chargerPhone);
+    $('.terminalContent input[name="describe"]').val(machineDetails.description);
+    $('.terminalContent input[name="merchantsNametext"]').val(machineDetails.merchantName);
+    $('.terminalContent input[name="merchantsName"]').val(machineDetails.userNum);
+});
+// 关闭
+$('.terminalContent .close').click(function(){
+    closeParents(this,'top0');
+    $('.hui-picker').hide();
 })
+
+// 选择省市区
+var picker2 = new huiPicker('#province', function() {
+    var sheng = picker2.getText(0);
+    var shi = picker2.getText(1);
+    var qu = picker2.getText(2);
+    hui('#province').html(sheng+' ' + shi+' ' + qu);
+});
+picker2.level = 3;
+//cities 数据来源于 cities.js
+picker2.bindRelevanceData(cities);
+
+// 确定修改
+$('.terminalContent .confirmBtn').click(function(){
+    var machineInformation = hui.getFormData('#form2');
+    console.log(machineInformation);
+    if(machineInformation.sNumber && machineInformation.name && machineInformation.number  && machineInformation.mapVal && machineInformation.area && machineInformation.merchantsName&&machineInformation.longitude&&machineInformation.latitude){
+        var editMachine=JSON.stringify({
+            number: machineInformation.sNumber,
+            info:machineInformation.name,
+            machineId:machineInformation.number,
+            location:$('.province').html()+' '+$('.terminalContent input[name="mapVal"]').val(),
+            area:machineInformation.area,
+            longitude:machineInformation.longitude,
+            latitude:machineInformation.latitude,
+            userNum:machineInformation.merchantsName,
+            chargerPhone:machineInformation.headPhone,
+            description:machineInformation.describe
+        });
+        loadingWith('正在编辑，请稍后')
+        loadAjax('/api/machine/updateMachine','post',sessionStorage.token,editMachine,'mask').then(res=>{
+            toastTitle(res.message,'success');
+            getMachineListTwo();
+        }).catch(err=>{
+            console.log(err)
+            toastTitle(err.message,'error')
+        })
+    }else{
+        toastTitle('带*为必填','warn')
+    }
+})
+
+// 远程操作
+$('.remoteOperation').click(function(){
+    showPopup('.remoteCont','.remoteBox','top30')
+    if(machineDetails.actionStatus==1){
+        $('.actionStatusBtn').hide();
+    }else{
+        $('.businessBtn ').hide();
+    }
+    if(machineDetails.actionStatus==0){
+        $('.businessBtn p').html('营业')
+    }else{
+        $('.businessBtn p').html('暂停营业')
+    }
+})
+$('.remoteBox').click(function(){
+    event.stopPropagation();
+});
+// 关闭
+$('.remoteCont').click(function(){
+    closeWindow(this,'top30')
+})
+// 营业操作
+$('.businessBtn').click(function(){
+    if(machineDetails.onlineStatus!=1){
+        toastTitle('售货机处于离线状态不可以操作此功能','warn');
+        return ;
+    }
+        hui.confirm(machineDetails.actionStatus==0?'确定营业？':'确定暂停营业？', ['取消','确定'], function(){
+            var action=machineDetails.actionStatus==0?'true':'false';
+            var openStatus=machineDetails.actionStatus==0?'1':'0'
+            loadingWith('正在操作，请稍后');
+            loadAjax('/api/machine/getStatus','post',sessionStorage.token,JSON.stringify({machineId: machineDetails.machineId}),'mask').then(Dres=>{
+                var statusType = JSON.parse(Dres.data);
+                if (statusType.actionStatus == 1) {
+                    loadAjax('/api/pushActive','post',sessionStorage.token,JSON.stringify({machine: machineDetails.machineId,
+                        action,}),'mask').then(res=>{
+                            toastTitle(res.message,'warn')
+                        }).catch(err=>{
+                            if(err=='true'){
+                                loadAjax('/api/machine/activeMachine','post',sessionStorage.token,JSON.stringify({achine: machineDetails.machineId,openStatus,}),'mask').then(res=>{
+                                    machineDetails=statusType;
+                                    toastTitle('操作成功','success');
+                                    getMachineListTwo();
+                                    if(machineDetails.actionStatus==0){
+                                        $('.businessBtn p').html('营业')
+                                    }else{
+                                        $('.businessBtn p').html('暂停营业')
+                                    }     
+                                }).catch(err=>{
+                                    console.log(err)
+                                    toastTitle('操作失败','error')
+                                })
+                            }else{
+                                toastTitle('操作失败','error')
+                            }
+                        })
+                }else{
+                    toastTitle('该设备未激活,无法进行营业操作','warn')
+                }
+            }).catch(err=>{
+                toastTitle(err.message,'error')
+            })
+        },function(){
+            console.log('取消后执行...');
+        });
+});
+// 激活操作
+$('.actionStatusBtn').click(function(){
+    hui.confirm('确定激活该售货机？', ['取消','确定'], function(){
+        loadingWith('正在激活，请稍后!')
+        loadAjax('/api/machine/activeMachine','post',sessionStorage.token,JSON.stringify({machineId:machineDetails.machineId,actionStatus:'1'}),'mask').then(res=>{
+            toastTitle(res.message,'success');
+            machineDetails.actionStatus=1;
+            $('.actionStatusBtn').hide();
+            $('.businessBtn ').show();
+            getMachineListTwo();
+        }).catch(err=>{
+            toastTitle(err.message,'error')
+        })
+    },function(){
+        // console.log('取消后执行...');
+    });
+})
+ // 高德地图部分
+ var map = new AMap.Map("machineMap", {
+    resizeEnable: true,
+    zoom:15
+});
+
+var geocoder = new AMap.Geocoder({
+    city: "", //城市设为北京，默认：“全国”
+});
+var marker = new AMap.Marker();
+function geoCode() {
+    // var address  = document.getElementById('address').value;
+    var address = '广东省广州市越秀区丽丰中心';
+    geocoder.getLocation(address, function (status, result) {
+        if (status === 'complete' && result.geocodes.length) {
+            var lnglat = result.geocodes[0].location; //经纬度
+            console.log(lnglat)
+            marker.setPosition(lnglat);
+            map.add(marker);
+            map.setFitView(marker);
+        } else {
+            // log.error('根据地址查询位置失败');
+            layer.msg('根据地址查询位置失败', { icon: 2 })
+
+        }
+    });
+};

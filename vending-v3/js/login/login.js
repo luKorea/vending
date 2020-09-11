@@ -79,14 +79,17 @@ layui.use(['form', 'layer'], function () {
                         } else {
                             layer.msg(res.message,{icon:2})
                         }
+                    },error:function(err){
+                        layer.msg("服务器请求超时",{icon:2})
                     }
                 })
             } else {
-                layer.msg('请输入密码',{icon:7})
+                layer.msg("请输入密码",{icon:7})
             }
         } else {
-            layer.msg('请输入账号',{icon:7})
+            layer.msg("请输入账号",{icon:7})
         }
     }
     javascript:window.history.forward(1);
 })
+console.log(99900)

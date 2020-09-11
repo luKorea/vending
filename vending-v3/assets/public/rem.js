@@ -1,5 +1,4 @@
 (function (doc, win) {
-    console.log(doc, win)
     var docEl = doc.documentElement,
         //console.log(docEl)
         resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',

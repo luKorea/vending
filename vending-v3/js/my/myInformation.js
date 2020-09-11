@@ -1,5 +1,5 @@
-import '../../MyCss/my/myInformation.css'
-layui.use(['layer'], function () {
+import '../../MyCss/my/myInformation.css';
+layui.use(['layer','form'], function () {
     var layer=layui.layer;
     // 点击编辑事件
     $('.editBtnClcick').click(function () {

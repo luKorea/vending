@@ -331,3 +331,7 @@ input:disabled{
 .relative{
     position: relative;
 }
+.hides{
+    display: none !important;
+    transition: all 0.3s;
+}

@@ -1,5 +1,27 @@
 import '../../../MyCss/mobile/machine/machineChild.scss';
-import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow ,wholeNum} from '../../../common/common.js';
+import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow ,wholeNum,permissionsFun} from '../../../common/common.js';
+var editAisleFlag=false,
+delAisleFlag=false,
+addAisleFlag=false;
+function permissions(){
+    permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token).then(res=>{
+        res.data.forEach(item => {    
+            if (item.id == '424') {
+                editAisleFlag = true;
+            }
+            if (item.id == '426') {
+                delAisleFlag = true;
+            }
+            if (item.id == '425') {
+                addAisleFlag = true;
+            }
+        });
+        addAisleFlag?$('.addAisle').removeClass('hides'):$('.addAisle').addClass('hides');
+        console.log(addAisleFlag)
+    }).catch(err=>{
+        console.log(err)
+    })
+};
 
 var parentWin = window.parent;
 // console.log(parentWin)
@@ -96,7 +118,7 @@ function aisleHtml(machieList) {
     $('.aisleCont').html(aisleStar);
     $('.aisleCont input').attr('checked', false)
 }
-
+permissions();
 // OPass();
 // 关闭独立独立密码验证
 $('.validationContent .close').click(function(){
@@ -161,6 +183,9 @@ $(".aisleCont").on({
     touchstart: function (e) {
         // 长按事件触发  
         timeOutEvent = setTimeout(function () {
+            if(!delAisleFlag){
+                return ;
+            }
             timeOutEvent = 0;
             $('.numberTop span').hide();
             $('.delCheckbox').show();
@@ -196,6 +221,10 @@ $(".aisleCont").on({
                     $('.delBtn').text('删除(' + delNum + ')')
                 }
             }else if(LongPress==1){
+                if(!editAisleFlag){
+                    toastTitle('您没有编辑货道的权限','warn')
+                    return ;
+                }
                 console.log($(this).attr('fireIndex'));
                 ArrIndex = $(this).attr("fireIndex").split(',');
                 editFlag=1;
@@ -501,7 +530,8 @@ $('.editAisleContent .confirmBtn').click(function(){
     });
     loadAjax('/api/machine/updateGoodWay','post',sessionStorage.token,editObj,'mask','.editAisleContent','top50').then(res=>{
         // console.log(res);
-        loadChild(requestId)
+        loadChild(requestId);
+        toastTitle(res.message,'success')
     }).catch(err=>{
         // console.log(err)
         toastTitle(err.message,'error')

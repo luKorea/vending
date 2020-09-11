@@ -36,3 +36,20 @@
 .hui-list-icons img {
     width: 0.5rem;
 }
+.goodsChildBody{
+    padding: 0.3rem 0 0.4rem 0;
+    .goodsList{
+        width: 92%;
+        margin: 0 auto;
+        padding: 0.2rem 0;
+        border-bottom: 1px solid #E4E3E6;
+        img{
+            width: 0.8rem;
+        }
+        p{
+            margin-left: 0.5rem;
+            color: #000000;
+            font-size: 0.3rem;
+        }
+    }
+}

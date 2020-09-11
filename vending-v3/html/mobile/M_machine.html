@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="144x144" href="../../img/icon.png" />
     <script src="../../assets/public/documentMobile.js"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=4b78c5cee1f0f8c37a2a2f8283e256b9&plugin=AMap.Geocoder"></script>
+    <!-- <script src="https://webapi.amap.com/maps?v=1.4.15&key=4b78c5cee1f0f8c37a2a2f8283e256b9"></script> -->
     <title>售货机</title>
 </head>
 
 <body>
     <div class="wrap ">
-        <div class="topHeader flexThree">
+        <div class="topHeader flexThree" id="topHeader">
             <span class="hui-icons hui-icons-left back"></span>
             <h2>售货机列表</h2>
             <span class="hui-icons hui-icons-menu-point"></span>
@@ -25,7 +27,7 @@
                 </div>
             </div>
             <div class="KeyInput flex">
-                <input type="text" placeholder="终端编号、信息">
+                <input type="text" name="key" placeholder="终端编号、信息">
                 <!-- <button>条件选择</button> -->
                 <button type="button" class="hui-button hui-primary">条件筛选</button>
             </div>
@@ -96,7 +98,7 @@
         <div class="operationBox maskBox">
             <div class="topHeader  flexThree">
                 <span class="hui-icons hui-icons-left"></span>
-                <h2>text2</h2>
+                <h2 class="machineTitle">text2</h2>
                 <!-- <span class="hui-icons hui-icons-menu-point"></span> -->
                 <span></span>
             </div>
@@ -123,7 +125,7 @@
                         <img src="../../img/shipment.png" alt="">
                         <p>出货详情</p>
                     </li>
-                    <li>
+                    <li class="remoteOperation">
                         <img src="../../img/set.png" alt="">
                         <p>远程操作</p>
                     </li>
@@ -168,51 +170,97 @@
     <div class="terminalContent maskContent">
         <div class="terminalBox maskBox">
             <div class="topHeader  flexThree">
-                <span class="hui-icons hui-icons-left"></span>
-                <h2>text2终端信息</h2>
+                <span class="hui-icons hui-icons-left close"></span>
+                <h2 class="machineTitle">text2终端信息</h2>
                 <!-- <span class="hui-icons hui-icons-menu-point"></span> -->
                 <span></span>
             </div>
             <div class="terminalBody">
                 <form style="padding:28px 0px;" class="hui-form" id="form2">
                     <div class="flex inputList">
+                        <label><span style="color: red;">*</span>终端编号:</label>
+                        <input type="text" name="sNumber">
+                    </div>
+                    <div class="flex inputList">
                         <label><span style="color: red;">*</span>终端名:</label>
-                        <input type="password" name="sNumber">
+                        <input type="text" name="name">
                     </div>
                     <div class="flex inputList">
                         <label>终端序列号:</label>
-                        <input type="password" name="1">
+                        <input type="text" disabled name="number">
+                    </div>
+                    <div class="flex inputList">
+                        <label><span style="color: red;">*</span>省市区:</label>
+                        <p class="province" id="province"></p>
                     </div>
                     <div class="flex inputList">
                         <label><span style="color: red;">*</span>地址:</label>
-                        <input type="password" name="2">
+                        <input type="text" name="mapVal">
+                    </div>
+                    <div class="mapContent">
+                        <div class="machineMap" id="machineMap">
+
+                        </div>
                     </div>
                     <div class="flex inputList">
                         <label><span style="color: red;">*</span>地区:</label>
-                        <input type="password" name="3">
+                        <input type="text" name="area">
                     </div>
                     <div class="flex inputList">
                         <label><span style="color: red;">*</span>经度:</label>
-                        <input type="password" name="4">
+                        <input type="number" name="longitude">
                     </div>
                     <div class="flex inputList">
                         <label><span style="color: red;">*</span>纬度:</label>
-                        <input type="password" name="5">
+                        <input type="number" name="latitude">
+                    </div>
+                    <div class="flex inputList">
+                        <label><span style="color: red;">*</span>所属商户:</label>
+                        <input type="text" name="merchantsNametext" disabled>
+                    </div>
+                    <div class="flex inputList" style="display: none;">
+                        <label><span style="color: red;">*</span>商户ID:</label>
+                        <input type="text" name="merchantsName" disabled>
                     </div>
                     <div class="flex inputList">
                         <label>负责人手机:</label>
-                        <input type="password" name="6">
+                        <input type="number" name="headPhone">
                     </div>
                     <div class="flex inputList">
                         <label>描述:</label>
-                        <input type="password" name="7">
+                        <input type="text" name="describe">
                     </div>
                 </form>
             </div>
+            <div class="terminalFooter">
+                <button type="button" class="hui-button hui-primary confirmBtn">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 激活 营业-->
+    <div class="maskContent remoteCont">
+        <div class="remoteBox centerMaskWindow maskBox">
+            <div class="goodsChildBody">
+                <div class="remote flex actionStatusBtn">  
+                    <img src="../../img/activation.png" alt="">
+                    <p>激活</p>
+                </div>
+                <div class="remote flex businessBtn">  
+                    <img src="../../img/business.png" alt="">
+                    <p>营业</p>
+                </div>
+                <div class="remote flex">  
+                    <img src="../../img/op.png" alt="">
+                    <p>其他远程操作</p>
+                </div>
+              </div>
         </div>
     </div>
     <script src="../../assets/public/hui-form.js"></script>
     <script src="../../assets/public/hui-refresh-load-more.js"></script>
+    <script src="../../assets/public/hui-picker.js"></script>
+    <script src="../../assets/public/cities.js"></script>
     <script>
       
         //         function showSelectRes(_selfBtn){

@@ -143,7 +143,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             console.log(obj)
             console.log(rank)
             var rankObj=JSON.stringify({
-                merchantId:merchantsPay,
+                merchantId:Number(merchantsPay),
                 topId:obj.data.id,
                 bottomId:rank[obj.data.rank - 2].id
             })

@@ -107,6 +107,55 @@ function wholeNum(that) {
     }
 }; 
 
+//获取用户权限
+function permissionsFun(url, type, userToken) {
+    return new Promise(function (resolve, reject) {
+      ajaxFun(url, type, userToken, '', resolve, reject).then(res => {
+        if (res.code == 200) {
+          resolve(res)
+        } else if (res.code == 403) {
+          window.location.href = "M_login.html";
+        } else {
+          reject(res)
+        }
+      }).catch((err) => {
+        toastTitle('服务器请求超时','error')
+        return;
+      })
+    })
+  }
+  async function permissionsVal(addIndex,editIndex,delIndex,four,five){
+    var dataFlag = {
+        addFlag: false,
+        editFlag: false,
+        delFlag: false,
+        fourFlag:false,
+        fiveFlag:false,
+      }
+      await permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token).then(res=>{
+          res.data.forEach((item,index)=>{
+              if(item.id == addIndex){
+                dataFlag.addFlag=true
+              }
+              if(item.id == editIndex){
+                dataFlag.editFlag=true
+              }
+              if(item.id == delIndex){
+                dataFlag.delFlag=true
+              }
+              if(item.id == four){
+                dataFlag.fourFlag=true
+              }
+              if(item.id == five){
+                fiveFlag.fourFlag=true
+              }
+          })
+      }).catch(err=>{
+
+      });
+      return dataFlag
+  }
+
 export {
     loadAjax,
     loadingWith,
@@ -119,4 +168,6 @@ export {
     outLogin,
     wholeNum,
     ChineseREgular,
+    permissionsFun,
+    permissionsVal,
 }
