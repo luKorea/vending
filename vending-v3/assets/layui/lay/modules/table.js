@@ -284,6 +284,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 //                  contentType:"application/json",
 //					data: JSON.stringify(d),
 					data:d,
+					timeout:10000,
 					dataType: "json",
 					headers: a.headers || {},
 //					headers: {'Content-Type': 'application/json'},

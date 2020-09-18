@@ -1,0 +1,214 @@
+.wrap{
+    width: 100%;
+    overflow: hidden;
+}
+.addActivityBox{
+    width: 800px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    .addActivityBody{
+        box-sizing: border-box;
+        padding: 25px 25px 30px;
+        .mt40 input{
+            width: 48%;
+            border: 0;
+            height: 40px !important;
+            line-height: 40px !important;
+        }
+        .c-datepicker-range-separator{
+            line-height: 40px;
+        }
+    }
+    .machineChoose{
+        margin-left: 105px;
+    }
+    .listFlex label{
+        width: 120px;
+    }
+    p{
+        margin-left: 25px;
+    }
+}
+.machineDetailsBox{
+    width: 900px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.goodsBox,.chooseGoodsBox{
+    width: 900px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    box-sizing: border-box;
+    padding: 0 20px;
+}
+.machineDetailsBox{
+    padding: 20px ;
+}
+.c-datepicker-picker__sidebar{
+    display: none;
+}
+.c-datepicker-picker__body{
+    margin-left: 0 !important;
+}
+.activityList{
+    width: 100%;
+    .tableList{
+        width: 100%;
+        table{
+            width: 100%; 
+        }
+    }
+    .layui-form{
+        width: 100% !important;
+    }
+}
+.addFooter,.goodsFooter,.chooseFooter,.machineFooter{
+    padding: 15px 0 25px ;
+    text-align: center;
+}
+.cancel_btn{
+    background: #fff !important;
+    border: 1px solid #dcdfe6 !important;
+    color: #606266;
+}
+.cancel_btn:hover{
+    color: #be954a !important;
+    border: 1px solid #be954a !important;
+}
+.SetTitle{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border-bottom: 1px solid #ebeef5;
+}
+.SetContList{
+    height: 450px;
+    overflow-y: auto;
+}
+.SetTitle>li,.setMateraialList>div{
+    padding: 12px 10px;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+.setMateraialList>div{
+    padding: 20px 10px;
+}
+.SetSorting{
+    width: 180px;
+}
+.abbreviateImg{
+    width: 180px;
+}
+.SetName{
+    width: 180px;
+}
+.duration{
+    width: 180px;
+}
+.SetOperation{
+    margin-left: 15px;
+    width: 185px;
+}
+.SetTitle>li>div{
+    color: #909399;
+    font-size: 14px;
+    /* line-height: 23px; */
+    font-weight: bold;
+    word-break: break-all;
+}
+.setMateraialList{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border-bottom: 1px solid #ebeef5;
+}
+.setMateraialList>div>div{
+    
+    color: #909399;
+    font-size: 14px;
+    /* line-height: 23px; */
+    font-weight: bold;
+    word-break: break-all;
+    width: 100%;
+}
+.abbreviateImg img{
+    width: 80px;
+    cursor: pointer;
+}
+.duration input{
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 60%;
+}
+.moreList{
+    text-align: center;
+    width: 10%;
+    margin: 0 auto ;
+    padding-top: 40px;
+    p{
+        color: #be954a;
+        margin: 0;
+    }
+    span{
+        color: #be954a;
+        text-align: center;
+    }
+    img{
+        transition: all 0.3s;
+    }
+}
+.actives{
+    transform:rotate(180deg);
+    transition: all 0.5s;
+}
+.complex{
+    form{
+        width: 100%;
+    }
+    .layui-form-item{
+        margin-bottom: 0;
+        .layui-input-block{
+            margin-left: 30px;
+        }
+    }
+}
+.seniorSet{
+    display: none;
+}
+.remove {
+    .c-datepicker-date-editor{
+        width: 75%;
+        margin-left: 5%;
+        input{
+            border: 0;
+        }
+    } 
+}

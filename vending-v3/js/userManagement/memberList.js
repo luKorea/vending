@@ -29,7 +29,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             return d.roleSign == 0 ? '否' : '是'
           }
         },
-        { field: 'alias', width: 200, title: '用户编号' },
+        { field: 'alias', width: 250, title: '用户编号' },
         { field: 'phone', width: 150, title: '手机号' },
         { field: 'merchantName', width: 150, title: '所属商户' },
 

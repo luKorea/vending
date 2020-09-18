@@ -25,15 +25,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             { field: 'alias', width: 160, title: '商户编号' },
             { field: 'addUser', width: 150, title: '创建人', },
-            { field: 'addTime', width: 180, title: '创建时间'},
+            { field: 'addTime', width: 180, title: '创建时间' },
             { field: 'lastUser', width: 150, title: '最后修改人', },
-            { field: 'lastTime', width: 180, title: '最后修改时间'},
+            { field: 'lastTime', width: 180, title: '最后修改时间' },
             { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo' },
         ]]
         , id: 'tableId'
         , page: true,
         // height: 'full-2000',
-         loading: true
+        loading: true
         , limits: [10, 20, 50]
         ,
         request: {
@@ -104,7 +104,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 $('.listInput input[name="marchantsText"]').val(data.merchantName);
             }
             $('.marchantsList').val(data.topMerchant);
-
+            $('.MemberOperation input[name="service_phone"]').val(data.service_phone);
+            $('.editImg img').prop('src', data.service_code);
 
         } else if (obj.event === 'delete') {
             if (data.id == 1) {
@@ -131,11 +132,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                             dataList = treeList();
                             // treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
                             // inst2.reload('treelistEdit', {
-                            
+
                             // });
-                            var  addEditData = treeList();
+                            var addEditData = treeList();
                             tree.reload('treelistEdit', {
-                                data:addEditData
+                                data: addEditData
                             });
                             tableIns.reload({
                                 where: {}
@@ -188,10 +189,50 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     //   关闭添加
     $('.addBox .addCancelBtn').click(function () {
         popupHide('addMerchants', 'addBox')
+    });
+    var addImg = null;
+    // 添加选择图片
+    $('.addBox .addUpload').change(function (e) {
+        if(!$(this).val()){
+            return ;
+        }
+        var that = this;
+        var upDetails = new FormData();
+        upDetails.append('file', e.target.files[0]);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        $.ajax({
+            type: 'post',
+            url: '/api/fileUpload',
+            processData: false,
+            contentType: false,
+            headers: {
+                token,
+            },
+            data: upDetails,
+            success: function (res) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                $(that).val('')
+                if (res.code == 0) {
+                    addImg = res.data.src;
+                    $('.addImg img').prop('src', addImg);
+                    $('.addImg').show();
+                } else {
+                    layer.msg(res.message, { icon: 7 });
+                }
+            },
+            error: function (err) {
+                $(that).val('')
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon')
+                layer.msg('上传失败', { icon: 2 })
+            }
+        })
     })
     // 添加商户事件
     $('.addBody .addSubmiBtn').click(function () {
-        console.log($('.addBox input[name="addmarchantsVal"]').val())  ;
+        console.log($('.addBox input[name="addmarchantsVal"]').val());
         var topVal = $('.addBox input[name="addmarchantsVal"]').val().split(' ');
         var aliasText = null;
         // marchantsList.forEach((item, index) => {
@@ -199,24 +240,33 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         //         aliasText = item.alias
         //     }
         // })
-        if ($('.addBox input[name="merchantsName"]').val() && $('.addBox input[name="addmarchantsVal"]').val()) {
+        if ($('.addBox input[name="merchantsName"]').val() && $('.addBox input[name="addmarchantsVal"]').val() && $('.addBox input[name="service_phone"]').val()) {
+            console.log($('.addBox input[name="service_phone"]').val())
+            if (!addImg) {
+                layer.msg('请上传微信二维码', { icon: 7 });
+                return;
+            }
             var addMerchantsData = JSON.stringify({
                 name: $('.addBox input[name="merchantsName"]').val(),
                 topMerchant: Number(topVal[0]),
-                alias: topVal[1]
+                alias: topVal[1],
+                service_phone: $('.addBox input[name="service_phone"]').val(),
+                service_code: addImg
             })
             loadingAjax('/api/merchant/newMerchant', 'post', addMerchantsData, sessionStorage.token, '', 'addMerchants', 'addBox', layer).then((res) => {
                 $('.addBox input[name="merchantsName"]').val('');
                 layer.msg(res.message, { icon: 1 });
+                addImg = null;
+                $('.addImg').hide();
                 dataList = treeList();
                 // treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
                 // inst2.reload('treelistEdit', {
-                            
+
                 // });
-                var  addEditData = treeList();
-                            tree.reload('treelistEdit', {
-                                data:addEditData
-                            });
+                var addEditData = treeList();
+                tree.reload('treelistEdit', {
+                    data: addEditData
+                });
                 tableIns.reload({
                     where: {}
                 })
@@ -224,22 +274,62 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 layer.msg(err.message, { icon: 2 })
             })
         } else {
-          
+
             layer.msg('带*号为必填', { icon: 7 })
         }
     })
+    // 编辑选择图片
+    $('.editMerchants .editUpload').change(function(e){
+        if(!$(this).val()){
+            return ;
+        }
+        var that = this;
+        var upDetails = new FormData();
+        upDetails.append('file', e.target.files[0]);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        $.ajax({
+            type: 'post',
+            url: '/api/fileUpload',
+            processData: false,
+            contentType: false,
+            headers: {
+                token,
+            },
+            data: upDetails,
+            success: function (res) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                $(that).val('')
+                if (res.code == 0) {
+                    addImg = res.data.src;
+                    $('.editImg img').prop('src', addImg);
+                } else {
+                    layer.msg(res.message, { icon: 7 });
+                }
+            },
+            error: function (err) {
+                $(that).val('')
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon')
+                layer.msg('上传失败', { icon: 2 })
+            }
+        })
+    })
     // 编辑商户事件
     $('.Medit .submit_btn').click(function () {
-        if ($('.editMerchants input[name="merchantsName"]').val()) {
+        if ($('.editMerchants input[name="merchantsName"]').val() && $('.editMerchants input[name="service_phone"]').val()) {
             var editdMerchantsData = JSON.stringify({
                 id: data.id,
                 name: $('.editMerchants input[name="merchantsName"]').val(),
                 topMerchant: Number($('.marchantsList').val()),
+                service_phone: $('.editMerchants input[name="service_phone"]').val(),
+                service_code: $('.editImg img').attr('src'),
             });
             loadingAjax('/api/merchant/updateMerchant', 'post', editdMerchantsData, sessionStorage.token, '', 'MemberOperation', 'MemberContent', layer).then((res) => {
-                var  addEditData = treeList();
+                var addEditData = treeList();
                 tree.reload('treelistEdit', {
-                    data:addEditData
+                    data: addEditData
                 });
                 layer.msg(res.message, { icon: 1 })
                 tableIns.reload({
@@ -257,11 +347,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     //树状图 
     var addEditData = null;
     var dataList = addEditData = treeList();
-    console.log(addEditData)
     // treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
-    $('.addBox input[name="marchantsListname"]').prop('placeholder',addEditData[0].title)
-    $('.addBox input[name="addmarchantsVal"]').val(addEditData[0].id+' '+addEditData[0].alias);
-    console.log($('.addBox input[name="addmarchantsVal"]').val())
+    $('.addBox input[name="marchantsListname"]').prop('placeholder', addEditData[0].title)
+    $('.addBox input[name="addmarchantsVal"]').val(addEditData[0].id + ' ' + addEditData[0].alias);
+    // console.log($('.addBox input[name="addmarchantsVal"]').val())
     // 监听f5刷新
     $("body").bind("keydown", function (event) {
         if (event.keyCode == 116) {
@@ -288,12 +377,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             console.log(obj);
             console.log(obj.data.id)
             tableIns.reload({
-                where:{
-                    conditionTwo:obj.data.id +'',
-                    conditionThree:'0'
+                where: {
+                    conditionTwo: obj.data.id + '',
+                    conditionThree: '0'
                 }
-              
-            })  
+
+            })
             var nodesEdti = $(`#test1 .layui-tree-txt`);
             for (var i = 0; i < nodesEdti.length; i++) {
                 if (nodesEdti[i].innerHTML === obj.data.title)
@@ -301,9 +390,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 else
                     nodesEdti[i].style.color = "#555";
             };
-            $('.addBox input[name="marchantsListname"]').prop('placeholder',obj.data.title)
+            $('.addBox input[name="marchantsListname"]').prop('placeholder', obj.data.title)
             $('.addBox input[name="addmarchantsVal"]').val(obj.data.id + ' ' + obj.data.alias);
-            console.log( $('.addBox input[name="marchantsListname"]').val());
+            console.log($('.addBox input[name="marchantsListname"]').val());
         },
     });
     var addFlag = false,

@@ -607,7 +607,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 { field: 'info', width: 200, title: '售货机信息' },
                 { field: 'location', width: 300, title: '地址', },
                 { field: 'merchantName', width: 150, title: '所属商户', },
-                { field: 'actionTime', width: 200, title: '激活时间', },
                 { field: 'description', width: 180, title: '描述' },
             ]],
             page: true,

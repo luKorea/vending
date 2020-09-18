@@ -160,6 +160,8 @@
                     <li class="salesDetails">销售详情</li>
                     <li class="shipmentDetails">出货记录</li>
                     <li class="payTypeSet">收款账户</li>
+                    <li>客服信息</li>
+                    <li>定制</li>
                     <div class="tabLine">
                     </div>
                 </ul>
@@ -553,6 +555,51 @@
                                 <span>确定</span>
                             </button>
                         </div> -->
+                    </li>
+                    <!-- 客服信息 -->
+                    <li class="service" style="display: none;">
+                        <div class="margin">
+                            <div class="serviceTitle">
+                                <div class="listFlex">
+                                    <label for="">客服电话：</label>
+                                    <input type="text" name="service_phone">
+                                </div>
+                                <div class="listFlex" style="margin-left: 110px;">
+                                    <button class="layui-btn layui-btn-normal btn uploadBtn " >
+                                        <span>上传客服二维码图片</span>
+                                        <input type="file" accept="image/*">
+                                    </button>
+                                    <button class="layui-btn layui-btn-normal btn delImgBtn" style="margin: 0 0 0 15px;">
+                                        <span>删除二维码图片</span>
+                                    </button>
+                                </div>
+                                <div class="ImgCont">
+                                    <img src="" alt="" class="WeChat">
+                                </div>
+                            </div>
+                            <div class="serviceFooter">
+                                <button class="layui-btn layui-btn-normal btn " style="margin: 0 0 0 15px;">
+                                    <span>确定</span>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- 定制 -->
+                    <li style="display: none;">
+                        <div class="margin">
+                            <div class="listFlex">
+                                <button class="layui-btn layui-btn-normal customBtn  btn" type="button">
+                                    <span>点击上传定制二维码</span>
+                                    <!-- <input type="file" accept="image/*"  class="customInput"> -->
+                                </button>
+                                <button class="layui-btn layui-btn-normal btn editDelImgBtn" style="margin: 0 0 0 15px;">
+                                    <span>删除定制二维码图片</span>
+                                </button>
+                            </div>
+                            <div class="listInput customImg" >
+                                <img src="../img/1.jpg" alt="">
+                            </div>
+                        </div>
                     </li>
                 </ul>
                 <!-- </div> -->

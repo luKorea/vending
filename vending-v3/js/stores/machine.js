@@ -192,7 +192,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // payTypeFun(Number(sessionStorage.machineGoodsId));
                 supportpay(machineSetData.machineId,machineSetData.userNum);
             }
-
+            if(machineSetData.service_code){
+                $('.ImgCont img').prop('src',machineSetData.service_code);
+                $('.ImgCont').show();
+            }else{
+                $('.ImgCont img').prop('src','');
+                $('.ImgCont').hide();
+            }
+            $('.serviceTitle input[name="service_phone"]').val(machineSetData.service_phone)
         } else if (obj.event == 'edit') {
             if (machineSetData.openStatus == 1) {
                 layer.msg('温馨提示！该售货机正在营业，不可进行编辑！', { icon: 7 })
@@ -367,7 +374,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     })
                 })
             } else {
-                layer.confirm('确定取消营业？', function (index) {
+                layer.confirm('确定暂停营业？', function (index) {
                     layer.close(index);
                     $('.mask').fadeIn();
                     $('.maskSpan').addClass('maskIcon')
@@ -383,7 +390,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         }),
                         success: function (Dres) {
                             if (Dres.code == 200) {
-                                var statusType = JSON.parse(Dres.data);
+                                console.log(Dres)
+                                // return ;
+                                // var statusType = JSON.parse(Dres.data);
+                                var statusType = Dres.data;
                                 if (statusType.actionStatus == 1) {
                                     $.ajax({
                                         type: 'post',
@@ -1547,26 +1557,62 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             supportpay(machineSetData.machineId,machineSetData.userNum)
         })
         
-      }); 
-    // payTypeFun(Number(sessionStorage.machineID));
-    // $('.paySetBtn').click(function () {
-    //     console.log($('#payTypeChoose').val());
-    //     if ($('#payTypeChoose').val() == 0) {
-    //         layer.msg('请选择支付类型', { icon: 7 });
-    //         return;
-    //     }
-    //     var payData = JSON.stringify({
-    //         machineId: machineSetData.machineId,
-    //         payId: Number($('#payTypeChoose').val())
-    //     });
-    //     loadingAjax('api/machine/configMachinePay', 'post', payData, sessionStorage.token, 'mask', '', '', layer).then(res => {
-    //         console.log(res);
-    //         layer.msg(res.message, { icon: 1 })
-    //         machineList.reload({
-    //             where: {}
-    //         })
-    //     }).catch(err => {
-    //         layer.msg(err.message, { icon: 2 })
-    //     })
-    // })
+      });
+
+    //   客服信息部分
+    // 更改客服微信二维码
+    $('.uploadBtn input').change(function(e){
+        var that=this;
+        var upDetails = new FormData();
+        upDetails.append('file', e.target.files[0]);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        $.ajax({
+            type: 'post',
+            url: '/api/fileUpload',
+            processData: false,
+            contentType: false,
+            headers: {
+              token,
+            },
+            data: upDetails,
+            success: function (res) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon')
+                if(res.code==0){
+                    $('.ImgCont img').prop('src',res.data.src);
+                    $('.ImgCont').show();
+                }else{
+                    layer.msg(res.message, { icon: 7 });
+                }
+            },
+            error:function(err){
+              $('.mask').fadeOut();
+              $('.maskSpan').removeClass('maskIcon')
+              layer.msg('上传失败',{icon:2})
+            }
+          })
+    });
+    // 删除图片
+    $('.delImgBtn').click(function(){
+        $('.ImgCont img').prop('src','');
+        $('.ImgCont').hide();
+    });
+    // 确定修改
+    $('.serviceFooter .btn').click(function(){
+        var editserviceObj=JSON.stringify({
+            machineId:machineSetData.machineId,
+            service_code:$('.ImgCont img').prop('src'),
+            service_phone:$('.serviceTitle input[name="service_phone"]').val()
+        });
+        loadingAjax('/api/machine/updateMachineService','post',editserviceObj,sessionStorage.token,'mask','','',layer).then(res=>{
+            layer.msg(res.message,{icon:1})
+            machineList.reload({
+                where:{}
+            });
+        }).catch(err=>{
+            console.log(err);
+            layer.msg(err.message,{icon:2})
+        })
+    })
 });

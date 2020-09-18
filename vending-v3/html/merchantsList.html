@@ -71,6 +71,28 @@
                             <input type="text" name="merchantsName">
                         </div>
                         <div class="listInput">
+                            <label for=""><span style="color: red;">*</span> 客服电话:</label>
+                            <input type="text" name="service_phone">
+                        </div>
+                        <div class="listFlex">
+                            <button class="layui-btn layui-btn-normal uploadBtn btn" type="button">
+                                <span>点击上传客服微信二维码</span>
+                                <input type="file" accept="image/*"  class="editUpload">
+                            </button>
+                        </div>
+                        <div class="listInput editImg" style="display: block;">
+                            <img src="" alt="">
+                        </div>
+                        <div class="listFlex">
+                            <button class="layui-btn layui-btn-normal customBtn  btn" type="button">
+                                <span>点击上传定制二维码(非必须)</span>
+                                <input type="file" accept="image/*"  class="customInput">
+                            </button>
+                            <button class="layui-btn layui-btn-normal btn editDelImgBtn" style="margin: 0 0 0 15px;">
+                                <span>删除定制二维码图片</span>
+                            </button>
+                        </div>
+                        <div class="listInput">
                             <label for=""><span style="color: red;">*</span> 上级商户:</label>
 									<!-- <select name="marchantsListname" class="marchantsList" lay-filter="stateSelect">
                                     </select> -->
@@ -104,6 +126,28 @@
                     <div class="listInput">
                         <label for=""><span style="color: red;">*</span> 商户名:</label>
                         <input type="text" name="merchantsName">
+                    </div>
+                    <div class="listInput">
+                        <label for=""><span style="color: red;">*</span> 客服电话:</label>
+                        <input type="text" name="service_phone">
+                    </div>
+                    <div class="listFlex">
+                        <button class="layui-btn layui-btn-normal uploadBtn btn" type="button">
+                            <span>点击上传客服微信二维码</span>
+                            <input type="file" accept="image/*" name="fileDetails" class="addUpload">
+                        </button>
+                    </div>
+                    <div class="listInput addImg">
+                        <img src="" alt="">
+                    </div>
+                    <div class="listFlex">
+                        <button class="layui-btn layui-btn-normal customBtn  btn" type="button">
+                            <span>点击上传定制二维码(非必须)</span>
+                            <input type="file" accept="image/*"  class="customInput">
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn addDelImgBtn" style="margin: 0 0 0 15px;">
+                            <span>删除定制二维码图片</span>
+                        </button>
                     </div>
                     <div class="listInput">
                         <label for=""><span style="color: red;">*</span> 上级商户:</label>

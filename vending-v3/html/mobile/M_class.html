@@ -81,6 +81,46 @@
                 </div>
             </div>
         </div>
+        <!-- 编辑部分 -->
+        <div class="editContent maskContent" >
+            <div class="maskBox centerMaskWindow editBox ">
+                <div class="header">
+                    <h1>编辑类目</h1>
+                    <button class="close">
+                        <span class="hui-icons hui-icons-close"></span>
+                    </button>
+                </div>
+                <div class="editBody">
+                    <div class="flex inputList">
+                        <label><span style="color: red;">*</span>类目名：</label>
+                        <input type="text" name="name" >
+                    </div>
+                    <div class="flex inputList">
+                        <label>备注：</label>
+                        <input type="text" name="note">
+                    </div>
+                    <div class="flex inputList">
+                        <label>创建人：</label>
+                        <input type="text" name="user" disabled>
+                    </div>
+                    <div class="flex inputList">
+                        <label>创建时间：</label>
+                        <input type="text" name="classifyTime" disabled>
+                    </div>
+                    <div class="flex inputList">
+                        <label>最后修改人:</label>
+                        <input type="text" name="lastUser" disabled>
+                    </div>
+                    <div class="flex inputList">
+                        <label>最后修改时间：</label>
+                        <input type="text" name="lastTime" disabled>
+                    </div>
+                </div>
+                <div class="editFooter flexCenter">
+                    <button type="button" class="hui-button hui-primary  confirmBtn">确定</button>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="../../assets/public/hui-refresh-load-more.js"></script>
 </body>

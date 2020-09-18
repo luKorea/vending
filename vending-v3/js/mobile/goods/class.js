@@ -68,7 +68,7 @@ function classDrawing(cData){
     cData.forEach((item,index)=>{
         cstr+=`<div class="hui-swipe-do list">
                     <div class="hui-swipe-do-doms">
-                        <div class="hui-swipe-do-content" classIndex="${machineListIndex}">
+                        <div class="hui-swipe-do-content core" classIndex="${machineListIndex}">
                                 <div class=" flex" style="padding: 0.15rem 0;">
                                     <div class="rank ${fourFlag?'':'hides'}">
                                         <img src="${require("../../../img/ascension.png")}" classIndex="${machineListIndex}"  class="${item.rank==1?'hides':''}" alt="">
@@ -161,7 +161,7 @@ $('.addClassCont').click(function(){
 // 确定添加
 $('.addFooter .confirmBtn').click(function(){
     if(!$('.addClassCont input[name="name"]').val()){
-        toastTitle('类名名不能为空','warn');
+        toastTitle('类目名不能为空','warn');
         return; 
     };
     var addClassobj=JSON.stringify({
@@ -193,8 +193,57 @@ $('.classList').on('click','.rank img',function(){
     });
     loadingWith('正在更改，请稍后')
     loadAjax('/api/classify/sortClassify', 'post',sessionStorage.token,rankObj,'mask').then(res=>{
-        toastTitle(res.message,'success')
+        toastTitle(res.message,'success');
+        getGoodsClassOne();
     }).catch(err=>{
-        toastTitle(err.message,'error')
+        toastTitle(err.message,'error');
+        return ;
+    })
+});
+
+// 编辑部分
+// 点击列表编辑
+var editList=null;
+$('.classList').on('click','.core',function(){
+    // console.log($(this).attr('classIndex'));
+    console.log(classArr[$(this).attr('classIndex')]);
+    editList=classArr[$(this).attr('classIndex')];
+    $('.editContent input[name="name"]').val(editList.classifyName);
+    $('.editContent input[name="note"]').val(editList.remark);
+    $('.editContent input[name="user"]').val(editList.user.userName);
+    $('.editContent input[name="classifyTime"]').val(editList.classifyTime);
+    $('.editContent input[name="lastUser"]').val(editList.lastUser);
+    $('.editContent input[name="lastTime"]').val(editList.lastTime);
+    showPopup('.editContent','.editBox','top30');
+})
+// 关闭编辑
+$('.editContent .close').click(function(){
+    closeParents(this,'top30');
+});
+$('.editBox').click(function(){
+    event.stopPropagation();
+});
+$('.editContent').click(function(){
+    closeWindow(this,'top30')
+});
+
+// 确定修改
+$('.editContent .confirmBtn').click(function(){
+    if(!$('.editContent input[name="name"]').val()){
+        toastTitle('类目名不能为空','warn');
+        return ;
+    }
+    loadingWith('正在编辑，请稍后');
+    var editObj=JSON.stringify({
+        classifyId:editList.classifyId,
+        classifyName:$('.editContent input[name="name"]').val(),
+        remark: $('.editContent input[name="note"]').val(),
+        merchantId:Number(sessionStorage.machineID)
+    });
+    loadAjax('/api/classify/updateClassify','post',sessionStorage.token,editObj,'mask','.editContent','top30').then(res=>{
+        toastTitle(res.message,'success');
+        getGoodsClassOne();
+    }).catch(err=>{
+        toastTitle(err.message,'success')
     })
 })

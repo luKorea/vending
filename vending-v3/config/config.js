@@ -20,6 +20,7 @@ var entry = {
         paySet:'./js/merchants/paySet.js',
         payType:'./js/merchants/payType.js',
         remote:'./js/stores/remote.js',
+        pickupCode:'./js/marketing/pickupCode.js',
         //移动端版本
         M_login:'./js/mobile/login/login.js',
         M_my:'./js/mobile/my/my.js',
@@ -90,6 +91,9 @@ var htmlConfig = [
     },
     {
         name: "remote",
+    },
+    {
+        name: "pickupCode",
     },
     //移动端部分
     {
