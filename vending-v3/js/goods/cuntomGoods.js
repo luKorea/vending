@@ -72,16 +72,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       {
         field: 'goods_Time', width: 200, title: '创建时间 ', templet: function (d) {
           if (d.goods_Time) {
-            var myDate = new Date(d.goods_Time);
-            var y = myDate.getFullYear();
-            var m = myDate.getMonth() + 1;
-            var d = myDate.getDate();
-            var h = myDate.getHours();
-            var min = myDate.getMinutes();
-            var s = myDate.getSeconds();
-            return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
+            return timeStamp(d.goods_Time)
           } else {
-            return '';
+            return '-';
           }
         }
       },
@@ -89,16 +82,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       {
         field: 'update_time', width: 200, title: '最后修改时间 ', templet: function (d) {
           if (d.update_time) {
-            var myDate = new Date(d.update_time);
-            var y = myDate.getFullYear();
-            var m = myDate.getMonth() + 1;
-            var d = myDate.getDate();
-            var h = myDate.getHours();
-            var min = myDate.getMinutes();
-            var s = myDate.getSeconds();
-            return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
+            return timeStamp(d.update_time)
           } else {
-            return '';
+            return '-';
           }
         }
       },
@@ -271,6 +257,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       , 'goodsStatus': singleData.goods_Status //商品状态
     });
     console.log(singleData.goods_images)
+    singleData.mail==1?$('.editor input[name="editmail"]').prop('checked',true):$('.editor input[name="editmail"]').prop('checked',false)
     $('#editImg').attr("src", singleData.goods_images)
     editWangEditor.txt.html(singleData.goods_Descript)
   });
@@ -320,7 +307,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           goods_Param: EditValData.goodsParam,  //规格
           goods_Status: EditValData.goodsStatus, //状态
           goods_Images: $('#editImg').attr("src"), //商品图片 不在form里
-          goods_Descript: editWangEditor.txt.html() //商品详情，编辑器里的内容
+          goods_Descript: editWangEditor.txt.html(), //商品详情，编辑器里的内容
+          mail:$('.editor input[name="editmail"]').prop('checked')?1:0
         }),
         success: function (res) {
 
@@ -449,8 +437,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   addWangEditor.create();
   // 点击确定添加
   $('.determine-btn2').click(function () {
+    
     var addValData = form.val("addValData");
     console.log(addValData);
+    console.log($('.addGoods input[name="mail"]'));
+    console.log($('.addGoods input[name="mail"]').prop('checked'));
     // &&addValData.goodsBrand
     if (addValData.goodsBarcode && addValData.goodsName && addValData.goodsType && addValData.goodsPrice && addValData.goodsCost) {
       if (addGoodsImg) {
@@ -472,7 +463,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             goods_Status: addValData.goodsStatus, //状态
             goods_Images: addGoodsImg, //商品图片 不在form里
             goods_Descript: addWangEditor.txt.html(), //商品详情，编辑器里的内容
-            merchantId: sessionStorage.machineID
+            merchantId: sessionStorage.machineID,
+            mail:$('.addGoods input[name="mail"]').prop('checked')?1:0
           }), success: function (res) {
             console.log(res)
             if (res.code == 200) {
@@ -746,16 +738,16 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       console.log(materialType);
       if (materialType == 2) {
         if (addWangEditor.txt.html().length > 11) {
-          addWangEditor.txt.append(`<div><video src="${obj.data.img}"></video></div>`);
+          addWangEditor.txt.append(`<div><iframe src="${obj.data.img}"></iframe></div>`);
         } else {
-          addWangEditor.txt.html(`<div><video src="${obj.data.img}"></video></div>`);
+          addWangEditor.txt.html(`<div><iframe src="${obj.data.img}"></iframe></div>`);
         }
         popupHide('goodsmaterialVideo', 'materialBox');
       } else {
         if (editWangEditor.txt.html().length > 11) {
-          editWangEditor.txt.append(`<div><video src="${obj.data.img}"></video></div>`);
+          editWangEditor.txt.append(`<div><iframe src="${obj.data.img}"></iframe></div>`);
         } else {
-          editWangEditor.txt.html(`<div><video src="${obj.data.img}"></video></div>`);
+          editWangEditor.txt.html(`<div><iframe src="${obj.data.img}"></iframe></div>`);
         }
         popupHide('goodsmaterialVideo', 'materialBox');
       }

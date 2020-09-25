@@ -13,6 +13,7 @@
     <div class="noticeWrap">
         <div class="margin">
             <div class="boxHeader">
+                <!-- <input type="file" class="xlsx"> -->
                 <button class="layui-btn layui-btn-normal addPushBtn btn ">
                     <span>发布公告</span>
                 </button>
@@ -35,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <!-- 添加 编辑 -->
+        <!-- 添加  -->
         <div class="maskContnet addEditCont" style="overflow-y: auto;">
             <div class="modificationBox margin0">
                 <div class="playHeader">
@@ -48,44 +49,179 @@
                     <div class="marginAuto">
                         <form action="" class="layui-form" lay-filter="addValData">
                             <div class="listFlex">
-                                <label for=""><span>*</span>标题</label>
-                                <input type="text">
+                                <label for=""><span>*</span>公告编号:</label>
+                                <input type="text" name="number">
                             </div>
                             <div class="listFlex">
-                                <label for=""><span>*</span> 状态</label>
-                                <form class="layui-form" action="">
-                                    <div class="layui-form-item" style="margin: 0;">
-                                        <input type="radio" name="goodsStatus" value="0" title="禁用">
-                                        <input type="radio" name="goodsStatus" value="1" title="启用" checked>
-                                    </div>
-                                </form>
+                                <label for=""><span>*</span>标题:</label>
+                                <input type="text" name="title">
+                            </div>
+                            <div class="listFlex">
+                                <label for=""><span>*</span> 是否首页显示:</label>
+                                <div class="layui-form-item" style="margin: 0;">
+                                    <input type="radio" name="indexShow" value="1" title="是" checked>
+                                    <input type="radio" name="indexShow" value="0" title="否">
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label for=""><span>*</span> 状态:</label>
+                                <div class="layui-form-item" style="margin: 0;">
+                                    <input type="radio" name="push" value="1" title="发布" checked>
+                                    <input type="radio" name="push" value="0" title="草稿箱">
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label for="">附件名:</label>
+                                <input type="text" name="accessoryName">
+                            </div>
+                            <div class="listFlex">
+                                <button class="layui-btn layui-btn-normal addUploadBtn relative btn " type="button"
+                                    style="margin-left: 120px;">
+                                    <i class="layui-icon layui-icon-circle "></i>
+                                    <span>上传附件</span>
+                                    <input type="file" name="addUpload">
+                                </button>
+                                <button class="layui-btn layui-btn-normal delUploadBtn  btn " type="button"
+                                    style="margin-left: 120px;">
+                                    <i class="layui-icon layui-icon-fonts-clear"></i>
+                                    <span>删除附件</span>
+                                </button>
+                            </div>
+                            <div class="listFlex">
+                                <label for="">附件地址:</label>
+                                <input type="text" disabled name="address">
                             </div>
                             <div class="editorCont">
                                 <label><span>*</span>公告详情</label>
-                                <div id="addWangEditor">
+                                <div id="addWangEditor" style="padding-top: 25px;">
 
                                 </div>
                             </div>
 
                         </form>
                         <div class="content-footer" style="margin-top:30px;">
-							<div style="text-align: center;">
-								<button class="layui-btn layui-btn-normal btn editDetermine-btn"
-									style="margin: 0 0 0 15px;">
-									<span>确定</span>
-								</button>
-								<button class="layui-btn layui-btn-normal btn reading-btn" id="edit"
-									style="margin: 0 0 0 15px;">
-									<span>预览</span>
-								</button>
-								<button class="layui-btn layui-btn-normal btn cancelBtn">
-									<span>取消</span>
-								</button>
-							</div>
-						</div>
+                            <div style="text-align: center;">
+                                <button class="layui-btn layui-btn-normal btn determinePushBtn"
+                                    style="margin: 0 0 0 15px;">
+                                    <span>确定</span>
+                                </button>
+                                <button class="layui-btn layui-btn-normal btn readingBtn" id="edit"
+                                    style="margin: 0 0 0 15px;">
+                                    <span>预览</span>
+                                </button>
+                                <button class="layui-btn layui-btn-normal btn cancelBtn">
+                                    <span>取消</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- 编辑 -->
+        <div class="maskContnet EditCont" style="overflow-y: auto;">
+            <div class="editBox margin0">
+                <div class="playHeader">
+                    <span>编辑公告</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="editBody">
+                    <div class="edit">
+                        <form action="" class="layui-form" lay-filter="addValData">
+                            <div class="listFlex">
+                                <label for=""><span>*</span>公告编号:</label>
+                                <input type="text" name="number">
+                            </div>
+                            <div class="listFlex">
+                                <label for=""><span>*</span>标题:</label>
+                                <input type="text" name="title">
+                            </div>
+                            <div class="listFlex">
+                                <label for=""><span>*</span> 是否首页显示:</label>
+                                <div class="layui-form-item" style="margin: 0;">
+                                    <input type="radio" name="indexShow" value="1" title="是" >
+                                    <input type="radio" name="indexShow" value="0" title="否">
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label for=""><span>*</span> 状态:</label>
+                                <div class="layui-form-item" style="margin: 0;">
+                                    <input type="radio" name="push" value="1" title="发布" >
+                                    <input type="radio" name="push" value="0" title="草稿箱">
+                                </div>
+                            </div>
+                            <div class="listFlex">
+                                <label for="">附件名:</label>
+                                <input type="text" name="accessoryName">
+                            </div>
+                            <div class="listFlex">
+                                <button class="layui-btn layui-btn-normal editUploadBtn relative btn " type="button"
+                                    style="margin-left: 120px;">
+                                    <i class="layui-icon layui-icon-circle "></i>
+                                    <span>上传附件</span>
+                                    <input type="file" name="editUpload">
+                                </button>
+                                <button class="layui-btn layui-btn-normal editDelUploadBtn  btn " type="button"
+                                    style="margin-left: 120px;">
+                                    <i class="layui-icon layui-icon-fonts-clear"></i>
+                                    <span>删除附件</span>
+                                </button>
+                            </div>
+                            <div class="listFlex">
+                                <label for="">附件地址:</label>
+                                <input type="text" disabled name="address">
+                            </div>
+                            <div class="editorCont">
+                                <label><span>*</span>公告详情</label>
+                                <div id="editWangEditor" style="padding-top: 25px;">
+
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="content-footer" style="margin-top:30px;">
+                            <div style="text-align: center;">
+                                <button class="layui-btn layui-btn-normal btn determinePushBtn"
+                                    style="margin: 0 0 0 15px;">
+                                    <span>确定</span>
+                                </button>
+                                <button class="layui-btn layui-btn-normal btn readingBtn" id="edit"
+                                    style="margin: 0 0 0 15px;">
+                                    <span>预览</span>
+                                </button>
+                                <button class="layui-btn layui-btn-normal btn cancelBtn">
+                                    <span>取消</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 预览 -->
+        <div class="maskContnet previewContent" style="overflow-y: auto;">
+            <div class="previewBox margin0">
+                <div class="playHeader">
+                    <span>公告详情</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="previewBody">
+                    <div class="previewHtml">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mask maskContnet">
+        <div class="TitleContentWith">
+            <span class="maskSpan" style="display: inline-block;">
+                <i class="layui-icon layui-icon-loading "></i>
+            </span>
+            数据处理中，请稍候
         </div>
     </div>
 </body>
@@ -94,10 +230,13 @@
         <!-- <button class="layui-btn layui-btn-sm btn operation" lay-event="editRole">
             <span style="color:#fff;">编辑角色</span>
         </button> -->
-        <button class="layui-btn layui-btn-sm btn operation listEdit " typeID='2' lay-event="edit">
+        <button class="layui-btn layui-btn-sm btn operation listEdit {{d.n_status==1?'hide':''}}" lay-event="edit">
             <span style="color:#fff;">编辑</span>
         </button>
-        <button class="layui-btn layui-btn-sm btn operation listEdit " typeID='2' lay-event="edit">
+        <button class="layui-btn layui-btn-sm btn operation listEdit {{d.n_status==0?'hide':''}}" lay-event="dow">
+            <span style="color:#fff;">{{d.is_show==1?'隐藏':'展示'}}</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn operation listEdit " lay-event="preview">
             <span style="color:#fff;">预览</span>
         </button>
     </div>

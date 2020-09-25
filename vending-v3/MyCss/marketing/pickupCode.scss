@@ -44,7 +44,7 @@
     box-sizing: border-box;
     transition: all 0.3s;
 }
-.goodsBox,.chooseGoodsBox{
+.goodsBox,.chooseGoodsBox,.activityMachineBox,.pickCodeBox{
     width: 900px;
     position: relative;
     margin: 2vh auto 50px;
@@ -55,6 +55,9 @@
     transition: all 0.3s;
     box-sizing: border-box;
     padding: 0 20px;
+}
+.activityMachineBox{
+    width: 750px;
 }
 .machineDetailsBox{
     padding: 20px ;
@@ -75,7 +78,11 @@
     }
     .layui-form{
         width: 100% !important;
+        td{
+            cursor: pointer;
+        }
     }
+
 }
 .addFooter,.goodsFooter,.chooseFooter,.machineFooter{
     padding: 15px 0 25px ;
@@ -211,4 +218,11 @@
             border: 0;
         }
     } 
+}
+.goodsBody{
+    thead{
+        .layui-unselect{
+            display: none !important;
+        }
+    }
 }

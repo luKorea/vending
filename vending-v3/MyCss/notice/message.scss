@@ -1,0 +1,16 @@
+.queryBtn, .refreshBtn {
+    margin-left: 15px;
+}
+.pushMessageBox{
+    width: 800px;
+    position: relative;
+    margin: 40vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    padding-bottom: 15px;
+    padding: 20px;
+    border-radius: 5px
+}

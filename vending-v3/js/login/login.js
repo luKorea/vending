@@ -93,3 +93,15 @@ layui.use(['form', 'layer'], function () {
     javascript:window.history.forward(1);
 })
 console.log(99900)
+
+// var browser = navigator.userAgent.toLowerCase();
+	 
+// if(browser.match(/Alipay/i)=="alipay"){
+//    alert("支付宝app的浏览器");
+    
+// }else if(browser.match(/MicroMessenger/i)=="micromessenger"){
+//     alert("微信app的浏览器");
+    
+// }else{
+//     console.log("其它浏览器");
+// }

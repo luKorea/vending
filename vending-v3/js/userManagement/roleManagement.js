@@ -82,7 +82,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         permissions5=[],//售货机权限
         permissions6=[],//广告权限
         permissions10=[],//通用模块
-        permissions11=[];//订单与账目权限
+        permissions11=[],//订单与账目权限
+        permissions13=[];//营销中心
     //监听工具条
     var objData = null;
     table.on('tool(test)', function (obj) {
@@ -139,7 +140,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                                         permissions10.push(item)
                                         break;  
                                     case 11:
-                                        permissions11.push(item)      
+                                        permissions11.push(item) 
+                                        break; 
+                                    case 13:
+                                        permissions13.push(item)  
                                     // default:
                                     //     console.log(index)
                                 }
@@ -159,6 +163,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             permissionsList(permissions6,'permissionsASR',objData);
             permissionsList(permissions10,'permissionsGeneral',objData);
             permissionsList(permissions11,'permissionsOrder',objData);
+            permissionsList(permissions13,'permissionsMarketing',objData);
             // permissionsList(permissionsDataList, 'permissionsAS', objData);
 
         } else if (obj.event === 'delete') {

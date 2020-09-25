@@ -26,27 +26,24 @@
 					<i class="layui-icon layui-icon-menu-fill"></i>
 				</div> -->
 				<!-- 公告 -->
-				<!-- <div class="swipe-header-notice">
-					<div class="layui-form">
+				<div class="swipe-header-notice">
+					<!-- <div class="layui-form">
 						<div class="layui-input-block" id="test">
 							<input type="checkbox" name="switch" lay-skin="switch" id="Isuse" value="1" checked>
 						</div>
-					</div>
+					</div> -->
 					<div class="swipe-tile" style="white-space:nowrap;">
 						<span>公 告:</span>
 					</div>
 					<div class="swipe-content-carousel">
-						<div class="layui-carousel" id="test1">
-							<div carousel-item>
-								<div>尊敬的商户，我司提现审核工作已恢复，请悉知</div>
-								<div>尊敬的商户，我司提现审核工作已恢复，请悉知</div>
-								<div>尊敬的商户，我司提现审核工作已恢复，请悉知</div>
-								<div>尊敬的商户，我司提现审核工作已恢复，请悉知</div>
-								<div>尊敬的商户，我司提现审核工作已恢复，请悉知</div>
+						<div class="layui-carousel" id="test1" lay-filter="publisSwiper">
+							<div carousel-item style="line-height: 35px;" class="noticeTitleText">
+								<!-- <div>尊敬的商户，我司提现审核工作已恢复，请悉知</div>
+								<div>尊敬的商户，我司提现审核工作已恢复，请悉知</div> -->
 							</div>
 						</div>
 					</div>
-				</div> -->
+				</div>
 			</div>
 
 			<ul class="layui-nav layui-layout-right nav-header-information">
@@ -236,7 +233,7 @@
 							<label>营销管理</label>
 						</a>
 						<dl class="layui-nav-child ">
-							<dd class="RMListFlag hide">
+							<dd class="">
 								<a href="javascript:;" class="navClick" navId="28">取货码管理</a>
 							</dd>
 						</dl>
@@ -337,14 +334,19 @@
 							</dd>
 						</dl>
 					</li> -->
-					<li class="layui-nav-item ">
+					<li class="layui-nav-item noticeCont">
 						<a href="javascript:;">
 							<i class="layui-icon layui-icon-notice"></i>
-							<label>公告管理</label>
+							<label>公告与消息管理</label>
 						</a>
 						<dl class="layui-nav-child">
-							<dd>
+							<dd class="roleListFlag hide">
 								<a href="javascript:;" class="navClick" navId="25">公告管理</a>
+							</dd>
+						</dl>
+						<dl class="layui-nav-child">
+							<dd class="roleListFlag hide">
+								<a href="javascript:;" class="navClick" navId="29">消息管理</a>
 							</dd>
 						</dl>
 					</li>
@@ -364,6 +366,20 @@
 			</div>
 		</div>
 	</div>
+	<div class="maskContnet previewContent" style="overflow-y: auto;">
+		<div class="previewBox margin0">
+			<div class="playHeader">
+				<span>公告详情</span>
+				<button class="close" type="button">
+					<i class="layui-icon layui-icon-close"></i>
+				</button>
+			</div>
+			<div class="previewBody">
+				<div class="previewHtml">
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- style="display: block;z-index: 999999;" -->
 	<div class="maskContnet socketCont" style="z-index: 9999999;">
 			<div class="sockotBox margin0">
@@ -379,6 +395,7 @@
 				
 			</div>
 	</div>
+	
 	<!-- <script src="../../js/index/navData.js"></script>
 	<script src="../../js/index/index.js"></script>	 -->
 </body>

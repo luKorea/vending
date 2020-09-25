@@ -215,7 +215,8 @@
 .permissionsMachine,
 .permissionsASR,
 .permissionsGAF,
-.permissionsOrder{
+.permissionsOrder,
+.permissionsMarketing{
     width: 100%;
     /* background-color: skyblue; */
     /* height: 100px; */
@@ -230,7 +231,8 @@
 .permissionsMachine>div,
 .permissionsASR>div,
 .permissionsGAF>div,
-.permissionsOrder>div{
+.permissionsOrder>div,
+.permissionsMarketing>div{
     width: 33%;
     margin-bottom: 10px;
     overflow: hidden;

@@ -12,10 +12,10 @@
     <div class="wrap">
         <div class="margin">
             <div class="header">
-                <button class="layui-btn layui-btn-normal btn addBtn " style="margin-right: 25px;" typeID='1'>
+                <button class="layui-btn layui-btn-normal btn addBtn hide" style="margin-right: 25px;" typeID='1'>
                     <span>添加活动</span>
                 </button>
-                <div style="max-width: 350px" class="key-contnet">
+                <div style="max-width: 350px" class="key-contnet activityListKey" >
                     <div class="key-text">关键字</div>
                     <input type="text" placeholder="活动名" name="keyMerchants" class="KyeText">
                 </div>
@@ -147,7 +147,7 @@
                     <div class="pubilshKey machineDetailsKey">
                         <div style="max-width: 300px;" class="key-contnet">
                             <div class="key-text">关键字</div>
-                            <input type="text" name="machineKey" placeholder="售货机编号、售货机名" class="KyeText">
+                            <input type="text" name="machineKey" placeholder="售货机编号、售货机名" name="machineKey">
                         </div>
                         <button class="layui-btn layui-btn-normal machineKeyBtn btn" style="margin-left: 20px;">
                             <i class="layui-icon layui-icon-search"></i>
@@ -155,7 +155,7 @@
                         </button>
                     </div>
                     <div class="machineDetailsList">
-                        <div>
+                        <div class="machineChooseList">
                             <table class="layui-hide" id="machineDetailsList" lay-filter="machineDetailsList"></table>
                         </div>
                     </div>
@@ -194,7 +194,7 @@
                                         </div>
                                     </form>
                                 </div> -->
-                                <button class="layui-btn layui-btn-normal queryBtnClick btn" style="margin: 0 0 0 15px;">
+                                <button class="layui-btn layui-btn-normal goodsKeyBtn btn" style="margin: 0 0 0 15px;">
                                     <i class="layui-icon layui-icon-search"></i>
                                     <span>查询</span>
                                 </button>
@@ -202,7 +202,7 @@
                         </div>
                         
                         <div class="data-list-contnet">
-                            <div class="list-table">
+                            <div class="goodsChooseList">
                                 <table class="layui-hide" id="goodsTable" lay-filter="goodsTable"></table>
                             </div>
                         </div>
@@ -240,9 +240,9 @@
                             <li class="duration">
                                 <div>数量</div>
                             </li>
-                            <li class="SetOperation">
+                            <!-- <li class="SetOperation">
                                 <div>操作</div>
-                            </li>
+                            </li> -->
                         </ul>
                         <ul class="SetContList">
                             <!-- <li class="setMateraialList">
@@ -278,6 +278,46 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 活动中机器 -->
+            <div class="maskContnet activityMachine" >
+                <div class="activityMachineBox margin">
+                    <div class="playHeader">
+                        <span>活动售货机</span>
+                        <button class="close" type="button">
+                            <i class="layui-icon layui-icon-close"></i>
+                        </button>
+                    </div>
+                    <div >
+                        <div class="machineDetailsList">
+                            <div>
+                                <table class="layui-hide" id="activityMachine" lay-filter="activityMachine"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--取货码列表  -->
+            <div class="maskContnet pickCode">
+                <div class="pickCodeBox margin0">
+                    <div class="playHeader">
+                        <span>取货码列表</span>
+                        <button class="close" type="button">
+                            <i class="layui-icon layui-icon-close"></i>
+                        </button>
+                    </div>
+                    <div class="pickCodeBody">
+                        <div >
+                            <div class="pickCod">
+                                <div>
+                                    <table class="layui-hide" id="pickCodeIn" lay-filter="pickCodeIn"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     </div>
     <div class="mask maskContnet">
         <div class="TitleContentWith">
@@ -289,16 +329,16 @@
     </div>
     <script type="text/html" id="barDemo">
         <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm btn"  lay-event="goodsIn">
-                <span style="color:#fff;">活动商品</span>
-            </button>
             <button class="layui-btn layui-btn-sm btn"  lay-event="machineIn">
                 <span style="color:#fff;">活动售货机</span>
             </button>
-            <button class="layui-btn layui-btn-sm btn operation listEdit "  lay-event="stop">
+            <button class="layui-btn layui-btn-sm btn"  lay-event="goodsIn">
+                <span style="color:#fff;">活动商品</span>
+            </button> 
+            <button class="layui-btn layui-btn-sm btn operation listEdit hide"  lay-event="stop">
                 <span style="color:#fff;">{{d.activity_status==0?'暂停':'开始'}}</span>
             </button>      
-            <button class="layui-btn layui-btn-sm btn del-btn hides" lay-event="cancel">
+            <button class="layui-btn layui-btn-sm btn del-btn listEdit hide" lay-event="cancel">
                 <span style="color:#fff;">取消</span>    
             </button>
             

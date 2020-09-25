@@ -691,3 +691,24 @@ async function permissionsVal(addIndex, editIndex, delIndex,four,five) {
   })
   return dataFlag
 }
+
+
+// 时间戳转时间问题
+function timeStamp(time){
+  // var myDate = new Date(time);
+  // var y = myDate.getFullYear();
+  // var m = myDate.getMonth() + 1;
+  // var d = myDate.getDate();
+  // var h = myDate.getHours();
+  // var min = myDate.getMinutes();
+  // var s = myDate.getSeconds();
+  // return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
+  var myDate = new Date(time);
+  var y = myDate.getFullYear();
+  var m = (myDate.getMonth() + 1) < 10 ? '0' + (myDate.getMonth() + 1) : (myDate.getMonth() + 1);
+  var d = myDate.getDate() < 10 ? '0' + myDate.getDate() : myDate.getDate();
+  var h = myDate.getHours() < 10 ? '0' + myDate.getHours() : myDate.getHours();
+  var min = myDate.getMinutes() < 10 ? '0' + myDate.getMinutes() : myDate.getMinutes();
+  var s = myDate.getSeconds() < 10 ? '0' + myDate.getSeconds() : myDate.getSeconds();
+  return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
+}

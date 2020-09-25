@@ -241,14 +241,48 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
   };
 
   // 导出excel表
+  // 导出时间
+  var exportStareTime=null,
+      exportEndTime=null;
+  laydate.render({
+    elem: '#test8'
+    ,type: 'month'
+    ,range: true,
+    done: function (value) {
+      var timerKey = value.split(' - ');
+      exportStareTime = timerKey[0];
+      exportEndTime= timerKey[1];
+     }
+  });
   $('.pushBtn').click(function () {
-    var myDate = new Date(),
+    $('.exportBody p').html(marchantName+'订单表格')
+    popupShow('exportCont','exportBox');
+   
+  });
+  // 关闭弹窗
+  $('.playHeader .close').click(function () {
+    $(this).parent().parent().addClass('margin0')
+    $(this).parents('.maskContnet').fadeOut();
+  });
+  // 取消导出
+  $('.exportCont .cancelBtn').click(function(){
+    popupHide('exportCont','exportBox');
+  })
+  // 确认导出
+  $('.exportCont .determinePushBtn').click(function(){
+    if(!(exportStareTime&&exportEndTime)){
+      layer.msg('请选择时间',{icon:7});
+      return ;
+    }
+ var myDate = new Date(),
       dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
       xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-    xhr.open("POST", '/api/order/exportExcel', true);
+    xhr.open("POST", `/api/order/exportExcel`, true);
     xhr.setRequestHeader("token", sessionStorage.token);
+   
     xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
     xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+    
     xhr.onload = function (res) {
       console.log(xhr)
       if (xhr.status == 200) {
@@ -257,8 +291,8 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
           return
         } else {
           var content = xhr.response;
-          // var fileName = `${marchantName}(${dataOf}).xls`; // 保存的文件名
-          var fileName=`${marchantName}订单${dataOf}`
+          // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+          var fileName=`${marchantName}订单${dataOf}.xlsx`
           var elink = document.createElement('a');
           elink.download = fileName;
           elink.style.display = 'none';
@@ -273,18 +307,13 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         return;
       }
     }
-    xhr.send(JSON.stringify({
-      condition: startTime,
-      conditionTwo: endTime,
-      conditionFour: machineCode,
-      conditionFive: merchantId
-    }));
-  });
-  // 关闭弹窗
-  $('.playHeader .close').click(function () {
-    $(this).parent().parent().addClass('margin0')
-    $(this).parents('.maskContnet').fadeOut();
-  });
+      var aa=JSON.stringify({
+      start_time:exportStareTime,
+      end_time:exportEndTime,
+      merchantId:merchantId
+    })
+    xhr.send(aa);
+  })
 
   // 订单商品列表
   var refundTatol=0;

@@ -231,7 +231,7 @@ input:hover{
     height: 100%;
     opacity: 0;
 }
-.addImg,.editImg{
+.addImg,.editImg,.customImg{
     display: none;
     width: 30%;
     margin-left: 105px;
@@ -245,7 +245,7 @@ input:hover{
     font-size: 14px;
     color: #606266;
 }
-.addImg img,.editImg img{
+.addImg img,.editImg img,.customImg img{
     display: block;
     margin: 0 auto ;
     width: 100%;

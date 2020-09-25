@@ -20,16 +20,9 @@ layui.use(['table', 'form', 'layer'], function () {
                 { field: 'update_user', width: 180, title: '最后修改人' },
                 { field: 'update_time', width: 180, title: '最后修改时间',templet:function(d){
                     if (d.update_time) {
-                        var myDate = new Date(d.update_time);
-                        var y = myDate.getFullYear();
-                        var m = myDate.getMonth() + 1;
-                        var d = myDate.getDate();
-                        var h = myDate.getHours();
-                        var min = myDate.getMinutes();
-                        var s = myDate.getSeconds();
-                        return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
+                        return timeStamp(d.update_time)
                       } else {
-                        return '';
+                        return '-';
                       }
                 }},
                 { field: 'operation', fixed: 'right', right: 0, width: 180, title: '操作', toolbar: '#barDemo' },

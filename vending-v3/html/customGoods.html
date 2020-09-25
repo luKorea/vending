@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="../assets/font/iconfont.css">
 	<title>商品管理</title>
 </head>
+
 <body>
 	<div class="Goods-wrap">
 		<div style="width: 100%;">
@@ -30,17 +31,20 @@
 									<i class="layui-icon layui-icon-app"></i>
 									<span>添加商品</span>
 								</button>
-								<button style="margin: 0;margin-left: 10px;" class="layui-btn layui-btn-normal pushGoodsBtn hide btn "
-									type="button" buteType="1">
+								<button style="margin: 0;margin-left: 10px;"
+									class="layui-btn layui-btn-normal pushGoodsBtn hide btn " type="button"
+									buteType="1">
 									<i class="layui-icon layui-icon-export "></i>
 									<span>推送商品</span>
 								</button>
-								<button style="margin: 0;;margin-left: 10px;" class="layui-btn layui-btn-normal pushListBtn  hide btn "
-									type="button" buteType="1">
+								<button style="margin: 0;;margin-left: 10px;"
+									class="layui-btn layui-btn-normal pushListBtn  hide btn " type="button"
+									buteType="1">
 									<i class="layui-icon layui-icon-list "></i>
 									<span>推送列表</span>
 								</button>
-								<button class="layui-btn layui-btn-normal query-btnClick btn" style="margin: 0;;margin-left: 10px">
+								<button class="layui-btn layui-btn-normal query-btnClick btn"
+									style="margin: 0;;margin-left: 10px">
 									<i class="layui-icon layui-icon-search"></i>
 									<span>查询</span>
 								</button>
@@ -49,11 +53,11 @@
 									<i class="layui-icon layui-icon-refresh "></i>
 									<span>刷新</span>
 								</button>
-							</div>					
+							</div>
 						</div>
 						<div class="layui-row" style="margin: 0;">
 							<div class=" layui-col-sm5 layui-col-md4 layui-col-lg6">
-								<div  class="key-contnet">
+								<div class="key-contnet">
 									<div class="key-text">关键字</div>
 									<input type="text" placeholder="商品名、编号查询" class="KyeText" style="width: 59%;">
 								</div>
@@ -70,7 +74,7 @@
 									</form>
 								</div>
 							</div>
-							
+
 							<div class=" layui-col-sm3 layui-col-md4 layui-col-lg6">
 								<div class="key-contnet">
 									<!-- 状态: -->
@@ -86,6 +90,8 @@
 									</form>
 								</div>
 							</div>
+
+
 							<div class=" layui-col-sm8 layui-col-md8 layui-col-lg6" style="margin-top:10px;">
 								<div class="key-contnet">
 									<!-- 销售价范围： -->
@@ -294,6 +300,15 @@
 											</form>
 										</div>
 									</li>
+									<li>
+										<div class="layui-form-item">
+											<label class="layui-form-label" style="width: 90px;">是否邮寄商品</label>
+											<div class="layui-input-block">
+												<input type="checkbox" name="editmail" lay-skin="switch"
+													lay-filter="editmail" lay-text="是|否">
+											</div>
+										</div>
+									</li>
 								</ul>
 							</form>
 						</div>
@@ -489,8 +504,7 @@
 										</div>
 									</li>
 									<li>
-										<div class="editor-list" style="margin-bottom:22px"
-											style="display: flex;align-items: center;">
+										<div class="editor-list" style="margin-bottom:22px">
 											<label for=""> 商品状态</label>
 											<form class="layui-form" action="">
 												<div class="layui-form-item" style="margin: 0;">
@@ -498,6 +512,15 @@
 													<input type="radio" name="goodsStatus" value="1" title="启用" checked>
 												</div>
 											</form>
+										</div>
+									</li>
+									<li>
+										<div class="layui-form-item">
+											<label class="layui-form-label" style="width: 90px;">是否邮寄商品</label>
+											<div class="layui-input-block">
+												<input type="checkbox" name="mail" lay-skin="switch"
+													lay-filter="mail" lay-text="是|否">
+											</div>
 										</div>
 									</li>
 								</ul>
@@ -697,77 +720,77 @@
 					<div class="navTabLine"></div>
 				</ul> -->
 				<!-- <div class="RTabCont"> -->
-					<div class="topBody">					
-						<div class="topKey">
-							<div>
-								<div class="key-contnet">
-									<!-- 商品类目: -->
-									<div class="key-text">推送性质</div>
-									<form class="layui-form" action="" style="max-width: 240px;">
-										<div class="layui-form" lay-filter="">
-											<select name="mandatory" id="" lay-filter="">
-												<option value="">全部</option>
-												<option value="0">非强制</option>
-												<option value="1">强制</option>
-											</select>
-										</div>
-									</form>
-								</div>
-								<div  class="key-contnet">
-									<div class="key-text">关键字</div>
-									<input type="text" placeholder="商品名" class="KyeText" name="KyeText">
-								</div>
-							
-								<div class="key-contnet">
-									<!-- 商品类目: -->
-									<div class="key-text">接收状态</div>
-									<form class="layui-form" action="" style="max-width: 240px;">
-										<div class="layui-form" lay-filter="">
-											<select name="receiveStatus" id="" lay-filter="">
-												<option value="">全部</option>
-												<option value="0">未接收</option>
-												<option value="1">已接收</option>
-											</select>
-										</div>
-									</form>
-								</div>
-							</div>
-							<div style="margin-top: 10px;">
-								<div class="key-contnet">
-									<!-- 商品类目: -->
-									<div class="key-text">推送类型</div>
-									<form class="layui-form" action="" style="max-width: 240px;">
-										<div class="layui-form" lay-filter="">
-											<select name="receiveType" id="" lay-filter="">
-												<option value="0">全部</option>
-												<option value="1">推送</option>
-												<option value="2">接收</option>
-											</select>
-										</div>
-									</form>
-								</div>
-								<button class="layui-btn layui-btn-normal pushQueryBtn btn">
-									<i class="layui-icon layui-icon-search"></i>
-									<span>查询</span>
-								</button>
-								<button class="layui-btn layui-btn-normal pushGoodsListBtn btn">
-									<i class="layui-icon layui-icon-download-circle"></i>
-									<span>接收</span>
-								</button>
-							</div>
-						
-						</div>
-						<!-- 数据列表内容 -->
+				<div class="topBody">
+					<div class="topKey">
 						<div>
-							<div class="data-list-contnet">
-								<div class="list_table1" style="margin-left: 20px;">
-									<table class="layui-hide" id="parentTableTest" lay-filter="parentTableTest"></table>
-								</div>
+							<div class="key-contnet">
+								<!-- 商品类目: -->
+								<div class="key-text">推送性质</div>
+								<form class="layui-form" action="" style="max-width: 240px;">
+									<div class="layui-form" lay-filter="">
+										<select name="mandatory" id="" lay-filter="">
+											<option value="">全部</option>
+											<option value="0">非强制</option>
+											<option value="1">强制</option>
+										</select>
+									</div>
+								</form>
+							</div>
+							<div class="key-contnet">
+								<div class="key-text">关键字</div>
+								<input type="text" placeholder="商品名" class="KyeText" name="KyeText">
+							</div>
+
+							<div class="key-contnet">
+								<!-- 商品类目: -->
+								<div class="key-text">接收状态</div>
+								<form class="layui-form" action="" style="max-width: 240px;">
+									<div class="layui-form" lay-filter="">
+										<select name="receiveStatus" id="" lay-filter="">
+											<option value="">全部</option>
+											<option value="0">未接收</option>
+											<option value="1">已接收</option>
+										</select>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div style="margin-top: 10px;">
+							<div class="key-contnet">
+								<!-- 商品类目: -->
+								<div class="key-text">推送类型</div>
+								<form class="layui-form" action="" style="max-width: 240px;">
+									<div class="layui-form" lay-filter="">
+										<select name="receiveType" id="" lay-filter="">
+											<option value="0">全部</option>
+											<option value="1">推送</option>
+											<option value="2">接收</option>
+										</select>
+									</div>
+								</form>
+							</div>
+							<button class="layui-btn layui-btn-normal pushQueryBtn btn">
+								<i class="layui-icon layui-icon-search"></i>
+								<span>查询</span>
+							</button>
+							<button class="layui-btn layui-btn-normal pushGoodsListBtn btn">
+								<i class="layui-icon layui-icon-download-circle"></i>
+								<span>接收</span>
+							</button>
+						</div>
+
+					</div>
+					<!-- 数据列表内容 -->
+					<div>
+						<div class="data-list-contnet">
+							<div class="list_table1" style="margin-left: 20px;">
+								<table class="layui-hide" id="parentTableTest" lay-filter="parentTableTest"></table>
 							</div>
 						</div>
 					</div>
+				</div>
 				<!-- </div> -->
-				
+
 			</div>
 		</div>
 		<!-- 遮罩 -->
@@ -780,7 +803,7 @@
 			</div>
 		</div>
 		<!-- 选择下级 -->
-		<div class="chooseLower maskContnet" >
+		<div class="chooseLower maskContnet">
 			<div class="chooseBox margin0">
 				<div class="playHeader">
 					<span>下级商户列表</span>
@@ -794,11 +817,10 @@
 				</div>
 				<div class="chooseFooter" style="margin-top:30px;padding-bottom: 20px;">
 					<div style="text-align: center;">
-						<button class="layui-btn layui-btn-normal btn determineBtn"
-							style="margin: 0 0 0 15px;">
+						<button class="layui-btn layui-btn-normal btn determineBtn" style="margin: 0 0 0 15px;">
 							<span>确定</span>
 						</button>
-						<button class="layui-btn layui-btn-normal btn chooseCan"  style="margin: 0 0 0 15px;">
+						<button class="layui-btn layui-btn-normal btn chooseCan" style="margin: 0 0 0 15px;">
 							<span>取消</span>
 						</button>
 					</div>
@@ -806,7 +828,7 @@
 			</div>
 		</div>
 		<!-- 是否强制推送 -->
-		<div class="PushMandatory maskContnet" >
+		<div class="PushMandatory maskContnet">
 			<div class="MandatoryBox margin0">
 				<div class="playHeader">
 					<!-- <span>下级商户列表</span> -->
@@ -819,14 +841,14 @@
 				</div>
 				<div class="mandatroFooter">
 					<div Ptype="1">是</div>
-					<div  Ptype="0" style="color: red;">否</div>
+					<div Ptype="0" style="color: red;">否</div>
 				</div>
 			</div>
 		</div>
 		<!-- 没有权限时显示白屏 -->
-        <div class="hangContent">
-            <p>您没有访问的权限!</p>
-        </div>
+		<div class="hangContent">
+			<p>您没有访问的权限!</p>
+		</div>
 	</div>
 </body>
 

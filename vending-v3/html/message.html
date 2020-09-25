@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../assets/public/documentWrite.js"></script>
+    <title>消息</title>
+</head>
+<body>
+    <div class="wrap">
+        <div class="margin">
+            <div class="messageHeader">
+                <!-- <input type="file" class="xlsx"> -->
+                <button class="layui-btn layui-btn-normal addPushBtn btn ">
+                    <span>发布公告</span>
+                </button>
+                <div style="max-width: 350px;margin-left: 15px;" class="key-contnet" >
+                    <div class="key-text">关键字</div>
+                    <input type="text" placeholder="消息标题" name="keyMerchants" class="KyeText">
+                </div>
+                <button class="layui-btn layui-btn-normal btn queryBtn">
+                    <i class="layui-icon layui-icon-search"></i>
+                    <span>查询</span>
+                </button>
+                <button class="layui-btn layui-btn-normal btn refreshBtn">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    <span>刷新</span>
+                </button>
+            </div>
+            <div class="messageTableList">
+                    <div class="tableList">
+                        <table class="layui-hide" id="massageTable" lay-filter="massageTable"></table>
+                    </div>
+            </div>
+        </div>
+
+        <!-- 发送信息 -->
+        <div class="pushMessageCont maskContnet">
+            <div class="pushMessageBox margin0">
+                <div class="playHeader">
+                    <span>发送信息</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="pushMessageBody">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

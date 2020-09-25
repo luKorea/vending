@@ -1,8 +1,8 @@
 //JavaScript代码区域
 import '../../MyCss/indexCss/index.css'
 import { navList } from '../../assets/public/navData.js'
-if(!sessionStorage.token){
-    window.location.href="login.html"
+if (!sessionStorage.token) {
+    window.location.href = "login.html"
 }
 window.onload = function () {
     var userName = sessionStorage.username;
@@ -14,17 +14,7 @@ window.onload = function () {
             form = layui.form;
         // 选项卡
         // var element = layui.element;
-        // 轮播图
-        var carousel = layui.carousel;
-        carousel.render({
-            elem: '#test1'
-            , width: '480px' //设置容器宽度
-            , height: '25px'
-            , arrow: 'none' //始终显示箭头
-            , anim: 'updown' //切换动画方式
-            , indicator: 'none'
-            , interval: '2000'
-        });
+
 
         var $ = layui.jquery
             , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
@@ -127,11 +117,11 @@ window.onload = function () {
             if (typeof (WebSocket) == "undefined") {
                 console.log("您的浏览器不支持WebSocket");
             } else {
-                console.log("您的浏览器支持WebSocket");
+                // console.log("您的浏览器支持WebSocket");
                 //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
                 //等同于socket = new WebSocket("ws://localhost:8888/xxxx/im/25");
                 //var socketUrl="${request.contextPath}/im/"+$("#userId").val();
-                        //  var socketUrl="http://172.16.71.142:8086/push?machine=8fc9d742bd0772c6&message=123456";
+                //  var socketUrl="http://172.16.71.142:8086/push?machine=8fc9d742bd0772c6&message=123456";
                 // var socketUrl = `ws://119.29.104.217:8086/pushServer/${sessionStorage.UserId}`;
                 var socketUrl = `http://172.16.71.142:8086/pushServer/${sessionStorage.UserId}`;
                 socketUrl = socketUrl.replace("https", "ws").replace("http", "ws");
@@ -153,7 +143,7 @@ window.onload = function () {
                     var gainData = JSON.parse(msg.data)
                     //type 1角色编辑或者删除 2用户编辑
                     if (gainData.type == 1) {
-                        console.log(gainData);
+                        // console.log(gainData);
                         // layer.msg(gainData.data,{icon:7})
                         $('.sockotTitle p').html(gainData.data)
                         popupShow('socketCont', 'sockotBox');
@@ -223,54 +213,54 @@ window.onload = function () {
         permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
             // console.log(res.data)
             // 用户模块
-            var userListFlag=false,
-                roleListFlag=false,
-                machineListFlag=false,
-                goodsClassFlag=false,
-                goodsListFlag=false,
-                materialListFlag=false,
-                merchantsListFlag=false,
-                paySetFlag=false,
-                accountsListFlag=false,
-                orderListFlag=false,
-                RMListFlag=false,
-                ReListFlag=false;
-            res.data.forEach(item=>{
-                if(item.id==408){
-                    userListFlag=true
+            var userListFlag = false,
+                roleListFlag = false,
+                machineListFlag = false,
+                goodsClassFlag = false,
+                goodsListFlag = false,
+                materialListFlag = false,
+                merchantsListFlag = false,
+                paySetFlag = false,
+                accountsListFlag = false,
+                orderListFlag = false,
+                RMListFlag = false,
+                ReListFlag = false;
+            res.data.forEach(item => {
+                if (item.id == 408) {
+                    userListFlag = true
                 }
-                if(item.id==407){
-                    roleListFlag=true
+                if (item.id == 407) {
+                    roleListFlag = true
                 }
-                if(item.id==413){
-                    machineListFlag=true
+                if (item.id == 413) {
+                    machineListFlag = true
                 }
-                if(item.id==414){
-                    goodsClassFlag=true
+                if (item.id == 414) {
+                    goodsClassFlag = true
                 }
-                if(item.id==409){
-                    goodsListFlag=true
+                if (item.id == 409) {
+                    goodsListFlag = true
                 }
-                if(item.id==410){
-                    materialListFlag=true
+                if (item.id == 410) {
+                    materialListFlag = true
                 }
-                if(item.id==400){
-                    merchantsListFlag=true
+                if (item.id == 400) {
+                    merchantsListFlag = true
                 }
-                if(item.id==431){
-                    paySetFlag=true
+                if (item.id == 431) {
+                    paySetFlag = true
                 }
-                if(item.id==423){
-                    accountsListFlag=true
+                if (item.id == 423) {
+                    accountsListFlag = true
                 }
-                if(item.id==419){
-                    orderListFlag=true
+                if (item.id == 419) {
+                    orderListFlag = true
                 }
-                if(item.id==412){
-                    RMListFlag=true
+                if (item.id == 412) {
+                    RMListFlag = true
                 }
-                if(item.id==411){
-                    ReListFlag=true
+                if (item.id == 411) {
+                    ReListFlag = true
                 }
             })
             // console.log(a) 
@@ -281,6 +271,7 @@ window.onload = function () {
             // var roleListFlag = res.data.some((item, index) => {
             //     return item.id == 407
             // });
+            // roleListFlag?$('.noticeCont').removeClass('hide'):$('.noticeCont').addClass('hide')
             roleListFlag ? $('.roleListFlag').removeClass('hide') : $('.roleListFlag').addClass('hide');
             (userListFlag || roleListFlag) ? $('.userCont').removeClass('hide') : $('.userCont').addClass('hide');
             //售货机模块
@@ -313,7 +304,7 @@ window.onload = function () {
             // var paySetFlag=res.data.some((item,index)=>{
             //     return item.id == 431
             // })
-            paySetFlag?$('.merchantsPay').removeClass('hide'):$('.merchantsPay').addClass('hide');
+            paySetFlag ? $('.merchantsPay').removeClass('hide') : $('.merchantsPay').addClass('hide');
             //账目模块
             // var accountsListFlag = res.data.some((item, index) => {
             //     return item.id == 423
@@ -340,6 +331,73 @@ window.onload = function () {
             layer.msg(err.message, { icon: 2 })
         })
 
+
+        // 获取公告列表
+        var noticeObj = JSON.stringify({
+            pageSize: 15,
+            pageNum: 1,
+            n_status: 1,
+            is_show: 1
+        })
+        // 轮播图
+        var carousel = layui.carousel;
+      var noticeSwp=  null;
+        var noticeList = null;
+        function shuffling(){
+            loadingAjax('/api/notices/getNoticeList', 'post', noticeObj, sessionStorage.token).then(res => {
+                console.log(res);
+                noticeList = res.data.list;
+                noticeDrawing(noticeList)
+            }).catch(err => {
+                console.log(err)
+            });
+        }
+        shuffling();
+        setTimeout(_=>{
+            shuffling()
+        },1800000)
+        // 公告渲染
+        function noticeDrawing(list) {
+            var noticeStr = ''
+            list.forEach((item, index) => {
+                noticeStr += `<div class="swpier"  ArrList="${index}">${item.title}</div>`
+            });
+            console.log(noticeStr)
+            $('.noticeTitleText').html(noticeStr);
+            noticeSwp=  carousel.render({
+                elem: '#test1'
+                , width: '480px' //设置容器宽度
+                , height: '25px'
+                , arrow: 'none' //始终显示箭头
+                , anim: 'updown' //切换动画方式
+                , indicator: 'none'
+                , interval: '2000'
+            });
+            var options={
+                'interval':2000
+            }
+            noticeSwp.reload(options);
+        };
+        // 点击公告
+        $('.noticeTitleText').on('click','.swpier',function(){
+            var swpierVal=noticeList[$(this).attr('ArrList')];
+            $('.previewContent .playHeader span').html(swpierVal.title);
+            $('.previewContent .previewBody .previewHtml').html(swpierVal.content);
+            console.log(swpierVal.content)
+            popupShow('previewContent','previewBox')
+        });
+         // 关闭弹窗
+    $('.playHeader .close').click(function () {
+        $(this).parent().parent().addClass('margin0')
+        $(this).parents('.maskContnet').fadeOut();
+    });
+        // 点击公告遮罩关闭弹窗
+        $('.previewBox').click(function(){
+            event.stopPropagation(); 
+        });
+        $('.previewContent').click(function(){
+            popupHide('previewContent','previewBox')
+        })
     });
 
 

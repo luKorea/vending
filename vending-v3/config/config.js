@@ -17,6 +17,7 @@ var entry = {
         release:'./js/advertising/release.js',
         myInformation:'./js/my/myInformation.js',
         notice:'./js/notice/notice.js',
+        message:'./js/notice/message.js',
         paySet:'./js/merchants/paySet.js',
         payType:'./js/merchants/payType.js',
         remote:'./js/stores/remote.js',
@@ -82,6 +83,9 @@ var htmlConfig = [
     },
     {
         name: "notice",
+    },
+    {
+        name: "message",
     },
     {
         name: "paySet",

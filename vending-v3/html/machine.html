@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的售货机</title>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   
+
     <script type="text/javascript"
         src="https://webapi.amap.com/maps?v=1.4.15&key=4b78c5cee1f0f8c37a2a2f8283e256b9&plugin=AMap.Geocoder"></script>
     <script src="../assets/public/documentWrite.js"></script>
@@ -160,8 +160,7 @@
                     <li class="salesDetails">销售详情</li>
                     <li class="shipmentDetails">出货记录</li>
                     <li class="payTypeSet">收款账户</li>
-                    <li>客服信息</li>
-                    <li>定制</li>
+                    <!-- <li>客服信息</li> -->
                     <div class="tabLine">
                     </div>
                 </ul>
@@ -210,7 +209,8 @@
                                             </div>
                                             <div style="max-width: 370px;" class="key-contnet">
                                                 <div class="key-text">地区</div>
-                                                <input type="text" class="notAllowed" disabled name="setRegion" class="KyeText">
+                                                <input type="text" class="notAllowed" disabled name="setRegion"
+                                                    class="KyeText">
                                             </div>
                                             <div style="max-width: 370px;" class="key-contnet">
                                                 <div class="key-text">终端地址</div>
@@ -316,98 +316,97 @@
                     <!-- 货道详情 -->
                     <li class="aisleDetails" style="display: none;">
                         <div class="detailsDel" style="margin-bottom: 10px;">
-                            <button class="layui-btn layui-btn-normal  delBtn  btn "
-                            type="button">
-                            <span>删除</span>
-                        </button>
+                            <button class="layui-btn layui-btn-normal  delBtn  btn " type="button">
+                                <span>删除</span>
+                            </button>
                         </div>
                         <form action="" class="layui-form" lay-filter="delDetalis" style="width: 100%;">
-                        <div class="aisleGoodsCont">
-                            <div class="aisleListCont flexTwo">
-                                <div class="listIndex">
-                                    <span>1</span>
-                                </div>
-                                <div class="aisleNumderGoods">
-                                    <div class="aisleNumderClick">
+                            <div class="aisleGoodsCont">
+                                <div class="aisleListCont flexTwo">
+                                    <div class="listIndex">
+                                        <span>1</span>
+                                    </div>
+                                    <div class="aisleNumderGoods">
+                                        <div class="aisleNumderClick">
+                                            <div class="numderTop">
+                                                <img src="../img/failure.png" alt="">
+                                                <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
+                                                <span>1</span>
+                                            </div>
+                                            <div class="numderBottom">
+                                                <div class="status1">正常</div>
+                                                <div>数量:5</div>
+                                            </div>
+                                        </div>
+                                        <div class="chooseCheck">
+                                            <input type="checkbox" name="" lay-skin="primary">
+                                            <span title="红包牛红包牛">红包牛红包牛</span>
+                                        </div>
+                                    </div>
+                                    <div class="aisleNumderGoods">
                                         <div class="numderTop">
                                             <img src="../img/failure.png" alt="">
                                             <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
-                                            <span>1</span>
+
+                                        </div>
+                                        <div class="numderBottom">
+                                            <div class="status2">禁用</div>
+                                            <div>数量:5</div>
+                                        </div>
+                                    </div>
+                                    <div class="aisleNumderGoods">
+                                        <div class="numderTop">
+                                            <img src="../img/failure.png" alt="">
+                                            <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
                                         </div>
                                         <div class="numderBottom">
                                             <div class="status1">正常</div>
                                             <div>数量:5</div>
                                         </div>
-                                    </div>                                 
-                                    <div class="chooseCheck">
-                                        <input type="checkbox" name="" lay-skin="primary">
-                                        <span title="红包牛红包牛">红包牛红包牛</span>
+                                    </div>
+                                    <div class="addAisle">
+                                        <span>+</span>
                                     </div>
                                 </div>
-                                <div class="aisleNumderGoods">
-                                    <div class="numderTop">
-                                        <img src="../img/failure.png" alt="">
-                                        <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
+                                <div class="aisleListCont flexTwo">
+                                    <div class="listIndex">
+                                        <span>2</span>
+                                    </div>
+                                    <div class="aisleNumderGoods">
+                                        <div class="numderTop">
+                                            <img src="../img/failure.png" alt="">
+                                            <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
+                                        </div>
+                                        <div class="numderBottom">
+                                            <div class="status1">正常</div>
+                                            <div>数量:5</div>
+                                        </div>
+                                    </div>
+                                    <div class="aisleNumderGoods">
+                                        <div class="numderTop">
+                                            <img src="../img/failure.png" alt="">
+                                            <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
+                                            <span></span>
+                                        </div>
+                                        <div class="numderBottom">
+                                            <div class="status1">正常</div>
+                                            <div>数量:5</div>
+                                        </div>
+                                    </div>
+                                    <div class="aisleNumderGoods">
+                                        <div class="numderTop">
+                                            <img src="../img/failure.png" alt="">
+                                            <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
+                                        </div>
+                                        <div class="numderBottom">
+                                            <div class="status1">正常</div>
+                                            <div>数量:5</div>
+                                        </div>
 
                                     </div>
-                                    <div class="numderBottom">
-                                        <div class="status2">禁用</div>
-                                        <div>数量:5</div>
-                                    </div>
-                                </div>
-                                <div class="aisleNumderGoods">
-                                    <div class="numderTop">
-                                        <img src="../img/failure.png" alt="">
-                                        <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
-                                    </div>
-                                    <div class="numderBottom">
-                                        <div class="status1">正常</div>
-                                        <div>数量:5</div>
-                                    </div>
-                                </div>
-                                <div class="addAisle">
-                                    <span>+</span>
                                 </div>
                             </div>
-                            <div class="aisleListCont flexTwo">
-                                <div class="listIndex">
-                                    <span>2</span>
-                                </div>
-                                <div class="aisleNumderGoods">
-                                    <div class="numderTop">
-                                        <img src="../img/failure.png" alt="">
-                                        <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
-                                    </div>
-                                    <div class="numderBottom">
-                                        <div class="status1">正常</div>
-                                        <div>数量:5</div>
-                                    </div>
-                                </div>
-                                <div class="aisleNumderGoods">
-                                    <div class="numderTop">
-                                        <img src="../img/failure.png" alt="">
-                                        <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
-                                        <span></span>
-                                    </div>
-                                    <div class="numderBottom">
-                                        <div class="status1">正常</div>
-                                        <div>数量:5</div>
-                                    </div>
-                                </div>
-                                <div class="aisleNumderGoods">
-                                    <div class="numderTop">
-                                        <img src="../img/failure.png" alt="">
-                                        <!-- <img src="http://pic.hnzczy.cn/1585304624004_32007447.png " alt=""> -->
-                                    </div>
-                                    <div class="numderBottom">
-                                        <div class="status1">正常</div>
-                                        <div>数量:5</div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
                     </li>
                     <!-- 销售详情 -->
                     <li class="salesTwo details" style="display: none;">
@@ -525,7 +524,7 @@
                         </div>
                     </li>
                     <!-- 设置支付类型 -->
-                    <li class="paySet" style="display: none;"> 
+                    <li class="paySet" style="display: none;">
                         <div>
                             <header>售货机收款账户设置</header>
                         </div>
@@ -538,7 +537,7 @@
                                         <input type="radio" name="sex" value="男" title="男" >
                                          <input type="radio" name="sex" value="女" title="女" >
                                     </div> -->
-                                  </div>
+                                </div>
 
                                 <!-- <div style="max-width: 370px;" class="key-contnet">
                                     <div class="key-text">支付类型</div>
@@ -557,25 +556,38 @@
                         </div> -->
                     </li>
                     <!-- 客服信息 -->
-                    <li class="service" style="display: none;">
+                    <!-- <li class="service" style="display: none;">
                         <div class="margin">
+                            
                             <div class="serviceTitle">
-                                <div class="listFlex">
-                                    <label for="">客服电话：</label>
-                                    <input type="text" name="service_phone">
-                                </div>
-                                <div class="listFlex" style="margin-left: 110px;">
-                                    <button class="layui-btn layui-btn-normal btn uploadBtn " >
-                                        <span>上传客服二维码图片</span>
-                                        <input type="file" accept="image/*">
-                                    </button>
-                                    <button class="layui-btn layui-btn-normal btn delImgBtn" style="margin: 0 0 0 15px;">
-                                        <span>删除二维码图片</span>
-                                    </button>
-                                </div>
-                                <div class="ImgCont">
-                                    <img src="" alt="" class="WeChat">
-                                </div>
+                                    <form class="layui-form" action="">
+                                        <div class="layui-form-item">
+                                            <label style="width: 90px;" class="layui-form-label">是否配置客服:</label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="machineOpen" lay-skin="switch"
+                                                    lay-filter="machineOpen" lay-text="是|否">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="serviceContent">
+                                        <div class="listFlex">
+                                            <label for="">客服电话：</label>
+                                            <input type="text" name="service_phone">
+                                        </div>
+                                        <div class="listFlex" style="margin-left: 110px;">
+                                            <button class="layui-btn layui-btn-normal btn uploadBtn " >
+                                                <span>上传客服二维码图片</span>
+                                                <input type="file" accept="image/*">
+                                            </button>
+                                            <button class="layui-btn layui-btn-normal btn delImgBtn" style="margin: 0 0 0 15px;">
+                                                <span>删除二维码图片</span>
+                                            </button>
+                                        </div>
+                                        <div class="ImgCont">
+                                            <img src="" alt="" class="WeChat">
+                                        </div>
+                                    </div>
+                               
                             </div>
                             <div class="serviceFooter">
                                 <button class="layui-btn layui-btn-normal btn " style="margin: 0 0 0 15px;">
@@ -583,24 +595,7 @@
                                 </button>
                             </div>
                         </div>
-                    </li>
-                    <!-- 定制 -->
-                    <li style="display: none;">
-                        <div class="margin">
-                            <div class="listFlex">
-                                <button class="layui-btn layui-btn-normal customBtn  btn" type="button">
-                                    <span>点击上传定制二维码</span>
-                                    <!-- <input type="file" accept="image/*"  class="customInput"> -->
-                                </button>
-                                <button class="layui-btn layui-btn-normal btn editDelImgBtn" style="margin: 0 0 0 15px;">
-                                    <span>删除定制二维码图片</span>
-                                </button>
-                            </div>
-                            <div class="listInput customImg" >
-                                <img src="../img/1.jpg" alt="">
-                            </div>
-                        </div>
-                    </li>
+                    </li> -->
                 </ul>
                 <!-- </div> -->
 
@@ -699,6 +694,64 @@
                                     <input type="number" name="userPhone">
                                 </li> -->
                                 <li class="listFlex">
+                                    <form class="layui-form" action="">
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">是否配置客服:</label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="machineOpen" lay-skin="switch"
+                                                    lay-filter="machineOpen" lay-text="是|否">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </li>
+                                <div class="serviceTitle" style="padding-bottom: 22px;">
+                                    <div class="listFlex">
+                                        <label for="">客服电话：</label>
+                                        <input type="text" name="service_phone">
+                                    </div>
+                                    <div class="listFlex" style="margin-left: 110px;">
+                                        <button class="layui-btn layui-btn-normal btn uploadBtn" type="button">
+                                            <span>上传客服二维码图片</span>
+                                            <input type="file" accept="image/*">
+                                        </button>
+                                        <button class="layui-btn layui-btn-normal btn delImgBtn"
+                                            style="margin: 0 0 0 15px;" type="button">
+                                            <span>删除二维码图片</span>
+                                        </button>
+                                    </div>
+                                    <div class="ImgCont">
+                                        <img src="" alt="" class="WeChat">
+                                    </div>
+                                </div>
+                                <li class="listFlex">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">是否配置定制:</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="customOpen" lay-skin="switch"
+                                                lay-filter="customOpen" lay-text="是|否">
+                                        </div>
+                                    </div>
+                                </li>
+                                <div class="customTitle" style="padding-bottom: 22px;">
+                                    <div class="listFlex">
+                                        <label for="">定制电话：</label>
+                                        <input type="text" name="custom_phone">
+                                    </div>
+                                    <div class="listFlex" style="margin-left: 110px;">
+                                        <button class="layui-btn layui-btn-normal btn uploadBtn2" type="button">
+                                            <span>上传定制二维码图片</span>
+                                            <input type="file" accept="image/*">
+                                        </button>
+                                        <button class="layui-btn layui-btn-normal btn delImgBtn2"
+                                            style="margin: 0 0 0 15px;" type="button">
+                                            <span>删除二维码图片</span>
+                                        </button>
+                                    </div>
+                                    <div class="customImgCont">
+                                        <img src="" alt="" class="WeChat">
+                                    </div>
+                                </div>
+                                <li class="listFlex">
                                     <label for="">负责人手机</label>
                                     <input type="number" name="headPhone">
                                 </li>
@@ -736,7 +789,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="hangContent">
             <p>您没有访问的权限!</p>
         </div>
@@ -860,32 +913,32 @@
             </div>
         </div>
         <!-- 添加货道详情数量 -->
-            <div class=" addDetalis maskContnet" >
-                <div class="addCont margin0">
-                    <div class="playHeader">
-                        <span>添加货道数量</span>
-                        <button class="close" type="button">
-                            <i class="layui-icon layui-icon-close"></i>
-                        </button>
+        <div class=" addDetalis maskContnet">
+            <div class="addCont margin0">
+                <div class="playHeader">
+                    <span>添加货道数量</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="passBody">
+                    <div class="listFlex">
+                        <label for="">数量：</label>
+                        <input type="number" name="addNum">
                     </div>
-                    <div class="passBody">
-                        <div class="listFlex">
-                            <label for="">数量：</label>
-                            <input type="number" name="addNum">
-                        </div>
-                        <div class="content-footer" style="margin-top:30px;">
-                            <div style="text-align: center;">
-                                <button class="layui-btn layui-btn-normal btn addDetalisBtn" style="margin: 0 0 0 15px;">
-                                    <span>确定</span>
-                                </button>
-                                <button class="layui-btn layui-btn-normal btn addCancelBtn">
-                                    <span>取消</span>
-                                </button>
-                            </div>
+                    <div class="content-footer" style="margin-top:30px;">
+                        <div style="text-align: center;">
+                            <button class="layui-btn layui-btn-normal btn addDetalisBtn" style="margin: 0 0 0 15px;">
+                                <span>确定</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal btn addCancelBtn">
+                                <span>取消</span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         <div class="mask maskContnet">
             <div class="TitleContentWith">
                 <span class="maskSpan" style="display: inline-block;">

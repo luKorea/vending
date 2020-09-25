@@ -671,11 +671,8 @@ input:hover{
 .layui-input-block{
     padding: 3px 15px;
 }
-.serviceTitle{
-    width: 500px;
-}
-.ImgCont{
-    width: 60%;
+.ImgCont,.customImgCont{
+    width: 50%;
     margin-left: 110px;
     background-color: #fff;
     border: 1px solid #c0ccda;
@@ -687,7 +684,7 @@ input:hover{
     font-size: 14px;
     color: #606266;
 }
-.ImgCont img{
+.ImgCont img,.customImgCont img{
     display: block;
     margin: 0 auto ;
     width: 100%;
@@ -698,10 +695,10 @@ input:hover{
     margin-top: 50px;
     text-align: center;
 }
-.uploadBtn{
+.uploadBtn,.uploadBtn2{
     position: relative;
 }
-.uploadBtn input{
+.uploadBtn input,.uploadBtn2 input{
     position: absolute;
     width: 100%;
     height: 100%;

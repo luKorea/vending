@@ -1,4 +1,4 @@
-import '../../MyCss/merchants/merchantsList.css'
+import '../../MyCss/merchants/merchantsList.css';
 layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var $ = layui.jquery,
         table = layui.table,
@@ -25,9 +25,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             { field: 'alias', width: 160, title: '商户编号' },
             { field: 'addUser', width: 150, title: '创建人', },
-            { field: 'addTime', width: 180, title: '创建时间' },
+            { field: 'addTime', width: 180, title: '创建时间' ,templet:function(d){
+                return timeStamp(d.addTime)
+            }},
             { field: 'lastUser', width: 150, title: '最后修改人', },
-            { field: 'lastTime', width: 180, title: '最后修改时间' },
+            { field: 'lastTime', width: 180, title: '最后修改时间' ,templet:function(d){
+                if(d.lastTime){
+                    return timeStamp(d.lastTime)
+                }else{
+                    return '-'
+                }
+            }},
             { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo' },
         ]]
         , id: 'tableId'
@@ -87,7 +95,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 商户列表
     // var marchantsList = merchantsListMian('');
     //监听工具条
-    var data = null;
+    var data = null,
+        editServiceFlag=false; 
     table.on('tool(test)', function (obj) {
         data = obj.data;
         console.log(data)
@@ -105,14 +114,49 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             }
             $('.marchantsList').val(data.topMerchant);
             $('.MemberOperation input[name="service_phone"]').val(data.service_phone);
-            $('.editImg img').prop('src', data.service_code);
-
+            $('.editMerchants input[name="customPhone"]').val(data.custom_phone)
+            if(data.service_code){
+                $('.editImg').show()
+                $('.editImg img').prop('src', data.service_code);
+            }else{
+                $('.editImg').hide()
+                $('.editImg img').prop('src', '');
+            }
+            if(data.custom_code){
+                $('.customImg').show();
+                $('.customImg img').prop('src',data.custom_code);
+            }else{
+                $('.customImg').hide();
+                $('.customImg img').prop('src','');
+            }
+            // 判断客服
+            if(data.is_service==1){
+                $('.editMerchants input[name="editServiceOpen"]').prop('checked',true);
+                $('.editServiceContent').show();
+                editServiceFlag=true;
+            }else{
+                $('.editMerchants input[name="editServiceOpen"]').prop('checked',false);
+                $('.editServiceContent').hide();
+                editServiceFlag=false;
+            }
+            // 判断定制
+            if(data.is_custom==1){
+                $('.editMerchants input[name="editCustomOpen"]').prop('checked',true);
+                $('.editCustomCont').show();
+                customFlag=true;
+            }else{
+                $('.editMerchants input[name="editCustomOpen"]').prop('checked',false);
+                $('.editCustomCont').hide();
+                customFlag=false;
+            }
+            form.render();
         } else if (obj.event === 'delete') {
             if (data.id == 1) {
                 layer.msg(data.title + '不能进行删除操作', { icon: 7 });
                 return;
             }
             layer.confirm('确定删除？', function (index) {
+                layer.close(index);
                 $.ajax({
                     type: 'post',
                     url: '/api/merchant/deleteMerchant',
@@ -126,7 +170,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }),
                     success: function (res) {
                         console.log(res)
-                        layer.close(index);
+                        
                         if (res.code == 200) {
                             layer.msg('删除成功', { icon: 1 })
                             dataList = treeList();
@@ -240,29 +284,29 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         //         aliasText = item.alias
         //     }
         // })
-        if ($('.addBox input[name="merchantsName"]').val() && $('.addBox input[name="addmarchantsVal"]').val() && $('.addBox input[name="service_phone"]').val()) {
+        if ($('.addBox input[name="merchantsName"]').val() && $('.addBox input[name="addmarchantsVal"]').val()) {
+             
             console.log($('.addBox input[name="service_phone"]').val())
-            if (!addImg) {
-                layer.msg('请上传微信二维码', { icon: 7 });
+            if (!(addImg||$('.addBox input[name="service_phone"]').val())&&addServiceFlag) {
+                layer.msg('请填写客服电话或上传客服微信二维码', { icon: 7 });
                 return;
             }
             var addMerchantsData = JSON.stringify({
                 name: $('.addBox input[name="merchantsName"]').val(),
                 topMerchant: Number(topVal[0]),
                 alias: topVal[1],
-                service_phone: $('.addBox input[name="service_phone"]').val(),
-                service_code: addImg
+                is_service:addServiceFlag?1:0,
+                service_phone: addServiceFlag?$('.addBox input[name="service_phone"]').val():'',
+                service_code: addServiceFlag?addImg:'',
             })
             loadingAjax('/api/merchant/newMerchant', 'post', addMerchantsData, sessionStorage.token, '', 'addMerchants', 'addBox', layer).then((res) => {
                 $('.addBox input[name="merchantsName"]').val('');
+                $('.addMerchants input[name="addServiceOpen"]').prop('checked');
+                form.render();
                 layer.msg(res.message, { icon: 1 });
                 addImg = null;
                 $('.addImg').hide();
                 dataList = treeList();
-                // treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
-                // inst2.reload('treelistEdit', {
-
-                // });
                 var addEditData = treeList();
                 tree.reload('treelistEdit', {
                     data: addEditData
@@ -274,11 +318,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 layer.msg(err.message, { icon: 2 })
             })
         } else {
-
             layer.msg('带*号为必填', { icon: 7 })
         }
     })
-    // 编辑选择图片
+    // 编辑选择客服图片
     $('.editMerchants .editUpload').change(function(e){
         if(!$(this).val()){
             return ;
@@ -302,8 +345,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 $('.maskSpan').removeClass('maskIcon');
                 $(that).val('')
                 if (res.code == 0) {
-                    addImg = res.data.src;
-                    $('.editImg img').prop('src', addImg);
+                    $('.editImg').show();
+                    $('.editImg img').prop('src', res.data.src);
                 } else {
                     layer.msg(res.message, { icon: 7 });
                 }
@@ -318,13 +361,18 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     })
     // 编辑商户事件
     $('.Medit .submit_btn').click(function () {
-        if ($('.editMerchants input[name="merchantsName"]').val() && $('.editMerchants input[name="service_phone"]').val()) {
+        if ($('.editMerchants input[name="merchantsName"]').val()) {
+            // $('.editMerchants input[name="service_phone"]').val()//客服电话
             var editdMerchantsData = JSON.stringify({
                 id: data.id,
                 name: $('.editMerchants input[name="merchantsName"]').val(),
                 topMerchant: Number($('.marchantsList').val()),
-                service_phone: $('.editMerchants input[name="service_phone"]').val(),
-                service_code: $('.editImg img').attr('src'),
+                service_phone:editServiceFlag? $('.editMerchants input[name="service_phone"]').val():'',
+                service_code:editServiceFlag? $('.editImg img').attr('src'):'',
+                is_service:editServiceFlag?1:0,
+                is_custom:customFlag?1:0,
+                custom_phone:customFlag?$('.editMerchants input[name="customPhone"]').val():'',
+                custom_code:customFlag?$('.customImg img').attr('src'):'',
             });
             loadingAjax('/api/merchant/updateMerchant', 'post', editdMerchantsData, sessionStorage.token, '', 'MemberOperation', 'MemberContent', layer).then((res) => {
                 var addEditData = treeList();
@@ -417,4 +465,81 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     $('.refreshBtn').click(function () {
         location.reload();
     });
+
+    // 监听添加客服开关
+    var addServiceFlag=false;
+    form.on('switch(switchTest)', function(data){
+        // console.log(data.elem.checked); //开关是否开启，true或者false
+        addServiceFlag=data.elem.checked;
+        if(data.elem.checked){
+            $('.serviceCont').slideDown();
+        }else{
+            $('.serviceCont').slideUp();
+        }
+      });  
+    //   监听编辑客服开关
+      form.on('switch(editService)', function(data){
+        editServiceFlag=data.elem.checked;
+        if(data.elem.checked){
+            $('.editServiceContent').slideDown();
+        }else{
+            $('.editServiceContent').slideUp();
+        }
+      }); 
+      var customFlag=false;
+    //   监听编辑定制开关
+    form.on('switch(editCustomOpen)', function(data){
+        customFlag=data.elem.checked;
+        if(data.elem.checked){
+            $('.editCustomCont').slideDown();
+        }else{
+            $('.editCustomCont').slideUp();
+        }
+      }); 
+    //   编辑选中定制图片
+      $('.customBtn .customInput').change(function(e){
+        if(!$(this).val()){
+            return ;
+        }
+        var that = this;
+        var upDetails = new FormData();
+        upDetails.append('file', e.target.files[0]);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        $.ajax({
+            type: 'post',
+            url: '/api/fileUpload',
+            processData: false,
+            contentType: false,
+            headers: {
+                token,
+            },
+            data: upDetails,
+            success: function (res) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                $(that).val('')
+                if (res.code == 0) {
+                    $('.customImg').show();
+                    $('.customImg img').prop('src', res.data.src);
+                } else {
+                    layer.msg(res.message, { icon: 7 });
+                }
+            },
+            error: function (err) {
+                $(that).val('')
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon')
+                layer.msg('上传失败', { icon: 2 })
+            }
+        })
+    });
+    // 清除定制图片
+    $('.editDelImgBtn').click(function(){
+        layer.confirm('确定定制图片？', function (index) {
+            layer.close(index);
+            $('.customImg').hide();
+            $('.customImg img').prop('src','');
+        })
+    })
 });

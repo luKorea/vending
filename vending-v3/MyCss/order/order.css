@@ -143,7 +143,7 @@
     color: #be954a;
     font-weight: bold;
 }
-.orderDetailsBox {
+.orderDetailsBox ,.exportBox{
     width: 800px;
     position: relative;
     margin: 2vh auto 50px;
@@ -153,6 +153,9 @@
     box-sizing: border-box;
     transition: all 0.3s;
     padding-bottom: 15px;
+}
+.exportBox{
+    width: 500px;
 }
 .refundBox{
     width: 400px;
@@ -235,12 +238,22 @@
     width: 100%;
     text-align: center;
 }
-.chooseCan{
+.chooseCan,.cancelBtn{
     color: #606266;
     background: #fff !important;
     border: 1px solid #dcdfe6 !important;
 }
-.chooseCan:hover{
+.chooseCan:hover,.cancelBtn:hover{
     color: #be954a;
     border: 1px solid #be954a !important;;
+}
+.exportBody{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+}
+.exportBody p{
+    text-align: center;
+    color: red;
+    margin-bottom: 15px;
 }
