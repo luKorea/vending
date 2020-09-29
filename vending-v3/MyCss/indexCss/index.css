@@ -271,10 +271,10 @@
 .noticeTitleText div{
     cursor: pointer;
 }
-.previewContent{
+.previewContent,.messageCont{
 	z-index: 1009 !important;
 }
-.previewBox{
+.previewBox,.messageBox{
     width: 950px;
     position: relative;
     margin: 2vh auto 50px;
@@ -284,5 +284,39 @@
     box-sizing: border-box;
     transition: all 0.3s;
 	padding-bottom: 15px;
-	
+}
+.messageContentList dl{
+	/* display: block !important;	 */
+	left: -100px;
+	max-height: 350px;
+	overflow-y: auto;
+}
+.messageContentList dl dd{
+	width: 300px;
+}
+.messageContentList dl dd a{
+	padding: 0 20px;
+}
+
+.messageContentList dl dd span,.messageContentList dl dd h5{
+	color: #333 !important;
+	width: 100%;
+	text-align: center;	
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.messageContentList dl::-webkit-scrollbar{
+	width: 5px;
+	height: 100%;
+}
+.messageContentList dl::-webkit-scrollbar-thumb{
+	border-radius: 10px;
+	background-color: rgba(51, 51, 51,0.1);
+}
+.messageContentList dl::-webkit-scrollbar-track {
+	border-radius: 10px;
+}
+.layui-nav .header-message a{
+	padding: 0 20px;
 }

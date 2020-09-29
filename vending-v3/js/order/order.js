@@ -274,8 +274,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       layer.msg('请选择时间',{icon:7});
       return ;
     }
+    $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
  var myDate = new Date(),
-      dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+      // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
       xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
     xhr.open("POST", `/api/order/exportExcel`, true);
     xhr.setRequestHeader("token", sessionStorage.token);
@@ -286,13 +288,15 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     xhr.onload = function (res) {
       console.log(xhr)
       if (xhr.status == 200) {
+        $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon');
         if (xhr.response.size < 100) {
           layer.msg('您没有导出订单的权限！', { icon: 7 })
           return
         } else {
           var content = xhr.response;
           // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-          var fileName=`${marchantName}订单${dataOf}.xlsx`
+          var fileName=`${marchantName}订单(${exportStareTime}-${exportEndTime}).xlsx`
           var elink = document.createElement('a');
           elink.download = fileName;
           elink.style.display = 'none';
@@ -303,6 +307,8 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
           document.body.removeChild(elink);
         }
       } else {
+        $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon');
         layer.msg('服务器请求超时', { icon: 2 });
         return;
       }

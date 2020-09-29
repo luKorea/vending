@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>销售经理管理</title>
+    <script src="../assets/public/documentWrite.js"></script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="margin">
+            <div class="salesHeader">
+                <!-- <input type="file" class="xlsx"> -->
+                <button class="layui-btn layui-btn-normal addSalesBtn hide btn ">
+                    <span>新增销售经理</span>
+                </button>
+                <button class="layui-btn layui-btn-normal importBtn hide btn ">
+                    <span>导入销售经理信息</span>
+                    <input type="file" name="addUpload">
+                </button>
+                <div style="max-width: 350px;margin-left: 15px;" class="key-contnet">
+                    <div class="key-text">关键字</div>
+                    <input type="text" placeholder="" name="keyMerchants" class="KyeText">
+                </div>
+                <button class="layui-btn layui-btn-normal btn queryBtn">
+                    <i class="layui-icon layui-icon-search"></i>
+                    <span>查询</span>
+                </button>
+                <button class="layui-btn layui-btn-normal btn del-btn hide delBtn">
+                    <i class="layui-icon layui-icon-delete"></i>
+                    <span>删除</span>
+                </button>
+                <button class="layui-btn layui-btn-normal btn refreshBtn">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    <span>刷新</span>
+                </button>
+            </div>
+            <div class="salesTableList">
+                <div class="tableList">
+                    <table class="layui-hide" id="salesTable" lay-filter="salesTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 新增销售经理 -->
+    <div class="addSalesCont maskContnet" style="overflow-y: auto;">
+        <div class="addSalesBox margin0">
+            <div class="playHeader">
+                <span>新增销售经理</span>
+                <button class="close" type="button">
+                    <i class="layui-icon layui-icon-close"></i>
+                </button>
+            </div>
+            <div class="addSalesBody">
+                <div class="listFlex">
+                    <label for=""><span style="color: red;">*</span>编号:</label>
+                    <input type="text" name="sm_no">
+                </div>
+                <div class="listFlex">
+                    <label for=""><span style="color: red;">*</span>姓名:</label>
+                    <input type="text" name="name">
+                </div>
+                <div class="listFlex">
+                    <label for=""><span style="color: red;">*</span>电话号:</label>
+                    <input type="text" name="phone">
+                </div>
+                <div class="listFlex">
+                    <label for=""><span style="color: red;">*</span>商家:</label>
+                    <input type="text" name="merchants">
+                </div>
+            </div>
+            <div class="footerBtn">
+                <button class="layui-btn layui-btn-normal confirmBtn btn " style="margin: 0 0 0 15px;">
+                    <span>确定</span>
+                </button>
+                <button class="layui-btn layui-btn-normal btn  cancelBtn" style="margin: 0 0 0 15px;">
+                    <span>取消</span>
+                </button>
+            </div>
+        </div>
+    </div>
+   <!-- 数据处理弹窗 -->
+    <div class="mask maskContnet">
+        <div class="TitleContentWith">
+            <span class="maskSpan" style="display: inline-block;">
+                <i class="layui-icon layui-icon-loading "></i>
+            </span>
+            数据处理中，请稍候
+        </div>
+    </div>
+</body>
+</html>

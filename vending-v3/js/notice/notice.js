@@ -67,9 +67,6 @@ layui.use(['table', 'form', 'layer',], function () {
 
             }
         })
- 
- 
-
 
     // 关闭弹窗
     $('.playHeader .close').click(function () {
@@ -119,7 +116,7 @@ layui.use(['table', 'form', 'layer',], function () {
                 $('.maskSpan').removeClass('maskIcon');
                 $(that).val('')
                 if (res.code == 0) {
-                    layer.msg('上传成功')
+                    layer.msg('上传成功',{icon:1})
                     $('.addEditCont input[name="address"]').val(res.data.src)
                 } else {
                     layer.msg(res.message, { icon: 7 });
@@ -188,7 +185,7 @@ layui.use(['table', 'form', 'layer',], function () {
             layer.msg('带*号为必填',{icon:7});
             return ;
         }
-        if(!addWangEditor.txt.html().length>11){
+        if(!(addWangEditor.txt.html().length>11)){
             layer.msg('公告详情最少五个字',{icon:7});
             return ;
         };
@@ -196,7 +193,8 @@ layui.use(['table', 'form', 'layer',], function () {
             layer.msg('附近名与附件地址必须同时填写');
             return ;
         };
-        
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
         var addPushObj=JSON.stringify({
             n_number:$('.addEditCont input[name="number"]').val(),
             title:$('.addEditCont input[name="title"]').val(),

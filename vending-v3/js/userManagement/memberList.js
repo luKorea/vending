@@ -1,4 +1,4 @@
-import '../../MyCss/userManagement/memberList.css'
+  import '../../MyCss/userManagement/memberList.css'
 layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
   var table = layui.table;
   var layer = layui.layer,
@@ -31,8 +31,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         },
         { field: 'alias', width: 250, title: '用户编号' },
         { field: 'phone', width: 150, title: '手机号' },
-        { field: 'merchantName', width: 150, title: '所属商户' },
-
+        { field: 'merchantName', width: 200, title: '所属商户' },
         { field: 'addUser', width: 150, title: '创建人', },
         { field: 'addTime', width: 180, title: '创建时间' },
         { field: 'lastUser', width: 150, title: '最后修改人', },
@@ -42,10 +41,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       ]]
       , id: 'tableId'
       , page: true
-      , loading: true
-      // ,method:'post'
-      , limits: [10, 20, 50]
-      ,
+      , loading: true,
       request: {
         'pageName': 'pageNum',
         'limitName': 'pageSize'

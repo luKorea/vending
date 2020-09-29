@@ -4,46 +4,21 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   var index = 0
   $('.navTab li').click(function () {
     console.log($(this).index())
+    if($(this).index()==2){
+      if(!videoTable){
+        videoTableFun();
+      }
+    }else if($(this).index()==1){
+      if(!detailsTable){
+        detailsTableFun();
+      }
+    }
     $(this).addClass('active').siblings().removeClass('active');
     let that = $(this);
     $('.tabLine').animate({
       left: (that.offset().left) + 'px'
     }, 500);
     $('.tabBox>div').eq($(this).index()).fadeIn().siblings().fadeOut();
-    // if ($(this).index() == 0) {
-    //   if (index == 0) {
-    //     index = $(this).index();
-    //     return;
-    //   } else if (index == 1) {
-    //     index = $(this).index();
-    //     onStep('details', 'ImgContnet');
-    //   } else {
-    //     index = $(this).index();
-    //     onStep('VideoContnet', 'ImgContnet');
-    //   }
-    // } else if ($(this).index() == 1) {
-    //   if (index == 0) {
-    //     index = $(this).index();
-    //     nextStep('ImgContnet', 'details')
-    //   } else if (index == 1) {
-    //     index = $(this).index();
-    //     return;
-    //   } else {
-    //     index = $(this).index();
-    //     onStep('VideoContnet', 'details');
-    //   }
-    // } else {
-    //   if (index == 0) {
-    //     index = $(this).index();
-    //     nextStep('ImgContnet', 'VideoContnet')
-    //   } else if (index = 1) {
-    //     index = $(this).index();
-    //     nextStep('details', 'VideoContnet')
-    //   } else {
-    //     index = $(this).index();
-    //     return;
-    //   }
-    // }
   });
   var startTime = '';
   //结束时间
@@ -129,6 +104,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   })
 
   var table = layui.table,
+  // 商品列表图片
     advertisingLis = table.render({
       elem: '#ImgData',
       method: 'post',
@@ -290,72 +266,77 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       }
     })
   })
-  var videoTable = table.render({
-    elem: '#VideoData',
-    method: 'post',
-    url: '/api/good_material/getGoodMaterial',
-    contentType: "application/json",
-    headers: {
-      token,
-    },
-    cols: [[
-      // { field: 'Img', width: 150, title: '素材图',templet: "" },
-      { type: 'checkbox', },
-      { field: 'name', width: 180, title: '视频名', },
-      {
-        field: 'name', width: 180, title: '审核状态', templet: function (d) {
-          return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
-        }
+  var videoTable =null;
+  // 视频列表
+  function videoTableFun(){
+    videoTable= table.render({
+      elem: '#VideoData',
+      method: 'post',
+      url: '/api/good_material/getGoodMaterial',
+      contentType: "application/json",
+      headers: {
+        token,
       },
-      { field: 'number', width: 200, title: '视频编号', },
-      { field: 'addUser', width: 150, title: '创建人', },
-      { field: 'publishTime', width: 180, title: '创建时间' },
-      
-      // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
-      { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoVideo', },
-
-    ]]
-    , page: true
-    , id: 'VideoListData'
-    , loading: true,
-    request: {
-      'pageName': 'pageNum',
-      'limitName': 'pageSize'
-    },
-    parseData: function (res) {
-      // console.log(res)
-      //res 即为原始返回的数据
-      if (res.code == 200) {
-        return {
-          "code": res.code, //解析接口状态
-          "msg": '', //解析提示文本
-          "count": res.data.total, //解析数据长度
-          "data": res.data.list //解析数据列表
-        };
-      } else {
-        return {
-          "code": res.code, //解析接口状态
-          "msg": res.message, //解析提示文本
+      cols: [[
+        // { field: 'Img', width: 150, title: '素材图',templet: "" },
+        { type: 'checkbox', },
+        { field: 'name', width: 180, title: '视频名', },
+        {
+          field: 'name', width: 180, title: '审核状态', templet: function (d) {
+            return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
+          }
+        },
+        { field: 'number', width: 200, title: '视频编号', },
+        { field: 'addUser', width: 150, title: '创建人', },
+        { field: 'publishTime', width: 180, title: '创建时间' },
+        
+        // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
+        { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoVideo', },
+  
+      ]]
+      , page: true
+      , id: 'VideoListData'
+      , loading: true,
+      request: {
+        'pageName': 'pageNum',
+        'limitName': 'pageSize'
+      },
+      parseData: function (res) {
+        // console.log(res)
+        //res 即为原始返回的数据
+        if (res.code == 200) {
+          return {
+            "code": res.code, //解析接口状态
+            "msg": '', //解析提示文本
+            "count": res.data.total, //解析数据长度
+            "data": res.data.list //解析数据列表
+          };
+        } else {
+          return {
+            "code": res.code, //解析接口状态
+            "msg": res.message, //解析提示文本
+          }
+        }
+  
+      },
+      where: {
+        conditionFour: '1',
+        conditionSix: sessionStorage.machineID
+      },
+      response: {
+        statusCode: 200 //规定成功的状态码，默认：0
+      },
+      done: function (res) {
+        permissions();
+        if (res.code == 403) {
+          window.parent.location.href = "login.html";
+        } else if (res.code == 405) {
+          $('.hangContent').show();
         }
       }
-
-    },
-    where: {
-      conditionFour: '1',
-      conditionSix: sessionStorage.machineID
-    },
-    response: {
-      statusCode: 200 //规定成功的状态码，默认：0
-    },
-    done: function (res) {
-      permissions();
-      if (res.code == 403) {
-        window.parent.location.href = "login.html";
-      } else if (res.code == 405) {
-        $('.hangContent').show();
-      }
-    }
-  });
+    });
+  }
+  
   // 监听视频操作
   table.on('tool(VideoData)', function (obj) {
     console.log(obj);
@@ -488,6 +469,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
               popupHide('addVideoCont', 'addVideoBox');
               $('.FlexInputWidth input[name="VideoName"]').val('');
               videoSrc = null;
+              $('.uploadVideo video').attr('src', '')
               $('.uploadVideo').fadeIn();
               layer.msg(res.message, { icon: 1 });
               videoTable.reload({
@@ -832,73 +814,77 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   });
 
 
-
-  var detailsTable = table.render({
-    elem: '#detailsImgData',
-    method: 'post',
-    url: '/api/good_material/getGoodMaterial',
-    contentType: "application/json",
-    headers: {
-      token,
-    },
-    cols: [[
-      { type: 'checkbox', },
-      { field: 'img', width: 150, title: '图片', templet: "#detailsImgtmp" },
-      { field: 'name', width: 180, title: '图片名', },
-      {
-        field: 'status', width: 180, title: '审核状态', templet: function (d) {
-          return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
-
-        }
+// 详情图片列表
+  var detailsTable = null;
+  function detailsTableFun(){
+    detailsTable= table.render({
+      elem: '#detailsImgData',
+      method: 'post',
+      url: '/api/good_material/getGoodMaterial',
+      contentType: "application/json",
+      headers: {
+        token,
       },
-      { field: 'number', width: 200, title: '图片编号', },
-      { field: 'addUser', width: 150, title: '创建人', },
-      { field: 'publishTime', width: 180, title: '创建时间' },
-     
-      // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
-      { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoImg', },
-    ]]
-    , page: true
-    , id: 'detailsId'
-    , loading: true,
-    request: {
-      'pageName': 'pageNum',
-      'limitName': 'pageSize'
-    },
-    parseData: function (res) {
-      // console.log(res)
-      //res 即为原始返回的数据
-      if (res.code == 200) {
-        return {
-          "code": res.code, //解析接口状态
-          "msg": '', //解析提示文本
-          "count": res.data.total, //解析数据长度
-          "data": res.data.list //解析数据列表
-        };
-      } else {
-        return {
-          "code": res.code, //解析接口状态
-          "msg": res.message, //解析提示文本
+      cols: [[
+        { type: 'checkbox', },
+        { field: 'img', width: 150, title: '图片', templet: "#detailsImgtmp" },
+        { field: 'name', width: 180, title: '图片名', },
+        {
+          field: 'status', width: 180, title: '审核状态', templet: function (d) {
+            return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
+  
+          }
+        },
+        { field: 'number', width: 200, title: '图片编号', },
+        { field: 'addUser', width: 150, title: '创建人', },
+        { field: 'publishTime', width: 180, title: '创建时间' },
+       
+        // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
+        { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoImg', },
+      ]]
+      , page: true
+      , id: 'detailsId'
+      , loading: true,
+      request: {
+        'pageName': 'pageNum',
+        'limitName': 'pageSize'
+      },
+      parseData: function (res) {
+        // console.log(res)
+        //res 即为原始返回的数据
+        if (res.code == 200) {
+          return {
+            "code": res.code, //解析接口状态
+            "msg": '', //解析提示文本
+            "count": res.data.total, //解析数据长度
+            "data": res.data.list //解析数据列表
+          };
+        } else {
+          return {
+            "code": res.code, //解析接口状态
+            "msg": res.message, //解析提示文本
+          }
+        }
+  
+      },
+      where: {
+        conditionFour: '2',
+        conditionSix: sessionStorage.machineID
+      },
+      response: {
+        statusCode: 200 //规定成功的状态码，默认：0
+      },
+      done: function (res) {
+        permissions();
+        if (res.code == 403) {
+          window.parent.location.href = "login.html";
+        } else {
+  
         }
       }
-
-    },
-    where: {
-      conditionFour: '2',
-      conditionSix: sessionStorage.machineID
-    },
-    response: {
-      statusCode: 200 //规定成功的状态码，默认：0
-    },
-    done: function (res) {
-      permissions();
-      if (res.code == 403) {
-        window.parent.location.href = "login.html";
-      } else {
-
-      }
-    }
-  });
+    });
+  }
+ 
 
   $('.details .add-btn').click(function () {
     $('.addDetailsImgCont input[name="detailsImgNane"]').val('');

@@ -266,11 +266,11 @@ permissionsVal(436,437).then(res=>{
             var arr = [];
             if (obj.checked) {
                 currentMachine.forEach(item=>{
-                    if(!item.includes(machineList)){
+                    if(!machineList.includes(item)){
                         machineList.push(item)
                     }
                 })
-                machineList = machineList.concat(currentMachine);
+                // machineList = machineList.concat(currentMachine);
             } else {
                 machineList.forEach((item, index) => {
                     if (!currentMachine.includes(item)) {
@@ -773,7 +773,7 @@ permissionsVal(436,437).then(res=>{
     })
 
  
-    
+    // 权限控制
     function permissions(){
         addFlag?$('.addBtn').removeClass('hide'):$('.addBtn').addClass('hide');
         editFlag?$('.listEdit').removeClass('hide'):$('.listEdit').addClass('hide')

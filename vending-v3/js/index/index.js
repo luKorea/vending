@@ -4,11 +4,14 @@ import { navList } from '../../assets/public/navData.js'
 if (!sessionStorage.token) {
     window.location.href = "login.html"
 }
+
 window.onload = function () {
     var userName = sessionStorage.username;
     $('#userLogin .userName').html(userName)
     var navStr = []; //判断tba选项卡有没有这个参数;
     layui.use(['layer', 'form', 'element', 'carousel'], function () {
+        // 子页面
+        var iframeChild = null;
         // 表单
         var layer = layui.layer,
             form = layui.form;
@@ -20,6 +23,7 @@ window.onload = function () {
             , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
         //新增一个Tab项
+
         function tabAdd(index, title) {
             element.tabAdd('demo', {
                 title,
@@ -30,8 +34,17 @@ window.onload = function () {
                              ${navList[index]}
                          </div>`
                 , id: index
-            })
+            });
+            // for (var i = 0; i < $('.iframe_show').length; i++) {
+            //     if ($('.iframe_show').eq(i).attr('src') == 'message.html') {
+            //         iframeChild = $('.iframe_show').eq(i);
+            //         console.log(iframeChild)
+                   
+            //     }
+            // }
+            
         };
+
         //切换到指定Tab项
         function tabChange(index) {
             element.tabChange('demo', index);
@@ -139,7 +152,7 @@ window.onload = function () {
                 };
                 //获得消息事件
                 socket.onmessage = function (msg) {
-                    // console.log(msg.data);
+                    console.log(msg);
                     var gainData = JSON.parse(msg.data)
                     //type 1角色编辑或者删除 2用户编辑
                     if (gainData.type == 1) {
@@ -156,6 +169,8 @@ window.onload = function () {
                         setTimeout(() => {
                             loginOut();
                         }, 3500)
+                    } else if (gainData.type == 3) {
+                        messageFunList()
                     }
 
                     // console.log(msg)
@@ -224,7 +239,9 @@ window.onload = function () {
                 accountsListFlag = false,
                 orderListFlag = false,
                 RMListFlag = false,
-                ReListFlag = false;
+                ReListFlag = false,
+                salesFlag=false,
+                pickupFlag=false;
             res.data.forEach(item => {
                 if (item.id == 408) {
                     userListFlag = true
@@ -261,6 +278,12 @@ window.onload = function () {
                 }
                 if (item.id == 411) {
                     ReListFlag = true
+                }
+                if(item.id==447){
+                    salesFlag=true
+                }
+                if(item.id==448){
+                    pickupFlag=true
                 }
             })
             // console.log(a) 
@@ -305,6 +328,8 @@ window.onload = function () {
             //     return item.id == 431
             // })
             paySetFlag ? $('.merchantsPay').removeClass('hide') : $('.merchantsPay').addClass('hide');
+            roleListFlag ? $('.merchantsPayType').removeClass('hide') : $('.merchantsPayType').addClass('hide');
+            salesFlag?$('.sales').removeClass('hide'):$('.sales').addClass('hide')
             //账目模块
             // var accountsListFlag = res.data.some((item, index) => {
             //     return item.id == 423
@@ -326,6 +351,8 @@ window.onload = function () {
             // });
             ReListFlag ? $('.ReListFlag').removeClass('hide') : $('.ReListFlag').addClass('hide');
             (RMListFlag || ReListFlag) ? $('.releaseCont').removeClass('hide') : $('.releaseCont').addClass('hide');
+            // 营销模块
+            pickupFlag ? $('.pickupCode').removeClass('hide').parents('.marketingCont').removeClass('hide') : $('.pickupCode').addClass('hide').parents('.marketingCont').addClass('hide');
         }).catch(err => {
             console.log(err)
             layer.msg(err.message, { icon: 2 })
@@ -341,30 +368,28 @@ window.onload = function () {
         })
         // 轮播图
         var carousel = layui.carousel;
-      var noticeSwp=  null;
+        var noticeSwp = null;
         var noticeList = null;
-        function shuffling(){
+        function shuffling() {
             loadingAjax('/api/notices/getNoticeList', 'post', noticeObj, sessionStorage.token).then(res => {
-                console.log(res);
                 noticeList = res.data.list;
                 noticeDrawing(noticeList)
             }).catch(err => {
-                console.log(err)
+                layer.msg('获取公告失败', { icon: 2 })
             });
         }
         shuffling();
-        setTimeout(_=>{
+        setTimeout(_ => {
             shuffling()
-        },1800000)
+        }, 1800000)
         // 公告渲染
         function noticeDrawing(list) {
             var noticeStr = ''
             list.forEach((item, index) => {
                 noticeStr += `<div class="swpier"  ArrList="${index}">${item.title}</div>`
             });
-            console.log(noticeStr)
             $('.noticeTitleText').html(noticeStr);
-            noticeSwp=  carousel.render({
+            noticeSwp = carousel.render({
                 elem: '#test1'
                 , width: '480px' //设置容器宽度
                 , height: '25px'
@@ -373,32 +398,103 @@ window.onload = function () {
                 , indicator: 'none'
                 , interval: '2000'
             });
-            var options={
-                'interval':2000
+            var options = {
+                'interval': 2000
             }
             noticeSwp.reload(options);
         };
         // 点击公告
-        $('.noticeTitleText').on('click','.swpier',function(){
-            var swpierVal=noticeList[$(this).attr('ArrList')];
+        $('.noticeTitleText').on('click', '.swpier', function () {
+            var swpierVal = noticeList[$(this).attr('ArrList')];
             $('.previewContent .playHeader span').html(swpierVal.title);
             $('.previewContent .previewBody .previewHtml').html(swpierVal.content);
-            console.log(swpierVal.content)
-            popupShow('previewContent','previewBox')
+            popupShow('previewContent', 'previewBox')
         });
-         // 关闭弹窗
-    $('.playHeader .close').click(function () {
-        $(this).parent().parent().addClass('margin0')
-        $(this).parents('.maskContnet').fadeOut();
-    });
+        // 关闭弹窗
+        $('.playHeader .close').click(function () {
+            $(this).parent().parent().addClass('margin0')
+            $(this).parents('.maskContnet').fadeOut();
+        });
         // 点击公告遮罩关闭弹窗
-        $('.previewBox').click(function(){
-            event.stopPropagation(); 
+        $('.previewBox').click(function () {
+            event.stopPropagation();
         });
-        $('.previewContent').click(function(){
-            popupHide('previewContent','previewBox')
+        $('.previewContent').click(function () {
+            popupHide('previewContent', 'previewBox')
+        });
+
+
+        // 未读消息部分
+        var messageListArr = [];
+        var unreadNum = 0;
+        // 未读消息
+        function messageFunList() {
+            unreadNum = 0;
+            var messageObj = JSON.stringify({
+                pageSize: 25,
+                pageNum: 1,
+                is_read: 0
+            });
+            loadingAjax('/api/notices/getHistoryMsg', 'post', messageObj, sessionStorage.token).then(res => {
+                console.log(res);
+                messageListArr = res.data.list;
+                var messageStr = '';
+                messageListArr.forEach((item, index) => {
+                    if (item.is_read == 0 && item.create_user != sessionStorage.username) {
+                        unreadNum++;
+                        messageStr += `<dd >
+                                    <a class="messageDow" messageIndex="${index}" href="javascript:;"><span>${item.title}</span></a>
+                                </dd>`
+                    }
+                })
+                $('.unreadMessageBox').html(messageStr);
+                $('.unreadMessage').html(unreadNum)
+                if (unreadNum == 0) {
+                    var emptyStr = `<dd>
+                                <h5>暂无未读消息</h5>
+                            </dd>`
+                    $('.unreadMessageBox').html(emptyStr)
+                }
+            }).catch(err => {
+                layer.msg('获取未读消息失败', { icon: 2 })
+            })
+        }
+        messageFunList();
+        window.messageFunList = messageFunList;
+        // 点击展示消息
+        $('.messageContentList').on('click', '.messageDow', function () {
+            console.log(messageListArr[$(this).attr('messageIndex')]);
+            var messageDetails = messageListArr[$(this).attr('messageIndex')]
+            $('.messageCont .playHeader span').html(`${messageDetails.title}`);
+            $('.messageBody .messageHtml').html(messageDetails.content);
+            status(messageDetails.id);
+            popupShow('messageCont', 'messageBox')
         })
+
+        $('.messageBox').click(function () {
+            event.stopPropagation();
+        });
+        $('.messageCont').click(function () {
+            popupHide('messageCont', 'messageBox')
+        });
+        function status(id) {
+            var messageObj = JSON.stringify({
+                message_id: id
+            });
+            loadingAjax('/api/notices/readMessage', 'post', messageObj, sessionStorage.token, '', '', '', layer).then(res => {
+                messageFunList();
+                if(window.message){
+                    window.message.reloadFun();
+                }
+                
+            }).catch(err => {
+                console.log(err)
+                layer.msg('阅读消息失败', { icon: 2 })
+            })
+        };
+
     });
+
 
 
     $("body").bind("keydown", function (event) {
@@ -408,6 +504,6 @@ window.onload = function () {
 
         }
     });
-
+    
     javascript: window.history.forward(1);
 }

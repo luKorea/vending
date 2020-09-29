@@ -28,7 +28,8 @@ var navList=[
     '<iframe class="iframe_show" src="paySet.html"></iframe>',
     '<iframe class="iframe_show" src="payType.html"></iframe>',
     '<iframe class="iframe_show" src="pickupCode.html"></iframe>',
-    '<iframe class="iframe_show" src="message.html"></iframe>',
+    '<iframe class="iframe_show" name="message" src="message.html"></iframe>',
+    '<iframe class="iframe_show" src="salesManager.html"></iframe>',
 ];
 export {
     navList,

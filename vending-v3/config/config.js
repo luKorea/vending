@@ -22,6 +22,7 @@ var entry = {
         payType:'./js/merchants/payType.js',
         remote:'./js/stores/remote.js',
         pickupCode:'./js/marketing/pickupCode.js',
+        salesManager:'./js/merchants/salesManager.js',
         //移动端版本
         M_login:'./js/mobile/login/login.js',
         M_my:'./js/mobile/my/my.js',
@@ -98,6 +99,9 @@ var htmlConfig = [
     },
     {
         name: "pickupCode",
+    },  
+    {
+        name: "salesManager",
     },
     //移动端部分
     {

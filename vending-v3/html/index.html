@@ -47,22 +47,19 @@
 			</div>
 
 			<ul class="layui-nav layui-layout-right nav-header-information">
-				<!-- <li class="layui-nav-item header-message">
+				<li class="layui-nav-item header-message messageContentList">
 					<a href="javascript:;">
 						<i class="layui-icon layui-icon-notice"></i>
 						<span>消息</span>
-
-						<p>0</p>
+						<p class="unreadMessage">0</p>
 					</a>
-					<dl class="layui-nav-child">
-						<dd>
-							<a href="javascript:;">体现消息</a>
-						</dd>
-						<dd>
-							<a href="javascript:;">安全设置</a>
-						</dd>
+					<dl class="layui-nav-child unreadMessageBox">
+						<!-- <dd>
+							<a href="javascript:;"><span>222</span></a>
+							<h5>暂无未读消息</h5>
+						</dd> -->
 					</dl>
-				</li> -->
+				</li>
 				<li class="layui-nav-item uers-message" id="userLogin">
 					<a href="javascript:;">
 						<span class="userName"></span>
@@ -91,6 +88,7 @@
 							<div class="content-tbas-iframe-html">
 								<!-- 首页 -->
 								<iframe class="iframe_show" src="myInformation.html"></iframe>
+								<!-- <iframe class="iframe_show" name="message" src="message.html"></iframe> -->
 								<!-- 大分类 数据中心 -->
 								<!-- 统计报表 -->
 								<!-- <iframe class="iframe-show" src="../dataCenter/report.html"></iframe> -->
@@ -227,12 +225,12 @@
 							</dd>
 						</dl>
 					</li>
-					<li class="layui-nav-item ">
+					<li class="layui-nav-item marketingCont hide">
 						<a href="javascript:;">
 							<i class="layui-icon layui-icon-chart"></i>
 							<label>营销管理</label>
 						</a>
-						<dl class="layui-nav-child ">
+						<dl class="layui-nav-child pickupCode hiede">
 							<dd class="">
 								<a href="javascript:;" class="navClick" navId="28">取货码管理</a>
 							</dd>
@@ -278,11 +276,14 @@
 							<dd class="merchantsListFlag hide">
 								<a href="javascript:;" class="navClick" navId="11">商户列表</a>
 							</dd>
-							<dd class="merchantsPay">
+							<dd class="merchantsPayType">
 								<a href="javascript:;" class="navClick" navId="27">支付类型管理</a>
 							</dd>
 							<dd class="merchantsPay hide">
 								<a href="javascript:;" class="navClick" navId="26">支付参数配置</a>
+							</dd>
+							<dd class="sales hide">
+								<a href="javascript:;" class="navClick" navId="30">销售经理管理</a>
 							</dd>
 							<!-- <dd>			
 								<a href="javascript:;" class="navClick" navId="12">个人商户信息</a>
@@ -345,7 +346,7 @@
 							</dd>
 						</dl>
 						<dl class="layui-nav-child">
-							<dd class="roleListFlag hide">
+							<dd class="">
 								<a href="javascript:;" class="navClick" navId="29">消息管理</a>
 							</dd>
 						</dl>
@@ -366,6 +367,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- 公告详情 -->
 	<div class="maskContnet previewContent" style="overflow-y: auto;">
 		<div class="previewBox margin0">
 			<div class="playHeader">
@@ -379,6 +381,23 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<!-- 消息详情 -->
+	<div class="messageCont maskContnet" >
+		<div class="messageBox margin0">
+			<div class="playHeader">
+				<span>消息详情</span>
+				<button class="close" type="button">
+					<i class="layui-icon layui-icon-close"></i>
+				</button>
+			</div>
+			<div class="messageBody">
+				<div class="messageHtml">
+
+				</div>
+			</div>
+		</div>
+
 	</div>
 	<!-- style="display: block;z-index: 999999;" -->
 	<div class="maskContnet socketCont" style="z-index: 9999999;">
