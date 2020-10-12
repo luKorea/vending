@@ -14,20 +14,25 @@ layui.use(['table', 'form', 'layer',], function () {
                 token: sessionStorage.token
             },
             cols: [[
-                { field: 'n_number', width: 200, title: '公告编号' },
-                { field: 'title', width: 230, title: '标题' },
-                { field: 'isShow', width: 150, title: '是否首页展示', templet:function(d){
+                { field: 'n_number', width: 200, title: '公告编号', align: 'center' },
+                { field: 'title', width: 210, title: '标题', align: 'center' },
+                { field: 'isShow', width: 150, title: '是否首页展示', align: 'center', templet:function(d){
                     return d.is_show==1?'是':'否'
                 }},
-                { field: 'status', width: 150, title: '状态',templet:function(d){
+                { field: 'status', width: 130, title: '状态', align: 'center',templet:function(d){
                     return d.n_status==1?'已发布':'草稿箱'
                 }},
-                { field: 'attach_name', width: 150, title: '附件名', },
-                { field: 'attach_url', width: 320, title: '附件地址', },
-                { field: 'create_time', width: 180, title: '创建时间',templet:function(d){
+                { field: 'attach_name', width: 150, title: '附件名', align: 'center',templet:function(d){
+                    return d.attach_name?d.attach_name:'-'
+                } },
+                { field: 'attach_url', width: 320, title: '附件地址', align: 'center', templet:function(d){
+                    return d.attach_url?d.attach_url:'-'
+                }},
+                { field: 'create_user', width: 130, title: '创建人', align: 'center', },
+                { field: 'create_time', width: 180, title: '创建时间', align: 'center',templet:function(d){
                     return timeStamp(d.create_time)
                 } },
-                { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo' },
+                { field: 'operation', width: 180, title: '操作', align: 'center', toolbar: '#barDemo' },
             ]],
             id: 'noticeId',
             page: true,
@@ -177,6 +182,7 @@ layui.use(['table', 'form', 'layer',], function () {
     })
     // 点击发布公告
     $('.addEditCont .determinePushBtn').click(function(){
+        var taht=this;
         // console.log($('.addEditCont input[name="push"]:checked').val());
         // return ;
         // console.log(addWangEditor.txt.html().length)
@@ -199,8 +205,9 @@ layui.use(['table', 'form', 'layer',], function () {
             n_number:$('.addEditCont input[name="number"]').val(),
             title:$('.addEditCont input[name="title"]').val(),
             content:addWangEditor.txt.html(),
-            is_show:Number($('.addEditCont input[name="indexShow"]:checked').val()),
-            n_status:Number($('.addEditCont input[name="push"]:checked').val()),
+            isShow:Number($('.addEditCont input[name="indexShow"]:checked').val()),
+            // n_status:Number($('.addEditCont input[name="push"]:checked').val()),
+            status:Number($(this).attr('pushType')),
             attach_name:$('.addEditCont input[name="accessoryName"]').val(),
             attach_url:$('.addEditCont input[name="address"]').val(),
             merchantId:sessionStorage.machineID
@@ -209,12 +216,19 @@ layui.use(['table', 'form', 'layer',], function () {
             layer.msg(res.message,{icon:1});
             noticeTableIns.reload({
                 where:{}
-            })
+            });
+            if(($(taht).attr('pushType')==1)&&($('.addEditCont input[name="indexShow"]:checked').val()==1)){
+                loadingAjax('/api/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+            }
+            console.log($(taht).attr('pushType'));
+            console.log($('.addEditCont input[name="indexShow"]:checked').val())
+         
             $('.addEditCont input[name="number"]').val('');
             $('.addEditCont input[name="title"]').val('');
             addWangEditor.txt.html('');
             $('.addEditCont input[name="accessoryName"]').val('');
             $('.addEditCont input[name="address"]').val('');
+           
         }).catch(err=>{
             console.log(err)
             layer.msg(err.message,{icon:2});
@@ -266,8 +280,8 @@ layui.use(['table', 'form', 'layer',], function () {
             $('.EditCont input[name="title"]').val(noticeData.title);
             $('.EditCont input[name="indexShow"][value=1]').prop("checked", noticeData.is_show == 1 ? true : false);
             $('.EditCont input[name="indexShow"][value=0]').prop("checked", noticeData.is_show == 0 ? true : false);
-            $('.EditCont input[name="push"][value=1]').prop("checked", noticeData.n_status == 1 ? true : false);
-            $('.EditCont input[name="push"][value=0]').prop("checked", noticeData.n_status == 0 ? true : false);
+            // $('.EditCont input[name="push"][value=1]').prop("checked", noticeData.n_status == 1 ? true : false);
+            // $('.EditCont input[name="push"][value=0]').prop("checked", noticeData.n_status == 0 ? true : false);
             $('.EditCont input[name="accessoryName"]').val(noticeData.attach_name);
             $('.EditCont input[name="address"]').val(noticeData.attach_url);
             editWangEditor.txt.html(noticeData.content);
@@ -291,7 +305,8 @@ layui.use(['table', 'form', 'layer',], function () {
                     layer.msg(res.message,{icon:1});
                     noticeTableIns.reload({
                         where:{}
-                    })
+                    });
+                    loadingAjax('/api/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
                 }).catch(err=>{
                     console.log(err)
                     layer.msg(err.message,{icon:2});
@@ -358,6 +373,7 @@ layui.use(['table', 'form', 'layer',], function () {
     })
     // 确定编辑
     $('.EditCont .determinePushBtn').click(function(){
+        var that=this;
         if(!($('.EditCont input[name="title"]').val()&&$('.EditCont input[name="number"]').val())){
             layer.msg('带*号为必填',{icon:7});
             return ;
@@ -377,7 +393,8 @@ layui.use(['table', 'form', 'layer',], function () {
             title:$('.EditCont input[name="title"]').val(),
             content:editWangEditor.txt.html(),
             is_show:Number($('.EditCont input[name="indexShow"]:checked').val()),
-            n_status:Number($('.EditCont input[name="push"]:checked').val()),
+            // status:Number($('.EditCont input[name="push"]:checked').val()),
+            n_status:Number($(this).attr('pushType')),
             attach_name:$('.EditCont input[name="accessoryName"]').val(),
             attach_url:$('.EditCont input[name="address"]').val(),
             merchantId:sessionStorage.machineID,
@@ -388,6 +405,9 @@ layui.use(['table', 'form', 'layer',], function () {
             noticeTableIns.reload({
                 where:{}
             })
+            if($(this).attr('pushType')==1){
+                loadingAjax('/api/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+            }
         }).catch(err=>{
             console.log(err)
             layer.msg(err.message,{icon:2});

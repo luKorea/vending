@@ -29,16 +29,19 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     },
     cols: [[
       { checkbox: true },
-      { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp" },
-      { field: 'goods_Core', width: 120, title: '商品编号', },
-      { field: 'goods_Name', width: 120, title: '商品名', color: '#409eff' },
+      { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center' },
+      { field: 'goods_Core', width: 120, title: '商品编号', align: 'center'},
+      { field: 'goods_Name', width: 120, title: '商品名', color: '#409eff', align: 'center' },
+      { field: 'goods_Name', width: 120, title: '是否邮寄商品', align: 'center',templet:function(d){
+        return d.mail==0?'否':'是'
+      } },
       {
-        field: 'goods_Status', width: 120, title: '商品状态 ', templet: function (d) {
+        field: 'goods_Status', width: 120, title: '商品状态', align: 'center', templet: function (d) {
           return d.goods_Status ==1 ? '启用' : '不启用'
         }
       },
-      { field: `classifyName`, width: 120, title: '商品类目' }, 
-      { field: 'goods_Price', width: 120, title: '销售价 ' ,templet:function(d){
+      { field: `classifyName`, width: 120, title: '商品类目', align: 'center' }, 
+      { field: 'goods_Price', width: 120, align: 'center', title: '销售价 ' ,templet:function(d){
         var oldNum =d.goods_Price;
         d.goods_Price= Number(Number(d.goods_Price).toFixed(2));
             if (!isNaN(d.goods_Price)) {
@@ -50,7 +53,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                 return oldNum;
             }
       }},
-      { field: 'goods_Cost', width: 120, title: '成本价 ',templet:function(d){
+      { field: 'goods_Cost', width: 120, align: 'center', title: '成本价 ',templet:function(d){
         var oldNum =d.goods_Cost;
         d.goods_Cost= Number(Number(d.goods_Cost).toFixed(2));
             if (!isNaN(d.goods_Cost)) {
@@ -62,15 +65,15 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                 return oldNum;
             }
       } },
-      { field: 'goods_Param', width: 120, title: '规格说明 ' },
+      { field: 'goods_Param', width: 120, title: '规格说明 ', align: 'center' },
       // { field: 'vipPrice', width: 120, title: '会员价 ' },
       // { field: 'strategy', width: 120, title: '优惠价策略 ' },
       // { field: 'goodsActivity', width: 120, title: '其他活动 ' },
       {
-        field: 'create_user', width: 130, title: '创建人 '
+        field: 'create_user', width: 130, title: '创建人 ', align: 'center'
       },
       {
-        field: 'goods_Time', width: 200, title: '创建时间 ', templet: function (d) {
+        field: 'goods_Time', width: 200, title: '创建时间 ', align: 'center', templet: function (d) {
           if (d.goods_Time) {
             return timeStamp(d.goods_Time)
           } else {
@@ -78,9 +81,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           }
         }
       },
-      { field: 'update_user', width: 130, title: '最后修改人 ' },
+      { field: 'update_user', width: 130, title: '最后修改人 ', align: 'center' },
       {
-        field: 'update_time', width: 200, title: '最后修改时间 ', templet: function (d) {
+        field: 'update_time', width: 200, title: '最后修改时间 ', align: 'center', templet: function (d) {
           if (d.update_time) {
             return timeStamp(d.update_time)
           } else {
@@ -89,7 +92,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         }
       },
 
-      { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
+      { field: 'operation', align: 'center', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
       // { fixed: 'right', width: 160, align: 'center', toolbar: '#barDemo' }
     ]]
     , id: 'tableId'
@@ -259,7 +262,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     console.log(singleData.goods_images)
     singleData.mail==1?$('.editor input[name="editmail"]').prop('checked',true):$('.editor input[name="editmail"]').prop('checked',false)
     $('#editImg').attr("src", singleData.goods_images)
-    editWangEditor.txt.html(singleData.goods_Descript)
+    var singGoodsDateils=singleData.goods_Descript.replace(/video/g,'iframe')
+    editWangEditor.txt.html(singGoodsDateils);
+    form.render();// 重新渲染一下
   });
 
   // 点击预览事件
@@ -288,7 +293,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     indexFlag = null;
     var EditValData = form.val("EditValData");
     console.log(EditValData)
-    if (EditValData.goodsBarcode && EditValData.goodsName && EditValData.goodsType && EditValData.goodsPrice && EditValData.goodsCost) {
+    if (EditValData.goodsParam&&EditValData.goodsBarcode && EditValData.goodsName && EditValData.goodsType && EditValData.goodsPrice && EditValData.goodsCost) {
+      var editGoodsDateils=editWangEditor.txt.html().replace(/iframe/g,'video  controls="false"')
       $.ajax({
         type: 'post',
         url: `/api/goods/updateGoods`,
@@ -307,19 +313,19 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           goods_Param: EditValData.goodsParam,  //规格
           goods_Status: EditValData.goodsStatus, //状态
           goods_Images: $('#editImg').attr("src"), //商品图片 不在form里
-          goods_Descript: editWangEditor.txt.html(), //商品详情，编辑器里的内容
+          goods_Descript: editGoodsDateils, //商品详情，编辑器里的内容
           mail:$('.editor input[name="editmail"]').prop('checked')?1:0
         }),
         success: function (res) {
-
           if (res.code == 200) {
             layer.msg('修改成功', { icon: 1 });
             tableIns.reload({
               where: {
               }
-            })
+            });
+            editGoodsDateils='';
             $('.editor').fadeOut();
-            loadingAjax('/api/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
+            // loadingAjax('/api/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
           } else if (res.code == 403) {
             window.parent.location.href = "login.html";
           } else {
@@ -443,15 +449,18 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     console.log($('.addGoods input[name="mail"]'));
     console.log($('.addGoods input[name="mail"]').prop('checked'));
     // &&addValData.goodsBrand
-    if (addValData.goodsBarcode && addValData.goodsName && addValData.goodsType && addValData.goodsPrice && addValData.goodsCost) {
+    if (addValData.goodsParam&&addValData.goodsBarcode && addValData.goodsName && addValData.goodsType && addValData.goodsPrice && addValData.goodsCost) {
       if (addGoodsImg) {
+        var addGoodsDateails=addWangEditor.txt.html().replace(/iframe/g,'video controls="false"');
+        console.log(addGoodsDateails);
+        // return ;
         $.ajax({
           type: 'post',
           url: `/api/goods/saveGoods`,
           headers: {
             "Content-Type": "application/json",
             token,
-          },
+          }, 
           data: JSON.stringify({
             goods_Core: addValData.goodsBarcode, //商品条码
             goods_Name: addValData.goodsName,   //商品名
@@ -462,7 +471,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             goods_Param: addValData.goodsParam,  //规格
             goods_Status: addValData.goodsStatus, //状态
             goods_Images: addGoodsImg, //商品图片 不在form里
-            goods_Descript: addWangEditor.txt.html(), //商品详情，编辑器里的内容
+            goods_Descript: addGoodsDateails, //商品详情，编辑器里的内容
             merchantId: sessionStorage.machineID,
             mail:$('.addGoods input[name="mail"]').prop('checked')?1:0
           }), success: function (res) {
@@ -480,8 +489,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                 , "goodsCost": ''
                 , "goodsParam": ''
               });
+              addGoodsDateails='';
               layer.msg('添加成功', { icon: 1 });
-              loadingAjax('/api/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
+              // loadingAjax('/api/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
 
               // 重新加载数据
               tableIns.reload({
@@ -556,12 +566,12 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         token,
       },
       cols: [[
-        { field: 'img', width: 100, title: '图片', templet: "#materiaImgtmp" },
-        { field: 'name', width: 120, title: '图片名', },
+        { field: 'img', width: 100, title: '图片', align: 'center', templet: "#materiaImgtmp" },
+        { field: 'name', width: 120, title: '图片名', align: 'center', },
         // { field: 'number', width: 200, title: '图片编号', },
-        { field: 'publishTime', width: 180, title: '发布时间' },
-        { field: 'addUser', width: 150, title: '发布人', },
-        { field: 'operationa', right: 0, width: 150, title: '操作', toolbar: '#materiaImg', fixed: 'right' },
+        { field: 'publishTime', width: 180, title: '发布时间' , align: 'center'},
+        { field: 'addUser', width: 150, title: '发布人', align: 'center', },
+        { field: 'operationa', right: 0, align: 'center', width: 150, title: '操作', toolbar: '#materiaImg', fixed: 'right' },
       ]]
       , page: true
       , id: 'ImgListData'
@@ -677,11 +687,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       cols: [[
         // { field: 'Img', width: 150, title: '素材图',templet: "" },
         // { type: 'checkbox', },
-        { field: 'name', width: 120, title: '视频名', },
-        { field: 'publishTime', width: 180, title: '发布时间' },
-        { field: 'addUser', width: 150, title: '发布人', },
+        { field: 'name', width: 120, title: '视频名', align: 'center', },
+        { field: 'publishTime', width: 180, title: '发布时间', align: 'center' },
+        { field: 'addUser', width: 150, title: '发布人', align: 'center', },
         // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
-        { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoVideo', },
+        { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoVideo', align: 'center', },
 
       ]]
       , page: true
@@ -766,9 +776,19 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
 
   });
   // 刷新页面
-  $('.refreshBtn').click(function () {
-    location.reload();
-  });
+  // $('.refreshBtn').click(function () {
+  //   location.reload();
+  // });
+  // 刷新商户列表
+$('.refreshBtnList').click(function(){
+  dataList = treeList();
+  treeFun(tree, 'testGoods', tableIns, dataList, 'condition', 'goodsClass', selectData)
+  tableIns.reload({
+    where:{
+      condition: sessionStorage.machineID,
+    }
+  })
+})
   //树状图
   var dataList1 = null;
   var dataList = dataList1 = treeList();
@@ -792,19 +812,19 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       },
       cols: [[
         { type: 'checkbox', },
-        { field: 'goods_images', width: 80, title: '图片', templet: "#Listimgtmp" },
-        { field: 'goods_Name', width: 150, title: '商品名', color: '#409eff' },
-        { field: `classifyName`, width: 160, title: '商品类目', },
-        { field: `tempMerchant`, width: 160, title: '商品所属商户', },
-        { field: `topMerchant`, width: 160, title: '推送商户', },
-        { field: `targetMerchant`, width: 160, title: '接收商户', },
+        { field: 'goods_images', width: 80, title: '图片', templet: "#Listimgtmp", align: 'center'},
+        { field: 'goods_Name', width: 150, title: '商品名', color: '#409eff', align: 'center' },
+        { field: `classifyName`, width: 160, title: '商品类目', align: 'center', },
+        { field: `tempMerchant`, width: 160, title: '商品所属商户', align: 'center', },
+        { field: `topMerchant`, width: 160, title: '推送商户', align: 'center', },
+        { field: `targetMerchant`, width: 160, title: '接收商户', align: 'center', },
         {
-          field: 'goods_Param', width: 130, title: '接收状态 ', templet: function (d) {
+          field: 'goods_Param', width: 130, title: '接收状态 ', align: 'center', templet: function (d) {
             return d.received == 0 ? '未接收' : '已接收'
           }
         },
         {
-          field: 'sendTime', width: 200, title: '推送时间 ', templet: function (d) {
+          field: 'sendTime', width: 200, title: '推送时间 ', align: 'center', templet: function (d) {
             var myDate = new Date(d.sendTime);
             var y = myDate.getFullYear();
             var m = myDate.getMonth() + 1;

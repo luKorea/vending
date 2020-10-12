@@ -17,26 +17,26 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
         },
         cols: [[
-            { field: 'title', width: 180, title: '商户名' },
+            { field: 'title', width: 180, title: '商户名' , align: 'center'},
             {
-                field: 'merchantName', width: 150, title: '上级商户', templet: function (d) {
+                field: 'merchantName', width: 150, title: '上级商户', align: 'center', templet: function (d) {
                     return d.id == 0 ? '' : d.merchantName
                 }
             },
-            { field: 'alias', width: 160, title: '商户编号' },
-            { field: 'addUser', width: 150, title: '创建人', },
-            { field: 'addTime', width: 180, title: '创建时间' ,templet:function(d){
+            { field: 'alias', width: 160, title: '商户编号', align: 'center' },
+            { field: 'addUser', width: 150, title: '创建人', align: 'center', },
+            { field: 'addTime', width: 180, title: '创建时间' , align: 'center',templet:function(d){
                 return timeStamp(d.addTime)
             }},
-            { field: 'lastUser', width: 150, title: '最后修改人', },
-            { field: 'lastTime', width: 180, title: '最后修改时间' ,templet:function(d){
+            { field: 'lastUser', width: 150, title: '最后修改人', align: 'center', },
+            { field: 'lastTime', width: 180, title: '最后修改时间', align: 'center' ,templet:function(d){
                 if(d.lastTime){
                     return timeStamp(d.lastTime)
                 }else{
                     return '-'
                 }
             }},
-            { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo' },
+            { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },
         ]]
         , id: 'tableId'
         , page: true,

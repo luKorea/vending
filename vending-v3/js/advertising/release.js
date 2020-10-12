@@ -55,9 +55,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         },
         cols: [[
             { type: 'checkbox', },
-            { field: 'number', width: 300, title: '发布单号' },
+            { field: 'number', width: 300, title: '发布单号', align: 'center' },
             {
-                field: 'advertisingTime', width: 120, title: '广告时长(秒)', templet: function (d) {
+                field: 'advertisingTime', align: 'center', width: 120, title: '广告时长(秒)', templet: function (d) {
                     var advertisingTime = 0;
                     d.publicizeAdvert.forEach((item, index) => {
                         return advertisingTime += Number(item.time);
@@ -67,7 +67,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 }
             },
             {
-                field: 'advertisingSize', width: 160, title: '广告大小(MB)', templet: function (d) {
+                field: 'advertisingSize', align: 'center', width: 160, title: '广告大小(MB)', templet: function (d) {
                     var advertisingSize = 0
                     d.publicizeAdvert.forEach((item, index) => {
                         return advertisingSize += Number(item.size);
@@ -77,15 +77,15 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 }
             },
             {
-                field: 'attribute', width: 180, title: '审核状态', templet: function (d) {
+                field: 'attribute', align: 'center', width: 180, title: '审核状态', templet: function (d) {
                     return d.attribute == 0 ? '未审核' : d.attribute == 1 ? '待审核' : d.attribute == 2 ? '审核通过' : '审核不通过'
                 }
             },
             // { field: 'amendTime', width: 130, title: '广告位', },
-            { field: 'addUser', width: 180, title: '创建人', },
-            { field: 'creationTime', width: 230, title: '创建时间' },
+            { field: 'addUser', width: 180, title: '创建人', align: 'center', },
+            { field: 'creationTime', width: 230, title: '创建时间', align: 'center' },
             
-            { field: 'operation', right: 0, width: 380, title: '操作', toolbar: '#barDemo', fixed: 'right' },
+            { field: 'operation', right: 0, align: 'center', width: 380, title: '操作', toolbar: '#barDemo', fixed: 'right' },
         ]],
         page: true,
         id: 'advertisingData',
@@ -256,10 +256,10 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 token,
             },
             cols: [[
-                { field: 'number', width: 150, title: '售货机编号' },
-                { field: 'info', width: 180, title: '售货机名', },
-                { field: 'location', width: 250, title: '机售货机地址', },
-                { field: 'operatio', width: 120, title: '操作', toolbar: '#machineDemo', },
+                { field: 'number', width: 150, title: '售货机编号', align: 'center' },
+                { field: 'info', width: 180, title: '售货机名', align: 'center', },
+                { field: 'location', width: 250, title: '机售货机地址', align: 'center', },
+                { field: 'operatio', width: 120, title: '操作', toolbar: '#machineDemo', align: 'center', },
 
             ]],
             page: true,
@@ -382,17 +382,17 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 },
                 cols: [[
                     { type: 'checkbox', },
-                    { field: 'img', width: 80, title: '微缩图', templet: "#imgtmp" },
-                    { field: 'name', width: 150, title: '素材名', },
-                    { field: 'size', width: 100, title: '大小(MB)', },
-                    { field: 'duration', width: 120, title: '播放时长(秒)', },
+                    { field: 'img', width: 80, title: '微缩图', templet: "#imgtmp" , align: 'center'},
+                    { field: 'name', width: 150, title: '素材名', align: 'center', },
+                    { field: 'size', width: 100, title: '大小(MB)', align: 'center', },
+                    { field: 'duration', width: 120, title: '播放时长(秒)', align: 'center', },
                     {
-                        field: 'advertisingAttribute', width: 150, title: '素材属性', templet: function (d) {
+                        field: 'advertisingAttribute', align: 'center', width: 150, title: '素材属性', templet: function (d) {
                             return d.advertisingAttribute == 0 ? '图片' : '视频'
                         }
                     },
-                    { field: 'addUser', width: 150, title: '创建人 ', },
-                    { field: 'creationTime', width: 160, title: '创建时间' },
+                    { field: 'addUser', width: 150, align: 'center', title: '创建人 ', },
+                    { field: 'creationTime', width: 160, title: '创建时间', align: 'center' },
                     
                 ]],
                 page: true,
@@ -604,10 +604,10 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             },
             cols: [[
                 { type: 'checkbox', },
-                { field: 'info', width: 200, title: '售货机信息' },
-                { field: 'location', width: 300, title: '地址', },
-                { field: 'merchantName', width: 150, title: '所属商户', },
-                { field: 'description', width: 180, title: '描述' },
+                { field: 'info', width: 200, title: '售货机信息', align: 'center' },
+                { field: 'location', width: 300, title: '地址', align: 'center', },
+                { field: 'merchantName', width: 150, title: '所属商户', align: 'center', },
+                { field: 'description', width: 180, title: '描述', align: 'center' },
             ]],
             page: true,
             id: 'machineAdvertisingList',
@@ -1023,9 +1023,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             },
             cols: [[
                 { type: 'checkbox', },
-                { field: 'number', width: 190, title: '发布单号', templet: "#Listimgtmp" },
+                { field: 'number', width: 190, title: '发布单号', templet: "#Listimgtmp", align: 'center' },
                 {
-                    field: 'duration', width: 160, title: '广告时长(秒)', templet: function (d) {
+                    field: 'duration', width: 160, title: '广告时长(秒)', align: 'center', templet: function (d) {
                         var advertisingTime = 0;
                         d.advertising.forEach((item, index) => {
                             return advertisingTime += Number(item.time);
@@ -1034,7 +1034,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     }
                 },
                 {
-                    field: 'size', width: 160, title: '广告大小(MB)', templet: function (d) {
+                    field: 'size', width: 160, title: '广告大小(MB)', align: 'center', templet: function (d) {
                         var advertisingSize = 0;
                         d.advertising.forEach((item, index) => {
                             return advertisingSize += Number(item.size);
@@ -1044,15 +1044,15 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     }
 
                 },
-                { field: `topMerchant`, width: 140, title: '推送商户', },
-                { field: `targetMerchant`, width: 160, title: '接收商户', },
+                { field: `topMerchant`, width: 140, title: '推送商户', align: 'center', },
+                { field: `targetMerchant`, width: 160, title: '接收商户', align: 'center', },
                 {
-                    field: 'received', width: 100, title: '接收状态 ', templet: function (d) {
+                    field: 'received', width: 100, title: '接收状态 ', align: 'center', templet: function (d) {
                         return d.received == 0 ? '未接收' : '已接收'
                     }
                 },
                 {
-                    field: 'sendTime', width: 200, title: '推送时间 ', templet: function (d) {
+                    field: 'sendTime', width: 200, title: '推送时间 ', align: 'center', templet: function (d) {
                         var myDate = new Date(d.sendTime);
                         var y = myDate.getFullYear();
                         var m = myDate.getMonth() + 1;
@@ -1063,7 +1063,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                         return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
                     }
                 },
-                { field: 'operatio', width: 80, title: '操作', toolbar: '#pushReleaseDemo', },
+                { field: 'operatio', width: 80, title: '操作', align: 'center', toolbar: '#pushReleaseDemo', },
             ]],
             id: 'parentTableId',
             page: true,

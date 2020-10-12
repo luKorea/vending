@@ -17,27 +17,27 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         token,
       },
       cols: [[
-        { field: 'userName', width: 180, title: '用户名' },
-        { field: 'name', width: 150, title: '姓名' },
+        { field: 'userName', width: 180, title: '用户名', align: 'center' },
+        { field: 'name', width: 150, title: '姓名' , align: 'center'},
         {
-          field: 'open', width: 150, title: '状态', templet: function (d) {
+          field: 'open', width: 150, title: '状态', align: 'center', templet: function (d) {
             return d.open == 0 ? '不启用' : '启用'
           }
         },
         {
-          field: 'roleSign', width: 150, title: '终端管理员', templet: function (d) {
+          field: 'roleSign', width: 150, align: 'center', title: '终端管理员', templet: function (d) {
             return d.roleSign == 0 ? '否' : '是'
           }
         },
-        { field: 'alias', width: 250, title: '用户编号' },
-        { field: 'phone', width: 150, title: '手机号' },
-        { field: 'merchantName', width: 200, title: '所属商户' },
-        { field: 'addUser', width: 150, title: '创建人', },
-        { field: 'addTime', width: 180, title: '创建时间' },
-        { field: 'lastUser', width: 150, title: '最后修改人', },
-        { field: 'lastTime', width: 180, title: '最后修改时间' },
+        { field: 'alias', width: 250, title: '用户编号', align: 'center' },
+        { field: 'phone', width: 150, title: '手机号', align: 'center' },
+        { field: 'merchantName', width: 200, title: '所属商户', align: 'center' },
+        { field: 'addUser', width: 150, title: '创建人', align: 'center', },
+        { field: 'addTime', width: 180, title: '创建时间', align: 'center' },
+        { field: 'lastUser', width: 150, title: '最后修改人', align: 'center', },
+        { field: 'lastTime', width: 180, title: '最后修改时间' , align: 'center'},
 
-        { field: 'operation', fixed: 'right', right: 0, width: 320, title: '操作', toolbar: '#barDemo' },
+        { field: 'operation', fixed: 'right', align: 'center', right: 0, width: 340, title: '操作', toolbar: '#barDemo' },
       ]]
       , id: 'tableId'
       , page: true
@@ -193,6 +193,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       });
 
     }else if(obj.event=='stores'){
+      if(data.roleSign==0){
+        layer.msg('该用户不是终端管理员',{icon:7});
+        return ;
+      }
       storesFun(obj.data.uuid)
     }
   });
@@ -585,11 +589,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
 
   var addFlag = true,
     editFlag = true,
-    delFlag = true;
-  permissionsVal(389, 390, 397).then(res => {
+    delFlag = true,
+    fourFlag=true;
+  permissionsVal(389, 390, 397,451).then(res => {
     addFlag = res.addFlag;
     editFlag = res.editFlag;
     delFlag = res.delFlag;
+    fourFlag=res.fourFlag;
     permissions();
   }).catch(err => {
     layer.msg('服务器请求超时', { icon: 7 })
@@ -598,6 +604,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
     editFlag ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
     delFlag ? $('.del-btn').removeClass('hides') : $('.del-btn').addClass('hides');
+    fourFlag? $('.userMachine').removeClass('hides') : $('.userMachine').addClass('hides');
   };
 
   var transferArr = [],
@@ -622,6 +629,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         transferFun(transferListArr, transferVal)
       });
       console.log(transferListArr)
+      
+      if((transferListArr.length==0)&&(transferVal.length==0)){
+        layer.msg('该用户所属商户没有售货机',{icon:7});
+        return ;
+      }
       popupShow('storesCont','storesBox');
     }).catch(err => {
       layer.msg(err.message, { icon: 2 })

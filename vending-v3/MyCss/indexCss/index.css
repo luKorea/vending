@@ -194,6 +194,7 @@
 }
 .layui-tab-title{
 	height: 50px;
+	z-index: 100;
 }
 .layui-tab-title li{
 	height: 50px;
@@ -319,4 +320,36 @@
 }
 .layui-nav .header-message a{
 	padding: 0 20px;
+}
+.previewBody{
+	padding: 20px;
+}
+.downloadBtn{
+	margin-bottom: 15px;
+}
+.downloadBtn a{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	color: #fff;
+}
+.previewTitle{
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.previewTitle>div{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 15px 15px;
+}
+.previewTitle span{
+	font-size: 18px;
+	font-weight: bold;
+}
+.previewTitle p{
+	font-size: 12px;
+	color: #606266;
 }

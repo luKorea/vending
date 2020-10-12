@@ -23,10 +23,10 @@ permissionsVal(436,437).then(res=>{
                 token: sessionStorage.token
             },
             cols: [[
-                { field: 'activity_name', width: 200, title: '活动名',event: 'pickup'  },
-                { field: 'code_count', width: 150, title: '取货码数量' ,event: 'pickup'},
+                { field: 'activity_name', width: 200, title: '活动名',event: 'pickup', align: 'center'  },
+                { field: 'code_count', width: 150, title: '取货码数量' ,event: 'pickup', align: 'center'},
                 {
-                    field: 'open', width: 150, title: '已兑换数量',event: 'pickup', templet: function (d) {
+                    field: 'open', width: 150, title: '已兑换数量',event: 'pickup', align: 'center', templet: function (d) {
                         var tatol = 0;
                         d.good_codes.forEach(item => {
                             if (item.code_status == 1) {
@@ -37,61 +37,40 @@ permissionsVal(436,437).then(res=>{
                     }
                 },
                 {
-                    field: 'roleSign', width: 230, title: '开始时间',event: 'pickup', templet: function (d) {
+                    field: 'roleSign', width: 230, title: '开始时间',event: 'pickup', align: 'center', templet: function (d) {
                         if (d.start_time) {
-                            var myDate = new Date(d.start_time);
-                            var y = myDate.getFullYear();
-                            var m = (myDate.getMonth() + 1) < 10 ? '0' + (myDate.getMonth() + 1) : (myDate.getMonth() + 1);
-                            var d = myDate.getDate() < 10 ? '0' + myDate.getDate() : myDate.getDate();
-                            var h = myDate.getHours() < 10 ? '0' + myDate.getHours() : myDate.getHours();
-                            var min = myDate.getMinutes() < 10 ? '0' + myDate.getMinutes() : myDate.getMinutes();
-                            var s = myDate.getSeconds() < 10 ? '0' + myDate.getSeconds() : myDate.getSeconds();
-                            return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
+                            return timeStamp(d.start_time)
                         } else {
-                            return '';
+                            return '-';
                         }
                     }
                 },
                 {
-                    field: 'alias', width: 230, title: '结束时间',event: 'pickup', templet: function (d) {
-                        if (d.end_time) {
-                            var myDate = new Date(d.end_time);
-                            var y = myDate.getFullYear();
-                            var m = (myDate.getMonth() + 1) < 10 ? '0' + (myDate.getMonth() + 1) : (myDate.getMonth() + 1);
-                            var d = myDate.getDate() < 10 ? '0' + myDate.getDate() : myDate.getDate();
-                            var h = myDate.getHours() < 10 ? '0' + myDate.getHours() : myDate.getHours();
-                            var min = myDate.getMinutes() < 10 ? '0' + myDate.getMinutes() : myDate.getMinutes();
-                            var s = myDate.getSeconds() < 10 ? '0' + myDate.getSeconds() : myDate.getSeconds();
-                            return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
+                    field: 'alias', width: 230, title: '结束时间',event: 'pickup', align: 'center', templet: function (d) {
+                        if (d.start_time) {
+                            return timeStamp(d.end_time)
                         } else {
-                            return '';
+                            return '-';
                         }
                     }
                 },
                 {
-                    field: 'phone', width: 180, title: '活动状态',event: 'pickup', templet: function (d) {
+                    field: 'phone', width: 180, title: '活动状态',event: 'pickup', align: 'center', templet: function (d) {
                         var time = new Date().getTime();
                         return d.activity_status == 1 ? '已暂停' : d.activity_status == 2 ? '已取消' : time > d.end_time ? '已过期' : '活动正常'
                     }
                 },
-                { field: 'create_user', width: 190, title: '创建人' ,event: 'pickup'},
+                { field: 'create_user', width: 190, title: '创建人' ,event: 'pickup', align: 'center'},
                 {
-                    field: 'addUser', width: 190, title: '创建时间',event: 'pickup', templet: function (d) {
-                        if (d.create_time) {
-                            var myDate = new Date(d.create_time);
-                            var y = myDate.getFullYear();
-                            var m = (myDate.getMonth() + 1) < 10 ? '0' + (myDate.getMonth() + 1) : (myDate.getMonth() + 1);
-                            var d = myDate.getDate() < 10 ? '0' + myDate.getDate() : myDate.getDate();
-                            var h = myDate.getHours() < 10 ? '0' + myDate.getHours() : myDate.getHours();
-                            var min = myDate.getMinutes() < 10 ? '0' + myDate.getMinutes() : myDate.getMinutes();
-                            var s = myDate.getSeconds() < 10 ? '0' + myDate.getSeconds() : myDate.getSeconds();
-                            return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
-                        } else {
-                            return '';
-                        }
+                    field: 'addUser', width: 190, title: '创建时间',event: 'pickup', align: 'center', templet: function (d) {
+                            if (d.start_time) {
+                                return timeStamp(d.create_time)
+                            } else {
+                                return '-';
+                            }
                     }
                 },
-                { field: 'operation', width: 350, title: '操作', toolbar: '#barDemo', fixed: 'right', right: 0, },
+                { field: 'operation', width: 350, title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right', right: 0, },
             ]],
             id: 'activityId',
             page: true,
@@ -201,9 +180,9 @@ permissionsVal(436,437).then(res=>{
             },
             cols: [[
                 { type: 'checkbox', },
-                { field: 'info', width: 200, title: '售货机信息' },
-                { field: 'location', width: 300, title: '地址', },
-                { field: 'merchantName', width: 300, title: '所属商户', },
+                { field: 'info', width: 200, title: '售货机信息', align: 'center' },
+                { field: 'location', width: 300, title: '地址', align: 'center', },
+                { field: 'merchantName', width: 300, title: '所属商户', align: 'center', },
             ]],
             page: true,
             id: 'machineAdvertisingList',
@@ -318,10 +297,10 @@ permissionsVal(436,437).then(res=>{
             },
             cols: [[
                 { type: 'checkbox', },
-                { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp" },
-                { field: 'goods_Name', width: 200, title: '商品名', color: '#409eff' },
-                { field: `classifyName`, width: 160, title: '商品类目' },
-                { field: 'goods_Core', width: 250, title: '商品编号', },
+                { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center' },
+                { field: 'goods_Name', width: 200, title: '商品名', color: '#409eff', align: 'center' },
+                { field: `classifyName`, width: 160, title: '商品类目', align: 'center' },
+                { field: 'goods_Core', width: 250, title: '商品编号', align: 'center', },
             ]],
             id: 'goodsID',
             page: true,
@@ -713,8 +692,8 @@ permissionsVal(436,437).then(res=>{
         activityMachineIn=table.render({
             elem: '#activityMachine',
             cols: [[
-                { field: 'info', width: 200, title: '售货机信息' },
-                { field: 'location', width: 450, title: '地址', },
+                { field: 'info', width: 200, title: '售货机信息', align: 'center' },
+                { field: 'location', width: 450, title: '地址', align: 'center', },
             ]],
             data:[
 
@@ -730,14 +709,19 @@ permissionsVal(436,437).then(res=>{
             elem: '#pickCodeIn',
             cols: [[
                 { field: 'good_code', width: 200, title: '取货码' },
-                { field: 'code_status', width: 150, title: '使用情况',sort: true ,templet:function(d){
+                { field: 'code_status', width: 150, title: '使用情况', align: 'center',sort: true ,templet:function(d){
                     return d.code_status==0?'待使用':'已使用'
                 }},
                 { field: 'operate_machine', width: 250, title: '使用的售货机', align:'center',templet:function(d){
-                    return d.operate_machine?d.operate_machine:'-'
+                    return d.info?d.info:'-'
                 }},
                 { field: 'operate_time', width: 250, title: '使用时间',align:'center',templet:function(d){
-                    return d.operate_time?d.operate_time:'-'
+                    
+                    if(d.operate_time){ 
+                        return  timeStamp(d.operate_time);
+                    }else{
+                        return '-'
+                    }
                 } },
             ]],
             data:[

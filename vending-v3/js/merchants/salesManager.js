@@ -29,11 +29,11 @@ layui.use(['table', 'form', 'layer'], function () {
         },
         cols: [[
             { checkbox: true },
-            { field: 'sm_no', width: 200, title: '编号' },
-            { field: 'sm_name', width: 230, title: '姓名' },
-            { field: 'sm_phone', width: 230, title: '电话号' },
-            { field: 'sm_classify', width: 230, title: '商家' },
-            { field: 'create_name', width: 230, title: '创建人' },
+            { field: 'sm_no', width: 200, title: '编号', align: 'center' },
+            { field: 'sm_name', width: 230, title: '姓名', align: 'center' },
+            { field: 'sm_phone', width: 230, title: '电话号', align: 'center' },
+            { field: 'sm_classify', width: 230, title: '商家', align: 'center' },
+            { field: 'create_name', width: 230, title: '创建人', align: 'center' },
             {
                 field: 'create_time', width: 200, title: '创建时间', templet: function (d) {
                     if (d.create_time) {
@@ -146,6 +146,9 @@ layui.use(['table', 'form', 'layer'], function () {
                 $(that).val('')
                 if (res.code == 200) {
                     layer.msg(res.message, { icon: 1 });
+                    salesTableIn.reload({
+                        where:{}
+                    })
 
                 } else {
                     layer.msg(res.message, { icon: 7 });
@@ -190,7 +193,7 @@ layui.use(['table', 'form', 'layer'], function () {
     })
 
     // 权限控制
-    permissionsVal(436,437).then(res=>{
+    permissionsVal(436,437,446).then(res=>{
         res.addFlag?$('.addSalesBtn').removeClass('hide'):$('.addSalesBtn').addClass('hide');
         res.editFlag?$('.importBtn').removeClass('hide'):$('.importBtn').addClass('hide');
         res.delFlag?$('.delBtn').removeClass('hide'):$('.delBtn').addClass('hide')

@@ -25,6 +25,10 @@
                     <i class="layui-icon layui-icon-search"></i>
                     <span>查询</span>
                 </button>
+                <button class="layui-btn layui-btn-normal btn messageListBtn">
+                    <i class="layui-icon layui-icon-note"></i>
+                    <span>消息发送列表</span>
+                </button>
                 <button class="layui-btn layui-btn-normal btn refreshBtn">
                     <i class="layui-icon layui-icon-refresh"></i>
                     <span>刷新</span>
@@ -97,11 +101,35 @@
                             </div>
                         </div>
                     </div>
-                    <div class="userTableList">
+                    <div class="userTableList footerBtn" style="text-align: center;">
                         <div class="uListTable">
                             <table class="layui-hide" id="userList" lay-filter="userList"></table>
                         </div>
+                        <div class="userListFooter">
+                            <button class="layui-btn layui-btn-normal confirmBtn btn " style="margin: 0 0 0 15px;">
+                                <span>确定</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal btn  cancelBtn" style="margin: 0 0 0 15px;">
+                                <span>取消</span>
+                            </button>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+           <!-- 发送信息列表 -->
+           <div class="pushMessageList maskContnet" >
+            <div class="pushMessageListBox margin0">
+                <div class="playHeader">
+                    <span>发送信息列表</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="pushMessageListBody">
+                        <div class="messageTableList">
+                            <table class="layui-hide" id="massagePushList" lay-filter="massagePushList"></table>
+                        </div>
                 </div>
             </div>
         </div>
@@ -121,6 +149,7 @@
                 </div>
             </div>
         </div>
+     
     </div>
       <!-- 数据处理弹窗 -->
       <div class="mask maskContnet">

@@ -43,7 +43,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         // { field: 'machineId', width: 220, title: '设备编号', },
         // { field: 'CreationTime', width: 100, title: '下单时间', },
 
-        { field: 'number', width: 180, title: '订单编号' },
+        { field: 'number', width: 180, title: '订单编号', align: 'center' },
         // { field: 'bili', width: 100, title: '购买数量' },
         // { field: 'bili', width: 120, title: '订单金额', },
         // { field: 'bili', width: 120, title: '支付金额', },
@@ -51,19 +51,19 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         // { field: '2', width: 160, title: '利润', },
         // { field: 'bili', width: 160, title: '退款金额', },
         {
-          field: 'payStatus', width: 130, title: '支付状态', templet: function (d) {
+          field: 'payStatus', width: 130, align: 'center', title: '支付状态', templet: function (d) {
             return d.payStatus == 1 ? '等待支付' : d.payStatus == 2?'已支付':'未支付'
           }
         },
-        { field: 'time', width: 180, title: '支付时间', },
-        { field: 'bili', width: 160, title: '支付类型',templet:function(d){
+        { field: 'time', width: 180, title: '支付时间', align: 'center', },
+        { field: 'bili', width: 160, align: 'center', title: '支付类型',templet:function(d){
           return d.payType==0?'支付宝':'微信'
         } },
-        { field: 'shipStatus', width: 160, title: '出货状态', templet:function(d){
+        { field: 'shipStatus', align: 'center', width: 160, title: '出货状态', templet:function(d){
           return d.shipStatus==0?'未出货':d.shipStatus==1?'出货失败':'出货成功'
         }},
-        { field: 'payee', width: 160, title: '收款方', },
-        { field: 'operation', width: 110, title: '详情 ', toolbar: '#barDemo' },
+        { field: 'payee', width: 160, title: '收款方', align: 'center', },
+        { field: 'operation', width: 110, title: '详情 ', toolbar: '#barDemo', align: 'center' },
       ]],
       page: true,
       loading: true,
@@ -329,9 +329,9 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       elem: '#GooodsData',
       cols: [[
         // { checkbox: true },
-        { field: 'goods_images', width: 120, title: '图片', templet: "#imgtmp" },
-        { field: 'goods_Name', width: 140, title: '商品名', },
-        { field: 'goods_Core', width: 140, title: '商品编号', },
+        { field: 'goods_images', width: 120, title: '图片', templet: "#imgtmp", align: 'center' },
+        { field: 'goods_Name', width: 140, title: '商品名', align: 'center', },
+        { field: 'goods_Core', width: 140, title: '商品编号', align: 'center', },
         { field: 'count', width: 120, title: '购买数量', align: 'center' },
         { field: 'refund_count', width: 120, title: '已退款数量', align: 'center' },
         // {
@@ -341,9 +341,9 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         // },
 
 
-        { field: 'goods_Price', width: 140, title: '销售价 ', },
-        { field: 'goods_Cost', width: 140, title: '成本价 ', },
-        { field: 'operation', right: 0, width: 80, title: '操作', toolbar: '#refundDemo', fixed: 'right' },
+        { field: 'goods_Price', width: 140, title: '销售价 ', align: 'center', },
+        { field: 'goods_Cost', width: 140, title: '成本价 ', align: 'center', },
+        { field: 'operation', right: 0, width: 80, align: 'center', title: '操作', toolbar: '#refundDemo', fixed: 'right' },
       ]],
       data: [
 
@@ -464,6 +464,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             goodId: goodsData.goods_Id,
             count: Number($('.refundNumber input').val()),
             amount:Number($('.sumInput input[name="sum"]').val())
+            // amount:0.01
           });
           loadingAjax('/api/pay/refund_alipay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
             layer.msg(res.message, { icon: 1 });
@@ -480,9 +481,11 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             orderId: orderData.number,
             goodId: goodsData.goods_Id,
             count: Number($('.refundNumber input').val()),
-            amount:Number($('.sumInput input[name="sum"]').val()),
+            // amount:Number($('.sumInput input[name="sum"]').val()),
+            amount:0.01,
             transaction_id:orderData.transaction_id,
-            total:refundTatol
+            // total:refundTatol
+            total:0.01
           });
           loadingAjax('/api/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
             layer.msg(res.message, { icon: 1 });

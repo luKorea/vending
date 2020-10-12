@@ -33,36 +33,36 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         },
         cols: [[
             { type: 'checkbox', },
-            { field: 'img', width: 120, title: '微缩图', templet: "#imgtmp" },
-            { field: 'name', width: 150, title: '素材名', },
-            { field: 'size', width: 100, title: '大小(MB)', },
+            { field: 'img', width: 120, title: '微缩图', templet: "#imgtmp" , align: 'center'},
+            { field: 'name', width: 150, title: '素材名', align: 'center', },
+            { field: 'size', width: 100, title: '大小(MB)', align: 'center', },
             // { field: 'amendTime', width: 130, title: '分辨率', },
             {
-                field: 'advertisingAttribute', width: 150, title: '素材属性', templet: function (d) {
+                field: 'advertisingAttribute', align: 'center', width: 150, title: '素材属性', templet: function (d) {
                     return d.advertisingAttribute == 0 ? '图片' : '视频'
                 }
             },
             {
-                field: 'advertisingType', width: 150, title: '素材类别', templet: function (d) {
+                field: 'advertisingType', align: 'center', width: 150, title: '素材类别', templet: function (d) {
                     return d.advertisingType == 0 ? '横屏' : '竖屏'
                 }
             },
-            { field: 'duration', width: 100, title: '播放时长' },
+            { field: 'duration', width: 100, title: '播放时长', align: 'center' },
             {
-                field: 'checkStatus', width: 160, title: '审核状态', templet: function (d) {
+                field: 'checkStatus', align: 'center', width: 160, title: '审核状态', templet: function (d) {
                     return d.checkStatus == 0 ? '未审核' : d.checkStatus == 1 ? '待审核' : d.checkStatus == 2 ? '审核通过' : '审核不通过'
                 }
             },
             {
-                field: 'advertisingStatus', width: 160, title: '素材状态', templet: function (d) {
+                field: 'advertisingStatus', align: 'center', width: 160, title: '素材状态', templet: function (d) {
                     return d.advertisingStatus == '1' ? '启用' : '不启用'
                 }
             },
-            { field: 'addUser', width: 150, title: '创建人 ', },
-            { field: 'creationTime', width: 160, title: '创建时间', },
+            { field: 'addUser', width: 150, title: '创建人 ', align: 'center', },
+            { field: 'creationTime', width: 160, title: '创建时间', align: 'center', },
            
             // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo',fixed: 'right',right: 0 },
-            { field: 'operation', right: 0, width: 200, title: '操作', toolbar: '#barDemo', align: 'center', fixed: 'right' },
+            { field: 'operation', right: 0, width: 200, title: '操作', align: 'center', toolbar: '#barDemo', align: 'center', fixed: 'right' },
         ]],
         page: true,
         id: 'tableId',

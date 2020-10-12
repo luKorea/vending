@@ -15,11 +15,11 @@ layui.use(['table', 'form', 'layer','tree'], function () {
             },
             cols: [[
                 { field: 'version_code', width: 180, title: '版本号',align:'center' },
-                { field: 'version_name', width: 180, title: '版本名' },
-                { field: 'apk_url', width: 350, title: '下载地址' },
-                { field: 'content', width: 350, title: '描述' },
-                { field: 'upload_user', width: 150, title: '创建人' },
-                { field: 'upload_time', width: 180, title: '创建时间',templet:function(d){
+                { field: 'version_name', width: 180, title: '版本名', align: 'center' },
+                { field: 'apk_url', width: 350, title: '下载地址' , align: 'center'},
+                { field: 'content', width: 350, title: '描述' , align: 'center'},
+                { field: 'upload_user', width: 150, title: '创建人' , align: 'center'},
+                { field: 'upload_time', width: 180, title: '创建时间', align: 'center',templet:function(d){
                     if (d.upload_time) {
                         var myDate = new Date(d.upload_time);
                         var y = myDate.getFullYear();
@@ -33,7 +33,7 @@ layui.use(['table', 'form', 'layer','tree'], function () {
                         return '';
                       }
                 }},
-                { field: 'operation', fixed: 'right', right: 0, width: 180, title: '操作', toolbar: '#barDemo' },
+                { field: 'operation', fixed: 'right', right: 0, width: 180, title: '操作', toolbar: '#barDemo', align: 'center' },
             ]]
             , id: 'tableId'
             , loading: true,
@@ -312,17 +312,17 @@ layui.use(['table', 'form', 'layer','tree'], function () {
             },
             cols: [[
                 { checkbox: true },
-                { field: 'number', width: 180, title: '终端编号',templet:function(d){
+                { field: 'number', width: 180, title: '终端编号', align: 'center',templet:function(d){
                     return d.number?d.number:'-'
                 } },
-                { field: '终端信息', width: 180, title: '终端信息',templet:function(d){
+                { field: '终端信息', width: 180, title: '终端信息', align: 'center',templet:function(d){
                     return d.info ? `<div>${d.info}</div>` : `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>`
                 } },
-                { field: 'location', width: 180, title: '地址' ,templet:function(d){
+                { field: 'location', width: 180, title: '地址', align: 'center' ,templet:function(d){
                     return d.location ? d.location : ' - '
                 }},
-                { field: 'appVersion', width: 180, title: '软件版本' },
-                { field: 'merchantName', width: 150, title: '所属商户' }
+                { field: 'appVersion', width: 180, align: 'center', title: '软件版本' },
+                { field: 'merchantName', width: 150, align: 'center', title: '所属商户' }
                ]],
              id: 'mId',
              loading: true,

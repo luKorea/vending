@@ -12,20 +12,20 @@ layui.use(['table', 'form', 'layer'], function () {
                 token:sessionStorage.token
             },
             cols: [[
-                { field: 'logo', width: 180, title: '图标',templet: "#imgtmp" },
-                { field: 'name', width: 180, title: '类型名' },
-                { field: 'status', width: 180, title: '状态',templet:function(d){
+                { field: 'logo', width: 180, title: '图标',templet: "#imgtmp", align: 'center' },
+                { field: 'name', width: 180, title: '类型名', align: 'center' },
+                { field: 'status', width: 180, title: '状态', align: 'center',templet:function(d){
                     return d.status==1?'启用':'禁用'
                 }},
-                { field: 'update_user', width: 180, title: '最后修改人' },
-                { field: 'update_time', width: 180, title: '最后修改时间',templet:function(d){
+                { field: 'update_user', width: 180, title: '最后修改人', align: 'center' },
+                { field: 'update_time', width: 180, title: '最后修改时间', align: 'center',templet:function(d){
                     if (d.update_time) {
                         return timeStamp(d.update_time)
                       } else {
                         return '-';
                       }
                 }},
-                { field: 'operation', fixed: 'right', right: 0, width: 180, title: '操作', toolbar: '#barDemo' },
+                { field: 'operation', fixed: 'right', align: 'center', right: 0, width: 180, title: '操作', toolbar: '#barDemo' },
             ]]
             , id: 'tableId'
             , loading: true,

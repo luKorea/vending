@@ -16,14 +16,14 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 token: sessionStorage.token,
             },
             cols: [[
-                { field: '1', width: 80, title: '', templet: "#imgtmp", event: 'rank' },
-                 { field: 'rank', width: 80, title: '排序' },
-                { field: 'payName', width: 180, title: '支付类型' },
-                { field: 'app_id', width: 300, title: '微信公众号id/支付宝商户id', },
-                { field: 'merchantName', width: 250, title: '所属商户' },
-                { field: 'payee', width: 280, title: '收款账号' },
-                { field: 'update_user', width: 200, title: '最后修改人' },
-                { field: 'update_time', width: 250, title: '最后修改时间',templet:function(d){
+                { field: '1', width: 80, title: '', templet: "#imgtmp", event: 'rank', align: 'center' },
+                 { field: 'rank', width: 80, title: '排序', align: 'center' },
+                { field: 'payName', width: 180, title: '支付类型', align: 'center' },
+                { field: 'app_id', width: 300, title: '微信公众号id/支付宝商户id', align: 'center', },
+                { field: 'merchantName', width: 250, title: '所属商户', align: 'center' },
+                { field: 'payee', width: 280, title: '收款账号', align: 'center' },
+                { field: 'update_user', width: 200, title: '最后修改人', align: 'center' },
+                { field: 'update_time', width: 250, title: '最后修改时间', align: 'center',templet:function(d){
                     if (d.update_time) {
                        return timeStamp(d.update_time)
                       } else {

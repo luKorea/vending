@@ -1,10 +1,10 @@
 .queryBtn, .refreshBtn {
     margin-left: 15px;
 }
-.pushMessageBox,.userBox,.detailsBox{
+.pushMessageBox,.userBox,.detailsBox,.pushMessageListBox{
     width: 800px;
     position: relative;
-    margin: 4vh auto 50px;
+    margin: 2vh auto 50px;
     background: #fff;
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0,0,0,.3);
@@ -89,4 +89,7 @@
 }
 .messageTableList .layui-form td{
     cursor: pointer;
+}
+.messageTableList,.detailsBody{
+    padding: 20px;
 }

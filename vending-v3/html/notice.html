@@ -63,13 +63,13 @@
                                     <input type="radio" name="indexShow" value="0" title="否">
                                 </div>
                             </div>
-                            <div class="listFlex">
+                            <!-- <div class="listFlex">
                                 <label for=""><span>*</span> 状态:</label>
                                 <div class="layui-form-item" style="margin: 0;">
                                     <input type="radio" name="push" value="1" title="发布" checked>
                                     <input type="radio" name="push" value="0" title="草稿箱">
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="listFlex">
                                 <label for="">附件名:</label>
                                 <input type="text" name="accessoryName">
@@ -102,8 +102,12 @@
                         <div class="content-footer" style="margin-top:30px;">
                             <div style="text-align: center;">
                                 <button class="layui-btn layui-btn-normal btn determinePushBtn"
-                                    style="margin: 0 0 0 15px;">
-                                    <span>确定</span>
+                                    style="margin: 0 0 0 15px;" pushType="1">
+                                    <span>发布</span>
+                                </button>
+                                 <button class="layui-btn layui-btn-normal btn determinePushBtn"
+                                    style="margin: 0 0 0 15px;" pushType="0">
+                                    <span>保存草稿</span>
                                 </button>
                                 <button class="layui-btn layui-btn-normal btn readingBtn" id="edit"
                                     style="margin: 0 0 0 15px;">
@@ -145,13 +149,13 @@
                                     <input type="radio" name="indexShow" value="0" title="否">
                                 </div>
                             </div>
-                            <div class="listFlex">
+                            <!-- <div class="listFlex">
                                 <label for=""><span>*</span> 状态:</label>
                                 <div class="layui-form-item" style="margin: 0;">
                                     <input type="radio" name="push" value="1" title="发布" >
                                     <input type="radio" name="push" value="0" title="草稿箱">
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="listFlex">
                                 <label for="">附件名:</label>
                                 <input type="text" name="accessoryName">
@@ -184,9 +188,13 @@
                         <div class="content-footer" style="margin-top:30px;">
                             <div style="text-align: center;">
                                 <button class="layui-btn layui-btn-normal btn determinePushBtn"
-                                    style="margin: 0 0 0 15px;">
-                                    <span>确定</span>
+                                    style="margin: 0 0 0 15px;" pushType='1'>
+                                    <span>发布</span>
                                 </button>
+                                <button class="layui-btn layui-btn-normal btn determinePushBtn"
+                                style="margin: 0 0 0 15px;" pushType='0'>
+                                <span>保存草稿</span>
+                            </button>
                                 <button class="layui-btn layui-btn-normal btn readingBtn" id="edit"
                                     style="margin: 0 0 0 15px;">
                                     <span>预览</span>

@@ -40,7 +40,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'location', width: 350, title: '地址', templet: function (d) {
+                    field: 'location', width: 350, title: '地址', align: 'center', templet: function (d) {
                         return d.location ? d.location : ' - '
                     }
                 },
@@ -69,24 +69,24 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         return `<div><span class="${d.wayStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.wayStatus == 0 ? '不正常' : '正常'}</span></div>`
                     }
                 },
-                { field: 'dealTime', width: 170, title: '最后交易时间',templet:function(d){
+                { field: 'dealTime', width: 170, title: '最后交易时间', align: 'center',templet:function(d){
                     if(d.dealTime){
                         return timeStamp(d.connectTime)
                     }else{
                         return '-'
                     }
                 } },
-                { field: 'merchantName', width: 150, title: '所属商户', },
-                { field: 'appVersion', width: 135, title: '软件版本', },
+                { field: 'merchantName', width: 150, title: '所属商户', align: 'center', },
+                { field: 'appVersion', width: 135, title: '软件版本', align: 'center', },
                 // { field: 'controllerVersion', width: 135, title: '控制器版本', },
-                { field: 'connectTime', width: 170, title: '联机时间',templet:function(d){
+                { field: 'connectTime', width: 170, title: '联机时间', align: 'center',templet:function(d){
                     if(d.actionTime){
                         return timeStamp(d.connectTime)
                     }else{
                         return '-'
                     }
                 } },
-                { field: 'actionTime', width: 170, title: '激活时间',templet:function(d){
+                { field: 'actionTime', width: 170, title: '激活时间', align: 'center',templet:function(d){
                     if(d.actionTime){
                         return timeStamp(d.actionTime)
                     }else{
@@ -94,8 +94,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                     
                 } },
-                { field: 'description', width: 250, title: '描述', },
-                { field: 'operation', fixed: 'right', right: 0, width: 250, title: '操作', toolbar: '#barDemo', align: 'left' },
+                { field: 'description', width: 250, title: '描述', align: 'center' },
+                { field: 'operation', fixed: 'right', right: 0, width: 250, title: '操作', toolbar: '#barDemo', align: 'center' },
             ]]
             , id: 'tableId'
             , page: true
@@ -152,7 +152,15 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         })
     });
-
+    $('.refreshBtnList').click(function(){
+        dataList = treeList();
+        treeFun(tree, 'test1', machineList, dataList, 'merchantId', 'condition', selectData, '', 'true')
+        machineList.reload({
+          where:{
+            merchantId: sessionStorage.machineID
+          }
+        })
+      })
 
 
     // 设置tab切换
@@ -743,8 +751,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'payStatus', width: 150, title: '支付状态', templet: function (d) {
-                        return `<div><span class="${d.payStatus == 1 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payStatus == 1 ? '已支付' : '未支付'}</span></div>`
+                    field: 'payStatus', width: 150, title: '支付状态', templet: function (d) {                                   
+                        return `<div><span class="${d.payStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payStatus == 1 ? '等待支付' : d.payStatus == 2?'已支付':'未支付'}</span></div>`
                     }
                 },
                 {
@@ -938,9 +946,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
 
     // 刷新页面
-    $('.refreshBtn').click(function () {
-        location.reload();
-    });
+    // $('.refreshBtn').click(function () {
+    //     location.reload();
+    // });
     // 监听f5刷新
     $("body").bind("keydown", function (event) {
         if (event.keyCode == 116) {

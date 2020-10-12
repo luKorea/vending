@@ -30,13 +30,13 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             token: sessionStorage.token
         },
         cols: [[
-            { field: 'title', width: 200, title: '消息标题' },
-            { field: 'is_read', width: 200, title: '状态' ,templet:function(d){
+            { field: 'title', width: 200, title: '消息标题', align: 'center' },
+            { field: 'is_read', width: 200, title: '状态', align: 'center' ,templet:function(d){
                 return d.is_read==0?'未读':'已读'
             }},
-            { field: 'create_user', width: 230, title: '创建人' },
+            { field: 'create_user', width: 230, title: '创建人', align: 'center' },
             {
-                field: 'create_time', width: 200, title: '创建时间', templet: function (d) {
+                field: 'create_time', width: 200, title: '创建时间', align: 'center', templet: function (d) {
                     if (d.create_time) {
                         return timeStamp(d.create_time)
                     } else {
@@ -54,7 +54,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             'limitName': 'pageSize'
         },
         where:{
-            // is_read:0
+            type:1
         },
         parseData: function (res) {
             // console.log(res)
@@ -175,21 +175,21 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             },
             cols: [[
                 { checkbox: true },
-                { field: 'userName', width: 180, title: '用户名' },
-                { field: 'name', width: 150, title: '姓名' },
+                { field: 'userName', width: 180, title: '用户名', align: 'center' },
+                { field: 'name', width: 150, title: '姓名', align: 'center' },
                 {
-                    field: 'open', width: 150, title: '状态', templet: function (d) {
+                    field: 'open', width: 150, title: '状态', align: 'center', templet: function (d) {
                         return d.open == 0 ? '不启用' : '启用'
                     }
                 },
                 {
-                    field: 'roleSign', width: 150, title: '终端管理员', templet: function (d) {
+                    field: 'roleSign', width: 150, align: 'center', title: '终端管理员', templet: function (d) {
                         return d.roleSign == 0 ? '否' : '是'
                     }
                 },
-                { field: 'alias', width: 250, title: '用户编号' },
-                { field: 'phone', width: 150, title: '手机号' },
-                { field: 'merchantName', width: 150, title: '所属商户' },
+                { field: 'alias', width: 250, title: '用户编号', align: 'center' },
+                { field: 'phone', width: 150, title: '手机号', align: 'center' },
+                { field: 'merchantName', width: 150, title: '所属商户', align: 'center' },
             ]],
             id: 'userId',
             page: true,
@@ -246,6 +246,11 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     var currentUserList = [];
    
     var userListArr = [];
+    var confirmListArr=[];
+    // 取消选择用户
+    $('.userContent .cancelBtn').click(function(){
+        popupHide('userContent','userBox')
+    })
     // 监听选择用户
     table.on('checkbox(userList)', function (obj) {
         console.log(obj.data); //选中行的相关数据
@@ -276,7 +281,18 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 userListArr.splice(userListArr.indexOf(obj.data.uuid), 1);
             }
         }
-        userListArr.length>0?$('.chooseTitle').html('已选择'):$('.chooseTitle').html('未选择');
+        // userListArr.length>0?$('.chooseTitle').html('已选择'):$('.chooseTitle').html('未选择');
+    });
+    // 确定选择用户
+    $('.userContent .confirmBtn').click(function(){
+        confirmListArr=userListArr;
+        popupHide('userContent','userBox')
+        confirmListArr.length>0?$('.chooseTitle').html('已选择'):$('.chooseTitle').html('未选择');
+    });
+
+    // 取消发送
+    $('.pushMessageCont .cancelBtn').click(function(){
+        popupHide('pushMessageCont','pushMessageBox')
     })
     // 发送消息
     $('.addPushBtn').click(function(){
@@ -331,7 +347,11 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             $('.pushMessageCont input[name="title"]').val('');
             $('.chooseTitle').html('未选择');
             addWangEditor.txt.html('')
-            
+            if(pushMessageListTable){
+                pushMessageListFun.reload({
+                    where:{}
+                })
+            }
         }).catch(err=>{
             layer.msg(err.message,{icon:2})
         })
@@ -353,7 +373,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     }
     $('.messageDetails .playHeader span').html(`${messageTableData.title}`)
     $('.messageDetails .detailsHtml ').html(messageTableData.content)
-    popupShow('messageDetails','detailsBox')
+    popupShow('messageDetails','detailsBox'); 
   });
 //   改变消息状态方法
   function status(id){
@@ -387,7 +407,84 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             })
         })
     }
-  
+
+      // 已发送信息列表
+      var pushMessageListTable=null;
+      function pushMessageListFun(){
+          pushMessageListTable = table.render({
+              elem: '#massagePushList',
+              method: 'post',
+              url: '/api/notices/getHistoryMsg',
+              contentType: "application/json",
+              headers: {
+                  token: sessionStorage.token
+              },
+              cols: [[
+                  { field: 'title', width: 200, title: '消息标题', align: 'center' },
+                  { field: 'create_user', width: 230, title: '创建人', align: 'center' },
+                  {
+                      field: 'create_time', width: 200, align: 'center', title: '创建时间', templet: function (d) {
+                          if (d.create_time) {
+                              return timeStamp(d.create_time)
+                          } else {
+                              return '-'
+                          }
+                      }
+                  },
+                  // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo' },
+              ]],
+              id: 'messageListID',
+              page: true,
+              loading: true,
+              request: {
+                  'pageName': 'pageNum',
+                  'limitName': 'pageSize'
+              },
+              where:{
+                  type:0
+              },
+              parseData: function (res) {
+                  // console.log(res)
+                  //res 即为原始返回的数据
+                  if (res.code == 200) {
+                      return {
+                          "code": res.code, //解析接口状态
+                          "msg": res.message, //解析提示文本
+                          "count": res.data.total, //解析数据长度
+                          "data": res.data.list //解析数据列表
+                      };
+                  } else if (res.code == 403) {
+                      window.parent.location.href = "login.html";
+                  }
+                  else {
+                      return {
+                          "code": res.code, //解析接口状态
+                          "msg": res.message,   //解析提示文本
+                      }
+                  }
+      
+              },
+              response: {
+                  statusCode: 200 //规定成功的状态码，默认：0
+              },
+              done: function (res) {
+      
+              }
+          });
+      }
+    $('.messageListBtn').click(function(){
+        if(!pushMessageListTable){
+            pushMessageListFun();
+        }
+        popupShow('pushMessageList','pushMessageListBox')
+    });
+
+    table.on('row(massagePushList)', function(obj){
+        var messageTableData = obj.data; 
+        $('.messageDetails .playHeader span').html(`${messageTableData.title}`)
+        $('.messageDetails .detailsHtml ').html(messageTableData.content)
+        popupShow('messageDetails','detailsBox'); 
+    })
 })
   // 父页面调用方法
    function reloadFun (){

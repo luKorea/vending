@@ -64,5 +64,66 @@
         }
     }
 }
-
-.topHeader{}
+h5{             
+    font-size: 0.3rem;
+    font-family: Source Han Sans CN;
+    font-weight: 600;
+    color: #333333;
+    line-height: 0.39rem;
+}
+p{          
+    font-size: 0.22rem;
+    font-family: Source Han Sans CN;
+    font-weight: 400;
+    color: #999999;
+    line-height: 0.39rem;
+}
+.myBody{
+    width: 100%;
+    margin: 0.96rem auto 0;
+    overflow: hidden;
+    background: #ffffff;
+    .nameTitle{
+        width: 92%; 
+        margin: 0.34rem auto 0.43rem;
+        .logo{
+            width: 0.98rem;
+            img{
+                width: 100%;
+            }
+        }
+        .informtion{
+            margin-left: 0.19rem;
+            h5{             
+                font-size: 0.3rem;
+                font-family: Source Han Sans CN;
+                font-weight: 600;
+                color: #333333;
+                line-height: 0.39rem;
+            }
+            p{          
+                font-size: 0.22rem;
+                font-family: Source Han Sans CN;
+                font-weight: 400;
+                color: #999999;
+                line-height: 0.39rem;
+            }
+        }
+    }
+    .informList{
+        border-top: 0.11rem solid #f0eff5;
+        overflow: hidden;
+        .list{
+            width: 92%;
+            margin: 0.28rem auto 0;
+            padding-bottom: 0.28rem;
+            border-bottom: 1px solid #f0eff5;
+            h5{
+                font-size: 0.24rem;
+            }
+            p{
+                font-size: 0.24rem;
+            }
+        }
+    }
+}

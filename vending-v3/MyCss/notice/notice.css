@@ -94,3 +94,12 @@
 .w-e-up-img-container i{
     font-size: 45px;
 }
+
+
+
+.tableList .layui-table-cell{
+    height:auto;
+    overflow:visible;
+    text-overflow:inherit;
+    white-space:normal;
+}

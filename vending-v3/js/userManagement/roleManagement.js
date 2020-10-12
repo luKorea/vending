@@ -17,12 +17,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
         },
         cols: [[
-            { field: 'name', width: 180, title: '角色名' },
-            { field: 'addUser', width: 150, title: '添加人' },
-            { field: 'addTime', width: 200, title: '添加时间' },
-            { field: 'lastUser', width: 180, title: '最后修改人', },
-            { field: 'lastTime', width: 200, title: '最后修改时间', sort: true },
-            { field: 'operation', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
+            { field: 'name', width: 180, title: '角色名', align: 'center' },
+            { field: 'addUser', width: 150, title: '添加人', align: 'center' },
+            { field: 'addTime', width: 200, title: '添加时间', align: 'center' },
+            { field: 'lastUser', width: 180, title: '最后修改人', align: 'center', },
+            { field: 'lastTime', width: 200, title: '最后修改时间', align: 'center' },
+            { field: 'operation', position: 'absolute', align: 'center', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
         ]]
         , id: 'tableId'
         , page: true
@@ -88,7 +88,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var objData = null;
     table.on('tool(test)', function (obj) {
         objData = obj.data;
-        // console.log(objData)
+        console.log(objData)
         $('.editInput input[name="userName"]').val(objData.name)
         if (obj.event === 'operation') {
             popupShow('editRold', 'editBox');
@@ -358,18 +358,22 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     //     }); 
     // 角色权限函数
     function permissionsList(list, element, TrueData) {
-        var ListData = '';
+        var ListData = `<div>
+        <input type="checkbox" lay-filter="permissionsAll" name="${element}" title="全选"
+            lay-skin="primary"  value="" >
+         </div>`;
+    // var ListData ='';
         list.forEach((ele, index) => {
             ListData += `<div>
                             <input type="checkbox" lay-filter="permissions" name="${ele.id}" title="${ele.name}"
-                                lay-skin="primary" checkbox value="${ele.id}" >
+                                lay-skin="primary"  value="${ele.id}" >
                         </div>`
         });
         $(`.${element}`).empty();
         $(`.${element}`).html(ListData);
         TrueData.permissions.forEach((item, index) => {
-            for (var i = 0; i < $(`.${element} input`).length; i++) {
-                if (item.id == list[i].id) {
+            for (var i = 1; i < $(`.${element} input`).length; i++) {
+                if (item.id == list[i-1].id) {
                     $(`.${element} input`).eq(i).prop('checked', true)
                 }
             }
@@ -425,5 +429,19 @@ var userPushId=[];
                 condition:$('.KyeText').val()
             }
         })
-    })
+    });
+    // 全选
+    form.on('checkbox(permissionsAll)', function(data){
+        console.log(data.elem); //得到checkbox原始DOM对象
+        console.log(data.elem.checked); //是否被选中，true或者false;
+        var ele=$(data.elem).attr('name');
+        if(!data.value){
+            if(data.elem.checked){
+                $(`.${ele} input`).prop('checked',true)
+            }else{
+                $(`.${ele} input`).prop('checked',false)
+            }
+            form.render('checkbox');
+        }
+      }); 
 });

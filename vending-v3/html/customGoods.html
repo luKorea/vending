@@ -8,7 +8,6 @@
 	<link rel="stylesheet" href="../assets/font/iconfont.css">
 	<title>商品管理</title>
 </head>
-
 <body>
 	<div class="Goods-wrap">
 		<div style="width: 100%;">
@@ -17,6 +16,10 @@
 				<div class="left-mian">
 					<div class="accountContnet" style="margin-left:15px;">
 						<p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
+						<button class="layui-btn layui-btn-normal  btn refreshBtnList" type="button"style="margin:10px 20px 0px ;">
+							<i class="layui-icon layui-icon-refresh "></i>
+							<span>刷新</span>
+						</button>
 						<div id="testGoods" class="demo-tree demo-tree-box"></div>
 					</div>
 					<!-- 右侧栏 -->
@@ -49,7 +52,7 @@
 									<span>查询</span>
 								</button>
 								<button style="margin: 0;;margin-left: 10px;"
-									class="layui-btn layui-btn-normal query-btn btn refreshBtn" type="button">
+									class="layui-btn layui-btn-normal query-btn btn query-btnClick" type="button">
 									<i class="layui-icon layui-icon-refresh "></i>
 									<span>刷新</span>
 								</button>
@@ -284,7 +287,8 @@
 										<div class="editor-list" style="margin-bottom:22px">
 											<label for=""> 规格描述</label>
 											<div class="editorWidthInput">
-												<textarea maxlength="200" name="goodsParam"></textarea>
+												<!-- <textarea maxlength="200" name="goodsParam"></textarea> -->
+												<input type="text" name="goodsParam">
 											</div>
 										</div>
 									</li>
@@ -497,9 +501,10 @@
 									</li>
 									<li>
 										<div class="editor-list" style="margin-bottom:22px">
-											<label for=""> 规格描述</label>
+											<label for=""> <span style="color:red;">*</span>规格描述</label>
 											<div class="editorWidthInput">
-												<textarea maxlength="200" name="goodsParam"></textarea>
+												<!-- <textarea maxlength="200" name="goodsParam"></textarea> -->
+												<input type="text" name="goodsParam">
 											</div>
 										</div>
 									</li>

@@ -152,8 +152,9 @@ window.onload = function () {
                 };
                 //获得消息事件
                 socket.onmessage = function (msg) {
-                    console.log(msg);
+                    
                     var gainData = JSON.parse(msg.data)
+                    // console.log(gainData);
                     //type 1角色编辑或者删除 2用户编辑
                     if (gainData.type == 1) {
                         // console.log(gainData);
@@ -171,6 +172,8 @@ window.onload = function () {
                         }, 3500)
                     } else if (gainData.type == 3) {
                         messageFunList()
+                    }else if(gainData.type=='notice'){
+                        shuffling();
                     }
 
                     // console.log(msg)
@@ -379,9 +382,6 @@ window.onload = function () {
             });
         }
         shuffling();
-        setTimeout(_ => {
-            shuffling()
-        }, 1800000)
         // 公告渲染
         function noticeDrawing(list) {
             var noticeStr = ''
@@ -406,8 +406,22 @@ window.onload = function () {
         // 点击公告
         $('.noticeTitleText').on('click', '.swpier', function () {
             var swpierVal = noticeList[$(this).attr('ArrList')];
+            console.log(swpierVal);
             $('.previewContent .playHeader span').html(swpierVal.title);
             $('.previewContent .previewBody .previewHtml').html(swpierVal.content);
+            $('.previeName span').html(swpierVal.create_user)
+            var noticeTime=timeStamp(swpierVal.create_time)
+            $('.previeTime span').html(noticeTime)
+            if(swpierVal.attach_name){
+                $('.downloadBtn').show();
+                $('.downloadBtn a').attr('src',swpierVal.attach_url)
+                var dowArr=swpierVal.attach_url.split('.');
+                var dowName=dowArr[dowArr.length-1]
+                $('.downloadBtn a').attr('download',swpierVal.attach_name+'.'+dowName);
+              
+            }else{
+                $('.downloadBtn').hide();
+            }
             popupShow('previewContent', 'previewBox')
         });
         // 关闭弹窗
