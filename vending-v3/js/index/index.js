@@ -9,12 +9,13 @@ window.onload = function () {
     var userName = sessionStorage.username;
     $('#userLogin .userName').html(userName)
     var navStr = []; //判断tba选项卡有没有这个参数;
-    layui.use(['layer', 'form', 'element', 'carousel'], function () {
+    layui.use(['layer', 'form', 'element', 'carousel', 'table'], function () {
         // 子页面
         var iframeChild = null;
         // 表单
         var layer = layui.layer,
-            form = layui.form;
+            form = layui.form,
+            table = layui.table;
         // 选项卡
         // var element = layui.element;
 
@@ -23,7 +24,7 @@ window.onload = function () {
             , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
         //新增一个Tab项
-
+        // console.log(table)
         function tabAdd(index, title) {
             element.tabAdd('demo', {
                 title,
@@ -39,10 +40,10 @@ window.onload = function () {
             //     if ($('.iframe_show').eq(i).attr('src') == 'message.html') {
             //         iframeChild = $('.iframe_show').eq(i);
             //         console.log(iframeChild)
-                   
+
             //     }
             // }
-            
+
         };
 
         //切换到指定Tab项
@@ -92,32 +93,6 @@ window.onload = function () {
                 $(".navClick").parent().removeClass('layui-this');
             }
         })
-        //Hash地址的定位
-        //   var layid = location.hash.replace(/^#test=/, '');
-        //   console.log(layid)
-        //   element.tabChange('test', layid);
-
-        // element.on('tab(demo)', function (elem) {
-        // 	location.hash = 'test=' + $(this).attr('lay-id');
-        // });
-
-        // tab nav 关联
-        // $("body").delegate(".layui-tab-title li","click",function() {
-        //     //或者$(this).childNodes[0].data
-        //     var Len = $(".navClick").length;
-        //     var Index;
-        //     for(var i = 0; i < Len; i++) {
-        //         if($(this).context.childNodes[0].data == $(".navClick").eq(i).text()) {
-        //             Index = i;            
-        //         }
-
-        //     }
-        //     // 左侧菜单初始化
-        //     $('.layui-nav-item').removeClass('layui-nav-itemed');
-        //     $(".navClick").eq(Index).parent().parent().parent().addClass('layui-nav-itemed');
-        //     $(".navClick").parent().removeClass('layui-this');
-        //     $(".navClick").eq(Index).parent().addClass('layui-this')
-        // });
 
 
         // 点击导航分类，其他分类收起
@@ -126,6 +101,7 @@ window.onload = function () {
         });
         var socket;
         var socketFlag = true;
+        // websocket
         function openSocket() {
             if (typeof (WebSocket) == "undefined") {
                 console.log("您的浏览器不支持WebSocket");
@@ -136,7 +112,7 @@ window.onload = function () {
                 //var socketUrl="${request.contextPath}/im/"+$("#userId").val();
                 //  var socketUrl="http://172.16.71.142:8086/push?machine=8fc9d742bd0772c6&message=123456";
                 // var socketUrl = `ws://119.29.104.217:8086/pushServer/${sessionStorage.UserId}`;
-                var socketUrl = `http://172.16.71.142:8086/pushServer/${sessionStorage.UserId}`;
+                var socketUrl = `http://192.168.3.19:8086/pushServer/${sessionStorage.UserId}`;
                 socketUrl = socketUrl.replace("https", "ws").replace("http", "ws");
                 // console.log(socketUrl);
                 if (socket != null) {
@@ -152,7 +128,7 @@ window.onload = function () {
                 };
                 //获得消息事件
                 socket.onmessage = function (msg) {
-                    
+
                     var gainData = JSON.parse(msg.data)
                     // console.log(gainData);
                     //type 1角色编辑或者删除 2用户编辑
@@ -172,8 +148,9 @@ window.onload = function () {
                         }, 3500)
                     } else if (gainData.type == 3) {
                         messageFunList()
-                    }else if(gainData.type=='notice'){
-                        shuffling();
+                    } else if (gainData.type == 'notice') {
+                        // shuffling();
+                        noticeFun();
                     }
 
                     // console.log(msg)
@@ -202,7 +179,6 @@ window.onload = function () {
                     openSocket()
                 }
             }
-            console.log(999)
         }, 10000)
 
         //退出登录
@@ -227,7 +203,7 @@ window.onload = function () {
         });
 
 
-
+        // 权限控制
         permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
             // console.log(res.data)
             // 用户模块
@@ -243,8 +219,8 @@ window.onload = function () {
                 orderListFlag = false,
                 RMListFlag = false,
                 ReListFlag = false,
-                salesFlag=false,
-                pickupFlag=false;
+                salesFlag = false,
+                pickupFlag = false;
             res.data.forEach(item => {
                 if (item.id == 408) {
                     userListFlag = true
@@ -282,11 +258,11 @@ window.onload = function () {
                 if (item.id == 411) {
                     ReListFlag = true
                 }
-                if(item.id==447){
-                    salesFlag=true
+                if (item.id == 447) {
+                    salesFlag = true
                 }
-                if(item.id==448){
-                    pickupFlag=true
+                if (item.id == 448) {
+                    pickupFlag = true
                 }
             })
             // console.log(a) 
@@ -332,7 +308,7 @@ window.onload = function () {
             // })
             paySetFlag ? $('.merchantsPay').removeClass('hide') : $('.merchantsPay').addClass('hide');
             roleListFlag ? $('.merchantsPayType').removeClass('hide') : $('.merchantsPayType').addClass('hide');
-            salesFlag?$('.sales').removeClass('hide'):$('.sales').addClass('hide')
+            salesFlag ? $('.sales').removeClass('hide') : $('.sales').addClass('hide')
             //账目模块
             // var accountsListFlag = res.data.some((item, index) => {
             //     return item.id == 423
@@ -364,7 +340,7 @@ window.onload = function () {
 
         // 获取公告列表
         var noticeObj = JSON.stringify({
-            pageSize: 15,
+            pageSize: 10,
             pageNum: 1,
             n_status: 1,
             is_show: 1
@@ -381,7 +357,7 @@ window.onload = function () {
                 layer.msg('获取公告失败', { icon: 2 })
             });
         }
-        shuffling();
+        // shuffling();
         // 公告渲染
         function noticeDrawing(list) {
             var noticeStr = ''
@@ -410,16 +386,16 @@ window.onload = function () {
             $('.previewContent .playHeader span').html(swpierVal.title);
             $('.previewContent .previewBody .previewHtml').html(swpierVal.content);
             $('.previeName span').html(swpierVal.create_user)
-            var noticeTime=timeStamp(swpierVal.create_time)
+            var noticeTime = timeStamp(swpierVal.create_time)
             $('.previeTime span').html(noticeTime)
-            if(swpierVal.attach_name){
+            if (swpierVal.attach_name) {
                 $('.downloadBtn').show();
-                $('.downloadBtn a').attr('src',swpierVal.attach_url)
-                var dowArr=swpierVal.attach_url.split('.');
-                var dowName=dowArr[dowArr.length-1]
-                $('.downloadBtn a').attr('download',swpierVal.attach_name+'.'+dowName);
-              
-            }else{
+                $('.downloadBtn a').attr('src', swpierVal.attach_url)
+                var dowArr = swpierVal.attach_url.split('.');
+                var dowName = dowArr[dowArr.length - 1]
+                $('.downloadBtn a').attr('download', swpierVal.attach_name + '.' + dowName);
+
+            } else {
                 $('.downloadBtn').hide();
             }
             popupShow('previewContent', 'previewBox')
@@ -450,7 +426,6 @@ window.onload = function () {
                 is_read: 0
             });
             loadingAjax('/api/notices/getHistoryMsg', 'post', messageObj, sessionStorage.token).then(res => {
-                console.log(res);
                 messageListArr = res.data.list;
                 var messageStr = '';
                 messageListArr.forEach((item, index) => {
@@ -497,18 +472,128 @@ window.onload = function () {
             });
             loadingAjax('/api/notices/readMessage', 'post', messageObj, sessionStorage.token, '', '', '', layer).then(res => {
                 messageFunList();
-                if(window.message){
+                if (window.message) {
                     window.message.reloadFun();
                 }
-                
+
             }).catch(err => {
                 console.log(err)
                 layer.msg('阅读消息失败', { icon: 2 })
             })
         };
 
-    });
+        // 公告列表部分
+        var noticeTableIns = null;
+        function noticeFun() {
+            noticeTableIns = table.render({
+                elem: '#noticeTable',
+                method: 'post',
+                url: '/api/notices/getNoticeList',
+                contentType: "application/json",
+                headers: {
+                    token: sessionStorage.token
+                },
+                cols: [[
+                    { field: 'title', width: 210, title: '标题', align: 'center' },
+                    {
+                        field: 'attach_name', width: 150, title: '附件名', align: 'center', templet: function (d) {
+                            return d.attach_name ? d.attach_name : '-'
+                        }
+                    },
+                    {
+                        field: 'attach_url', width: 320, title: '附件地址', align: 'center', templet: function (d) {
+                            return d.attach_url ? d.attach_url : '-'
+                        }
+                    },
+                    { field: 'create_user', width: 130, title: '创建人', align: 'center', },
+                    {
+                        field: 'create_time', width: 180, title: '创建时间', align: 'center', templet: function (d) {
+                            return timeStamp(d.create_time)
+                        }
+                    },
+                ]],
+                id: 'noticeTableId',
+                page: true,
+                loading: true,
+                request: {
+                    'pageName': 'pageNum',
+                    'limitName': 'pageSize'
+                },
+                where: {
+                    // merchantId:Number(sessionStorage.machineID) 
+                    n_status: 1,
+                    is_show: 1
+                },
+                parseData: function (res) {
+                    // console.log(res)
+                    //res 即为原始返回的数据
+                    if (res.code == 200) {
+                        return {
+                            "code": res.code, //解析接口状态
+                            "msg": res.message, //解析提示文本
+                            "count": res.data.total, //解析数据长度
+                            "data": res.data.list //解析数据列表
+                        };
+                    } else if (res.code == 403) {
+                        window.parent.location.href = "login.html";
+                    }
+                    else {
+                        return {
+                            "code": res.code, //解析接口状态
+                            "msg": res.message,   //解析提示文本
+                        }
+                    }
 
+                },
+                response: {
+                    statusCode: 200 //规定成功的状态码，默认：0
+                },
+                done: function (res) {
+                    console.log(res)
+                    noticeList = [];
+                    res.data.forEach(item => {
+                        if ((item.is_show == 1) && (item.n_status == 1)) {
+                            noticeList.push(item);
+                            noticeDrawing(noticeList)
+                        }
+                    })
+                }
+            })
+        }
+        noticeFun();
+
+        // 更多
+        $('.more').click(function () {
+            popupShow('noticeContent', 'noticeBox')
+        });
+        // 点击遮罩关闭
+        $('.noticeBox').click(function () {
+            event.stopPropagation();
+        });
+        $('.noticeContent').click(function () {
+            popupHide('noticeContent', 'noticeBox')
+        });
+        // 监听点击公告列表
+        table.on('row(noticeTable)', function (obj) {
+            console.log(obj)
+            $('.previewContent .playHeader span').html(obj.data.title);
+            $('.previewContent .previewBody .previewHtml').html(obj.data.content);
+            $('.previeName span').html(obj.data.create_user)
+            var noticeTime = timeStamp(obj.data.create_time)
+            $('.previeTime span').html(noticeTime);
+            if (obj.data.attach_name) {
+                $('.downloadBtn').show();
+                $('.downloadBtn a').attr('src', obj.data.attach_url)
+                var dowArr = obj.data.attach_url.split('.');
+                var dowName = dowArr[dowArr.length - 1]
+                $('.downloadBtn a').attr('download', obj.data.attach_name + '.' + dowName);
+
+            } else {
+                $('.downloadBtn').hide();
+            }
+            popupShow('previewContent', 'previewBox')
+        })
+    });
 
 
     $("body").bind("keydown", function (event) {
@@ -518,6 +603,6 @@ window.onload = function () {
 
         }
     });
-    
+
     javascript: window.history.forward(1);
 }

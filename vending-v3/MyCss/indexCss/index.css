@@ -272,10 +272,10 @@
 .noticeTitleText div{
     cursor: pointer;
 }
-.previewContent,.messageCont{
+.previewContent,.messageCont,.noticeContent{
 	z-index: 1009 !important;
 }
-.previewBox,.messageBox{
+.previewBox,.messageBox,.noticeBox{
     width: 950px;
     position: relative;
     margin: 2vh auto 50px;
@@ -285,6 +285,19 @@
     box-sizing: border-box;
     transition: all 0.3s;
 	padding-bottom: 15px;
+}
+.noticeBox{
+	width: 1000px;
+	margin: 5vh auto 50px;
+}
+.noticeBox td{
+	cursor: pointer !important;
+}
+.noticeBox .tableList .layui-table-cell{
+    height:auto;
+    overflow:visible;
+    text-overflow:inherit;
+    white-space:normal;
 }
 .messageContentList dl{
 	/* display: block !important;	 */

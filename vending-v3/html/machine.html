@@ -28,7 +28,8 @@
                     </div> -->
                     <div class="left-mian">
                         <div class="accountContnet" style="margin-left: 15px;">
-                            <button class="layui-btn layui-btn-normal  btn refreshBtnList" type="button"style="margin:10px 20px 0px ;">
+                            <button class="layui-btn layui-btn-normal  btn refreshBtnList" type="button"
+                                style="margin:10px 20px 0px ;">
                                 <i class="layui-icon layui-icon-refresh "></i>
                                 <span>刷新</span>
                             </button>
@@ -743,6 +744,15 @@
                                         <img src="" alt="" class="WeChat">
                                     </div>
                                 </div>
+                                <li class="listFlex salseList">
+                                    <label for="">销售经理类别：</label>
+                                    <div class="layui-input-block salseCont">
+                                        <!-- <input type="radio" name="sex" value="" title="无" checked> -->
+                                    </div>
+                                </li>
+                                <div class="salseList">
+                                    <p class="loadMore">加载更多</p>
+                                </div>
                                 <li class="listFlex">
                                     <label for="">负责人手机</label>
                                     <input type="number" name="headPhone">
@@ -965,7 +975,7 @@
     </div>
 </script>
 <script type="text/html" id="imgtmp">
-    <div><img src="{{d.goods_images}}  " style="width: 40px; height: 40px;"></div>
+    <div><img src="{{d.goods_images}}  " style="width: 40px; height: 40px;object-fit:cover"></div>
 </script>
 <script src="../assets/public/area.js"></script>
 

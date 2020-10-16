@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../assets/public/documentWrite.js"></script>
+    <title>邮寄订单</title>
+  
+</head>
+<body>
+    <div class="orderWrap">
+        <div class="query-contnet margin">
+            <div class="layui-row">
+                <div class="layui-col-sm3 layui-col-md6 layui-col-lg3">
+                    <div class="key-contnet">
+                        <div class="key-text">订单时间</div>
+                        <div class="itmes">
+                            <div class="layui-inline" style="width: 80%;">
+                                <div class="layui-input-inline" style="width: 100%;">
+                                    <input style="text-align: center;" type="text" class="layui-input" id="test6" autocomplete="off" placeholder=" - ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+                <div class="layui-col-sm3 layui-col-md6 layui-col-lg3">
+                    <div style="max-width: 280px;margin-left: 50px;" class="key-contnet">
+                        <div class="key-text">订单编号</div>
+                        <input type="text" name="orderCode" placeholder="请输入订单编号">
+                    </div>
+                </div>
+                <!-- <div class="layui-col-sm3 layui-col-md3">
+                    <div style="max-width: 280px;margin-left: 50px;" class="key-contnet">
+                        <div class="key-text">输入会员号码</div>
+                        <input type="text" value="请输入会员号码">
+                    </div>
+                </div> -->
+                <div class="layui-col-sm2 layui-col-md6 layui-col-lg3 quert-export">
+                    <button class="layui-btn layui-btn-normal queryBtn btn">
+                        <i class="layui-icon layui-icon-search"></i>
+                        <span>查询</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal pushBtn  btn" style="margin-left: 10px;">
+                        <i class="layui-icon layui-icon-print"></i>
+                        <span>导出</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal refreshBtn btn" style="margin-left: 10px;">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                        <span>刷新</span>
+                    </button>
+                </div>
+            </div>
+            <div class="bodyTable">
+                <div>
+                    <table class="layui-hide" id="mailTableOn" lay-filter="mailTableOn"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 发货 -->
+    <div class="deliveryCont maskContnet" >
+        <div class="deliveryBox margin0">
+            <div class="playHeader">
+                <span>发货</span>
+                <button class="close" type="button">
+                    <i class="layui-icon layui-icon-close"></i>
+                </button>
+            </div>
+            <div class="deliveryBody">
+                <div class="listFlex">
+                    <label for=""><span>*</span>物流公司:</label>
+                    <input type="text" name="company">
+                </div>
+                <div class="listFlex">
+                    <label for=""><span>*</span>物流单号:</label>
+                    <input type="text" name="logisticsNumber">
+                </div>
+            </div>
+            <div class="content-footer" style="margin-top:30px;">
+                <div style="text-align: center;">
+                    <button class="layui-btn layui-btn-normal btn determinePushBtn"
+                        style="margin: 0 0 0 15px;" >
+                        <span>确定</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn cancelBtn">
+                        <span>取消</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+       <!-- 导出订单部分 -->
+       <div class="exportCont maskContnet" >
+        <div class="exportBox margin">
+            <div class="playHeader">
+                <span>导出订单</span>
+                <button class="close" type="button">
+                    <i class="layui-icon layui-icon-close"></i>
+                </button>
+            </div>
+            <div class="exportBody">
+                <p>邮寄订单表格</p>
+                <div class="listFlex">
+                    <label><span style="color: red;">*</span>时间：</label>
+                    <div class="layui-input-inline" style="width: 60%;">
+                        <input type="text" class="layui-input" id="test8" placeholder=" - " style="text-align: center;">
+                      </div>
+                </div>
+            </div>
+            <div class="content-footer" >
+                <div style="text-align: center;">
+                    <button class="layui-btn layui-btn-normal btn determinePushBtn"
+                        style="margin: 0 0 0 15px;">
+                        <span>确定</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn cancelBtn">
+                        <span>取消</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="mask maskContnet" >
+        <div class="TitleContentWith">
+            <span class="maskSpan"  style="display: inline-block;"> 
+                <i class="layui-icon layui-icon-loading "></i>
+            </span>
+            数据处理中，请稍候
+        </div>
+    </div>
+</body>
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="delivery">
+            <span style="color:#fff;">发货</span>
+        </button> 
+    </div>
+</script>
+</html>

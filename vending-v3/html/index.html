@@ -43,6 +43,10 @@
 							</div>
 						</div>
 					</div>
+				
+				</div>
+				<div class="more" style="margin-left: -35px;width: 40px;cursor: pointer;">
+					更多
 				</div>
 			</div>
 
@@ -245,6 +249,9 @@
 							<dd class="orderListFlag hide">
 								<a href="javascript:;" class="navClick" navId="16">商户订单</a>
 							</dd>
+							<dd class="orderListFlag hide">
+								<a href="javascript:;" class="navClick" navId="31">邮寄订单</a>
+							</dd>
 							<!-- <dd>
 								<a href="javascript:;" class="navClick" navId="17">旧版用户订单</a>
 							</dd> -->
@@ -367,6 +374,23 @@
 			</div>
 		</div>
 	</div>
+		<!-- 公告列表 -->
+		<div class="maskContnet noticeContent">
+			<div class="noticeBox margin0">
+				<div class="playHeader">
+					<span>公告列表</span>
+					<button class="close" type="button">
+						<i class="layui-icon layui-icon-close"></i>
+					</button>
+				</div>
+				<div class="noticeBody">
+					<div class="tableList">
+						<table class="layui-hide" id="noticeTable" lay-filter="noticeTable"></table>
+					</div>
+				</div>
+			</div>
+			
+		</div>
 	<!-- 公告详情 -->
 	<div class="maskContnet previewContent" style="overflow-y: auto;">
 		<div class="previewBox margin0">
@@ -386,19 +410,25 @@
 						<p>发布时间：</p>
 						<span></span>
 					</div>
-					<button class="layui-btn layui-btn-normal btn downloadBtn" type="button">
-						<a href=";" download="">
-							点击下载附件
-						</a>
-					</button>
+					
 				</div>
 				
 				<!-- <a href="/user/test/xxxx.txt" download="文件名.txt">点击下载</a> -->
 				<div class="previewHtml">
 				</div>
+				<div style="text-align: center;margin-top: 25px;">
+					<button class="layui-btn layui-btn-normal btn downloadBtn" type="button" >
+						<a href=";" download="">
+							下载附件
+						</a>
+					</button>
+				</div>
+		
 			</div>
 		</div>
 	</div>
+
+
 	<!-- 消息详情 -->
 	<div class="messageCont maskContnet" >
 		<div class="messageBox margin0">

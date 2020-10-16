@@ -149,6 +149,19 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 $('.editCustomCont').hide();
                 customFlag=false;
             }
+            // 判断销售经理类别
+            salseList=[]
+            salesClassList(data.id,1);
+            if(data.is_sales==1){
+                salseFlag=true;
+                $('.listFlex input[name="salse"]').prop('checked',true);
+                $('.salseList').show();
+            }else{
+                salseFlag=false;
+                $('.listFlex input[name="salse"]').prop('checked',false);
+                $('.salseList').hide();
+            }
+            
             form.render();
         } else if (obj.event === 'delete') {
             if (data.id == 1) {
@@ -363,6 +376,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     $('.Medit .submit_btn').click(function () {
         if ($('.editMerchants input[name="merchantsName"]').val()) {
             // $('.editMerchants input[name="service_phone"]').val()//客服电话
+            if(salseFlag){
+                if(!$('.salseCont input[name="salseClassName"]:checked').val()){
+                    layer.msg('请选择销售经理类别，如没有请到商户管理下销售经理管理新增',{icon:7});
+                    return ;
+                }
+            }
             var editdMerchantsData = JSON.stringify({
                 id: data.id,
                 name: $('.editMerchants input[name="merchantsName"]').val(),
@@ -373,6 +392,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 is_custom:customFlag?1:0,
                 custom_phone:customFlag?$('.editMerchants input[name="customPhone"]').val():'',
                 custom_code:customFlag?$('.customImg img').attr('src'):'',
+                is_sales:salseFlag?1:0,
+                sales_type:$('.salseCont input[name="salseClassName"]:checked').val()
+
             });
             loadingAjax('/api/merchant/updateMerchant', 'post', editdMerchantsData, sessionStorage.token, '', 'MemberOperation', 'MemberContent', layer).then((res) => {
                 var addEditData = treeList();
@@ -395,6 +417,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     //树状图 
     var addEditData = null;
     var dataList = addEditData = treeList();
+    var eleColor=null; //商户列表颜色
     // treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
     $('.addBox input[name="marchantsListname"]').prop('placeholder', addEditData[0].title)
     $('.addBox input[name="addmarchantsVal"]').val(addEditData[0].id + ' ' + addEditData[0].alias);
@@ -405,6 +428,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             f5Fun()
         }
     });
+    // 刷新商户列表
+    // $('.refreshBtnList').click(function(){
+    //     tree.reload('treelistEdit', {
+            
+    //       });
+    //       console.log(eleColor)
+    //       setTimeout(_=>{
+    //         eleColor.style.color = "#be954a";
+    //       },150)
+          
+    // })
     var inst2 = tree.render({
         elem: '#test1',
         id: 'treelistEdit',
@@ -422,8 +456,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             none: ''
         },
         click: function (obj) {
-            console.log(obj);
-            console.log(obj.data.id)
             tableIns.reload({
                 where: {
                     conditionTwo: obj.data.id + '',
@@ -433,14 +465,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             })
             var nodesEdti = $(`#test1 .layui-tree-txt`);
             for (var i = 0; i < nodesEdti.length; i++) {
-                if (nodesEdti[i].innerHTML === obj.data.title)
+                if (nodesEdti[i].innerHTML === obj.data.title){
                     nodesEdti[i].style.color = "#be954a";
-                else
+                    eleColor=nodesEdti[i];
+                    console.log(eleColor)
+                }              
+                else{
                     nodesEdti[i].style.color = "#555";
+                }   
             };
             $('.addBox input[name="marchantsListname"]').prop('placeholder', obj.data.title)
             $('.addBox input[name="addmarchantsVal"]').val(obj.data.id + ' ' + obj.data.alias);
-            console.log($('.addBox input[name="marchantsListname"]').val());
         },
     });
     var addFlag = false,
@@ -542,4 +577,54 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             $('.customImg img').prop('src','');
         })
     })
+
+    // 销售经理类别
+    var salseList=[];
+    // 获取商户销售经理类别
+    function salesClassList(mid,mNum){
+        var salesObj=JSON.stringify({
+            merchantId:mid,
+            pageSize:10,
+            pageNum:mNum
+        })
+        loadingAjax('/api/sales_manager/getSalesType','post',salesObj,sessionStorage.token,'mask','','',layer).then(res=>{
+            console.log(res)
+            if(res.data.list!=0){
+                salseList=salseList.concat(res.data.list);
+                ToSalseListFun(salseList)
+            }
+            if (salseList.length==0){
+                $('.salseCont').html(`<input type="radio" name="salseClassName" value="" title="无" checked>`);
+                form.render();
+            }
+            if(res.data.list.length==10){
+                $('.loadMore').show();
+            }else{
+                $('.loadMore').hide();
+            }
+        }).catch(err=>{
+            console.log(err)
+            layer.msg(err.message,{icon:2})
+        })
+    }
+
+    // 渲染销售经理列表
+    function ToSalseListFun(ToList){
+        var salseStr='';
+        ToList.forEach(item=>{
+            salseStr+=`<input type="radio" name="salseClassName" ${data.sales_type==item.sm_classify?'checked':''} value="${item.sm_classify}" title="${item.sm_classify}">`
+        });
+        $('.salseCont').html(salseStr);
+        form.render();
+    };
+    // 监听销售经理开关
+    var salseFlag=false;
+    form.on('switch(salseOpne)', function(data){
+        salseFlag=data.elem.checked;
+        if(data.elem.checked){
+            $('.salseList').slideDown();
+        }else{
+            $('.salseList').slideUp();
+        }
+      });   
 });

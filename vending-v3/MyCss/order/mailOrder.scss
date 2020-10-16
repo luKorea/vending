@@ -1,0 +1,46 @@
+.deliveryBox{
+    width: 700px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    padding-bottom: 15px;
+    .deliveryBody{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+        span{
+            color: red;
+        }
+    }
+ 
+}
+.exportBox{
+    width: 500px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    padding-bottom: 15px;
+    .exportBody{
+        p{    
+            text-align: center;
+            color: red;
+            margin-bottom: 15px;}
+    }
+}
+.cancelBtn{
+    background: #fff !important;
+    border: 1px solid #dcdfe6 !important;
+    color: #606266;
+}
+.cancelBtn:hover{
+    border-color: #be954a !important;
+    color: #be954a !important;
+}

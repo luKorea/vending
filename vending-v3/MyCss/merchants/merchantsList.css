@@ -252,3 +252,14 @@ input:hover{
     z-index: 1;
     margin: 0;
 }
+.salseList .salseCont{
+    margin-left: 15px;
+}
+.salseList .salseCont>div{
+    width: 28%;
+}
+.loadMore{
+    text-align: center;
+    margin: -5px 0 10px;
+    cursor: pointer;
+}

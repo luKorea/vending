@@ -494,6 +494,7 @@ input:hover{
 .numderTop img{
     width: 100%;
     height: 90px;
+    object-fit:cover
 }
 .numderBottom{
     display: flex;
@@ -724,4 +725,19 @@ input:hover{
     width: 100%;
     z-index: 1;
     margin: 0;
+}
+.loadMore{
+    text-align: center;
+    margin: -5px 0 10px;
+    cursor: pointer;
+}
+.salseCont{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-left: 0px;
+    flex-wrap: wrap;
+}
+.salseCont>div{
+    width: 40%;
 }

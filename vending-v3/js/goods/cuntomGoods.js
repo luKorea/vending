@@ -32,7 +32,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center' },
       { field: 'goods_Core', width: 120, title: '商品编号', align: 'center'},
       { field: 'goods_Name', width: 120, title: '商品名', color: '#409eff', align: 'center' },
-      { field: 'goods_Name', width: 120, title: '是否邮寄商品', align: 'center',templet:function(d){
+      { field: 'mail', width: 120, title: '是否邮寄商品', align: 'center',templet:function(d){
         return d.mail==0?'否':'是'
       } },
       {
@@ -106,7 +106,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       'limitName': 'pageSize'
     },
     where: {
-      condition: sessionStorage.machineID
+      condition: sessionStorage.machineID,
+      mail:1
     },
     parseData: function (res) {
       // console.log(res)

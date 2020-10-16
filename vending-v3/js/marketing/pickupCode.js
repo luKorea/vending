@@ -312,16 +312,23 @@ permissionsVal(436,437).then(res=>{
             },
             where: {
                 condition: sessionStorage.machineID,
+                conditionSeven:0
             },
             parseData: function (res) {
                 // console.log(res)
                 //res 即为原始返回的数据
                 if (res.code == 200) {
+                    var gTotal=[];
+                    res.data.list.forEach(item=>{
+                        if(item.mail==0){
+                            gTotal.push(item)
+                        }
+                    })
                     return {
                         "code": res.code, //解析接口状态
-                        "msg": '', //解析提示文本
+                        "msg": res.message, //解析提示文本
                         "count": res.data.total, //解析数据长度
-                        "data": res.data.list //解析数据列表
+                        "data": res.data.list //解析数据列表
                     };
                 } else {
                     return {
@@ -329,7 +336,6 @@ permissionsVal(436,437).then(res=>{
                         "msg": res.message, //解析提示文本
                     }
                 }
-
             },
             response: {
                 statusCode: 200 //规定成功的状态码，默认：0
@@ -350,8 +356,7 @@ permissionsVal(436,437).then(res=>{
                })
                 $('.list-table .layui-table-header input[type="checkbox"]').prop('disabled', true);
                 $('.list-table .layui-table-header .laytable-cell-checkbox>div').hide();
-                form.render('checkbox');
-               
+                form.render('checkbox');         
             }
         })
     }
@@ -728,6 +733,7 @@ permissionsVal(436,437).then(res=>{
             ],
             id:'pickIn',
             loading: true,
+            page: true,
         })
     };
 

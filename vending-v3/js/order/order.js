@@ -73,7 +73,8 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         'limitName': 'pageSize'
       },
       where: {
-        conditionFive: sessionStorage.machineID
+        conditionFive: sessionStorage.machineID,
+        conditionSeven:0
       },
       parseData: function (res) {
         // console.log(res)
@@ -290,10 +291,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       if (xhr.status == 200) {
         $('.mask').fadeOut();
         $('.maskSpan').removeClass('maskIcon');
-        if (xhr.response.size < 100) {
-          layer.msg('您没有导出订单的权限！', { icon: 7 })
-          return
-        } else {
+        // if (xhr.response.size < 100) {
+        //   layer.msg('您没有导出订单的权限！', { icon: 7 })
+        //   return
+        // } else {
           var content = xhr.response;
           // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
           var fileName=`${marchantName}订单(${exportStareTime}-${exportEndTime}).xlsx`
@@ -305,7 +306,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
           document.body.appendChild(elink);
           elink.click();
           document.body.removeChild(elink);
-        }
+        // }
       } else {
         $('.mask').fadeOut();
         $('.maskSpan').removeClass('maskIcon');
@@ -313,12 +314,12 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         return;
       }
     }
-      var aa=JSON.stringify({
+      var orderObj=JSON.stringify({
       start_time:exportStareTime,
       end_time:exportEndTime,
       merchantId:merchantId
     })
-    xhr.send(aa);
+    xhr.send(orderObj);
   })
 
   // 订单商品列表

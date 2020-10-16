@@ -142,6 +142,7 @@ layui.use(['table', 'form', 'layer','tree'], function () {
                                 $('.editAppCont input[name="apk_url"]').val(res.data.src)
                               }                           
                             layer.msg('上传成功',{icon:1});
+                            $('.uploadTitle label').html('已上传')
                           }else{
                               layer.msg('上传失败',{icon:2});
                               $(that).val('');
@@ -153,7 +154,7 @@ layui.use(['table', 'form', 'layer','tree'], function () {
                           $(that).val('');
                         }
                       })
-                    // $('.uploadTitle label').html('已上传')
+                    
                 }
 
             },

@@ -101,7 +101,6 @@ layui.use(['table', 'form', 'layer'], function () {
             layer.msg('带*号未必填', { icon: 7 });
             return
         }
-        return;
         var addObj = JSON.stringify({
             sm_no: $('.addSalesCont input[name="sm_no"]').val(),
             merchant_id: Number(sessionStorage.machineID),
@@ -110,9 +109,14 @@ layui.use(['table', 'form', 'layer'], function () {
             sm_classify: $('.addSalesCont input[name="merchants"]').val(),
         });
         loadingAjax('/api/sales_manager/addSalesManager', 'post', addObj, sessionStorage.token).then(res => {
+            layer.msg(res.message, { icon: 1 });
+            salesTableIn.reload({
+                where:{
 
+                }
+            })
         }).catch(err => {
-
+            layer.msg(err.message, { icon: 2 })
         });
     })
     // 取消添加
@@ -186,6 +190,7 @@ layui.use(['table', 'form', 'layer'], function () {
                 salesTableIn.reload({
                     where: {}
                 });
+                popupHide('addSalesCont','addSalesBox')
             }).catch(err => {
                 layer.msg(err.message, { icon: 2 })
             })
@@ -198,4 +203,13 @@ layui.use(['table', 'form', 'layer'], function () {
         res.editFlag?$('.importBtn').removeClass('hide'):$('.importBtn').addClass('hide');
         res.delFlag?$('.delBtn').removeClass('hide'):$('.delBtn').addClass('hide')
     });
+
+
+
+
+    var abc={
+        a:1,
+        b:2,
+        c:3
+    }
 })

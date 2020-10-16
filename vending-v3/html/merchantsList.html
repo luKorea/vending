@@ -21,6 +21,10 @@
                         <!-- <div class="fixedAccount">
                             <span> 粤宝商户-中邮广州</span>
                         </div> -->
+                        <!-- <button class="layui-btn layui-btn-normal  btn refreshBtnList" type="button"style="margin:10px 20px 0px ;">
+                            <i class="layui-icon layui-icon-refresh "></i>
+                            <span>刷新</span>
+                        </button> -->
                         <div id="test1" class="demo-tree demo-tree-box"></div>
                     </div>
                     <!-- 右侧栏 -->
@@ -126,7 +130,29 @@
                                 <img src="" alt="">
                             </div>
                         </div>
-
+                        <div class="listFlex">
+                            <form class="layui-form" action="">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">是否配置销售经理类别:</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" name="salse" lay-skin="switch" lay-filter="salseOpne"
+                                            lay-text="是|否">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="listInput salseList">
+                            <label for="">销售经理类别:</label>
+                            <form class="layui-form" style="width: 100%;" lay-filter="salesDataVal">
+                                <div class="layui-input-block salseCont">
+                                    <!-- <input type="radio" name="sex" value="" title="无" checked> -->
+                                </div>
+                            </form>
+                        </div>
+                        <div class="salseList">
+                            <p class="loadMore">加载更多</p>
+                        </div>
+                        
                         <div class="listInput">
                             <label for=""><span style="color: red;">*</span> 上级商户:</label>
                             <!-- <select name="marchantsListname" class="marchantsList" lay-filter="stateSelect">

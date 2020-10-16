@@ -69,31 +69,37 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         return `<div><span class="${d.wayStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.wayStatus == 0 ? '不正常' : '正常'}</span></div>`
                     }
                 },
-                { field: 'dealTime', width: 170, title: '最后交易时间', align: 'center',templet:function(d){
-                    if(d.dealTime){
-                        return timeStamp(d.connectTime)
-                    }else{
-                        return '-'
+                {
+                    field: 'dealTime', width: 170, title: '最后交易时间', align: 'center', templet: function (d) {
+                        if (d.dealTime) {
+                            return timeStamp(d.connectTime)
+                        } else {
+                            return '-'
+                        }
                     }
-                } },
+                },
                 { field: 'merchantName', width: 150, title: '所属商户', align: 'center', },
                 { field: 'appVersion', width: 135, title: '软件版本', align: 'center', },
                 // { field: 'controllerVersion', width: 135, title: '控制器版本', },
-                { field: 'connectTime', width: 170, title: '联机时间', align: 'center',templet:function(d){
-                    if(d.actionTime){
-                        return timeStamp(d.connectTime)
-                    }else{
-                        return '-'
+                {
+                    field: 'connectTime', width: 170, title: '联机时间', align: 'center', templet: function (d) {
+                        if (d.actionTime) {
+                            return timeStamp(d.connectTime)
+                        } else {
+                            return '-'
+                        }
                     }
-                } },
-                { field: 'actionTime', width: 170, title: '激活时间', align: 'center',templet:function(d){
-                    if(d.actionTime){
-                        return timeStamp(d.actionTime)
-                    }else{
-                        return '-'
+                },
+                {
+                    field: 'actionTime', width: 170, title: '激活时间', align: 'center', templet: function (d) {
+                        if (d.actionTime) {
+                            return timeStamp(d.actionTime)
+                        } else {
+                            return '-'
+                        }
+
                     }
-                    
-                } },
+                },
                 { field: 'description', width: 250, title: '描述', align: 'center' },
                 { field: 'operation', fixed: 'right', right: 0, width: 250, title: '操作', toolbar: '#barDemo', align: 'center' },
             ]]
@@ -152,15 +158,15 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         })
     });
-    $('.refreshBtnList').click(function(){
+    $('.refreshBtnList').click(function () {
         dataList = treeList();
         treeFun(tree, 'test1', machineList, dataList, 'merchantId', 'condition', selectData, '', 'true')
         machineList.reload({
-          where:{
-            merchantId: sessionStorage.machineID
-          }
+            where: {
+                merchantId: sessionStorage.machineID
+            }
         })
-      })
+    })
 
 
     // 设置tab切换
@@ -211,9 +217,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (paySetFlag) {
                 //支付方式
                 // payTypeFun(Number(sessionStorage.machineGoodsId));
-                supportpay(machineSetData.machineId,machineSetData.userNum);
+                supportpay(machineSetData.machineId, machineSetData.userNum);
             }
-          
+
         } else if (obj.event == 'edit') {
             if (machineSetData.openStatus == 1) {
                 layer.msg('温馨提示！该售货机正在营业，不可进行编辑！', { icon: 7 })
@@ -253,43 +259,45 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
             $('.editMachineCont').show();
             // 客服部分
-            if(machineSetData.service_code){
-                $('.ImgCont img').prop('src',machineSetData.service_code);
+            if (machineSetData.service_code) {
+                $('.ImgCont img').prop('src', machineSetData.service_code);
                 $('.ImgCont').show();
-            }else{
-                $('.ImgCont img').prop('src','');
+            } else {
+                $('.ImgCont img').prop('src', '');
                 $('.ImgCont').hide();
             }
-            if(machineSetData.is_service==1){
+            if (machineSetData.is_service == 1) {
                 $('.serviceTitle').show();
-                $('.listFlex input[name="machineOpen"]').prop('checked',true);
-                machineServiceFlag=true;
-            }else{
+                $('.listFlex input[name="machineOpen"]').prop('checked', true);
+                machineServiceFlag = true;
+            } else {
                 $('.serviceTitle').hide();
-                $('.listFlex input[name="machineOpen"]').prop('checked',false);
-                machineServiceFlag=false;
+                $('.listFlex input[name="machineOpen"]').prop('checked', false);
+                machineServiceFlag = false;
             };
             $('.serviceTitle input[name="service_phone"]').val(machineSetData.service_phone);
             // 定制部分
-            if(machineSetData.custom_code){
-                $('.customImgCont img').prop('src',machineSetData.custom_code);
+            if (machineSetData.custom_code) {
+                $('.customImgCont img').prop('src', machineSetData.custom_code);
                 $('.customImgCont').show();
-            }else{
-                $('.customImgCont img').prop('src','');
+            } else {
+                $('.customImgCont img').prop('src', '');
                 $('.customImgCont').hide();
             }
-            if(machineSetData.is_custom==1){
+            if (machineSetData.is_custom == 1) {
                 $('.customTitle').show();
-                $('.listFlex input[name="customOpen"]').prop('checked',true);
-                customFlag=true;
-            }else{
+                $('.listFlex input[name="customOpen"]').prop('checked', true);
+                customFlag = true;
+            } else {
                 $('.customTitle').hide();
-                $('.listFlex input[name="customOpen"]').prop('checked',false);
-                customFlag=false;
+                $('.listFlex input[name="customOpen"]').prop('checked', false);
+                customFlag = false;
             };
+            // 销售经理
+            salesClassList(machineSetData,1)
             $('.customTitle input[name="custom_phone"]').val(machineSetData.custom_phone)
             form.render();
-            
+
             geoCode();
         } else if (obj.event == 'activate') {
             if (!activateFlag) {
@@ -626,13 +634,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
         var editMachineData = form.val("editmachine");
         if (editMachineData.sNumber && editMachineData.tName && editMachineData.number && editMachineData.province && editMachineData.city && editMachineData.district && editMachineData.mapVal && editMachineData.area && editMachineData.merchantsName) {
-            if(!($('.serviceTitle input[name="service_phone"]').val()||$('.ImgCont img').attr('src'))&&machineServiceFlag){
+            if (!($('.serviceTitle input[name="service_phone"]').val() || $('.ImgCont img').attr('src')) && machineServiceFlag) {
                 layer.msg('请填写客服电话或上传客服微信二维码', { icon: 7 });
-            return ;
+                return;
             }
-            if(!($('.customTitle input[name="custom_phone"]').val()||$('.customImgCont img').attr('src'))&&customFlag){
+            if (!($('.customTitle input[name="custom_phone"]').val() || $('.customImgCont img').attr('src')) && customFlag) {
                 layer.msg('请填写定制电话或上传定制二维码', { icon: 7 });
-            return ;
+                return;
             }
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon')
@@ -651,17 +659,19 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     area: editMachineData.area,
                     longitude: editMachineData.longitude,
                     latitude: editMachineData.latitude,
-                    userNum:machineSetData.userNum==Number(editMachineData.merchantsName)?0:Number(editMachineData.merchantsName),
+                    userNum: machineSetData.userNum == Number(editMachineData.merchantsName) ? 0 : Number(editMachineData.merchantsName),
                     // userNum:0,
                     // userPhone: editMachineData.userPhone,
                     chargerPhone: editMachineData.headPhone,
                     description: editMachineData.describe,
-                    is_service:machineServiceFlag?1:0,
-                    service_phone:machineServiceFlag?$('.serviceTitle input[name="service_phone"]').val():'',
-                    service_code:machineServiceFlag?$('.ImgCont img').attr('src'):'',
-                    is_custom:customFlag?1:0,
-                    custom_phone:customFlag?$('.customTitle input[name="custom_phone"]').val():'',
-                    custom_code:customFlag?$('.customImgCont img').attr('src'):'',
+                    is_service: machineServiceFlag ? 1 : 0,
+                    service_phone: machineServiceFlag ? $('.serviceTitle input[name="service_phone"]').val() : '',
+                    service_code: machineServiceFlag ? $('.ImgCont img').attr('src') : '',
+                    is_custom: customFlag ? 1 : 0,
+                    custom_phone: customFlag ? $('.customTitle input[name="custom_phone"]').val() : '',
+                    custom_code: customFlag ? $('.customImgCont img').attr('src') : '',
+                    is_sales:$('.salseCont input[name="salseClassName"]:checked').val()==-99?1:0,
+                    sales_type:$('.salseCont input[name="salseClassName"]:checked').val()==-99?'':$('.salseCont input[name="salseClassName"]:checked').val()
                 }),
                 success: function (res) {
                     $('.mask').fadeOut();
@@ -751,8 +761,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'payStatus', width: 150, title: '支付状态', templet: function (d) {                                   
-                        return `<div><span class="${d.payStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payStatus == 1 ? '等待支付' : d.payStatus == 2?'已支付':'未支付'}</span></div>`
+                    field: 'payStatus', width: 150, title: '支付状态', templet: function (d) {
+                        return `<div><span class="${d.payStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payStatus == 1 ? '等待支付' : d.payStatus == 2 ? '已支付' : '未支付'}</span></div>`
                     }
                 },
                 {
@@ -1290,7 +1300,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     aisleStr += `<div class="aisleNumderGoods" >
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">
-                                    <img src="${child.goods_images?child.goods_images:'http://172.16.71.142:8087/image/127b55b9-da32-4569-b740-3adf5e5524af.png'}" alt="">
+                                    <img src="${child.goods_images ? child.goods_images : 'http://172.16.71.142:8087/image/127b55b9-da32-4569-b740-3adf5e5524af.png'}" alt="">
                                         <span>${Cindex + 1}</span>
                                     </div>
                                     <div class="numderBottom">
@@ -1312,7 +1322,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         });
         aisleStr += `<div class="aisleListCont flexTwo ${addAisleFlag ? '' : 'hide'}">
         <div class="listIndex">
-                                <span>${ strList.length + 1}</span>
+                                <span>${strList.length + 1}</span>
                             </div>
                         <div class="addAisle" indexVal="${strList.length + 1}">
                             <span>+</span>
@@ -1414,7 +1424,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('数量和容量为为必填', { icon: 7 });
             return;
         }
-        if(!(Number($('.aisleList input[name="total"]').val())>=Number($('.aisleList input[name="count"]').val()))){
+        if (!(Number($('.aisleList input[name="total"]').val()) >= Number($('.aisleList input[name="count"]').val()))) {
             layer.msg('货道容量不能小于当前数量', { icon: 7 });
             return;
         }
@@ -1546,24 +1556,24 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             machineId: machindID,
         })
         loadingAjax('/api/pay/getMachinePayParam', 'post', payList, sessionStorage.token).then(res => {
-            loadingAjax('/api/pay/getPayParam', 'post', JSON.stringify({merchantId:Number(merchantsID)}), sessionStorage.token).then(pres => {
-                var setPayStr=''
-                res.data.forEach((item,index)=>{
-                    if(item.status==1){
-                        setPayStr+=`<div class="layui-form-item">
+            loadingAjax('/api/pay/getPayParam', 'post', JSON.stringify({ merchantId: Number(merchantsID) }), sessionStorage.token).then(pres => {
+                var setPayStr = ''
+                res.data.forEach((item, index) => {
+                    if (item.status == 1) {
+                        setPayStr += `<div class="layui-form-item">
                                         <label class="layui-form-label">${item.tName}：</label>
                                     <div class="layui-input-block">`
-                    if(item.selectPay.length==0){
-                        setPayStr+=`<input type="radio" lay-filter="radioTest" name="${item.id}" value="${0+'-'+0}" title="无" checked>`
-                    }else{
-                        setPayStr+=`<input type="radio" lay-filter="radioTest" name="${item.id}" value="${item.selectPay[0].mpId+'-'+0}" title="无" >`
-                    }
-                        pres.data.forEach((e,i)=>{
-                            if(item.id==e.payType){
-                                setPayStr+=`<input type="radio" lay-filter="radioTest" name="${item.id}" value="${(item.selectPay.length>0?item.selectPay[0].mpId:0)+'-'+e.id}" title="${e.payee}" ${item.selectPay.length<=0?'':item.selectPay[0].paramId==e.id?'checked':''} >`
-                            }     
+                        if (item.selectPay.length == 0) {
+                            setPayStr += `<input type="radio" lay-filter="radioTest" name="${item.id}" value="${0 + '-' + 0}" title="无" checked>`
+                        } else {
+                            setPayStr += `<input type="radio" lay-filter="radioTest" name="${item.id}" value="${item.selectPay[0].mpId + '-' + 0}" title="无" >`
+                        }
+                        pres.data.forEach((e, i) => {
+                            if (item.id == e.payType) {
+                                setPayStr += `<input type="radio" lay-filter="radioTest" name="${item.id}" value="${(item.selectPay.length > 0 ? item.selectPay[0].mpId : 0) + '-' + e.id}" title="${e.payee}" ${item.selectPay.length <= 0 ? '' : item.selectPay[0].paramId == e.id ? 'checked' : ''} >`
+                            }
                         })
-                        setPayStr+=`</div>
+                        setPayStr += `</div>
                         </div>`
                     }
                 })
@@ -1577,42 +1587,42 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg(err.message, { icon: 2 })
         })
     }
-    $('.paySet .paySetBtn').click(function(){
+    $('.paySet .paySetBtn').click(function () {
         var payFormData = form.val("paySetData");
         console.log(payFormData)
     })
-   
-    form.on('radio(radioTest)', function(data){
+
+    form.on('radio(radioTest)', function (data) {
         layer.confirm('确定修改收款账户？', function (index) {
             layer.close(index);
             console.log(data); //被点击的radio的value值;
-            var dataID=data.value.split('-');
+            var dataID = data.value.split('-');
             console.log(dataID)
-            var setMachinePay=JSON.stringify({
-                machineId:machineSetData.machineId,
-                paramId:Number(dataID[1]) ,
-                mpId:Number(dataID[0])
+            var setMachinePay = JSON.stringify({
+                machineId: machineSetData.machineId,
+                paramId: Number(dataID[1]),
+                mpId: Number(dataID[0])
             });
-            loadingAjax('/api/pay/updateMachinePayParam','post',setMachinePay,sessionStorage.token).then(res=>{
-                layer.msg(res.message,{icon:1 })
-                supportpay(machineSetData.machineId,machineSetData.userNum);
-            }).catch(err=>{
-                layer.msg(err.message,{icon:2   })
+            loadingAjax('/api/pay/updateMachinePayParam', 'post', setMachinePay, sessionStorage.token).then(res => {
+                layer.msg(res.message, { icon: 1 })
+                supportpay(machineSetData.machineId, machineSetData.userNum);
+            }).catch(err => {
+                layer.msg(err.message, { icon: 2 })
             })
-        },function(){
-            supportpay(machineSetData.machineId,machineSetData.userNum)
+        }, function () {
+            supportpay(machineSetData.machineId, machineSetData.userNum)
         })
-        
-      });
+
+    });
 
     //   客服信息部分
-    var machineServiceFlag=false;
+    var machineServiceFlag = false;
     // 更改客服微信二维码
-    $('.uploadBtn input').change(function(e){
-        if(!$(this).val()){
-            return ;
+    $('.uploadBtn input').change(function (e) {
+        if (!$(this).val()) {
+            return;
         }
-        var that=this;
+        var that = this;
         var upDetails = new FormData();
         upDetails.append('file', e.target.files[0]);
         $('.mask').fadeIn();
@@ -1623,57 +1633,57 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             processData: false,
             contentType: false,
             headers: {
-              token,
+                token,
             },
             data: upDetails,
             success: function (res) {
                 $(that).val('')
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon')
-                if(res.code==0){
-                    $('.ImgCont img').prop('src',res.data.src);
+                if (res.code == 0) {
+                    $('.ImgCont img').prop('src', res.data.src);
                     $('.ImgCont').show();
-                }else{
+                } else {
                     layer.msg(res.message, { icon: 7 });
                 }
             },
-            error:function(err){
+            error: function (err) {
                 $(that).val('')
-              $('.mask').fadeOut();
-              $('.maskSpan').removeClass('maskIcon')
-              layer.msg('上传失败',{icon:2})
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon')
+                layer.msg('上传失败', { icon: 2 })
             }
-          })
+        })
     });
     // 删除图片
-    $('.delImgBtn').click(function(){
-        $('.ImgCont img').prop('src','');
+    $('.delImgBtn').click(function () {
+        $('.ImgCont img').prop('src', '');
         $('.ImgCont').hide();
     });
     // 监听客服开关
-    form.on('switch(machineOpen)', function(data){
-        machineServiceFlag=data.elem.checked;
-        if(data.elem.checked){
+    form.on('switch(machineOpen)', function (data) {
+        machineServiceFlag = data.elem.checked;
+        if (data.elem.checked) {
             $('.serviceTitle').slideDown();
-        }else{
+        } else {
             $('.serviceTitle').slideUp();
         }
-      }); 
-        // 监听定制开关
-        var customFlag=false;
-    form.on('switch(customOpen)', function(data){
-        customFlag=data.elem.checked;
-        if(data.elem.checked){
+    });
+    // 监听定制开关
+    var customFlag = false;
+    form.on('switch(customOpen)', function (data) {
+        customFlag = data.elem.checked;
+        if (data.elem.checked) {
             $('.customTitle').slideDown();
-        }else{
+        } else {
             $('.customTitle').slideUp();
         }
-      }); 
-      $('.uploadBtn2 input').change(function(e){
-        if(!$(this).val()){
-            return ;
+    });
+    $('.uploadBtn2 input').change(function (e) {
+        if (!$(this).val()) {
+            return;
         }
-        var that=this;
+        var that = this;
         var upDetails = new FormData();
         upDetails.append('file', e.target.files[0]);
         $('.mask').fadeIn();
@@ -1684,30 +1694,63 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             processData: false,
             contentType: false,
             headers: {
-              token,
+                token,
             },
             data: upDetails,
             success: function (res) {
                 $(that).val('')
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon')
-                if(res.code==0){
-                    $('.customImgCont img').prop('src',res.data.src);
+                if (res.code == 0) {
+                    $('.customImgCont img').prop('src', res.data.src);
                     $('.customImgCont').show();
-                }else{
+                } else {
                     layer.msg(res.message, { icon: 7 });
                 }
             },
-            error:function(err){
+            error: function (err) {
                 $(that).val('')
-              $('.mask').fadeOut();
-              $('.maskSpan').removeClass('maskIcon')
-              layer.msg('上传失败',{icon:2})
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon')
+                layer.msg('上传失败', { icon: 2 })
             }
-          })
+        })
     });
-    $('.delImgBtn2').click(function(){
-        $('.customImgCont img').prop('src','');
+    $('.delImgBtn2').click(function () {
+        $('.customImgCont img').prop('src', '');
         $('.customImgCont').hide();
     });
+    // 销售经理类别
+    var salseList = [];
+    // 获取商户销售经理类别
+    function salesClassList(mobj, mNum) {
+        var salesObj = JSON.stringify({
+            merchantId: mobj.userNum,
+            pageSize: 10,
+            pageNum: mNum
+        })
+        loadingAjax('/api/sales_manager/getSalesType', 'post', salesObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
+            console.log(res)
+                salseList = salseList.concat(res.data.list);
+                ToSalseListFun(salseList,mobj)
+            if (res.data.list.length == 10) {
+                $('.loadMore').show();
+            } else {
+                $('.loadMore').hide();
+            }
+        }).catch(err => {
+            console.log(err)
+            layer.msg(err.message, { icon: 2 })
+        })
+    };
+     // 渲染销售经理列表
+     function ToSalseListFun(ToList,mobj){
+        var salseStr=`<input type="radio" ${mobj.is_sales==0?'checked':''} name="salseClassName" value="-99" title="不启用" >
+        <input type="radio" name="salseClassName" ${mobj.is_sales==1?mobj.sales_type?'':'checked':''} value="" title="默认" >`;
+        ToList.forEach(item=>{
+            salseStr+=`<input type="radio" name="salseClassName" ${mobj.is_sales==1?machineSetData.sales_type==item.sm_classify?'checked':'':''} value="${item.sm_classify}" title="${item.sm_classify}">`
+        });
+        $('.salseCont').html(salseStr);
+        form.render();
+    };
 });

@@ -23,6 +23,7 @@ var entry = {
         remote:'./js/stores/remote.js',
         pickupCode:'./js/marketing/pickupCode.js',
         salesManager:'./js/merchants/salesManager.js',
+        mailOrder:'./js/order/mailOrder.js',
         //移动端版本
         M_login:'./js/mobile/login/login.js',
         M_my:'./js/mobile/my/my.js',
@@ -124,6 +125,9 @@ var htmlConfig = [
     },
     {
         name: "M_class",
+    },
+    {
+        name: "mailOrder",
     },
 ];
 module.exports = {
