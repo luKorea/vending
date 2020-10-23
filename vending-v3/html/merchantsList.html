@@ -152,7 +152,17 @@
                         <div class="salseList">
                             <p class="loadMore">加载更多</p>
                         </div>
-                        
+                        <div class="listFlex" >
+                            <form class="layui-form" action="">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">是否开启订单跟踪:</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" name="order" lay-skin="switch"  lay-filter="orderOpen"
+                                            lay-text="是|否">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <div class="listInput">
                             <label for=""><span style="color: red;">*</span> 上级商户:</label>
                             <!-- <select name="marchantsListname" class="marchantsList" lay-filter="stateSelect">
@@ -213,6 +223,17 @@
                         <div class="listInput addImg">
                             <img src="" alt="">
                         </div>
+                    </div>
+                    <div class="listFlex" >
+                        <form class="layui-form" action="">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">是否开启订单跟踪:</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="order" lay-skin="switch"  lay-filter="orderOpen"
+                                        lay-text="是|否">
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="listInput">
                         <label for=""><span style="color: red;">*</span> 上级商户:</label>

@@ -161,7 +161,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 $('.listFlex input[name="salse"]').prop('checked',false);
                 $('.salseList').hide();
             }
-            
+           $('.MemberOperation input[name="order"]').prop('checked', data.follow_mail==1?true:false);
             form.render();
         } else if (obj.event === 'delete') {
             if (data.id == 1) {
@@ -311,6 +311,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 is_service:addServiceFlag?1:0,
                 service_phone: addServiceFlag?$('.addBox input[name="service_phone"]').val():'',
                 service_code: addServiceFlag?addImg:'',
+                follow_mail:$('.addMerchants input[name="order]').prop('checked')?1:0
             })
             loadingAjax('/api/merchant/newMerchant', 'post', addMerchantsData, sessionStorage.token, '', 'addMerchants', 'addBox', layer).then((res) => {
                 $('.addBox input[name="merchantsName"]').val('');
@@ -393,7 +394,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 custom_phone:customFlag?$('.editMerchants input[name="customPhone"]').val():'',
                 custom_code:customFlag?$('.customImg img').attr('src'):'',
                 is_sales:salseFlag?1:0,
-                sales_type:$('.salseCont input[name="salseClassName"]:checked').val()
+                sales_type:$('.salseCont input[name="salseClassName"]:checked').val(),
+                follow_mail:$('.MemberOperation input[name="order"]').prop('checked')?1:0
 
             });
             loadingAjax('/api/merchant/updateMerchant', 'post', editdMerchantsData, sessionStorage.token, '', 'MemberOperation', 'MemberContent', layer).then((res) => {
@@ -482,6 +484,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         editFlag = false,
         delFlag = false;
     permissionsVal(393, 394, 395).then(res => {
+        console.log(res)
         addFlag = res.addFlag;
         editFlag = res.editFlag;
         delFlag = res.delFlag;
@@ -627,4 +630,5 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             $('.salseList').slideUp();
         }
       });   
+    //   console.log($('.MemberOperation input[name="order"]').prop('checked'))
 });

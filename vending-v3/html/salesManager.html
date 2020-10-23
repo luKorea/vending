@@ -14,6 +14,12 @@
                 <button class="layui-btn layui-btn-normal addSalesBtn hide btn ">
                     <span>新增销售经理</span>
                 </button>
+                <button class="layui-btn layui-btn-normal pushXlsxBtn btn ">
+                    <!-- <span>下载xlsx模板</span> -->
+                    <a href="../assets/public/exe.xlsx" download="销售经理导入模板.xlsx" style="color: #fff;">
+                        下载xlsx模板
+                    </a>
+                </button>
                 <button class="layui-btn layui-btn-normal importBtn hide btn ">
                     <span>导入销售经理信息</span>
                     <input type="file" name="addUpload">
@@ -65,7 +71,7 @@
                     <input type="text" name="phone">
                 </div>
                 <div class="listFlex">
-                    <label for=""><span style="color: red;">*</span>商家:</label>
+                    <label for=""><span style="color: red;">*</span>类别:</label>
                     <input type="text" name="merchants">
                 </div>
             </div>

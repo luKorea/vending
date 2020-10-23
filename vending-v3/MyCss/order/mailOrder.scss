@@ -18,6 +18,26 @@
     }
  
 }
+.editBox{
+    width: 700px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    padding-bottom: 15px;
+    .editBody{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+        span{
+            color: red;
+        }
+    }
+ 
+}
 .exportBox{
     width: 500px;
     position: relative;
@@ -43,4 +63,7 @@
 .cancelBtn:hover{
     border-color: #be954a !important;
     color: #be954a !important;
+}
+.bodyTable .layui-form {
+    width: 100%;
 }

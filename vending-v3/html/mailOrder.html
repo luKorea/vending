@@ -8,6 +8,7 @@
   
 </head>
 <body>
+    <!-- <img class="imgs" src="" alt="" style="width: 100px;height: 100px;"> -->
     <div class="orderWrap">
         <div class="query-contnet margin">
             <div class="layui-row">
@@ -90,6 +91,38 @@
             </div>
         </div>
     </div>
+     <!-- 编辑物流信息 -->
+     <div class="editCont maskContnet" >
+        <div class="editBox margin0">
+            <div class="playHeader">
+                <span>编辑物流信息</span>
+                <button class="close" type="button">
+                    <i class="layui-icon layui-icon-close"></i>
+                </button>
+            </div>
+            <div class="editBody">
+                <div class="listFlex">
+                    <label for=""><span>*</span>物流公司:</label>
+                    <input type="text" name="company">
+                </div>
+                <div class="listFlex">
+                    <label for=""><span>*</span>物流单号:</label>
+                    <input type="text" name="logisticsNumber">
+                </div>
+            </div>
+            <div class="content-footer" style="margin-top:30px;">
+                <div style="text-align: center;">
+                    <button class="layui-btn layui-btn-normal btn determinePushBtn"
+                        style="margin: 0 0 0 15px;" >
+                        <span>确定</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn cancelBtn">
+                        <span>取消</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
        <!-- 导出订单部分 -->
        <div class="exportCont maskContnet" >
         <div class="exportBox margin">
@@ -133,8 +166,11 @@
 </body>
 <script type="text/html" id="barDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm btn operation" lay-event="delivery">
+        <button class="layui-btn layui-btn-sm btn operation {{d.dispatch_status==0?'':'hide'}}" lay-event="delivery">
             <span style="color:#fff;">发货</span>
+        </button> 
+        <button class="layui-btn layui-btn-sm btn operation {{d.dispatch_status==1?'':'hide'}}" lay-event="edit">
+            <span style="color:#fff;">编辑物流信息</span>
         </button> 
     </div>
 </script>

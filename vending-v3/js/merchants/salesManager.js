@@ -4,6 +4,8 @@ layui.use(['table', 'form', 'layer'], function () {
         form = layui.form,
         layer = layui.layer,
         token = sessionStorage.token;
+
+    // $('.pushXlsxBtn ').prop('href','../../img/exe.xlsx')
     // 关闭弹窗
     $('.playHeader .close').click(function () {
         $(this).parent().parent().addClass('margin0')
@@ -32,7 +34,7 @@ layui.use(['table', 'form', 'layer'], function () {
             { field: 'sm_no', width: 200, title: '编号', align: 'center' },
             { field: 'sm_name', width: 230, title: '姓名', align: 'center' },
             { field: 'sm_phone', width: 230, title: '电话号', align: 'center' },
-            { field: 'sm_classify', width: 230, title: '商家', align: 'center' },
+            { field: 'sm_classify', width: 230, title: '类别', align: 'center' },
             { field: 'create_name', width: 230, title: '创建人', align: 'center' },
             {
                 field: 'create_time', width: 200, title: '创建时间', templet: function (d) {
@@ -111,10 +113,15 @@ layui.use(['table', 'form', 'layer'], function () {
         loadingAjax('/api/sales_manager/addSalesManager', 'post', addObj, sessionStorage.token).then(res => {
             layer.msg(res.message, { icon: 1 });
             salesTableIn.reload({
-                where:{
+                where: {
 
                 }
             })
+            $('.addSalesCont input[name="sm_no"]').val('');
+            $('.addSalesCont input[name="name"]').val('');
+            $('.addSalesCont input[name="phone"]').val('');
+            $('.addSalesCont input[name="merchants"]').val('');
+            popupHide('addSalesCont', 'addSalesBox')
         }).catch(err => {
             layer.msg(err.message, { icon: 2 })
         });
@@ -151,7 +158,7 @@ layui.use(['table', 'form', 'layer'], function () {
                 if (res.code == 200) {
                     layer.msg(res.message, { icon: 1 });
                     salesTableIn.reload({
-                        where:{}
+                        where: {}
                     })
 
                 } else {
@@ -190,7 +197,7 @@ layui.use(['table', 'form', 'layer'], function () {
                 salesTableIn.reload({
                     where: {}
                 });
-                popupHide('addSalesCont','addSalesBox')
+                popupHide('addSalesCont', 'addSalesBox')
             }).catch(err => {
                 layer.msg(err.message, { icon: 2 })
             })
@@ -198,18 +205,18 @@ layui.use(['table', 'form', 'layer'], function () {
     })
 
     // 权限控制
-    permissionsVal(436,437,446).then(res=>{
-        res.addFlag?$('.addSalesBtn').removeClass('hide'):$('.addSalesBtn').addClass('hide');
-        res.editFlag?$('.importBtn').removeClass('hide'):$('.importBtn').addClass('hide');
-        res.delFlag?$('.delBtn').removeClass('hide'):$('.delBtn').addClass('hide')
+    permissionsVal(436, 437, 446).then(res => {
+        res.addFlag ? $('.addSalesBtn').removeClass('hide') : $('.addSalesBtn').addClass('hide');
+        res.editFlag ? $('.importBtn').removeClass('hide') : $('.importBtn').addClass('hide');
+        res.delFlag ? $('.delBtn').removeClass('hide') : $('.delBtn').addClass('hide')
     });
 
 
 
 
-    var abc={
-        a:1,
-        b:2,
-        c:3
+    var abc = {
+        a: 1,
+        b: 2,
+        c: 3
     }
 })
