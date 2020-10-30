@@ -107,7 +107,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     },
     where: {
       condition: sessionStorage.machineID,
-      mail:1
+      // mail:1
     },
     parseData: function (res) {
       // console.log(res)

@@ -14,16 +14,18 @@
                 <button class="layui-btn layui-btn-normal addSalesBtn hide btn ">
                     <span>新增销售经理</span>
                 </button>
-                <button class="layui-btn layui-btn-normal pushXlsxBtn btn ">
-                    <!-- <span>下载xlsx模板</span> -->
-                    <a href="../assets/public/exe.xlsx" download="销售经理导入模板.xlsx" style="color: #fff;">
-                        下载xlsx模板
-                    </a>
-                </button>
+             
                 <button class="layui-btn layui-btn-normal importBtn hide btn ">
-                    <span>导入销售经理信息</span>
+                    <span>批量导入销售经理信息</span>
                     <input type="file" name="addUpload">
                 </button>
+                   <!-- <button class="layui-btn layui-btn-normal pushXlsxBtn btn "> -->
+                    <a href="../assets/public/exe.xlsx" class="dowloadX" download="批量导入销售经理导入模板.xlsx" style="color: #be954a;">
+                        <img src="../img/sigh.png" alt="">
+                        <span>下载批量导入销售经理模板</span>
+                        
+                    </a>
+                <!-- </button> -->
                 <div style="max-width: 350px;margin-left: 15px;" class="key-contnet">
                     <div class="key-text">关键字</div>
                     <input type="text" placeholder="" name="keyMerchants" class="KyeText">

@@ -21,7 +21,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 { field: 'payName', width: 180, title: '支付类型', align: 'center' },
                 { field: 'app_id', width: 300, title: '微信公众号id/支付宝商户id', align: 'center', },
                 { field: 'merchantName', width: 250, title: '所属商户', align: 'center' },
-                { field: 'payee', width: 280, title: '收款账号', align: 'center' },
+                { field: 'payee', width: 280, title: '收款方', align: 'center' },
                 { field: 'update_user', width: 200, title: '最后修改人', align: 'center' },
                 { field: 'update_time', width: 250, title: '最后修改时间', align: 'center',templet:function(d){
                     if (d.update_time) {

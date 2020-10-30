@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../assets/public/documentWrite.js"></script>
     <title>邮寄订单</title>
-  
+
 </head>
+
 <body>
     <!-- <img class="imgs" src="" alt="" style="width: 100px;height: 100px;"> -->
     <div class="orderWrap">
@@ -18,12 +20,13 @@
                         <div class="itmes">
                             <div class="layui-inline" style="width: 80%;">
                                 <div class="layui-input-inline" style="width: 100%;">
-                                    <input style="text-align: center;" type="text" class="layui-input" id="test6" autocomplete="off" placeholder=" - ">
+                                    <input style="text-align: center;" type="text" class="layui-input" id="test6"
+                                        autocomplete="off" placeholder=" - ">
                                 </div>
                             </div>
                         </div>
                     </div>
-                  
+
                 </div>
                 <div class="layui-col-sm3 layui-col-md6 layui-col-lg3">
                     <div style="max-width: 280px;margin-left: 50px;" class="key-contnet">
@@ -60,7 +63,7 @@
         </div>
     </div>
     <!-- 发货 -->
-    <div class="deliveryCont maskContnet" >
+    <div class="deliveryCont maskContnet">
         <div class="deliveryBox margin0">
             <div class="playHeader">
                 <span>发货</span>
@@ -80,8 +83,7 @@
             </div>
             <div class="content-footer" style="margin-top:30px;">
                 <div style="text-align: center;">
-                    <button class="layui-btn layui-btn-normal btn determinePushBtn"
-                        style="margin: 0 0 0 15px;" >
+                    <button class="layui-btn layui-btn-normal btn determinePushBtn" style="margin: 0 0 0 15px;">
                         <span>确定</span>
                     </button>
                     <button class="layui-btn layui-btn-normal btn cancelBtn">
@@ -91,8 +93,8 @@
             </div>
         </div>
     </div>
-     <!-- 编辑物流信息 -->
-     <div class="editCont maskContnet" >
+    <!-- 编辑物流信息 -->
+    <div class="editCont maskContnet">
         <div class="editBox margin0">
             <div class="playHeader">
                 <span>编辑物流信息</span>
@@ -112,8 +114,7 @@
             </div>
             <div class="content-footer" style="margin-top:30px;">
                 <div style="text-align: center;">
-                    <button class="layui-btn layui-btn-normal btn determinePushBtn"
-                        style="margin: 0 0 0 15px;" >
+                    <button class="layui-btn layui-btn-normal btn determinePushBtn" style="margin: 0 0 0 15px;">
                         <span>确定</span>
                     </button>
                     <button class="layui-btn layui-btn-normal btn cancelBtn">
@@ -123,8 +124,8 @@
             </div>
         </div>
     </div>
-       <!-- 导出订单部分 -->
-       <div class="exportCont maskContnet" >
+    <!-- 导出订单部分 -->
+    <div class="exportCont maskContnet">
         <div class="exportBox margin">
             <div class="playHeader">
                 <span>导出订单</span>
@@ -138,13 +139,12 @@
                     <label><span style="color: red;">*</span>时间：</label>
                     <div class="layui-input-inline" style="width: 60%;">
                         <input type="text" class="layui-input" id="test8" placeholder=" - " style="text-align: center;">
-                      </div>
+                    </div>
                 </div>
             </div>
-            <div class="content-footer" >
+            <div class="content-footer">
                 <div style="text-align: center;">
-                    <button class="layui-btn layui-btn-normal btn determinePushBtn"
-                        style="margin: 0 0 0 15px;">
+                    <button class="layui-btn layui-btn-normal btn determinePushBtn" style="margin: 0 0 0 15px;">
                         <span>确定</span>
                     </button>
                     <button class="layui-btn layui-btn-normal btn cancelBtn">
@@ -155,9 +155,52 @@
         </div>
 
     </div>
-    <div class="mask maskContnet" >
+
+    <!-- 订单商品列表 -->
+    <div class="goodsCont maskContnet" style="display: none;overflow-x: auto;">
+        <div class="goodsBox margin0">
+            <div class="playHeader">
+                <span>邮寄订单商品列表</span>
+                <button class="close" type="button">
+                    <i class="layui-icon layui-icon-close"></i>
+                </button>
+            </div>
+            <div class="goodsBody">
+                <div>
+                    <table class="layui-hide" id="GooodsData" lay-filter="GooodsData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+      <!-- 退款 -->
+      <div class="refundNUmCont maskContnet" >
+        <div class="refundBox margin0">
+            <div class="twoPoles" style="text-align: center;font-size: 14px;">请输入需要退款商品的数量（最少为1,最多为<span></span>）</div>
+            <!-- <div class="refundNumber">
+                <input type="number" value="1" min="1">
+            </div> -->
+            <div class="listFlex refundNumber">
+                <label for="">数量：</label>
+                <input type="number" value="1" min="1">
+            </div>
+            <div class="listFlex sumInput">
+                <label for="">金额：</label>
+                <input type="number" name="sum"  disabled style="text-align: center;">
+            </div>
+            <div style="text-align: center;margin-top: 15px;">
+                <button class="layui-btn layui-btn-normal btn determineBtn"
+                    style="margin: 0 0 0 15px;">
+                    <span>确定</span>
+                </button>
+                <button class="layui-btn layui-btn-normal btn chooseCan"  style="margin: 0 0 0 15px;">
+                    <span>取消</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="mask maskContnet">
         <div class="TitleContentWith">
-            <span class="maskSpan"  style="display: inline-block;"> 
+            <span class="maskSpan" style="display: inline-block;">
                 <i class="layui-icon layui-icon-loading "></i>
             </span>
             数据处理中，请稍候
@@ -171,6 +214,19 @@
         </button> 
         <button class="layui-btn layui-btn-sm btn operation {{d.dispatch_status==1?'':'hide'}}" lay-event="edit">
             <span style="color:#fff;">编辑物流信息</span>
+        </button> 
+        <button class="layui-btn layui-btn-sm btn operation" lay-event="goods">
+            <span style="color:#fff;">商品</span>
+        </button> 
+    </div>
+</script>
+<script type="text/html" id="imgtmp">
+    <div><img src="{{d.goods_images}}  " style="width: 40px; height: 40px;object-fit: cover;"></div>
+</script>
+<script type="text/html" id="refundDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn operation hide refundBtnTwo" lay-event="refund">
+            <span style="color:#fff;">退款</span>
         </button> 
     </div>
 </script>

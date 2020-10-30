@@ -187,6 +187,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         console.log(machineSetData)
         $('.maskHeader span').html(machineSetData.info + '详细信息')
         if (obj.event == 'set') {
+            aisleHtml1(wayArr)
             x = obj.data.wayX;
             y = obj.data.wayY;
             if (AisleDetailsFlag) {
@@ -1063,8 +1064,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             cols: [[
                 { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp" },
                 { field: 'goods_Name', width: 200, title: '商品名', color: '#409eff' },
-                { field: `classifyName`, width: 250, title: '商品类目' },
-                { field: 'goods_Core', width: 300, title: '商品编号', },
+                { field: `classifyName`, width: 150, title: '商品类目' },
+                { field: 'mail', width: 130, title: '是否邮寄商品', align: 'center',templet:function(d){
+                    return d.mail==0?'否':'是'
+                  } },
+                { field: 'goods_Core', width: 180, title: '商品编号', },
                 { field: 'operation', position: 'absolute', right: 0, width: 80, title: '操作', toolbar: '#GoodsbarDemo' },
 
             ]],
@@ -1187,14 +1191,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 wayList.push(wayitem[i])
             }
         }
-        aisleHtml(wayList);
+        // aisleHtml(wayList);
     };
     //选择商品
     $('.relative').click(function () {
         popupShow('goodsCont', 'goodsBox')
         if (goodsTableIns) {
             goodsTableIns.reload({
-                where: {}
+                where: {
+                    condition:sessionStorage.machineGoodsId,
+                }
             })
         } else {
             goodsreload();
@@ -1230,22 +1236,22 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     //                         aisleStr += `<div class="aisleNumderGoods" fireIndex="${index + ',' + Cindex}">
     //                         <div class="numderTop">                                   
     //                             <img src="${child.goods_images}" alt=""> 
-    //                             <span>${Cindex + 1}</span>
+    //                             <span>${item.id}</span>
     //                         </div>
     //                         <div class="numderBottom">
     //                             <div class="status1">正常</div>
-    //                             <div>数量:${child.count}</div>
+    //                             <div>数量:1</div>
     //                         </div>
     //                     </div>`
     //                     }else{
     //                         aisleStr += `<div class="aisleNumderGoods" fireIndex="${index + ',' + Cindex}">
     //                         <div class="numderTop">                                   
     //                         <img src="../img/failure.png" alt="">
-    //                             <span>${Cindex + 1}</span>
+    //                             <span>${item.id}</span>
     //                         </div>
     //                         <div class="numderBottom">
     //                             <div class="status1">正常</div>
-    //                             <div>数量:${child.count}</div>
+    //                             <div>数量:1</div>
     //                         </div>
     //                     </div>`
     //                     }
@@ -1254,11 +1260,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     //                 aisleStr += `<div class="aisleNumderGoods" fireIndex="${index + ',' + Cindex}">
     //                 <div class="numderTop">
     //                 <img src="../img/failure.png" alt="">
-    //                     <span>${Cindex + 1}</span>
+    //                     <span>${item.id}</span>
     //                 </div>
     //                 <div class="numderBottom">
     //                     <div class="status2">禁用</div>
-    //                     <div>数量:${child.count}</div>
+    //                     <div>数量:1</div>
     //                 </div>
     //             </div>`
     //             }
@@ -1271,6 +1277,71 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     //     $('.aisleGoodsCont').html(aisleStr)
     // }
     // 货道详情渲染
+    var wayArr=[
+        [{id:1},{id:2},{id:3},{id:4},{id:5},{id:6},{id:7}],
+        [{id:11},{id:12},{id:13},{id:14},{id:15},{id:16},{id:17}],
+        [{id:21},{id:22},{id:23},{id:24},{id:25},{id:26},{id:27},{id:28},{id:29},{id:30}],
+        [{id:31},{id:32},{id:34},{id:36},{id:38},],
+        [{id:41},{id:43},{id:45}],
+        [{id:51},{id:52},{id:54},{id:56}],
+    ]
+    function aisleHtml1(strList) {
+        var aisleStr = '';
+        strList.forEach((item, index) => {
+            aisleStr += `<div class="aisleListCont flexTwo">
+                            <div class="listIndex">
+                                <span>${index + 1}</span>
+                            </div>`
+            item.forEach((child, Cindex) => {
+                if (child.open != 0) {
+                    aisleStr += `<div class="aisleNumderGoods" >
+                                    <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
+                                    <div class="numderTop">                                   
+                                        <img src="${child.goods_images}" alt=""> 
+                                    <span>${child.id}</span>
+                                    </div>
+                                <div class="numderBottom">
+                                        <div class="status1">正常</div>
+                                    <div>数量:1</div>
+                                    </div>
+                                    </div>  
+                                    <div class="chooseCheck">
+                                        <input type="checkbox"   lay-skin="primary">
+                                        <span 1</span>
+                                    </div>
+                                </div>`
+                } else {
+                    aisleStr += `<div class="aisleNumderGoods" >
+                                    <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
+                                    <div class="numderTop">
+                                    <img src="${child.goods_images ? child.goods_images : 'http://172.16.71.142:8087/image/127b55b9-da32-4569-b740-3adf5e5524af.png'}" alt="">
+                                        <span>${item.id}</span>
+                                    </div>
+                                    <div class="numderBottom">
+                                        <div class="status2">禁用</div>
+                                        <div>数量:1</div>
+                                    </div>
+                                    </div>  
+                                    <div class="chooseCheck">
+                                        <input type="checkbox"   lay-skin="primary">
+                                        <span 1</span>
+                                    </div>
+                                </div>`
+                }
+            });
+            aisleStr += ` </div>`
+        });
+        // aisleStr += `<div class="aisleListCont flexTwo >
+        // <div class="listIndex">
+        //                         <span>${strList.length + 1}</span>
+        //                     </div>
+        //                 <div class="addAisle" indexVal="${strList.length + 1}">
+        //                     <span>+</span>
+        //                 </div>
+        //             </div>`
+        $('.aisleGoodsCont').html(aisleStr);
+        form.render('checkbox');
+    };
     function aisleHtml(strList) {
         var aisleStr = '';
         strList.forEach((item, index) => {
@@ -1284,16 +1355,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">                                   
                                         <img src="${child.goods_images}" alt=""> 
-                                    <span>${Cindex + 1}</span>
+                                    <span>${item.id}</span>
                                     </div>
                                 <div class="numderBottom">
                                         <div class="status1">正常</div>
-                                    <div>数量:${child.count}</div>
+                                    <div>数量:1</div>
                                     </div>
                                     </div>  
                                     <div class="chooseCheck">
-                                        <input type="checkbox" value="${child.id}" ${delAisleFlag ? '' : 'disabled'} name="${child.id}" lay-skin="primary">
-                                        <span title="${child.goods_Name ? child.goods_Name : '-'}">${child.goods_Name ? child.goods_Name : '-'}</span>
+                                        <input type="checkbox"   lay-skin="primary">
+                                        <span 1</span>
                                     </div>
                                 </div>`
                 } else {
@@ -1301,16 +1372,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">
                                     <img src="${child.goods_images ? child.goods_images : 'http://172.16.71.142:8087/image/127b55b9-da32-4569-b740-3adf5e5524af.png'}" alt="">
-                                        <span>${Cindex + 1}</span>
+                                        <span>${item.id}</span>
                                     </div>
                                     <div class="numderBottom">
                                         <div class="status2">禁用</div>
-                                        <div>数量:${child.count}</div>
+                                        <div>数量:1</div>
                                     </div>
                                     </div>  
                                     <div class="chooseCheck">
-                                        <input type="checkbox" value="${child.id}" ${delAisleFlag ? '' : 'disabled'} name="${child.id}" lay-skin="primary">
-                                        <span title="${child.goods_Name ? child.goods_Name : '-'}">${child.goods_Name ? child.goods_Name : '-'}</span>
+                                        <input type="checkbox"   lay-skin="primary">
+                                        <span 1</span>
                                     </div>
                                 </div>`
                 }

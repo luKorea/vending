@@ -55,13 +55,31 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             return d.payStatus == 1 ? '等待支付' : d.payStatus == 2?'已支付':'未支付'
           }
         },
-        { field: 'time', width: 180, title: '支付时间', align: 'center', },
+        { field: 'time', width: 180, title: '支付时间', align: 'center', templet:function(d){
+          if(d.time){
+            return timeStamp(d.time)
+          }else{
+            return '-'
+          }
+        }},
         { field: 'bili', width: 160, align: 'center', title: '支付类型',templet:function(d){
-          return d.payType==0?'支付宝':'微信'
+          return d.payType==1?'微信':'支付宝'
         } },
+        { field: 'sign_name', width: 210, title: '退款状态', align: 'center' ,templet:function(d){
+          var total=0;
+          var result=0;
+           d.goodsList.forEach(item=>{
+              total+=item.count;
+              result+=item.refund_count
+           })
+           return result==0?'未退款':total-result==0?'全部退款':'部分退款'
+      }},
         { field: 'shipStatus', align: 'center', width: 160, title: '出货状态', templet:function(d){
           return d.shipStatus==0?'未出货':d.shipStatus==1?'出货失败':'出货成功'
         }},
+        { field: 'sales_no', width: 160, title: '销售经理', align: 'center' ,templet:function(d){
+          return d.sales_no?d.sales_no:'-'
+      }},
         { field: 'payee', width: 160, title: '收款方', align: 'center', },
         { field: 'operation', width: 110, title: '详情 ', toolbar: '#barDemo', align: 'center' },
       ]],
@@ -353,6 +371,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       loading: true,
       done: function (res) {
         console.log(res)
+        refundTatol=0;
         res.data.forEach(item=>{
           refundTatol+=item.goods_Price;
         })
@@ -377,7 +396,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       goodsDetails();
     }
     $('.detailsOrderCode').html(obj.data.number);//订单编号
-    $('.payTime').html(obj.data.time);//支付时间
+    $('.payTime').html(timeStamp(obj.data.time));//支付时间
     $('.orderInformation button span').html((obj.data.shipStatus == 0 ? '未出货' :obj.data.shipStatus == 1?'出货失败':'出货成功'))
     var payNum = 0,
       paindSum = 0,

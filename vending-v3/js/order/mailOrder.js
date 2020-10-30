@@ -14,11 +14,11 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
             },
             cols: [[
                 { field: 'number', width: 210, title: '订单编号', align: 'center' },
-                { field: 'payType', width: 210, title: '付款类型', align: 'center',templet:function(d){
+                { field: 'payType', width: 150, title: '付款类型', align: 'center',templet:function(d){
                     return d.payType==0?'支付宝':'微信'
                 } },
                 { field: 'payee', width: 210, title: '收款账号', align: 'center' },
-                { field: 'Number', width: 210, title: '订单金额', align: 'center',templet:function(d){
+                { field: 'Number', width: 150, title: '订单金额', align: 'center',templet:function(d){
                     if(d.goodsList.lebght!=0){
                         var Num=0;
                         d.goodsList.forEach(item=>{
@@ -29,9 +29,24 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
                         return 0
                     }
                 } },
+                { field: 'sign_name', width: 180, title: '退款状态', align: 'center' ,templet:function(d){
+                    var total=0;
+                    var result=0;
+                     d.goodsList.forEach(item=>{
+                        total+=item.count;
+                        result+=item.refund_count
+                     })
+                     return result==0?'未退款':total-result==0?'全部退款':'部分退款'
+                }},
+                { field: 'sales_no', width: 210, title: '销售经理', align: 'center' ,templet:function(d){
+                    return d.sales_no?d.sales_no:'-'
+                }},
                 { field: 'sign_name', width: 210, title: '收货人', align: 'center' },
-                { field: 'sign_address', width: 210, title: '售货地址', align: 'center' },
-                { field: 'notes', width: 210, title: '备注', align: 'center' },
+                { field: 'sign_phone', width: 210, title: '收货人电话', align: 'center' },
+                { field: 'sign_address', width: 250, title: '收货地址', align: 'center' },
+                { field: 'notes', width: 210, title: '备注', align: 'center' ,templet:function(d){
+                    return d.notes?d.notes:'-'
+                }},
                 { field: 'notes', width: 210, title: '下单时间', align: 'center' ,templet:function(d){
                     return timeStamp(d.time)
                 }},
@@ -50,7 +65,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
                         return d.express_number ? d.express_number : '-'
                     }
                 },
-                { field: 'operation', width: 138, title: '操作 ',fixed: 'right', right: 0, toolbar: '#barDemo', align: 'center' },
+                { field: 'operation', width: 200, title: '操作 ',fixed: 'right', right: 0, toolbar: '#barDemo', align: 'center' },
             ]],
             page: true,
             loading: true,
@@ -99,10 +114,14 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
         mailOrderData = obj.data;
         if (obj.event == 'delivery') {
             popupShow('deliveryCont', 'deliveryBox');
-        } else if (obj.event) {
+        } else if (obj.event=='edit') {
             $('.editCont input[name="company"]').val(mailOrderData.express_type);
             $('.editCont input[name="logisticsNumber"]').val(mailOrderData.express_number)
             popupShow('editCont', 'editBox')
+        }else if(obj.event=='goods'){
+          
+                goodsDetails(obj.data.goodsList);
+              popupShow('goodsCont','goodsBox')
         }
 
     });
@@ -257,13 +276,157 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
     $('.refreshBtn').click(function () {
         location.reload();
     });
-    var stra = JSON.stringify({
-        random: '121312313'
-    })
-    loadingAjax('/api/order/getVerificationCode', 'post', stra).then(res => {
-        console.log(res)
-    }).catch(err => {
-        // console.log(err)
-        $('.imgs').attr('src', err)
-    })
+
+
+    // 商品部分
+    var refundTatol=0;
+  var orderGoods = null;
+    function goodsDetails(data) {
+        orderGoods = table.render({
+          elem: '#GooodsData',
+          cols: [[
+            // { checkbox: true },
+            { field: 'goods_images', width: 80, title: '图片', templet: "#imgtmp", align: 'center' },
+            { field: 'goods_Name', width: 140, title: '商品名', align: 'center', },
+            { field: 'goods_Core', width: 140, title: '商品编号', align: 'center', },
+            { field: 'count', width: 120, title: '购买数量', align: 'center' },
+            { field: 'refund_count', width: 120, title: '已退款数量', align: 'center' },
+            // {
+            //   field: 'goods_Cost', align: 'center', width: 140, title: '退款状态 ', templet: function (d) {
+            //     return d.refund == 0 ? '-' : '已退款'
+            //   }
+            // },
+    
+    
+            { field: 'goods_Price', width: 130, title: '销售价 ', align: 'center', },
+            { field: 'goods_Cost', width: 130, title: '成本价 ', align: 'center', },
+            { field: 'operation', right: 0, width: 80, align: 'center', title: '操作', toolbar: '#refundDemo', fixed: 'right' },
+          ]],
+          data,
+          id: 'goodsLIstTable',
+          loading: true,
+          done: function (res) {
+            refundTatol=0;
+            // console.log(res)
+            res.data.forEach(item=>{
+              refundTatol+=item.goods_Price;
+            })
+            permissions();
+          }
+        })
+      }
+
+    //   监听退款
+    var goodsData=null;
+    table.on('tool(GooodsData)', function (obj) {
+        if (mailOrderData.payStatus != 2) {
+          layer.msg('订单未支付，不能进行退款操作', { icon: 7 });
+          return;
+        }
+        goodsData = obj.data;
+        console.log(goodsData)
+        if (obj.data.count != obj.data.refund_count) {
+          $('.twoPoles span').html(obj.data.count - obj.data.refund_count);
+          $('.refundNumber input').val(1)
+          $('.refundNumber input').prop('max', obj.data.count - obj.data.refund_count);
+          $('.sumInput input[name="sum"]').val(goodsData.goods_Price);
+          popupShow('refundNUmCont', 'refundBox')
+        } else {
+          layer.msg('该商品已全部退款', { icon: 7 })
+        }
+      });
+       // 取消退款
+  $('.refundNUmCont .chooseCan').click(function () {
+    popupHide('refundNUmCont', 'refundBox')
+  });
+ // 正则检验只能输入正整数
+ var reduction = 1;
+ $('.refundNumber input').keyup(function () {
+   var num = $(this).val(),
+     re = /^\d*$/;
+   if (!re.test(num)) {
+     layer.msg('只能输入正整数', { icon: 7 });
+     $(this).val(reduction);
+     $('.sumInput input[name="sum"]').val(Number($(this).val()*goodsData.goods_Price));
+   } else {
+     reduction = $(this).val();
+     console.log(reduction);
+     $('.sumInput input[name="sum"]').val(Number($(this).val()*goodsData.goods_Price));
+   }
+   $('.sumInput input[name="sum"]').val(Number($(this).val()*goodsData.goods_Price));
+ });
+ $('.refundNumber input').change(function(){
+   $('.sumInput input[name="sum"]').val(Number($(this).val()*goodsData.goods_Price));
+ })
+
+
+
+ $('.refundNUmCont .determineBtn').click(function () {
+    console.log($('.refundNumber input').val())
+    if ($('.refundNumber input').val() > 0 && $('.refundNumber input').val() <= goodsData.count - goodsData.refund_count) {
+      layer.confirm('确定退款？', function (index) {
+        layer.close(index);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+       
+        if(mailOrderData.payType==0){
+          var refundData = JSON.stringify({
+            machineId:mailOrderData.machineId,
+            orderId: mailOrderData.number,
+            goodId: goodsData.goods_Id,
+            count: Number($('.refundNumber input').val()),
+            amount:Number($('.sumInput input[name="sum"]').val())
+            // amount:0.01
+          });
+          loadingAjax('/api/pay/refund_alipay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
+            layer.msg(res.message, { icon: 1 });
+            mailTable.reload({
+              where: {}
+            })
+          }).catch(err => {
+            layer.msg(err.message, { icon: 2 });
+          })
+        }else if(mailOrderData.payType==1){
+          var refundData = JSON.stringify({
+            machineId:mailOrderData.machineId,
+            orderId: mailOrderData.number,
+            goodId: goodsData.goods_Id,
+            count: Number($('.refundNumber input').val()),
+            // amount:Number($('.sumInput input[name="sum"]').val()),
+            amount:0.01,
+            transaction_id:mailOrderData.transaction_id,
+            // total:refundTatol
+            total:0.01
+          });
+          loadingAjax('/api/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
+            layer.msg(res.message, { icon: 1 });
+            popupHide('orderDetails', 'orderDetailsBox');
+            mailTable.reload({
+              where: {}
+            })
+          }).catch(err => {
+            layer.msg(err.message, { icon: 2 });
+          })
+        }
+       
+       
+      })
+    } else {
+      layer.msg('请按照提示填写数量', { icon: 7 })
+    }
+  });
+      var addFlag=false,
+      editFlag=false;
+    
+      permissionsVal(420, 421).then(res => {
+        addFlag= res.addFlag;
+        editFlag= res.editFlag;
+        permissions();
+      }).catch(err => {
+        layer.msg('服务器请求超时', { icon: 7 })
+      });
+      function permissions(){
+        addFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
+        editFlag ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
+      };
 })

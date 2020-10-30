@@ -1,7 +1,7 @@
-import '../../MyCss/goods/customCategory.css'
+import '../../MyCss/goods/customCategory.css';
 layui.use(['table', 'form', 'layer', 'tree'], function () {
   sessionStorage.classTag = sessionStorage.machineID;
-   var  table = layui.table,
+  var table = layui.table,
     layer = layui.layer,
     tree = layui.tree,
     rank = null,
@@ -17,9 +17,9 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       }
       , cols: [[
         { field: '1', width: 80, title: '', templet: "#imgtmp", event: 'rank', align: 'center' },
-        { field: 'rank', width: 80, title: '排序' , align: 'center'},
-        { field: 'classifyName', width: 150, title: '类目名' , align: 'center'},
-        { field: 'remark', width: 150, title: '备注' , align: 'center'},
+        { field: 'rank', width: 80, title: '排序', align: 'center' },
+        { field: 'classifyName', width: 150, title: '类目名', align: 'center' },
+        { field: 'remark', width: 150, title: '备注', align: 'center' },
         // { field: 'type', width: 180, title: '使用机型'},
         {
           field: 'user', width: 150, title: '创建人', align: 'center', templet: function (d) {
@@ -30,7 +30,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
           field: 'classifyTime', width: 200, title: '创建时间', align: 'center'
         },
         {
-          field: 'lastUser', width: 150, title: '最后修改人', align: 'center', 
+          field: 'lastUser', width: 150, title: '最后修改人', align: 'center',
         },
         {
           field: 'lastTime', width: 190, title: '最后修改时间', align: 'center'
@@ -73,7 +73,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       done: function (res) {
         rank = res.data;
         permissions();
-        if(res.code==405){
+        if (res.code == 405) {
           $('.hangContent').show();
         }
       }
@@ -128,7 +128,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
               }
             })
             // $('.addClass').fadeOut();
-            loadingAjax('/api/refreshGoods','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+            loadingAjax('/api/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
           } else if (res.code == 403) {
             window.parent.location.href = "login.html";
           } else {
@@ -164,7 +164,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       layer.confirm('确定删除？', function (index) {
         // obj.del();
         // layer.close(index);
-        Goodsdel(editData, 2, obj, index,tableIns,sessionStorage.classTag);
+        Goodsdel(editData, 2, obj, index, tableIns, sessionStorage.classTag);
       });
 
     } else if (obj.event == 'rank') {
@@ -212,7 +212,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
 
               }
             })
-            loadingAjax('/api/refreshGoods','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+            loadingAjax('/api/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
           } else if (res.code == 403) {
             window.parent.location.href = "login.html";
           }
@@ -240,17 +240,24 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
   });
 
   var dataList = treeList();
-  treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId','','','','true');
-// 刷新商户列表
-$('.refreshBtnList').click(function(){
-  dataList = treeList();
-  treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId','','','','true');
-  tableIns.reload({
-    where:{
-      merchantId: sessionStorage.machineID,
+  treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId', '', '', '', 'true');
+  // 刷新商户列表
+  $('.refreshBtnList').click(function () {
+    var dataList1 = treeList();
+    if (JSON.stringify(dataList1)  != JSON.stringify(dataList)) {
+      dataList = dataList1;
+      treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId', '', '', '', 'true');
+      tableIns.reload({
+        where: {
+          merchantId: sessionStorage.machineID,
+        }
+      })
+      layer.msg('已刷新',{icon:1})
+    } else {
+      layer.msg('已刷新',{icon:1})
     }
+
   })
-})
   // 刷新页面
   // $('.refreshBtn').click(function () {
   //   // $('.keyText').val('')
@@ -276,7 +283,7 @@ $('.refreshBtnList').click(function(){
       f5Fun()
     }
   });
- 
+
   // function permissions(){
   //   permissionsVal(373,374,372,403).then(res=>{
   //     console.log(res);
@@ -288,23 +295,23 @@ $('.refreshBtnList').click(function(){
   //     layer.msg('服务器请求超时',{icon:7})
   //   })
   // };
-  var addFlag=false,
-  editFlag=false,
-  delFlag=false,
-  fourFlag=false;
-  permissionsVal(373,374,372,403).then(res=>{
-    addFlag=res.addFlag;
-    editFlag=res.editFlag;
-    delFlag=res.delFlag;
-    fourFlag=res.fourFlag;
+  var addFlag = false,
+    editFlag = false,
+    delFlag = false,
+    fourFlag = false;
+  permissionsVal(373, 374, 372, 403).then(res => {
+    addFlag = res.addFlag;
+    editFlag = res.editFlag;
+    delFlag = res.delFlag;
+    fourFlag = res.fourFlag;
     permissions();
-  }).catch(err=>{
-    layer.msg('服务器请求超时',{icon:7})
+  }).catch(err => {
+    layer.msg('服务器请求超时', { icon: 7 })
   })
-  function permissions(){
-    addFlag?$('.add-btn').removeClass('hide'):$('.add-btn').addClass('hide');
-    editFlag?$('.TEdit').removeClass('hide'):$('.TEdit').addClass('hide');
-    delFlag?$('.TDel').removeClass('hide'):$('.TDel').addClass('hide');
-    fourFlag?$('.rankImg').removeClass('hide'):$('.rankImg').addClass('hide');
+  function permissions() {
+    addFlag ? $('.add-btn').removeClass('hide') : $('.add-btn').addClass('hide');
+    editFlag ? $('.TEdit').removeClass('hide') : $('.TEdit').addClass('hide');
+    delFlag ? $('.TDel').removeClass('hide') : $('.TDel').addClass('hide');
+    fourFlag ? $('.rankImg').removeClass('hide') : $('.rankImg').addClass('hide');
   };
 })                                                      

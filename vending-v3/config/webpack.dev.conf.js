@@ -19,13 +19,21 @@ module.exports = merge(base, {
             //把/api/t转发到target，但是转发的是http://xxx/api/t
             //不要/api,用pathRewrite
             '/api': {
-                target: 'http://192.168.3.19:8086', //(跨域的地址)
-                // target: 'http://119.29.104.217:8086', //(跨域的地址)
-                changeOrigin: true,
+                // target: 'http://192.168.3.33:8086', //(跨域的地址)
+                target: 'http://119.29.104.217:8086', //(跨域的地址)
+                changeOrigin: false,
                 pathRewrite: {
                     '^/api': ''
                 }
-            }
+            },
+            '/apis': {
+                target: 'http://192.168.3.19:8086', //(跨域的地址)
+                // target: 'http://119.29.104.217:8086', //(跨域的地址)
+                changeOrigin: false,
+                pathRewrite: {
+                    '^/apis': ''
+                }
+            },
         }
     },
     //启用source-map方便调试

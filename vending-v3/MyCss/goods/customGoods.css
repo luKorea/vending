@@ -352,6 +352,7 @@
     position: relative;
     z-index: 1;
     margin-left: -75px;
+    object-fit: cover;
 }
 .up-iconCont1,.up-iconCont2{
     display: block;
