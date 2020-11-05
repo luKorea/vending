@@ -17,6 +17,10 @@
             <div style="display: flex;">
                 <div class="left-mian" >
                     <div class="accountContnet" style="margin-left: 15px;">
+                        <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表" data-direction="bottom" type="button">
+                            <i class="layui-icon layui-icon-refresh-3 "></i>
+                            <!-- 刷新 -->
+                        </button>
                         <p style="margin:20px 20px 10px;color:#be954a;">商户列表</p>
                         <div id="test1" class="demo-tree demo-tree-box"></div>
                     </div>
@@ -24,14 +28,31 @@
                 </div>
                 <i class="layui-icon layui-icon-right  onLeft"></i>
                 <div class="main">
-                    <div class="listHeader">
-                        <button class="layui-btn layui-btn-normal addBtnClick btn" >
-							<span>添加收款账号</span>
-                        </button>
-                        <button class="layui-btn layui-btn-normal refreshBtn  btn" >
-							<i class="layui-icon layui-icon-refresh"></i>
-							<span>刷新</span>
-						</button>
+                        <!-- <div class="listHeader">
+                            <button class="layui-btn layui-btn-normal addBtnClick btn" >
+                                <span>添加收款账号</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal refreshBtn  btn" >
+                                <i class="layui-icon layui-icon-refresh"></i>
+                                <span>刷新</span>
+                            </button>
+                        </div> -->
+                    <div class="newHeader" >
+                        <div class="newHeaderText">
+                            操作部分
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary addBtnClick">
+                                <i class="layui-icon layui-icon-app"></i>
+                                <span>添加收款账号</span>              
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary refreshBtn">
+                                <i class="layui-icon layui-icon-refresh-3 "></i>
+                                <!-- 刷新 -->
+                            </button>
+                        </div>
                     </div>
                     <div>
                         <div class="data-list">

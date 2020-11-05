@@ -16,12 +16,17 @@
 				<!-- 左边部分 -->
 				<div class="left-mian">
 					<div class="accountContnet" style="margin-left:15px;">
+						<button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表" data-direction="bottom" type="button">
+							<i class="layui-icon layui-icon-refresh-3 "></i>
+							<!-- 刷新 -->
+						</button>
 						<p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
-						<button class="layui-btn layui-btn-normal  btn refreshBtnList" type="button"
+						<!-- <button class="layui-btn layui-btn-normal  btn refreshBtnList" type="button"
 							style="margin:10px 20px 0px ;">
 							<i class="layui-icon layui-icon-refresh "></i>
 							<span>刷新</span>
-						</button>
+						</button> -->
+						
 						<div id="testGoods" class="demo-tree demo-tree-box"></div>
 					</div>
 					<!-- 右侧栏 -->
@@ -29,7 +34,7 @@
 				</div>
 				<i class="layui-icon layui-icon-right  on-left"></i>
 				<div class="margin">
-					<div class="header-query">
+					<!-- <div class="header-query">
 						<div class="layui-row">
 							<div class=" layui-col-sm12 layui-col-md12 layui-col-lg12">
 								<button class="layui-btn layui-btn-normal  add-btn btn hide" style="margin: 0;">
@@ -108,7 +113,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="newHeader">
 						<div class="newHeaderText">
 							条件查询
@@ -116,15 +121,15 @@
 						<form action="" class="layui-form" lay-filter="">
 							<div class="newKeyContent">
 								<div class="newKeyItem">
-									<label for="关键字">关键字</label>
+									<label for="">关键字</label>
 									<div>
-										<input type="text" placeholder="商品名">
+										<input type="text" lass="KyeText" placeholder="商品名">
 									</div>
 								</div>
 							</div>
 							<div class="newKeyContent">
 								<div class="newKeyItem">
-									<label for="关键字">商品类目</label>
+									<label for="">商品类目</label>
 									<div class="layui-form" lay-filter="myDiv" >
 										<select name="" id="GoodsType" lay-filter="mySelect">
 										</select>
@@ -133,27 +138,46 @@
 							</div>
 							<div class="newKeyContent">
 								<div class="newKeyItem">
-									<label for="关键字">状态</label>
+									<label for="">状态</label>
 									<div class="layui-form" lay-filter="myDiv" >
-										<select name="" id="GoodsType" lay-filter="mySelect">
+										<select name="" id="" lay-filter="stateSelect">
+											<option value="">全部</option>
+											<option value="0">不启用</option>
+											<option value="1">启用</option>
 										</select>
 									</div>
 								</div>
 							</div>
 							<div class="newKeyContent">
-								<button type="button" class="layui-btn layui-btn-primary">
+								<button type="button" class="layui-btn layui-btn-primary query-btnClick">
 									<i class="layui-icon layui-icon-search"></i>
-									查询
+									<span>查询</span>
+									
 								</button>
 							</div>
 							<div class="newKeyContent">
-								<button type="button" class="layui-btn layui-btn-primary">
+								<button type="button" class="layui-btn hide add-btn layui-btn-primary">
 									<i class="layui-icon layui-icon-app"></i>
-									添加类目
+									<span>添加商品</span>
+									
 								</button>
 							</div>
 							<div class="newKeyContent">
-								<button type="button" class="layui-btn layui-btn-primary">
+								<button type="button" class="layui-btn layui-btn-primary pushGoodsBtn hide">
+									<i class="layui-icon layui-icon-export "></i>
+									<span>推送商品</span>
+									
+								</button>
+							</div>
+							<div class="newKeyContent">
+								<button type="button" class="layui-btn layui-btn-primary pushListBtn  hide">
+									<i class="layui-icon layui-icon-list "></i>
+									<span>推送列表</span>
+									
+								</button>
+							</div>
+							<div class="newKeyContent">
+								<button type="button" class="layui-btn layui-btn-primary query-btnClick">
 									<i class="layui-icon layui-icon-refresh-3 "></i>
 									<!-- 刷新 -->
 								</button>

@@ -80,6 +80,9 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         { field: 'sales_no', width: 160, title: '销售经理', align: 'center' ,templet:function(d){
           return d.sales_no?d.sales_no:'-'
       }},
+      { field: 'notes', width: 210, title: '备注', align: 'center' ,templet:function(d){
+        return d.notes?d.notes:'-'
+    }},
         { field: 'payee', width: 160, title: '收款方', align: 'center', },
         { field: 'operation', width: 110, title: '详情 ', toolbar: '#barDemo', align: 'center' },
       ]],

@@ -1,5 +1,6 @@
 import '../../MyCss/advertising/release.css'
 layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function () {
+    tooltip('.refreshBtnList', {transition: true, time: 200});
     var token = sessionStorage.token,
         tree = layui.tree,
         form = layui.form;
@@ -1203,9 +1204,26 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         layer.msg('服务器请求超时', { icon: 7 })
     });
     function permissions() {
-        addFlag ? $('.publicBtn').removeClass('hide') : $('.publicBtn').addClass('hide');
+        addFlag ? $('.publicAdvertisingBtn').removeClass('hide') : $('.publicAdvertisingBtn').addClass('hide');
         delFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
-        fourFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
-        fiveFlag ? $('.pushListBtn').removeClass('hide') : $('.pushListBtn').addClass('hide');
+        fourFlag ? $('.pushReleaseBtn').removeClass('hide') : $('.pushReleaseBtn').addClass('hide');
+        fiveFlag ? $('.RpushListBtn').removeClass('hide') : $('.RpushListBtn').addClass('hide');
     };
+
+    // 商户刷新
+    $('.refreshBtnList').click(function(){
+        var dataList1 = treeList();
+        if (JSON.stringify(dataList1)  != JSON.stringify(dataList)) {
+            dataList=dataList1;
+            treeFun(tree, 'test1', advertisingLis, dataList, 'conditionThree');
+            advertisingLis.reload({
+                where: {
+                    conditionThree: sessionStorage.machineID
+                },
+            })
+            
+        }else{
+            layer.msg('已刷新',{icon:1})
+        }
+    })
 });

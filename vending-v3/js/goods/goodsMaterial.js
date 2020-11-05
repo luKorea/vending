@@ -4,12 +4,12 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   var index = 0
   $('.navTab li').click(function () {
     console.log($(this).index())
-    if($(this).index()==2){
-      if(!videoTable){
+    if ($(this).index() == 2) {
+      if (!videoTable) {
         videoTableFun();
       }
-    }else if($(this).index()==1){
-      if(!detailsTable){
+    } else if ($(this).index() == 1) {
+      if (!detailsTable) {
         detailsTableFun();
       }
     }
@@ -32,7 +32,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     range: true,
     done: function (value, date, endDate) {
       console.log(value); //得到日期生成的值，如：2017-08-18
-      timerKey = value.split(' - ');
+      var timerKey = value.split(' - ');
       console.log(timerKey);
       startTime = timerKey[0];
       endTime = timerKey[1];
@@ -47,7 +47,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     range: true,
     done: function (value, date, endDate) {
       console.log(value); //得到日期生成的值，如：2017-08-18
-      timerKey = value.split(' - ');
+      var timerKey = value.split(' - ');
       console.log(timerKey);
       startTime2 = timerKey[0];
       endTime2 = timerKey[1];
@@ -61,7 +61,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     range: true,
     done: function (value, date, endDate) {
       console.log(value); //得到日期生成的值，如：2017-08-18
-      timerKey = value.split(' - ');
+      var timerKey = value.split(' - ');
       console.log(timerKey);
       startTime3 = timerKey[0];
       endTime3 = timerKey[1];
@@ -104,7 +104,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   })
 
   var table = layui.table,
-  // 商品列表图片
+    // 商品列表图片
     advertisingLis = table.render({
       elem: '#ImgData',
       method: 'post',
@@ -126,7 +126,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         { field: 'number', width: 200, title: '图片编号', align: 'center', },
         { field: 'addUser', width: 150, title: '创建人', align: 'center', },
         { field: 'publishTime', width: 180, title: '创建时间', align: 'center' },
-        
+
         // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
         { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoImg', align: 'center', },
       ]]
@@ -266,10 +266,10 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       }
     })
   })
-  var videoTable =null;
+  var videoTable = null;
   // 视频列表
-  function videoTableFun(){
-    videoTable= table.render({
+  function videoTableFun() {
+    videoTable = table.render({
       elem: '#VideoData',
       method: 'post',
       url: '/api/good_material/getGoodMaterial',
@@ -289,10 +289,10 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         { field: 'number', width: 200, title: '视频编号', align: 'center', },
         { field: 'addUser', width: 150, title: '创建人', align: 'center', },
         { field: 'publishTime', width: 180, title: '创建时间', align: 'center' },
-        
+
         // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
         { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoVideo', align: 'center', },
-  
+
       ]]
       , page: true
       , id: 'VideoListData'
@@ -317,7 +317,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
             "msg": res.message, //解析提示文本
           }
         }
-  
+
       },
       where: {
         conditionFour: '1',
@@ -336,7 +336,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       }
     });
   }
-  
+
   // 监听视频操作
   table.on('tool(VideoData)', function (obj) {
     console.log(obj);
@@ -390,7 +390,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
               popupHide('addImgCont', 'addImgBox');
               $('.FlexInputWidth ingpu[name="ImgNane"]').val('');
               $('#GoodsImg').attr("src", '');
-              addGoodsImg=null;
+              addGoodsImg = null;
               $('.upload-list').hide()
               layer.msg(res.message, { icon: 1 });
               advertisingLis.reload({
@@ -419,7 +419,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     var uploadVideo = new FormData();
     uploadVideo.append('file', e.target.files[0]);
     $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon')
+    $('.maskSpan').addClass('maskIcon')
     $.ajax({
       type: 'post',
       url: '/api/fileUpload',
@@ -440,10 +440,10 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         } else {
           layer.msg(res.message, { icon: 7 });
         }
-      },error:function(err){
+      }, error: function (err) {
         $('.mask').fadeOut();
         $('.maskSpan').removeClass('maskIcon')
-        layer.msg('上传失败',{icon:2})
+        layer.msg('上传失败', { icon: 2 })
       }
     })
   })
@@ -470,7 +470,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
               $('.FlexInputWidth input[name="VideoName"]').val('');
               videoSrc = null;
               $('.uploadVideo video').attr('src', '')
-              $('.uploadVideo').fadeIn();
+              $('.uploadVideo').fadeOut();
               layer.msg(res.message, { icon: 1 });
               videoTable.reload({
                 where: {}
@@ -766,7 +766,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       editImg.append("file", editImgfile);
       console.log(editImg)
       $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon')
+      $('.maskSpan').addClass('maskIcon')
       $.ajax({
         type: 'post',
         url: '/api/fileUpload',
@@ -778,7 +778,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         data: editImg,
         success: function (res) {
           $('.mask').fadeOut();
-        $('.maskSpan').removeClass('maskIcon')
+          $('.maskSpan').removeClass('maskIcon')
           console.log(res)
           if (res.code == 0) {
             // addGoodsImgIndex 1为编辑 2为添加
@@ -786,16 +786,16 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
             $('#GoodsImg').attr("src", addGoodsImg);
             $('.ImgCropping').fadeOut();
             $('.upload-list').fadeIn();
-            
+
             // $('.cropper-bg').css('background','transparent')
             // $('.previewImg img').attr('src', '');
           } else {
             layer.msg(res.msg)
           }
-        },error:function(err){
+        }, error: function (err) {
           $('.mask').fadeOut();
-        $('.maskSpan').removeClass('maskIcon');
-        layer.msg('上传失败',{icon:2})
+          $('.maskSpan').removeClass('maskIcon');
+          layer.msg('上传失败', { icon: 2 })
         }
       });
     }
@@ -814,10 +814,10 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   });
 
 
-// 详情图片列表
+  // 详情图片列表
   var detailsTable = null;
-  function detailsTableFun(){
-    detailsTable= table.render({
+  function detailsTableFun() {
+    detailsTable = table.render({
       elem: '#detailsImgData',
       method: 'post',
       url: '/api/good_material/getGoodMaterial',
@@ -832,13 +832,13 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         {
           field: 'status', width: 180, title: '审核状态', align: 'center', templet: function (d) {
             return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
-  
+
           }
         },
         { field: 'number', width: 200, title: '图片编号', align: 'center', },
         { field: 'addUser', width: 150, title: '创建人', align: 'center', },
         { field: 'publishTime', width: 180, title: '创建时间', align: 'center' },
-       
+
         // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
         { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoImg', align: 'center', },
       ]]
@@ -865,7 +865,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
             "msg": res.message, //解析提示文本
           }
         }
-  
+
       },
       where: {
         conditionFour: '2',
@@ -879,12 +879,12 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         if (res.code == 403) {
           window.parent.location.href = "login.html";
         } else {
-  
+
         }
       }
     });
   }
- 
+
 
   $('.details .add-btn').click(function () {
     $('.addDetailsImgCont input[name="detailsImgNane"]').val('');
@@ -896,7 +896,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     var upDetails = new FormData();
     upDetails.append('file', e.target.files[0]);
     $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon')
+    $('.maskSpan').addClass('maskIcon')
     $.ajax({
       type: 'post',
       url: '/api/fileUpload',
@@ -919,10 +919,10 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
           layer.msg(res.message, { icon: 7 });
         }
       },
-      error:function(err){
+      error: function (err) {
         $('.mask').fadeOut();
         $('.maskSpan').removeClass('maskIcon')
-        layer.msg('上传失败',{icon:2})
+        layer.msg('上传失败', { icon: 2 })
       }
     })
   });
@@ -964,7 +964,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         layer.msg('请上传图片', { icon: 7 });
       }
     } else {
-      layer.msg('请输入图片', { icon: 7 });
+      layer.msg('请输入图片名', { icon: 7 });
     }
   });
 

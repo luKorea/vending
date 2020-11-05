@@ -9,22 +9,19 @@
     <!-- 左侧公共部分 -->
     <title>订单管理</title>
 </head>
+
 <body>
     <div class="order-wrap">
         <div class="box-tab">
             <div class="layui-tab layui-tab-brief" lay-filter="demo">
-                <ul class="layui-tab-title">
+                <!-- <ul class="layui-tab-title">
                     <li class="layui-this">售货机订单</li>
-                    <!-- <li>用户管理</li>
-                            <li>权限分配</li>
-                            <li>商品管理</li>
-                            <li>订单管理</li> -->
-                </ul>
+                </ul> -->
 
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <!-- 头部查询部分 -->
-                        <div class="query-contnet margin">
+                        <!-- <div class="query-contnet margin">
                             <div class="layui-row">
                                 <div class="layui-col-sm3 layui-col-md6 layui-col-lg4">
                                     <div class="key-contnet">
@@ -32,12 +29,12 @@
                                         <div class="itmes">
                                             <div class="layui-inline">
                                                 <div class="layui-input-inline">
-                                                    <input style="text-align: center;" type="text" class="layui-input" id="test6" autocomplete="off" placeholder=" - ">
+                                                    <input style="text-align: center;" type="text" class="layui-input"
+                                                        id="test6" autocomplete="off" placeholder=" - ">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                  
                                 </div>
                                 <div class="layui-col-sm3 layui-col-md6 layui-col-lg3">
                                     <div style="max-width: 280px;margin-left: 50px;" class="key-contnet">
@@ -45,26 +42,64 @@
                                         <input type="text" name="orderCode" placeholder="请输入订单编号">
                                     </div>
                                 </div>
-                                <!-- <div class="layui-col-sm3 layui-col-md3">
-                                    <div style="max-width: 280px;margin-left: 50px;" class="key-contnet">
-                                        <div class="key-text">输入会员号码</div>
-                                        <input type="text" value="请输入会员号码">
-                                    </div>
-                                </div> -->
                                 <div class="layui-col-sm2 layui-col-md6 layui-col-lg3 quert-export">
                                     <button class="layui-btn layui-btn-normal queryBtn btn">
                                         <i class="layui-icon layui-icon-search"></i>
                                         <span>查询</span>
                                     </button>
-                                    <button class="layui-btn layui-btn-normal pushBtn hide btn" style="margin-left: 10px;">
+                                    <button class="layui-btn layui-btn-normal pushBtn hide btn"
+                                        style="margin-left: 10px;">
                                         <i class="layui-icon layui-icon-print"></i>
                                         <span>导出</span>
                                     </button>
-                                    <button class="layui-btn layui-btn-normal refreshBtn btn" style="margin-left: 10px;">
+                                    <button class="layui-btn layui-btn-normal refreshBtn btn"
+                                        style="margin-left: 10px;">
                                         <i class="layui-icon layui-icon-refresh"></i>
                                         <span>刷新</span>
                                     </button>
                                 </div>
+                            </div>
+                        </div> -->
+                        <div class="newHeader" style="margin: 30px 20px 20px;">
+                            <div class="newHeaderText">
+                                条件查询
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">订单时间</label>
+                                    <div>
+                                        <input style="text-align: center;" type="text" class="layui-input" id="test6"
+                                            autocomplete="off" placeholder=" - ">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">订单编号</label>
+                                    <div class="key-contnet ">
+                                        <input type="text" name="orderCode"  placeholder="订单编号">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary queryBtn">
+
+                                    <i class="layui-icon layui-icon-search"></i>
+                                    <span>查询</span>
+
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary pushBtn hide">
+                                    <i class="layui-icon layui-icon-print"></i>
+                                    <span>导出</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary queryBtn">
+                                    <i class="layui-icon layui-icon-refresh-3 "></i>
+                                    <!-- 刷新 -->
+                                </button>
                             </div>
                         </div>
                         <!-- 筛选条件-->
@@ -215,7 +250,7 @@
                             <div class="ban-input">
                                 <div class="input-contnet">
                                     <div>
-                                        利润总  金额
+                                        利润总 金额
                                     </div>
                                     <input type="text" name="profitsSum" value="" disabled>
 
@@ -262,7 +297,7 @@
                                             <p>售货机列表</p>
                                             <div class="equipment">
                                                 <div style="padding-left:10px;padding: 13px 0 0 0; ">
-                                                    <span class="allmachine active" >全部终端</span>
+                                                    <span class="allmachine active">全部终端</span>
                                                 </div>
                                                 <div class="machineList" id="demo">
                                                 </div>
@@ -273,7 +308,7 @@
                                 <div class="sidebar">
                                     <i class="layui-icon layui-icon-left"></i>
                                 </div>
-                                
+
                             </div>
                             <i class="layui-icon layui-icon-right  onLeft" style="z-index: 888;"></i>
                             <div class="data-right">
@@ -338,7 +373,7 @@
                                 <span>订单金额 ：</span>
                                 <span class="orderSum">￥0</span>
                             </div>
-                            
+
                             <div>
                                 <span>实收金额 ：</span>
                                 <span class="paidInSum">￥0</span>
@@ -379,7 +414,7 @@
                                 <span style="color: red;width: 75%;">温馨提示：退款请认真核对信息！</span>
                                 <!-- <p style="float: right;width: 25%;">退款金额：<span class="refundNum">0</span></p> -->
                             </div>
-                           
+
                             <!-- <button class="layui-btn layui-btn-normal delBtn refundBtn  btn" style="padding: 0 18px;">
                                 <span>退款</span>
                             </button> -->
@@ -390,14 +425,15 @@
                             </div>
                         </div>
                     </div>
-                  
+
                 </div>
             </div>
         </div>
-       <!-- 退款 -->
-        <div class="refundNUmCont maskContnet" >
+        <!-- 退款 -->
+        <div class="refundNUmCont maskContnet">
             <div class="refundBox margin0">
-                <div class="twoPoles" style="text-align: center;font-size: 14px;">请输入需要退款商品的数量（最少为1,最多为<span></span>）</div>
+                <div class="twoPoles" style="text-align: center;font-size: 14px;">请输入需要退款商品的数量（最少为1,最多为<span></span>）
+                </div>
                 <!-- <div class="refundNumber">
                     <input type="number" value="1" min="1">
                 </div> -->
@@ -407,14 +443,13 @@
                 </div>
                 <div class="listFlex sumInput">
                     <label for="">金额：</label>
-                    <input type="number" name="sum"  disabled style="text-align: center;">
+                    <input type="number" name="sum" disabled style="text-align: center;">
                 </div>
                 <div style="text-align: center;margin-top: 15px;">
-                    <button class="layui-btn layui-btn-normal btn determineBtn"
-                        style="margin: 0 0 0 15px;">
+                    <button class="layui-btn layui-btn-normal btn determineBtn" style="margin: 0 0 0 15px;">
                         <span>确定</span>
                     </button>
-                    <button class="layui-btn layui-btn-normal btn chooseCan"  style="margin: 0 0 0 15px;">
+                    <button class="layui-btn layui-btn-normal btn chooseCan" style="margin: 0 0 0 15px;">
                         <span>取消</span>
                     </button>
                 </div>
@@ -422,7 +457,7 @@
         </div>
 
         <!-- 导出订单部分 -->
-        <div class="exportCont maskContnet" >
+        <div class="exportCont maskContnet">
             <div class="exportBox margin">
                 <div class="playHeader">
                     <span>导出订单</span>
@@ -435,14 +470,14 @@
                     <div class="listFlex">
                         <label><span style="color: red;">*</span>时间：</label>
                         <div class="layui-input-inline" style="width: 60%;">
-                            <input type="text" class="layui-input" id="test8" placeholder=" - " style="text-align: center;">
-                          </div>
+                            <input type="text" class="layui-input" id="test8" placeholder=" - "
+                                style="text-align: center;">
+                        </div>
                     </div>
                 </div>
-                <div class="content-footer" >
+                <div class="content-footer">
                     <div style="text-align: center;">
-                        <button class="layui-btn layui-btn-normal btn determinePushBtn"
-                            style="margin: 0 0 0 15px;">
+                        <button class="layui-btn layui-btn-normal btn determinePushBtn" style="margin: 0 0 0 15px;">
                             <span>确定</span>
                         </button>
                         <button class="layui-btn layui-btn-normal btn cancelBtn">
@@ -453,9 +488,9 @@
             </div>
 
         </div>
-        <div class="mask maskContnet" >
+        <div class="mask maskContnet">
             <div class="TitleContentWith">
-                <span class="maskSpan"  style="display: inline-block;"> 
+                <span class="maskSpan" style="display: inline-block;">
                     <i class="layui-icon layui-icon-loading "></i>
                 </span>
                 数据处理中，请稍候
@@ -483,4 +518,5 @@
 <script type="text/html" id="imgtmp">
     <div><img src="{{d.goods_images}}  " style="width: 40px; height: 40px;object-fit: cover;"></div>
 </script>
+
 </html>

@@ -9,8 +9,7 @@
 <body>
     <div class="wrap">
         <div class="margin">
-            <div class="salesHeader">
-                <!-- <input type="file" class="xlsx"> -->
+            <!-- <div class="salesHeader">
                 <button class="layui-btn layui-btn-normal addSalesBtn hide btn ">
                     <span>新增销售经理</span>
                 </button>
@@ -19,13 +18,10 @@
                     <span>批量导入销售经理信息</span>
                     <input type="file" name="addUpload">
                 </button>
-                   <!-- <button class="layui-btn layui-btn-normal pushXlsxBtn btn "> -->
                     <a href="../assets/public/exe.xlsx" class="dowloadX" download="批量导入销售经理导入模板.xlsx" style="color: #be954a;">
                         <img src="../img/sigh.png" alt="">
-                        <span>下载批量导入销售经理模板</span>
-                        
+                        <span>下载批量导入销售经理模板</span>    
                     </a>
-                <!-- </button> -->
                 <div style="max-width: 350px;margin-left: 15px;" class="key-contnet">
                     <div class="key-text">关键字</div>
                     <input type="text" placeholder="" name="keyMerchants" class="KyeText">
@@ -42,6 +38,56 @@
                     <i class="layui-icon layui-icon-refresh"></i>
                     <span>刷新</span>
                 </button>
+            </div> -->
+            <div class="newHeader" style="margin-top: 30px;">
+                <div class="newHeaderText">
+                    条件查询
+                </div>
+                <div class="newKeyContent">
+                    <div class="newKeyItem">
+                        <label for="">关键字</label>
+                        <div>
+                            <input type="text" name="keyMerchants" class="KyeText">
+                        </div>
+                    </div>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary queryBtn">   
+                        <i class="layui-icon layui-icon-search"></i>
+                        <span>查询</span>
+                        
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary addSalesBtn hide">
+                        <i class="layui-icon layui-icon-app"></i>
+                        <span>新增销售经理</span>
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary importBtn hide">
+                        <i class="layui-icon layui-icon-print"></i>
+                        <span>批量导入销售经理信息</span>
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <a href="../assets/public/exe.xlsx" class="dowloadX" download="批量导入销售经理导入模板.xlsx" style="color: #be954a;margin-top: 8px;">
+                        <img src="../img/sigh.png" alt="">
+                        <span>下载批量导入销售经理模板</span>    
+                    </a>
+                </div>
+                <div class="newKeyContent" style="margin-left: 8px;">
+                    <button type="button" class="layui-btn layui-btn-primary hide delBtn">
+                        <i class="layui-icon layui-icon-delete"></i>
+                    <span>删除</span>
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary queryBtn">
+                        <i class="layui-icon layui-icon-refresh-3 "></i>
+                        <!-- 刷新 -->
+                    </button>
+                </div>
             </div>
             <div class="salesTableList">
                 <div class="tableList">

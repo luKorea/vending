@@ -1,5 +1,6 @@
 import '../../MyCss/goods/customCategory.css';
 layui.use(['table', 'form', 'layer', 'tree'], function () {
+  tooltip('.refreshBtnList', {transition: true, time: 200});
   sessionStorage.classTag = sessionStorage.machineID;
   var table = layui.table,
     layer = layui.layer,
@@ -80,7 +81,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     });
 
   // 查询事件
-  $('.query-btn').click(function () {
+  $('.queryBtn').click(function () {
     tableIns.reload({
       where: {
         classifyName: $('.keyText').val()
@@ -89,7 +90,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
   })
   var indexFlag = null;
   var operationId = null;
-  $('.add-btn').click(function () {
+  $('.addBtn').click(function () {
     $('.addClass input[name="addTypeName"]').val('');
     $('.addClass input[name="addNote"]').val('')
     popupShow('addClass', 'addContent');
@@ -309,7 +310,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     layer.msg('服务器请求超时', { icon: 7 })
   })
   function permissions() {
-    addFlag ? $('.add-btn').removeClass('hide') : $('.add-btn').addClass('hide');
+    addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
     editFlag ? $('.TEdit').removeClass('hide') : $('.TEdit').addClass('hide');
     delFlag ? $('.TDel').removeClass('hide') : $('.TDel').addClass('hide');
     fourFlag ? $('.rankImg').removeClass('hide') : $('.rankImg').addClass('hide');

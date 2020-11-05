@@ -15,6 +15,10 @@
         <div class="flex-contnet">
             <div class="left-mian">
                 <div class="accountContnet" style="margin-left:15px;">
+                    <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表" data-direction="bottom" type="button">
+                        <i class="layui-icon layui-icon-refresh-3 "></i>
+                        <!-- 刷新 -->
+                    </button>
                     <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
                     <!-- <div class="fixed-account">
                       <span> 粤宝商户-中邮广州</span>
@@ -25,8 +29,8 @@
                 <div class="sidebar" style="height: 750px;"><i class="layui-icon layui-icon-left"></i></div>
             </div>
             <i class="layui-icon layui-icon-right  on-left"></i>
-            <div class="right-contnet">
-                <div class="qeury-header">
+            <div class="right-contnet" style="margin: 20px;">
+                <!-- <div class="qeury-header">
                     <div class="layui-row">
 
                         <div class=" layui-col-sm6 layui-col-md9 layui-col-lg4">
@@ -89,25 +93,73 @@
                                 <span>审核不通过</span>
                             </button>
                         </div>
-                        <!-- <div class="layui-col-sm7 layui-col-md6 layui-col-lg8">                              
-                            <button style="margin-top: 0;" class="layui-btn layui-btn-normal RpushListBtn btn "
-                                type="button" buteType="1">
+                       
+                    </div>
+                </div> -->
+                <div class="newHeader">
+                    <div class="newHeaderText">
+                        条件查询
+                    </div>
+                    <form action="" class="layui-form" lay-filter="">
+                        <div class="newKeyContent">
+                            <div class="newKeyItem">
+                                <label for="">发布时间</label>
+                                <div>
+                                    <input type="text" class="layui-input" id="test6" placeholder=" - "
+                                            autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary keyBtn">
+                                <i class="layui-icon layui-icon-search"></i>
+                                <span>查询</span>
+                                
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary hide publicAdvertisingBtn">
+                                <i class="layui-icon layui-icon-add-circle "></i>
+                                <span>发布广告</span>
+                                
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary pushReleaseBtn hide">
+                                <i class="layui-icon layui-icon-export "></i>
+                                <span>推送广告到下级商户</span>
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary RpushListBtn hide">
                                 <i class="layui-icon layui-icon-list "></i>
                                 <span>推送列表</span>
                             </button>
-                            <button class="layui-btn layui-btn-normal  btn submitAuditBtn">
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary submitAuditBtn">
                                 <span>提交审核</span>
                             </button>
-                            <button class="layui-btn layui-btn-normal  btn approvedBtn" style="margin-left: 10px;">
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary hide auditBtnTwo approvedBtn">
                                 <span>审核通过</span>
                             </button>
-                            <button class="layui-btn layui-btn-normal noPassBtn btn">
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary hide auditBtnTwo noPassBtn">
                                 <span>审核不通过</span>
                             </button>
-                        </div> -->
-                    </div>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary keyBtn">
+                                <i class="layui-icon layui-icon-refresh-3 "></i>
+                                <!-- 刷新 -->
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="data-list">
+                <div class="data-list" style="margin-top: 10px;">
                     <div class="listtable">
                         <table class="layui-hide" id="machineListData" lay-filter="machineListData"></table>
                     </div>

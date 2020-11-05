@@ -103,8 +103,8 @@ input{
     margin: 20px;
 }
 .del-btn,.noPassBtn,.delBtn{
-    background-color: #f56c6c !important;
-    border-color: #f56c6c !important;
+    /* background-color: #f56c6c !important;
+    border-color: #f56c6c !important; */
 }
 .layui-table-box>.layui-table-body{
     /* max-height: 620px;
@@ -564,9 +564,20 @@ input:hover{
 .newKeyContent .layui-btn .layui-icon {
     margin-right: 3px;
     font-size: 18px;
-    vertical-align: bottom;
-    /* color: #be954a; */
+    /* vertical-align: bottom; */
 }
 .layui-table-header{
     border: none !important;
+}
+.newKeyContent button{
+    display: flex;
+    align-items: center;
+    margin: 0 3px;
+}
+.newKeyContent input:focus{
+    border: 1px solid #be954a;
+}
+.refreshBtnList{
+    margin-left: 10px;
+    padding: 0 10px !important;
 }

@@ -1,7 +1,7 @@
 .data-left{
     -webkit-box-flex: 0;
     overflow: hidden;
-    padding-top: 17px;
+    /* padding-top: 17px; */
     position: relative;
     padding-right: 40px;
     width: 400px;
@@ -37,7 +37,7 @@
     background-color: #eee;
     border-radius: 10px 0 0 10px;
     -webkit-transition: right 1s;
-    top: 187px;
+    top: 187px !important;
 }
 .data-left input{
     -webkit-appearance: none;

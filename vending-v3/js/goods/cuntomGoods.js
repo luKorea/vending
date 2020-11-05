@@ -1,5 +1,6 @@
 import '../../MyCss/goods/customGoods.css'
 layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
+  tooltip('.refreshBtnList', {transition: true, time: 200}, );
   var $ = layui.jquery,
     tree = layui.tree;
   // 收起
@@ -782,13 +783,19 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   // });
   // 刷新商户列表
 $('.refreshBtnList').click(function(){
-  dataList = treeList();
-  treeFun(tree, 'testGoods', tableIns, dataList, 'condition', 'goodsClass', selectData)
-  tableIns.reload({
-    where:{
-      condition: sessionStorage.machineID,
-    }
-  })
+  var dataList1=treeList();
+  if (JSON.stringify(dataList1)  != JSON.stringify(dataList)) {
+    dataList = dataList1;
+    treeFun(tree, 'testGoods', tableIns, dataList, 'condition', 'goodsClass', selectData)
+    tableIns.reload({
+      where:{
+        condition: sessionStorage.machineID,
+      }
+    });
+    layer.msg('已刷新',{icon:1})
+  }else{
+    layer.msg('已刷新',{icon:1})
+  }
 })
   //树状图
   var dataList1 = null;

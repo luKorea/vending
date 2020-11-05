@@ -11,7 +11,7 @@
 <body>
     <div class="remoteWrap">
         <div class="margin">
-            <div class="header">
+            <!-- <div class="header">
                 <button class="layui-btn layui-btn-normal  btn addAppBtn">
                     <span>添加App版本</span>
                 </button>
@@ -19,6 +19,23 @@
                     <i class="layui-icon layui-icon-refresh"></i>
                     <span>刷新</span>
                 </button>
+            </div> -->
+            <div class="newHeader" style="margin-top: 30px;">
+                <div class="newHeaderText">
+                    操作部分
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary addAppBtn">
+                        <i class="layui-icon layui-icon-app"></i>
+                        <span>添加App版本</span>              
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary refreshBtn">
+                        <i class="layui-icon layui-icon-refresh-3 "></i>
+                        <!-- 刷新 -->
+                    </button>
+                </div>
             </div>
             <div class="dataList">
                 <div class="listTable">
@@ -53,7 +70,7 @@
                         <div class="listFlex relative">
                             <button class="layui-btn layui-btn-normal uploadBtn btn" type="button">
                                 <span>上传App</span>
-                                <input type="file" accept=".ipa,.apk"  name="uploadImg" indexFlag="add">
+                                <input type="file" accept=".ipa,.apk" name="uploadImg" indexFlag="add">
                             </button>
                         </div>
                         <div class="listFlex uploadTitle">
@@ -106,7 +123,7 @@
                         <div class="listFlex relative">
                             <button class="layui-btn layui-btn-normal uploadBtn btn" type="button">
                                 <span>上传App</span>
-                                <input type="file" accept=".ipa,.apk"  name="uploadImg" indexFlag="edit">
+                                <input type="file" accept=".ipa,.apk" name="uploadImg" indexFlag="edit">
                             </button>
                         </div>
                         <div class="listFlex" style="display: none;">
@@ -141,7 +158,7 @@
                     </button>
                 </div>
                 <div class="machineBody" style="display: flex;">
-                    <div class="left-mian" >
+                    <div class="left-mian">
                         <div class="left-miana">
                             <div class="accountContnet" style="margin-left: 15px;">
                                 <p style="margin:20px 20px 10px;color:#be954a;">商户列表</p>
@@ -152,20 +169,20 @@
                             </div>
                         </div>
                     </div>
-                        <div class="machineListTable">
-                            <div class="mListTable">
-                                <table class="layui-hide" id="machineList" lay-filter="machineList"></table>
-                            </div>
-                            <div class="updataFooter footerBtn">
-                                <button class="layui-btn layui-btn-normal btn pushBtn" style="margin: 0 0 0 15px;">
-                                    <span>确定</span>
-                                </button>
-                                <button class="layui-btn layui-btn-normal btn  cancelBtn" style="margin: 0 0 0 15px;">
-                                    <span>取消</span>
-                                </button>
-                            </div>
-                            
+                    <div class="machineListTable">
+                        <div class="mListTable">
+                            <table class="layui-hide" id="machineList" lay-filter="machineList"></table>
                         </div>
+                        <div class="updataFooter footerBtn">
+                            <button class="layui-btn layui-btn-normal btn pushBtn" style="margin: 0 0 0 15px;">
+                                <span>确定</span>
+                            </button>
+                            <button class="layui-btn layui-btn-normal btn  cancelBtn" style="margin: 0 0 0 15px;">
+                                <span>取消</span>
+                            </button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>

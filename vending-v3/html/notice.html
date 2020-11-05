@@ -12,8 +12,7 @@
 <body>
     <div class="noticeWrap">
         <div class="margin">
-            <div class="boxHeader">
-                <!-- <input type="file" class="xlsx"> -->
+            <!-- <div class="boxHeader">
                 <button class="layui-btn layui-btn-normal addPushBtn btn ">
                     <span>发布公告</span>
                 </button>
@@ -29,6 +28,39 @@
                     <i class="layui-icon layui-icon-refresh"></i>
                     <span>刷新</span>
                 </button>
+            </div> -->
+            <div class="newHeader" style="margin-top: 30px;">
+                <div class="newHeaderText">
+                    条件查询
+                </div>
+                <div class="newKeyContent">
+                    <div class="newKeyItem">
+                        <label for="">关键字</label>
+                        <div class="key-contnet">
+                            <input type="text" placeholder="公告标题" name="keyMerchants" class="KyeText">
+                        </div>
+                    </div>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary queryBtn">                     
+                        <i class="layui-icon layui-icon-search"></i>
+                        <span>查询</span>
+                        
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary addPushBtn">
+                        <i class="layui-icon layui-icon-app"></i>
+                        <span>发布公告</span>
+                        
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary queryBtn">
+                        <i class="layui-icon layui-icon-refresh-3 "></i>
+                        <!-- 刷新 -->
+                    </button>
+                </div>
             </div>
             <div class="BoxTableList">
                 <div class="tableList">

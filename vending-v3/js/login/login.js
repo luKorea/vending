@@ -1,4 +1,6 @@
+// import '../../assets/public/documentWrite.js';
 import '../../MyCss/login/login.css';
+
 layui.use(['form', 'layer'], function () {
    
     // window.history.forward(1);

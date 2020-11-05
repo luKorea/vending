@@ -1,5 +1,6 @@
 import '../../MyCss/advertising/fodder.css'
 layui.use(['laydate', 'table', 'layer', 'tree'], function () {
+    tooltip('.refreshBtnList', {transition: true, time: 200});
     var token = sessionStorage.token,
         layer = layui.layer,
         form = layui.form,
@@ -110,17 +111,16 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     // 查询事件
     $('.keyQueryBtn').click(function () {
         var KeyValData = form.val("KeyValData");
-        var keyStatus = form.val("keyStatus");
         console.log(KeyValData);
         tableIns.reload({
-            where: { //设定异步数据接口的额外参数，任意设     
+            where: {      
                 keyWord: KeyValData.name,//关键字
                 attribute: KeyValData.attribute,//素材属性
                 type: KeyValData.type,//素材类别
                 checkStatus: KeyValData.checkStatus,//审核状态
                 minSize: KeyValData.minSize,//最小mb
                 maxSize: KeyValData.maxSize,//最大mb
-                status: keyStatus.advertisingStatus,//素材状态
+                status: KeyValData.advertisingStatus,//素材状态
                 startTime: startTime,//开始时间
                 endTime: endTime//结束时间
             }
@@ -929,13 +929,31 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         layer.msg('服务器请求超时', { icon: 7 })
     });
     function permissions() {
-        addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+        addFlag ? $('.uploadBtn').removeClass('hide') : $('.uploadBtn').addClass('hide');
         editFlag ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
-        delFlag ? $('.del-Btn').removeClass('hide') : $('.del-Btn').addClass('hide');
+        delFlag ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
         fourFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
     };
     //刷新
     $('.refreshBtn').click(function () {
         location.reload();
     });
+
+    // 刷新商户列表
+    $('.refreshBtnList').click(function(){
+        var dataList1=treeList();
+        if (JSON.stringify(dataList1)  != JSON.stringify(dataList)) {
+            dataList=dataList1;
+            treeFun(tree, 'test1', tableIns, dataList, 'merchantId')
+            tableIns.reload({
+                where: {
+                    'merchantId': Number(sessionStorage.machineID)
+                }
+            })
+            layer.msg('已刷新',{icon:1})
+        }else{
+            layer.msg('已刷新',{icon:1})
+        }
+        
+    })
 });

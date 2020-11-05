@@ -15,7 +15,7 @@
         <div class="list-body">
             <div>
                 <div class="mian">
-                    <div class="add-member">
+                    <!-- <div class="add-member">
                         <button class="layui-btn layui-btn-normal btn addBtn" typeID='add'>
                             <span>添加角色</span>
                         </button>
@@ -31,8 +31,40 @@
                             <i class="layui-icon layui-icon-refresh "></i>
                             <span>刷新</span>
                         </button>
+                    </div> -->
+                    <div class="newHeader">
+                        <div class="newHeaderText">
+                            条件查询
+                        </div>
+                        <div class="newKeyContent">
+                            <div class="newKeyItem">
+                                <label for="">关键字</label>
+                                <div>
+                                    <input type="text" placeholder="角色名" name="keyMerchants" class="KyeText">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary queryBtnClick">           
+                                <i class="layui-icon layui-icon-search"></i>
+                                <span>查询</span>    
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary addBtn">
+                                <i class="layui-icon layui-icon-app"></i>
+                                <span>添加角色</span>
+                                
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary queryBtnClick">
+                                <i class="layui-icon layui-icon-refresh-3 "></i>
+                                <!-- 刷新 -->
+                            </button>
+                        </div>
                     </div>
-                    <div>
+                    <div style="margin-top: 10px;">
                         <div class="data-list">
                             <div class="list-table">
                                 <table class="layui-hide" id="tableTest" lay-filter="test"></table>

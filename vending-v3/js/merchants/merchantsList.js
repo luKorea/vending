@@ -299,7 +299,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         // })
         if ($('.addBox input[name="merchantsName"]').val() && $('.addBox input[name="addmarchantsVal"]').val()) {
              
-            console.log($('.addBox input[name="service_phone"]').val())
+            // console.log($('.addBox input[name="service_phone"]').val())
             if (!(addImg||$('.addBox input[name="service_phone"]').val())&&addServiceFlag) {
                 layer.msg('请填写客服电话或上传客服微信二维码', { icon: 7 });
                 return;

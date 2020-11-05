@@ -11,7 +11,7 @@
 <body>
     <div class="wrap">
         <div class="margin">
-            <div class="header">
+            <!-- <div class="header">
                 <button class="layui-btn layui-btn-normal btn addBtn hide" style="margin-right: 25px;" typeID='1'>
                     <span>添加活动</span>
                 </button>
@@ -27,8 +27,40 @@
                     <i class="layui-icon layui-icon-refresh "></i>
                     <span>刷新</span>
                 </button>
+            </div> -->
+            <div class="newHeader" style="margin-top: 30px;">
+                <div class="newHeaderText">
+                    条件查询
+                </div>
+                <div class="newKeyContent">
+                    <div class="newKeyItem">
+                        <label for="关键字">关键字</label>
+                        <div class="activityListKey">
+                            <input type="text" placeholder="活动名" name="keyMerchants" class="KyeText">
+                        </div>
+                    </div>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary queryBtnClick">
+                        <i class="layui-icon layui-icon-search"></i>
+                        <span>查询</span>
+                        
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary addBtn hide">
+                        <i class="layui-icon layui-icon-app"></i>
+                        <span>添加活动</span>
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary queryBtnClick">
+                        <i class="layui-icon layui-icon-refresh-3 "></i>
+                        <!-- 刷新 -->
+                    </button>
+                </div>
             </div>
-            <div class="activityList">
+            <div class="activityList" style="margin-top: 10px;">
                 <div class="tableList">
                     <table class="layui-hide" id="tableactivity" lay-filter="tableactivity"></table>
                 </div>

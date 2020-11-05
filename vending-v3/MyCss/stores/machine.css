@@ -115,7 +115,8 @@
 }
 /* 右边内容部分 */
 .contnet-right{
-    margin: 10px 0px 0px 40px;
+    /* margin: 10px 0px 0px 40px; */
+    margin: 20px;
     /* -webkit-box-flex: 1;
     -ms-flex: 1;
     flex: 1; */
@@ -508,6 +509,7 @@ input:hover{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
 }
 .chooseCheck input{
     display: inline-block;
@@ -517,7 +519,7 @@ input:hover{
 .chooseCheck span{
     cursor: default;
     display: inline-block;
-    width: 80%;
+    width: 100%;
     overflow: hidden;/*内容超出后隐藏*/
     text-overflow: ellipsis;/* 超出内容显示为省略号*/
     white-space: nowrap;/*文本不进行换行*/

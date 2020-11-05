@@ -25,6 +25,10 @@
                     <!-- <div class="input-account">
                       <input type="text" placeholder="输入用户账号">
                   </div> -->
+                  <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表" data-direction="bottom" type="button">
+                    <i class="layui-icon layui-icon-refresh-3 "></i>
+                    <!-- 刷新 -->
+                </button>
                     <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
                     <!-- <div class="fixed-account">
                       <span> 粤宝商户-中邮广州</span>
@@ -36,177 +40,262 @@
             </div>
             <i class="layui-icon layui-icon-right  on-left"></i>
             <!-- 右边 -->
-            <div class="right-contnet">
-                <div class="query-header">
+            <div class="right-contnet" style="margin: 20px;">
+                <!-- <div class="query-header">
                     <form action="" class="layui-form" lay-filter="KeyValData">
-                    <div class="layui-row">
-                        <div class="layui-col-sm9 layui-col-md6 layui-col-lg4">
-                            <div class="itmes key-contnet">
-                                <!-- 上传时间： -->
-                                <div class="key-text">上传时间</div>
-                                <!-- <div class="layui-inline">
-                                    <div class="layui-input-inline">
-                                        <input type="text" class="layui-input" id="test6" placeholder=" - ">
+                        <div class="layui-row">
+                            <div class="layui-col-sm9 layui-col-md6 layui-col-lg4">
+                                <div class="itmes key-contnet">
+                                    <div class="key-text">上传时间</div>
+                                    <div class="layui-inline">
+                                        <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" id="test6" placeholder=" - "
+                                                autocomplete="off">
+                                        </div>
                                     </div>
-                                </div> -->
-                                <div class="layui-inline">
-                                      <div class="layui-input-inline">
-                                        <input type="text" class="layui-input" id="test6" placeholder=" - " autocomplete="off">
-                                      </div>
-                                  </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-sm8 layui-col-md6 layui-col-lg4">
+                                <div style="max-width: 280px;" class="key-contnet">
+                                    <div class="key-text">关键字</div>
+                                    <input type="text" name="name" placeholder="请输入素材名">
+                                </div>
+                            </div>
+                            <div class="layui-col-sm8 layui-col-md6 layui-col-lg4">
+                                <div class="key-contnet">
+                                    <div class="key-text">素材属性</div>
+                                    <form class="layui-form" action="" style="max-width: 240px;">
+                                        <div class="layui-form" lay-filter="myDiv">
+                                            <select name="attribute" id="" lay-filter="mySelect">
+                                                <option value="">全部</option>
+                                                <option value="0">图片</option>
+                                                <option value="1">视频</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="layui-col-sm8 layui-col-md6 layui-col-lg4">
+                                <div class="key-contnet">
+                                    <div class="key-text">素材类别</div>
+                                    <form class="layui-form" action="" style="max-width: 240px;">
+                                        <div class="layui-form" lay-filter="myDiv">
+                                            <select name="type" id="" lay-filter="mySelect">
+                                                <option value="">全部</option>
+                                                <option value="0">横版</option>
+                                                <option value="1">竖版</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="layui-col-sm8 layui-col-m6 layui-col-lg4">
+                                <div class="key-contnet">
+                                    <div class="key-text">审核状态</div>
+                                    <form class="layui-form" action="" style="max-width: 240px;">
+                                        <div class="layui-form" lay-filter="myDiv">
+                                            <select name="checkStatus" id="" lay-filter="mySelect">
+                                                <option value="">全部</option>
+                                                <option value="0">未审核</option>
+                                                <option value="1">待审核</option>
+                                                <option value="2">审核通过</option>
+                                                <option value="3">审核不通过</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="layui-col-sm9 layui-col-md6 layui-col-lg4 number ">
+                                <div class="key-contnet" style="display: inline-table;;">
+                                    <div class="key-text">大小范围(mb)</div>
+                                    <form class="layui-form" action="" style="display: flex;justify-content: start;">
+                                        <div style="max-width: 100px;">
+                                            <input type="number" name="minSize">
+                                        </div>
+                                        <span style="line-height: 35px;">——</span>
+                                        <div style="max-width: 100px;">
+                                            <input type="number" name="maxSize">
+                                        </div>
+                                    </form>
+
+                                </div>
+
                             </div>
                         </div>
-                        <div class="layui-col-sm8 layui-col-md6 layui-col-lg4">
-                            <div style="max-width: 280px;" class="key-contnet">
-                                <div class="key-text">关键字</div>
-                                <input type="text" name="name" placeholder="请输入素材名">
+                        <div class="layui-row">
+                            <div class="layui-col-sm7 layui-col-md6 layui-col-lg4">
+                                <div class="key-contnet">
+                                    <div class="key-text">素材状态</div>
+                                    <form class="layui-form" action="" lay-filter="keyStatus" style="max-width: 240px;">
+                                        <div class="layui-form">
+                                            <select name="advertisingStatus" id="" lay-filter="mySelect">
+                                                <option value="">全部</option>
+                                                <option value="1">启用</option>
+                                                <option value="0">不启用</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md3 layui-col-lg1 addBtn hide"
+                                style="margin-right: 20px;">
+                                <button class="layui-btn layui-btn-normal  btn uploadBtn">
+                                    <i class="layui-icon layui-icon-add-circle "></i>
+                                    <span>上传素材</span>
+                                </button>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md3 layui-col-lg1 del-Btn  hide">
+                                <button class="layui-btn layui-btn-normal del-btn btn">
+                                    <span>删除素材</span>
+                                </button>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md3 layui-col-lg1">
+                                <button class="layui-btn layui-btn-normal  btn submitAuditBtn">
+                                    <span>提交审核</span>
+                                </button>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md3 layui-col-lg1 auditBtnTwo hide">
+                                <button class="layui-btn layui-btn-normal  btn approvedBtn">
+                                    <span>审核通过</span>
+                                </button>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md3 layui-col-lg1 auditBtnTwo hide"
+                                style="margin-right: 10px;">
+                                <button class="layui-btn layui-btn-normal noPassBtn btn">
+                                    <span>审核不通过</span>
+                                </button>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md3 layui-col-lg1">
+                                <button class="layui-btn layui-btn-normal  btn keyQueryBtn">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                    <span>查询</span>
+                                </button>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md3 layui-col-lg1">
+                                <button class="layui-btn layui-btn-normal  btn refreshBtn">
+                                    <i class="layui-icon layui-icon-refresh"></i>
+                                    <span>刷新</span>
+                                </button>
                             </div>
                         </div>
-                        <div class="layui-col-sm8 layui-col-md6 layui-col-lg4">
-                            <div class="key-contnet">
-                                <!-- 素材属性: -->
-                                <div class="key-text">素材属性</div>
-                                <form class="layui-form" action="" style="max-width: 240px;">
-                                    <div class="layui-form" lay-filter="myDiv">
-                                        <select name="attribute" id="" lay-filter="mySelect">
-                                            <option value="">全部</option>
-                                            <option value="0">图片</option>
-                                            <option value="1">视频</option>
-                                        </select>
-                                    </div>
-                                </form>
+                    </form>
+                </div> -->
+                <div class="newHeader">
+                    <div class="newHeaderText">
+                        条件查询
+                    </div>
+                    <form action="" class="layui-form" lay-filter="KeyValData">
+                        <div class="newKeyContent">
+                            <div class="newKeyItem">
+                                <label for="">上传时间</label>
+                                <div>
+                                    <input type="text" class="layui-input" id="test6" placeholder=" - "
+                                        autocomplete="off">
+                                </div>
                             </div>
                         </div>
-                        <div class="layui-col-sm8 layui-col-md6 layui-col-lg4">
-                            <div class="key-contnet">
-                                <!-- 素材类别: -->
-                                <div class="key-text">素材类别</div>
-                                <form class="layui-form" action="" style="max-width: 240px;">
-                                    <div class="layui-form" lay-filter="myDiv">
-                                        <select name="type" id="" lay-filter="mySelect">
-                                            <option value="">全部</option>
-                                            <option value="0">横版</option>
-                                            <option value="1">竖版</option>
-                                        </select>
-                                    </div>
-                                </form>
+                        <div class="newKeyContent">
+                            <div class="newKeyItem">
+                                <label for="">关键字</label>
+                                <div class="layui-form" lay-filter="myDiv">
+                                    <input type="text" name="name" placeholder="素材名">
+                                </div>
                             </div>
                         </div>
-                        <div class="layui-col-sm8 layui-col-m6 layui-col-lg4">
-                            <div class="key-contnet">
-                                <!-- 审核状态: -->
-                                <div class="key-text">审核状态</div>
-                                <form class="layui-form" action="" style="max-width: 240px;">
-                                    <div class="layui-form" lay-filter="myDiv">
-                                        <select name="checkStatus" id="" lay-filter="mySelect">
-                                            <option value="">全部</option>
-                                            <option value="0">未审核</option>
-                                            <option value="1">待审核</option>
-                                            <option value="2">审核通过</option>
-                                            <option value="3">审核不通过</option>
-                                        </select>
-                                    </div>
-                                </form>
+                        <div class="newKeyContent">
+                            <div class="newKeyItem">
+                                <label for="">素材属性</label>
+                                <div class="layui-form" lay-filter="myDiv">
+                                    <select name="attribute" id="" lay-filter="mySelect">
+                                        <option value="">全部</option>
+                                        <option value="0">图片</option>
+                                        <option value="1">视频</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="layui-col-sm9 layui-col-md6 layui-col-lg4 number ">
-                            <!-- 大小范围(mb): -->
-                            <div class="key-contnet" style="display: inline-table;;">
-                                <div class="key-text">大小范围(mb)</div>
-                                <form class="layui-form" action="" style="display: flex;justify-content: start;">
-                                    <div style="max-width: 100px;">
-                                        <input type="number" name="minSize">
-                                    </div>
-                                    <span style="line-height: 35px;">——</span>    
-                                    <div style="max-width: 100px;">
-                                        <input type="number" name="maxSize">
-                                    </div>
-                                </form>
+                        <div class="newKeyContent">
+                            <div class="newKeyItem">
+                                <label for="">素材类别</label>
+                                <div class="layui-form" lay-filter="myDiv">
+                                    <select name="type" id="" lay-filter="mySelect">
+                                        <option value="">全部</option>
+                                        <option value="0">横版</option>
+                                        <option value="1">竖版</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="newKeyContent">
+                            <div class="newKeyItem">
+                                <label for="">审核状态</label>
+                                <div class="layui-form" lay-filter="myDiv">
+                                    <select name="checkStatus" id="" lay-filter="mySelect">
+                                        <option value="">全部</option>
+                                        <option value="0">未审核</option>
+                                        <option value="1">待审核</option>
+                                        <option value="2">审核通过</option>
+                                        <option value="3">审核不通过</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="newKeyContent">
+                            <div class="newKeyItem">
+                                <label for="">素材状态</label>
+                                <div class="layui-form" lay-filter="myDiv">
+                                    <select name="advertisingStatus" id="" lay-filter="mySelect">
+                                        <option value="">全部</option>
+                                        <option value="1">启用</option>
+                                        <option value="0">不启用</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary keyQueryBtn">
+                                <i class="layui-icon layui-icon-search"></i>
+                                <span>查询</span>
                                 
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div class="layui-row">
-                        <div class="layui-col-sm7 layui-col-md6 layui-col-lg4">
-                            <div class="key-contnet">
-                                <!-- 素材状态: -->
-                                <div class="key-text">素材状态</div>
-                                <form class="layui-form" action="" lay-filter="keyStatus" style="max-width: 240px;">
-                                    <div class="layui-form" >
-                                        <select name="advertisingStatus" id="" lay-filter="mySelect">
-                                            <option value="">全部</option>
-                                            <option value="1">启用</option>
-                                            <option value="0">不启用</option>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="layui-col-sm6 layui-col-md3 layui-col-lg1 addBtn hide" style="margin-right: 20px;">
-                            <button class="layui-btn layui-btn-normal  btn uploadBtn" >
-                                <i class="layui-icon layui-icon-add-circle "></i>
-                                <span>上传素材</span>
                             </button>
                         </div>
-                        <div class="layui-col-sm6 layui-col-md3 layui-col-lg1 del-Btn  hide">
-                            <button class="layui-btn layui-btn-normal del-btn btn">
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary hide uploadBtn">
+                                <i class="layui-icon layui-icon-add-circle "></i>
+                                <span>上传素材</span>
+                                
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary del-btn hide">
+                                <i class="layui-icon layui-icon-delete"></i>
                                 <span>删除素材</span>
                             </button>
                         </div>
-                        <div class="layui-col-sm6 layui-col-md3 layui-col-lg1">
-                            <button class="layui-btn layui-btn-normal  btn submitAuditBtn">
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary submitAuditBtn">
                                 <span>提交审核</span>
                             </button>
                         </div>
-                        <div class="layui-col-sm6 layui-col-md3 layui-col-lg1 auditBtnTwo hide">
-                            <button class="layui-btn layui-btn-normal  btn approvedBtn">
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary auditBtnTwo approvedBtn hide">
                                 <span>审核通过</span>
                             </button>
                         </div>
-                        <div class="layui-col-sm6 layui-col-md3 layui-col-lg1 auditBtnTwo hide" style="margin-right: 10px;">
-                            <button class="layui-btn layui-btn-normal noPassBtn btn">
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary auditBtnTwo noPassBtn hide">
                                 <span>审核不通过</span>
                             </button>
                         </div>
-                        <div class="layui-col-sm6 layui-col-md3 layui-col-lg1">
-                            <button class="layui-btn layui-btn-normal  btn keyQueryBtn">
-                                <i class="layui-icon layui-icon-search"></i>
-                                <span>查询</span>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary keyQueryBtn">
+                                <i class="layui-icon layui-icon-refresh-3 "></i>
+                                <!-- 刷新 -->
                             </button>
                         </div>
-                        <div class="layui-col-sm6 layui-col-md3 layui-col-lg1">
-                            <button class="layui-btn layui-btn-normal  btn refreshBtn">
-                                <i class="layui-icon layui-icon-refresh"></i>
-                                <span>刷新</span>
-                            </button>
-                        </div>
-                        <!-- <div class="layui-col-sm12 layui-col-md12 layui-col-lg8">
-                            <button class="layui-btn layui-btn-normal  btn keyQueryBtn">
-                                <i class="layui-icon layui-icon-search"></i>
-                                <span>查询</span>
-                            </button>
-                            <button class="layui-btn layui-btn-normal  btn uploadBtn" style="margin-left: 10px;">
-                                <i class="layui-icon layui-icon-add-circle "></i>
-                                <span>上传素材</span>
-                            </button>
-                            <button class="layui-btn layui-btn-normal del-btn btn">
-                                <span>删除素材</span>
-                            </button>
-                            <button class="layui-btn layui-btn-normal  btn submitAuditBtn">
-                                <span>提交审核</span>
-                            </button>
-                            <button class="layui-btn layui-btn-normal  btn approvedBtn" style="margin-left: 10px;">
-                                <span>审核通过</span>
-                            </button>
-                            <button class="layui-btn layui-btn-normal noPassBtn btn">
-                                <span>审核不通过</span>
-                            </button>
-                        </div> -->
-                    </div>
-                </form>
+                    </form>
                 </div>
-                <div class="data-list">
+                <div class="data-list" style="margin-top: 10px;">
                     <div class="listtable">
                         <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
                     </div>
@@ -274,8 +363,8 @@
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>素材属性</label>
                                 <div class="FlexInputWidth">
-                                    <div class="layui-form" >
-                                        <select name="materiaAttribute"  id="" lay-filter="myAttribute">
+                                    <div class="layui-form">
+                                        <select name="materiaAttribute" id="" lay-filter="myAttribute">
                                             <option value="">全部</option>
                                             <option value="0">图片</option>
                                             <option value="1">视频</option>
@@ -309,7 +398,8 @@
                                 <span>上传图片</span>
                                 <input type="file" accept="image/*" name="ImgFile">
                             </button>
-                            <button class="layui-btn layui-btn-normal  btn VideoBtn" type="button" style="display: none;margin-left: 0;">
+                            <button class="layui-btn layui-btn-normal  btn VideoBtn" type="button"
+                                style="display: none;margin-left: 0;">
                                 <i class="layui-icon layui-icon-add-circle "></i>
                                 <span>上传视频</span>
                                 <input type="file" accept="video/*" name="videoFile">
@@ -324,9 +414,8 @@
                         </form>
                     </div>
                 </div>
-                <div class="uploadMateriaFooter">          
-                    <button class="layui-btn layui-btn-normal btn confirmBtn"
-                        style="margin: 0 0 0 15px;" type="button" >
+                <div class="uploadMateriaFooter">
+                    <button class="layui-btn layui-btn-normal btn confirmBtn" style="margin: 0 0 0 15px;" type="button">
                         <span>确定</span>
                     </button>
                     <button class="layui-btn layui-btn-normal btn cancel-btn">
@@ -336,8 +425,8 @@
             </div>
         </div>
 
-          <!-- 编辑素材部分 -->
-          <div class="editMaterialCont maskContnet" style="overflow-y: auto;">
+        <!-- 编辑素材部分 -->
+        <div class="editMaterialCont maskContnet" style="overflow-y: auto;">
             <div class="uploadMateriaBox margin0">
                 <!-- <div class="BoxHeader">
                     <span>上传素材</span>
@@ -354,13 +443,13 @@
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>素材名</label>
                                 <div class="FlexInputWidth">
-                                    <input type="text"  name="materialName">
+                                    <input type="text" name="materialName">
                                 </div>
                             </div>
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>素材属性</label>
                                 <div class="FlexInputWidth">
-                                    <div class="layui-form" >
+                                    <div class="layui-form">
                                         <select name="materiaAttribute" disabled id="" lay-filter="EditSelect">
                                             <option value="">全部</option>
                                             <option value="0">图片</option>
@@ -390,12 +479,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="layui-btn layui-btn-normal  btn editImgBtn" type="button" style="display: none;">
+                            <button class="layui-btn layui-btn-normal  btn editImgBtn" type="button"
+                                style="display: none;">
                                 <i class="layui-icon layui-icon-add-circle "></i>
                                 <span>上传图片</span>
                                 <input type="file" accept="image/*" name="editImg">
                             </button>
-                            <button class="layui-btn layui-btn-normal  btn editVideoBtn" type="button" style="display: none;margin-left: 0;">
+                            <button class="layui-btn layui-btn-normal  btn editVideoBtn" type="button"
+                                style="display: none;margin-left: 0;">
                                 <i class="layui-icon layui-icon-add-circle "></i>
                                 <span>上传视频</span>
                                 <input type="file" accept="video/*" name="editVideo">
@@ -410,9 +501,9 @@
                         </form>
                     </div>
                 </div>
-                <div class="uploadMateriaFooter">          
-                    <button class="layui-btn layui-btn-normal btn editConfirmBtn"
-                        style="margin: 0 0 0 15px;" type="button" >
+                <div class="uploadMateriaFooter">
+                    <button class="layui-btn layui-btn-normal btn editConfirmBtn" style="margin: 0 0 0 15px;"
+                        type="button">
                         <span>确定</span>
                     </button>
                     <button class="layui-btn layui-btn-normal btn editCancelBtn">
@@ -446,7 +537,7 @@
         </div>
         <div class="mask maskContnet" style="z-index: 9999;">
             <div class="TitleContentWith">
-                <span class="maskSpan"  style="display: inline-block;"> 
+                <span class="maskSpan" style="display: inline-block;">
                     <i class="layui-icon layui-icon-loading "></i>
                 </span>
                 数据处理中，请稍候
@@ -478,4 +569,5 @@
 <script type="text/html" id="imgtmp">
     <div ><img src="{{d.advertisingAttribute==0?d.img:''}}  " style="width: 40px;" ></div>
 </script>
+
 </html>

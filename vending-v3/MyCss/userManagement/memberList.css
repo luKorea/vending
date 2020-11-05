@@ -2,7 +2,8 @@
     width: 100%;
 }
 .mian{
-    margin: 10px 0px 0px 40px;
+    /* margin: 10px 0px 0px 40px; */
+    margin: 20px;
     width: 100%;
     overflow: hidden;
 }

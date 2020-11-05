@@ -1,5 +1,6 @@
   import '../../MyCss/userManagement/memberList.css'
 layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
+  tooltip('.refreshBtnList', {transition: true, time: 200});
   var table = layui.table;
   var layer = layui.layer,
     layer = layui.layer,
@@ -688,5 +689,23 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     });
   }
 
+  // 刷新商户
+  $('.refreshBtnList').click(function(){
+    var dataList1=treeList();
+    if (JSON.stringify(dataList1)  != JSON.stringify(dataList)) {
+      addEditData=dataList1;
+      tree.reload('treelistAdd',{
+        data:addEditData
+      });
+      tableIns.reload({
+        where: {
+          condition: sessionStorage.machineID
+        }
+      });
+      layer.msg('已刷新',{icon:1})
+    }else{
+      layer.msg('已刷新',{icon:1})
+    }
+  })
 });
 

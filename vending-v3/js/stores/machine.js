@@ -2,6 +2,7 @@ import '../../MyCss/stores/machine.css';
 import { provinceChange, cityChange } from '../../assets/public/selectMore';
 // console.log()
 layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
+    tooltip('.refreshBtnList', { transition: true, time: 200 });
     // console.log(provinceChange)
     // 收起
     $('.sidebar i').click(function () {
@@ -159,16 +160,20 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
     });
     $('.refreshBtnList').click(function () {
-        dataList = treeList();
-        treeFun(tree, 'test1', machineList, dataList, 'merchantId', 'condition', selectData, '', 'true')
-        machineList.reload({
-            where: {
-                merchantId: sessionStorage.machineID
-            }
-        })
+        var dataList1 = treeList();
+        if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
+            dataList = dataList1;
+            treeFun(tree, 'test1', machineList, dataList, 'merchantId', 'condition', selectData, '', 'true')
+            machineList.reload({
+                where: {
+                    merchantId: sessionStorage.machineID
+                }
+            });
+            layer.msg('已刷新', { icon: 1 })
+        } else {
+            layer.msg('已刷新', { icon: 1 })
+        }
     })
-
-
     // 设置tab切换
     $('.setNav li').click(function () {
         $(this).addClass('active').siblings().removeClass('active');
@@ -187,11 +192,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         console.log(machineSetData)
         $('.maskHeader span').html(machineSetData.info + '详细信息')
         if (obj.event == 'set') {
-            aisleHtml1(wayArr)
-            x = obj.data.wayX;
-            y = obj.data.wayY;
             if (AisleDetailsFlag) {
                 getGoodsWay(obj.data.machineId);
+            } else {
+                var titleHtml = `<div style="text-align: center;">您没有权限访问货道详情！</div>`
+                $('.aisleGoodsCont').html(titleHtml)
             }
             $('.setUpCont').show();
             var setAddress = null;
@@ -295,7 +300,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 customFlag = false;
             };
             // 销售经理
-            salesClassList(machineSetData,1)
+            salesClassList(machineSetData, 1)
             $('.customTitle input[name="custom_phone"]').val(machineSetData.custom_phone)
             form.render();
 
@@ -671,8 +676,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     is_custom: customFlag ? 1 : 0,
                     custom_phone: customFlag ? $('.customTitle input[name="custom_phone"]').val() : '',
                     custom_code: customFlag ? $('.customImgCont img').attr('src') : '',
-                    is_sales:$('.salseCont input[name="salseClassName"]:checked').val()==-99?1:0,
-                    sales_type:$('.salseCont input[name="salseClassName"]:checked').val()==-99?'':$('.salseCont input[name="salseClassName"]:checked').val()
+                    is_sales: $('.salseCont input[name="salseClassName"]:checked').val() == -99 ? 1 : 0,
+                    sales_type: $('.salseCont input[name="salseClassName"]:checked').val() == -99 ? '' : $('.salseCont input[name="salseClassName"]:checked').val()
                 }),
                 success: function (res) {
                     $('.mask').fadeOut();
@@ -1065,9 +1070,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp" },
                 { field: 'goods_Name', width: 200, title: '商品名', color: '#409eff' },
                 { field: `classifyName`, width: 150, title: '商品类目' },
-                { field: 'mail', width: 130, title: '是否邮寄商品', align: 'center',templet:function(d){
-                    return d.mail==0?'否':'是'
-                  } },
+                {
+                    field: 'mail', width: 130, title: '是否邮寄商品', align: 'center', templet: function (d) {
+                        return d.mail == 0 ? '否' : '是'
+                    }
+                },
                 { field: 'goods_Core', width: 180, title: '商品编号', },
                 { field: 'operation', position: 'absolute', right: 0, width: 80, title: '操作', toolbar: '#GoodsbarDemo' },
 
@@ -1118,50 +1125,15 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     var withList = [];
 
     //货道详情部分
-    // function getGoodsWay(machineId) {
-    //     var aisleData = JSON.stringify({
-    //         machineId,
-    //     })
-    //     loadingAjax('/api//machine/getGoodWay', 'post', aisleData, sessionStorage.token,'','','',layer).then(res => {
-    //         console.log(res)
-    //         aisleList = [];
-    //         withList = [];
-    //         var letterSlice = letterArr.slice(0, y);
-    //         // console.log(letterSlice)
-    //         letterSlice.forEach((item, index) => {
-    //             for (var i = 0; i < x; i++) {
-    //                 var aisleObj = {
-    //                     way: item + '' + (i + 1),
-    //                     count: 0,
-    //                     open: 0,
-    //                 }
-    //                 aisleList.push(aisleObj)
-    //             }
-    //         })
-    //         withList = aisleList;
-    //         withList.forEach((item, index) => {
-    //             for (var j = 0; j < res.data.length; j++) {
-    //                 if (item.way == res.data[j].way) {
-    //                     withList[index] = res.data[j];
-    //                 }
-    //             }
-    //         });
-    //         aisleHtml(withList);
-    //     }).catch(err => {
-    //         console.log(err)
-    //         layer.msg(err.message, { icon: 2 })
-    //     })
-    // }
     var wayList = [];
-    var wayitem = [];
     function getGoodsWay(machineId) {
         wayList = [];
-        wayitem = [];
         var aisleData = JSON.stringify({
             machineId,
         })
         loadingAjax('/api//machine/getGoodWay', 'post', aisleData, sessionStorage.token, '', '', '', layer).then(res => {
             againFun(res);
+            console.log(res)
         }).catch(err => {
             console.log(err)
             wayList = [];
@@ -1173,25 +1145,19 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     };
     // 渲染方法
     function againFun(res) {
-        wayList = [];
-        wayitem = [];
-        for (var i = 0; i < res.data.length; i++) {
-            wayitem.push([])
-        }
-        wayitem.forEach((item, index) => {
-            res.data.forEach((ele, i) => {
-                if ((index + 1) == ele.way) {
-                    wayitem[index].push(ele);
-                    console.log(1)
-                }
-            })
-        })
-        for (var i = 0; i < wayitem.length; i++) {
-            if (wayitem[i].length > 0) {
-                wayList.push(wayitem[i])
+        console.log(res)
+        wayList = [
+            [], [], [], [], [], []
+        ];
+        res.data.forEach(item => {
+            // console.log(item.row)
+            if (item.row) {
+                wayList[item.row - 1].push(item)
             }
-        }
-        // aisleHtml(wayList);
+
+        })
+        console.log(wayList)
+        aisleHtml1(wayList);
     };
     //选择商品
     $('.relative').click(function () {
@@ -1199,7 +1165,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         if (goodsTableIns) {
             goodsTableIns.reload({
                 where: {
-                    condition:sessionStorage.machineGoodsId,
+                    condition: sessionStorage.machineGoodsId,
                 }
             })
         } else {
@@ -1216,75 +1182,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         })
     })
-    //货道详情渲染
-    var letterArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-    var result = [];
-    // function aisleHtml(strList) {
-    //     var aisleStr = '';
-    //      result = [];
-    //     for (var i = 0, len = strList.length; i < len; i += x) {
-    //         result.push(strList.slice(i, i + x));
-    //     }
-    //     result.forEach((item, index) => {
-    //         aisleStr += `<div class="aisleListCont flexTwo">
-    //                         <div class="listIndex">
-    //                         <span>${index + 1}</span>
-    //                         </div>`
-    //         item.forEach((child, Cindex) => {
-    //             if (child.open != 0) {
-    //                     if(child.count>0){
-    //                         aisleStr += `<div class="aisleNumderGoods" fireIndex="${index + ',' + Cindex}">
-    //                         <div class="numderTop">                                   
-    //                             <img src="${child.goods_images}" alt=""> 
-    //                             <span>${item.id}</span>
-    //                         </div>
-    //                         <div class="numderBottom">
-    //                             <div class="status1">正常</div>
-    //                             <div>数量:1</div>
-    //                         </div>
-    //                     </div>`
-    //                     }else{
-    //                         aisleStr += `<div class="aisleNumderGoods" fireIndex="${index + ',' + Cindex}">
-    //                         <div class="numderTop">                                   
-    //                         <img src="../img/failure.png" alt="">
-    //                             <span>${item.id}</span>
-    //                         </div>
-    //                         <div class="numderBottom">
-    //                             <div class="status1">正常</div>
-    //                             <div>数量:1</div>
-    //                         </div>
-    //                     </div>`
-    //                     }
-
-    //             } else {
-    //                 aisleStr += `<div class="aisleNumderGoods" fireIndex="${index + ',' + Cindex}">
-    //                 <div class="numderTop">
-    //                 <img src="../img/failure.png" alt="">
-    //                     <span>${item.id}</span>
-    //                 </div>
-    //                 <div class="numderBottom">
-    //                     <div class="status2">禁用</div>
-    //                     <div>数量:1</div>
-    //                 </div>
-    //             </div>`
-    //             }
-
-    //         })
-    //         aisleStr += `<div class="addAisle">
-    //                         <span>+</span>
-    //                     </div></div>`
-    //     })
-    //     $('.aisleGoodsCont').html(aisleStr)
-    // }
     // 货道详情渲染
-    var wayArr=[
-        [{id:1},{id:2},{id:3},{id:4},{id:5},{id:6},{id:7}],
-        [{id:11},{id:12},{id:13},{id:14},{id:15},{id:16},{id:17}],
-        [{id:21},{id:22},{id:23},{id:24},{id:25},{id:26},{id:27},{id:28},{id:29},{id:30}],
-        [{id:31},{id:32},{id:34},{id:36},{id:38},],
-        [{id:41},{id:43},{id:45}],
-        [{id:51},{id:52},{id:54},{id:56}],
-    ]
     function aisleHtml1(strList) {
         var aisleStr = '';
         strList.forEach((item, index) => {
@@ -1297,52 +1195,43 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     aisleStr += `<div class="aisleNumderGoods" >
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">                                   
-                                        <img src="${child.goods_images}" alt=""> 
-                                    <span>${child.id}</span>
+                                        <img src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt=""> 
+                                    <span>${child.way}</span>
                                     </div>
                                 <div class="numderBottom">
                                         <div class="status1">正常</div>
-                                    <div>数量:1</div>
+                                    <div>数量:${child.count}</div>
                                     </div>
                                     </div>  
                                     <div class="chooseCheck">
-                                        <input type="checkbox"   lay-skin="primary">
-                                        <span 1</span>
+                                        <span> ${child.goods_Name ? child.goods_Name : '-'}</span>
                                     </div>
                                 </div>`
                 } else {
                     aisleStr += `<div class="aisleNumderGoods" >
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">
-                                    <img src="${child.goods_images ? child.goods_images : 'http://172.16.71.142:8087/image/127b55b9-da32-4569-b740-3adf5e5524af.png'}" alt="">
-                                        <span>${item.id}</span>
+                                    <img src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt="">
+                                        <span>${child.way}</span>
                                     </div>
                                     <div class="numderBottom">
                                         <div class="status2">禁用</div>
-                                        <div>数量:1</div>
+                                        <div>数量:${child.count}</div>
                                     </div>
                                     </div>  
                                     <div class="chooseCheck">
-                                        <input type="checkbox"   lay-skin="primary">
-                                        <span 1</span>
+                                        <span>${child.goods_Name ? child.goods_Name : ''}</span>
                                     </div>
                                 </div>`
                 }
             });
             aisleStr += ` </div>`
         });
-        // aisleStr += `<div class="aisleListCont flexTwo >
-        // <div class="listIndex">
-        //                         <span>${strList.length + 1}</span>
-        //                     </div>
-        //                 <div class="addAisle" indexVal="${strList.length + 1}">
-        //                     <span>+</span>
-        //                 </div>
-        //             </div>`
         $('.aisleGoodsCont').html(aisleStr);
         form.render('checkbox');
     };
     function aisleHtml(strList) {
+        // console.log(strList)
         var aisleStr = '';
         strList.forEach((item, index) => {
             aisleStr += `<div class="aisleListCont flexTwo">
@@ -1355,7 +1244,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">                                   
                                         <img src="${child.goods_images}" alt=""> 
-                                    <span>${item.id}</span>
+                                    <span>${Cindex + 1}</span>
                                     </div>
                                 <div class="numderBottom">
                                         <div class="status1">正常</div>
@@ -1372,7 +1261,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">
                                     <img src="${child.goods_images ? child.goods_images : 'http://172.16.71.142:8087/image/127b55b9-da32-4569-b740-3adf5e5524af.png'}" alt="">
-                                        <span>${item.id}</span>
+                                        <span>${Cindex + 1}</span>
                                     </div>
                                     <div class="numderBottom">
                                         <div class="status2">禁用</div>
@@ -1463,9 +1352,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     function aisleEdit() {
         goodsDetails = wayList[ArrIndex[0]][ArrIndex[1]];
         console.log(goodsDetails)
-        $('.editAisle input[name="goodsName"]').val(goodsDetails.goods_Name);
-        $('.editAisle input[name="goodsName"]').attr('IVal', goodsDetails.goods_Id);
-        $('.editAisle input[name="price"]').val(goodsDetails.goods_Price);
+        $('.editAisle input[name="goodsName"]').val(goodsDetails.goods_Name ? goodsDetails.goods_Name : '');
+        $('.editAisle input[name="goodsName"]').attr('IVal', goodsDetails.goods_Id ? goodsDetails.goods_Id : '');
+        $('.editAisle input[name="price"]').val(goodsDetails.goods_Price ? goodsDetails.goods_Price : '');
         $('.editAisle input[name="count"]').val(goodsDetails.count);
         $('.editAisle input[name="total"]').val(goodsDetails.total);
         // $('.editAisle select[name="testSele"]').val(goodsDetails.test);
@@ -1501,11 +1390,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
         var editData = JSON.stringify({
             machineId: machineSetData.machineId,
-            id: goodsDetails.id,
-            goodId: $('.editAisle input[name="goodsName"]').attr('IVal'),
-            count: $('.editAisle input[name="count"]').val(),
-            total: $('.editAisle input[name="total"]').val(),
-            open: $('.editAisle select[name="testSele"]').val()
+            id: goodsDetails.way,
+            goodId: Number($('.editAisle input[name="goodsName"]').attr('IVal')),
+            count: Number($('.editAisle input[name="count"]').val()),
+            total: Number($('.editAisle input[name="total"]').val()),
+            open: Number($('.editAisle select[name="testSele"]').val())
         });
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
@@ -1802,8 +1691,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
         loadingAjax('/api/sales_manager/getSalesType', 'post', salesObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
             console.log(res)
-                salseList = salseList.concat(res.data.list);
-                ToSalseListFun(salseList,mobj)
+            salseList = salseList.concat(res.data.list);
+            ToSalseListFun(salseList, mobj)
             if (res.data.list.length == 10) {
                 $('.loadMore').show();
             } else {
@@ -1814,12 +1703,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg(err.message, { icon: 2 })
         })
     };
-     // 渲染销售经理列表
-     function ToSalseListFun(ToList,mobj){
-        var salseStr=`<input type="radio" ${mobj.is_sales==0?'checked':''} name="salseClassName" value="-99" title="不启用" >
-        <input type="radio" name="salseClassName" ${mobj.is_sales==1?mobj.sales_type?'':'checked':''} value="" title="默认" >`;
-        ToList.forEach(item=>{
-            salseStr+=`<input type="radio" name="salseClassName" ${mobj.is_sales==1?machineSetData.sales_type==item.sm_classify?'checked':'':''} value="${item.sm_classify}" title="${item.sm_classify}">`
+    // 渲染销售经理列表
+    function ToSalseListFun(ToList, mobj) {
+        var salseStr = `<input type="radio" ${mobj.is_sales == 0 ? 'checked' : ''} name="salseClassName" value="-99" title="不启用" >
+        <input type="radio" name="salseClassName" ${mobj.is_sales == 1 ? mobj.sales_type ? '' : 'checked' : ''} value="" title="默认" >`;
+        ToList.forEach(item => {
+            salseStr += `<input type="radio" name="salseClassName" ${mobj.is_sales == 1 ? machineSetData.sales_type == item.sm_classify ? 'checked' : '' : ''} value="${item.sm_classify}" title="${item.sm_classify}">`
         });
         $('.salseCont').html(salseStr);
         form.render();
