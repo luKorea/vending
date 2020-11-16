@@ -504,7 +504,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         $.each(addList, function (index, ele) {
             materaiaList += ` <li class="setMateraialList">
                                 <div class="liftImg" style="text-align: center;">
-                                    <img ${index == 0 ? 'class="hidden"' : ''} src="../../img/lift.png" class="sortingImg" index="${index}" alt="">
+                                    <img ${index == 0 ? 'class="hidden"' : ''} src="${require('../../img/lift.png')}" class="sortingImg" index="${index}" alt="">
                                 </div>
                                 <div class="SetSorting">
                                     <div>${index + 1}</div>

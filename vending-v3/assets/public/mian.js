@@ -622,8 +622,11 @@ function animateNumberFun(ele, num, type) {
         var str = c.split('.');
         if (type == 1) {
           if (str.length == 1) { c = c + '.00'; } else { if (str[1].length == 1) { c = c + '0'; } }
+          target.text('￥'+c);
+        }else{
+          target.text(c);
         }
-        target.text(c);
+        // target.text(c);
       }
     },
     500

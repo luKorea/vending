@@ -43,7 +43,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
                 }},
                 { field: 'sign_name', width: 210, title: '收货人', align: 'center' },
                 { field: 'sign_phone', width: 210, title: '收货人电话', align: 'center' },
-                { field: 'sign_address', width: 250, title: '收货地址', align: 'center' },
+                { field: 'sign_address', width: 300, title: '收货地址', align: 'center' },
                 { field: 'notes', width: 210, title: '备注', align: 'center' ,templet:function(d){
                     return d.notes?d.notes:'-'
                 }},

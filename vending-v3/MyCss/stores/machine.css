@@ -412,6 +412,12 @@ input:hover{
 .shipmentRecord{
     width: 100%;
 }
+.shipmentRecord .layui-form{
+    width: fit-content;
+}
+.replenishment{
+    width: 100%;
+}
 .hides{
     display: none;
 }
@@ -618,6 +624,9 @@ input:hover{
     box-sizing: border-box;
     padding: 20px;
 }
+.goodsBody .layui-table-body td{  
+    cursor: pointer;
+}
 .goodsBody .key-contnet{
     width: 40%;
     margin-left: 10px;
@@ -742,4 +751,7 @@ input:hover{
 }
 .salseCont>div{
     width: 40%;
+}
+.navSetCont .layui-table-box>.layui-table-body{
+    height: 400px !important;
 }

@@ -23,7 +23,7 @@
                 <div class="dataListCont flexTwo">
                     <div class="turnover dataList">
                         <header>总营业额(元)</header>
-                        <p>0</p>
+                        <p> 0</p>
                     </div>
                     <div class="guestOrders dataList">
                         <header>总客单量(笔)</header>
@@ -35,7 +35,7 @@
                     </div>
                     <p id="aa"></p>
                 </div>
-                <div class="header-query flexTwo " >
+                <!-- <div class="header-query flexTwo " >
                     <div style="width: 350px;">
                         <div class="itmes key-contnet">
                             <div class="key-text">月份</div>
@@ -48,11 +48,6 @@
                             </div>
                         </div>
                     </div>
-                   
-                    <!-- <div style="max-width: 250px;margin-left: 80px;" class="key-contnet">
-                        <div class="key-text">关键字</div>
-                        <input type="text" placeholder="类目名">
-                    </div> -->
                     <div style="margin-left:50px;">
                         <button class="layui-btn layui-btn-normal queryBtn btn" >
                             <i class="layui-icon layui-icon-search"></i>
@@ -61,6 +56,33 @@
                         <button class="layui-btn layui-btn-normal refreshBtn btn"style="margin-left:5px;" >
                             <i class="layui-icon layui-icon-refresh"></i>
                             <span>刷新</span>
+                        </button>
+                    </div>
+                </div> -->
+                <div class="newHeader">
+                    <div class="newHeaderText">
+                        条件查询
+                    </div>
+                    <div class="newKeyContent">
+                        <div class="newKeyItem">
+                            <label for="">月份</label>
+                            <div>
+                                <input type="text" class="layui-input" id="itemrs1" autocomplete="off" style="width: 100%;text-align: center;" placeholder="-">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newKeyContent">
+                        <button type="button" class="layui-btn layui-btn-primary queryBtn">
+
+                            <i class="layui-icon layui-icon-search"></i>
+                            <span>查询</span>
+
+                        </button>
+                    </div>
+                    <div class="newKeyContent">
+                        <button type="button" class="layui-btn layui-btn-primary refreshBtn" >  
+                            <i class="layui-icon layui-icon-refresh-3 "></i>
+                            <!-- 刷新 -->
                         </button>
                     </div>
                 </div>

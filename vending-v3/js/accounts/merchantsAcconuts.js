@@ -127,7 +127,9 @@ layui.use(['table', 'laydate', 'tree', 'layer'], function () {
                 token,
             },
             cols: [[
-                { field: 'time', width: 200, title: '支付时间', align: 'center' },
+                { field: 'time', width: 200, title: '支付时间', align: 'center' ,templet:function(d){
+                    return timeStamp(d.time)
+                }},
                 { field: 'number', width: 200, title: '订单号', align: 'center' },
                 { field: 'amount', width: 160, title: '金额(元)', align: 'center',templet:function(d){
                     return Number(d.amount.toFixed(2)).toLocaleString()

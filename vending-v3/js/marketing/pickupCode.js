@@ -1,19 +1,20 @@
 // import { loadAjax, showPopup } from '../../common/common';
 import '../../MyCss/marketing/pickupCode.scss';
-layui.use(['form', 'layer', 'table'], function () {
-    var addFlag=false,
-    editFlag=false,
-    delFlag=false;
-// 权限控制
-permissionsVal(436,437).then(res=>{
-    addFlag=res.addFlag;
-    editFlag=res.editFlag;
-    console.log(addFlag)
-    permissions();
-});
+layui.use(['form', 'layer', 'table', 'transfer'], function () {
+    var addFlag = false,
+        editFlag = false,
+        delFlag = false;
+    // 权限控制
+    permissionsVal(436, 437).then(res => {
+        addFlag = res.addFlag;
+        editFlag = res.editFlag;
+        console.log(addFlag)
+        permissions();
+    });
     var form = layui.form,
         layer = layui.layer,
         table = layui.table,
+        transfer = layui.transfer,
         activityTable = table.render({
             elem: '#tableactivity',
             method: 'post',
@@ -23,10 +24,10 @@ permissionsVal(436,437).then(res=>{
                 token: sessionStorage.token
             },
             cols: [[
-                { field: 'activity_name', width: 200, title: '活动名',event: 'pickup', align: 'center'  },
-                { field: 'code_count', width: 150, title: '取货码数量' ,event: 'pickup', align: 'center'},
+                { field: 'activity_name', width: 200, title: '活动名', event: 'pickup', align: 'center' },
+                { field: 'code_count', width: 150, title: '取货码数量', event: 'pickup', align: 'center' },
                 {
-                    field: 'open', width: 150, title: '已兑换数量',event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'open', width: 150, title: '已兑换数量', event: 'pickup', align: 'center', templet: function (d) {
                         var tatol = 0;
                         d.good_codes.forEach(item => {
                             if (item.code_status == 1) {
@@ -37,7 +38,7 @@ permissionsVal(436,437).then(res=>{
                     }
                 },
                 {
-                    field: 'roleSign', width: 230, title: '开始时间',event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'roleSign', width: 230, title: '开始时间', event: 'pickup', align: 'center', templet: function (d) {
                         if (d.start_time) {
                             return timeStamp(d.start_time)
                         } else {
@@ -46,7 +47,7 @@ permissionsVal(436,437).then(res=>{
                     }
                 },
                 {
-                    field: 'alias', width: 230, title: '结束时间',event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'alias', width: 230, title: '结束时间', event: 'pickup', align: 'center', templet: function (d) {
                         if (d.start_time) {
                             return timeStamp(d.end_time)
                         } else {
@@ -55,19 +56,19 @@ permissionsVal(436,437).then(res=>{
                     }
                 },
                 {
-                    field: 'phone', width: 180, title: '活动状态',event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'phone', width: 180, title: '活动状态', event: 'pickup', align: 'center', templet: function (d) {
                         var time = new Date().getTime();
                         return d.activity_status == 1 ? '已暂停' : d.activity_status == 2 ? '已取消' : time > d.end_time ? '已过期' : '活动正常'
                     }
                 },
-                { field: 'create_user', width: 190, title: '创建人' ,event: 'pickup', align: 'center'},
+                { field: 'create_user', width: 190, title: '创建人', event: 'pickup', align: 'center' },
                 {
-                    field: 'addUser', width: 190, title: '创建时间',event: 'pickup', align: 'center', templet: function (d) {
-                            if (d.start_time) {
-                                return timeStamp(d.create_time)
-                            } else {
-                                return '-';
-                            }
+                    field: 'addUser', width: 190, title: '创建时间', event: 'pickup', align: 'center', templet: function (d) {
+                        if (d.start_time) {
+                            return timeStamp(d.create_time)
+                        } else {
+                            return '-';
+                        }
                     }
                 },
                 { field: 'operation', width: 350, title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right', right: 0, },
@@ -116,11 +117,11 @@ permissionsVal(436,437).then(res=>{
         $(this).parent().parent().addClass('margin0')
         $(this).parents('.maskContnet').fadeOut();
     });
-    $('.addActivity .cancel_btn').click(function(){
-        popupHide('addActivity','addActivityBox')
+    $('.addActivity .cancel_btn').click(function () {
+        popupHide('addActivity', 'addActivityBox')
     });
-    $('.goodsCont .cancel_btn').click(function(){
-        popupHide('goodsCont','goodsBox')
+    $('.goodsCont .cancel_btn').click(function () {
+        popupHide('goodsCont', 'goodsBox')
     });
     // 刷新页面
     $('.refreshBtn').click(function () {
@@ -133,10 +134,10 @@ permissionsVal(436,437).then(res=>{
             f5Fun()
         }
     });
-   
+
     //   添加活动
-    var start_time=null,//活动开始时间
-        end_time=null;//活动结束时间
+    var start_time = null,//活动开始时间
+        end_time = null;//活动结束时间
     $('.addBtn').click(function () {
         var myDate = new Date();
         var y = myDate.getFullYear();
@@ -153,17 +154,37 @@ permissionsVal(436,437).then(res=>{
             isRange: true,
             hide: function (type) {
                 console.info(this.$input.eq(0).val(), this.$input.eq(1).val());
-                start_time=this.$input.eq(0).val();
-                end_time=this.$input.eq(1).val();
+                start_time = this.$input.eq(0).val();
+                end_time = this.$input.eq(1).val();
             }
         });
         popupShow('addActivity', 'addActivityBox');
     });
-    $('.goodsChooseBtn').click(function(){
+    // 选择商品
+    $('.goodsChooseBtn').click(function () {
+        if(goodsList.length==0){
+            popupShow('goodsCont', 'goodsBox');
+        }else{
+            chooseFun(goodsList);
+            $('.chooseFooter').show();
+            $('.chooseGoods input').prop('disabled', false)
+            popupShow('chooseGoods', 'chooseGoodsBox')
+        }
+        
+    });
+    // 选择更多商品
+    $('.moreChoose').click(function(){
+        popupHide('chooseGoods','chooseGoodsBox')
         popupShow('goodsCont','goodsBox');
-    })
-    $('.machineChooseBtn').click(function(){
-        popupShow('machineDetailsCont','machineDetailsBox');
+
+    });
+    $('.machineChooseBtn').click(function () {
+        if (machineListArr.length == 0) {
+            getMachineList(sessionStorage.UserId);
+        }else{
+            transferFun(machineListArr, chooseMachine)
+        }
+        popupShow('machineDetailsCont', 'machineDetailsBox');
     })
     // 售货机列表
     var machineAdvertising = null;
@@ -219,15 +240,15 @@ permissionsVal(436,437).then(res=>{
                 currentMachine = []
                 res.data.forEach((item, index) => {
                     currentMachine.push(item.machineId);
-                    for(var i in machineList){
-                        var ele=machineList[i];
-                        if(item.machineId==ele){
+                    for (var i in machineList) {
+                        var ele = machineList[i];
+                        if (item.machineId == ele) {
                             $('.machineChooseList tr[data-index=' + i + '] input[type="checkbox"]').prop('checked', true);
                             form.render();// 重新渲染一下
                         }
                     }
                 });
-                
+
                 if (res.code == 403) {
                     window.parent.location.href = "login.html";
                 }
@@ -235,7 +256,7 @@ permissionsVal(436,437).then(res=>{
             // skin: 'nob'
         });
     };
-    machineAdvertisingFun();
+    // machineAdvertisingFun();
     // 监听售货机复选框操作
     table.on('checkbox(machineDetailsList)', function (obj) {
         console.log(obj.checked); //当前是否选中状态
@@ -244,8 +265,8 @@ permissionsVal(436,437).then(res=>{
         if (obj.type == 'all') {
             var arr = [];
             if (obj.checked) {
-                currentMachine.forEach(item=>{
-                    if(!machineList.includes(item)){
+                currentMachine.forEach(item => {
+                    if (!machineList.includes(item)) {
                         machineList.push(item)
                     }
                 })
@@ -268,18 +289,18 @@ permissionsVal(436,437).then(res=>{
                 console.log(machineList)
             }
         }
-        if(machineList.length>0){
+        if (machineList.length > 0) {
             $('.machineFlag').text('已选择')
-        }else{
+        } else {
             $('.machineFlag').text('未选择')
         }
     });
-    $('.machineDetailsCont .determineBtn').click(function(){
-        if(machineList==0){
-            layer.msg('请选择售货机',{icon:7});
-            return ;
+    $('.machineDetailsCont .determineBtn').click(function () {
+        if (chooseMachine == 0) {
+            layer.msg('请选择售货机', { icon: 7 });
+            return;
         };
-        popupHide('machineDetailsCont','machineDetailsBox');
+        popupHide('machineDetailsCont', 'machineDetailsBox');
     })
 
     //   商品列表
@@ -305,22 +326,21 @@ permissionsVal(436,437).then(res=>{
             id: 'goodsID',
             page: true,
             loading: true,
-            height: '480',
             request: {
                 'pageName': 'pageNum',
                 'limitName': 'pageSize'
             },
             where: {
                 condition: sessionStorage.machineID,
-                conditionSeven:0
+                conditionSeven: 0
             },
             parseData: function (res) {
                 // console.log(res)
                 //res 即为原始返回的数据
                 if (res.code == 200) {
-                    var gTotal=[];
-                    res.data.list.forEach(item=>{
-                        if(item.mail==0){
+                    var gTotal = [];
+                    res.data.list.forEach(item => {
+                        if (item.mail == 0) {
                             gTotal.push(item)
                         }
                     })
@@ -345,18 +365,18 @@ permissionsVal(436,437).then(res=>{
                     window.parent.location.href = "login.html";
                 }
                 console.log(res)
-               res.data.forEach(item=>{
-                for(var i in goodsList){
-                    var ele=goodsList[i];
-                    if(item.goods_Id==ele.goodsId){
-                        $('.goodsChooseList tr[data-index=' + i + '] input[type="checkbox"]').prop('checked', true);
-                        form.render();// 重新渲染一下
+                res.data.forEach(item => {
+                    for (var i in goodsList) {
+                        var ele = goodsList[i];
+                        if (item.goods_Id == ele.goodsId) {
+                            $('.goodsChooseList tr[data-index=' + i + '] input[type="checkbox"]').prop('checked', true);
+                            form.render();// 重新渲染一下
+                        }
                     }
-                }
-               })
+                })
                 $('.list-table .layui-table-header input[type="checkbox"]').prop('disabled', true);
                 $('.list-table .layui-table-header .laytable-cell-checkbox>div').hide();
-                form.render('checkbox');         
+                form.render('checkbox');
             }
         })
     }
@@ -384,12 +404,12 @@ permissionsVal(436,437).then(res=>{
                 console.log(goodsList)
             }
         }
-        if(goodsList.length>0){
+        if (goodsList.length > 0) {
             $('.goodsFlag').text('已选择')
-        }else{
+        } else {
             $('.goodsFlag').text('未选择')
         }
-        
+
     });
     $('.goodsCont .determineBtn').click(function () {
         if (goodsList.length == 0) {
@@ -398,7 +418,7 @@ permissionsVal(436,437).then(res=>{
         }
         chooseFun(goodsList);
         $('.chooseFooter').show();
-        $('.chooseGoods input').prop('disabled',false)
+        $('.chooseGoods input').prop('disabled', false)
         popupShow('chooseGoods', 'chooseGoodsBox')
     })
     // 渲染已选择商品
@@ -423,34 +443,35 @@ permissionsVal(436,437).then(res=>{
                             </div>
                           
                         </li>`
-                    //     <div class="SetOperation">
-                    //     <button class="layui-btn layui-btn-normal delBtn  btn del-btn" delIndex="${index}">
-                    //         <span>删除</span>
-                    //     </button>
-                    // </div>
+            //     <div class="SetOperation">
+            //     <button class="layui-btn layui-btn-normal delBtn  btn del-btn" delIndex="${index}">
+            //         <span>删除</span>
+            //     </button>
+            // </div>
         });
         $('.SetContList').html(goodsStr)
     };
 
     // 输入商品数量事件
     var reduction = 1;
-    $('.SetContList').on('keyup', '.setMateraialList input', function () {
+    $('.SetContList').on('change', '.setMateraialList input', function () {
         var num = $(this).val(),
             re = /^\d*$/;
-        if (!re.test(num)) {
+            console.log(num)
+        if ((!re.test(num))||(num==0)) {
             layer.msg('只能输入正整数', { icon: 7 });
-            if(reduction){
+            if (reduction) {
                 $(this).val(reduction);
-                goodsList[$(this).attr('inputIndex')].count=$(this).val();
-            }else{
+                goodsList[$(this).attr('inputIndex')].count = $(this).val();
+            } else {
                 $(this).val(1);
-                goodsList[$(this).attr('inputIndex')].count=$(this).val();
+                goodsList[$(this).attr('inputIndex')].count = $(this).val();
             }
-            
+
         } else {
             reduction = $(this).val();
             console.log($(this).attr('inputIndex'));
-            goodsList[$(this).attr('inputIndex')].count=$(this).val();
+            goodsList[$(this).attr('inputIndex')].count = $(this).val();
         }
     });
     // 已选商品删除
@@ -467,150 +488,151 @@ permissionsVal(436,437).then(res=>{
     //     })
     // })
     // 已选择商品确定
-    $('.chooseGoods .determineBtn').click(function(){
-        popupHide('goodsCont','goodsBox');
-        popupHide('chooseGoods','chooseGoodsBox')
+    $('.chooseGoods .determineBtn').click(function () {
+        popupHide('goodsCont', 'goodsBox');
+        popupHide('chooseGoods', 'chooseGoodsBox')
     });
     // 点击高级设置
-    var flag=false;
-    $('.moreList').click(function(){
+    var flag = false;
+    $('.moreList').click(function () {
         $('.seniorSet').slideToggle();
-        flag=!flag;
-        if(flag){
+        flag = !flag;
+        if (flag) {
             $('.moreList img').addClass('actives')
-        }else{
+        } else {
             $('.moreList img').removeClass('actives')
         }
     });
     // 选择单个清除取货码时间;
-    var cleanTime=null;
+    var cleanTime = null;
     $('.J-datepicker').datePicker({
         hasShortcut: true,
         min: '',
         max: '',
-        hide: function() {
+        hide: function () {
             console.info(this.$input.eq(0).val());
-            cleanTime=this.$input.eq(0).val()
+            cleanTime = this.$input.eq(0).val()
         }
     });
     // 清除无效取货码
-    $('.cleanBtn').click(function(){
-      if(!cleanTime){
-          layer.msg('请选择需要清除无效取货码的时间节点',{icon:7});
-          return;
-      }  
-      layer.confirm(`确定清除${cleanTime}前无效的取货码？`, function (index) {
-        layer.close(index);
-        var tiemObj=JSON.stringify({
-            time:cleanTime
+    $('.cleanBtn').click(function () {
+        if (!cleanTime) {
+            layer.msg('请选择需要清除无效取货码的时间节点', { icon: 7 });
+            return;
+        }
+        layer.confirm(`确定清除${cleanTime}前无效的取货码？`, function (index) {
+            layer.close(index);
+            var tiemObj = JSON.stringify({
+                time: cleanTime
+            })
+            loadingAjax('/api/activity/resetGoodCode', 'post', tiemObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
+                layer.msg(res.message, { icon: 1 })
+            }).catch(err => {
+                layer.msg(err.message, { icon: 2 })
+            })
         })
-        loadingAjax('/api/activity/resetGoodCode','post',tiemObj,sessionStorage.token,'mask','','',layer).then(res=>{
-              layer.msg(res.message,{icon:1})
-          }).catch(err=>{
-              layer.msg(err.message,{icon:2})
-          })
-      })
-    
+
     });
-    var codecountNum=1;
-    $('.addActivityBody input[name="codeConst"]').keyup(function(){
+    var codecountNum = 1;
+    $('.addActivityBody input[name="codeConst"]').keyup(function () {
         var num = $(this).val(),
-        re = /^\d*$/;
-    if (!re.test(num)) {
-        layer.msg('只能输入正整数', { icon: 7 });
-        if(codecountNum){
-            $(this).val(codecountNum);
-        }else{
-            $(this).val(1);
+            re = /^\d*$/;
+        if (!re.test(num)) {
+            layer.msg('只能输入正整数', { icon: 7 });
+            if (codecountNum) {
+                $(this).val(codecountNum);
+            } else {
+                $(this).val(1);
+            }
+        } else {
+            codecountNum = $(this).val();
         }
-    } else {
-        codecountNum = $(this).val();
-    }
     });
-    var codeLen=12;
-    $('.addActivityBody input[name="codeLen"]').keyup(function(){
+    var codeLen = 12;
+    $('.addActivityBody input[name="codeLen"]').keyup(function () {
         var num = $(this).val(),
-        re = /^\d*$/;
-    if (!re.test(num)) {
-        layer.msg('只能输入正整数', { icon: 7 });
-        if(codeLen){
-            $(this).val(codeLen);
-        }else{
-            $(this).val(12);
+            re = /^\d*$/;
+        if (!re.test(num)) {
+            layer.msg('只能输入正整数', { icon: 7 });
+            if (codeLen) {
+                $(this).val(codeLen);
+            } else {
+                $(this).val(12);
+            }
+        } else {
+            codeLen = $(this).val();
         }
-    } else {
-        codeLen = $(this).val();
-    }
     });
-    $('.addActivityBody input[name="codeLen"]').blur(function(){
-        if(!($(this).val()>=8&&$(this).val()<=30)){
-            layer.msg('取货码长度范围为8位到30位',{icon:7});
+    $('.addActivityBody input[name="codeLen"]').blur(function () {
+        if (!($(this).val() >= 8 && $(this).val() <= 30)) {
+            layer.msg('取货码长度范围为8位到30位', { icon: 7 });
             $(this).val(12);
         }
     });
 
     // 新增活动提交
-    $('.addFooter .submitBtn').click(function(){
-        if(!(start_time&&end_time)){
-            layer.msg('请选择开始时间与结束时间',{icon:7});
-            return ;
+    $('.addFooter .submitBtn').click(function () {
+        if (!(start_time && end_time)) {
+            layer.msg('请选择开始时间与结束时间', { icon: 7 });
+            return;
         }
-        if(!($('.addActivityBody input[name="activityName"]').val()&&$('.addActivityBody input[name="codeConst"]').val()>0)){
-            layer.msg('活动名不能为空且取货码数量必须大于0',{icon:7});
-            return ;
+        if (!($('.addActivityBody input[name="activityName"]').val() && $('.addActivityBody input[name="codeConst"]').val() > 0)) {
+            layer.msg('活动名不能为空且取货码数量必须大于0', { icon: 7 });
+            return;
         }
-        if(machineList.length==0){
-            layer.msg('请选择售货机',{icon:7})
-            return ;
+        if (chooseMachine.length == 0) {
+            layer.msg('请选择售货机', { icon: 7 })
+            return;
         }
-        if(goodsList.length==0){
-            layer.msg('请选择商品',{icon:7})
-            return ;
+        if (goodsList.length == 0) {
+            layer.msg('请选择商品', { icon: 7 })
+            return;
         }
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        var pushGoodsList=[];
-        goodsList.forEach(item=>{
+        var pushGoodsList = [];
+        goodsList.forEach(item => {
             pushGoodsList.push({
-                good_count:Number(item.count),
-                good_id:item.goodsId
+                good_count: Number(item.count),
+                good_id: item.goodsId
             })
         })
-        var addOb=JSON.stringify({
-            activity_name:$('.addActivityBody input[name="activityName"]').val(),
+        var addOb = JSON.stringify({
+            activity_name: $('.addActivityBody input[name="activityName"]').val(),
             start_time,
             end_time,
-            code_count:$('.addActivityBody input[name="codeConst"]').val(),
-            merchantId:sessionStorage.machineID,
-            machines:machineList,
-            goods:pushGoodsList,
-            type:$('.complex input[name="complexNum"]').val(),
-            len:$('.seniorSet input[name="codeLen"]').val()
+            code_count: $('.addActivityBody input[name="codeConst"]').val(),
+            merchantId: sessionStorage.machineID,
+            machines: chooseMachine,
+            goods: pushGoodsList,
+            type: Number($('.complex input[name="complexNum"]:checked').val()),
+            len: $('.seniorSet input[name="codeLen"]').val()
         })
-        loadingAjax('/api/activity/newActivity', 'post',addOb,sessionStorage.token,'mask','addActivity','addActivityBox').then(res=>{
-            layer.msg(res.message,{icon:1});
+        loadingAjax('/api/activity/newActivity', 'post', addOb, sessionStorage.token, 'mask', 'addActivity', 'addActivityBox').then(res => {
+            layer.msg(res.message, { icon: 1 });
             $('.addActivityBody input[name="activityName"]').val('');
             $('.addActivityBody input[name="codeConst"]').val('');
             $('.c-datepicker-data-input').val('');
             $('.machineFlag').html('未选择');
             $('.goodsFlag').html('未选择');
-            start_time=null;
-            end_time=null;
-            machineList=[];
-            goodsList=[];
+            start_time = null;
+            end_time = null;
+            chooseMachine = [];
+            goodsList = [];
             $('.seniorSet input[name="codeLen"]').val(12);
             $('.complex input[name="complexNum"]').val(4);
             activityTable.reload({
-                where:{}
+                where: {}
             });
-            machineAdvertising.reload({
+            // machineAdvertising.reload({
 
-            });
+            // });
             goodsTableIns.reload({
-                where:{}
-            })
-        }).catch(err=>{
-            layer.msg(err.message,{icon:2});
+                where: {}
+            });
+            transferFun(machineListArr, chooseMachine)
+        }).catch(err => {
+            layer.msg(err.message, { icon: 2 });
         })
     });
 
@@ -618,154 +640,228 @@ permissionsVal(436,437).then(res=>{
     // 监听操作部分
     table.on('tool(tableactivity)', function (obj) {
         console.log(obj)
-        var stamp=new Date().getTime();
-        if(obj.event=='stop'){
-            if(stamp>obj.data.end_time){
-                layer.msg('该活动已过期，不可进行操作',{icon:7});
+        var stamp = new Date().getTime();
+        if (obj.event == 'stop') {
+            if (stamp > obj.data.end_time) {
+                layer.msg('该活动已过期，不可进行操作', { icon: 7 });
                 return;
             };
-            layer.confirm(obj.data.activity_status==0?'确定暂停？':'确定开始？', function (index) {
+            layer.confirm(obj.data.activity_status == 0 ? '确定暂停？' : '确定开始？', function (index) {
                 layer.close(index);
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
-                var stopObj=JSON.stringify({
-                    activity_id:obj.data.id,
-                    activity_status:obj.data.activity_status==0?1:0
+                var stopObj = JSON.stringify({
+                    activity_id: obj.data.id,
+                    activity_status: obj.data.activity_status == 0 ? 1 : 0
                 });
-                loadingAjax('/api/activity/operateActivity','post',stopObj,sessionStorage.token,'mask','','',layer).then(res=>{
-                    layer.msg(res.message,{icon:1});
+                loadingAjax('/api/activity/operateActivity', 'post', stopObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
+                    layer.msg(res.message, { icon: 1 });
                     activityTable.reload({
-                        where:{}
+                        where: {}
                     })
-                }).catch(err=>{
-                    layer.msg(err.message,{icon:2})
+                }).catch(err => {
+                    layer.msg(err.message, { icon: 2 })
                 })
             })
-        }else if(obj.event=='cancel'){
-            if(stamp>obj.data.end_time){
-                layer.msg('该活动已过期，不可进行取消操作',{icon:7});
+        } else if (obj.event == 'cancel') {
+            if (stamp > obj.data.end_time) {
+                layer.msg('该活动已过期，不可进行取消操作', { icon: 7 });
                 return;
-            }   
+            }
             layer.confirm(`确定取活动(取消后活动将停止并且取货码失效)`, function (index) {
                 layer.close(index);
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
-                var cancelObj=JSON.stringify({
-                    activity_id:obj.data.id,
-                    activity_status:2
+                var cancelObj = JSON.stringify({
+                    activity_id: obj.data.id,
+                    activity_status: 2
                 })
-                loadingAjax('/api/activity/operateActivity','post',cancelObj,sessionStorage.token,'mask','','',layer).then(res=>{
-                    layer.msg(res.message,{icon:1});
+                loadingAjax('/api/activity/operateActivity', 'post', cancelObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
+                    layer.msg(res.message, { icon: 1 });
                     activityTable.reload({
-                        where:{}
+                        where: {}
                     })
-                }).catch(err=>{
-                    layer.msg(err.message,{icon:2})
+                }).catch(err => {
+                    layer.msg(err.message, { icon: 2 })
                 })
             })
-        }else if(obj.event=='machineIn'){
-            if(!activityMachineIn){
+        } else if (obj.event == 'machineIn') {
+            if (!activityMachineIn) {
                 activityMachineFun();
             };
             activityMachineIn.reload({
                 data: obj.data.activity_machine
-              });
-              $('.activityMachine .playHeader span').html(obj.data.activity_name+'活动售货机')
-              popupShow('activityMachine','activityMachineBox')
+            });
+            $('.activityMachine .playHeader span').html(obj.data.activity_name + '活动售货机')
+            popupShow('activityMachine', 'activityMachineBox')
 
-        }else if(obj.event=='goodsIn'){
+        } else if (obj.event == 'goodsIn') {
             chooseFun(obj.data.goods_list);
             $('.chooseFooter').hide();
-            $('.chooseGoods input').prop('disabled',true);
-            $('.activityMachine .playHeader span').html(obj.data.activity_name+'活动商品')
-            popupShow('chooseGoods','chooseGoodsBox')
-        }else if(obj.event=='pickup'){
+            $('.chooseGoods input').prop('disabled', true);
+            $('.activityMachine .playHeader span').html(obj.data.activity_name + '活动商品')
+            popupShow('chooseGoods', 'chooseGoodsBox')
+        } else if (obj.event == 'pickup') {
             // console.log(1)   
-            if(!pickupCodeIn){
+            if (!pickupCodeIn) {
                 pickupCodeFun()
             }
             pickupCodeIn.reload({
                 data: obj.data.good_codes
-              });
-              $('.pickCode .playHeader span').html(obj.data.activity_name+'取货码列表')
-              popupShow('pickCode','pickCodeBox')
+            });
+            $('.pickCode .playHeader span').html(obj.data.activity_name + '取货码列表')
+            popupShow('pickCode', 'pickCodeBox')
         }
     });
     // 活动售货机
-    var activityMachineIn=null;
-    function activityMachineFun(){
-        activityMachineIn=table.render({
+    var activityMachineIn = null;
+    function activityMachineFun() {
+        activityMachineIn = table.render({
             elem: '#activityMachine',
             cols: [[
                 { field: 'info', width: 200, title: '售货机信息', align: 'center' },
                 { field: 'location', width: 450, title: '地址', align: 'center', },
             ]],
-            data:[
+            data: [
 
             ],
-            id:'chooseMachineIn',
+            id: 'chooseMachineIn',
             loading: true,
         })
     }
-    // 售货机列表
-    var pickupCodeIn=null;
-    function pickupCodeFun(){
-        pickupCodeIn=table.render({
+    // 取货码列表
+    var pickupCodeIn = null;
+    function pickupCodeFun() {
+        pickupCodeIn = table.render({
             elem: '#pickCodeIn',
             cols: [[
-                { field: 'good_code', width: 200, title: '取货码' },
-                { field: 'code_status', width: 150, title: '使用情况', align: 'center',sort: true ,templet:function(d){
-                    return d.code_status==0?'待使用':'已使用'
-                }},
-                { field: 'operate_machine', width: 250, title: '使用的售货机', align:'center',templet:function(d){
-                    return d.info?d.info:'-'
-                }},
-                { field: 'operate_time', width: 250, title: '使用时间',align:'center',templet:function(d){
-                    
-                    if(d.operate_time){ 
-                        return  timeStamp(d.operate_time);
-                    }else{
-                        return '-'
+                { field: 'good_code', width: 160, title: '取货码', align: 'center' },
+                {
+                    field: 'code_status', width: 130, title: '使用情况', align: 'center', sort: true, templet: function (d) {
+                        return d.code_status == 0 ? '待使用' : '已使用'
                     }
-                } },
+                },
+                {
+                    field: 'operate_machine', width: 250, title: '使用的售货机', align: 'center', templet: function (d) {
+                        return d.info ? d.info : '-'
+                    }
+                },
+                {
+                    field: 'ship_info', width: 200, title: '出货情况', align: 'center', templet: function (d) {
+                        if (d.code_status == 0) {
+                            return '-'
+                        } else {
+                            var str = '';
+                            d.ship_info.forEach(item => {
+                                str += `<div>${item.goods_Name + (item.ship_error == 0 ? '全部出货成功' : '出货（' + ((item.ship_total - item.ship_error) + '/' + item.ship_total) + ')')}</div>`
+                            });
+                            return str
+                        }
+                    }
+                },
+                {
+                    field: 'operate_time', width: 200, title: '使用时间', align: 'center', templet: function (d) {
+
+                        if (d.operate_time) {
+                            return timeStamp(d.operate_time);
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
             ]],
-            data:[
+            data: [
             ],
-            id:'pickIn',
+            id: 'pickIn',
             loading: true,
             page: true,
         })
     };
 
     // 活动查询
-    $('.queryBtnClick').click(function(){
+    $('.queryBtnClick').click(function () {
         activityTable.reload({
-            where:{
-                condition:$('.activityListKey .KyeText').val()
+            where: {
+                condition: $('.activityListKey .KyeText').val()
             }
         });
     });
     // 售货机查询
-    $('.machineKeyBtn').click(function(){
+    $('.machineKeyBtn').click(function () {
         machineAdvertising.reload({
-            where:{
-                keyword:$('.machineDetailsBody input[name="machineKey"]').val()
+            where: {
+                keyword: $('.machineDetailsBody input[name="machineKey"]').val()
             }
         })
     });
     // 商品查询
-    $('.goodsKeyBtn').click(function(){
+    $('.goodsKeyBtn').click(function () {
         goodsTableIns.reload({
-            where:{
-                conditionTwo:$('.goodsCont input[name="GoodsKyeText"]').val()
+            where: {
+                conditionTwo: $('.goodsCont input[name="GoodsKyeText"]').val()
             }
         })
-    })
-
- 
+    });
     // 权限控制
-    function permissions(){
-        addFlag?$('.addBtn').removeClass('hide'):$('.addBtn').addClass('hide');
-        editFlag?$('.listEdit').removeClass('hide'):$('.listEdit').addClass('hide')
-    }
+    function permissions() {
+        addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+        editFlag ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide')
+    };
+    // 售货机穿梭框
+    function transferFun(data, value) {
+        transfer.render({
+            elem: '#test6',
+            data,
+            title: ['未选择售货机', '已选择售货机'],
+            width: 380,
+            height: 500, //定义高度
+            value,
+            onchange: function (obj, indexs) {
+                console.log(indexs)
+                console.log(obj)
+                if(indexs==0){
+                    obj.forEach(item=>{
+                        chooseMachine.push(item.value)
+                    })
+                    console.log(chooseMachine)
+                }else if(indexs==1){
+                    obj.forEach(item=>{
+                       chooseMachine.splice(chooseMachine.indexOf(item.value),1);
+                       console.log(chooseMachine.indexOf(item.value))
+                    });
+                    console.log(chooseMachine)
+                }
+                chooseMachine.length==0?$('.machineFlag').text('未选择'):$('.machineFlag').text('已选择')
+            }
+        });
+    };
+    //   活动已选择售货机
+    var chooseMachine = [];
+    //   获取商户下的售货机
+    var machineListArr = [];
+    function getMachineList(uId) {
+        loadingAjax('/api/user/getUserMachine', 'post', JSON.stringify({ UUId: uId }), sessionStorage.token).then(res => {
+            var getList = res.data.unSelect.concat(res.data.select)
+            getList = res.data.unSelect.concat(res.data.select);
+            getList.forEach(item => {
+                var transObj = {
+                    value: item.machineId,
+                    title: item.info ? item.info : '(此为未命名的新售货机)'
+                };
+                machineListArr.push(transObj)
+            });
+            console.log(machineListArr)
+            transferFun(machineListArr, chooseMachine);
+        }).catch(err => {
+            layer.msg('获取售货机失败', { icon: 2 })
+        })
+    };
+    var abcd = JSON.stringify({
+        pageSize: 10,
+        pageNum: 1,
+        merchant_id: 93
+    })
+    loadingAjax('/api/order/getCodeOrder', 'post', abcd, sessionStorage.token).then(res => {
+        console.log(res)
+    });
 })

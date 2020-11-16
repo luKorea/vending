@@ -1,0 +1,27 @@
+.salesTableList{
+    td{
+        cursor: pointer !important;
+    }
+}
+.salesBox{
+    width: 800px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    padding-bottom: 15px;
+    overflow: hidden;
+    .salesBody{
+        padding: 20px;
+    }
+    .layui-form{
+        width: 100%;
+        overflow-x: auto;
+    }
+    .layui-table-box>.layui-table-body{
+        height: 350px;
+    }
+}

@@ -33,7 +33,8 @@
                                 <i class="layui-icon layui-icon-refresh "></i>
                                 <span>刷新</span>
                             </button> -->
-                            <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表" data-direction="bottom" type="button">
+                            <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表"
+                                data-direction="bottom" type="button">
                                 <i class="layui-icon layui-icon-refresh-3 "></i>
                                 <!-- 刷新 -->
                             </button>
@@ -194,11 +195,11 @@
                                     <button type="button" class="layui-btn layui-btn-primary machineListKeyBtn">
                                         <i class="layui-icon layui-icon-search"></i>
                                         <span>查询</span>
-                                        
+
                                     </button>
                                 </div>
                                 <div class="newKeyContent">
-                                    <button type="button" class="layui-btn layui-btn-primary">
+                                    <button type="button" class="layui-btn layui-btn-primary machineListKeyBtn">
                                         <i class="layui-icon layui-icon-refresh-3 "></i>
                                         <!-- 刷新 -->
                                     </button>
@@ -222,7 +223,7 @@
         <!--  设置部分-->
         <div class="setUpCont " style="overflow-y: auto;display: none;">
             <div class="maskHeader">
-                <span>Y2019119164白云富力桃园邮政支局详细信息</span>
+                <span></span>
                 <p class="close">
                     <i class="layui-icon layui-icon-close"></i>
                 </p>
@@ -234,6 +235,7 @@
                     <li class="salesDetails">销售详情</li>
                     <li class="shipmentDetails">出货记录</li>
                     <li class="payTypeSet">收款账户</li>
+                    <li class="">补货记录</li>
                     <!-- <li>客服信息</li> -->
                     <div class="tabLine">
                     </div>
@@ -484,11 +486,10 @@
                     </li>
                     <!-- 销售详情 -->
                     <li class="salesTwo details" style="display: none;">
-                        <form class="layui-form" style="width: 100%;" lay-filter="salesDataVal">
+                        <!-- <form class="layui-form" style="width: 100%;" lay-filter="salesDataVal">
                             <div class="layui-row">
                                 <div class="layui-col-sm9 layui-col-md6 layui-col-lg4">
                                     <div class="itmes key-contnet">
-                                        <!-- 上传时间： -->
                                         <div class="key-text">时间</div>
                                         <div class="layui-inline">
                                             <div class="layui-input-inline">
@@ -498,22 +499,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="layui-col-sm8 layui-col-md6 layui-col-lg4">
-                                    <div style="max-width: 360px;" class="key-contnet">
-                                        <div class="key-text">关键字</div>
-                                        <input type="text" name="key" placeholder="请输入关键字">
-                                    </div>
-                                </div> -->
                                 <div class="layui-col-sm8 layui-col-md6 layui-col-lg4">
                                     <div class="key-contnet">
-                                        <!-- 素材属性: -->
                                         <div class="key-text">出货状态</div>
                                         <form class="layui-form" action="" style="max-width: 360px;">
                                             <div class="layui-form" lay-filter="" style="width: 260px;">
                                                 <select name="shipmentStatus" id="" lay-filter="mySelect">
                                                     <option value="">全部</option>
-                                                    <option value="1">出货成功</option>
-                                                    <option value="0">出货失败</option>
+                                                    <option value="0">未出货</option>
+                                                    <option value="1">出货失败</option>
+                                                    <option value="1">出货失败</option>
                                                 </select>
                                             </div>
                                         </form>
@@ -521,14 +516,14 @@
                                 </div>
                                 <div class="layui-col-sm8 layui-col-md6 layui-col-lg4 margin-top">
                                     <div class="key-contnet">
-                                        <!-- 素材类别: -->
                                         <div class="key-text">支付状态</div>
                                         <form class="layui-form" action="" style="max-width: 360px;">
                                             <div class="layui-form" lay-filter="" style="width: 260px;">
                                                 <select name="payStatus" id="" lay-filter="mySelect">
                                                     <option value="">全部</option>
-                                                    <option value="1">已支付</option>
                                                     <option value="0">未支付</option>
+                                                    <option value="1">等待支付</option>
+                                                    <option value="2">已支付</option>
                                                 </select>
                                             </div>
                                         </form>
@@ -536,7 +531,6 @@
                                 </div>
                                 <div class="layui-col-sm8 layui-col-m6 layui-col-lg4 margin-top">
                                     <div class="key-contnet">
-                                        <!-- 审核状态: -->
                                         <div class="key-text">支付类型</div>
                                         <form class="layui-form" action="" style="max-width: 360px;">
                                             <div class="layui-form" lay-filter="" style="width: 260px;">
@@ -556,7 +550,67 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                        </form> -->
+                        <div class="newHeader">
+                            <div class="newHeaderText">
+                                条件查询
+                            </div>
+                            <form action="" class="layui-form" lay-filter="salesDataVal">
+                                <div class="newKeyContent">
+                                    <div class="newKeyItem">
+                                        <label for="">时间</label>
+                                        <div>
+                                            <input type="text" class="layui-input" id="test6" placeholder="  - "
+                                                autocomplete="off" style="text-align: center;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="newKeyContent">
+                                    <div class="newKeyItem">
+                                        <label for="">出货状态</label>
+                                        <div class="layui-form">
+                                            <select name="shipmentStatus" id="" lay-filter="mySelect">
+                                                <option value="">全部</option>
+                                                <option value="0">未出货</option>
+                                                <option value="1">出货失败</option>
+                                                <option value="2">出货成功</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="newKeyContent">
+                                    <div class="newKeyItem">
+                                        <label for="">支付状态</label>
+                                        <div class="layui-form" lay-filter="myDiv">
+                                            <select name="payStatus" id="" lay-filter="mySelect">
+                                                <option value="">全部</option>
+                                                <option value="0">未支付</option>
+                                                <option value="1">等待支付</option>
+                                                <option value="2">已支付</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="newKeyContent">
+                                    <div class="newKeyItem">
+                                        <label for="">支付类型</label>
+                                        <div class="layui-form" lay-filter="myDiv">
+                                            <select name="payType" id="" lay-filter="mySelect">
+                                                <option value="">全部</option>
+                                                <option value="1">微信</option>
+                                                <option value="0">支付宝</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="newKeyContent">
+                                    <button type="button" class="layui-btn layui-btn-primary selesQueryBtn">
+                                        <i class="layui-icon layui-icon-search"></i>
+                                        <span>查询</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                         <div style="box-sizing: border-box;">
                             <div class="data-list-table">
                                 <table class="layui-hide" id="salesDateilsTable" lay-filter="salesDateilsTable"></table>
@@ -565,27 +619,29 @@
                     </li>
                     <!-- 出货记录 -->
                     <li class="shipmentRecord" style="display: none;">
-                        <div class="layui-row">
-                            <div class="layui-col-sm9 layui-col-md6 layui-col-lg3">
-                                <div class="itmes key-contnet">
-                                    <!-- 上传时间： -->
-                                    <div class="key-text">时间</div>
-                                    <div class="layui-inline">
-                                        <div class="layui-input-inline">
-                                            <input type="text" class="layui-input" id="test7" placeholder="  - "
-                                                autocomplete="off" style="text-align: center;">
-                                        </div>
+                        <div class="newHeader">
+                            <div class="newHeaderText">
+                                条件查询
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">时间</label>
+                                    <div>
+                                        <input type="text" class="layui-input" id="test7" placeholder="  - "
+                                            autocomplete="off" style="text-align: center;">
                                     </div>
                                 </div>
                             </div>
-                            <div class="layui-col-sm8 layui-col-md6 layui-col-lg3">
-                                <div style="max-width: 360px;" class="key-contnet">
-                                    <div class="key-text">关键字</div>
-                                    <input type="text" name="keyName" placeholder="请输入关键字">
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">关键字</label>
+                                    <div>
+                                        <input type="text" name="keyName" placeholder="">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="layui-col-sm8 layui-col-m6 layui-col-lg1 ">
-                                <button class="layui-btn layui-btn-normal  btn shipmentQueryBtn" type="button">
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary shipmentQueryBtn">
                                     <i class="layui-icon layui-icon-search"></i>
                                     <span>查询</span>
                                 </button>
@@ -670,6 +726,42 @@
                             </div>
                         </div>
                     </li> -->
+                    <!-- 补货记录 -->
+                    <li class="replenishment">
+                        <div class="newHeader">
+                            <div class="newHeaderText">
+                                条件查询
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">时间</label>
+                                    <div>
+                                        <input type="text" class="layui-input" id="test8" placeholder="  - "
+                                            autocomplete="off" style="text-align: center;">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">关键字</label>
+                                    <div>
+                                        <input type="text" name="RkeyName" placeholder="">
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary RQueryBtn">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                    <span>查询</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div style="box-sizing: border-box;">
+                            <div class="rTableList">
+                                <table class="layui-hide" id="replenishmentTable" lay-filter="replenishmentTable"></table>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
                 <!-- </div> -->
 
@@ -826,7 +918,7 @@
                                     </div>
                                 </div>
                                 <li class="listFlex salseList">
-                                    <label for="">销售经理类别：</label>
+                                    <label style="flex-shrink:0" for="">销售经理类别：</label>
                                     <div class="layui-input-block salseCont">
                                         <!-- <input type="radio" name="sex" value="" title="无" checked> -->
                                     </div>

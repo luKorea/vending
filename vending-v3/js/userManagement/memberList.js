@@ -199,6 +199,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         return ;
       }
       storesFun(obj.data.uuid)
+      // storesFun();
     }
   });
 
@@ -613,7 +614,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     transferVal = [];
   function storesFun(uid) {
     loadingAjax('/api/user/getUserMachine', 'post', JSON.stringify({ UUId: uid }), sessionStorage.token).then(res => {
-
+      console.log(res)
       transferListArr = [];
       transferVal=[]
       // transferVal = res.data.select;
@@ -627,10 +628,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
           title: item.info ? item.info : '(此为未命名的新售货机)'
         });
         transferListArr.push(transferObj)
+        console.log(transferListArr);
+        console.log(transferVal)
         transferFun(transferListArr, transferVal)
       });
-      console.log(transferListArr)
-      
       if((transferListArr.length==0)&&(transferVal.length==0)){
         layer.msg('该用户所属商户没有售货机',{icon:7});
         return ;

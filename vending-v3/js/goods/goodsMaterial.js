@@ -425,6 +425,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       url: '/api/fileUpload',
       processData: false,
       contentType: false,
+      timeout:10000,
       headers: {
         token,
       },
@@ -579,6 +580,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       checkStatusList = table.checkStatus('detailsId');
       tableType = detailsTable;
     }
+    console.log()
     if (checkStatusList.data.length > 0) {
       $('.mask').fadeIn();
       $('.maskSpan').addClass('maskIcon');
@@ -772,6 +774,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         url: '/api/fileUpload',
         processData: false,
         contentType: false,
+        timeout: 10000,
         headers: {
           token,
         },
@@ -902,6 +905,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       url: '/api/fileUpload',
       processData: false,
       contentType: false,
+      timeout: 10000,
       headers: {
         token,
       },

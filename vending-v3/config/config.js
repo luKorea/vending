@@ -24,6 +24,8 @@ var entry = {
         pickupCode:'./js/marketing/pickupCode.js',
         salesManager:'./js/merchants/salesManager.js',
         mailOrder:'./js/order/mailOrder.js',
+        codeOrder:'./js/order/codeOrder.js',
+        salesResults:'./js/merchants/salesResults.js',
         //移动端版本
         M_login:'./js/mobile/login/login.js',
         M_my:'./js/mobile/my/my.js',
@@ -103,6 +105,12 @@ var htmlConfig = [
     },  
     {
         name: "salesManager",
+    },
+    {
+        name: "codeOrder",
+    },
+    {
+        name: "salesResults",
     },
     //移动端部分
     {

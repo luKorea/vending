@@ -2,6 +2,7 @@ import '../../MyCss/stores/machine.css';
 import { provinceChange, cityChange } from '../../assets/public/selectMore';
 // console.log()
 layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
+    var funNum = 1;
     tooltip('.refreshBtnList', { transition: true, time: 200 });
     // console.log(provinceChange)
     // 收起
@@ -184,6 +185,23 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             width: (that).width() + 'px'
         }, 500);
         $('.navSetCont li').eq($(this).index()).fadeIn().siblings().hide();
+        switch (that.index()) {
+            case 1:
+                getGoodsWay(machineSetData.machineId);
+                break;
+            case 2:
+                salesFun(machineSetData.machineId);
+                break;
+            case 3:
+                recordFun(machineSetData.machineId);
+                break;
+            case 4:
+                supportpay(machineSetData.machineId, machineSetData.userNum);
+                break;
+            case 5:
+                replenishmenFun(machineSetData.machineId);
+                break;
+        }
     });
     // 监听售货机列表操作
     var machineSetData = null
@@ -192,12 +210,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         console.log(machineSetData)
         $('.maskHeader span').html(machineSetData.info + '详细信息')
         if (obj.event == 'set') {
-            if (AisleDetailsFlag) {
-                getGoodsWay(obj.data.machineId);
-            } else {
-                var titleHtml = `<div style="text-align: center;">您没有权限访问货道详情！</div>`
-                $('.aisleGoodsCont').html(titleHtml)
-            }
             $('.setUpCont').show();
             var setAddress = null;
             if (machineSetData.location) {
@@ -213,18 +225,31 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 'setCity': setAddress ? setAddress[2] : '',
                 'setArea': setAddress ? setAddress[3] : '',
                 'setRegion': machineSetData.area
-            })
-            if (salesListFlag) {
-                salesFun(machineSetData.machineId);
-            }
-            if (shipmentListFlag) {
-                recordFun(machineSetData.machineId);
-            }
-            if (paySetFlag) {
-                //支付方式
-                // payTypeFun(Number(sessionStorage.machineGoodsId));
-                supportpay(machineSetData.machineId, machineSetData.userNum);
-            }
+            });
+
+            $('.navSetCont li').eq(0).show().siblings().hide();
+            $('.setNav li').eq(0).addClass('active').siblings().removeClass('active');
+            $('.tabLine').animate({
+                left: ($('.setNav li').eq(0).offset().left - 20) + 'px',
+                width: $('.setNav li').eq(0).width() + 'px'
+            }, 1)
+            // if (AisleDetailsFlag) {
+            //     getGoodsWay(machineSetData.machineId);
+            //     $('.aisleDetailsTab').show()
+            // } else {
+            //     $('.aisleDetailsTab').hide()
+            //     var titleHtml = `<div style="text-align: center;">您没有权限访问货道详情！</div>`
+            //     $('.aisleGoodsCont').html(titleHtml)
+            // }
+            // if (salesListFlag) {
+            //     salesFun(machineSetData.machineId);
+            // }
+            // if (shipmentListFlag) {
+            //     recordFun(machineSetData.machineId);
+            // }
+            // if (paySetFlag) {
+            //     supportpay(machineSetData.machineId, machineSetData.userNum);
+            // }
 
         } else if (obj.event == 'edit') {
             if (machineSetData.openStatus == 1) {
@@ -262,8 +287,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 $('.district').val(region[2]);
                 form.render('select');
             }
-
             $('.editMachineCont').show();
+            $('.editMachineCont').scrollTop(0)
             // 客服部分
             if (machineSetData.service_code) {
                 $('.ImgCont img').prop('src', machineSetData.service_code);
@@ -300,6 +325,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 customFlag = false;
             };
             // 销售经理
+            funNum = 1;
             salesClassList(machineSetData, 1)
             $('.customTitle input[name="custom_phone"]').val(machineSetData.custom_phone)
             form.render();
@@ -311,32 +337,19 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 return;
             }
             layer.confirm('确定激活该设备？', function (index) {
-                $.ajax({
-                    type: 'post',
-                    url: '/api/machine/activeMachine',
-                    headers: {
-                        "Content-Type": "application/json",
-                        token,
-                    },
-                    data: JSON.stringify({
-                        machineId: machineSetData.machineId,
-                        actionStatus: '1',
-                    }),
-                    success: function (res) {
-                        layer.close(index);
-                        if (res.code == 200) {
-                            layer.msg('激活成功', { icon: 1 });
-                            machineList.reload({
-                                where: {}
-                            })
-                        } else if (res.code == 403) {
-                            window.parent.location.href = "login.html";
-                        } else {
-                            layer.msg(res.message, { icon: 2 });
-                        }
-                    }, error: function (err) {
-                        layer.msg('服务器请求超时', { icon: 2 });
-                    }
+                $('.mask').fadeIn();
+                $('.maskSpan').addClass('maskIcon');
+                var activeMachineObj = JSON.stringify({
+                    machineId: machineSetData.machineId,
+                    actionStatus: '1',
+                });
+                loadingAjax('/api/machine/activeMachine', 'post', activeMachineObj, token, 'mask', '', '', layer).then(res => {
+                    layer.msg('激活成功', { icon: 1 });
+                    machineList.reload({
+                        where: {}
+                    })
+                }).catch(err => {
+                    layer.msg(res.message, { icon: 2 });
                 })
             })
         } else if (obj.event == 'startThe') {
@@ -354,89 +367,112 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     layer.close(index);
                     $('.mask').fadeIn();
                     $('.maskSpan').addClass('maskIcon')
-                    $.ajax({
-                        type: 'post',
-                        url: '/api/machine/getStatus',
-                        headers: {
-                            "Content-Type": "application/json",
-                            token,
-                        },
-                        data: JSON.stringify({
-                            machineId: machineSetData.machineId,
-                        }),
-                        success: function (Dres) {
-                            if (Dres.code == 200) {
-                                var statusType = Dres.data;
-                                if (statusType.actionStatus == 1) {
-                                    $.ajax({
-                                        type: 'post',
-                                        url: '/api/pushActive',
-                                        headers: {
-                                            "Content-Type": "application/json",
-                                            token,
-                                        },
-                                        data: JSON.stringify({
-                                            machine: machineSetData.machineId,
-                                            action: 'true'
-                                        }),
-                                        success: function (res) {
-                                            // console.log(res)
-                                            // $('.mask').fadeOut();
-                                            // $('.maskSpan').removeClass('maskIcon');
-                                            if (res == 'true') {
-                                                // layer.msg('操作成功', { icon: 1 });
-                                                // machineList.reload({
-                                                //     where: {}
-                                                // })
-                                                $.ajax({
-                                                    type: 'post',
-                                                    url: '/api/machine/activeMachine',
-                                                    headers: {
-                                                        "Content-Type": "application/json",
-                                                        token,
-                                                    },
-                                                    data: JSON.stringify({
-                                                        machineId: machineSetData.machineId,
-                                                        openStatus: '1'
-                                                    }),
-                                                    success: function (Sres) {
-                                                        $('.mask').fadeOut();
-                                                        $('.maskSpan').removeClass('maskIcon');
-                                                        if (Sres.code == 200) {
-                                                            layer.msg('操作成功', { icon: 1 });
-                                                            machineList.reload({
-                                                                where: {}
-                                                            })
-                                                        } else {
-                                                            layer.msg(Sres.message, { icon: 2 })
-                                                        }
-                                                    }
-                                                })
-                                            } else {
-                                                $('.mask').fadeOut();
-                                                $('.maskSpan').removeClass('maskIcon');
-                                                layer.msg('操作失败', { icon: 2 });
-                                            }
-                                        }, errpr: function (err) {
-                                            $('.mask').fadeOut();
-                                            $('.maskSpan').removeClass('maskIcon');
-                                            layer.msg('服务器请求超时', { icon: 2 });
-                                        }
-                                    })
+                    // $.ajax({
+                    //     type: 'post',
+                    //     url: '/api/machine/getStatus',
+                    //     headers: {
+                    //         "Content-Type": "application/json",
+                    //         token,
+                    //     },
+                    //     data: JSON.stringify({
+                    //         machineId: machineSetData.machineId,
+                    //     }),
+                    //     success: function (Dres) {
+                    //         if (Dres.code == 200) {
+                    //             var statusType = Dres.data;
+                    //             if (statusType.actionStatus == 1) {
+                    //                 $.ajax({
+                    //                     type: 'post',
+                    //                     url: '/api/pushActive',
+                    //                     headers: {
+                    //                         "Content-Type": "application/json",
+                    //                         token,
+                    //                     },
+                    //                     data: JSON.stringify({
+                    //                         machine: machineSetData.machineId,
+                    //                         action: 'true'
+                    //                     }),
+                    //                     success: function (res) {
+                    //                         if (res == 'true') {
+                    //                             $.ajax({
+                    //                                 type: 'post',
+                    //                                 url: '/api/machine/activeMachine',
+                    //                                 headers: {
+                    //                                     "Content-Type": "application/json",
+                    //                                     token,
+                    //                                 },
+                    //                                 data: JSON.stringify({
+                    //                                     machineId: machineSetData.machineId,
+                    //                                     openStatus: '1'
+                    //                                 }),
+                    //                                 success: function (Sres) {
+                    //                                     $('.mask').fadeOut();
+                    //                                     $('.maskSpan').removeClass('maskIcon');
+                    //                                     if (Sres.code == 200) {
+                    //                                         layer.msg('操作成功', { icon: 1 });
+                    //                                         machineList.reload({
+                    //                                             where: {}
+                    //                                         })
+                    //                                     } else {
+                    //                                         layer.msg(Sres.message, { icon: 2 })
+                    //                                     }
+                    //                                 }
+                    //                             })
+                    //                         } else {
+                    //                             $('.mask').fadeOut();
+                    //                             $('.maskSpan').removeClass('maskIcon');
+                    //                             layer.msg('操作失败', { icon: 2 });
+                    //                         }
+                    //                     }, errpr: function (err) {
+                    //                         $('.mask').fadeOut();
+                    //                         $('.maskSpan').removeClass('maskIcon');
+                    //                         layer.msg('服务器请求超时', { icon: 2 });
+                    //                     }
+                    //                 })
 
+                    //             } else {
+                    //                 $('.mask').fadeOut();
+                    //                 $('.maskSpan').removeClass('maskIcon');
+                    //                 layer.msg('该设备未激活,无法营业', { icon: 7 })
+                    //             }
+                    //         } else if (Dres.code == 403) {
+                    //             window.parent.location.href = "login.html";
+                    //         } else {
+                    //             $('.mask').fadeOut();
+                    //             $('.maskSpan').removeClass('maskIcon');
+                    //             layer.msg(Dres.message, { icon: 2 })
+                    //         }
+                    //     }
+                    // })
+                    loadingAjax('/api/machine/getStatus', 'post', JSON.stringify({ machineId: machineSetData.machineId }), token).then(Dres => {
+                        console.log(Dres)
+                        if (Dres.data.actionStatus == 1) {
+                            loadingAjax('/api/pushActive', 'post', JSON.stringify({ machine: machineSetData.machineId, action: 'true' }), token).then(res => {
+                            }).catch(err => {
+                                if (err == 'true') {
+                                    loadingAjax('/api/machine/activeMachine', 'post', JSON.stringify({ machineId: machineSetData.machineId, openStatus: '1' }), token, 'mask').then(Sres => {
+                                        layer.msg('操作成功', { icon: 1 });
+                                        machineList.reload({
+                                            where: {}
+                                        })
+                                    }).catch(Serr => {
+                                        layer.msg(Serr.message, { icon: 2 })
+                                    })
                                 } else {
                                     $('.mask').fadeOut();
                                     $('.maskSpan').removeClass('maskIcon');
-                                    layer.msg('该设备未激活,无法营业', { icon: 7 })
+                                    layer.msg('操作失败', { icon: 2 });
                                 }
-                            } else if (Dres.code == 403) {
-                                window.parent.location.href = "login.html";
-                            } else {
-                                $('.mask').fadeOut();
-                                $('.maskSpan').removeClass('maskIcon');
-                                layer.msg(Dres.message, { icon: 2 })
-                            }
+                            })
+                        } else {
+                            $('.mask').fadeOut();
+                            $('.maskSpan').removeClass('maskIcon');
+                            layer.msg('操作失败', { icon: 2 });
                         }
+                    }).catch(Derr => {
+                        $('.mask').fadeOut();
+                        $('.maskSpan').removeClass('maskIcon');
+                        layer.msg(Derr.message, { icon: 2 })
                     })
                 })
             } else {
@@ -530,8 +566,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     })
                 })
             }
-
-
         }
     });
     // 关闭设置
@@ -676,7 +710,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     is_custom: customFlag ? 1 : 0,
                     custom_phone: customFlag ? $('.customTitle input[name="custom_phone"]').val() : '',
                     custom_code: customFlag ? $('.customImgCont img').attr('src') : '',
-                    is_sales: $('.salseCont input[name="salseClassName"]:checked').val() == -99 ? 1 : 0,
+                    is_sales: $('.salseCont input[name="salseClassName"]:checked').val() == -99 ? 0 : 1,
                     sales_type: $('.salseCont input[name="salseClassName"]:checked').val() == -99 ? '' : $('.salseCont input[name="salseClassName"]:checked').val()
                 }),
                 success: function (res) {
@@ -763,7 +797,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 { field: 'number', width: 250, title: '订单号', },
                 {
                     field: 'shipStatus', width: 150, title: '出货状态', templet: function (d) {
-                        return `<div><span class="${d.shipStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.shipStatus == 0 ? '出货失败' : '出货成功'}</span></div>`
+                        return `<div><span class="${d.shipStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.shipStatus == 0 ? '未出货' : d.shipStatus == 1 ? '出货失败' : '出货成功'}</span></div>`
                     }
                 },
                 {
@@ -828,7 +862,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             where: {
                 conditionFive: selesVal.shipmentStatus,
                 conditionSix: selesVal.payStatus,
-                conditionSeven: selesVal.payType,
+                conditionSeven: Number(selesVal.payType),
                 conditionTwo: selesStartTime,
                 conditionThree: selesEndTime,
             }
@@ -839,46 +873,54 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     function recordFun(id) {
         recordDataList = table.render({
             elem: '#shipmentListTable',
-            url: `/api//machine/getShippingList`,
+            url: `/api/machine/getShippingList`,
             method: 'post',
             contentType: "application/json",
             headers: {
                 token,
             },
             cols: [[
-                { field: 'time', width: 200, title: '出货时间', },
                 {
-                    field: 'source', width: 120, title: '操作来源',
-                },
-                {
-                    field: 'goodName', width: 150, title: '商品名',
-                },
-                {
-                    field: 'way', width: 130, title: '货道名',
-                },
-                {
-                    field: 'cabinetName', width: 130, title: '机柜名',
-                },
-                { field: 'cabinetType', width: 100, title: '机柜类型', },
-                {
-                    field: 'countNum', width: 100, title: '出货时数量(个)', templet: function (d) {
-                        return d.stock + d.count
+                    field: 'time', width: 230, title: '出货时间', align: 'center', templet: function (d) {
+                        if (d.create_time) {
+                            return timeStamp(d.create_time)
+                        } else {
+                            return '-'
+                        }
                     }
                 },
-                { field: 'stock', width: 100, title: '出货后数量(个)', },
-                { field: 'count', width: 100, title: '出货数量(个)', },
+                {
+                    field: 'goodName', width: 180, title: '商品名', align: 'center', templet: function (d) {
+                        if (d.good_info) {
+                            return d.good_info[0].goods_Name
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    field: 'ship_status', width: 150, title: '出货状态', align: 'center', templet: function (d) {
+                        return d.ship_f == 0 ? '出货成功' : '出货失败'
+                    }
+                },
+                { field: 'ship_count', width: 120, align: 'center', title: '出货数量(个)', },
+                { field: 'ship_f', width: 120, align: 'center', title: '出货失败数量(个)', },
+                {
+                    field: 'ship_type', width: 120, align: 'center', title: '出货类型', templet: function (d) {
+                        return d.ship_type == 0 ? '取货码' : '订单'
+                    }
+                },
+                { field: 'order_code', width: 200, align: 'center', title: '订单号/取货码', },
             ]]
             , id: 'shipmentId'
             , page: true
-            , loading: true
-            , limits: [10, 20, 50, 100]
-            ,
+            , loading: true,
             request: {
                 'pageName': 'pageNum',
                 'limitName': 'pageSize'
             },
             where: {
-                condition: id
+                machineId: machineSetData.machineId
             },
             parseData: function (res) {
                 // console.log(res)
@@ -1015,7 +1057,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             activateFlag ? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
             paySetFlag ? $('.payTypeSet').removeClass('hide') : $('.payTypeSet').addClass('hide');
             delAisleFlag ? $('.detailsDel').removeClass('hide') : $('.detailsDel').addClass('hide');
-            AisleDetailsFlag ? $('.aisleDetailsTab').removeClass('hide') : $('.aisleDetailsTab').addClass('hide');
+            AisleDetailsFlag ? $('aisleDetailsTab').removeClass('hide') : $('aisleDetailsTab').addClass('hide');
             salesListFlag ? $('.salesDetails').removeClass('hide') : $('.salesDetails').addClass('hide');
             shipmentListFlag ? $('.shipmentDetails').removeClass('hide') : $('.shipmentDetails').addClass('hide');
         }).catch(err => {
@@ -1364,16 +1406,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     }
 
     // 选择商品 
-    table.on('tool(goodsTable)', function (obj) {
-        console.log(obj)
-        if (obj.event == 'choose') {
-            $('.editAisle input[name="goodsName"]').val(obj.data.goods_Name);
-            $('.editAisle input[name="goodsName"]').attr('IVal', obj.data.goods_Id);
-            $('.editAisle input[name="price"]').val(obj.data.goods_Price);
-
-            popupHide('goodsCont', 'goodsBox')
-        }
-    })
+    table.on('row(goodsTable)', function (obj) {
+        $('.editAisle input[name="goodsName"]').val(obj.data.goods_Name);
+        $('.editAisle input[name="goodsName"]').attr('IVal', obj.data.goods_Id);
+        $('.editAisle input[name="price"]').val(obj.data.goods_Price);
+        popupHide('goodsCont', 'goodsBox')
+    });
     // 修改详情
     $('.editAisle .ediaisleBtn').click(function () {
         if (!($('.editAisle input[name="goodsName"]').attr('IVal'))) {
@@ -1394,13 +1432,15 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             goodId: Number($('.editAisle input[name="goodsName"]').attr('IVal')),
             count: Number($('.editAisle input[name="count"]').val()),
             total: Number($('.editAisle input[name="total"]').val()),
-            open: Number($('.editAisle select[name="testSele"]').val())
+            open: Number($('.editAisle select[name="testSele"]').val()),
+            replenish: Number($('.editAisle input[name="count"]').val()) - goodsDetails.count
         });
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         loadingAjax('/api/machine/updateGoodWay', 'post', editData, sessionStorage.token, 'mask', 'editAisle', 'editAisleBox', layer).then(res => {
             layer.msg(res.message, { icon: 1 });
             getGoodsWay(machineSetData.machineId);
+            loadingAjax('/api/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
         }).catch(err => {
             console.log(err);
             layer.msg(err.message, { icon: 2 })
@@ -1689,6 +1729,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             pageSize: 10,
             pageNum: mNum
         })
+        if (mNum == 1) {
+            salseList = []
+        }
         loadingAjax('/api/sales_manager/getSalesType', 'post', salesObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
             console.log(res)
             salseList = salseList.concat(res.data.list);
@@ -1704,13 +1747,122 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
     };
     // 渲染销售经理列表
+
     function ToSalseListFun(ToList, mobj) {
-        var salseStr = `<input type="radio" ${mobj.is_sales == 0 ? 'checked' : ''} name="salseClassName" value="-99" title="不启用" >
-        <input type="radio" name="salseClassName" ${mobj.is_sales == 1 ? mobj.sales_type ? '' : 'checked' : ''} value="" title="默认" >`;
+        console.log(funNum)
+        var salseStr = '';
+        if (funNum == 1) {
+            $('.salseCont').html('');
+            salseStr = `<input type="radio" ${mobj.is_sales == 0 ? 'checked' : ''} name="salseClassName" value="-99" title="不启用" >
+            <input type="radio" name="salseClassName" ${mobj.is_sales == 1 ? mobj.sales_type ? '' : 'checked' : ''} value="" title="默认" >`;
+            funNum++
+        }
+
         ToList.forEach(item => {
             salseStr += `<input type="radio" name="salseClassName" ${mobj.is_sales == 1 ? machineSetData.sales_type == item.sm_classify ? 'checked' : '' : ''} value="${item.sm_classify}" title="${item.sm_classify}">`
         });
-        $('.salseCont').html(salseStr);
+        $('.salseCont').append(salseStr);
         form.render();
     };
+
+
+    // 补货记录
+    var replenishmentList
+    function replenishmenFun() {
+        replenishmentList = table.render({
+            elem: '#replenishmentTable',
+            url: `/api/machine/getReplenish`,
+            method: 'post',
+            contentType: "application/json",
+            headers: {
+                token,
+            },
+            cols: [[
+                {
+                    field: 'replenish_time', width: 230, title: '补货时间', templet: function (d) {
+                        if (d.replenish_time) {
+                            return timeStamp(d.replenish_time)
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    field: 'ship_f', width: 180, title: '商品名', align: 'center', templet: function (d) {
+                        if (d.good_info) {
+                            return d.good_info[0].goods_Name
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    field: 'replenish_count', width: 150, title: '补货数量', align: 'center'
+                },
+                { field: 'way', width: 100, title: '补货货道', align: 'center' },
+
+            ]]
+            , id: 'shipmentId'
+            , page: true
+            , loading: true
+            , limits: [10, 20, 50, 100]
+            ,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where: {
+                machineId: machineSetData.machineId
+            },
+            parseData: function (res) {
+                // console.log(res)
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    window.parent.location.href = "login.html";
+                }
+            }
+        });
+    };
+
+    //开始时间
+    var replenishmentStartTime = '';
+    //结束时间
+    var sreplenishmentEndTime = '';
+    laydate.render({
+        elem: '#test8',
+        range: true,
+        done: function (value, date, endDate) {
+            // console.log(value); //得到日期生成的值，如：2017-08-18
+            var timerKey = value.split(' - ');
+            replenishmentStartTime = timerKey[0];
+            sreplenishmentEndTime = timerKey[1];
+        }
+    });
+    $('.replenishment .RQueryBtn').click(function () {
+        replenishmentList.reload({
+            where: {
+                start_time: replenishmentStartTime,
+                end_time: sreplenishmentEndTime
+            }
+        })
+    })
 });

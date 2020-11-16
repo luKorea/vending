@@ -130,6 +130,9 @@ layui.use(['table', 'form', 'layer'], function () {
     $('.addSalesCont .cancelBtn').click(function () {
         popupHide('addSalesCont', 'addSalesBox')
     })
+    $('.pushImportBtn').click(function(){
+        popupShow('pushSalesCont','pushSalesBox')
+    })
     // 导入销售经理
     $('.importBtn input[name="addUpload"]').change(function (e) {
         if (!$(this).val()) {
@@ -160,7 +163,7 @@ layui.use(['table', 'form', 'layer'], function () {
                     salesTableIn.reload({
                         where: {}
                     })
-
+                    popupHide('pushSalesCont ','pushSalesBox')
                 } else {
                     layer.msg(res.message, { icon: 7 });
                 }
@@ -207,16 +210,14 @@ layui.use(['table', 'form', 'layer'], function () {
     // 权限控制
     permissionsVal(436, 437, 446).then(res => {
         res.addFlag ? $('.addSalesBtn').removeClass('hide') : $('.addSalesBtn').addClass('hide');
-        res.editFlag ? $('.importBtn').removeClass('hide') : $('.importBtn').addClass('hide');
+        res.editFlag ? $('.pushImportBtn').removeClass('hide') : $('.pushImportBtn').addClass('hide');
         res.delFlag ? $('.delBtn').removeClass('hide') : $('.delBtn').addClass('hide')
     });
 
 
 
 
-    var abc = {
-        a: 1,
-        b: 2,
-        c: 3
-    }
+//   $('.importBtn').click(function(){
+//       $('.importBtn input[name="addUpload"]').click()
+//   })
 })

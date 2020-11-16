@@ -45,7 +45,6 @@ window.onload = function () {
             // }
 
         };
-
         //切换到指定Tab项
         function tabChange(index) {
             element.tabChange('demo', index);
@@ -122,7 +121,6 @@ window.onload = function () {
                 socket = new WebSocket(socketUrl);
                 //打开事件
                 socket.onopen = function () {
-                    console.log("websocket已打开");
                     socketFlag = true;
                     //socket.send("这是来自客户端的消息" + location.href + new Date());
                 };
@@ -184,12 +182,10 @@ window.onload = function () {
         //退出登录
         function loginOut() {
             loadingAjax('/api/user/logout', 'post', '', sessionStorage.token, '', '', '', layer).then((res) => {
-                console.log(res)
                 // window.history.go(-1);
                 sessionStorage.token = '';
                 window.location.replace('login.html')
             }).catch((err) => {
-                console.log(err)
                 layer.msg(err.message)
             })
         }
@@ -333,7 +329,6 @@ window.onload = function () {
             // 营销模块
             pickupFlag ? $('.pickupCode').removeClass('hide').parents('.marketingCont').removeClass('hide') : $('.pickupCode').addClass('hide').parents('.marketingCont').addClass('hide');
         }).catch(err => {
-            console.log(err)
             layer.msg(err.message, { icon: 2 })
         })
 
@@ -382,7 +377,6 @@ window.onload = function () {
         // 点击公告
         $('.noticeTitleText').on('click', '.swpier', function () {
             var swpierVal = noticeList[$(this).attr('ArrList')];
-            console.log(swpierVal);
             $('.previewContent .playHeader span').html(swpierVal.title);
             $('.previewContent .previewBody .previewHtml').html(swpierVal.content);
             $('.previeName span').html(swpierVal.create_user)
@@ -452,7 +446,6 @@ window.onload = function () {
         window.messageFunList = messageFunList;
         // 点击展示消息
         $('.messageContentList').on('click', '.messageDow', function () {
-            console.log(messageListArr[$(this).attr('messageIndex')]);
             var messageDetails = messageListArr[$(this).attr('messageIndex')]
             $('.messageCont .playHeader span').html(`${messageDetails.title}`);
             $('.messageBody .messageHtml').html(messageDetails.content);
@@ -549,14 +542,16 @@ window.onload = function () {
                     statusCode: 200 //规定成功的状态码，默认：0
                 },
                 done: function (res) {
-                    console.log(res)
                     noticeList = [];
-                    res.data.forEach(item => {
-                        if ((item.is_show == 1) && (item.n_status == 1)) {
-                            noticeList.push(item);
-                            noticeDrawing(noticeList)
-                        }
-                    })
+                    if(res.code==200){
+                        res.data.forEach(item => {
+                            if ((item.is_show == 1) && (item.n_status == 1)) {
+                                noticeList.push(item);
+                                noticeDrawing(noticeList)
+                            }
+                        })
+                    }
+                   
                 }
             })
         }
@@ -575,7 +570,6 @@ window.onload = function () {
         });
         // 监听点击公告列表
         table.on('row(noticeTable)', function (obj) {
-            console.log(obj)
             $('.previewContent .playHeader span').html(obj.data.title);
             $('.previewContent .previewBody .previewHtml').html(obj.data.content);
             $('.previeName span').html(obj.data.create_user)

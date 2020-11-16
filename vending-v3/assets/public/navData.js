@@ -31,6 +31,8 @@ var navList=[
     '<iframe class="iframe_show" name="message" src="message.html"></iframe>',
     '<iframe class="iframe_show" src="salesManager.html"></iframe>',
     '<iframe class="iframe_show" src="mailOrder.html"></iframe>',
+    '<iframe class="iframe_show" src="codeOrder.html"></iframe>',
+    '<iframe class="iframe_show" src="salesResults.html"></iframe>',
 ];
 export {
     navList,

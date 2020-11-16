@@ -16,7 +16,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         range: true,
         done: function (value, date, endDate) {
             console.log(value); //得到日期生成的值，如：2017-08-18
-            timerKey = value.split(' - ');
+          var  timerKey = value.split(' - ');
             console.log(timerKey);
             startTime = timerKey[0];
             endTime = timerKey[1];

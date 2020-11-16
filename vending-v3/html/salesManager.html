@@ -65,16 +65,10 @@
                     </button>
                 </div>
                 <div class="newKeyContent">
-                    <button type="button" class="layui-btn layui-btn-primary importBtn hide">
-                        <i class="layui-icon layui-icon-print"></i>
-                        <span>批量导入销售经理信息</span>
+                    <button type="button" class="layui-btn layui-btn-primary pushImportBtn hide">
+                        <i class="layui-icon layui-icon-upload-drag"></i>
+                        <span>导入销售经理</span>
                     </button>
-                </div>
-                <div class="newKeyContent">
-                    <a href="../assets/public/exe.xlsx" class="dowloadX" download="批量导入销售经理导入模板.xlsx" style="color: #be954a;margin-top: 8px;">
-                        <img src="../img/sigh.png" alt="">
-                        <span>下载批量导入销售经理模板</span>    
-                    </a>
                 </div>
                 <div class="newKeyContent" style="margin-left: 8px;">
                     <button type="button" class="layui-btn layui-btn-primary hide delBtn">
@@ -130,6 +124,32 @@
                 <button class="layui-btn layui-btn-normal btn  cancelBtn" style="margin: 0 0 0 15px;">
                     <span>取消</span>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 批量导入销售经理 -->
+    <div class="pushSalesCont maskContnet" >
+        <div class="pushSalesBox margin0">
+            <div class="playHeader">
+                <span>批量导入销售经理</span>
+                <button class="close" type="button">
+                    <i class="layui-icon layui-icon-close"></i>
+                </button>
+            </div>
+            <div class="pushSalesBody">
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-sm importBtn" style="position: relative;">
+                        <span>批量导入销售经理信息</span>
+                        <input type="file" name="addUpload">
+                    </button>
+                </div>
+                <div class="newKeyContent" style="margin-left: 15px;">
+                    <a href="../assets/public/exe.xlsx" class="dowloadX" download="批量导入销售经理导入模板.xlsx" style="color: #be954a;margin-top: 8px;">
+                        <img src="../img/sigh.png" alt="">
+                        <span>下载批量导入销售经理模板</span>    
+                    </a>
+                </div>
             </div>
         </div>
     </div>

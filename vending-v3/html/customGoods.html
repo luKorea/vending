@@ -16,7 +16,8 @@
 				<!-- 左边部分 -->
 				<div class="left-mian">
 					<div class="accountContnet" style="margin-left:15px;">
-						<button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表" data-direction="bottom" type="button">
+						<button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表"
+							data-direction="bottom" type="button">
 							<i class="layui-icon layui-icon-refresh-3 "></i>
 							<!-- 刷新 -->
 						</button>
@@ -26,7 +27,7 @@
 							<i class="layui-icon layui-icon-refresh "></i>
 							<span>刷新</span>
 						</button> -->
-						
+
 						<div id="testGoods" class="demo-tree demo-tree-box"></div>
 					</div>
 					<!-- 右侧栏 -->
@@ -123,14 +124,14 @@
 								<div class="newKeyItem">
 									<label for="">关键字</label>
 									<div>
-										<input type="text" lass="KyeText" placeholder="商品名">
+										<input type="text" class="KyeText" placeholder="商品名">
 									</div>
 								</div>
 							</div>
 							<div class="newKeyContent">
 								<div class="newKeyItem">
 									<label for="">商品类目</label>
-									<div class="layui-form" lay-filter="myDiv" >
+									<div class="layui-form" lay-filter="myDiv">
 										<select name="" id="GoodsType" lay-filter="mySelect">
 										</select>
 									</div>
@@ -139,7 +140,7 @@
 							<div class="newKeyContent">
 								<div class="newKeyItem">
 									<label for="">状态</label>
-									<div class="layui-form" lay-filter="myDiv" >
+									<div class="layui-form" lay-filter="myDiv">
 										<select name="" id="" lay-filter="stateSelect">
 											<option value="">全部</option>
 											<option value="0">不启用</option>
@@ -152,28 +153,28 @@
 								<button type="button" class="layui-btn layui-btn-primary query-btnClick">
 									<i class="layui-icon layui-icon-search"></i>
 									<span>查询</span>
-									
+
 								</button>
 							</div>
 							<div class="newKeyContent">
 								<button type="button" class="layui-btn hide add-btn layui-btn-primary">
 									<i class="layui-icon layui-icon-app"></i>
 									<span>添加商品</span>
-									
+
 								</button>
 							</div>
 							<div class="newKeyContent">
 								<button type="button" class="layui-btn layui-btn-primary pushGoodsBtn hide">
 									<i class="layui-icon layui-icon-export "></i>
 									<span>推送商品</span>
-									
+
 								</button>
 							</div>
 							<div class="newKeyContent">
 								<button type="button" class="layui-btn layui-btn-primary pushListBtn  hide">
 									<i class="layui-icon layui-icon-list "></i>
 									<span>推送列表</span>
-									
+
 								</button>
 							</div>
 							<div class="newKeyContent">
@@ -784,7 +785,7 @@
 		</div>
 
 		<!--上级商户商品列表 -->
-		<div class="topGoodsList maskContnet">
+		<div class="topGoodsList maskContnet" >
 			<div class="topBox margin0">
 				<div class="playHeader">
 					<span>推送列表</span>
@@ -792,17 +793,10 @@
 						<i class="layui-icon layui-icon-close"></i>
 					</button>
 				</div>
-				<!-- <ul class="topPushNav">
-					<li>非强制推送列表</li>
-					<li>强制推送列表</li>
-					<div class="navTabLine"></div>
-				</ul> -->
-				<!-- <div class="RTabCont"> -->
 				<div class="topBody">
-					<div class="topKey">
+					<!-- <div class="topKey">
 						<div>
 							<div class="key-contnet">
-								<!-- 商品类目: -->
 								<div class="key-text">推送性质</div>
 								<form class="layui-form" action="" style="max-width: 240px;">
 									<div class="layui-form" lay-filter="">
@@ -820,7 +814,6 @@
 							</div>
 
 							<div class="key-contnet">
-								<!-- 商品类目: -->
 								<div class="key-text">接收状态</div>
 								<form class="layui-form" action="" style="max-width: 240px;">
 									<div class="layui-form" lay-filter="">
@@ -835,7 +828,6 @@
 						</div>
 						<div style="margin-top: 10px;">
 							<div class="key-contnet">
-								<!-- 商品类目: -->
 								<div class="key-text">推送类型</div>
 								<form class="layui-form" action="" style="max-width: 240px;">
 									<div class="layui-form" lay-filter="">
@@ -857,6 +849,64 @@
 							</button>
 						</div>
 
+					</div> -->
+					<div class="newHeader">
+						<div class="newHeaderText">
+							条件查询
+						</div>
+						<form action="" class="layui-form" lay-filter="">
+							<div class="newKeyContent">
+								<div class="newKeyItem">
+									<label for="">关键字</label>
+									<div>
+										<input type="text" placeholder="商品名" class="KyeText" name="KyeText">
+									</div>
+								</div>
+							</div>
+							<div class="newKeyContent">
+								<div class="newKeyItem">
+									<label for="">推送性质</label>
+									<div class="layui-form" lay-filter="myDiv">
+										<select name="mandatory" id="" lay-filter="">
+											<option value="">全部</option>
+											<option value="0">非强制</option>
+											<option value="1">强制</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="newKeyContent">
+								<div class="newKeyItem">
+									<label for="">接收状态</label>
+									<div class="layui-form" lay-filter="myDiv">
+										<select name="receiveStatus" id="" lay-filter="">
+											<option value="">全部</option>
+											<option value="0">未接收</option>
+											<option value="1">已接收</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="newKeyContent">
+								<div class="newKeyItem">
+									<label for="">推送类型</label>
+									<div class="layui-form" lay-filter="myDiv">
+										<select name="receiveType" id="" lay-filter="">
+											<option value="0">全部</option>
+											<option value="1">推送</option>
+											<option value="2">接收</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="newKeyContent">
+								<button type="button" class="layui-btn layui-btn-primary pushQueryBtn">
+									<i class="layui-icon layui-icon-search"></i>
+									<span>查询</span>
+
+								</button>
+							</div>
+						</form>
 					</div>
 					<!-- 数据列表内容 -->
 					<div>
@@ -867,7 +917,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- </div> -->
 
 			</div>
 		</div>

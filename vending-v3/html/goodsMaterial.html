@@ -114,31 +114,32 @@
                         </div>
                     </div> -->
                     <div class="newHeader">
-						<div class="newHeaderText">
-							条件查询
-						</div>
-						<form action="" class="layui-form" lay-filter="">
-                            <div class="newKeyContent">
-								<div class="newKeyItem">
-									<label for="">发布时间</label>
-									<div>
-                                        <input style="text-align: center;" type="text" class="layui-input"
-                                                    id="itemrs1" placeholder=" - " autocomplete="off">
-                                    </div>
-								</div>
-							</div>
-							<div class="newKeyContent">
-								<div class="newKeyItem">
-									<label for="">关键字</label>
-									<div class="key-contnet">
-                                        <input type="text" placeholder="图片名" name="KeyImgName" class="KyeText">
-									</div>
-								</div>
-							</div>
-							<div class="newKeyContent">
-								<div class="newKeyItem">
-									<label for="">审核状态</label>
-									<div class="layui-form"  >
+                        <div class="newHeaderText">
+                            条件查询
+                        </div>
+
+                        <div class="newKeyContent">
+                            <div class="newKeyItem">
+                                <label for="">发布时间</label>
+                                <div>
+                                    <input style="text-align: center;" type="text" class="layui-input" id="itemrs1"
+                                        placeholder=" - " autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="newKeyContent">
+                            <div class="newKeyItem">
+                                <label for="">关键字</label>
+                                <div class="key-contnet">
+                                    <input type="text" placeholder="图片名" name="KeyImgName" class="KyeText">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="newKeyContent">
+                            <div class="newKeyItem">
+                                <label for="">审核状态</label>
+                                <div class="layui-form">
+                                    <form action="" class="layui-form" lay-filter="">
                                         <select name="logoImgStatus" id="" lay-filter="">
                                             <option value="">全部</option>
                                             <option value="0">未审核</option>
@@ -146,51 +147,52 @@
                                             <option value="2">审核通过</option>
                                             <option value="3">审核不通过</option>
                                         </select>
-									</div>
-								</div>
-							</div>
-							<div class="newKeyContent">
-								<button type="button" class="layui-btn layui-btn-primary ImgQueyuBtnClick">
-									<i class="layui-icon layui-icon-search"></i>
-									<span>查询</span>
-									
-								</button>
-							</div>
-							<div class="newKeyContent">
-								<button type="button" class="layui-btn hide addBtn add-btn layui-btn-primary">
-									<i class="layui-icon layui-icon-app"></i>
-									<span>添加图片</span>			
-								</button>
-							</div>
-							<div class="newKeyContent">
-								<button type="button" class="layui-btn layui-btn-primary hide dleBtn delBtn">
-									<i class="layui-icon layui-icon-delete"></i>
-									<span>删除图片</span>	
-								</button>
+                                    </form>
+                                </div>
                             </div>
-                            <div class="newKeyContent">
-								<button type="button" class="layui-btn layui-btn-primary  submitAuditBtn">
-									<span>提交审核</span>	
-								</button>
-							</div>
-							<div class="newKeyContent">
-                                <button class="layui-btn  layui-btn-primary auditBtnTwo  auditBtn" typeId="0" type="2">
-                                    <span>审核通过</span>
-                                </button>
-                            </div>
-                            <div class="newKeyContent">
-                                <button class="layui-btn layui-btn-primary auditBtnTwo auditBtn " typeId="0" type="3">
-                                    <span>审核不通过</span>
-                                </button>
-							</div>
-							<div class="newKeyContent">
-								<button type="button" class="layui-btn layui-btn-primary ImgQueyuBtnClick">
-									<i class="layui-icon layui-icon-refresh-3 "></i>
-									<!-- 刷新 -->
-								</button>
-							</div>
-						</form>
-					</div>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary ImgQueyuBtnClick">
+                                <i class="layui-icon layui-icon-search"></i>
+                                <span>查询</span>
+
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn hide addBtn add-btn layui-btn-primary">
+                                <i class="layui-icon layui-icon-app"></i>
+                                <span>添加图片</span>
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary hide dleBtn delBtn">
+                                <i class="layui-icon layui-icon-delete"></i>
+                                <span>删除图片</span>
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary  submitAuditBtn" typeId="0">
+                                <span>提交审核</span>
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button class="layui-btn  layui-btn-primary auditBtnTwo  auditBtn" typeId="0" type="2">
+                                <span>审核通过</span>
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button class="layui-btn layui-btn-primary auditBtnTwo auditBtn " typeId="0" type="3">
+                                <span>审核不通过</span>
+                            </button>
+                        </div>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary ImgQueyuBtnClick">
+                                <i class="layui-icon layui-icon-refresh-3 "></i>
+                                <!-- 刷新 -->
+                            </button>
+                        </div>
+
+                    </div>
                     <div class="imgListBox">
                         <div class="data-list">
                             <div class="listtable" style="overflow-x: auto;">
@@ -293,28 +295,29 @@
                             <div class="newHeaderText">
                                 条件查询
                             </div>
-                            <form action="" class="layui-form" lay-filter="">
-                                <div class="newKeyContent">
-                                    <div class="newKeyItem">
-                                        <label for="">发布时间</label>
-                                        <div>
-                                            <input style="text-align: center;" type="text" class="layui-input"
-                                                        id="itemrs3" placeholder=" - " autocomplete="off">
-                                        </div>
+
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">发布时间</label>
+                                    <div>
+                                        <input style="text-align: center;" type="text" class="layui-input" id="itemrs3"
+                                            placeholder=" - " autocomplete="off">
                                     </div>
                                 </div>
-                                <div class="newKeyContent">
-                                    <div class="newKeyItem">
-                                        <label for="">关键字</label>
-                                        <div class="key-contnet" >
-                                            <input type="text" placeholder="图片名" name="KeyImgName" class="KyeText">
-                                        </div>
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">关键字</label>
+                                    <div class="key-contnet">
+                                        <input type="text" placeholder="图片名" name="KeyImgName" class="KyeText">
                                     </div>
                                 </div>
-                                <div class="newKeyContent">
-                                    <div class="newKeyItem">
-                                        <label for="">审核状态</label>
-                                        <div class="layui-form" >
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">审核状态</label>
+                                    <div class="layui-form">
+                                        <form action="" class="layui-form" lay-filter="">
                                             <select name="detailsImgStatus" id="" lay-filter="">
                                                 <option value="">全部</option>
                                                 <option value="0">未审核</option>
@@ -322,50 +325,52 @@
                                                 <option value="2">审核通过</option>
                                                 <option value="3">审核不通过</option>
                                             </select>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
-                                <div class="newKeyContent">
-                                    <button type="button" class="layui-btn layui-btn-primary detailsImgQueyuBtnClick">
-                                        <i class="layui-icon layui-icon-search"></i>
-                                        <span>查询</span>
-                                        
-                                    </button>
-                                </div>
-                                <div class="newKeyContent">
-                                    <button class="layui-btn layui-btn-primary  add-btn  addBtn hide" >
-                                        <i class="layui-icon layui-icon-app"></i>
-                                        <span>添加图片</span>
-                                    </button>
-                                </div>
-                                <div class="newKeyContent">
-                                    <button type="button" class="layui-btn layui-btn-primary delBtn dleBtn hide">
-                                        <i class="layui-icon layui-icon-delete"></i>
-                                        <span>删除图片</span>  
-                                    </button>
-                                </div>
-                                <div class="newKeyContent">
-                                    <button class="layui-btn  layui-btn-primary  submitAuditBtn" typeId="2">
-                                        <span>提交审核</span>
-                                    </button>
-                                </div>
-                                <div class="newKeyContent">
-                                    <button class="layui-btn layui-btn-primary hide  auditBtnTwo auditBtn" typeId="2" type="2">
-                                        <span>审核通过</span>
-                                    </button>
-                                </div>
-                                <div class="newKeyContent">
-                                    <button class="layui-btn layui-btn-primary auditBtn  auditBtnTwo hide" typeId="2" type="3">
-                                        <span>审核不通过</span>
-                                    </button>
-                                </div>
-                                <div class="newKeyContent">
-                                    <button type="button" class="layui-btn layui-btn-primary detailsImgQueyuBtnClick">
-                                        <i class="layui-icon layui-icon-refresh-3 "></i>
-                                        <!-- 刷新 -->
-                                    </button>
-                                </div>
-                            </form>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary detailsImgQueyuBtnClick">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                    <span>查询</span>
+
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button class="layui-btn layui-btn-primary  add-btn  addBtn hide">
+                                    <i class="layui-icon layui-icon-app"></i>
+                                    <span>添加图片</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary delBtn dleBtn hide">
+                                    <i class="layui-icon layui-icon-delete"></i>
+                                    <span>删除图片</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button class="layui-btn  layui-btn-primary  submitAuditBtn" typeId="2">
+                                    <span>提交审核</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button class="layui-btn layui-btn-primary hide  auditBtnTwo auditBtn" typeId="2"
+                                    type="2">
+                                    <span>审核通过</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button class="layui-btn layui-btn-primary auditBtn  auditBtnTwo hide" typeId="2"
+                                    type="3">
+                                    <span>审核不通过</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary detailsImgQueyuBtnClick">
+                                    <i class="layui-icon layui-icon-refresh-3 "></i>
+                                    <!-- 刷新 -->
+                                </button>
+                            </div>
                         </div>
                         <div class="imgListBox">
                             <div class="data-list">
@@ -470,28 +475,29 @@
                             <div class="newHeaderText">
                                 条件查询
                             </div>
-                            <form action="" class="layui-form" lay-filter="">
-                                <div class="newKeyContent">
-                                    <div class="newKeyItem">
-                                        <label for="">发布时间</label>
-                                        <div>
-                                            <input style="text-align: center;" type="text" class="layui-input"
-                                                        placeholder=" - " id="itemrs2" autocomplete="off">
-                                        </div>
+
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">发布时间</label>
+                                    <div>
+                                        <input style="text-align: center;" type="text" class="layui-input"
+                                            placeholder=" - " id="itemrs2" autocomplete="off">
                                     </div>
                                 </div>
-                                <div class="newKeyContent">
-                                    <div class="newKeyItem">
-                                        <label for="">关键字</label>
-                                        <div class="layui-form" lay-filter="myDiv" >
-                                            <input type="text" placeholder="视频名" name="keyVideoName" class="KyeText">
-                                        </div>
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">关键字</label>
+                                    <div class="layui-form" lay-filter="myDiv">
+                                        <input type="text" placeholder="视频名" name="keyVideoName" class="KyeText">
                                     </div>
                                 </div>
-                                <div class="newKeyContent">
-                                    <div class="newKeyItem">
-                                        <label for="">审核状态</label>
-                                        <div class="layui-form" lay-filter="myDiv" >
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">审核状态</label>
+                                    <div class="layui-form" lay-filter="myDiv">
+                                        <form action="" class="layui-form" lay-filter="">
                                             <select name="videoStatus" id="" lay-filter="">
                                                 <option value="">全部</option>
                                                 <option value="0">未审核</option>
@@ -499,48 +505,52 @@
                                                 <option value="2">审核通过</option>
                                                 <option value="3">审核不通过</option>
                                             </select>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
-                                <div class="newKeyContent">
-                                    <button type="button" class="layui-btn layui-btn-primary VideoQueryBtnClick">
-                                        <i class="layui-icon layui-icon-search"></i>
-                                        <span>查询</span>    
-                                    </button>
-                                </div>
-                                <div class="newKeyContent">
-                                    <button type="button" class="layui-btn layui-btn-primary add-btn addBtn hide layui-btn-primary">
-                                        <i class="layui-icon layui-icon-app"></i>
-                                        <span>添加视频</span>
-                                    </button>
-                                </div>
-                                <div class="newKeyContent">
-                                    <button class="layui-btn layui-btn-primary  delBtn dleBtn  hide"  typeId="1">
-                                        <span>删除视频</span>
-                                    </button>
-                                </div>
-                                <div class="newKeyContent">
-                                    <button class="layui-btn  layui-btn-primary  submitAuditBtn" typeId="1">
-                                        <span>提交审核</span>
-                                    </button>
-                                </div>
-                                <div class="newKeyContent">
-                                    <button class="layui-btn layui-btn-primary auditBtnTwo hide auditBtn" typeId="1" type="2">
-                                        <span>审核通过</span>
-                                    </button>
-                                </div>
-                                <div class="newKeyContent">
-                                    <button class="layui-btn layui-btn-primary auditBtn hide auditBtnTwo " typeId="1" type="3">
-                                        <span>审核不通过</span>
-                                    </button>
-                                </div>
-                                <div class="newKeyContent">
-                                    <button type="button" class="layui-btn layui-btn-primary query-btnClick">
-                                        <i class="layui-icon layui-icon-refresh-3 "></i>
-                                        <!-- 刷新 -->
-                                    </button>
-                                </div>
-                            </form>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary VideoQueryBtnClick">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                    <span>查询</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button"
+                                    class="layui-btn layui-btn-primary add-btn addBtn hide layui-btn-primary">
+                                    <i class="layui-icon layui-icon-app"></i>
+                                    <span>添加视频</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button class="layui-btn layui-btn-primary  delBtn dleBtn  hide" typeId="1">
+                                    <span>删除视频</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button class="layui-btn  layui-btn-primary  submitAuditBtn" typeId="1">
+                                    <span>提交审核</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button class="layui-btn layui-btn-primary auditBtnTwo hide auditBtn" typeId="1"
+                                    type="2">
+                                    <span>审核通过</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button class="layui-btn layui-btn-primary auditBtn hide auditBtnTwo " typeId="1"
+                                    type="3">
+                                    <span>审核不通过</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary query-btnClick">
+                                    <i class="layui-icon layui-icon-refresh-3 "></i>
+                                    <!-- 刷新 -->
+                                </button>
+                            </div>
+
                         </div>
                         <div class="videoListBox">
                             <div class="data-list">
