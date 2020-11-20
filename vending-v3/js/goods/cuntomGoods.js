@@ -248,9 +248,24 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   // 点击商品信息事件
   $('body').on('click', '.GoodsInformation', function () {
     indexFlag = null;
+    loadingAjax('/api/goods/judgeGoodPrice','post',JSON.stringify({goodId:singleData.goods_Id}),sessionStorage.token).then(res=>{
+      if(!(res.flag)){
+        layer.msg('商品也产生订单，不能修改价格',{icon:'7'});
+        $('.editor .editorWidthInput input[name="goodsPrice"]').prop('disabled',true);
+        $('.editor .editorWidthInput input[name="goodsCost"]').prop('disabled',true)
+      }else{
+        $('.editor .editorWidthInput input[name="goodsPrice"]').prop('disabled',false);
+        $('.editor .editorWidthInput input[name="goodsCost"]').prop('disabled',false)
+      }
+    }).catch(err=>{
+      $('.editor .editorWidthInput input[name="goodsPrice"]').prop('disabled',true);
+        $('.editor .editorWidthInput input[name="goodsCost"]').prop('disabled',true)
+      layer.msg('服务器请求超时',{icon:'2'})
+    })
     $('.anUp').slideUp();
     // $('.editor').fadeIn();
     popupShow('editor', 'editor-content');
+    $('.editor').scrollTop(0)
     form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
       "goodsBarcode": singleData.goods_Core // "商品条码
       , "goodsName": singleData.goods_Name //商品名
@@ -321,13 +336,14 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         success: function (res) {
           if (res.code == 200) {
             layer.msg('修改成功', { icon: 1 });
+          
+            editGoodsDateils='';
+            $('.editor').fadeOut();
+            // loadingAjax('/api/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
             tableIns.reload({
               where: {
               }
             });
-            editGoodsDateils='';
-            $('.editor').fadeOut();
-            // loadingAjax('/api/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
           } else if (res.code == 403) {
             window.parent.location.href = "login.html";
           } else {
@@ -376,6 +392,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   $('.add-btn').click(function () {
     // $('.addGoods').fadeIn();
     popupShow('addGoods', 'editor-content');
+    $('.addGoods').scrollTop(0);
     $('.tailoring-container').fadeIn();
   });
 

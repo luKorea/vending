@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>邮寄订单列表</title>
+    <script src="../assets/jquery-3.1.1.min.js"></script>
+    <script src="../assets/rem.js"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- <div class="header">
+            <h1>邮寄订单列表</h1>
+        </div> -->
+        <!-- 搜素部分 -->
+        <div class="searchCont" style="display: block;">
+            <div class="searchbox">
+                <h2>查询邮寄订单</h2>
+                <div class="line">
+                    <span></span>
+                </div>
+                <div class="icontion">
+                    <img src="../img/icon.png">
+                </div>
+                <div class="formCont">
+                    <div class="list">
+                        <p> <img src="../img/user1.png" alt=""></p>
+                        <input type="text" name="name" placeholder="收货人" autocomplete="off">
+                    </div>
+                    <div class="list">
+                        <p> <img src="../img/phone1.png" alt=""></p>
+                        <input type="number" name="phone" placeholder="手机号" autocomplete="off">
+                    </div>
+                    <div class="list">
+                        <p> <img src="" alt="" class="codeImg"></p>
+                        <input type="text" name="code" placeholder="验证码" autocomplete="off">
+                    </div>
+                    <div class="btn" style="overflow: hidden;">
+                        <h4>提交</h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- 订单列表 -->
+        <div class="orderListCont" style="display: none;">
+            <div class="header flexC">
+                <img src="../img/back.png" class="back" alt="">
+                <h1>查询邮寄订单</h1>
+                <span></span>
+            </div>
+            <div style="margin-bottom: 1rem;" class="ordertListBox">
+                <!-- <div class="orderNameList">
+                    <div class="orderList flexC">
+                        <h5 style="color: #be954a;">1603187264000</h5>
+                        <p>2020-10-20 17:47:45</p>
+                    </div>
+                    <div class="orderList flexC">
+                        <h5>收货人：<span >yuebao</span></h5>
+                        <p>收货电话：<span>1303521541</span></p>
+                    </div>
+                    <div class="orderList flexC">
+                        <h5>物流公司：<span>天天</span></h5>
+                        <p>物流单号：<span>202010261836</span></p>
+                    </div>
+                    <div class="orderList flexC">
+                        <h5>收货地址：<span>浙江省-杭州市****云生</span></h5>
+                        <p></p>
+                    </div>
+                    <div class="orderList flexC">
+                        <h5>发货状态：<span>已发货</span></h5>
+                        <h2>￥350</h2>
+                    </div>
+                    
+                </div> -->
+                <div class="orderNameList">
+                    <div class="listHeader flexC">
+                        <h3>可乐/13059854541</h3>
+                        <p>已发货</p>
+                    </div>
+                    <div class="orderListS">
+                        <div>
+                            <div class="orderList flex">
+                                <h5>物流/快递公司：<span>天天</span></h5>
+                            </div>
+                            <div class="orderList flex">
+                                <h5>物流/快递单号：<span>202010261836</span></h5>
+                            </div>
+                        </div>
+
+                        <div class="orderList flex">
+                            <h5>收货地址：<span>浙江省-杭州市****云生</span></h5>
+                        </div>
+                        <div class="orderList flex">
+                            <h5>订单金额：<span>￥350</span></h5>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- <div class="orderFooter">
+                <h4>《《《搜索</h4>
+            </div> -->
+        </div>
+        <!-- 商品列表 -->
+        <div class="goodsCont" style="display: none;">
+            <div class="goodsBox">
+                <ul class="goodsList">
+                    <div class="goodsHeader">
+                        <h1>商品列表</h1>
+                        <img src="../img/clonepng.png" alt="">
+                    </div>
+                    <div class="goodsListCont">
+                        <li class="list flex">
+                            <div class="img">
+                                <img
+                                    src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1603087445&di=a4ad1b7211323421f7fe3d5e8080edf5&src=http://a0.att.hudong.com/70/91/01300000261284122542917592865.jpg" />
+                            </div>
+                            <div class="goodsInform">
+                                <h5>金币足球</h5>
+                                <div class="flexC of">
+                                    <p>￥128.00</p>
+                                    <p>x3</p>
+                                </div>
+                                <!-- <h5>总价：384.00</h5> -->
+                            </div>
+                        </li>
+                    </div>
+
+
+                </ul>
+            </div>
+        </div>
+        <!-- 轻提示 -->
+        <div class="prompt">
+            确定购买
+        </div>
+</body>
+
+</html>

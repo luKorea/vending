@@ -162,6 +162,9 @@
     width: 100%;
     overflow-x: auto;
 }
+.data-right .layui-form .layui-table-body td{
+    cursor: pointer;
+}
 .onLeft{
     color: rgb(153, 153, 153);
     text-align: center;

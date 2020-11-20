@@ -382,7 +382,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
             layer.msg(res.message, { icon: 1 });
             mailTable.reload({
               where: {}
-            })
+            });
           }).catch(err => {
             layer.msg(err.message, { icon: 2 });
           })

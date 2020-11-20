@@ -816,7 +816,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             id: 'salesId',
             page: true,
             loading: true,
-            height: 'full-100',
+            // height: 'full-100',
             limits: [10, 20, 50, 100],
             request: {
                 'pageName': 'pageNum',
@@ -1021,7 +1021,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         addAisleFlag = false,
         AisleDetailsFlag = false,//货道详情
         salesListFlag = false,//销售记录
-        shipmentListFlag = false;//出货记录
+        shipmentListFlag = false,//出货记录
+        shmentListFlag=false;
     function permissions() {
         permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
             res.data.forEach(item => {
@@ -1052,6 +1053,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if (item.id == '402') {
                     shipmentListFlag = true;
                 }
+                if(item.id=='456'){
+                    shmentListFlag=true;
+                }
             })
 
             activateFlag ? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
@@ -1060,6 +1064,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             AisleDetailsFlag ? $('aisleDetailsTab').removeClass('hide') : $('aisleDetailsTab').addClass('hide');
             salesListFlag ? $('.salesDetails').removeClass('hide') : $('.salesDetails').addClass('hide');
             shipmentListFlag ? $('.shipmentDetails').removeClass('hide') : $('.shipmentDetails').addClass('hide');
+            shmentListFlag?$('.shmentSet').removeClass('hide'):$('.shmentSet').addClass('hide');
         }).catch(err => {
             layer.msg(err.message, { icon: 2 })
         });

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,19 @@
     <script src="../assets/public/documentWrite.js"></script>
 </head>
 <style>
-    .list-table .layui-form{
+    .list-table .layui-form {
         width: 100%;
     }
 </style>
+
 <body>
     <div class="payWrap">
         <div class="margin" style="margin: 0;">
             <div style="display: flex;">
-                <div class="left-mian" >
+                <div class="left-mian">
                     <div class="accountContnet" style="margin-left: 15px;">
-                        <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表" data-direction="bottom" type="button">
+                        <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表"
+                            data-direction="bottom" type="button">
                             <i class="layui-icon layui-icon-refresh-3 "></i>
                             <!-- 刷新 -->
                         </button>
@@ -28,7 +31,7 @@
                 </div>
                 <i class="layui-icon layui-icon-right  onLeft"></i>
                 <div class="main">
-                        <!-- <div class="listHeader">
+                    <!-- <div class="listHeader">
                             <button class="layui-btn layui-btn-normal addBtnClick btn" >
                                 <span>添加收款账号</span>
                             </button>
@@ -37,14 +40,14 @@
                                 <span>刷新</span>
                             </button>
                         </div> -->
-                    <div class="newHeader" >
+                    <div class="newHeader">
                         <div class="newHeaderText">
                             操作部分
                         </div>
                         <div class="newKeyContent">
                             <button type="button" class="layui-btn layui-btn-primary addBtnClick">
                                 <i class="layui-icon layui-icon-app"></i>
-                                <span>添加收款账号</span>              
+                                <span>添加收款账号</span>
                             </button>
                         </div>
                         <div class="newKeyContent">
@@ -57,15 +60,16 @@
                     <div>
                         <div class="data-list">
                             <div class="list-table" style="width: 100%;">
-                                <table style="width: 100%;" class="layui-hide" id="payList" lay-filter="payList"></table>
+                                <table style="width: 100%;" class="layui-hide" id="payList" lay-filter="payList">
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- 编辑 --> 
-        <div class="changePay maskContnet" style="overflow-y: auto;"> 
+        <!-- 编辑 -->
+        <div class="changePay maskContnet" style="overflow-y: auto;">
             <div class="changeBox margin0">
                 <div class="playHeader">
                     <span>编辑支付参数配置</span>
@@ -101,13 +105,25 @@
                                 <input type="text" name="MerchantsId" autocomplete="off">
                             </div>
                         </div>
-                      <div class="WeChat">
-                        <div class="listFlex  ">
-                            <label><span style="color: red;">*</span>公众号密钥：</label>
-                            <!-- <input type="text" name="app_key"> -->
-                            <textarea name="app_key"  rows="5"></textarea autocomplete="off">
+                        <div class="WeChat">
+                            <div class="listFlex ">
+                                <label><span style="color: red;">*</span>商户密钥</label>
+                                <input type="text" name="MerchantsKey" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="WeChat">
+                            <div class="listFlex  ">
+                                <label><span style="color: red;">*</span>支付密钥：</label>
+                                <!-- <input type="text" name="app_key"> -->
+                                <textarea name="app_key" rows="5"></textarea autocomplete="off">
                         </div>
                       </div>
+                        <!-- <div class="WeChat">
+                            <div class="listFlex  ">
+                                <label><span style="color: red;">*</span>公众号密钥：</label>
+                                <textarea name="app_key" rows="5"></textarea autocomplete="off">
+                        </div>
+                      </div> -->
                         <div class="Alipay">
                             <div class="listFlex ">
                                 <label><span style="color: red;">*</span>支付宝商户ID：</label>
@@ -125,10 +141,10 @@
                             <div class="listFlex ">
                                 <label><span style="color: red;">*</span>应用私钥：</label>
                                 <!-- <input type="text" name="app_private_key"> -->
-                                <textarea name="app_private_key"  rows="5" autocomplete="off"></textarea>
+                                <textarea name="app_private_key" rows="5" autocomplete="off"></textarea>
                             </div>
                         </div>
-                        
+
                     </form>
                     <div style="text-align: center; margin-top: 15px;" class="Medit">
                         <button class="layui-btn layui-btn-normal btn submit_btn" type="button">
@@ -136,13 +152,13 @@
                         </button>
                         <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
                             <span>取消</span>
-                        </button>                       
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- 添加 -->
-        <div class="addePay maskContnet" style="overflow-y: auto;"> 
+        <div class="addePay maskContnet" style="overflow-y: auto;">
             <div class="addBox margin0">
                 <div class="playHeader">
                     <span>添加支付参数配置</span>
@@ -156,7 +172,7 @@
                             <label><span style="color: red;">*</span>支付类型：</label>
                             <!-- <input type="text" name="typeIndex" disabled> -->
                             <div class="layui-form" lay-filter="" style="width: 100%;">
-                                <select name="typeIndex" id="addTypeSelect" lay-filter="addSelect" >
+                                <select name="typeIndex" id="addTypeSelect" lay-filter="addSelect">
                                 </select>
                             </div>
                         </div>
@@ -176,11 +192,17 @@
                                 <input type="text" name="MerchantsId" autocomplete="off">
                             </div>
                         </div>
-                      <div class="WeChat">
-                        <div class="listFlex  ">
-                            <label><span style="color: red;">*</span>公众号密钥：</label>
-                            <!-- <input type="text" name="app_key"> -->
-                            <textarea name="app_key"  rows="5"></textarea autocomplete="off">
+                        <div class="WeChat">
+                            <div class="listFlex ">
+                                <label><span style="color: red;">*</span>商户密钥</label>
+                                <input type="text" name="MerchantsKey" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="WeChat">
+                            <div class="listFlex  ">
+                                <label><span style="color: red;">*</span>支付密钥：</label>
+                                <!-- <input type="text" name="app_key"> -->
+                                <textarea name="app_key" rows="5"></textarea autocomplete="off">
                         </div>
                       </div>
                         <div class="Alipay">
@@ -200,10 +222,10 @@
                             <div class="listFlex ">
                                 <label><span style="color: red;">*</span>应用私钥：</label>
                                 <!-- <input type="text" name="app_private_key"> -->
-                                <textarea name="app_private_key"  rows="5" autocomplete="off"></textarea>
+                                <textarea name="app_private_key" rows="5" autocomplete="off"></textarea>
                             </div>
                         </div>
-                        
+
                     </form>
                     <div style="text-align: center; margin-top: 15px;" class="Medit">
                         <button class="layui-btn layui-btn-normal btn submit_btn" type="button">
@@ -211,17 +233,17 @@
                         </button>
                         <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
                             <span>取消</span>
-                        </button>                       
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="mask maskContnet">
             <div class="TitleContentWith">
-                <span class="maskSpan" style="display: inline-block;"> 
+                <span class="maskSpan" style="display: inline-block;">
                     <i class="layui-icon layui-icon-loading "></i>
                 </span>
-               
+
                 数据处理中，请稍候
             </div>
         </div>
@@ -240,4 +262,5 @@
 <script type="text/html" id="imgtmp">
     <div class="rankImg "><img class="{{d.rank==1?'hide':''}}" src="../img/lift.png" style="width: 15px;cursor: pointer;" ><span></span></div>
     </script>
+
 </html>

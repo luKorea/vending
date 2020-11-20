@@ -91,6 +91,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     table.on('tool(payList)', function (obj) {
         payData = obj.data;
         // console.log(obj)
+        console.log(payData)
         if(obj.event=="edit"){
             if (payData.payName == '微信') {
                 $('.changePay .WeChat').show();
@@ -109,9 +110,11 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 'officialId': payData.payName == '微信' ? payData.app_id : '',
                 'MerchantsId': payData.payName == '微信' ? payData.mchId : '',
                 'app_key': payData.payName == '微信' ? payData.app_key : '',
+                'MerchantsKey':payData.payName == '微信' ? payData.app_private_key : '',
                 'aliPayId': payData.payName == '支付宝' ? payData.app_id : '',
                 'alipay_public_key': payData.payName == '支付宝' ? payData.alipay_public_key : '',
                 'app_private_key': payData.payName == '支付宝' ? payData.app_private_key : '',
+                
             })
             popupShow('changePay', 'changeBox')
         }else if(obj.event=="del"){
@@ -160,7 +163,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     $('.changeBody .submit_btn').click(function () {
         var payFormData = form.val("SetPay");
         if (payFormData.typeIndex == '2') {
-            if (!(payFormData.payee&&payFormData.officialId && payFormData.MerchantsId && payFormData.app_key)) {
+            if (!(payFormData.payee&&payFormData.officialId && payFormData.MerchantsId && payFormData.app_key&&payFormData.MerchantsKey)) {
                 layer.msg('带*为必填', { icon: 7 });
                 return;
             }
@@ -181,7 +184,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             var textParam = JSON.stringify({
                 app_id: payFormData.officialId,//微信公众号id
                 mchId: payFormData.MerchantsId,//商户号ID
-                app_key: payFormData.app_key//公众号密钥
+                app_key: payFormData.app_key,//支付密钥
             });
             var editUrl = '/api/pay/testWxPay'
         } else if (payFormData.typeIndex == 1) {
@@ -202,7 +205,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 app_key: payFormData.typeIndex == '2' ? payFormData.app_key : '',
                 mchId: payFormData.typeIndex == '2' ? payFormData.MerchantsId : '',
                 alipay_public_key: payFormData.typeIndex == '1' ? payFormData.alipay_public_key : '',
-                app_private_key: payFormData.typeIndex == '1' ? payFormData.app_private_key : ''
+                app_private_key: payFormData.typeIndex == '1' ? payFormData.app_private_key : payFormData.MerchantsKey
             })
             loadingAjax('/api/pay/updatePayParam', 'post', editPay, sessionStorage.token, 'mask', 'changePay', 'changeBox', layer).then(res => {
                 layer.msg(res.message, { icon: 1 });
@@ -308,7 +311,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       $('.addePay .submit_btn').click(function(){
           var addData=form.val("addPay");
           if (addData.typeIndex == '2') {
-            if (!(addData.payee&&addData.officialId && addData.MerchantsId && addData.app_key)) {
+            if (!(addData.payee&&addData.officialId && addData.MerchantsId && addData.app_key&&addData.MerchantsKey)) {
                 layer.msg('带*为必填', { icon: 7 });
                 return;
             }
@@ -345,6 +348,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     'aliPayId':  '',
                     'alipay_public_key':  '',
                     'app_private_key':  '',
+                    'MerchantsKey':'',
                 })
                 return ;
             }).catch(err => {
@@ -360,7 +364,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             var textParam = JSON.stringify({
                 app_id: addData.officialId,//微信公众号id
                 mchId: addData.MerchantsId,//商户号ID
-                app_key: addData.app_key//公众号密钥
+                app_key: addData.app_key,//公众号密钥
             });
             var editUrl = '/api/pay/testWxPay'
         } else if (addData.typeIndex == 1) {
@@ -380,7 +384,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 app_key: addData.typeIndex == '2' ? addData.app_key : '',
                 mchId: addData.typeIndex == '2' ? addData.MerchantsId : '',
                 alipay_public_key: addData.typeIndex == '1' ? addData.alipay_public_key : '',
-                app_private_key: addData.typeIndex == '1' ? addData.app_private_key : ''
+                app_private_key: addData.typeIndex == '1' ? addData.app_private_key : addData.MerchantsKey
             })
             loadingAjax('/api/pay/newPayParam', 'post', editPay, sessionStorage.token, 'mask', 'addePay', 'addBox', layer).then(res => {
                 layer.msg(res.message, { icon: 1 });
@@ -396,6 +400,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     'aliPayId':  '',
                     'alipay_public_key':  '',
                     'app_private_key':  '',
+                    'MerchantsKey':'',
                 })
             }).catch(err => {
                 layer.msg(err.message, { icon: 2 })
