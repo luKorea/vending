@@ -608,7 +608,7 @@
 }
     .data-list-contnet .layui-form{
         width: 100%;
-        overflow-x: auto;
+        /* overflow-x: auto; */
 
     }
     .editor-content .layui-form{

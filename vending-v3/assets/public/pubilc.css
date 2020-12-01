@@ -581,3 +581,18 @@ input:hover{
     margin-left: 10px;
     padding: 0 10px !important;
 }
+.layui-table-cell {
+    height:auto;
+    overflow:visible !important;
+    text-overflow:inherit !important;
+    white-space:normal !important;
+    word-break: break-all !important;
+}
+.layui-table-cell div{
+    width: 100%;
+    height:auto;
+    overflow:visible !important;
+    text-overflow:inherit !important;
+    white-space:normal !important;
+    word-break: break-all !important;
+}

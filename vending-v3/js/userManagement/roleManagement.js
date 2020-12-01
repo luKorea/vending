@@ -372,11 +372,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         $(`.${element}`).empty();
         $(`.${element}`).html(ListData);
         TrueData.permissions.forEach((item, index) => {
+            // var elearr=[];
             for (var i = 1; i < $(`.${element} input`).length; i++) {
                 if (item.id == list[i-1].id) {
                     $(`.${element} input`).eq(i).prop('checked', true)
                 }
-            }
+            };
         })
         form.render('checkbox');
     }

@@ -29,30 +29,36 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 token,
             },
             cols: [[
-                { field: 'activity_name', width: 160, title: '活动名', align: 'center' },
+                { field: 'activity_name', width: 130, title: '活动名', align: 'center' },
                 { field: 'good_code', width: 210, title: '取货码', align: 'center' },
-                { field: 'machineName', width: 210, title: '终端名', align: 'center' },
+                { field: 'machineName', width: 200, title: '终端名', align: 'center' },
                 { field: 'machineAddress', width: 210, title: '终端地址', align: 'center' },
                 {
                     field: 'ship_info', width: 250, title: '出货情况', align: 'center', templet: function (d) {
-                        if (d.code_status == 0) {
+                        if(d.ship_info.length==0){
                             return '-'
-                        } else {
-                            var str = '';
-                            d.ship_info.forEach(item => {
-                                str += `<div>${item.goods_Name + (item.ship_error == 0 ? '全部出货成功' : '出货（' + ((item.ship_total - item.ship_error) + '/' + item.ship_total) + ')')}</div>`
+                          }else{
+                            var str='';
+                            d.ship_info.forEach((item,index)=>{
+                              str+=`<div>${item.goods_Name}(${item.way}货道${item.ship_status==0?'出货失败':item.ship_status==1?'出货成功':'货道故障'})</div>`
                             });
                             return str
-                        }
+                          }
                     }
                 },
-                { field: 'operate_time', width: 250, title: '取货时间', templet:function(d){
+                { field: 'operate_time', width: 150, align: 'center', title: '取货时间', templet:function(d){
                     if (d.operate_time) {
                         return timeStamp(d.operate_time)
                     } else {
                         return '-';
                     }
                 }},
+                {
+                    field: 'operate_time', width: 100, title: '退货状态', align: 'center', templet: function (d) {
+                        return d.refund==0?'未退货':'已退货'
+                    }
+                },
+                { field: 'operation',  width: 100, title: '操作', toolbar: '#refundDemo', align: 'center' },
             ]],
             page: true,
             loading: true,
@@ -171,4 +177,29 @@ var activeCode='';
       }
     })
   })
+
+  table.on('row(moneyData)', function(obj){
+    var codeData=obj.data;
+    console.log(obj)
+    if(codeData.refund==1){
+        return ;
+    }
+    layer.confirm('确定退货？', function (index) {
+        layer.close(index);
+    var codeObj=JSON.stringify({
+        good_code :codeData.good_code
+    });
+    loadingAjax('/api/machine/activityRefund','post',codeObj,sessionStorage.token).then(res=>{
+        layer.msg(res.message,{icon:1});
+        orderTable.reload({
+            where:{
+
+            }
+        })
+    }).catch(err=>{
+        layer.msg(err.message,{icon:2})
+    })
+    })
+  
+  });
 })

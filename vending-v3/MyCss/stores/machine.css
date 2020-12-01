@@ -94,7 +94,7 @@
     height: 76px;
     background-color: #eee;
     border-radius: 10px 0 0 10px;
-    -webkit-transition: right 1s;
+    /* -webkit-transition: right 1s; */
 }
 .on-left{
     color: #999;
@@ -107,7 +107,7 @@
     height: 76px;
     background-color: #eee;
     border-radius: 0 10px 10px 0;
-    -webkit-transition: left 1s;
+    /* -webkit-transition: left 1s; */
     cursor: pointer;
     line-height: 76px;
     font-size: 24px;
@@ -129,6 +129,7 @@
     font-size: 14px;
 }
 .layui-form{
+    /* width: 100%; */
     display: inline-block;
     position: relative;
 }
@@ -197,9 +198,9 @@ input{
     overflow: hidden;
     display: flex;
 }
-.data-list-table .layui-form{
+/* .data-list-table .layui-form{
     overflow-x: auto ;
-}
+} */
 .data-list-table .layui-table{
     max-height: 600px;
     position: relative;
@@ -414,6 +415,7 @@ input:hover{
 }
 .shipmentRecord .layui-form{
     width: fit-content;
+    width: 90%;
 }
 .replenishment{
     width: 100%;
@@ -516,6 +518,7 @@ input:hover{
     justify-content: space-between;
     align-items: center;
     text-align: center;
+    position: relative;
 }
 .chooseCheck input{
     display: inline-block;
@@ -542,7 +545,10 @@ input:hover{
     width: 50%;
     height: 35px;
     line-height: 35px;
-    text-align: center;
+    text-align: center; 
+    overflow:hidden; 
+    text-overflow:ellipsis; 
+    white-space:nowrap; 
 }
 .numderTop span{
     display: inline-block;
@@ -754,4 +760,7 @@ input:hover{
 }
 .navSetCont .layui-table-box>.layui-table-body{
     height: 400px !important;
+}
+.rTableList .layui-form{
+    width: 90%;
 }

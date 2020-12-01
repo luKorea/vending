@@ -795,11 +795,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     field: 'time', width: 200, title: '时间'
                 },
                 { field: 'number', width: 250, title: '订单号', },
-                {
-                    field: 'shipStatus', width: 150, title: '出货状态', templet: function (d) {
-                        return `<div><span class="${d.shipStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.shipStatus == 0 ? '未出货' : d.shipStatus == 1 ? '出货失败' : '出货成功'}</span></div>`
-                    }
-                },
+                // {
+                //     field: 'shipStatus', width: 150, title: '出货状态', templet: function (d) {
+                //         return `<div><span class="${d.shipStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.shipStatus == 0 ? '出货失败' : d.shipStatus == 1 ? '出货成功' : '货道故障'}</span></div>`
+                //     }
+                // },
                 {
                     field: 'payStatus', width: 150, title: '支付状态', templet: function (d) {
                         return `<div><span class="${d.payStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payStatus == 1 ? '等待支付' : d.payStatus == 2 ? '已支付' : '未支付'}</span></div>`
@@ -890,8 +890,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'goodName', width: 180, title: '商品名', align: 'center', templet: function (d) {
-                        if (d.good_info) {
+                    field: 'goodName', width: 200, title: '商品名', align: 'center', templet: function (d) {
+                        if (d.good_info.length!=0) {
                             return d.good_info[0].goods_Name
                         } else {
                             return '-'
@@ -900,17 +900,27 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {
                     field: 'ship_status', width: 150, title: '出货状态', align: 'center', templet: function (d) {
-                        return d.ship_f == 0 ? '出货成功' : '出货失败'
+                        return d.ship_status == 0 ? '出货失败' : d.ship_status==1?'出货成功':'货道故障'
                     }
                 },
-                { field: 'ship_count', width: 120, align: 'center', title: '出货数量(个)', },
-                { field: 'ship_f', width: 120, align: 'center', title: '出货失败数量(个)', },
+                { field: 'before_count', width: 150, align: 'center', title: '出货前数量(个)',},
+                // { field: 'ship_count', width: 135, align: 'center', title: '出货数量(个)',templet:function(d){
+                //     return d.ship_status==1?'1':'0'
+                // } },
+                { field: 'before_count', width: 150, align: 'center', title: '出货后数量(个)' ,templet:function(d){
+                     return d.ship_status==1?d.before_count-1:d.before_count
+                }},
+                // { field: 'ship_f', width: 140, align: 'center', title: '出货失败数量(个)',templet:function(d){
+                //     return d.ship_status==1?'0':'1'
+                // } },
+               
                 {
-                    field: 'ship_type', width: 120, align: 'center', title: '出货类型', templet: function (d) {
-                        return d.ship_type == 0 ? '取货码' : '订单'
+                    field: 'ship_type', width: 150, align: 'center', title: '出货类型', templet: function (d) {
+                        return d.ship_type == 1 ? '订单' : '取货码'
                     }
                 },
-                { field: 'order_code', width: 200, align: 'center', title: '订单号/取货码', },
+                { field: 'way', width: 120, align: 'center', title: '出货货道' },
+                { field: 'order_code', width: 210, align: 'center', title: '订单号/取货码', },
             ]]
             , id: 'shipmentId'
             , page: true
@@ -1250,8 +1260,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                     <div>数量:${child.count}</div>
                                     </div>
                                     </div>  
-                                    <div class="chooseCheck">
-                                        <span> ${child.goods_Name ? child.goods_Name : '-'}</span>
+                                    <div class="chooseCheck" data-tip="${child.goods_Name ? child.goods_Name : ''}" data-direction="bottom">
+                                        <span >${child.mail?'(邮寄)':''} ${child.goods_Name ? child.goods_Name : '-'}</span>
                                     </div>
                                 </div>`
                 } else {
@@ -1266,16 +1276,18 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                         <div>数量:${child.count}</div>
                                     </div>
                                     </div>  
-                                    <div class="chooseCheck">
-                                        <span>${child.goods_Name ? child.goods_Name : ''}</span>
+                                    <div class="chooseCheck" data-tip="${child.goods_Name ? child.goods_Name : ''}" data-direction="bottom">
+                                        <span >${child.mail?'(邮寄)':''}${child.goods_Name ? child.goods_Name : ''}</span>
                                     </div>
                                 </div>`
                 }
             });
             aisleStr += ` </div>`
         });
+        
         $('.aisleGoodsCont').html(aisleStr);
         form.render('checkbox');
+        tooltip('.chooseCheck', { transition: true, time: 200 });
     };
     function aisleHtml(strList) {
         // console.log(strList)
@@ -1396,6 +1408,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         popupHide('editAisle', 'editAisleBox')
     });
     var goodsDetails = null;
+    var flagObj={};
     function aisleEdit() {
         goodsDetails = wayList[ArrIndex[0]][ArrIndex[1]];
         console.log(goodsDetails)
@@ -1407,7 +1420,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         // $('.editAisle select[name="testSele"]').val(goodsDetails.test);
         form.val("testVal", {
             'testSele': goodsDetails.open
-        })
+        });
+        flagObj={
+            machineId: machineSetData.machineId,
+            way: goodsDetails.way,
+            goodId: Number(goodsDetails.goods_Id),
+            newGoodId:Number(goodsDetails.goods_Id),
+            count: Number(goodsDetails.count),
+            total: Number(goodsDetails.total),
+            open: Number(goodsDetails.open),
+            replenish:goodsDetails.count
+        }
     }
 
     // 选择商品 
@@ -1433,13 +1456,21 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
         var editData = JSON.stringify({
             machineId: machineSetData.machineId,
-            id: goodsDetails.way,
-            goodId: Number($('.editAisle input[name="goodsName"]').attr('IVal')),
+            way: goodsDetails.way,
+            goodId: Number(goodsDetails.goods_Id?goodsDetails.goods_Id:$('.editAisle input[name="goodsName"]').attr('IVal')),
+            newGoodId:Number($('.editAisle input[name="goodsName"]').attr('IVal')),
+            replenish:goodsDetails.goods_Id?goodsDetails.count:0,
             count: Number($('.editAisle input[name="count"]').val()),
-            total: Number($('.editAisle input[name="total"]').val()),
-            open: Number($('.editAisle select[name="testSele"]').val()),
-            replenish: Number($('.editAisle input[name="count"]').val()) - goodsDetails.count
+            total: Number(goodsDetails.goods_Id?goodsDetails.total:0),
+            newTotal: Number($('.editAisle input[name="total"]').val()),
+            status:goodsDetails.open,
+            newStatus: Number($('.editAisle select[name="testSele"]').val()),
+            // replenish: Number($('.editAisle input[name="count"]').val()) - goodsDetails.count
         });
+        if(editData==JSON.stringify(flagObj)){
+            popupHide('editAisle','editAisleBox');
+            return ;
+        };
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         loadingAjax('/api/machine/updateGoodWay', 'post', editData, sessionStorage.token, 'mask', 'editAisle', 'editAisleBox', layer).then(res => {
@@ -1783,8 +1814,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
+                { field: 'way', width: 250, title: '补货人', align: 'center',templet:function(d){
+                    return d.name+'('+d.username+')'
+                } },
                 {
-                    field: 'replenish_time', width: 230, title: '补货时间', templet: function (d) {
+                    field: 'replenish_time', width: 230, title: '补货时间', align: 'center', templet: function (d) {
                         if (d.replenish_time) {
                             return timeStamp(d.replenish_time)
                         } else {
@@ -1792,9 +1826,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         }
                     }
                 },
+                { field: 'way', width: 100, title: '补货货道', align: 'center' },
                 {
                     field: 'ship_f', width: 180, title: '商品名', align: 'center', templet: function (d) {
-                        if (d.good_info) {
+                        if (d.good_info.length!=0) {
                             return d.good_info[0].goods_Name
                         } else {
                             return '-'
@@ -1802,9 +1837,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
+                    field: 'replenish_count', width: 150, title: '补货前数量', align: 'center',templet:function(d){
+                        return d.after_count-d.replenish_count
+                    }
+                },
+                {
                     field: 'replenish_count', width: 150, title: '补货数量', align: 'center'
                 },
-                { field: 'way', width: 100, title: '补货货道', align: 'center' },
+                {
+                    field: 'after_count', width: 150, title: '补货后数量', align: 'center',
+                },
+                
 
             ]]
             , id: 'shipmentId'
@@ -1865,8 +1908,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.replenishment .RQueryBtn').click(function () {
         replenishmentList.reload({
             where: {
-                start_time: replenishmentStartTime,
-                end_time: sreplenishmentEndTime
+                start_time: replenishmentStartTime?replenishmentStartTime:null,
+                end_time: sreplenishmentEndTime?sreplenishmentEndTime:null
             }
         })
     })

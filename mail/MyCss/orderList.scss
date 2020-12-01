@@ -153,18 +153,23 @@ label.label {
 }
 .orderListCont{
     width: 100%;
-    padding-top: 1.2rem;
+    padding-top: 0.4rem;
     // background: url('../img/backgroud.jpg');
     background-size: cover;
     min-height: 100vh;
+    background: #EEEEEE;
+    padding-bottom: 0.5rem;
     .orderNameList{
-        width: 100%;
-        border-bottom: 0.15rem solid rgba(190, 149, 74,1);
+        width: 94%;
+        // border-bottom: 0.15rem solid rgba(190, 149, 74,1);
         padding:0.2rem 0;
         overflow: hidden;
         margin-bottom: 0.3rem;
+        margin: 0 auto 0.2rem;
+        background: #fff;
+        border-radius: 0.1rem;
         .orderList{
-            width: 94%;
+            width: 100%;
             // margin: 0 auto;
             padding: 0.1rem 0;
             h5{        
@@ -299,7 +304,7 @@ label.label {
             width: 60%;
         }
         .goodsInform>h5{
-            // margin-top: 0.35rem;
+            margin-top: 0.1rem;
             font-size: 0.3rem;
             font-family: PingFang SC;
             font-weight: bold;
@@ -307,7 +312,7 @@ label.label {
             text-align: left;
         }
         .of{
-            margin-top: 0.33rem;
+            margin-top: 0.13rem;
         }
         .of p{
             font-size: 0.32rem;
@@ -340,4 +345,17 @@ label.label {
         font-weight: 400;
         padding: 0.05rem 0.15rem;
     }
+}
+.scroller li {
+	height:60px;
+	border-bottom: 1px solid #eee;
+	background-color: #fff;
+	font-size: 14px;
+	
+}
+
+.game-info{ padding:15px 10px; background:#FFF; line-height:22px; color:#333; font-size:14px;}
+.game-info p{color:#999; font-size:12px;}
+.pullUp{
+    display: none !important;
 }

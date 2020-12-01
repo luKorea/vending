@@ -61,40 +61,6 @@ function Goodsdel(id, indexs, obj, index, tableID, classTag) {
   }
 
 }
-
-// 商品查询封装
-// tableIns --数据表格实例对象
-//                                  1关键字 2商品类型ID 3状态ID 4开始价格 5结束价格
-function upPreferential(tableIns, keyGoodsName, GoodsTypeID, stateId, startingPrice, closingPrice) {
-  tableIns.reload({
-    where: { //设定异步数据接口的额外参数，任意设     
-      conditionTwo: keyGoodsName, //关键字
-      conditionThree: GoodsTypeID, //分类
-      conditionFour: stateId, //商品状态
-      conditionFive: startingPrice,  //开始价格
-      conditionSix: closingPrice,   //结束价格
-      //…
-    }
-  })
-};
-// 编辑器添加网络视频
-// 点击提交
-//输入框父元素class名   编辑器
-// function insert(className, editClass) {
-//   console.log($(`.${className} input[name="videoInput"]`).val())
-//   // return $(`.${className} input[name="videoInput"]`).val();  
-//   if (editClass.txt.html().length > 11) {
-//     // console.log(addWangEditor.txt.html())
-//     editClass.txt.append(`<p>${$(`.${className} input[name="videoInput"]`).val()}</p>`);
-//     $('.videoTab').fadeOut();
-//     $(`.${className} input[name="videoInput"]`).val('')
-//   } else {
-//     editClass.txt.html(`<p>${$(`.${className} input[name="videoInput"]`).val()}</p>`);
-//     $('.videoTab').fadeOut();
-//     $(`.${className} input[name="videoInput"]`).val('')
-//   }
-// };
-
 // tab切换下一步事件
 function nextStep(before, after) {
   $(`.${before}`).animate({

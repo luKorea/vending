@@ -286,6 +286,13 @@
     transition: all 0.3s;
 	padding-bottom: 15px;
 }
+.messageBox,.previewBox{
+	height: 60vh;
+	overflow-y: auto;
+}
+.previewHtml,.messageHtml{
+	min-height: 45vh;
+}
 .noticeBox{
 	width: 1000px;
 	margin: 5vh auto 50px;

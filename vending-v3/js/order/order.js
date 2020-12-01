@@ -90,15 +90,15 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         },
         {
           field: 'ship_info', width: 200, title: '出货详情', align: 'center', templet: function (d) {
-              if (d.code_status == 0) {
-                  return '-'
-              } else {
-                  var str = '';
-                  d.ship_info.forEach(item => {
-                      str += `<div>${item.goods_Name + (item.ship_error == 0 ? '全部出货成功' : '出货（' + ((item.ship_total - item.ship_error) + '/' + item.ship_total) + ')')}</div>`
-                  });
-                  return str
-              }
+            if(d.ship_info.length==0){
+              return '-'
+            }else{
+              var str='';
+              d.ship_info.forEach((item,index)=>{
+                str+=`<div>${item.goods_Name}(${item.way}货道${item.ship_status==0?'出货失败':item.ship_status==1?'出货成功':'货道故障'})</div>`
+              });
+              return str
+            }
           }
       },
         {
@@ -398,7 +398,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
 
         { field: 'goods_Price', width: 140, title: '销售价 ', align: 'center', },
         { field: 'goods_Cost', width: 140, title: '成本价 ', align: 'center', },
-        // { field: 'operation', right: 0, width: 80, align: 'center', title: '操作', toolbar: '#refundDemo', fixed: 'right' },
+        { field: 'operation', right: 0, width: 80, align: 'center', title: '操作', toolbar: '#refundDemo', fixed: 'right' },
       ]],
       data: [
 
@@ -543,11 +543,11 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             orderId: orderData.number,
             goodId: goodsData.goods_Id,
             count: Number($('.refundNumber input').val()),
-            // amount:Number($('.sumInput input[name="sum"]').val()),
-            amount: 0.01,
+            amount:Number($('.sumInput input[name="sum"]').val()),
+            // amount: 0.01,
             transaction_id: orderData.transaction_id,
-            // total:refundTatol
-            total: 0.01
+            total:orderData.amount
+            // total: 0.01
           });
           loadingAjax('/api/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
             layer.msg(res.message, { icon: 1 });
@@ -588,14 +588,14 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
 
   // 退款
   $('.orderDetails .refundBtn').click(function(){
-    if (orderData.payStatus != 2) {
-      layer.msg('订单未支付，不能进行退款操作', { icon: 7 });
-      return;
-    };
-    if(orderData.goodsList[0].refund_count!=0){
-      layer.msg('订单已退款', { icon: 7 });
-      return;
-    }
+    // if (orderData.payStatus != 2) {
+    //   layer.msg('订单未支付，不能进行退款操作', { icon: 7 });
+    //   return;
+    // };
+    // if(orderData.goodsList[0].refund_count!=0){
+    //   layer.msg('订单已退款', { icon: 7 });
+    //   return;
+    // }
     layer.confirm('确定退款？(请检查订单出货情况！)', function (index) {
       layer.close(index);
       $('.mask').fadeIn();
@@ -607,10 +607,12 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       var refundData=JSON.stringify({
         machineId: orderData.machineId,
         orderId: orderData.number,
-        amount:Number(orderData.amount),
+        // amount:Number(orderData.amount),
+        amount:0.01,
         goodId:goodsArray,
         transaction_id:orderData.payType==1?orderData.transaction_id:'',
         total:orderData.payType==1? Number(orderData.amount):''
+
       });
       var url='';
       if(orderData.payType==0){

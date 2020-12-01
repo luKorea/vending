@@ -62,7 +62,7 @@ function GetCode() {
 GetCode();
 
 
-
+var codeFlag=null;
 $('.formCont .btn').click(function () {
     if (!($('.list input[name="name"]').val() && $('.list input[name="phone"]').val()&&$('.list input[name="code"]').val())) {
         prompt('收货人、手机号与验证码不能为空');
@@ -87,8 +87,10 @@ $('.formCont .btn').click(function () {
             prompt('查询无数据');
             return ;
         };
+        codeFlag=$('.list input[name="code"]').val();
         $('.searchCont').hide();
         orderListFun(JSON.parse(ress))
+        console.log(JSON.parse(ress))
         $('.orderListCont').show()
     }).catch(err => {
         
@@ -146,7 +148,7 @@ function orderListFun(listStr) {
                 </div>`
     });
     
-    $('.ordertListBox').html(str);
+    $('.ordertListBox ul').html(str);
 };
 
 function goodsListFun(goodsList) {
@@ -163,6 +165,7 @@ function goodsListFun(goodsList) {
                         <p>X ${item.count}</p>
                     </div>
                     <h5>总价：￥${Number(item.goods_Price) * Number(item.count)}</h5>
+                    <p style="margin:5px 0;">已退款数量：${item.refund_count?item.refund_count:0}</p>
                 </div>
             </li>`
     });
@@ -192,3 +195,43 @@ $('.back').click(function () {
 });
 
 
+refresher.init({
+	id:"ordertListBox",
+	pullDownAction:Refresh, 																		
+	});																																							
+function Refresh() {																
+	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+		var el, li, i;																		
+		// el =document.querySelector("#ordertListBox ul");					
+        //这里写你的刷新代码		
+        var nameInformation = JSON.stringify({
+            phone: $('.list input[name="phone"]').val(),
+            name: $('.list input[name="name"]').val(),
+            code:codeFlag,
+            random: randomNum
+        })
+        var data = JSON.stringify({
+            data: encrypts(nameInformation)
+        });
+        loadAjax('/api/order/getMailByUser', 'post', data).then(res => {
+            var ress= decrypts(res.data);
+            if(JSON.parse(ress).length==0){
+                prompt('查询无数据');
+                return ;
+            };
+            orderListFun(JSON.parse(ress))
+            prompt('刷新成功');
+        }).catch(err => {
+            $('.orderListCont').hide()
+            $('.searchCont').show();
+            prompt('请重新查询');
+        });
+		document.getElementById("ordertListBox").querySelector(".pullDownIcon").style.display="none";		
+		document.getElementById("ordertListBox").querySelector(".pullDownLabel").innerHTML="刷新成功";																					 
+		setTimeout(function () {
+			ordertListBox.refresh();
+			document.getElementById("ordertListBox").querySelector(".pullDownLabel").innerHTML="";								
+			},1000);//模拟qq下拉刷新显示成功效果
+		/****remember to refresh after  action completed！ ---yourId.refresh(); ----| ****/
+	}, 1000);
+}

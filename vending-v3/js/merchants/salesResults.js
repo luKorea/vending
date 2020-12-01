@@ -15,17 +15,17 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
         //结束时间
         endTime = y + '-' + ((m + 1) < 10 ? '0' + (m + 1) : (m + 1)) + '-' + d,
         initialTime1 = startTime + ' - ' + endTime
-    console.log(startTime);
-    console.log(endTime);
+    // console.log(startTime);
+    // console.log(endTime);
     laydate.render({
         elem: '#test6',
         range: true,
         value: initialTime1,
         // showBottom: false,
         done: function (value, date, endDate) {
-            console.log(value); //得到日期生成的值，如：2017-08-18
+            // console.log(value); //得到日期生成的值，如：2017-08-18
             var timerKey = value.split(' - ');
-            console.log(timerKey);
+            // console.log(timerKey);
             startTime = timerKey[0];
             endTime = timerKey[1];
         }
@@ -81,7 +81,9 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
             'limitName': 'pageSize'
         },
         where: {
-            merchantId: Number(sessionStorage.machineID)
+            merchantId: Number(sessionStorage.machineID),
+            start_time:startTime,
+            end_time:endTime
         },
         parseData: function (res) {
             // console.log(res)
@@ -210,7 +212,7 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
     var salesData=null;
     table.on('row(salesTable)', function(obj){
          salesData = obj.data;
-         console.log(obj)
+        //  console.log(obj)
          $('.salesCont .playHeader span').html(`${salesData.sm_name}(${startTime}-${endTime})销售业绩`)
         popupShow('salesCont','salesBox');
         if(!managerTable){
@@ -224,6 +226,128 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
                 }
             })
         }
-        
       });
+
+    //   到处部分
+      // 导出excel表
+    // 导出时间
+    var exportStareTime = null,
+        exportEndTime = null;
+    laydate.render({
+        elem: '#test8'
+        , type: 'month'
+        , range: true,
+        done: function (value) {
+            var timerKey = value.split(' - ');
+            exportStareTime = timerKey[0];
+            exportEndTime = timerKey[1];
+        }
+    });
+    // 导出按钮
+    $('.pushBtn').click(function(){
+        if(!(startTime&&endTime)){
+            layer.msg('请选择时间', { icon: 7 });
+            return;
+        }
+        layer.confirm(`确定导出（${startTime}至${endTime}销售经理业绩）？`, function (index) {
+            layer.close(index);
+            $('.mask').fadeIn();
+            $('.maskSpan').addClass('maskIcon');
+            var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+            xhr.open("POST", `/api/sales_manager/exportSalesManagerOrder`, true);
+            xhr.setRequestHeader("token", sessionStorage.token);
+    
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+            xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+    
+            xhr.onload = function (res) {
+                // console.log(xhr)
+                if (xhr.status == 200) {
+                    $('.mask').fadeOut();
+                    $('.maskSpan').removeClass('maskIcon');
+                    var content = xhr.response;
+                    // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+                    var fileName = `${sessionStorage.marchantName}销售经理业绩(${startTime}-${endTime}).xlsx`
+                    var elink = document.createElement('a');
+                    elink.download = fileName;
+                    elink.style.display = 'none';
+                    var blob = new Blob([content]);
+                    elink.href = URL.createObjectURL(blob);
+                    document.body.appendChild(elink);
+                    elink.click();
+                    document.body.removeChild(elink);
+                } else {
+                    $('.mask').fadeOut();
+                    $('.maskSpan').removeClass('maskIcon');
+                    layer.msg('服务器请求超时', { icon: 2 });
+                    return;
+                }
+            }
+            var orderObj = JSON.stringify({
+                start_time: exportStareTime,
+                // start_time:'2020-10-01',
+                end_time: exportEndTime,
+                // end_time:'2020-12-30',
+                merchantId: Number(sessionStorage.machineID)
+            })
+            xhr.send(orderObj);
+        })
+        // popupShow('exportCont','exportBox')
+    })
+    // 取消
+    $('.content-footer .cancelBtn').click(function(){
+        popupHide('exportCont','exportBox')
+    })
+      // 导出
+      $('.exportCont .determinePushBtn').click(function () {
+        if (!(exportStareTime && exportEndTime)) {
+            layer.msg('请选择时间', { icon: 7 });
+            return;
+        }
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        xhr.open("POST", `/api/sales_manager/exportSalesManagerOrder`, true);
+        xhr.setRequestHeader("token", sessionStorage.token);
+
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+
+        xhr.onload = function (res) {
+            // console.log(xhr)
+            if (xhr.status == 200) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                var content = xhr.response;
+                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+                var fileName = `${sessionStorage.marchantName}销售经理业绩(${exportStareTime}-${exportEndTime}).xlsx`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
+            } else {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('服务器请求超时', { icon: 2 });
+                return;
+            }
+        }
+        var orderObj = JSON.stringify({
+            start_time: exportStareTime,
+            // start_time:'2020-10-01',
+            end_time: exportEndTime,
+            // end_time:'2020-12-30',
+            merchantId: Number(sessionStorage.machineID)
+        })
+        xhr.send(orderObj);
+    });
+
+    permissionsVal(460).then(res=>{
+        res.addFlag?$('.pushBtn').removeClass('hide'):$('.pushBtn').addClass('hide')
+
+    })
 })

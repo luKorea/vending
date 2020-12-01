@@ -162,26 +162,26 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
     });
     // 选择商品
     $('.goodsChooseBtn').click(function () {
-        if(goodsList.length==0){
+        if (goodsList.length == 0) {
             popupShow('goodsCont', 'goodsBox');
-        }else{
+        } else {
             chooseFun(goodsList);
             $('.chooseFooter').show();
             $('.chooseGoods input').prop('disabled', false)
             popupShow('chooseGoods', 'chooseGoodsBox')
         }
-        
+
     });
     // 选择更多商品
-    $('.moreChoose').click(function(){
-        popupHide('chooseGoods','chooseGoodsBox')
-        popupShow('goodsCont','goodsBox');
+    $('.moreChoose').click(function () {
+        popupHide('chooseGoods', 'chooseGoodsBox')
+        popupShow('goodsCont', 'goodsBox');
 
     });
     $('.machineChooseBtn').click(function () {
         if (machineListArr.length == 0) {
             getMachineList(sessionStorage.UserId);
-        }else{
+        } else {
             transferFun(machineListArr, chooseMachine)
         }
         popupShow('machineDetailsCont', 'machineDetailsBox');
@@ -332,7 +332,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             },
             where: {
                 condition: sessionStorage.machineID,
-                conditionSeven: 0
+                conditionSeven: 0,
             },
             parseData: function (res) {
                 // console.log(res)
@@ -365,15 +365,18 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                     window.parent.location.href = "login.html";
                 }
                 console.log(res)
-                res.data.forEach(item => {
-                    for (var i in goodsList) {
-                        var ele = goodsList[i];
-                        if (item.goods_Id == ele.goodsId) {
-                            $('.goodsChooseList tr[data-index=' + i + '] input[type="checkbox"]').prop('checked', true);
+                console.log(goodsList)
+                for (var i in goodsList) {
+                    res.data.forEach((item,index )=> {
+
+                        // var ele = ;
+                        if (item.goods_Id == goodsList[i].goodsId) {
+                            $('.goodsChooseList tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true);
                             form.render();// 重新渲染一下
                         }
-                    }
-                })
+
+                    })
+                }
                 $('.list-table .layui-table-header input[type="checkbox"]').prop('disabled', true);
                 $('.list-table .layui-table-header .laytable-cell-checkbox>div').hide();
                 form.render('checkbox');
@@ -457,8 +460,8 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
     $('.SetContList').on('change', '.setMateraialList input', function () {
         var num = $(this).val(),
             re = /^\d*$/;
-            console.log(num)
-        if ((!re.test(num))||(num==0)) {
+        console.log(num)
+        if ((!re.test(num)) || (num == 0)) {
             layer.msg('只能输入正整数', { icon: 7 });
             if (reduction) {
                 $(this).val(reduction);
@@ -563,11 +566,15 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             codeLen = $(this).val();
         }
     });
+    var lenFlag=false
     $('.addActivityBody input[name="codeLen"]').blur(function () {
         if (!($(this).val() >= 8 && $(this).val() <= 30)) {
             layer.msg('取货码长度范围为8位到30位', { icon: 7 });
             $(this).val(12);
+            lenFlag=true
+            return;
         }
+        lenFlag=false
     });
 
     // 新增活动提交
@@ -587,6 +594,10 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
         if (goodsList.length == 0) {
             layer.msg('请选择商品', { icon: 7 })
             return;
+        }
+        if(lenFlag){
+            lenFlag=false;
+            return ;
         }
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
@@ -608,6 +619,8 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             type: Number($('.complex input[name="complexNum"]:checked').val()),
             len: $('.seniorSet input[name="codeLen"]').val()
         })
+        console.log(addOb);
+        // return ;
         loadingAjax('/api/activity/newActivity', 'post', addOb, sessionStorage.token, 'mask', 'addActivity', 'addActivityBox').then(res => {
             layer.msg(res.message, { icon: 1 });
             $('.addActivityBody input[name="activityName"]').val('');
@@ -620,7 +633,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             chooseMachine = [];
             goodsList = [];
             $('.seniorSet input[name="codeLen"]').val(12);
-            $('.complex input[name="complexNum"]').val(4);
+            // $('.complex input[name="complexNum"]').val(4);
             activityTable.reload({
                 where: {}
             });
@@ -735,38 +748,43 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
         pickupCodeIn = table.render({
             elem: '#pickCodeIn',
             cols: [[
-                { field: 'good_code', width: 160, title: '取货码', align: 'center' },
+                { field: 'good_code', width: 150, title: '取货码', align: 'center' },
                 {
                     field: 'code_status', width: 130, title: '使用情况', align: 'center', sort: true, templet: function (d) {
                         return d.code_status == 0 ? '待使用' : '已使用'
                     }
                 },
                 {
-                    field: 'operate_machine', width: 250, title: '使用的售货机', align: 'center', templet: function (d) {
+                    field: 'operate_machine', width: 210, title: '使用的售货机', align: 'center', templet: function (d) {
                         return d.info ? d.info : '-'
                     }
                 },
                 {
-                    field: 'ship_info', width: 200, title: '出货情况', align: 'center', templet: function (d) {
-                        if (d.code_status == 0) {
+                    field: 'ship_info', width: 250, title: '出货情况', align: 'center', templet: function (d) {
+                        if (d.ship_info.length == 0) {
                             return '-'
                         } else {
                             var str = '';
                             d.ship_info.forEach(item => {
-                                str += `<div>${item.goods_Name + (item.ship_error == 0 ? '全部出货成功' : '出货（' + ((item.ship_total - item.ship_error) + '/' + item.ship_total) + ')')}</div>`
+                                str += `<div>${item.goods_Name}(${item.way}货道${item.ship_status == 0 ? '出货失败' : item.ship_status == 1 ? '出货成功' : '货道故障'})</div>`
                             });
                             return str
                         }
                     }
                 },
                 {
-                    field: 'operate_time', width: 200, title: '使用时间', align: 'center', templet: function (d) {
+                    field: 'operate_time', width: 175, title: '使用时间', align: 'center', templet: function (d) {
 
                         if (d.operate_time) {
                             return timeStamp(d.operate_time);
                         } else {
                             return '-'
                         }
+                    }
+                },
+                {
+                    field: 'operate_time', width: 100, title: '退货状态', align: 'center', templet: function (d) {
+                        return d.refund == 0 ? '未退货' : '已退货'
                     }
                 },
             ]],
@@ -819,19 +837,19 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             onchange: function (obj, indexs) {
                 console.log(indexs)
                 console.log(obj)
-                if(indexs==0){
-                    obj.forEach(item=>{
+                if (indexs == 0) {
+                    obj.forEach(item => {
                         chooseMachine.push(item.value)
                     })
                     console.log(chooseMachine)
-                }else if(indexs==1){
-                    obj.forEach(item=>{
-                       chooseMachine.splice(chooseMachine.indexOf(item.value),1);
-                       console.log(chooseMachine.indexOf(item.value))
+                } else if (indexs == 1) {
+                    obj.forEach(item => {
+                        chooseMachine.splice(chooseMachine.indexOf(item.value), 1);
+                        console.log(chooseMachine.indexOf(item.value))
                     });
                     console.log(chooseMachine)
                 }
-                chooseMachine.length==0?$('.machineFlag').text('未选择'):$('.machineFlag').text('已选择')
+                chooseMachine.length == 0 ? $('.machineFlag').text('未选择') : $('.machineFlag').text('已选择')
             }
         });
     };
@@ -861,7 +879,9 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
         pageNum: 1,
         merchant_id: 93
     })
-    loadingAjax('/api/order/getCodeOrder', 'post', abcd, sessionStorage.token).then(res => {
-        console.log(res)
-    });
+    // loadingAjax('/api/order/getCodeOrder', 'post', abcd, sessionStorage.token).then(res => {
+    //     console.log(res)
+    // });
+
+
 })

@@ -31,8 +31,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     cols: [[
       { checkbox: true },
       { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center' },
-      { field: 'goods_Core', width: 120, title: '商品编号', align: 'center'},
-      { field: 'goods_Name', width: 120, title: '商品名', color: '#409eff', align: 'center' },
+      { field: 'goods_Core', width: 180, title: '商品编号', align: 'center'},
+      { field: 'goods_Name', width: 200, title: '商品名', color: '#409eff', align: 'center' },
       { field: 'mail', width: 120, title: '是否邮寄商品', align: 'center',templet:function(d){
         return d.mail==0?'否':'是'
       } },
@@ -191,8 +191,13 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
 
   // 点击查询事件，重新渲染数据表格
   $('.query-btnClick').click(function () {
-    //                        1关键字 2商品类型ID 3状态ID 4开始价格 5结束价格
-    upPreferential(tableIns, $(".KyeText").val(), GoodsTypeID, stateId, $('.startingPrice').val(), $('.closingPrice').val());
+     tableIns.reload({
+      where:{
+        conditionTwo: $(".KyeText").val(), //关键字
+        conditionThree: GoodsTypeID, //分类
+        conditionFour: stateId, //商品状态
+      }
+    })
   })
 
   // 监听操作删除

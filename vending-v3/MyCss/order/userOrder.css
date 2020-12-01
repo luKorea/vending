@@ -160,7 +160,7 @@
  }
 .data-right .layui-form{
     width: 100%;
-    overflow-x: auto;
+    /* overflow-x: auto; */
 }
 .data-right .layui-form .layui-table-body td{
     cursor: pointer;

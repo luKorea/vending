@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="orderTable">
-                        <div>
+                        <div style="overflow: hidden;">
                             <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
                         </div>
                     </div>
@@ -73,5 +73,13 @@
             </div>
         </div>
     </div>
+    <script type="text/html" id="refundDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm btn operation  refundBtnTwo {{d.refund==1?'hide':''}}" lay-event="refund">
+                <span style="color:#fff;">退货</span>
+            </button> 
+        </div>
+    </script>
 </body>
+
 </html>

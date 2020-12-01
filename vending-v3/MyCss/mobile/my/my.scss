@@ -111,7 +111,7 @@ p{
         }
     }
     .informList{
-        border-top: 0.11rem solid #f0eff5;
+        border-top: 0.15rem solid #f0eff5;
         overflow: hidden;
         .list{
             width: 92%;
@@ -123,6 +123,14 @@ p{
             }
             p{
                 font-size: 0.24rem;
+            }
+            img{
+                width: 0.4rem;
+                
+            }
+            span{
+                vertical-align: middle;
+                line-height: 0.38rem;
             }
         }
     }

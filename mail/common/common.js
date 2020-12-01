@@ -92,7 +92,7 @@ function decrypt1(cipher) {
     });
     var decryptResult = bytes.toString(CryptoJS.enc.Utf8);
     return decryptResult
-};
+}
 export {
     loadAjax,
     prompt,
