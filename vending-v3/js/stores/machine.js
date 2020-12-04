@@ -66,20 +66,20 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         return `<div><span class="${d.openStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.openStatus == 0 ? '无营业' : '营业'}</span></div>`
                     }
                 },
-                {
-                    field: 'wayStatus', width: 135, title: '货道状态', align: 'center', templet: function (d) {
-                        return `<div><span class="${d.wayStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.wayStatus == 0 ? '不正常' : '正常'}</span></div>`
-                    }
-                },
-                {
-                    field: 'dealTime', width: 170, title: '最后交易时间', align: 'center', templet: function (d) {
-                        if (d.dealTime) {
-                            return timeStamp(d.connectTime)
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
+                // {
+                //     field: 'wayStatus', width: 135, title: '货道状态', align: 'center', templet: function (d) {
+                //         return `<div><span class="${d.wayStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.wayStatus == 0 ? '不正常' : '正常'}</span></div>`
+                //     }
+                // },
+                // {
+                //     field: 'dealTime', width: 170, title: '最后交易时间', align: 'center', templet: function (d) {
+                //         if (d.dealTime) {
+                //             return timeStamp(d.connectTime)
+                //         } else {
+                //             return '-'
+                //         }
+                //     }
+                // },
                 { field: 'merchantName', width: 150, title: '所属商户', align: 'center', },
                 { field: 'appVersion', width: 135, title: '软件版本', align: 'center', },
                 // { field: 'controllerVersion', width: 135, title: '控制器版本', },
@@ -862,9 +862,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             where: {
                 conditionFive: selesVal.shipmentStatus,
                 conditionSix: selesVal.payStatus,
-                conditionSeven: Number(selesVal.payType),
-                conditionTwo: selesStartTime,
-                conditionThree: selesEndTime,
+                conditionSeven: selesVal.payType,
+                conditionTwo: selesStartTime?selesStartTime:null,
+                conditionThree: selesEndTime?selesEndTime:null,
             }
         })
     })
@@ -903,14 +903,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         return d.ship_status == 0 ? '出货失败' : d.ship_status==1?'出货成功':'货道故障'
                     }
                 },
-                { field: 'before_count', width: 150, align: 'center', title: '出货前数量(个)',},
-                // { field: 'ship_count', width: 135, align: 'center', title: '出货数量(个)',templet:function(d){
+                { field: 'before_count', width: 150, align: 'center', title: '出货前数量',},
+                // { field: 'ship_count', width: 135, align: 'center', title: '出货数量',templet:function(d){
                 //     return d.ship_status==1?'1':'0'
                 // } },
-                { field: 'before_count', width: 150, align: 'center', title: '出货后数量(个)' ,templet:function(d){
+                { field: 'before_count', width: 150, align: 'center', title: '出货后数量' ,templet:function(d){
                      return d.ship_status==1?d.before_count-1:d.before_count
                 }},
-                // { field: 'ship_f', width: 140, align: 'center', title: '出货失败数量(个)',templet:function(d){
+                // { field: 'ship_f', width: 140, align: 'center', title: '出货失败数量',templet:function(d){
                 //     return d.ship_status==1?'0':'1'
                 // } },
                
@@ -977,6 +977,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     if (merchantsListData.length == 0) {
         dataListEdit = []
     }
+    console.log(JSON.stringify(dataList))
     //售货机列表
     treeFun(tree, 'test1', machineList, dataList, 'merchantId', 'condition', selectData, '', 'true')
 
@@ -1125,14 +1126,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp" },
-                { field: 'goods_Name', width: 200, title: '商品名', color: '#409eff' },
-                { field: `classifyName`, width: 150, title: '商品类目' },
+                { field: 'goods_Name', width: 200, align: 'center', title: '商品名', color: '#409eff' ,templet:function(d){
+                    return (d.mail==1?'(邮寄)'+d.goods_Name:d.goods_Name)
+                    // return '1'
+                }},
+                { field: `classifyName`, align: 'center', width: 150, title: '商品类目' },
                 {
-                    field: 'mail', width: 130, title: '是否邮寄商品', align: 'center', templet: function (d) {
+                    field: 'mail', align: 'center', width: 130, title: '是否邮寄商品', align: 'center', templet: function (d) {
                         return d.mail == 0 ? '否' : '是'
                     }
                 },
-                { field: 'goods_Core', width: 180, title: '商品编号', },
+                { field: 'goods_Core', align: 'center', width: 180, title: '商品编号', },
                 { field: 'operation', position: 'absolute', right: 0, width: 80, title: '操作', toolbar: '#GoodsbarDemo' },
 
             ]],
@@ -1277,7 +1281,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                     </div>
                                     </div>  
                                     <div class="chooseCheck" data-tip="${child.goods_Name ? child.goods_Name : ''}" data-direction="bottom">
-                                        <span >${child.mail?'(邮寄)':''}${child.goods_Name ? child.goods_Name : ''}</span>
+                                        <span >${child.mail==1?'(邮寄)':''}${child.goods_Name ? child.goods_Name : ''}</span>
                                     </div>
                                 </div>`
                 }
@@ -1412,7 +1416,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     function aisleEdit() {
         goodsDetails = wayList[ArrIndex[0]][ArrIndex[1]];
         console.log(goodsDetails)
-        $('.editAisle input[name="goodsName"]').val(goodsDetails.goods_Name ? goodsDetails.goods_Name : '');
+        $('.editAisle input[name="goodsName"]').val(goodsDetails.goods_Name ?goodsDetails.mail==1?'(邮寄)'+ goodsDetails.goods_Name: goodsDetails.goods_Name: '');
         $('.editAisle input[name="goodsName"]').attr('IVal', goodsDetails.goods_Id ? goodsDetails.goods_Id : '');
         $('.editAisle input[name="price"]').val(goodsDetails.goods_Price ? goodsDetails.goods_Price : '');
         $('.editAisle input[name="count"]').val(goodsDetails.count);
@@ -1435,7 +1439,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 选择商品 
     table.on('row(goodsTable)', function (obj) {
-        $('.editAisle input[name="goodsName"]').val(obj.data.goods_Name);
+        $('.editAisle input[name="goodsName"]').val(obj.data.mail==1?'(邮寄)'+ obj.data.goods_Name:obj.data.goods_Name);
         $('.editAisle input[name="goodsName"]').attr('IVal', obj.data.goods_Id);
         $('.editAisle input[name="price"]').val(obj.data.goods_Price);
         popupHide('goodsCont', 'goodsBox')

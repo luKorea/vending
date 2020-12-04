@@ -1,5 +1,5 @@
 import '../../../MyCss/mobile/machine/machine.scss';
-import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow,permissionsFun } from '../../../common/common.js';
+import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow,permissionsFun ,timeStamp,treeList } from '../../../common/common.js';
 // loadingWith('正在加载');
 //返回上一页
 $('#topHeader .back').click(function () {
@@ -15,7 +15,8 @@ paySetFlag = false,//配置机器支付方式
 // addAisleFlag = false,//增加货道
 AisleDetailsFlag = false,//货道详情
 salesListFlag = false,//销售记录
-shipmentListFlag = false;//出货记录
+shipmentListFlag = false,//出货记录
+replenishmentFlag=false;//补货记录
 function permissions(){
     permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token).then(res=>{
         res.data.forEach(item => {
@@ -25,18 +26,9 @@ function permissions(){
             if (item.id == '392') {
                 activateFlag = true;
             }
-            // if (item.id == '424') {
-            //     editAisleFlag = true;
-            // }
             if (item.id == '432') {
                 paySetFlag = true;
             }
-            // if (item.id == '426') {
-            //     delAisleFlag = true;
-            // }
-            // if (item.id == '425') {
-            //     addAisleFlag = true;
-            // }
             if (item.id == '427') {
                 AisleDetailsFlag = true;
             }
@@ -46,16 +38,22 @@ function permissions(){
             if (item.id == '402') {
                 shipmentListFlag = true;
             }
+            if(item.id=='456'){
+                replenishmentFlag=true;
+            }
         });
-        activateFlag?$('.actionStatusBtn').show():$('.actionStatusBtn').hide();
+        activateFlag?$('.remoteOperation').show():$('.remoteOperation').hide();
         AisleDetailsFlag?$('.aisleDetalis').show():$('.aisleDetalis').hide();
         paySetFlag?$('.paySetBtn').show():$('.paySetBtn').hide();
+        shipmentListFlag?$('.shipmentRd').show():$('.shipmentRd').hide();
+        replenishmentFlag?$('.Rrecord').show():$('.Rrecord').hide();
     }).catch(err=>{
         console.log(err)
     })
 }
 permissions();
 //条件筛选数据、事件
+var merchantIdStr=sessionStorage.machineID;
 var pageNum = 1,
     pageSize = 10,
     actionIndex = '',//激活
@@ -69,11 +67,12 @@ function getMachineList() {
     var machineData = JSON.stringify({
         pageNum,
         pageSize,
-        merchantId: sessionStorage.machineID,
+        // merchantId: sessionStorage.machineID,
         onlineStatus: onlineIndex ? Number(onlineIndex) : '',
         actionStatus: actionIndex ? Number(actionIndex) : '',
         openStatus: permissionsIndex ? Number(permissionsIndex) : '',
-        stockStatus: CreationIndex ? Number(CreationIndex) : ''
+        stockStatus: CreationIndex ? Number(CreationIndex) : '',
+        merchantId:merchantIdStr,
     });
     loadAjax('/api/machine/getMachineList', 'post', sessionStorage.token, machineData, 'mask').then(res => {
         $('.allmachine span').html(res.data.total)
@@ -109,9 +108,10 @@ function machineDrawing(mData) {
                         <li class="${item.actionStatus == 0 ? 'colorG' : 'colorYes'}">${item.actionStatus == 0 ? '未激活' : '已激活'}</li>
                         <li class="${item.onlineStatus == 0 ? 'colorNo' : 'colorYes'}" >${item.onlineStatus == 0 ? '离线' : '在线'}</li>
                         <li class="${item.openStatus == 0 ? 'colorG' : 'colorYes'}">${item.openStatus == 0 ? '无营业' : '正在营业'}</li>
-                        <li class="${item.stockStatus == 0 ? 'colorYes' : item.stockStatus == 1 ? 'colorG' : 'colorNo'}">${item.stockStatus == 0 ? '货道正常' : item.stockStatus == 1 ? '一般缺货' : '严重缺货'}</li>
+
                     </ul>
                 </div> `
+                // <li class="${item.stockStatus == 0 ? 'colorYes' : item.stockStatus == 1 ? 'colorG' : 'colorNo'}">${item.stockStatus == 0 ? '货道正常' : item.stockStatus == 1 ? '一般缺货' : '严重缺货'}</li>
         machineListIndex++
     })
     $('.machineList').append(mstr)
@@ -121,6 +121,7 @@ hui.loadMore(getMachineList, '正在加载');
 
 // 下拉刷新部分
 var loadFlag=false;
+
 function getMachineListTwo() {
     hui.loading('加载中...');
     machineArr1=[];
@@ -130,12 +131,13 @@ function getMachineListTwo() {
     var machineData = JSON.stringify({
         pageNum,
         pageSize,
-        merchantId: sessionStorage.machineID,
+        // merchantId: sessionStorage.machineID,
         onlineStatus: onlineIndex ? Number(onlineIndex) : '',
         actionStatus: actionIndex ? Number(actionIndex) : '',
         openStatus: permissionsIndex ? Number(permissionsIndex) : '',
         stockStatus: CreationIndex ? Number(CreationIndex) : '',
         keyword,
+        merchantId:merchantIdStr,
     });
     var arrFlag = false;
     loadAjax('/api/machine/getMachineList', 'post', sessionStorage.token, machineData, 'mask').then(res => {
@@ -305,11 +307,13 @@ function supportpay(machindID, merchantsID) {
             });
             $('#form1').html(setPayStr)
         }).catch(err => {
-            layer.msg(err.message, { icon: 2 })
+            // layer.msg(err.message, { icon: 2 })
+            toastTitle(err.message, 'error');
         })
     }).catch(err => {
         console.log(err)
-        layer.msg(err.message, { icon: 2 })
+        // layer.msg(err.message, { icon: 2 })
+        toastTitle(err.message, 'error');
     })
 }
 // supportpay("6241739031f5ad41", 58);
@@ -433,7 +437,7 @@ $('.remoteOperation').click(function(){
     }else{
         $('.businessBtn ').hide();
     }
-    if(machineDetails.actionStatus==0){
+    if(machineDetails.openStatus==0){
         $('.businessBtn p').html('营业')
     }else{
         $('.businessBtn p').html('暂停营业')
@@ -454,25 +458,28 @@ $('.businessBtn').click(function(){
     }
         hui.confirm(machineDetails.actionStatus==0?'确定营业？':'确定暂停营业？', ['取消','确定'], function(){
             var action=machineDetails.actionStatus==0?'true':'false';
-            var openStatus=machineDetails.actionStatus==0?'1':'0'
+            var openStatus=machineDetails.openStatus==0?'1':'0'
             loadingWith('正在操作，请稍后');
             loadAjax('/api/machine/getStatus','post',sessionStorage.token,JSON.stringify({machineId: machineDetails.machineId}),'mask').then(Dres=>{
-                var statusType = JSON.parse(Dres.data);
+                var statusType = Dres.data;
                 if (statusType.actionStatus == 1) {
                     loadAjax('/api/pushActive','post',sessionStorage.token,JSON.stringify({machine: machineDetails.machineId,
                         action,}),'mask').then(res=>{
                             toastTitle(res.message,'warn')
                         }).catch(err=>{
+                            console.log(err)
                             if(err=='true'){
-                                loadAjax('/api/machine/activeMachine','post',sessionStorage.token,JSON.stringify({achine: machineDetails.machineId,openStatus,}),'mask').then(res=>{
+                                loadAjax('/api/machine/activeMachine','post',sessionStorage.token,JSON.stringify({machineId: machineDetails.machineId,openStatus,}),'mask').then(res=>{
                                     machineDetails=statusType;
                                     toastTitle('操作成功','success');
                                     getMachineListTwo();
-                                    if(machineDetails.actionStatus==0){
+                                    if(machineDetails.openStatus==0){
                                         $('.businessBtn p').html('营业')
                                     }else{
                                         $('.businessBtn p').html('暂停营业')
-                                    }     
+                                    }    
+                                    $('.remoteCont').fadeOut(100).children('.remoteBox ').removeClass('top30');
+                                    closeWindow('.operationList','top0')
                                 }).catch(err=>{
                                     console.log(err)
                                     toastTitle('操作失败','error')
@@ -485,6 +492,8 @@ $('.businessBtn').click(function(){
                     toastTitle('该设备未激活,无法进行营业操作','warn')
                 }
             }).catch(err=>{
+                console.log(err)
+                alert(1)
                 toastTitle(err.message,'error')
             })
         },function(){
@@ -535,3 +544,374 @@ function geoCode() {
         }
     });
 };
+
+
+// 出货记录部分
+$('.shipmentRd').click(function(){
+    // console.log(machineDetails);
+    $('.shipmentContent .sHeader').html(`${machineDetails.info}出货记录`)
+    showPopup('.shipmentContent', '.shipmentBox', 'top0');
+    shipmenListArr(machineDetails.machineId,1)
+});
+
+// 出货记录返回
+$('.shipmentContent .close').click(function(){
+    closeParents(this,'top0');
+    $('.hui-picker').hide();
+});
+// 时间初始化
+var sStart_time=null,
+    send_time=null;
+jeDate("#test08",{
+    format: "YYYY-MM-DD",
+    range:" - ",
+    donefun:function(obj){
+        console.log(obj);
+        var timerKey = obj.val.split(' - ');
+        sStart_time=timerKey[0];
+        send_time=timerKey[1]
+        shipmenListArr(machineDetails.machineId,1)
+    },
+    clearfun:function(ele,val){
+        // console.log(9999);
+        sStart_time=null;
+        send_time=null;
+        shipmenListArr(machineDetails.machineId,1)
+    }
+});
+// 获取出货记录
+function shipmenListArr(mId,mNum){
+    var sObj=JSON.stringify({
+        machineId:mId,
+        pageNum:mNum,
+        pageSize:10,
+        start_time:sStart_time,
+        end_time:send_time
+    });
+    loadAjax(`/api/machine/getShippingList`,'post',sessionStorage.token,sObj).then(res=>{
+        console.log(res)
+        if(mNum==1){ 
+            if(res.data.list.length==0){
+                $('.pages1').hide();
+                $('.shipmenList').html('<h2>暂无数据</h2>');
+                return ;
+            }
+            pageN(res.data.total,'.pages1');
+            $('.pages1').show()
+        }else{
+            $('.pages1').show()
+        }
+        var str='';
+        res.data.list.forEach(item=>{
+            str+=`<li>
+                    <div class="keyText flex">
+                        <label for="">出货时间:</label>
+                        <p>${item.create_time?timeStamp(item.create_time):'-'}</p>
+                    </div>
+                    <div class="keyText flex">
+                        <label for="">商品名:</label>
+                        <p>${item.good_info.length!=0?item.good_info[0].goods_Name:'-'}</p>
+                    </div>
+                    <div class="keyText flex">
+                        <label for="">出货状态:</label>
+                        <p>${item.ship_status==0?'出货失败':item.ship_status==1?'出货成功':'货道故障'}</p>
+                    </div>
+                    <div class="keyText flex">
+                        <label for="">出货前数量:</label>
+                        <p>${item.before_count}</p>
+                    </div>
+                    <div class="keyText flex">
+                        <label for="">出货后数量:</label>
+                        <p>${item.ship_status==1?item.before_count-1:item.before_count}</p>
+                    </div>
+                    <div class="keyText flex">
+                        <label for="">出货类型:</label>
+                        <p>${item.ship_type==1?'订单':'取货码'}</p>
+                    </div>
+                    <div class="keyText flex">
+                        <label for="">出货货道:</label>
+                        <p>${item.way}</p>
+                    </div>
+                    <div class="keyText flex">
+                        <label for="">订单号/取货码:</label>
+                        <p>${item.order_code}</p>
+                    </div>
+                </li>`
+        });
+        $('.shipmenList').html(str)
+    }).catch(err=>{
+        console.log(err)
+        toastTitle(err.message, 'error');
+    })
+};
+
+// 分页页面方法
+function pageN(conut,ele){
+    var Num=(Number(conut)/10)
+    Num= Num%1==0?Num:Num+1
+    console.log(Math.floor(Num))
+    var ForNum=Math.floor(Num)
+    var pageStr=''
+    for(let i=0;i<ForNum;i++){
+        pageStr+=` <div class="pageVal ${i==0?'hui-pager-active':''}"  val="${i+1}"><a href="javascript:hui.toast('第${i+1}页');" >${i+1}</a></div>`
+    };
+   $(`${ele} .hui-pager`).html(pageStr)
+};
+// 出货记录点击分页
+$('.pages1').on('click','.pageVal',function(){
+    $(this).addClass('hui-pager-active').siblings().removeClass('hui-pager-active')
+    shipmenListArr(machineDetails.machineId,Number($(this).attr('val')));
+});
+
+// 补货记录部分
+$('.Rrecord').click(function(){
+    $('.rMentContent .rHeader').html(`${machineDetails.info}补货记录`);
+    showPopup('.rMentContent', '.rMentBox', 'top0');
+    rMentListArr(machineDetails.machineId,1)
+})
+// 出货记录返回
+$('.rMentContent .close').click(function(){
+    closeParents(this,'top0');
+    $('.hui-picker').hide();
+});
+
+var rStart_time=null,
+    rend_time=null;
+jeDate("#test09",{
+    format: "YYYY-MM-DD",
+    range:" - ",
+    donefun:function(obj){
+        console.log(obj);
+        var timerKey = obj.val.split(' - ');
+        rStart_time=timerKey[0];
+        rend_time=timerKey[1]
+        rMentListArr(machineDetails.machineId,1)
+    },
+    clearfun:function(ele,val){
+        rStart_time=null;
+        rend_time=null;
+        rMentListArr(machineDetails.machineId,1)
+    }
+});
+function rMentListArr(mId,mNum){
+    var rObj=JSON.stringify({
+        machineId:mId,
+        pageNum:mNum,
+        pageSize:10,
+        start_time:rStart_time,
+        end_time:rend_time
+    });
+    loadAjax(`/api/machine/getReplenish`,'post',sessionStorage.token,rObj).then(res=>{
+        if(mNum==1){ 
+            if(res.data.list.length==0){
+                $('.pages2').hide();
+                $('.rMentList').html('<h2>暂无数据</h2>');
+                return ;
+            }
+            pageN(res.data.total,'.pages2');
+            $('.pages2').show();
+        }else{
+            $('.pages2').show()
+        };
+        var str='';
+        res.data.list.forEach(item=>{
+            str+=`   <li>
+                        <div class="keyText flex">
+                            <label for="">补货人</label>
+                            <p>${item.name}(${item.username})</p>
+                        </div>
+                        <div class="keyText flex">
+                            <label for="">补货时间:</label>
+                            <p>${item.replenish_time?timeStamp(item.replenish_time):'-'}</p>
+                        </div>
+                        <div class="keyText flex">
+                            <label for="">补货货道:</label>
+                            <p>${item.way}</p>
+                        </div>
+                        <div class="keyText flex">
+                            <label for="">商品名:</label>
+                            <p>${item.good_info.length!=0?item.good_info[0].goods_Name:'-'}</p>
+                        </div>
+                        <div class="keyText flex">
+                            <label for="">补货前数量:</label>
+                            <p>${item.after_count-item.replenish_count}</p>
+                        </div>
+                        <div class="keyText flex">
+                            <label for="">补货数量:</label>
+                            <p>${item.replenish_count}</p>
+                        </div>
+                        <div class="keyText flex">
+                            <label for="">补货后数量:</label>
+                            <p>${item.after_count}</p>
+                        </div>
+                    </li>`
+        });
+        $('.rMentList').html(str)
+    }).catch(err=>{
+        console.log(err)
+        toastTitle(err.message, 'error');
+    });
+}
+// 补货记录点击分页
+$('.pages2').on('click','.pageVal',function(){
+   
+    $(this).addClass('hui-pager-active').siblings().removeClass('hui-pager-active')
+    rMentListArr(machineDetails.machineId,Number($(this).attr('val')));
+});
+
+// 销售记录
+$('.salesDetails').click(function(){
+    console.log(machineDetails);
+    $('.salesContent .salesheader').html(`${machineDetails.info}销售详情`);
+    showPopup('.salesContent', '.salesBox', 'top0');
+    salesListArr(machineDetails.machineId,1)
+});
+// 出货记录返回
+$('.salesContent .close').click(function(){
+    closeParents(this,'top0');
+    $('.hui-picker').hide();
+});
+var saStart_time=null,
+    saend_time=null;
+jeDate("#test10",{
+    format: "YYYY-MM-DD",
+    range:" - ",
+    donefun:function(obj){
+        console.log(obj);
+        var timerKey = obj.val.split(' - ');
+        saStart_time=timerKey[0];
+        saend_time=timerKey[1]
+        salesListArr(machineDetails.machineId,1)
+    },
+    clearfun:function(ele,val){
+        saend_time=null;
+        saend_time=null;
+        salesListArr(machineDetails.machineId,1)
+    }
+});
+// 销售详情方法
+function salesListArr(mId,mNum){
+    var salesObj=JSON.stringify({
+        condition:mId,
+        pageNum:mNum,
+        pageSize:10,
+        conditionTwo:saend_time,
+        conditionThree:saend_time
+    });
+    loadAjax('/api//machine/getSalesList','post',sessionStorage.token,salesObj).then(res=>{
+        if(mNum==1){ 
+            if(res.data.list.length==0){
+                $('.pages3').hide();
+                $('.salesList').html('<h2>暂无数据</h2>');
+                return ;
+            }
+            pageN(res.data.total,'.pages3');
+            $('.pages3').show()
+        }else{
+            $('.pages3').show()
+        };
+        var str='';
+        res.data.list.forEach(item=>{
+            str+=`<li>
+                    <div class="keyText flex">
+                        <label for="">时间:</label>
+                        <p>${item.time}</p>
+                    </div>
+                    <div class="keyText flex">
+                        <label for="">订单号:</label>
+                        <p>${item.number}</p>
+                    </div>
+                    <div class="keyText flex">
+                        <label for="">支付状态:</label>
+                        <p>${item.payStatus==1?'等待支付':item.payStatus==2?'已支付':'未支付'} </p>
+                    </div>
+                    <div class="keyText flex">
+                        <label for="">支付方式:</label>
+                        <p>${item.payType==0?'支付宝':'微信'} </p>
+                    </div>
+                    <div class="keyText flex">
+                        <label for="">收款方:</label>
+                        <p>${item.payee}</p>
+                    </div>
+                    <div class="keyText flex">
+                        <label for="">金额:</label>
+                        <p>${item.amount}</p>
+                    </div>
+                </li>`
+        });
+        $('.salesList').html(str);
+    }).catch(err=>{
+        console.log(err)
+        toastTitle(err.message, 'error');
+    });
+}
+// 销售记录点击分页
+$('.pages3').on('click','.pageVal',function(){
+    $(this).addClass('hui-pager-active').siblings().removeClass('hui-pager-active')
+    salesListArr(machineDetails.machineId,Number($(this).attr('val')));
+});
+
+// 商户数部分
+var merchantsArr=treeList(sessionStorage.machineID);
+// 点击右上角按钮弹出商户树
+$('.hui-icons-menu-point').click(function(){
+    if(merchantsArr.length==0){
+        toastTitle('您没有查看下级商户的权限','warn') ;
+        return ;
+    };
+    showPopup('.merchantsContent', '.merchantsBox', 'top0');
+})
+
+// 点击遮罩隐藏
+$('.merchantsBox').click(function(){
+    event.stopPropagation(); 
+});
+$('.merchantsContent').click(function(){
+    closeWindow(this,'top0');
+});
+
+
+console.log(merchantsArr)
+
+let dom='<ul class="sire">';
+	function getTree(data){
+		$.each(data,(index,item )=>{
+			if(item.children&&item.children.length){
+				dom+=`<li class="parent "> <img indexFlag="1" class="nextImg" src="${require('../../../img/next.png')}" alt=""> <span class="navFocus" mId="${item.id}">${item.title}</span> <ul class="parentOne">`				
+				return getTree(item.children)
+				dom+=`</ul>`
+			}else{
+				dom+=`<li> <img src="${require('../../../img/account.png')}" alt=""> <span mId="${item.id}">${item.title}</span>`
+			}
+			dom+='</li>'
+
+		})
+	}
+	getTree(merchantsArr);
+	dom+='</ul>'
+    $('.merchantsBox').html(dom);
+
+    // 点击商户树
+    $('.merchantsBox').on('click','.parent span',function(){
+        $('.merchantsBox .parent span').removeClass('navFocus');
+        $(this).addClass('navFocus');
+        // console.log($(this).attr('mId'))
+        merchantIdStr= Number($(this).attr('mId'));
+        pageNum=1;
+        getMachineListTwo();
+    });
+
+    // 商户树展开收起
+    $('.merchantsBox').on('click','.nextImg',function(){
+        if($(this).attr('indexFlag')==1){
+            $(this).attr('indexFlag',2);
+            $(this).addClass('navImg')
+        }else{
+            $(this).attr('indexFlag',1);
+            $(this).removeClass('navImg')
+        }
+        $(this).siblings('.parentOne').slideToggle();
+    })
+    
+// 引入底部导航栏
+$('#footer').load('M_footerNav.html');

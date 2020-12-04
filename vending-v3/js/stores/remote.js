@@ -394,21 +394,23 @@ layui.use(['table', 'form', 'layer','tree'], function () {
                    socketMachineStr+=`${item.machineId},`
                    machineIdArr.push(item.machineId);
                })
-            loadingAjax('/api/updateApp','post',JSON.stringify({machine:socketMachineStr}),'mask','','',layer).then(res=>{
+               console.log()
+            // loadingAjax('/api/updateApp','post',JSON.stringify({machine:socketMachineStr}),'mask','','',layer).then(res=>{
                 
+            // }).catch(err=>{
+               
+                
+            // })
+            var updataObj=JSON.stringify({
+                version_code:appObj.version_code,
+                machineId:machineIdArr,
+                merchantId:Number(pushAppMerchantId) 
+            });
+            loadingAjax('/api/app/updateMachineApp','post',updataObj,sessionStorage.token,'mask','machineListCOnt','machineBox',layer).then(res=>{
+                console.log(res);
+                layer.msg(res.message,{icon:1})
             }).catch(err=>{
-                var updataObj=JSON.stringify({
-                    version_code:appObj.version_code,
-                    machineId:machineIdArr,
-                    merchantId:Number(pushAppMerchantId) 
-                });
-                loadingAjax('/api/app/updateMachineApp','post',updataObj,sessionStorage.token,'mask','machineListCOnt','machineBox',layer).then(res=>{
-                    console.log(res);
-                    layer.msg(res.message,{icon:1})
-                }).catch(err=>{
-                    layer.msg(err.message,{icon:2})
-                })
-                
+                layer.msg(err.message,{icon:2})
             })
         })
     })

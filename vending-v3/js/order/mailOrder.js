@@ -299,7 +299,9 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
       cols: [[
         // { checkbox: true },
         { field: 'goods_images', width: 80, title: '图片', templet: "#imgtmp", align: 'center' },
-        { field: 'goods_Name', width: 140, title: '商品名', align: 'center', },
+        { field: 'goods_Name', width: 140, title: '商品名', align: 'center',templet:function(d){
+          return d.mail==1?'(邮寄)'+d.goods_Name:d.goods_Name
+        } },
         { field: 'goods_Core', width: 140, title: '商品编号', align: 'center', },
         { field: 'count', width: 120, title: '购买数量', align: 'center' },
         { field: 'refund_count', width: 120, title: '已退款数量', align: 'center' },

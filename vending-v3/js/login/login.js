@@ -26,7 +26,7 @@ layui.use(['form', 'layer', 'carousel'], function () {
     carousel.render({
         elem: '#test10',
         width: '100%',
-        height: '100%',
+        height: '40vw',
         interval: 3000,
         arrow: 'none'
     });

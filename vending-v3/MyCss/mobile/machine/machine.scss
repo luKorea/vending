@@ -114,7 +114,7 @@ body{
         }
     }
 }
-.operationBox,.terminalBox{
+.operationBox,.terminalBox,.shipmentBox,.rMentBox,.salesBox{
     position: absolute;
     overflow-y: auto;
     background: #ffffff;
@@ -221,4 +221,157 @@ body{
 .hui-form-items-title{
     height: 36px;
     line-height: 36px;
+}
+.shipmentBox,.rMentBox,.salesBox{
+    background: #f0eff5;
+    .shipmentBody,.rMentBody,.salesBody{
+        width: 96%;
+        padding: 0 2%;
+        margin-top: 1.1rem; 
+    }
+    // .rMentBody{
+    //     width: 96%;
+    //     padding: 0 2%;
+    //     margin-top: 1.1rem; 
+    // }
+    // .salesBody{
+
+    // }
+}
+
+// .rMentBox{
+//     background: #f0eff5;
+    
+// }
+
+.recordList {
+    width: 98%;
+    margin: 0 auto;
+    li{
+        background: #ffffff;
+        border-radius: 0.1rem;
+        padding: 0.25rem;
+        margin-bottom: 0.2rem;
+        
+    }
+    h2{
+        text-align: center;
+        color: #333333;    
+        font-family: Source Han Sans CN;
+        font-weight: 400;
+        font-size: 0.24rem;
+    }
+    .keyText{
+        padding: 0.1rem 0.1rem;
+        
+        label{
+            width: 1.56rem;
+            color: #333333;    
+            font-family: Source Han Sans CN;
+            font-weight: 400;
+            font-size: 0.24rem;
+        }
+        p{   
+            font-size: 0.26rem;
+            font-family: Source Han Sans CN;
+            font-weight: 400;
+            color: #333333;
+        }
+      
+    }
+}
+
+.hui-pager{
+    justify-content: start;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+    div{
+        flex-shrink:0
+    }
+}
+.pages1{
+    width: 100%;
+    overflow: hidden;
+}
+.hui-pager-active a{
+    color: #ffffff;
+}
+#footer{
+    .childBox{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        // height: 1rem;
+        z-index: 2;
+        background:rgba(255,255,255,1);
+        border-top: 1px solid #EBEBEB;
+        padding: 0.1rem 0;
+        .nav .center{
+            span{
+                color: $color;
+            }
+            p{
+                color: $color;
+                font-weight: bold;  
+            }
+        }
+    }
+}
+.merchantsBox{
+    position: absolute;
+    overflow-y: auto;
+    background: #ffffff;
+    // padding: 0 4%;
+    width: 100%;
+    height: 50vh;
+    transition: all 0.5s;
+    top: -100%;
+    .sire{
+        padding: 0.2rem;
+    }
+    .parent{
+        padding: 0.2rem;
+            ul:nth-child(1){
+                padding-top: 0.2rem;
+            }
+        ul{
+            padding-left: 0.55rem;
+            li{
+                margin: 0.25rem 0;  
+            } 
+        }
+    }
+    img{
+        width: 0.45rem;
+        vertical-align: middle; 
+    }
+    .nextImg{
+        transform:rotate(90deg);
+        transition: all 0.3s;
+    }
+    .navImg{
+        transform:rotate(0deg);
+        transition: all 0.3s;
+    }
+    .navFocus{
+        color: #be954a;
+        font-weight: bold;
+    }
+}
+.jeinpbox{
+    width: 60%;
+    margin: 0.25rem auto;
+    input{
+        width: 100%;
+        padding: 0.2rem 0;
+        border-radius: 0.15rem;
+        outline: none;
+        border: none !important;
+        input:focus{
+            outline: none !important;
+            border: none !important;
+        }
+    }
 }

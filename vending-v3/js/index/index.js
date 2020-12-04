@@ -352,7 +352,7 @@ window.onload = function () {
                 layer.msg('获取公告失败', { icon: 2 })
             });
         }
-        // shuffling();
+        shuffling();
         // 公告渲染
         function noticeDrawing(list) {
             var noticeStr = ''

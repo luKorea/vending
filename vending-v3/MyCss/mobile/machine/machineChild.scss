@@ -12,7 +12,7 @@
         // padding:0 4%;
         margin: 0.15rem 1.2% 0;
         margin-bottom: 0.2rem;
-        height: 3.18rem;
+        height: 2.68rem;
     }
     .listIndex{
         text-align: center;
@@ -34,11 +34,12 @@
         .numberTop{
             // width: 100%;
             border-bottom: 1px solid #787c80;
-            height: 2rem;
+            height: 1.5rem;
             img{
                 width: 100%;
                 // height: 1.6rem;
-                height: 2rem;
+                height: 1.5rem;
+                object-fit: cover;
             }
             span{
                 display: inline-block;
@@ -75,6 +76,9 @@
                 width: 65%;
                 text-align: center;
                 line-height: 0.7rem;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-align: center;
             };     
         }
         p{
@@ -255,17 +259,20 @@
             width: 94%;
             margin: 0.1rem auto 0;
             p{               
-              font-size: 0.28rem;
-              font-family: PingFang SC;
-              font-weight: 700;
-              color: #333333;
-              line-height: 0.6rem;
+                font-size: 0.28rem;
+                font-family: PingFang SC;
+                font-weight: 700;
+                color: #333333;
+                line-height: 0.6rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
             span{
                 font-size: 0.24rem;
-              font-family: PingFang SC;
-              color: #666666;
-              line-height: 0.6rem;
+                font-family: PingFang SC;
+                color: #666666;
+                line-height: 0.6rem;
             }
         }
        }
@@ -280,4 +287,26 @@
 }
 .empty{
     text-align: center;
+}
+#footer{
+    .childBox{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        // height: 1rem;
+        z-index: 2;
+        background:rgba(255,255,255,1);
+        border-top: 1px solid #EBEBEB;
+        padding: 0.1rem 0;
+        .nav .center{
+            span{
+                color: $color;
+            }
+            p{
+                color: $color;
+                font-weight: bold;  
+            }
+        }
+    }
 }

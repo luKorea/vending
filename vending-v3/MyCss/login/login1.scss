@@ -9,7 +9,11 @@ body {
     margin: 0;
     display: block;
     z-index: -10;
-    .swiper-container {
+    overflow: hidden;
+    #test10{
+        height: 80vh;
+    }
+    .layui-carousel {
         top: 50%;
         transform: translateY(-50%);
         img {
@@ -24,7 +28,7 @@ body {
     width: 480px;
     height: 460px;
     position: fixed;
-    // background: #fff url(../../image/loginBg.png) no-repeat;
+    background: #fff url(../../img/loginBG.png) no-repeat;
     z-index: 10;
     overflow: hidden;
     border-radius: 10px;

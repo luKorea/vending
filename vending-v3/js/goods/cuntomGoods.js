@@ -32,7 +32,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       { checkbox: true },
       { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center' },
       { field: 'goods_Core', width: 180, title: '商品编号', align: 'center'},
-      { field: 'goods_Name', width: 200, title: '商品名', color: '#409eff', align: 'center' },
+      { field: 'goods_Name', width: 200, title: '商品名', color: '#409eff', align: 'center',templet:function(d){
+        return (d.mail==1?'(邮寄)'+d.goods_Name:d.goods_Name)
+      } },
       { field: 'mail', width: 120, title: '是否邮寄商品', align: 'center',templet:function(d){
         return d.mail==0?'否':'是'
       } },
@@ -180,7 +182,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   // 查询商品类型id
   var GoodsTypeID = '';
   // 监听商品类型下拉框
-  form.on('select(mySelect)', function (data) {
+  form.on('select(mySelect1)', function (data) {
+    console.log(data)
     GoodsTypeID = data.value;
   });
   var stateId = ''

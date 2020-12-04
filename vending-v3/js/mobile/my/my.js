@@ -19,10 +19,10 @@ $('.changePass ').click(function(){
 loadingWith('正在加载');
 loadAjax('/api/user/getUserInfo','post',sessionStorage.token,'','mask').then(res=>{
     $('.userName').html(res.data.userName);
-    $('.name').html(' 姓名 :'+res.data.name);
-    $('.phone').html('联系电话 :'+res.data.phone);
-    $('.alias').html('用户编号 :'+res.data.alias);
-    $('.merchantName').html('所属商户 :'+res.data.merchantName)
+    $('.name').html(res.data.name);
+    $('.phone').html(res.data.phone);
+    $('.alias').html(res.data.alias);
+    $('.merchantName').html(res.data.merchantName)
     console.log(res)
 }).catch(err=>{
     setTimeout(_=>{
@@ -43,7 +43,7 @@ $('.confirmBtn').click(function(){
             return ;
         }
         if($(`.${ele} input[name="newPass"]`).val()!=$(`.${ele} input[name="newPassTwo"]`).val()){
-            toastTitle('新密码与确人密码不一致','warn');
+            toastTitle('新密码与确认密码不一致','warn');
             return ;
         }
         var passData=JSON.stringify({
@@ -54,12 +54,13 @@ $('.confirmBtn').click(function(){
         });
         loadAjax('/api//user/updatePsw','post',sessionStorage.token,passData,'mask',`.${ele}`).then(res=>{
             loadingWith('正在修改');
-            toastTitle(res.message+(passTypeIndex==0?'请重新登录！':''))
-            if(passTypeIndex==0){
-                setTimeout(_=>{
-                    outLogin()
-                },1500)
-            };
+            toastTitle(res.message)
+            // toastTitle(res.message+(passTypeIndex==0?'请重新登录！':''))
+            // if(passTypeIndex==0){
+            //     setTimeout(_=>{
+            //         outLogin()
+            //     },1500)
+            // };
             $(`.${ele} input[name="oldPass"]`).val('');
             $(`.${ele} input[name="newPass"]`).val('');
             $(`.${ele} input[name="newPassTwo"]`).val('')

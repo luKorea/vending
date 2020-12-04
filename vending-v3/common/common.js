@@ -100,61 +100,108 @@ function ChineseREgular(that) {
 //   正则判断只能输入正整数
 function wholeNum(that) {
     var num = $(that).val(),
-        re = /^\d*$/;  
+        re = /^\d*$/;
     if (!re.test(num)) {
-        toastTitle('只能输入正整数','warn')
+        toastTitle('只能输入正整数', 'warn')
         $(that).val(1);
     }
-}; 
+};
 
 //获取用户权限
 function permissionsFun(url, type, userToken) {
     return new Promise(function (resolve, reject) {
-      ajaxFun(url, type, userToken, '', resolve, reject).then(res => {
-        if (res.code == 200) {
-          resolve(res)
-        } else if (res.code == 403) {
-          window.location.href = "M_login.html";
-        } else {
-          reject(res)
-        }
-      }).catch((err) => {
-        toastTitle('服务器请求超时','error')
-        return;
-      })
+        ajaxFun(url, type, userToken, '', resolve, reject).then(res => {
+            if (res.code == 200) {
+                resolve(res)
+            } else if (res.code == 403) {
+                window.location.href = "M_login.html";
+            } else {
+                reject(res)
+            }
+        }).catch((err) => {
+            toastTitle('服务器请求超时', 'error')
+            return;
+        })
     })
-  }
-  async function permissionsVal(addIndex,editIndex,delIndex,four,five){
+}
+async function permissionsVal(addIndex, editIndex, delIndex, four, five) {
     var dataFlag = {
         addFlag: false,
         editFlag: false,
         delFlag: false,
-        fourFlag:false,
-        fiveFlag:false,
-      }
-      await permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token).then(res=>{
-          res.data.forEach((item,index)=>{
-              if(item.id == addIndex){
-                dataFlag.addFlag=true
-              }
-              if(item.id == editIndex){
-                dataFlag.editFlag=true
-              }
-              if(item.id == delIndex){
-                dataFlag.delFlag=true
-              }
-              if(item.id == four){
-                dataFlag.fourFlag=true
-              }
-              if(item.id == five){
-                fiveFlag.fourFlag=true
-              }
-          })
-      }).catch(err=>{
+        fourFlag: false,
+        fiveFlag: false,
+    }
+    await permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token).then(res => {
+        res.data.forEach((item, index) => {
+            if (item.id == addIndex) {
+                dataFlag.addFlag = true
+            }
+            if (item.id == editIndex) {
+                dataFlag.editFlag = true
+            }
+            if (item.id == delIndex) {
+                dataFlag.delFlag = true
+            }
+            if (item.id == four) {
+                dataFlag.fourFlag = true
+            }
+            if (item.id == five) {
+                fiveFlag.fourFlag = true
+            }
+        })
+    }).catch(err => {
 
-      });
-      return dataFlag
-  }
+    });
+    return dataFlag
+};
+// 时间戳转时间问题
+function timeStamp(time) {
+    // var myDate = new Date(time);
+    // var y = myDate.getFullYear();
+    // var m = myDate.getMonth() + 1;
+    // var d = myDate.getDate();
+    // var h = myDate.getHours();
+    // var min = myDate.getMinutes();
+    // var s = myDate.getSeconds();
+    // return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
+    var myDate = new Date(time);
+    var y = myDate.getFullYear();
+    var m = (myDate.getMonth() + 1) < 10 ? '0' + (myDate.getMonth() + 1) : (myDate.getMonth() + 1);
+    var d = myDate.getDate() < 10 ? '0' + myDate.getDate() : myDate.getDate();
+    var h = myDate.getHours() < 10 ? '0' + myDate.getHours() : myDate.getHours();
+    var min = myDate.getMinutes() < 10 ? '0' + myDate.getMinutes() : myDate.getMinutes();
+    var s = myDate.getSeconds() < 10 ? '0' + myDate.getSeconds() : myDate.getSeconds();
+    return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
+};
+
+// 获取商户树数据
+ function treeList(mId){
+    var dataList=[];
+    $.ajax({
+        type: 'post',
+        url: '/api/merchant/getMerchantGroup',
+        headers: {
+          token:sessionStorage.token,
+          "Content-Type": "application/json",
+        },
+        async: false,
+        data: JSON.stringify({
+          topId: mId
+        }),
+        success: function (res) {
+          if (res.code == 200) {
+            dataList.push(res.data[0])
+          } else if (res.code == 403) {
+            window.parent.location.href = "M_login.html";
+          }
+        },
+        error: function (err) {
+            dataList=[];
+        }
+      })
+      return dataList
+}
 
 export {
     loadAjax,
@@ -170,4 +217,6 @@ export {
     ChineseREgular,
     permissionsFun,
     permissionsVal,
+    timeStamp,
+    treeList,
 }

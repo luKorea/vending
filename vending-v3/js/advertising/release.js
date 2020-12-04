@@ -84,9 +84,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             },
             // { field: 'amendTime', width: 130, title: '广告位', },
             { field: 'addUser', width: 180, title: '创建人', align: 'center', },
-            { field: 'creationTime', width: 230, title: '创建时间', align: 'center' },
+            { field: 'creationTime', width: 250, title: '创建时间', align: 'center' },
             
-            { field: 'operation', right: 0, align: 'center', width: 380, title: '操作', toolbar: '#barDemo', fixed: 'right' },
+            { field: 'operation', right: 0, align: 'center', width: 400, title: '操作', toolbar: '#barDemo', fixed: 'right' },
         ]],
         page: true,
         id: 'advertisingData',

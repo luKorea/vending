@@ -6,7 +6,7 @@
     <link rel="icon" type="image/png" sizes="144x144" href="../../img/icon.png" />
     <script src="../../assets/public/md5.js"></script>
     <script src="../../assets/public/documentMobile.js"></script>
-    <title>个人中心</title>
+    <title>个人信息</title>
 </head>
 
 <body>
@@ -14,7 +14,7 @@
         <div class="topHeader flexThree" >
             <span></span>
             <!-- <span></span> -->
-            <h2 style="padding: 3.34%;">个人中心</h2>
+            <h2 style="padding: 3.34%;">个人信息</h2>
             <span></span>
             <!-- <span></span> -->
         </div>
@@ -24,30 +24,30 @@
                     <img src="../../img/icon.png" alt="">
                 </div>
                 <div class="informtion">
-                    <h5>Jack-Jame</h5>
-                    <p>130-4567-7893</p>
+                    <h5 class="userName">Jack-Jame</h5>
+                    <p class="phone"></p>
                 </div>
             </div>
             <div class="informList informText">
                 <div class="list flexThree">
-                    <h5>用户姓名</h5>
-                    <p>陈浩杰</p>
+                    <h5 >用户姓名</h5>
+                    <p class="name">陈浩杰</p>
                 </div>
                 <div class="list flexThree">
                     <h5>用户编号</h5>
-                    <p>sysadmin@05</p>
+                    <p class="alias">sysadmin@05</p>
                 </div>
                 <div class="list flexThree">
                     <h5>所属商户</h5>
-                    <p>根商户</p>
+                    <p class="merchantName">根商户</p>
                 </div>
             </div>
             <div class="informList informPass">
-                <div class="list flexThree">
+                <div class="list flexThree loginPassBtn">
                     <h5>修改登录密码</h5>
                     <img src="../../img/next.png" alt="">
                 </div>
-                <div class="list flexThree">
+                <div class="list flexThree independentPassBtn">
                     <h5>修改独立密码</h5>
                     <img src="../../img/next.png" alt="">
                 </div>
@@ -144,11 +144,11 @@
                     </div>
                     <div class="flex inputList blur">
                         <label><span>*</span>新密码:</label>
-                        <input type="password" name="newPass" placeholder="请输入旧密码">
+                        <input type="password" name="newPass" placeholder="请输入新密码">
                     </div>
                     <div class="flex inputList blur">
                         <label><span>*</span>确认新密码:</label>
-                        <input type="password" name="newPassTwo" placeholder="请输入旧密码">
+                        <input type="password" name="newPassTwo" placeholder="请输入确认密码">
                     </div>
                     <div class="footerCont">
                         <div class="confirmBtn" PassType="0">
@@ -168,16 +168,16 @@
                 </div>
                 <div class="changeBody">
                     <div class="flex inputList">
-                        <label><span>*</span>用户密码:</label>
+                        <label><span>*</span>登录密码:</label>
                         <input type="password" name="oldPass" placeholder="请输入旧密码">
                     </div>
                     <div class="flex inputList blur">
                         <label><span>*</span>新独立密码:</label>
-                        <input type="password" name="newPass" placeholder="请输入旧密码">
+                        <input type="password" name="newPass" placeholder="请输入新独立密码">
                     </div>
                     <div class="flex inputList blur">
                         <label><span>*</span>确认新密码:</label>
-                        <input type="password" name="newPassTwo" placeholder="请输入旧密码">
+                        <input type="password" name="newPassTwo" placeholder="请输入新密码">
                     </div>
                     <div class="footerCont">
                         <div class="confirmBtn" PassType="1">

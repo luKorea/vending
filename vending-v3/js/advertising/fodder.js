@@ -104,7 +104,6 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             } else if (res.code == 405) {
                 $('.hangContent').show();
             }
-
         }
     });
 
@@ -899,7 +898,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         delFlag = false,
         auditFla = false;
     permissionsFun('/api/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         addFlag = res.data.some((item, index) => {
             return item.id == '362'
         });
@@ -955,5 +954,9 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             layer.msg('已刷新',{icon:1})
         }
         
+    })
+    $('body').on('error','img',function(){
+        console.log(1999)
+      $(this).prop("src", '../../img/failure.png');
     })
 });

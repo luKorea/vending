@@ -319,7 +319,9 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             cols: [[
                 { type: 'checkbox', },
                 { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center' },
-                { field: 'goods_Name', width: 200, title: '商品名', color: '#409eff', align: 'center' },
+                { field: 'goods_Name', width: 200, title: '商品名', color: '#409eff', align: 'center',templet:function(d){
+                    return (d.mail==1?'(邮寄)'+d.goods_Name:d.goods_Name)
+                } },
                 { field: `classifyName`, width: 160, title: '商品类目', align: 'center' },
                 { field: 'goods_Core', width: 250, title: '商品编号', align: 'center', },
             ]],
@@ -395,7 +397,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                     goodsId: obj.data.goods_Id,
                     count: 1,
                     goods_images: obj.data.goods_images,
-                    goods_Core: obj.data.goods_Core
+                    goods_Core: obj.data.goods_Core,
                 });
                 console.log(goodsList);
             } else {
