@@ -3,7 +3,9 @@ const webpack = require('webpack');
 var entry = {
         orderIndex: './js/orderIndex.js',
         placeOrder: './js/placeOrder.js',
-        orderList:'./js/orderList.js'
+        orderList:'./js/orderList.js',
+        codeLogin:'./js/codeLogin.js',
+        operation:'./js/operation.js'
     }
     //页面配置
 var htmlConfig = [
@@ -15,6 +17,12 @@ var htmlConfig = [
     },
     {
         name: "orderList",
+    },
+    {
+        name: "codeLogin",
+    },
+    {
+        name: "operation",
     },
 ];
 module.exports = {

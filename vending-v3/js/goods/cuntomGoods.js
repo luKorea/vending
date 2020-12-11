@@ -846,7 +846,9 @@ $('.refreshBtnList').click(function(){
       cols: [[
         { type: 'checkbox', },
         { field: 'goods_images', width: 80, title: '图片', templet: "#Listimgtmp", align: 'center'},
-        { field: 'goods_Name', width: 150, title: '商品名', color: '#409eff', align: 'center' },
+        { field: 'goods_Name', width: 150, title: '商品名', color: '#409eff', align: 'center',templet:function(d){
+          return (d.mail==1?'(邮寄)'+d.goods_Name:goods_Name)
+        } },
         { field: `classifyName`, width: 160, title: '商品类目', align: 'center', },
         { field: `tempMerchant`, width: 160, title: '商品所属商户', align: 'center', },
         { field: `topMerchant`, width: 160, title: '推送商户', align: 'center', },

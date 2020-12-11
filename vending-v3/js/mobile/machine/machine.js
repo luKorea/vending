@@ -717,7 +717,7 @@ function rMentListArr(mId,mNum){
         res.data.list.forEach(item=>{
             str+=`   <li>
                         <div class="keyText flex">
-                            <label for="">补货人</label>
+                            <label for="">补货人:</label>
                             <p>${item.name}(${item.username})</p>
                         </div>
                         <div class="keyText flex">
@@ -878,17 +878,18 @@ let dom='<ul class="sire">';
 		$.each(data,(index,item )=>{
 			if(item.children&&item.children.length){
 				dom+=`<li class="parent "> <img indexFlag="1" class="nextImg" src="${require('../../../img/next.png')}" alt=""> <span class="navFocus" mId="${item.id}">${item.title}</span> <ul class="parentOne">`				
-				return getTree(item.children)
+				  getTree(item.children)
 				dom+=`</ul>`
 			}else{
-				dom+=`<li> <img src="${require('../../../img/account.png')}" alt=""> <span mId="${item.id}">${item.title}</span>`
+				dom+=`<li> <img src="${require('../../../img/user-group .png')}" alt=""> <span mId="${item.id}">${item.title}</span>`
 			}
 			dom+='</li>'
 
 		})
 	}
 	getTree(merchantsArr);
-	dom+='</ul>'
+    dom+='</ul>'
+    console.log(dom)
     $('.merchantsBox').html(dom);
 
     // 点击商户树

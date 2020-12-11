@@ -304,6 +304,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 layer.msg('请填写客服电话或上传客服微信二维码', { icon: 7 });
                 return;
             }
+            // console.log($('.addMerchants input[name="order"]').prop('checked'));
             var addMerchantsData = JSON.stringify({
                 name: $('.addBox input[name="merchantsName"]').val(),
                 topMerchant: Number(topVal[0]),
@@ -311,7 +312,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 is_service:addServiceFlag?1:0,
                 service_phone: addServiceFlag?$('.addBox input[name="service_phone"]').val():'',
                 service_code: addServiceFlag?addImg:'',
-                follow_mail:$('.addMerchants input[name="order]').prop('checked')?1:0
+                follow_mail:$('.addMerchants input[name="order"]').prop('checked')?1:0
             })
             loadingAjax('/api/merchant/newMerchant', 'post', addMerchantsData, sessionStorage.token, '', 'addMerchants', 'addBox', layer).then((res) => {
                 $('.addBox input[name="merchantsName"]').val('');

@@ -220,6 +220,10 @@ layui.use(['table', 'form', 'layer'], function () {
       }
     })
 });
+// 编辑取消
+$('.editpayType .editCancelBtn').click(function(){
+    popupHide('editpayType','editBox');
+})
 //   编辑
 $('.editpayType .RdetermineBtn').click(function(){
     if(!$('.editpayType input[name="name"]').val()){

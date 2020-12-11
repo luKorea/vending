@@ -436,26 +436,27 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     }
     $('.detailsOrderCode').html(obj.data.number);//订单编号
     $('.payTime').html(timeStamp(obj.data.time));//支付时间
-    // $('.orderInformation button span').html((obj.data.shipStatus == 0 ? '未出货' : obj.data.shipStatus == 1 ? '出货失败' : '出货成功'));
-    $('.orderInformation button span').html(obj.data.notes)
+    $('.orderInformation button span').html((obj.data.shipStatus == 0 ? '未出货' : obj.data.shipStatus == 1 ? '出货失败' : '出货成功'));
+    // $('.orderInformation button span').html(obj.data.notes)
     var payNum = 0,
       paindSum = 0,
       childProfits = 0,
-      refundNumSum = 0;
+      refundNumSum = 0,
+      orderAmount=0;
     obj.data.goodsList.forEach((item, index) => {
       payNum += item.count;
       paindSum += item.goods_Price * (item.count - item.refund_count);
 
       childProfits += (item.goods_Price - item.goods_Cost) * (item.count - item.refund_count)
       refundNumSum += item.goods_Price * item.refund_count
-
+      // orderAmount+=item
     })
     $('.payType').html((obj.data.payType == 0 ? '支付宝' : '微信'))
     $('.payNUmber').html(payNum);
-    $('.paidInSum').html(paindSum);
+    $('.paidInSum').html(orderData.payType==2?'￥'+paindSum:'￥0');
 // $('.paidInSum').html(orderData.amount);
     $('.orderSum').html('￥' + obj.data.amount);
-    $('.profitsSum').html('￥' + childProfits)
+    $('.profitsSum').html(orderData.payType==2?'￥' + childProfits:'￥0')
     $('.collection button span').html((obj.data.payStatus == 1 ? '等待支付' : obj.data.payStatus == 2 ? '支付成功' : '未支付'));
     $('.machineCode').html(obj.data.machineId);
     $('.merchantName').html(obj.data.merchantName);

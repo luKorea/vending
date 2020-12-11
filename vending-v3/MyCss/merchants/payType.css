@@ -26,12 +26,12 @@
     left: 0;
     opacity: 0;
 }
-.addCancelBtn{
+.addCancelBtn,.editCancelBtn{
     background-color: #fff !important;
     border: 1px solid #dcdfe6 !important;
     color: #606266;
 }
-.addCancelBtn:hover{
+.addCancelBtn:hover,.editCancelBtn:hover{
     color: #be954a;
     border: 1px solid #be954a !important;
     border-color:#be954a ;
