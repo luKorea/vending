@@ -1,0 +1,59 @@
+.orderBox{
+    margin-top: 20px;
+    .orderBody{
+        display: flex;
+        width: 100%;
+        .activityBox{
+            -webkit-box-flex: 0;
+            overflow: hidden;
+            position: relative;
+            padding-right: 40px;
+            width: 250;
+            flex: 0 0 250px;
+            p{
+                margin: 10px;
+                color: #be954a;
+                font-weight: bold;
+            }
+            .activityList{
+                height: 530px;
+                width: 100%;
+                float: left;
+                overflow-y: auto;
+                border: 1px solid #ccc;
+                padding: 10px;
+                box-sizing: border-box;
+                position: relative;
+                cursor: default;
+                background: #fff;
+                color: #606266;
+                overflow: hidden;
+                span{
+                    display: block;
+                    padding: 5px 0;
+                    cursor: pointer;
+                }
+                .active{
+                    color: #be954a;
+                    font-weight: bold;
+                }
+                #demo{
+                    padding-left: 10px;
+                }
+            }
+        }
+        .orderTable{
+            width: 100%;
+            overflow: hidden;
+            margin-top: 30px;
+        }
+    }
+}
+.orderTable{
+    .layui-form{
+        width: 100%;
+        tr td{
+            cursor: pointer;
+        }
+    }
+} 

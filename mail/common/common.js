@@ -23,10 +23,43 @@ function loadAjax(url, type, data, mask, element, top) {
             reject(res);
          }
         }).catch(err => {
+            $('.mask').hide()
+            prompt(err.message)
             return;
         })
     })
 };
+
+function ajaxFun1(url, type,token, data) {
+    return $.ajax({
+        type,
+        url,
+        timeout: 10000,
+        data,
+        headers: {
+            "Content-Type": "application/json",
+            token
+        },
+    })
+};
+// 请求方法
+// 请求方法
+function loadAjax1(url, type,token, data, mask, element, top) {
+    return new Promise(function (resolve, reject) {
+        ajaxFun1(url, type,token, data,resolve,reject).then(res => {
+         if(res.code==200){
+            resolve(res)
+         }else{
+            reject(res);
+         }
+        }).catch(err => {
+            $('.mask').hide()
+            prompt(err.message)
+            return;
+        })
+    })
+};
+
 
 // 轻提示
 function prompt(work) {
@@ -35,7 +68,7 @@ function prompt(work) {
     var time = 0;
     var setTime = setInterval(_ => {
         time++;
-        if (time == 2) {
+        if (time == 3) {
             $('.prompt').fadeOut();
             clearInterval(setTime)
         }
@@ -103,4 +136,5 @@ export {
     timeStamp,
     keyText,
     decrypt1,
+    loadAjax1
 }

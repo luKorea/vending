@@ -1,0 +1,434 @@
+@import '../../../common/common.scss';
+.wrap{
+    background-color: #f0eff5;
+    min-height: 100vh;
+}
+body{
+    background-color: #f0eff5;
+}
+.machineContnet{
+    width: 100%;
+    .machineLenght{
+        width: 100%;
+        background: $color;
+        padding: 0.1rem 4% 0;
+        box-sizing: border-box;
+        overflow: hidden;
+        // height: 1rem;    
+        font-family:PingFang SC;
+        img{
+            display: inline-block;
+            margin-top: 0.01rem;
+            width: 100%;
+        }
+        .allmachine{
+            text-align: center;
+            margin-top: -2rem;
+            p{
+                font-size:0.26rem;
+                font-weight:500;
+                color:rgba(255,255,255,1);
+                margin-bottom: 0.4rem;
+            }
+            span{
+                font-size:0.72rem;
+                font-weight:500;
+                color:rgba(255,255,255,1);
+            }
+        }
+    }
+    .machineList{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.3rem 3% 0;
+        .list{
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 0.2rem;
+            border-radius: 0.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+            background: #ffffff;
+            padding-left: 0.15rem;
+            .info{
+                color: rgb(51, 51, 51);
+                font-size: 0.36rem;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                line-height: 0.6rem;
+            }
+            .address{
+                line-height: 0.8rem;
+                color: rgb(153, 153, 153);
+                font-size: 0.28rem;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            .status{
+                li{
+                    flex: 1;
+                    line-height: 0.6rem;
+                    margin-bottom: 0.15rem;
+                }
+            }
+        }
+    }
+}
+.conditionsHalf{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 4%;
+    height: 60vh;
+    overflow-y: auto ;
+    background: #ffffff;
+    border-radius: 0 0 .266667rem .266667rem;
+    position: absolute;
+    top: -60vh;
+    transition: all 0.5s;
+    .conditionList{
+        margin-bottom: 0.2rem;
+        header{
+            font-size: .32rem;
+            line-height: 0.8rem;
+            font-weight: 500;
+        }
+        li{
+            display: inline-block;
+            width: 1.4rem;
+            height: .6rem;
+            line-height: .6rem;
+            text-align: center;
+            background: #f1f1f1;
+            opacity: 1;
+            border-radius: 5px;
+            color: #666;
+            margin-right: .36rem;
+        }
+    }
+    .conditionFooter{
+        width: 92%;
+        margin: .4rem auto 0;
+        button{
+            width: 45%;
+        }
+    }
+}
+.operationBox,.terminalBox,.shipmentBox,.rMentBox,.salesBox{
+    position: absolute;
+    overflow-y: auto;
+    background: #ffffff;
+    // padding: 0 4%;
+    width: 100%;
+    height: 100vh;
+    transition: all 0.5s;
+    top: -100%;
+}
+.operationBody{
+    margin-top: 0.94rem;
+    .operationNav{
+        flex-wrap: wrap;
+        padding-top: 0.3rem;
+        li{
+            width: 33.3%;
+            text-align: center; 
+            box-sizing: border-box;    
+            padding: 0 4%;
+            margin-bottom: 0.5rem;
+            img{
+                width: 50%;
+            }
+            p{
+                color: #333;
+                font-size: .28rem;
+                text-align: center;
+                padding-top: 0.1rem;
+            }
+        }
+    }
+}
+.collectionBox{
+    top: -100%;
+}
+.childConten{
+    width: 100%;
+    height: 100%;
+    .childBox{
+        top: 0;
+    }
+}
+// 终端信息部分
+.terminalBody{
+    width: 96%;
+    padding: 0 2%;
+    margin-top: 1.1rem;
+    .inputList {
+        label{
+            font-size: 0.28rem;
+        }
+        p{
+            width: 78%;
+            background-image: none;
+            border-radius: 4px;
+            border: 1px solid #dcdfe6;
+            box-sizing: border-box;
+            display: inline-block;
+            font-size: inherit;
+            height: 0.8rem;
+            line-height: 0.8rem;
+            outline: 0;
+            padding: 0 15px;
+            transition: border-color 0.2s;
+            font-family: PingFang SC;
+            border-color: #e4e7ed;
+            color: #c0c4cc;
+            background-color: #f5f7fa;
+        }
+    }
+}
+.mapContent{
+    display: none;
+}
+.terminalFooter{
+    padding-bottom:0.3rem ;
+    button{
+        margin: 0 auto;
+    }
+}
+.remote  {
+    width: 92%;
+    margin: 0 auto;
+    padding: 0.2rem 0;
+    border-bottom: 1px solid #E4E3E6;
+    img{
+        width: 0.8rem;
+    }
+    p{
+        margin-left: 0.5rem;
+        color: #000000;
+        font-size: 0.3rem;
+    }
+}
+.hui-form-radios{
+    display: block !important;
+    label{
+        display: block;
+    }
+}
+.hui-form-items{
+    align-items: flex-start;
+}
+.hui-form-items-title{
+    height: 36px;
+    line-height: 36px;
+}
+.shipmentBox,.rMentBox,.salesBox{
+    background: #f0eff5;
+    .shipmentBody,.rMentBody,.salesBody{
+        width: 96%;
+        padding: 0 2%;
+        margin-top: 1.1rem; 
+    }
+    // .rMentBody{
+    //     width: 96%;
+    //     padding: 0 2%;
+    //     margin-top: 1.1rem; 
+    // }
+    // .salesBody{
+
+    // }
+}
+
+// .rMentBox{
+//     background: #f0eff5;
+    
+// }
+
+.recordList {
+    width: 98%;
+    margin: 0 auto;
+    li{
+        background: #ffffff;
+        border-radius: 0.1rem;
+        padding: 0.25rem;
+        margin-bottom: 0.2rem;
+        
+    }
+    h2{
+        text-align: center;
+        color: #333333;    
+        font-family: Source Han Sans CN;
+        font-weight: 400;
+        font-size: 0.24rem;
+    }
+    .keyText{
+        padding: 0.1rem 0.1rem;
+        
+        label{
+            width: 1.56rem;
+            color: #333333;    
+            font-family: Source Han Sans CN;
+            font-weight: 400;
+            font-size: 0.24rem;
+        }
+        p{   
+            font-size: 0.26rem;
+            font-family: Source Han Sans CN;
+            font-weight: 400;
+            color: #333333;
+        }
+      
+    }
+}
+
+.hui-pager{
+    justify-content: start;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+    div{
+        flex-shrink:0
+    }
+}
+.pages1{
+    width: 100%;
+    overflow: hidden;
+}
+.hui-pager-active a{
+    color: #ffffff;
+}
+#footer{
+    .childBox{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        // height: 1rem;
+        z-index: 2;
+        background:rgba(255,255,255,1);
+        border-top: 1px solid #EBEBEB;
+        padding: 0.1rem 0;
+        .nav .center{
+            span{
+                color: $color;
+            }
+            p{
+                color: $color;
+                font-weight: bold;  
+            }
+        }
+    }
+}
+.merchantsBox{
+    position: absolute;
+    overflow-y: auto;
+    background: #ffffff;
+    // padding: 0 4%;
+    width: 100%;
+    height: 50vh;
+    transition: all 0.5s;
+    top: -100%;
+    .sire{
+        padding: 0.2rem;
+    }
+    .parent{
+        padding: 0.2rem 0.2rem 0.2rem 0;
+            ul:nth-child(1){
+                padding-top: 0.2rem;
+            }
+        ul{
+            padding-left: 0.55rem;
+            li{
+                margin: 0.25rem 0;  
+            } 
+        }
+    }
+    img{
+        width: 0.45rem;
+        vertical-align: middle; 
+    }
+    .nextImg{
+        transform:rotate(90deg);
+        transition: all 0.3s;
+    }
+    .navImg{
+        transform:rotate(0deg);
+        transition: all 0.3s;
+    }
+    .navFocus{
+        color: #be954a;
+        font-weight: bold;
+    }
+}
+.jeinpbox{
+    width: 60%;
+    margin: 0.25rem auto;
+    input{
+        width: 100%;
+        padding: 0.2rem 0;
+        border-radius: 0.15rem;
+        outline: none;
+        border: none !important;
+        input:focus{
+            outline: none !important;
+            border: none !important;
+        }
+    }
+}
+.aloneBox{
+    position: absolute;
+    left: 50%;
+    top: -30%;
+    transform: translate(-50%, -30%);
+    font-weight: bold;
+    width: 90%;
+    background: #ffffff;
+    transition: all 0.3s;
+    z-index: 25;
+    overflow: hidden;
+    color: #606266;
+    border-radius: 0.08rem;
+    header{
+        font-size: 0.32rem;
+        color: #be954a;
+        text-align: center;
+        margin-bottom: 0.2rem;
+        line-height: 0.6rem;
+        padding-top: 0.15rem;
+    }
+    .aloneBody{
+        text-align: center;
+        input{
+            width: 85%;
+            background-color: #fff;
+            background-image: none;
+            border-radius: 4px;
+            border: 1px solid #dcdfe6;
+            box-sizing: border-box;
+            color: #606266;
+            display: inline-block;
+            font-size: inherit;
+            height: 0.8rem;
+            line-height: 0.8rem;
+            outline: 0;
+            padding: 0 15px;
+            transition: border-color 0.2s;
+            font-family: PingFang SC;
+            margin: 0 auto;
+            text-align: center;
+        }
+        margin-bottom: 0.35rem;
+    }
+    .confirmBtn{
+        width: 3.2rem;
+        margin: 0 auto;
+        border-radius: 0.44rem;
+        text-align: center;
+        background: #be954a;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: white;
+        padding: 0.14rem 0;
+        margin-bottom: 0.6rem;
+    }
+}

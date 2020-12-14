@@ -16,6 +16,8 @@ function encrypts(content) {
     var result = String(encryptResult);//把object转化为string
     return result
 };
+console.log(encrypts('8fff1fcf1d20f09e'));
+// return ;
 var str = getQueryString('goods');
 var goodsData = null;
 $.ajax({
