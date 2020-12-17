@@ -151,7 +151,7 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
                 } },
                 { field: 'subject', width: 180, title: '订单商品', align: 'center' },
                 { field: 'notes', width: 180, title: '出货状态', align: 'center' ,templet:function(d){
-                    return d.notes?d.notes:'-'
+                    return d.shipStatus?d.shipStatus:'-'
                 }},
                 { field: 'payType', width: 180, title: '支付类型', align: 'center' ,templet:function(d){
                     return d.payType==1?'微信':'支付宝'
@@ -231,8 +231,8 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
     //   到处部分
       // 导出excel表
     // 导出时间
-    var exportStareTime = null,
-        exportEndTime = null;
+    var exportStareTime = timeStamp(new Date().getTime()),
+        exportEndTime = timeStamp(new Date().getTime());
     laydate.render({
         elem: '#test8'
         , type: 'month'
@@ -284,9 +284,9 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
                 }
             }
             var orderObj = JSON.stringify({
-                start_time: exportStareTime,
+                start_time: startTime,
                 // start_time:'2020-10-01',
-                end_time: exportEndTime,
+                end_time: endTime,
                 // end_time:'2020-12-30',
                 merchantId: Number(sessionStorage.machineID)
             })

@@ -204,14 +204,14 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 mchId: payFormData.MerchantsId,//商户号ID
                 app_key: payFormData.app_key,//支付密钥
             });
-            var editUrl = `${vApi}/pay/testWxPay`
+            var editUrl = `/pay/testWxPay`
         } else if (payFormData.typeIndex == 1) {
             var textParam = JSON.stringify({
                 app_id: payFormData.aliPayId,//支付宝商户ID
                 app_private_key: payFormData.app_private_key,//应用私钥
                 alipay_public_key: payFormData.alipay_public_key//公众号密钥
             });
-            var editUrl = `${vApi}/pay/testAliPay`
+            var editUrl = `/pay/testAliPay`
         }else if(payFormData.typeIndex == 3){
             var editPayObj=JSON.stringify({
                 // merchantId: merchantsPay,
@@ -444,14 +444,14 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 mchId: addData.MerchantsId,//商户号ID
                 app_key: addData.app_key,//公众号密钥
             });
-            var editUrl = `${vApi}/pay/testWxPay`
+            var editUrl = `/pay/testWxPay`
         } else if (addData.typeIndex == 1) {
             var textParam = JSON.stringify({
                 app_id: addData.aliPayId,//支付宝商户ID
                 app_private_key: addData.app_private_key,//应用私钥
                 alipay_public_key: addData.alipay_public_key//公众号密钥
             });
-            var editUrl = `${vApi}/pay/testAliPay`
+            var editUrl = `/pay/testAliPay`
         } else if (addData.typeIndex == 3) {
             var addPayObj=JSON.stringify({
                 // merchantId: merchantsPay,

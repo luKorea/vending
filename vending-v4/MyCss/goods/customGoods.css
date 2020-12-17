@@ -195,7 +195,7 @@
     text-align: right;
     box-sizing: border-box;
 }
-.cancel-btn,.cancel-btn2,.chooseCan{
+.cancel-btn,.cancel-btn2,.chooseCan,.synchronousCancel{
     display: inline-block !important;
     line-height: 1;
     white-space: nowrap;
@@ -217,7 +217,7 @@
     border-color: #be954a !important ;
     color: #be954a !important;
 }
-.cancel-btn2:hover{
+.cancel-btn2:hover,.synchronousCancel:hover{
     border-color: #be954a !important ;
     color: #be954a !important;
 }
@@ -817,4 +817,35 @@
   .treeList  .isShow{
         width: 14px;
         margin-right: 5px;
+    }
+    .synchronousBox{
+        width: 1300px;
+        position: relative;
+        margin: 2vh auto 50px;
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 0 1px 3px rgba(0,0,0,.3);
+        box-sizing: border-box;
+        transition: all 0.5s;
+    }
+    .synchronousBody{
+        box-sizing: border-box;
+        padding: 0 50px;
+        display: flex;
+        justify-content: space-around;
+    }
+    .synchronousBody>div{
+        width: 45%;
+        height: 600px;
+        border: 1px solid #e6e6e6;
+    }
+    .synchronousBody .layui-table-body{
+        height: 450px !important;
+    }
+    .synchronousBody   .layui-form{
+        padding-left: 5px;
+        margin-top: 0;
+    }
+    .sFooter{
+        padding: 15px;
     }

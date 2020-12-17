@@ -3,6 +3,7 @@ layui.use(['table', 'form', 'layer'], function () {
     var table = layui.table,
         form = layui.form,
         layer = layui.layer,
+        laydate=layui.laydate,
         token = sessionStorage.token;
 
     // $('.pushXlsxBtn ').prop('href','../../img/exe.xlsx')
@@ -85,11 +86,30 @@ layui.use(['table', 'form', 'layer'], function () {
 
         }
     });
+    var startTime=null,
+    endTime=null;
+    laydate.render({
+        elem: '#test6',
+        range: true,
+        value: initialTime1,
+        // showBottom: false,
+        done: function (value, date, endDate) {
+            // console.log(value); //得到日期生成的值，如：2017-08-18
+            var timerKey = value.split(' - ');
+            // console.log(timerKey);
+            startTime = timerKey[0];
+            endTime = timerKey[1];
+        }
+
+    });
     // 查询
     $('.queryBtn').click(function () {
         salesTableIn.reload({
             where: {
-                keyword: $('.KyeText').val()
+                keyword: $('.KyeText').val(),
+                sm_no:$('.keyNumder').val(),
+                start_time: startTime,
+                end_time: endTime
             }
         })
     })
@@ -146,7 +166,7 @@ layui.use(['table', 'form', 'layer'], function () {
         $('.maskSpan').addClass('maskIcon');
         $.ajax({
             type: 'post',
-            url: '/sales_manager/importSalesManager',
+            url: `${vApi}/sales_manager/importSalesManager`,
             processData: false,
             contentType: false,
             timeout: 10000,

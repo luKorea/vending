@@ -734,8 +734,9 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
         activityMachineIn = table.render({
             elem: '#activityMachine',
             cols: [[
+                { field: 'number', width: 200, title: '售货机编号', align: 'center' },
                 { field: 'info', width: 200, title: '售货机信息', align: 'center' },
-                { field: 'location', width: 450, title: '地址', align: 'center', },
+                { field: 'location', width: 310, title: '地址', align: 'center', },
             ]],
             data: [
 
@@ -786,7 +787,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                 },
                 {
                     field: 'operate_time', width: 100, title: '退货状态', align: 'center', templet: function (d) {
-                        return d.refund == 0 ? '未退货' : '已退货'
+                        return d.refund == 1 ? '已退货' : '未退货'
                     }
                 },
             ]],

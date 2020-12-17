@@ -236,7 +236,7 @@
                     <li class="shipmentDetails">出货记录</li>
                     <li class="payTypeSet">收款账户</li>
                     <li class="shmentSet">补货记录</li>
-                    <!-- <li>客服信息</li> -->
+                    <li class="editPriceTab">修改价格记录</li>
                     <div class="tabLine">
                     </div>
                 </ul>
@@ -685,47 +685,6 @@
                             </button>
                         </div> -->
                     </li>
-                    <!-- 客服信息 -->
-                    <!-- <li class="service" style="display: none;">
-                        <div class="margin">
-                            
-                            <div class="serviceTitle">
-                                    <form class="layui-form" action="">
-                                        <div class="layui-form-item">
-                                            <label style="width: 90px;" class="layui-form-label">是否配置客服:</label>
-                                            <div class="layui-input-block">
-                                                <input type="checkbox" name="machineOpen" lay-skin="switch"
-                                                    lay-filter="machineOpen" lay-text="是|否">
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <div class="serviceContent">
-                                        <div class="listFlex">
-                                            <label for="">客服电话：</label>
-                                            <input type="text" name="service_phone">
-                                        </div>
-                                        <div class="listFlex" style="margin-left: 110px;">
-                                            <button class="layui-btn layui-btn-normal btn uploadBtn " >
-                                                <span>上传客服二维码图片</span>
-                                                <input type="file" accept="image/*">
-                                            </button>
-                                            <button class="layui-btn layui-btn-normal btn delImgBtn" style="margin: 0 0 0 15px;">
-                                                <span>删除二维码图片</span>
-                                            </button>
-                                        </div>
-                                        <div class="ImgCont">
-                                            <img src="" alt="" class="WeChat">
-                                        </div>
-                                    </div>
-                               
-                            </div>
-                            <div class="serviceFooter">
-                                <button class="layui-btn layui-btn-normal btn " style="margin: 0 0 0 15px;">
-                                    <span>确定</span>
-                                </button>
-                            </div>
-                        </div>
-                    </li> -->
                     <!-- 补货记录 -->
                     <li class="replenishment">
                         <div class="newHeader">
@@ -759,6 +718,18 @@
                         <div style="box-sizing: border-box;">
                             <div class="rTableList">
                                 <table class="layui-hide" id="replenishmentTable" lay-filter="replenishmentTable">
+                                </table>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- 价格修改记录 -->
+                    <li class="price">
+                        <div>
+                            <header>修改价格记录</header>
+                        </div>
+                        <div style="box-sizing: border-box;">
+                            <div class="priceEditBox">
+                                <table class="layui-hide" id="priceEdit" lay-filter="priceEdit">
                                 </table>
                             </div>
                         </div>
@@ -853,7 +824,8 @@
                                         </select>
                                     </div> -->
                                 </li>
-                                <button type="button" class="layui-btn layui-btn-primary editRefres" style="margin-left: 130px;" type="button">
+                                <button type="button" class="layui-btn layui-btn-primary editRefres"
+                                    style="margin-left: 130px;" type="button">
                                     <i class="layui-icon layui-icon-refresh-3 "></i>
                                     <!-- 刷新 -->
                                 </button>

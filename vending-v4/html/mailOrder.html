@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../assets/public/documentWrite.js"></script>
     <title>邮寄订单</title>
-
+    <script src="../assets/public/Courier.js"></script>
 </head>
 
 <body>
@@ -98,7 +98,7 @@
         </div>
     </div>
     <!-- 发货 -->
-    <div class="deliveryCont maskContnet">
+    <div class="deliveryCont maskContnet" >
         <div class="deliveryBox margin0">
             <div class="playHeader">
                 <span>发货</span>
@@ -108,12 +108,23 @@
             </div>
             <div class="deliveryBody">
                 <div class="listFlex">
-                    <label for=""><span>*</span>物流公司:</label>
-                    <input type="text" name="company">
+                    <label style="width: 130px;" for=""><span>*</span>快递/物流公司:</label>
+                    <!-- <input type="text" name="company"> -->
+                    <form action="" class="layui-form" lay-filter="" style="width: 100%;display: inline-block;">
+                        <div class="layui-form" lay-filter="" style="width: 100%;">
+                            <select name="company" id="deliverySele" lay-filter="stateSelect">
+                            </select>
+                        </div>
+                    </form>
+                    
                 </div>
                 <div class="listFlex">
-                    <label for=""><span>*</span>物流单号:</label>
+                    <label style="width: 130px;" for=""><span>*</span>快递/物流单号:</label>
                     <input type="text" name="logisticsNumber">
+                </div>
+                <div class="listFlex">
+                    <label style="width: 130px;" for="">发货时间:</label>
+                    <input type="text" class="layui-input" id="test5" >
                 </div>
             </div>
             <div class="content-footer" style="margin-top:30px;">
@@ -139,12 +150,23 @@
             </div>
             <div class="editBody">
                 <div class="listFlex">
-                    <label for=""><span>*</span>物流公司:</label>
-                    <input type="text" name="company">
+                    <label style="width: 130px;" for=""><span>*</span>快递/物流公司:</label>
+                    <!-- <input type="text" name="company"> -->
+                    <form action="" class="layui-form" lay-filter="" style="width: 100%;display: inline-block;">
+                        <div class="layui-form" lay-filter="" style="width: 100%;">
+                            <select name="company" id="editSele" lay-filter="stateSelect">
+                            </select>
+                        </div>
+                    </form>
+                    
                 </div>
                 <div class="listFlex">
-                    <label for=""><span>*</span>物流单号:</label>
+                    <label style="width: 130px;" for=""><span>*</span>快递/物流单号:</label>
                     <input type="text" name="logisticsNumber">
+                </div>
+                <div class="listFlex">
+                    <label style="width: 130px;" for="">发货时间:</label>
+                    <input type="text" class="layui-input" id="test7" >
                 </div>
             </div>
             <div class="content-footer" style="margin-top:30px;">
@@ -173,7 +195,8 @@
                 <div class="listFlex">
                     <label><span style="color: red;">*</span>时间：</label>
                     <div class="layui-input-inline" style="width: 60%;">
-                        <input type="text" class="layui-input" id="test8" placeholder=" - " autocomplete="off" style="text-align: center;">
+                        <input type="text" class="layui-input" id="test8" placeholder=" - " autocomplete="off"
+                            style="text-align: center;">
                     </div>
                 </div>
             </div>

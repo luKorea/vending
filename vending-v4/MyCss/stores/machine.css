@@ -415,7 +415,7 @@ input:hover{
 }
 .shipmentRecord .layui-form{
     width: fit-content;
-    width: 90%;
+    /* width: 90%; */
 }
 .replenishment{
     width: 100%;
@@ -763,4 +763,10 @@ input:hover{
 }
 .rTableList .layui-form{
     width: 90%;
+}
+.price header{
+    color: #606266;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
 }

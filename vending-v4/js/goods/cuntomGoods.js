@@ -251,20 +251,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   // 点击商品信息事件
   $('body').on('click', '.GoodsInformation', function () {
     indexFlag = null;
-    loadingAjax('/goods/judgeGoodPrice', 'post', JSON.stringify({ goodId: singleData.goods_Id }), sessionStorage.token).then(res => {
-      if (!(res.flag)) {
-        layer.msg('商品也产生订单，不能修改价格', { icon: '7' });
-        $('.editor .editorWidthInput input[name="goodsPrice"]').prop('disabled', true);
-        $('.editor .editorWidthInput input[name="goodsCost"]').prop('disabled', true)
-      } else {
-        $('.editor .editorWidthInput input[name="goodsPrice"]').prop('disabled', false);
-        $('.editor .editorWidthInput input[name="goodsCost"]').prop('disabled', false)
-      }
-    }).catch(err => {
-      $('.editor .editorWidthInput input[name="goodsPrice"]').prop('disabled', true);
-      $('.editor .editorWidthInput input[name="goodsCost"]').prop('disabled', true)
-      layer.msg('服务器请求超时', { icon: '2' })
-    })
     $('.anUp').slideUp();
     // $('.editor').fadeIn();
     popupShow('editor', 'editor-content');
@@ -461,7 +447,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     if (addValData.goodsParam && addValData.goodsBarcode && addValData.goodsName && addValData.goodsType && addValData.goodsPrice && addValData.goodsCost) {
       if (addGoodsImg) {
         var addGoodsDateails = addWangEditor.txt.html().replace(/iframe/g, 'video controls="false"');
-        var addGoodsObj=JSON.stringify({
+        var addGoodsObj = JSON.stringify({
           goods_Core: addValData.goodsBarcode, //商品条码
           goods_Name: addValData.goodsName,   //商品名
           classify_Id: addValData.goodsType,     //商品类型
@@ -477,7 +463,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         });
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        loadingAjax('/goods/saveGoods','post',addGoodsObj,sessionStorage.token,'mask','','',layer).then(res=>{
+        loadingAjax('/goods/saveGoods', 'post', addGoodsObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
           $('.addGoods').fadeOut();
           $('.upload-demo2 .upload-list2').fadeOut();
           addGoodsImg = null;
@@ -497,7 +483,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             }
           })
           addWangEditor.txt.clear();
-        }).catch(err=>{
+        }).catch(err => {
           layer.msg(err.message, { icon: 2 })
         })
       } else {
@@ -622,7 +608,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   $('.goodsmaterialVideo .queryBtnClick').click(function () {
     videoTable.reload({
       where: {
-        conditionFour: '0',
+        conditionFour: '1',
         conditionFive: '2',
         conditionThree: $('.goodsmaterialVideo input[name="KyeText"]').val()
       }
@@ -1057,13 +1043,15 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     editFlag = true,
     delFlag = true,
     fourFlag = true,
-    fiveFlag = true;
-  permissionsVal(377, 378, 375, 416, 415).then(res => {
+    fiveFlag = true,
+    sixFlag = false;
+  permissionsVal(377, 378, 375, 416, 415, 461).then(res => {
     addFlag = res.addFlag;
     editFlag = res.editFlag;
     delFlag = res.delFlag;
     fourFlag = res.fourFlag;
     fiveFlag = res.fiveFlag;
+    sixFlag = res.sixFlag;
     permissions();
   }).catch(err => {
     layer.msg('服务器请求超时', { icon: 7 })
@@ -1074,5 +1062,224 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     delFlag ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
     fourFlag ? $('.pushGoodsBtn').removeClass('hide') : $('.pushGoodsBtn').addClass('hide');
     fiveFlag ? $('.pushListBtn').removeClass('hide') : $('.pushListBtn').addClass('hide');
+    sixFlag ? $('.syncBtn').removeClass('hide') : $('.syncBtn').addClass('hide');
+    console.log(sixFlag)
   };
-})
+
+  // 同步价格部分
+  $('.syncBtn').click(function () {
+    popupShow('synchronousCont', 'synchronousBox');
+    synchronousGoodsFun();
+    machineTableFun();
+  })
+  // 同步商品价格列表；
+  var synchronousGoodsTable = null;
+  function synchronousGoodsFun() {
+    synchronousGoodsTable = table.render({
+      elem: '#cGoodsTable'
+      , url: `${vApi}/goods/findAll`
+      , method: 'post',
+      contentType: "application/json",
+      headers: {
+        token,
+      },
+      cols: [[
+        { checkbox: true },
+        { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center' },
+        { field: 'goods_Core', width: 150, title: '商品编号', align: 'center' },
+        {
+          field: 'goods_Name', width: 150, title: '商品名', color: '#409eff', align: 'center', templet: function (d) {
+            return (d.mail == 1 ? '(邮寄)' + d.goods_Name : d.goods_Name)
+          }
+        },
+        {
+          field: 'goods_Price', width: 80, align: 'center', title: '销售价 ', templet: function (d) {
+            var oldNum = d.goods_Price;
+            d.goods_Price = Number(Number(d.goods_Price).toFixed(2));
+            if (!isNaN(d.goods_Price)) {
+              var c = (d.goods_Price.toString().indexOf('.') !== -1) ? d.goods_Price.toLocaleString() : d.goods_Price.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+              var str = c.split(".");
+              if (str.length == 1) { c = c + '.00'; } else { if (str[1].length == 1) { c = c + '0'; } }
+              return c;
+            } else {
+              return oldNum;
+            }
+          }
+        },
+        {
+          field: 'mail', width: 150, title: '是否邮寄商品', align: 'center', templet: function (d) {
+            return d.mail == 0 ? '否' : '是'
+          }
+        },
+      
+      ]]
+      , id: 'goodsTableS'
+      , page: true
+      , loading: true,
+      // ,method:'post'
+      // ,limits: [10,20,50]
+
+      request: {
+        'pageName': 'pageNum',
+        'limitName': 'pageSize'
+      },
+      where: {
+        condition: sessionStorage.machineID,
+        // mail:1
+      },
+      parseData: function (res) {
+        // console.log(res)
+        //res 即为原始返回的数据
+        if (res.code == 200) {
+          return {
+            "code": res.code, //解析接口状态
+            "msg": '', //解析提示文本
+            "count": res.data.total, //解析数据长度
+            "data": res.data.list //解析数据列表
+          };
+        } else {
+          return {
+            "code": res.code, //解析接口状态
+            "msg": res.message, //解析提示文本
+          }
+        }
+
+      },
+      response: {
+        statusCode: 200 //规定成功的状态码，默认：0
+      },
+      done: function (res) {
+        permissions();
+        if (res.code == 403) {
+          window.parent.location.href = "login.html";
+        } else if (res.code == 405) {
+          $('.hangContent').show();
+        }
+      }
+
+    });
+  }
+  // 同步商品价格售货机
+  var machineTableS = null;
+  function machineTableFun() {
+    machineTableS = table.render({
+      elem: '#machineTable',
+      url: `${vApi}/machine/getMachineList`,
+      method: 'post',
+      contentType: "application/json",
+      headers: {
+        token,
+      },
+      cols: [[
+        { checkbox: true },
+        {
+          field: 'number', width: 150, title: '终端编号', align: 'center', templet: function (d) {
+            return d.number ? d.number : '-'
+          }
+        },
+        {
+          field: 'info', width: 250, title: '终端信息', align: 'center', templet: function (d) {
+            return d.info ? `<div>${d.info}</div>` : `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>`
+          }
+        },
+        {
+          field: 'location', width: 250, title: '地址', align: 'center', templet: function (d) {
+            return d.location ? d.location : ' - '
+          }
+        },
+      ]]
+      , id: 'machineIDTable'
+      , page: true
+      , loading: true
+      , limits: [10, 20, 50, 100]
+      ,
+      request: {
+        'pageName': 'pageNum',
+        'limitName': 'pageSize'
+      },
+      where: {
+        merchantId: sessionStorage.machineID
+      },
+      parseData: function (res) {
+        //res 即为原始返回的数据
+        if (res.code == 200) {
+          return {
+            "code": res.code, //解析接口状态
+            "msg": res.message, //解析提示文本
+            "count": res.data.total, //解析数据长度
+            "data": res.data.list //解析数据列表
+          };
+        } else {
+          return {
+            "code": res.code, //解析接口状态
+            "msg": res.message,   //解析提示文本
+          }
+        }
+
+      },
+      response: {
+        statusCode: 200 //规定成功的状态码，默认：0
+      },
+      done: function (res) {
+        permissions();
+        if (res.code == 403) {
+          window.parent.location.href = "login.html";
+        } else if (res.code == 405) {
+          $('.hangContent').show();
+        }
+      }
+    });
+  }
+
+  // 确定同步价格
+  $('.synchronousCont .synchronousCancel').click(function () {
+    popupHide('synchronousCont', 'synchronousBox');
+  })
+  $('.synchronousCont .synchronousBtn').click(function () {
+    var SGoodsArr = table.checkStatus('goodsTableS').data;
+    var SMachineIDArr = table.checkStatus('machineIDTable').data;
+    console.log(SGoodsArr);
+    console.log(SMachineIDArr)
+    if (SGoodsArr.length == 0 || SMachineIDArr.length == 0) {
+      layer.msg('请选择需要同步价格的商品与售货机', { icon: 7 });
+      return;
+    };
+    layer.confirm('确定同步价格？', function (index) {
+      layer.close(index);
+      var SYGoodsVal = [],
+        SYMachineVal = [];
+      SGoodsArr.forEach(item => {
+        var SGObj = {
+          goodId: item.goods_Id,
+          price: item.goods_Price
+        };
+        SYGoodsVal.push(SGObj)
+      });
+      SMachineIDArr.forEach(item => {
+        var SMObj = {
+          machineId: item.machineId
+        };
+        SYMachineVal.push(SMObj)
+      });
+      var syncPriceObj = JSON.stringify({
+        goods: SYGoodsVal,
+        machines: SYMachineVal
+      })
+      loadingAjax('/goods/syncPrice', 'post', syncPriceObj, sessionStorage.token).then(res => {
+        layer.msg(res.message, { icon: 1 });
+        synchronousGoodsTable.reload({
+          where: {}
+        });
+        machineTableS.reload({
+          where: {}
+        });
+        popupHide('synchronousCont', 'synchronousBox');
+      }).catch(err => {
+        layer.msg(err.message,{icon:2})
+        console.log(err)
+      })
+      
+    });
+
+  })
+});

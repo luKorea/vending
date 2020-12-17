@@ -161,10 +161,10 @@ function goodsListFun(goodsList) {
                 <div class="goodsInform">
                     <h5>${item.goods_Name}</h5>
                     <div class="flexC of">
-                        <p>￥${item.goods_Price}</p>
+                        <p>￥${item.price}</p>
                         <p>X ${item.count}</p>
                     </div>
-                    <h5>总价：￥${Number(item.goods_Price) * Number(item.count)}</h5>
+                    <h5>总价：￥${Number(item.price) * Number(item.count)}</h5>
                     <p style="margin:5px 0;">已退款数量：${item.refund_count?item.refund_count:0}</p>
                 </div>
             </li>`
@@ -202,7 +202,7 @@ refresher.init({
 function Refresh() {																
 	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
 		var el, li, i;																		
-		// el =document.querySelector("#ordertListBox ul");					
+		el =document.querySelector("#ordertListBox ul");					
         //这里写你的刷新代码		
         var nameInformation = JSON.stringify({
             phone: $('.list input[name="phone"]').val(),
@@ -226,6 +226,7 @@ function Refresh() {
             $('.searchCont').show();
             prompt('请重新查询');
         });
+        alert(1)
 		document.getElementById("ordertListBox").querySelector(".pullDownIcon").style.display="none";		
 		document.getElementById("ordertListBox").querySelector(".pullDownLabel").innerHTML="刷新成功";																					 
 		setTimeout(function () {

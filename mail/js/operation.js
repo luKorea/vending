@@ -100,8 +100,15 @@ $('.inquiryBox .confirm').click(function () {
             }else if(err=='true'){
                
                 prompt('操作成功');
-                lamFlag=0;
-                lamFlag == 1 ? $('.lamp p').html('售货机关灯') : $('.lamp p').html('售货机关灯');
+                // lamFlag=0;
+                // lamFlag=lamFlag==1?0:1;
+                if(lamFlag==1){
+                    lamFlag=0
+                }else{
+                    lamFlag=1
+                }
+                console.log(lamFlag)
+                lamFlag == 1 ? $('.lamp p').html('售货机关灯') : $('.lamp p').html('售货机开灯');
             }else{
                 prompt(err.message)
             }
@@ -119,8 +126,13 @@ $('.inquiryBox .confirm').click(function () {
                 prompt('操作失败')
             }else if(err=='true'){
                 prompt('操作成功');
-                soundFlag=0;
-                soundFlag == 1 ? $('.lamp p').html('售货机静音') : $('.lamp p').html('售货机开启声音');
+                // soundFlag=soundFlag==1?0:1;
+                if(soundFlag==1){
+                    soundFlag=0
+                }else{
+                    soundFlag=1
+                }
+                soundFlag == 1 ? $('.sound p').html('售货机静音') : $('.sound p').html('售货机开启声音');
             }else{
                 prompt(err.message)
             }

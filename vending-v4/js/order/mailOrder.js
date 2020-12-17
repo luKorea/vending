@@ -38,7 +38,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
             if (d.goodsList.lebght != 0) {
               var Num = 0;
               d.goodsList.forEach(item => {
-                Num += item.goods_Price * item.count
+                Num += item.price * item.count
               })
               return Num;
             } else {
@@ -63,18 +63,23 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
           }
         },
         {
-          field: 'dispatch_status', width: 210, title: '物流状态', align: 'center', templet: function (d) {
+          field: 'dispatch_status', width: 210, title: '快递/物流状态', align: 'center', templet: function (d) {
             return d.dispatch_status == 0 ? '未发货' : d.dispatch_status == 1 ? '已发货' : '已售货'
           }
         },
         {
-          field: 'express_type', width: 190, title: '物流公司/快递公司', align: 'center', templet: function (d) {
+          field: 'express_type', width: 190, title: '快递/物流公司', align: 'center', templet: function (d) {
             return d.express_type ? d.express_type : '-'
           }
         },
         {
-          field: 'express_number', width: 210, title: '物流单号', align: 'center', templet: function (d) {
+          field: 'express_number', width: 210, title: '快递/物流单号', align: 'center', templet: function (d) {
             return d.express_number ? d.express_number : '-'
+          }
+        },
+        {
+          field: 'express_number', width: 210, title: '发货时间', align: 'center', templet: function (d) {
+            return d.express_time ? timeStamp(d.express_time) : '-'
           }
         },
         { field: 'operation', width: 200, title: '操作 ', fixed: 'right', right: 0, toolbar: '#barDemo', align: 'center' },
@@ -114,6 +119,17 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
       done: function (res) {
       }
     });
+
+    // 渲染快递下拉框
+
+    console.log(CourierList)
+    var optionList = `<option value="">全部</option>`;
+    CourierList.forEach(item=>{
+      optionList+=`<option value="${item}">${item}</option>`
+    });
+    $('#deliverySele').html(optionList);
+    $('#editSele').html(optionList);
+    form.render('select');
   // 关闭弹窗
   $('.playHeader .close').click(function () {
     $(this).parent().parent().addClass('margin0')
@@ -127,15 +143,16 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
     if (obj.event == 'delivery') {
       popupShow('deliveryCont', 'deliveryBox');
     } else if (obj.event == 'edit') {
-      $('.editCont input[name="company"]').val(mailOrderData.express_type);
-      $('.editCont input[name="logisticsNumber"]').val(mailOrderData.express_number)
+      $('.editCont select[name="company"]').val(mailOrderData.express_type);
+      $('.editCont input[name="logisticsNumber"]').val(mailOrderData.express_number);
+      $('#test7').val(mailOrderData.express_time);
       popupShow('editCont', 'editBox')
     } else if (obj.event == 'goods') {
 
       goodsDetails(obj.data.goodsList);
       popupShow('goodsCont', 'goodsBox')
     }
-
+    form.render('select');
   });
   // 取消
   $('.deliveryCont .cancelBtn').click(function () {
@@ -143,7 +160,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
   })
   //确定发货
   $('.deliveryCont .determinePushBtn').click(function () {
-    if (!($('.deliveryBody input[name="company"]').val() && $('.deliveryBody input[name="logisticsNumber"]').val())) {
+    if (!($('.deliveryBody select[name="company"]').val() && $('.deliveryBody input[name="logisticsNumber"]').val())) {
       layer.msg('带*为必填', { icon: 7 });
       return;
     };
@@ -151,15 +168,16 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
     $('.maskSpan').addClass('maskIcon');
     var deliveryObj = JSON.stringify({
       number: mailOrderData.number,
-      express_type: $('.deliveryBody input[name="company"]').val(),
+      express_type: $('.deliveryBody select[name="company"]').val(),
       express_number: $('.deliveryBody input[name="logisticsNumber"]').val(),
+      express_time:$('#test5').val()?$('#test5').val():timeStamp(new Date().getTime())
     });
     loadingAjax('/order/updateMailMsg', 'post', deliveryObj, sessionStorage.token, 'mask', 'deliveryCont', 'deliveryBox', layer).then(res => {
       layer.msg(res.message, { icon: 1 });
       mailTable.reload({
         where: {}
       });
-      $('.deliveryBody input[name="company"]').val(''),
+      $('.deliveryBody select[name="company"]').val(''),
         $('.deliveryBody input[name="logisticsNumber"]').val('')
     }).catch(err => {
       layer.msg(err.message, { icon: 2 });
@@ -172,7 +190,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
   });
   // 确定编辑
   $('.editCont .determinePushBtn').click(function () {
-    if (!($('.editCont input[name="company"]').val() && $('.editCont input[name="logisticsNumber"]').val())) {
+    if (!($('.editCont select[name="company"]').val() && $('.editCont input[name="logisticsNumber"]').val())) {
       layer.msg('带*为必填', { icon: 7 });
       return;
     };
@@ -180,8 +198,9 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
     $('.maskSpan').addClass('maskIcon');
     var editObj = JSON.stringify({
       number: mailOrderData.number,
-      express_type: $('.editCont input[name="company"]').val(),
+      express_type: $('.editCont select[name="company"]').val(),
       express_number: $('.editCont input[name="logisticsNumber"]').val(),
+      express_time:$('#test7').val()?$('#test7').val():timeStamp(new Date().getTime())
     });
     loadingAjax('/order/updateOrder', 'post', editObj, sessionStorage.token, 'mask', 'editCont', 'deliveryBox', layer).then(res => {
       layer.msg(res.message, { icon: 1 });
@@ -290,8 +309,6 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
   });
 
 
-  // 商品部分
-  var refundTatol = 0;
   var orderGoods = null;
   function goodsDetails(data) {
     orderGoods = table.render({
@@ -299,9 +316,11 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
       cols: [[
         // { checkbox: true },
         { field: 'goods_images', width: 80, title: '图片', templet: "#imgtmp", align: 'center' },
-        { field: 'goods_Name', width: 140, title: '商品名', align: 'center',templet:function(d){
-          return d.mail==1?'(邮寄)'+d.goods_Name:d.goods_Name
-        } },
+        {
+          field: 'goods_Name', width: 140, title: '商品名', align: 'center', templet: function (d) {
+            return d.mail == 1 ? '(邮寄)' + d.goods_Name : d.goods_Name
+          }
+        },
         { field: 'goods_Core', width: 140, title: '商品编号', align: 'center', },
         { field: 'count', width: 120, title: '购买数量', align: 'center' },
         { field: 'refund_count', width: 120, title: '已退款数量', align: 'center' },
@@ -320,11 +339,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
       id: 'goodsLIstTable',
       loading: true,
       done: function (res) {
-        refundTatol = 0;
-        // console.log(res)
-        res.data.forEach(item => {
-          refundTatol += item.goods_Price;
-        })
+      
         permissions();
       }
     })
@@ -382,17 +397,19 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
         layer.close(index);
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-
+        console.log(mailOrderData);
+        // return ;
         if (mailOrderData.payType == 0) {
           var refundData = JSON.stringify({
             machineId: mailOrderData.machineId,
             orderId: mailOrderData.number,
             goodId: goodsData.goods_Id,
             count: Number($('.refundNumber input').val()),
-            amount: Number($('.sumInput input[name="sum"]').val())
+            amount: Number($('.sumInput input[name="sum"]').val()),
+            pay_id:mailOrderData.pay_id
             // amount:0.01
           });
-          loadingAjax('/pay/refund_alipay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
+          loadingAjax('/pay/refund_alipay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox',layer).then(res => {
             layer.msg(res.message, { icon: 1 });
             mailTable.reload({
               where: {}
@@ -408,12 +425,13 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
             goodId: goodsData.goods_Id,
             count: Number($('.refundNumber input').val()),
             amount: Number($('.sumInput input[name="sum"]').val()),
+            pay_id:mailOrderData.pay_id,
             // amount:0.01,
             transaction_id: mailOrderData.transaction_id,
             total: mailOrderData.amount,
             // total:0.01
           });
-          loadingAjax('/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
+          loadingAjax('/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox',layer).then(res => {
             layer.msg(res.message, { icon: 1 });
 
             mailTable.reload({
@@ -443,4 +461,62 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
     addFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
     editFlag ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
   };
+
+
+
+  // 编辑部分下拉框
+  $(".selectBox1 .fa").on("click", function (event) {
+    $(this).parent().next().toggle();//ul弹窗展开
+    if (event.stopPropagation) {
+      // 针对 Mozilla 和 Opera   
+      event.stopPropagation();
+    } else if (window.event) {
+      // 针对 IE   
+      window.event.cancelBubble = true;
+    }
+  });
+
+  //
+  $(".selectUl1 li").click(function (event) {
+    event = event || window.event;
+    console.log($(this).html())
+    $('.editCont select[name="company"]').val($(this).html())
+
+  });
+
+  // 发货下拉框
+  $(".selectBox2 .fa").on("click", function (event) {
+    $(this).parent().next().toggle();//ul弹窗展开
+    if (event.stopPropagation) {
+      // 针对 Mozilla 和 Opera   
+      event.stopPropagation();
+    } else if (window.event) {
+      // 针对 IE   
+      window.event.cancelBubble = true;
+    }
+  });
+
+  //
+  $(".selectUl2 li").click(function (event) {
+    event = event || window.event;
+    console.log($(this).html())
+    $('.deliveryCont select[name="company"]').val($(this).html())
+
+  });
+  //点击任意地方隐藏下拉
+  $(document).click(function (event) {
+    event = event || window.event;
+    $(".selectUl").hide();//当点击空白处，隐藏ul弹窗
+  });
+
+  // 发货时间部分
+  laydate.render({
+    elem: '#test5'
+    ,type: 'datetime',
+  });
+   // 编辑发货时间部分
+   laydate.render({
+    elem: '#test7'
+    ,type: 'datetime',
+  });
 })

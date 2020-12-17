@@ -24,7 +24,7 @@ $('.searchCont .btn').click(function(){
             url:'/api/scanLogin',
             timeout: 10000,
             data:JSON.stringify({
-                action:'true',
+                action:sessionStorage.token,
                 machine:decrypt1(machineId) 
             }),
             headers: {
@@ -45,6 +45,31 @@ $('.searchCont .btn').click(function(){
             }
         });
     }).catch(err=>{
+        $.ajax({
+            type:'post',
+            url:'/api/scanLogin',
+            timeout: 10000,
+            data:JSON.stringify({
+                action:'false',
+                machine:decrypt1(machineId) 
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                token:sessionStorage.token
+            },
+            success:function(res){
+                $('.mask').hide();
+                if(res=='true'){
+                    window.location.href=`operation.html?machineId=${getQueryString('machineId')}`
+                }else{
+                    prompt('售货机离线,登录失败') 
+                }
+            },
+            error:function(err){
+                $('.mask').hide();
+                prompt('服务器请求超时')
+            }
+        });
         $('.mask').hide();
         prompt(err.message)
     })

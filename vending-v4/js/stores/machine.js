@@ -201,6 +201,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             case 5:
                 replenishmenFun(machineSetData.machineId);
                 break;
+            case 6:
+                priceFun()
         }
     });
     // 监听售货机列表操作
@@ -385,7 +387,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 loadingAjax('/machine/getStatus', 'post', JSON.stringify({ machineId: machineSetData.machineId }), token).then(Dres => {
                     console.log(Dres)
                     if (Dres.data.actionStatus == 1) {
-                        loadingAjax('/pushActive', 'post', JSON.stringify({ machine: machineSetData.machineId, action: 'true' }), token).then(res => {
+                        loadingAjax('/pushActive', 'post', JSON.stringify({ machine: machineSetData.machineId, action: machineSetData.openStatus != 1?'true':'false' }), token).then(res => {
                         }).catch(err => {
                             if (err == 'true') {
                                 loadingAjax('/machine/activeMachine', 'post', JSON.stringify({ machineId: machineSetData.machineId, openStatus: openStatusIndex }), token, 'mask').then(Sres => {
@@ -759,7 +761,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {
                     field: 'payType', width: 150, title: '支付方式', templet: function (d) {
-                        return `<div><span class="${d.payType != 0 ? 'tableStateCellTrue' : 'tableStateCellAli'}">${d.payType != 0 ? '微信' : '支付宝'}</span></div>`
+                        return `<div><span class="${d.payType == 3?'tableStateCellFalse':d.payType != 0 ? 'tableStateCellTrue' : 'tableStateCellAli'}">${d.payType==3?'工行支付':d.payType != 0 ? '微信' : '支付宝'}</span></div>`
                     }
                 },
                 { field: 'payee', width: 150, title: '收款方', },
@@ -850,16 +852,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'ship_status', width: 150, title: '出货状态', align: 'center', templet: function (d) {
+                    field: 'ship_status', width: 165, title: '出货状态', align: 'center', templet: function (d) {
                         return d.ship_status == 0 ? '出货失败' : d.ship_status == 1 ? '出货成功' : '货道故障'
                     }
                 },
-                { field: 'before_count', width: 150, align: 'center', title: '出货前数量', },
+                { field: 'before_count', width: 165, align: 'center', title: '出货前数量', },
                 // { field: 'ship_count', width: 135, align: 'center', title: '出货数量',templet:function(d){
                 //     return d.ship_status==1?'1':'0'
                 // } },
                 {
-                    field: 'before_count', width: 150, align: 'center', title: '出货后数量', templet: function (d) {
+                    field: 'before_count', width: 165, align: 'center', title: '出货后数量', templet: function (d) {
                         return d.ship_status == 1 ? d.before_count - 1 : d.before_count
                     }
                 },
@@ -868,7 +870,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // } },
 
                 {
-                    field: 'ship_type', width: 150, align: 'center', title: '出货类型', templet: function (d) {
+                    field: 'ship_type', width: 165, align: 'center', title: '出货类型', templet: function (d) {
                         return d.ship_type == 1 ? '订单' : '取货码'
                     }
                 },
@@ -998,7 +1000,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         AisleDetailsFlag = false,//货道详情
         salesListFlag = false,//销售记录
         shipmentListFlag = false,//出货记录
-        shmentListFlag = false;
+        shmentListFlag = false,
+        editPriceFlag=false;//修改价格记录
     function permissions() {
         permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
             res.data.forEach(item => {
@@ -1032,6 +1035,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if (item.id == '456') {
                     shmentListFlag = true;
                 }
+                // if(item.id=='461'){
+                //     editPriceFlag=true
+                // }
             })
 
             activateFlag ? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
@@ -1041,6 +1047,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             salesListFlag ? $('.salesDetails').removeClass('hide') : $('.salesDetails').addClass('hide');
             shipmentListFlag ? $('.shipmentDetails').removeClass('hide') : $('.shipmentDetails').addClass('hide');
             shmentListFlag ? $('.shmentSet').removeClass('hide') : $('.shmentSet').addClass('hide');
+            // editPriceFlag ? $('.editPriceTab').removeClass('hide') : $('.editPriceTab').addClass('hide');
         }).catch(err => {
             layer.msg(err.message, { icon: 2 })
         });
@@ -1155,6 +1162,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }).catch(err => {
             console.log(err)
             wayList = [];
+            wayFlagArr=[];
             var titleHtml = `<div style="text-align: center;">您没有权限访问货道详情！</div>`
             $('.aisleGoodsCont').html(titleHtml)
             // console.log(err)
@@ -1162,11 +1170,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
     };
     // 渲染方法
+    var wayFlagArr=[];
     function againFun(res) {
         console.log(res)
         wayList = [
             [], [], [], [], [], []
         ];
+        wayFlagArr=res.data
         res.data.forEach(item => {
             // console.log(item.row)
             if (item.row) {
@@ -1263,7 +1273,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
         if (sessionStorage.independentPass) {
             aisleEdit();
-            popupShow('editAisle', 'editAisleBox')
+            popupShow('editAisle', 'editAisleBox');
+            layer.msg('同一商品在不同货道，商品价格以最新编辑价格为准！',{icon:7})
         } else {
             popupShow('iPasswprd', 'passwordCont')
         }
@@ -1286,10 +1297,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 console.log(1)
                 aisleEdit();
                 popupHide('iPasswprd', 'passwordCont')
-                popupShow('editAisle', 'editAisleBox')
+                popupShow('editAisle', 'editAisleBox');
+                layer.msg('同一商品在不同货道，商品价格以最新编辑价格为准！',{icon:7})
             } else {
                 popupHide('iPasswprd', 'passwordCont')
-                popupShow('addDetalis', 'addCont')
+                popupShow('addDetalis', 'addCont');
             }
 
         }).catch(err => {
@@ -1358,6 +1370,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('货道容量不能小于当前数量', { icon: 7 });
             return;
         }
+        // if($('.editAisle input[name="goodsName"]').attr('IVal')!=goodsDetails.goods_Id){
+        //     var repeatFlag=wayFlagArr.every(item=>{
+        //         return item.goods_Id!=$('.editAisle input[name="goodsName"]').attr('IVal')
+        //     })
+        //     if(!repeatFlag){
+        //         layer.msg('该商品已在其他货道上架，请勿在不同货道上架同一商品',{icon:7})
+        //         return ;
+        //     }
+        // }
+        // console.log(repeatFlag)
+        // return ;
         var editData = JSON.stringify({
             machineId: machineSetData.machineId,
             way: goodsDetails.way,
@@ -1564,11 +1587,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         paramId: 0,
                         mpId: Number(AcbcId)
                     })
-                    loadingAjax('/pay/updateMachinePayParam', 'post', acbcObj, sessionStorage.token).then(res => {}).then(res=>{
+                    loadingAjax('/pay/updateMachinePayParam', 'post', acbcObj, sessionStorage.token).then(res => {
+                        supportpay(machineSetData.machineId, machineSetData.userNum);
                     }).catch(err=>{})
+                }else{
+                    supportpay(machineSetData.machineId, machineSetData.userNum);
                 }
                 
-                supportpay(machineSetData.machineId, machineSetData.userNum);
+                
             }).catch(err => {
                 layer.msg(err.message, { icon: 2 })
             })
@@ -1588,14 +1614,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
             loadingAjax('/pay/updateMachinePayParam', 'post', setMachinePay, sessionStorage.token).then(res => {
                 layer.msg(res.message, { icon: 1 })
+              
                 if(Number(dataID[1])!='0'&&weId!='0'){
                     var weObj=JSON.stringify({
                         machineId: machineSetData.machineId,
                         paramId: 0,
                         mpId: Number(weId)
                     })
-                    loadingAjax('/pay/updateMachinePayParam', 'post', weObj, sessionStorage.token).then(res => {}).then(res=>{
-                    }).catch(err=>{})
+                    loadingAjax('/pay/updateMachinePayParam', 'post', weObj, sessionStorage.token).then(res => {}).catch(err=>{})
                 }
                 if(Number(dataID[1])!='0'&&aliId!='0'){
                     var aliObj=JSON.stringify({
@@ -1603,12 +1629,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         paramId: 0,
                         mpId: Number(aliId)
                     })
-                    loadingAjax('/pay/updateMachinePayParam', 'post', aliObj, sessionStorage.token).then(res => {}).then(res=>{
+                    loadingAjax('/pay/updateMachinePayParam', 'post', aliObj, sessionStorage.token).then(res => {
+                        supportpay(machineSetData.machineId, machineSetData.userNum);
                     }).catch(err=>{})
-                }
-                setImmediate(_=>{
+                }else{
                     supportpay(machineSetData.machineId, machineSetData.userNum);
-                },100)
+                }
+               
+                // setImmediate(_=>{
+                //     supportpay(machineSetData.machineId, machineSetData.userNum);
+                // },0)
                 
             }).catch(err => {
                 layer.msg(err.message, { icon: 2 })
@@ -1880,4 +1910,68 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         })
     });
+
+    // 修改价格记录部分
+    var priceTable=null;
+    function priceFun(){
+        priceTable = table.render({
+            elem: '#priceEdit',
+            url: `${vApi}/machine/getPriceRecord`,
+            method: 'post',
+            contentType: "application/json",
+            headers: {
+                token,
+            },
+            cols: [[
+                { field: 'way', width: 150, title: '货道', align: 'center', },
+                { field: 'old_price', width: 150, title: '修改前价格', align: 'center', },
+                { field: 'new_price', width: 150, title: '修改后价格', align: 'center', },
+                { field: 'goods_Name', width: 150, title: '商品名', align: 'center', },
+                { field: 'user_name', width: 150, title: '修改人', align: 'center', },
+                {
+                    field: 'way', width: 250, title: '修改时间', align: 'center', templet: function (d) {
+                        return d.change_time?timeStamp(d.change_time):'-'
+                    }
+                },
+            ]]
+            , id: 'priceId'
+            , page: true
+            , loading: true
+            , limits: [10, 20, 50, 100]
+            ,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where: {
+                machineId: machineSetData.machineId
+            },
+            parseData: function (res) {
+                // console.log(res)
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    window.parent.location.href = "login.html";
+                }
+            }
+        });
+    }
 });

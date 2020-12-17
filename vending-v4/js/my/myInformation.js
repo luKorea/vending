@@ -55,7 +55,7 @@ layui.use(['layer','form'], function () {
                                         <span class="mytitle">${res.data.merchantName?res.data.merchantName:'-'}</span>
                                     </div> `;
             $('.basicInformation').html(informationText)
-
+            sessionStorage.marchantName=res.data.merchantName;
         }).catch(err => {
             console.log(err);
             layer.msg(err.message, { icon: 2 })

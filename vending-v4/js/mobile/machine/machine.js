@@ -382,6 +382,22 @@ $('.operationNav .info').click(function(){
     $('.terminalContent input[name="merchantsNametext"]').val(machineDetails.merchantName);
     $('.terminalContent input[name="merchantsName"]').val(machineDetails.userNum);
 });
+// 初始化开关
+// hui('#switchBox').switchBox(['否','是'],function(res){
+//     console.log(res)
+//     if(res){
+//         hui.toast('开关打开');
+//     }else{
+//         hui.toast('开关关闭');
+//     }
+// }, true);
+// hui('#switchBox2').switchBox(['否','是'],function(res){
+//     if(res){
+//         hui.toast('开关打开');
+//     }else{
+//         hui.toast('开关关闭');
+//     }
+// }, true);
 // 关闭
 $('.terminalContent .close').click(function(){
     closeParents(this,'top0');

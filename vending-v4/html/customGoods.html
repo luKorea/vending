@@ -178,6 +178,13 @@
 								</button>
 							</div>
 							<div class="newKeyContent">
+								<button type="button" class="layui-btn layui-btn-primary syncBtn  hide">
+									<i class="layui-icon layui-icon-align-center"></i>
+									<span>同步商品价格</span>
+
+								</button>
+							</div>
+							<div class="newKeyContent">
 								<button type="button" class="layui-btn layui-btn-primary query-btnClick">
 									<i class="layui-icon layui-icon-refresh-3 "></i>
 									<!-- 刷新 -->
@@ -969,6 +976,40 @@
 				<div class="mandatroFooter">
 					<div Ptype="1">是</div>
 					<div Ptype="0" style="color: red;">否</div>
+				</div>
+			</div>
+		</div>
+		<!-- 同步商品价格 -->
+		<div class="synchronousCont maskContnet" >
+			<div class="synchronousBox margin0">
+				<div class="playHeader">
+					<span>同步商品价格</span>
+					<button class="close" type="button">
+						<i class="layui-icon layui-icon-close"></i>
+					</button>
+				</div>
+				<div class="synchronousBody">
+					<div class="goodsSynchrouos">
+							<div class="list-table">
+								<table class="layui-hide" id="cGoodsTable" lay-filter="cGoodsTable"></table>
+							</div>
+					</div>
+					<div class="machineSynchrouos">
+						<div class="list-table">
+							<table class="layui-hide" id="machineTable" lay-filter="machineTable"></table>
+						</div>
+					</div>
+				</div>
+				<div class="sFooter">
+					<div style="text-align: center;">
+						<button class="layui-btn layui-btn-normal btn synchronousBtn"
+							style="margin: 0 0 0 15px;">
+							<span>确定</span>
+						</button>
+						<button class="layui-btn layui-btn-normal btn synchronousCancel">
+							<span>取消</span>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

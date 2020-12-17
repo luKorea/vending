@@ -110,6 +110,7 @@ layui.use(['form', 'layer', 'carousel'], function () {
                     } else {
                         sessionStorage.accountPass = ''
                     }
+                    // return ;
                     window.location.href = "index.html"
                 }).catch(err => {
                     layer.msg(err.message, { icon: 2 })
