@@ -4,6 +4,9 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
     layer = layui.layer,
     form = layui.form,
     laydate = layui.laydate,
+     startTime = getKeyTime().startTime,
+    //结束时间
+     endTime = getKeyTime().endTime,
     mailTable = table.render({
       elem: '#mailTableOn',
       url: `${vApi}/order/getOrderList`,
@@ -34,17 +37,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
         },
         { field: 'payee', width: 210, title: '收款账号', align: 'center' },
         {
-          field: 'Number', width: 150, title: '订单金额', align: 'center', templet: function (d) {
-            if (d.goodsList.lebght != 0) {
-              var Num = 0;
-              d.goodsList.forEach(item => {
-                Num += item.price * item.count
-              })
-              return Num;
-            } else {
-              return 0
-            }
-          }
+          field: 'amount', width: 150, title: '订单金额', align: 'center'
         },
         {
           field: 'sign_name', width: 180, title: '退款状态', align: 'center', templet: function (d) {
@@ -92,7 +85,9 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
       },
       where: {
         conditionFive: sessionStorage.machineID,
-        conditionSeven: 1
+        conditionSeven: 1,
+        condition:startTime,
+        conditionTwo: endTime,
       },
       parseData: function (res) {
         //res 即为原始返回的数据
@@ -122,7 +117,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
 
     // 渲染快递下拉框
 
-    console.log(CourierList)
+    // console.log(CourierList)
     var optionList = `<option value="">全部</option>`;
     CourierList.forEach(item=>{
       optionList+=`<option value="${item}">${item}</option>`
@@ -213,9 +208,9 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
   })
 
   //导出订单 
-  $('.pushBtn').click(function () {
-    popupShow('exportCont', 'exportBox');
-  })
+  // $('.pushBtn').click(function () {
+  //   popupShow('exportCont', 'exportBox');
+  // })
   // 导出excel表
   // 导出时间
   var exportStareTime = null,
@@ -235,11 +230,15 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
     popupHide('exportCont', 'exportBox')
   })
   // 导出
-  $('.exportCont .determinePushBtn').click(function () {
-    if (!(exportStareTime && exportEndTime)) {
+  $('.pushBtn').click(function () {
+    if (!(startTime && endTime)) {
       layer.msg('请选择时间', { icon: 7 });
       return;
     }
+    if (timeFlag(startTime, endTime)) {
+      layer.msg('时间选择范围最多三个月', { icon: 7 });
+      return;
+  }
     $('.mask').fadeIn();
     $('.maskSpan').addClass('maskIcon');
     var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
@@ -256,7 +255,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
         $('.maskSpan').removeClass('maskIcon');
         var content = xhr.response;
         // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-        var fileName = `${sessionStorage.marchantName}邮寄订单(${exportStareTime}-${exportEndTime}).xlsx`
+        var fileName = `${sessionStorage.marchantName}邮寄订单(${startTime}-${endTime}).xlsx`
         var elink = document.createElement('a');
         elink.download = fileName;
         elink.style.display = 'none';
@@ -273,20 +272,18 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
       }
     }
     var orderObj = JSON.stringify({
-      start_time: exportStareTime,
-      end_time: exportEndTime,
+      start_time: startTime,
+      end_time: endTime,
       merchantId: Number(sessionStorage.machineID)
     })
     xhr.send(orderObj);
   });
   // 日期选择
-  var startTime = '';
-  //结束时间
-  var endTime = '';
   var laydate = layui.laydate;
   laydate.render({
     elem: '#test6',
     range: true,
+    value: getKeyTime().keyTimeData,
     done: function (value) {
       var timerKey = value.split(' - ');
       startTime = timerKey[0];
@@ -295,6 +292,10 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
   });
   // 查询
   $('.queryBtn').click(function () {
+    if (timeFlag(startTime, endTime)) {
+      layer.msg('时间选择范围最多三个月', { icon: 7 });
+      return;
+  }
     mailTable.reload({
       where: {
         condition: startTime,

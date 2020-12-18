@@ -20,9 +20,9 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     }, 500);
     $('.tabBox>div').eq($(this).index()).fadeIn().siblings().fadeOut();
   });
-  var startTime = '';
+  var startTime = getKeyTime().startTime;
   //结束时间
-  var endTime = '';
+  var endTime = getKeyTime().endTime;
   var form = layui.form,
     tree = layui.tree;
   //   时间选择器
@@ -30,6 +30,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   laydate.render({
     elem: '#itemrs1',
     range: true,
+    value: getKeyTime().keyTimeData,
     done: function (value, date, endDate) {
       console.log(value); //得到日期生成的值，如：2017-08-18
       var timerKey = value.split(' - ');
@@ -39,12 +40,13 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     }
   });
 
-  var startTime2 = '';
+  var startTime2 = getKeyTime().startTime;
   //结束时间
-  var endTime2 = '';
+  var endTime2 = getKeyTime().endTime;
   laydate.render({
     elem: '#itemrs2',
     range: true,
+    value: getKeyTime().keyTimeData,
     done: function (value, date, endDate) {
       console.log(value); //得到日期生成的值，如：2017-08-18
       var timerKey = value.split(' - ');
@@ -53,12 +55,13 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       endTime2 = timerKey[1];
     }
   });
-  var startTime3 = '';
+  var startTime3 = getKeyTime().startTime;
   //结束时间
-  var endTime3 = '';
+  var endTime3 = getKeyTime().endTime;
   laydate.render({
     elem: '#itemrs3',
     range: true,
+    value: getKeyTime().keyTimeData,
     done: function (value, date, endDate) {
       console.log(value); //得到日期生成的值，如：2017-08-18
       var timerKey = value.split(' - ');
@@ -216,6 +219,10 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
 
   // 图片查询
   $('.ImgQueyuBtnClick').click(function () {
+    if (timeFlag(startTime, endTime)) {
+      layer.msg('时间选择范围最多三个月', { icon: 7 });
+      return;
+    }
     advertisingLis.reload({
       where: {
         conditionThree: $('.key-contnet input[name="KeyImgName"]').val(),
@@ -228,6 +235,10 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   });
   // 视频查询
   $('.VideoQueryBtnClick').click(function () {
+    if (timeFlag(startTime2, endTime2)) {
+      layer.msg('时间选择范围最多三个月', { icon: 7 });
+      return;
+    }
     videoTable.reload({
       where: {
         conditionThree: $('.key-contnet input[name="keyVideoName"]').val(),
@@ -240,6 +251,10 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   });
   // 详情图片查询
   $('.detailsImgQueyuBtnClick').click(function () {
+    if (timeFlag(startTime3, endTime3)) {
+      layer.msg('时间选择范围最多三个月', { icon: 7 });
+      return;
+    }
     detailsTable.reload({
       where: {
         conditionThree: $('.details input[name="KeyImgName"]').val(),
@@ -431,7 +446,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         });
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        loadingAjax('/good_material/saveGoodMaterial','post',addVideoObj,sessionStorage.token,'mask','addVideoCont','addVideoBox').then(res=>{
+        loadingAjax('/good_material/saveGoodMaterial', 'post', addVideoObj, sessionStorage.token, 'mask', 'addVideoCont', 'addVideoBox').then(res => {
           $('.FlexInputWidth input[name="VideoName"]').val('');
           videoSrc = null;
           $('.uploadVideo video').attr('src', '')
@@ -440,7 +455,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
           videoTable.reload({
             where: {}
           })
-        }).catch(err=>{
+        }).catch(err => {
           layer.msg(err.message, { icon: 2 });
         })
       } else {
@@ -483,24 +498,24 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         });
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        loadingAjax('/good_material/deleteGoodMaterial','post',JSON.stringify({ data: delID}),sessionStorage.token,'mask','','',layer).then(res=>{
+        loadingAjax('/good_material/deleteGoodMaterial', 'post', JSON.stringify({ data: delID }), sessionStorage.token, 'mask', '', '', layer).then(res => {
           layer.msg(res.message, { icon: 1 });
           tableIV.reload({
             where: {
               conditionFour: typeID
             }
           })
-        }).catch(err=>{
-            if(err.code==202){
-              layer.msg(res.message, { icon: 7 });
-              tableIV.reload({
-                where: {
-                  conditionFour: typeID
-                }
-              })
-            }else{
-              layer.msg(err.message, { icon: 2 });
-            }
+        }).catch(err => {
+          if (err.code == 202) {
+            layer.msg(res.message, { icon: 7 });
+            tableIV.reload({
+              where: {
+                conditionFour: typeID
+              }
+            })
+          } else {
+            layer.msg(err.message, { icon: 2 });
+          }
         })
       })
     } else {
@@ -580,22 +595,22 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
 
   // 提交审核，审核通过，审核不通过方法
   function goodsAudit(type, data, eleTable, conditionFour, url) {
-    loadingAjax(url,'post',JSON.stringify({data,type}),sessionStorage.token,'mask','','',layer).then(res=>{
+    loadingAjax(url, 'post', JSON.stringify({ data, type }), sessionStorage.token, 'mask', '', '', layer).then(res => {
       layer.msg(res.message, { icon: 1 });
-          eleTable.reload({
-            where: {
-              conditionFour,
-            }
-          })
-    }).catch(err=>{
-      if(err.code==202){
+      eleTable.reload({
+        where: {
+          conditionFour,
+        }
+      })
+    }).catch(err => {
+      if (err.code == 202) {
         layer.msg(err.message, { icon: 7 });
         eleTable.reload({
           where: {
             conditionFour,
           }
         })
-      }else{
+      } else {
         layer.msg(err.message, { icon: 2 });
       }
     })
@@ -861,12 +876,12 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       if ($('#GoodsDetailsImg').attr('src')) {
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        var addDetailsImgObj=JSON.stringify({
+        var addDetailsImgObj = JSON.stringify({
           attribute: '2',
-            img: $('#GoodsDetailsImg').attr('src'),
-            name: $('.addDetailsImgBody input[name="detailsImgNane"]').val(),
+          img: $('#GoodsDetailsImg').attr('src'),
+          name: $('.addDetailsImgBody input[name="detailsImgNane"]').val(),
         })
-        loadingAjax('/good_material/saveGoodMaterial','post',addDetailsImgObj,sessionStorage.token,'mask','addDetailsImgCont','addDetailsImgBox',layer).then(res=>{
+        loadingAjax('/good_material/saveGoodMaterial', 'post', addDetailsImgObj, sessionStorage.token, 'mask', 'addDetailsImgCont', 'addDetailsImgBox', layer).then(res => {
           $('.addDetailsImgBody input[name="detailsImgNane"]').val('')
           $('.upload-list2').fadeOut();
           $('#GoodsDetailsImg').attr('src', '')
@@ -874,7 +889,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
           detailsTable.reload({
             where: {}
           })
-        }).catch(err=>{
+        }).catch(err => {
           layer.msg(err.message, { icon: 2 });
         })
       } else {

@@ -6,22 +6,12 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
         laydate = layui.laydate,
         token = sessionStorage.token;
     // 初始时间
-    var initialTime = new Date();
-    var y = initialTime.getFullYear(),
-        m = initialTime.getMonth(),
-        d = initialTime.getDate(),
-        //开始时间
-        startTime = y + '-' + ((m + 1) < 10 ? '0' + (m + 1) : (m + 1)) + '-' + d,
-        //结束时间
-        endTime = y + '-' + ((m + 1) < 10 ? '0' + (m + 1) : (m + 1)) + '-' + d,
-        initialTime1 = startTime + ' - ' + endTime
-    // console.log(startTime);
-    // console.log(endTime);
+    var startTime=getKeyTime().startTime,
+    endTime=getKeyTime().endTime;
     laydate.render({
         elem: '#test6',
         range: true,
-        value: initialTime1,
-        // showBottom: false,
+        value:getKeyTime().keyTimeData,
         done: function (value, date, endDate) {
             // console.log(value); //得到日期生成的值，如：2017-08-18
             var timerKey = value.split(' - ');
@@ -29,7 +19,6 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
             startTime = timerKey[0];
             endTime = timerKey[1];
         }
-
     });
     var salesTableIn = table.render({
         elem: '#salesTable',
@@ -50,14 +39,14 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
                     if (d.achievement.length == 0) {
                         return '-'
                     } else {
-                        return d.achievement[0].order_total
+                        return d.order_total
                     }
                 }
             },
             {
                 field: 'create_name', width: 230, title: '总金额(￥)', align: 'center', templet: function (d) {
                     if (d.achievement.length != 0) {
-                        return d.achievement[0].achievement
+                        return d.achievement
                     } else {
                         return '-'
                     }
@@ -82,8 +71,11 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
         },
         where: {
             merchantId: Number(sessionStorage.machineID),
-            start_time:startTime,
-            end_time:endTime
+            refund:1,
+            start_time: startTime,
+            end_time: endTime,
+            // start_time:startTime,
+            // end_time:endTime
         },
         parseData: function (res) {
             // console.log(res)
@@ -113,13 +105,17 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
 
         }
     });
-
     // 总查询
     $('.queryBtn').click(function () {
+        if (timeFlag(startTime, endTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
         salesTableIn.reload({
             where: {
                 start_time: startTime,
-                end_time: endTime
+                end_time: endTime,
+                refund: $('.newKeyItem input[name="open"]').prop('checked') ? 1 : 0,
             }
         })
     });
@@ -249,6 +245,10 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
             layer.msg('请选择时间', { icon: 7 });
             return;
         }
+        if (timeFlag(startTime, endTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
         layer.confirm(`确定导出（${startTime}至${endTime}销售经理业绩）？`, function (index) {
             layer.close(index);
             $('.mask').fadeIn();
@@ -288,7 +288,8 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
                 // start_time:'2020-10-01',
                 end_time: endTime,
                 // end_time:'2020-12-30',
-                merchantId: Number(sessionStorage.machineID)
+                merchantId: Number(sessionStorage.machineID),
+                refund: $('.newKeyItem input[name="open"]').prop('checked') ? 1 : 0,
             })
             xhr.send(orderObj);
         })

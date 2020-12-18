@@ -655,12 +655,15 @@ input:hover{
     top: 0;
     right: 0;
     transition: .1s;
-    padding: 10px 20px;
+    padding: 10px ;
     text-align: center;
     box-sizing: border-box;
     border-radius: 4px;
     border-color: transparent;
     cursor: pointer;
+}
+.relative button img{
+    width: 15px;
 }
 .listFlex .layui-form{
     width: 80%;
@@ -769,4 +772,8 @@ input:hover{
     font-size: 16px;
     line-height: 24px;
     font-weight: 700;
+}
+.promptP{
+    color: red;
+    text-align: center;
 }

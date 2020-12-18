@@ -1,13 +1,14 @@
 import '../../MyCss/order/codeOrder.scss';
 layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     // 日期选择
-    var startTime = '';
+    var startTime = getKeyTime().startTime;
     //结束时间
-    var endTime = '';
+    var endTime = getKeyTime().endTime;
     var laydate = layui.laydate;
     laydate.render({
         elem: '#test6',
         range: true,
+        value: getKeyTime().keyTimeData,
         done: function (value) {
             var timerKey = value.split(' - ');
             startTime = timerKey[0];
@@ -15,7 +16,6 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         }
     });
     var token = sessionStorage.token,
-        tree = layui.tree,
         flow = layui.flow,
         layer = layui.layer,
         table = layui.table,
@@ -31,34 +31,39 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             cols: [[
                 { field: 'activity_name', width: 130, title: '活动名', align: 'center' },
                 { field: 'good_code', width: 210, title: '取货码', align: 'center' },
-                { field: 'machineName', width: 200, title: '终端名', align: 'center' },
+                { field: 'machineName', width: 200, title: '售货机名', align: 'center',templet:function(d){
+                    return `<div>${d.machineName}</div>
+                    <div>(${d.number})</div>`
+                } },
                 { field: 'machineAddress', width: 210, title: '终端地址', align: 'center' },
                 {
                     field: 'ship_info', width: 250, title: '出货情况', align: 'center', templet: function (d) {
-                        if(d.ship_info.length==0){
+                        if (d.ship_info.length == 0) {
                             return '-'
-                          }else{
-                            var str='';
-                            d.ship_info.forEach((item,index)=>{
-                              str+=`<div>${item.goods_Name}(${item.way}货道${item.ship_status==0?'出货失败':item.ship_status==1?'出货成功':'货道故障'})</div>`
+                        } else {
+                            var str = '';
+                            d.ship_info.forEach((item, index) => {
+                                str += `<div>${item.goods_Name}(${item.way}货道${item.ship_status == 0 ? '出货失败' : item.ship_status == 1 ? '出货成功' : '货道故障'})</div>`
                             });
                             return str
-                          }
+                        }
                     }
                 },
-                { field: 'operate_time', width: 150, align: 'center', title: '取货时间', templet:function(d){
-                    if (d.operate_time) {
-                        return timeStamp(d.operate_time)
-                    } else {
-                        return '-';
+                {
+                    field: 'operate_time', width: 150, align: 'center', title: '取货时间', templet: function (d) {
+                        if (d.operate_time) {
+                            return timeStamp(d.operate_time)
+                        } else {
+                            return '-';
+                        }
                     }
-                }},
+                },
                 {
                     field: 'operate_time', width: 100, title: '退货状态', align: 'center', templet: function (d) {
-                        return d.refund==0?'未退货':'已退货'
+                        return d.refund == 0 ? '未退货' : '已退货'
                     }
                 },
-                { field: 'operation',  width: 100, title: '操作', toolbar: '#refundDemo', align: 'center' },
+                { field: 'operation', width: 100, title: '操作', toolbar: '#refundDemo', align: 'center' },
             ]],
             page: true,
             loading: true,
@@ -68,7 +73,9 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 'limitName': 'pageSize'
             },
             where: {
-                merchant_id: Number(sessionStorage.machineID) ,
+                merchant_id: Number(sessionStorage.machineID),
+                start_time: startTime ? startTime : null,
+                end_time: endTime ? endTime : null,
             },
             parseData: function (res) {
                 // console.log(res)
@@ -136,70 +143,61 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     }
     getFlow();
 
-      //查询
-  $('.queryBtn').click(function () {
-      if(startTime){
+    //查询
+    $('.queryBtn').click(function () {
         orderTable.reload({
             where: {
-              start_time: startTime,
-              end_time: endTime,
-            }
-          })
-      }else{
-        orderTable.reload({
-            where: {
-                start_time: null,
-              end_time: null,
-            }
-          })
-      }
-  });
-
-//   点击活动
-var activeCode='';
-  $('body').on('click','.activityArr span',function(){
-    $('.allmachine').removeClass('active');
-    $(this).addClass('active').siblings().removeClass('active');
-    activeCode=$(this).attr('activityID');
-    orderTable.reload({
-        where: {
-            activity_id:Number(activeCode) 
-        }
-      });
-  });
-  $('.allmachine').click(function () {
-    $(this).addClass('active');
-    $('.activityArr span').removeClass('active');
-    activeCode = '';
-    orderTable.reload({
-      where: {
-        activity_id: null
-      }
-    })
-  })
-
-  table.on('row(moneyData)', function(obj){
-    var codeData=obj.data;
-    console.log(obj)
-    if(codeData.refund==1){
-        return ;
-    }
-    layer.confirm('确定退货？', function (index) {
-        layer.close(index);
-    var codeObj=JSON.stringify({
-        good_code :codeData.good_code
-    });
-    loadingAjax('/machine/activityRefund','post',codeObj,sessionStorage.token).then(res=>{
-        layer.msg(res.message,{icon:1});
-        orderTable.reload({
-            where:{
-
+                start_time: startTime ? startTime : null,
+                end_time: endTime ? endTime : null,
             }
         })
-    }).catch(err=>{
-        layer.msg(err.message,{icon:2})
+    });
+
+    //   点击活动
+    var activeCode = '';
+    $('body').on('click', '.activityArr span', function () {
+        $('.allmachine').removeClass('active');
+        $(this).addClass('active').siblings().removeClass('active');
+        activeCode = $(this).attr('activityID');
+        orderTable.reload({
+            where: {
+                activity_id: Number(activeCode)
+            }
+        });
+    });
+    $('.allmachine').click(function () {
+        $(this).addClass('active');
+        $('.activityArr span').removeClass('active');
+        activeCode = '';
+        orderTable.reload({
+            where: {
+                activity_id: null
+            }
+        })
     })
-    })
-  
-  });
+
+    table.on('row(moneyData)', function (obj) {
+        var codeData = obj.data;
+        console.log(obj)
+        if (codeData.refund == 1) {
+            return;
+        }
+        layer.confirm('确定退货？', function (index) {
+            layer.close(index);
+            var codeObj = JSON.stringify({
+                good_code: codeData.good_code
+            });
+            loadingAjax('/machine/activityRefund', 'post', codeObj, sessionStorage.token).then(res => {
+                layer.msg(res.message, { icon: 1 });
+                orderTable.reload({
+                    where: {
+
+                    }
+                })
+            }).catch(err => {
+                layer.msg(err.message, { icon: 2 })
+            })
+        })
+
+    });
 })

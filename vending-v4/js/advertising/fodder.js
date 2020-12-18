@@ -8,12 +8,13 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         laydate = layui.laydate,
         tree = layui.tree;
     //开始时间
-    var startTime = '';
+    var startTime = getKeyTime().startTime,
     //结束时间
-    var endTime = '';
+     endTime = getKeyTime().endTime;
     laydate.render({
         elem: '#test6',
         range: true,
+        value: getKeyTime().keyTimeData,
         done: function (value, date, endDate) {
             console.log(value); //得到日期生成的值，如：2017-08-18
             var timerKey = value.split(' - ');
@@ -74,7 +75,9 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             'limitName': 'pageSize'
         },
         where: {
-            'merchantId': Number(sessionStorage.machineID)
+            'merchantId': Number(sessionStorage.machineID),
+            startTime: startTime,//开始时间
+                endTime: endTime//结束时间
             // merchantId: sessionStorage.machineID
         },
         parseData: function (res) {
@@ -109,6 +112,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
 
     // 查询事件
     $('.keyQueryBtn').click(function () {
+        if (timeFlag(startTime, endTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
         var KeyValData = form.val("KeyValData");
         console.log(KeyValData);
         tableIns.reload({

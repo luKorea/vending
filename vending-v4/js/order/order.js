@@ -2,13 +2,14 @@ import '../../MyCss/order/userOrder.css'
 import '../../MyCss/order/order.css'
 layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
   // 日期选择
-  var startTime = '';
+  var startTime = getKeyTime().startTime;
   //结束时间
-  var endTime = '';
+  var endTime = getKeyTime().endTime;
   var laydate = layui.laydate;
   laydate.render({
     elem: '#test6',
     range: true,
+    value: getKeyTime().keyTimeData,
     done: function (value) {
       var timerKey = value.split(' - ');
       startTime = timerKey[0];
@@ -39,7 +40,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         token,
       },
       cols: [[
-        { field: 'info', width: 210, title: '终端名', align: 'center' },
+        { field: 'info', width: 210, title: '售货机名', align: 'center' ,templet:function(d){
+          return `<div>${d.info}</div>
+                  <div>(${d.number})</div>`
+        }},
         // { field: 'machineId', width: 220, title: '设备编号', },
         // { field: 'CreationTime', width: 100, title: '下单时间', },
 
@@ -50,17 +54,20 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         // { field: 'hah', width: 160, title: '成本', },
         // { field: '2', width: 160, title: '利润', },
         // { field: 'bili', width: 160, title: '退款金额', },
-        { field: 'number', width: 130, title: '订单金额', align: 'center' ,templet:function(d){
-          var amount=0;
-          if(d.goodsList.length!=0){
-              d.goodsList.forEach(item=>{
-                amount+=item.price
-              });
-              return amount  
-          }else{
-            return 0
-          }
-        }},
+        {
+          field: 'amount', width: 130, title: '订单金额', align: 'center'
+          // ,templet:function(d){
+          //   var amount=0;
+          //   if(d.goodsList.length!=0){
+          //       d.goodsList.forEach(item=>{
+          //         amount+=item.price*item.count
+          //       });
+          //       return amount  
+          //   }else{
+          //     return 0
+          //   }
+          // }
+        },
         {
           field: 'payStatus', width: 130, align: 'center', title: '支付状态', templet: function (d) {
             return d.payStatus == 1 ? '等待支付' : d.payStatus == 2 ? '已支付' : '未支付'
@@ -130,7 +137,9 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       },
       where: {
         conditionFive: sessionStorage.machineID,
-        conditionSeven: 0
+        conditionSeven: 0,
+        condition: startTime,
+        conditionTwo: endTime,
       },
       parseData: function (res) {
         // console.log(res)
@@ -157,34 +166,33 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         statusCode: 200 //规定成功的状态码，默认：0
       },
       done: function (res) {
-        console.log(res);
-        if (res.code == 200) {
-          console.log(res)
-          var orderAllSumVal = 0,
-            profitsSum = 0,
-            PaidInSum = 0,
-            refundSum = 0,
-            orderNUm = 0;
-          $('.ban-input input[name="orderNumVal"]').val(res.data.length);
-          res.data.forEach((item, index) => {
-            if (item.payStatus == 2) {
-              orderAllSumVal += item.amount;
-              item.goodsList.forEach((v, i) => {
-                profitsSum += (v.price - v.goods_Cost) * (v.count - v.refund_count);
-                PaidInSum += v.price * (v.count - v.refund_count);
-                refundSum += (v.price * v.refund_count)
-              })
-            }
-          });
-          // $('.ban-input input[name="orderAllSumVal"]').val(Number(orderAllSumVal.toFixed(2)).toLocaleString());
-          $('.ban-input input[name="orderAllSumVal"]').val(numFormat1(orderAllSumVal));
+        // console.log(res);
+        // if (res.code == 200) {
+        //   console.log(res)
+        //   var orderAllSumVal = 0,
+        //     profitsSum = 0,
+        //     PaidInSum = 0,
+        //     refundSum = 0;
+        //   $('.ban-input input[name="orderNumVal"]').val(res.data.length);
+        //   res.data.forEach((item, index) => {
+        //     if (item.payStatus == 2) {
+        //       orderAllSumVal += item.amount;
+        //       item.goodsList.forEach((v, i) => {
+        //         profitsSum += (v.price - v.goods_Cost) * (v.count - v.refund_count);
+        //         PaidInSum += v.price * (v.count - v.refund_count);
+        //         refundSum += (v.price * v.refund_count)
+        //       })
+        //     }
+        //   });
+        //   // $('.ban-input input[name="orderAllSumVal"]').val(Number(orderAllSumVal.toFixed(2)).toLocaleString());
+        //   $('.ban-input input[name="orderAllSumVal"]').val(numFormat1(orderAllSumVal));
 
-          $('.ban-input input[name="profitsSum"]').val(numFormat1(profitsSum));
-          $('.ban-input input[name="orderPaidInSum"]').val(numFormat1(PaidInSum));
-          $('.ban-input input[name="orderRefundSum"]').val(numFormat1(refundSum));
-        } else if (res.code == 405) {
-          $('.hangContent').show();
-        }
+        //   $('.ban-input input[name="profitsSum"]').val(numFormat1(profitsSum));
+        //   $('.ban-input input[name="orderPaidInSum"]').val(numFormat1(PaidInSum));
+        //   $('.ban-input input[name="orderRefundSum"]').val(numFormat1(refundSum));
+        // } else if (res.code == 405) {
+        //   $('.hangContent').show();
+        // }
       }
     });
 
@@ -313,11 +321,11 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       exportEndTime = timerKey[1];
     }
   });
-  $('.pushBtn').click(function () {
-    $('.exportBody p').html(marchantName + '订单表格')
-    popupShow('exportCont', 'exportBox');
+  // $('.pushBtn').click(function () {
+  //   $('.exportBody p').html(marchantName + '订单表格')
+  //   popupShow('exportCont', 'exportBox');
 
-  });
+  // });
   // 关闭弹窗
   $('.playHeader .close').click(function () {
     $(this).parent().parent().addClass('margin0')
@@ -328,9 +336,13 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     popupHide('exportCont', 'exportBox');
   })
   // 确认导出
-  $('.exportCont .determinePushBtn').click(function () {
-    if (!(exportStareTime && exportEndTime)) {
+  $('.pushBtn').click(function () {
+    if (!(startTime && endTime)) {
       layer.msg('请选择时间', { icon: 7 });
+      return;
+    }
+    if (timeFlag(startTime, endTime)) {
+      layer.msg('时间选择范围最多三个月', { icon: 7 });
       return;
     }
     $('.mask').fadeIn();
@@ -355,7 +367,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         // } else {
         var content = xhr.response;
         // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-        var fileName = `${marchantName}订单(${exportStareTime}-${exportEndTime}).xlsx`
+        var fileName = `${marchantName}订单(${startTime}-${endTime}).xlsx`
         var elink = document.createElement('a');
         elink.download = fileName;
         elink.style.display = 'none';
@@ -373,8 +385,8 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       }
     }
     var orderObj = JSON.stringify({
-      start_time: exportStareTime,
-      end_time: exportEndTime,
+      start_time: startTime,
+      end_time: endTime,
       merchantId: merchantId
     })
     xhr.send(orderObj);
@@ -447,36 +459,36 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     if (!orderGoods) {
       goodsDetails();
     }
+    if (orderData.payStatus == 2) {
+      loadingAjax('/order/getOrderStatistics', 'post', JSON.stringify({ number: orderData.number }), '', '', '', layer).then(res => {
+        $('.paidInSum').html(res.data.real);
+        $('.profitsSum').html(res.data.cost);
+        $('.refundSum').html(res.data.refund);
+        $('.collectionBody').show();
+
+      }).catch(err => {
+        $('.collectionBody').hide();
+      });
+    } else {
+      $('.collectionBody').hide();
+    }
+
     $('.detailsOrderCode').html(obj.data.number);//订单编号
     $('.payTime').html(timeStamp(obj.data.time));//支付时间
     $('.orderInformation button span').html((obj.data.shipStatus == 0 ? '未出货' : obj.data.shipStatus == 1 ? '部分出货失败' : '出货成功'));
     // $('.orderInformation button span').html(obj.data.notes)
-    var payNum = 0,
-      paindSum = 0,
-      childProfits = 0,
-      refundNumSum = 0,
-      orderAmount = 0;
+    var payNum = 0;
     obj.data.goodsList.forEach((item, index) => {
       payNum += item.count;
-      paindSum += item.price * (item.count - item.refund_count);
-      orderAmount += item.price*item.count;
-      childProfits += (((item.price * 100) - (item.goods_Cost) * 100) * (item.count - item.refund_count));
-      // console.log(childProfits)
-      refundNumSum += item.price * item.refund_count
     })
     $('.payType').html((obj.data.payStatus == 0 ? '支付宝' : obj.data.payStatus == 1 ? '微信' : '工行支付'));
     $('.payNUmber').html(payNum);
-    // console.log(paindSum)
-    $('.paidInSum').html(obj.data.payStatus == 2 ? '￥' + paindSum : '￥0');
     // $('.paidInSum').html(orderData.amount);
-    $('.orderSum').html('￥' + orderAmount);
-
-    $('.profitsSum').html('￥' + childProfits / 100)
+    $('.orderSum').html('￥' + orderData.amount);
     $('.collection button span').html((obj.data.payStatus == 1 ? '等待支付' : obj.data.payStatus == 2 ? '支付成功' : '未支付'));
     $('.machineCode').html(obj.data.machineId);
     $('.merchantName').html(obj.data.merchantName);
     $('.merchantCode ').html(obj.data.alias);
-    $('.refundSum').html('￥' + refundNumSum)
     popupShow('orderDetails', 'orderDetailsBox')
     orderGoods.reload({
       data: obj.data.goodsList
@@ -484,6 +496,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
   });
   //查询
   $('.queryBtn').click(function () {
+    if (timeFlag(startTime, endTime)) {
+      layer.msg('时间选择范围最多三个月', { icon: 7 });
+      return;
+    }
     orderTable.reload({
       where: {
         condition: startTime,
@@ -542,10 +558,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             goodId: goodsData.goods_Id,
             count: Number($('.refundNumber input').val()),
             amount: Number($('.sumInput input[name="sum"]').val()),
-            pay_id:orderData.pay_id
+            pay_id: orderData.pay_id
             // amount:0.01
           });
-          loadingAjax('/pay/refund_alipay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox',layer).then(res => {
+          loadingAjax('/pay/refund_alipay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox', layer).then(res => {
             layer.msg(res.message, { icon: 1 });
             popupHide('orderDetails', 'orderDetailsBox');
             orderTable.reload({
@@ -564,7 +580,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             // amount: 0.01,
             transaction_id: orderData.transaction_id,
             total: orderData.amount,
-            pay_id:orderData.pay_id
+            pay_id: orderData.pay_id
             // total: 0.01
           });
           loadingAjax('/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
@@ -584,7 +600,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             count: Number($('.refundNumber input').val()),
             transaction_id: orderData.transaction_id,
             amount: Number($('.sumInput input[name="sum"]').val()),
-            pay_id:orderData.pay_id
+            pay_id: orderData.pay_id
           });
           loadingAjax('/pay/refund_icbc', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
             layer.msg(res.message, { icon: 1 });
@@ -657,7 +673,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       } else if (orderData.payType == 1) {
         url = `${vApi}/pay/refund_wxpay`
       }
-      loadingAjax(url, 'post', refundData, sessionStorage.token, 'mask', 'orderDetails ', 'orderDetailsBox',layer).then(res => {
+      loadingAjax(url, 'post', refundData, sessionStorage.token, 'mask', 'orderDetails ', 'orderDetailsBox', layer).then(res => {
         layer.msg(res.message, { icon: 1 });
         // popupHide('orderDetails', 'orderDetailsBox');
         orderTable.reload({

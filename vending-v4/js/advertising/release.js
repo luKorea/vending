@@ -1,20 +1,21 @@
 import '../../MyCss/advertising/release.css'
 layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function () {
-    tooltip('.refreshBtnList', {transition: true, time: 200});
+    tooltip('.refreshBtnList', { transition: true, time: 200 });
     var token = sessionStorage.token,
         tree = layui.tree,
         form = layui.form;
-    var startTime = '';
+    var startTime = getKeyTime().startTime;
     //结束时间
-    var endTime = '';
+    var endTime = getKeyTime().endTime;
     // 日期选择
     var laydate = layui.laydate;
     laydate.render({
         elem: '#test6',
         range: true,
+        value: getKeyTime().keyTimeData,
         done: function (value, date, endDate) {
             // console.log(value); //得到日期生成的值，如：2017-08-18
-        var timerKey = value.split(' - ');
+            var timerKey = value.split(' - ');
             // console.log(timerKey);
             startTime = timerKey[0];
             endTime = timerKey[1];
@@ -31,6 +32,10 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     })
     // 查询
     $('.keyBtn').click(function () {
+        if (timeFlag(startTime, endTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
         advertisingLis.reload({
             where: {
                 condition: startTime,
@@ -85,7 +90,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             // { field: 'amendTime', width: 130, title: '广告位', },
             { field: 'addUser', width: 180, title: '创建人', align: 'center', },
             { field: 'creationTime', width: 250, title: '创建时间', align: 'center' },
-            
+
             { field: 'operation', right: 0, align: 'center', width: 400, title: '操作', toolbar: '#barDemo', fixed: 'right' },
         ]],
         page: true,
@@ -97,7 +102,9 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             'limitName': 'pageSize'
         },
         where: {
-            conditionThree: sessionStorage.machineID
+            conditionThree: sessionStorage.machineID,
+            condition: startTime,
+            conditionTwo: endTime,
         },
         parseData: function (res) {
             //res 即为原始返回的数据
@@ -220,31 +227,31 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             }
             editDetailsList.push(editObj)
         });
-            $.ajax({
-                type: 'post',
-                url: `${vApi}/publicized/updatePublicize`,
-                processData: false,
-                contentType: false,
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                data: JSON.stringify({
-                    number: numderID,
-                    publicizeAdvert: editDetailsList
-                }),
-                success: function (res) {
-                    if (res.code == 200) {
-                        popupHide('advertisingDetails', 'detailsBox');
-                        layer.msg('修改成功', { icon: 1, });
-                        editDetailsList = [];
-                    } else if (res.code == 403) {
-                        window.parent.location.href = "login.html";
-                    } else {
-                        layer.msg(res.message, { icon: 7 });
-                    }
+        $.ajax({
+            type: 'post',
+            url: `${vApi}/publicized/updatePublicize`,
+            processData: false,
+            contentType: false,
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            data: JSON.stringify({
+                number: numderID,
+                publicizeAdvert: editDetailsList
+            }),
+            success: function (res) {
+                if (res.code == 200) {
+                    popupHide('advertisingDetails', 'detailsBox');
+                    layer.msg('修改成功', { icon: 1, });
+                    editDetailsList = [];
+                } else if (res.code == 403) {
+                    window.parent.location.href = "login.html";
+                } else {
+                    layer.msg(res.message, { icon: 7 });
                 }
-            });
+            }
+        });
     })
 
     function machineDetailsFun(id) {
@@ -383,7 +390,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 },
                 cols: [[
                     { type: 'checkbox', },
-                    { field: 'img', width: 80, title: '微缩图', templet: "#imgtmp" , align: 'center'},
+                    { field: 'img', width: 80, title: '微缩图', templet: "#imgtmp", align: 'center' },
                     { field: 'name', width: 150, title: '素材名', align: 'center', },
                     { field: 'size', width: 100, title: '大小(MB)', align: 'center', },
                     { field: 'duration', width: 120, title: '播放时长(秒)', align: 'center', },
@@ -394,7 +401,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     },
                     { field: 'addUser', width: 150, align: 'center', title: '创建人 ', },
                     { field: 'creationTime', width: 160, title: '创建时间', align: 'center' },
-                    
+
                 ]],
                 page: true,
                 id: 'chooesId',
@@ -553,21 +560,21 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             }
             confirmList.push(confirmObj)
         });
-            if (confirmList.length == addMaterList.length) {
-                loadingAjax('/publicized/savePublicize','post',JSON.stringify({publicizeAdvert: confirmList,merchantId: sessionStorage.machineID}),sessionStorage.token,'mask','','',layer).then(res=>{
-                    popupHide('pubilshSweet', 'sweetBox');
-                    popupHide('releaseAdvertising', 'publishBox')
-                    layer.msg('发布成功', { icon: 1, });
-                    addMaterList = [];
-                    advertisingLis.reload({
-                        where: {}
-                    })
-                }).catch(err=>{
-                    layer.msg(err.message, { icon: 7 });
+        if (confirmList.length == addMaterList.length) {
+            loadingAjax('/publicized/savePublicize', 'post', JSON.stringify({ publicizeAdvert: confirmList, merchantId: sessionStorage.machineID }), sessionStorage.token, 'mask', '', '', layer).then(res => {
+                popupHide('pubilshSweet', 'sweetBox');
+                popupHide('releaseAdvertising', 'publishBox')
+                layer.msg('发布成功', { icon: 1, });
+                addMaterList = [];
+                advertisingLis.reload({
+                    where: {}
                 })
-            } else {
-                layer.msg('出错！请重新发布', { icon: 7 });
-            }
+            }).catch(err => {
+                layer.msg(err.message, { icon: 7 });
+            })
+        } else {
+            layer.msg('出错！请重新发布', { icon: 7 });
+        }
     });
 
 
@@ -584,6 +591,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             },
             cols: [[
                 { type: 'checkbox', },
+                { field: 'number', width: 180, title: '售货机编号', align: 'center' },
                 { field: 'info', width: 200, title: '售货机信息', align: 'center' },
                 { field: 'location', width: 300, title: '地址', align: 'center', },
                 { field: 'merchantName', width: 150, title: '所属商户', align: 'center', },
@@ -744,7 +752,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                 }
                 checkList.push(submitObj)
             });
-                auditMethods('1', checkList,'/publicized/checkStatus');
+            auditMethods('1', checkList, '/publicized/checkStatus');
         } else {
             layer.msg('请选择需要提交审核的素材', { icon: 7, });
         }
@@ -756,7 +764,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             return;
         }
         var approveCheckStatus = table.checkStatus('advertisingData');
-      var  approveList = [];
+        var approveList = [];
         if (approveCheckStatus.data.length > 0) {
             layer.confirm('确定审核通过？', function (index) {
                 layer.close(index);
@@ -769,7 +777,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     }
                     approveList.push(approveObj)
                 });
-                    auditMethods('0', approveList,'/publicized/updateStatus')
+                auditMethods('0', approveList, '/publicized/updateStatus')
             })
 
         } else {
@@ -783,7 +791,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             return;
         }
         var noPassCheckStatus = table.checkStatus('advertisingData');
-      var  noPassList = [];
+        var noPassList = [];
         if (noPassCheckStatus.data.length > 0) {
             layer.confirm('确定审核不通过？', function (index) {
                 layer.close(index);
@@ -795,28 +803,28 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     }
                     noPassList.push(noPassObj)
                 });
-                    auditMethods('0', noPassList,'/publicized/updateStatus')
+                auditMethods('0', noPassList, '/publicized/updateStatus')
             })
         } else {
             layer.msg('请选择需要不通过审核的素材', { icon: 7 });
         }
     })
     // 提交审核，审核通过，审核不通过方法
-    function auditMethods(type, data,url) {
-        loadingAjax(url,'post',JSON.stringify({data,type}),sessionStorage.token,'mask','','',layer).then(res=>{
+    function auditMethods(type, data, url) {
+        loadingAjax(url, 'post', JSON.stringify({ data, type }), sessionStorage.token, 'mask', '', '', layer).then(res => {
             layer.msg(res.message, { icon: 1 });
             advertisingLis.reload({
                 where: {
                 }
             })
-        }).catch(err=>{
-            if(err.code==202){
+        }).catch(err => {
+            if (err.code == 202) {
                 layer.msg(err.message, { icon: 7 });
                 advertisingLis.reload({
                     where: {
                     }
                 });
-            }else{
+            } else {
                 layer.msg(err.message, { icon: 2, });
             }
         })
@@ -955,7 +963,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         popupShow('topGoodsList', 'topBox')
     })
     $('.mandatroFooter div').click(function () {
-      var  PType = $(this).attr('Ptype');
+        var PType = $(this).attr('Ptype');
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         var RData = JSON.stringify({
@@ -1174,19 +1182,19 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     };
 
     // 商户刷新
-    $('.refreshBtnList').click(function(){
+    $('.refreshBtnList').click(function () {
         var dataList1 = treeList();
-        if (JSON.stringify(dataList1)  != JSON.stringify(dataList)) {
-            dataList=dataList1;
+        if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
+            dataList = dataList1;
             treeFun(tree, 'test1', advertisingLis, dataList, 'conditionThree');
             advertisingLis.reload({
                 where: {
                     conditionThree: sessionStorage.machineID
                 },
             })
-            
-        }else{
-            layer.msg('已刷新',{icon:1})
+
+        } else {
+            layer.msg('已刷新', { icon: 1 })
         }
     })
 });

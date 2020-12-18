@@ -1,9 +1,9 @@
 import '../../MyCss/merchants/salesManager.scss';
-layui.use(['table', 'form', 'layer'], function () {
+layui.use(['table', 'form', 'layer', 'laydate'], function () {
     var table = layui.table,
         form = layui.form,
         layer = layui.layer,
-        laydate=layui.laydate,
+        laydate = layui.laydate,
         token = sessionStorage.token;
 
     // $('.pushXlsxBtn ').prop('href','../../img/exe.xlsx')
@@ -16,6 +16,20 @@ layui.use(['table', 'form', 'layer'], function () {
     $("body").bind("keydown", function (event) {
         if (event.keyCode == 116) {
             f5Fun()
+        }
+    });
+    var startTime = getKeyTime().startTime,
+        endTime = getKeyTime().endTime;
+    laydate.render({
+        elem: '#test6',
+        range: true,
+        value: getKeyTime().keyTimeData,
+        done: function (value, date, endDate) {
+            console.log(value); //得到日期生成的值，如：2017-08-18
+            var timerKey = value.split(' - ');
+            console.log(timerKey);
+            startTime = timerKey[0];
+            endTime = timerKey[1];
         }
     });
     // 刷新页面
@@ -86,32 +100,30 @@ layui.use(['table', 'form', 'layer'], function () {
 
         }
     });
-    var startTime=null,
-    endTime=null;
-    laydate.render({
-        elem: '#test6',
-        range: true,
-        value: initialTime1,
-        // showBottom: false,
-        done: function (value, date, endDate) {
-            // console.log(value); //得到日期生成的值，如：2017-08-18
-            var timerKey = value.split(' - ');
-            // console.log(timerKey);
-            startTime = timerKey[0];
-            endTime = timerKey[1];
-        }
-
-    });
     // 查询
     $('.queryBtn').click(function () {
-        salesTableIn.reload({
-            where: {
-                keyword: $('.KyeText').val(),
-                sm_no:$('.keyNumder').val(),
-                start_time: startTime,
-                end_time: endTime
-            }
-        })
+        if (timeFlag(startTime, endTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
+        if (startTime) {
+            salesTableIn.reload({
+                where: {
+                    keyword: $('.KyeText').val(),
+                    sm_no: $('.keyNumder').val(),
+                    start_time: startTime,
+                    end_time: endTime
+                }
+            })
+        } else {
+            salesTableIn.reload({
+                where: {
+                    keyword: $('.KyeText').val(),
+                    sm_no: $('.keyNumder').val(),
+                }
+            })
+        }
+
     })
     // 添加销售经理
     $('.addSalesBtn').click(function () {
@@ -150,8 +162,8 @@ layui.use(['table', 'form', 'layer'], function () {
     $('.addSalesCont .cancelBtn').click(function () {
         popupHide('addSalesCont', 'addSalesBox')
     })
-    $('.pushImportBtn').click(function(){
-        popupShow('pushSalesCont','pushSalesBox')
+    $('.pushImportBtn').click(function () {
+        popupShow('pushSalesCont', 'pushSalesBox')
     })
     // 导入销售经理
     $('.importBtn input[name="addUpload"]').change(function (e) {
@@ -183,7 +195,7 @@ layui.use(['table', 'form', 'layer'], function () {
                     salesTableIn.reload({
                         where: {}
                     })
-                    popupHide('pushSalesCont ','pushSalesBox')
+                    popupHide('pushSalesCont ', 'pushSalesBox')
                 } else {
                     layer.msg(res.message, { icon: 7 });
                 }
@@ -237,7 +249,7 @@ layui.use(['table', 'form', 'layer'], function () {
 
 
 
-//   $('.importBtn').click(function(){
-//       $('.importBtn input[name="addUpload"]').click()
-//   })
+    //   $('.importBtn').click(function(){
+    //       $('.importBtn input[name="addUpload"]').click()
+    //   })
 })

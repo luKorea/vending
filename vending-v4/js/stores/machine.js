@@ -32,12 +32,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'number', width: 150, title: '终端编号', align: 'center', templet: function (d) {
+                    field: 'number', width: 150, title: '售货机编号', align: 'center', templet: function (d) {
                         return d.number ? d.number : '-'
                     }
                 },
                 {
-                    field: 'info', width: 330, title: '终端信息', align: 'center', templet: function (d) {
+                    field: 'info', width: 330, title: '售货机信息', align: 'center', templet: function (d) {
                         return d.info ? `<div>${d.info}</div>` : `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>`
                     }
                 },
@@ -387,7 +387,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 loadingAjax('/machine/getStatus', 'post', JSON.stringify({ machineId: machineSetData.machineId }), token).then(Dres => {
                     console.log(Dres)
                     if (Dres.data.actionStatus == 1) {
-                        loadingAjax('/pushActive', 'post', JSON.stringify({ machine: machineSetData.machineId, action: machineSetData.openStatus != 1?'true':'false' }), token).then(res => {
+                        loadingAjax('/pushActive', 'post', JSON.stringify({ machine: machineSetData.machineId, action: machineSetData.openStatus != 1 ? 'true' : 'false' }), token).then(res => {
                         }).catch(err => {
                             if (err == 'true') {
                                 loadingAjax('/machine/activeMachine', 'post', JSON.stringify({ machineId: machineSetData.machineId, openStatus: openStatusIndex }), token, 'mask').then(Sres => {
@@ -705,12 +705,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     // 销售详情部分
     //开始时间
-    var selesStartTime = '';
+    var selesStartTime = getKeyTime().startTime;
     //结束时间
-    var selesEndTime = '';
+    var selesEndTime = getKeyTime().endTime;
     laydate.render({
         elem: '#test6',
         range: true,
+        value: getKeyTime().keyTimeData,
         done: function (value, date, endDate) {
             // console.log(value); //得到日期生成的值，如：2017-08-18
             var timerKey = value.split(' - ');
@@ -719,11 +720,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
     });
 
-    var startTime = '',
-        endTime = '';
+    var startTime = getKeyTime().startTime,
+        endTime = getKeyTime().endTime;
     laydate.render({
         elem: '#test7',
         range: true,
+        value: getKeyTime().keyTimeData,
         done: function (value, date, endDate) {
             console.log(value); //得到日期生成的值，如：2017-08-18
             var timerKey = value.split(' - ');
@@ -761,7 +763,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {
                     field: 'payType', width: 150, title: '支付方式', templet: function (d) {
-                        return `<div><span class="${d.payType == 3?'tableStateCellFalse':d.payType != 0 ? 'tableStateCellTrue' : 'tableStateCellAli'}">${d.payType==3?'工行支付':d.payType != 0 ? '微信' : '支付宝'}</span></div>`
+                        return `<div><span class="${d.payType == 3 ? 'tableStateCellFalse' : d.payType != 0 ? 'tableStateCellTrue' : 'tableStateCellAli'}">${d.payType == 3 ? '工行支付' : d.payType != 0 ? '微信' : '支付宝'}</span></div>`
                     }
                 },
                 { field: 'payee', width: 150, title: '收款方', },
@@ -777,7 +779,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 'limitName': 'pageSize'
             },
             where: {
-                condition: id
+                condition: id,
+                conditionTwo: selesStartTime ? selesStartTime : null,
+                conditionThree: selesEndTime ? selesEndTime : null,
             },
             parseData: function (res) {
                 // console.log(res)
@@ -809,6 +813,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 销售详情查询
     $('.selesQueryBtn').click(function () {
+        if (timeFlag(selesStartTime, selesEndTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
         var selesVal = form.val('salesDataVal')
         console.log(selesVal)
         salesDatilsList.reload({
@@ -885,7 +893,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 'limitName': 'pageSize'
             },
             where: {
-                machineId: machineSetData.machineId
+                machineId: machineSetData.machineId,
+                conditionTwo: startTime,
+                conditionThree: endTime,
             },
             parseData: function (res) {
                 // console.log(res)
@@ -917,6 +927,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     }
     // 出货记录列表
     $('.shipmentQueryBtn').click(function () {
+        if (timeFlag(startTime, endTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
         recordDataList.reload({
             where: {
                 conditionTwo: startTime,
@@ -1001,7 +1015,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         salesListFlag = false,//销售记录
         shipmentListFlag = false,//出货记录
         shmentListFlag = false,
-        editPriceFlag=false;//修改价格记录
+        editPriceFlag = false;//修改价格记录
     function permissions() {
         permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
             res.data.forEach(item => {
@@ -1162,7 +1176,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }).catch(err => {
             console.log(err)
             wayList = [];
-            wayFlagArr=[];
+            wayFlagArr = [];
             var titleHtml = `<div style="text-align: center;">您没有权限访问货道详情！</div>`
             $('.aisleGoodsCont').html(titleHtml)
             // console.log(err)
@@ -1170,13 +1184,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
     };
     // 渲染方法
-    var wayFlagArr=[];
+    var wayFlagArr = [];
     function againFun(res) {
         console.log(res)
         wayList = [
             [], [], [], [], [], []
         ];
-        wayFlagArr=res.data
+        wayFlagArr = res.data
         res.data.forEach(item => {
             // console.log(item.row)
             if (item.row) {
@@ -1274,7 +1288,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         if (sessionStorage.independentPass) {
             aisleEdit();
             popupShow('editAisle', 'editAisleBox');
-            layer.msg('同一商品在不同货道，商品价格以最新编辑价格为准！',{icon:7})
+
         } else {
             popupShow('iPasswprd', 'passwordCont')
         }
@@ -1298,7 +1312,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 aisleEdit();
                 popupHide('iPasswprd', 'passwordCont')
                 popupShow('editAisle', 'editAisleBox');
-                layer.msg('同一商品在不同货道，商品价格以最新编辑价格为准！',{icon:7})
+
             } else {
                 popupHide('iPasswprd', 'passwordCont')
                 popupShow('addDetalis', 'addCont');
@@ -1392,8 +1406,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             newTotal: Number($('.editAisle input[name="total"]').val()),
             status: goodsDetails.open,
             newStatus: Number($('.editAisle select[name="testSele"]').val()),
-            price: goodsDetails.goods_Id? goodsDetails.price+'':'0',
-            newPrice:$('.editAisle input[name="price"]').val()+'',
+            price: goodsDetails.goods_Id ? goodsDetails.price + '' : '0',
+            newPrice: $('.editAisle input[name="price"]').val() + '',
             // replenish: Number($('.editAisle input[name="count"]').val()) - goodsDetails.count
         });
         if (editData == JSON.stringify(flagObj)) {
@@ -1516,9 +1530,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     };
     //支付类型设置
     // 获取支付参数
-    var weId=null,
-        aliId=null,
-        AcbcId=null;
+    var weId = null,
+        aliId = null,
+        AcbcId = null;
     function supportpay(machindID, merchantsID) {
         var payList = JSON.stringify({
             machineId: machindID,
@@ -1527,25 +1541,25 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             loadingAjax('/pay/getPayParam', 'post', JSON.stringify({ merchantId: Number(merchantsID) }), sessionStorage.token).then(pres => {
                 var setPayStr = ''
                 res.data.forEach((item, index) => {
-                    if(item.id==1){
-                        aliId=item.selectPay.length>0?item.selectPay[0].mpId:0
-                    }else if(item.id==2){
-                        weId=item.selectPay.length>0?item.selectPay[0].mpId:0
-                    }else if(item.id==3){
-                        AcbcId=item.selectPay.length>0?item.selectPay[0].mpId:0
+                    if (item.id == 1) {
+                        aliId = item.selectPay.length > 0 ? item.selectPay[0].mpId : 0
+                    } else if (item.id == 2) {
+                        weId = item.selectPay.length > 0 ? item.selectPay[0].mpId : 0
+                    } else if (item.id == 3) {
+                        AcbcId = item.selectPay.length > 0 ? item.selectPay[0].mpId : 0
                     }
                     if (item.status == 1) {
                         setPayStr += `<div class="layui-form-item">
                                         <label class="layui-form-label">${item.tName}：</label>
                                     <div class="layui-input-block">`
                         if (item.selectPay.length == 0) {
-                            setPayStr += `<input type="radio" lay-filter="${item.id==3?'radioTest3':'radioTest'}" name="${item.id}" value="${0 + '-' + 0}" title="无" checked>`
+                            setPayStr += `<input type="radio" lay-filter="${item.id == 3 ? 'radioTest3' : 'radioTest'}" name="${item.id}" value="${0 + '-' + 0}" title="无" checked>`
                         } else {
-                            setPayStr += `<input type="radio" lay-filter="${item.id==3?'radioTest3':'radioTest'}" name="${item.id}" value="${item.selectPay[0].mpId + '-' + 0}" title="无" >`
+                            setPayStr += `<input type="radio" lay-filter="${item.id == 3 ? 'radioTest3' : 'radioTest'}" name="${item.id}" value="${item.selectPay[0].mpId + '-' + 0}" title="无" >`
                         }
                         pres.data.forEach((e, i) => {
                             if (item.id == e.payType) {
-                                setPayStr += `<input type="radio" lay-filter="${item.id==3?'radioTest3':'radioTest'}" name="${item.id}" value="${(item.selectPay.length > 0 ? item.selectPay[0].mpId : 0) + '-' + e.id}" title="${e.payee}" ${item.selectPay.length <= 0 ? '' : item.selectPay[0].paramId == e.id ? 'checked' : ''} >`
+                                setPayStr += `<input type="radio" lay-filter="${item.id == 3 ? 'radioTest3' : 'radioTest'}" name="${item.id}" value="${(item.selectPay.length > 0 ? item.selectPay[0].mpId : 0) + '-' + e.id}" title="${e.payee}" ${item.selectPay.length <= 0 ? '' : item.selectPay[0].paramId == e.id ? 'checked' : ''} >`
                             }
                         })
                         setPayStr += `</div>
@@ -1581,20 +1595,20 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             });
             loadingAjax('/pay/updateMachinePayParam', 'post', setMachinePay, sessionStorage.token).then(res => {
                 layer.msg(res.message, { icon: 1 })
-                if(Number(dataID[1])!='0'&&AcbcId!='0'){
-                    var acbcObj=JSON.stringify({
+                if (Number(dataID[1]) != '0' && AcbcId != '0') {
+                    var acbcObj = JSON.stringify({
                         machineId: machineSetData.machineId,
                         paramId: 0,
                         mpId: Number(AcbcId)
                     })
                     loadingAjax('/pay/updateMachinePayParam', 'post', acbcObj, sessionStorage.token).then(res => {
                         supportpay(machineSetData.machineId, machineSetData.userNum);
-                    }).catch(err=>{})
-                }else{
+                    }).catch(err => { })
+                } else {
                     supportpay(machineSetData.machineId, machineSetData.userNum);
                 }
-                
-                
+
+
             }).catch(err => {
                 layer.msg(err.message, { icon: 2 })
             })
@@ -1614,32 +1628,32 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
             loadingAjax('/pay/updateMachinePayParam', 'post', setMachinePay, sessionStorage.token).then(res => {
                 layer.msg(res.message, { icon: 1 })
-              
-                if(Number(dataID[1])!='0'&&weId!='0'){
-                    var weObj=JSON.stringify({
+
+                if (Number(dataID[1]) != '0' && weId != '0') {
+                    var weObj = JSON.stringify({
                         machineId: machineSetData.machineId,
                         paramId: 0,
                         mpId: Number(weId)
                     })
-                    loadingAjax('/pay/updateMachinePayParam', 'post', weObj, sessionStorage.token).then(res => {}).catch(err=>{})
+                    loadingAjax('/pay/updateMachinePayParam', 'post', weObj, sessionStorage.token).then(res => { }).catch(err => { })
                 }
-                if(Number(dataID[1])!='0'&&aliId!='0'){
-                    var aliObj=JSON.stringify({
+                if (Number(dataID[1]) != '0' && aliId != '0') {
+                    var aliObj = JSON.stringify({
                         machineId: machineSetData.machineId,
                         paramId: 0,
                         mpId: Number(aliId)
                     })
                     loadingAjax('/pay/updateMachinePayParam', 'post', aliObj, sessionStorage.token).then(res => {
                         supportpay(machineSetData.machineId, machineSetData.userNum);
-                    }).catch(err=>{})
-                }else{
+                    }).catch(err => { })
+                } else {
                     supportpay(machineSetData.machineId, machineSetData.userNum);
                 }
-               
+
                 // setImmediate(_=>{
                 //     supportpay(machineSetData.machineId, machineSetData.userNum);
                 // },0)
-                
+
             }).catch(err => {
                 layer.msg(err.message, { icon: 2 })
             })
@@ -1857,7 +1871,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 'limitName': 'pageSize'
             },
             where: {
-                machineId: machineSetData.machineId
+                machineId: machineSetData.machineId,
+                start_time: replenishmentStartTime ? replenishmentStartTime : null,
+                end_time: sreplenishmentEndTime ? sreplenishmentEndTime : null
             },
             parseData: function (res) {
                 // console.log(res)
@@ -1889,12 +1905,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     };
 
     //开始时间
-    var replenishmentStartTime = '';
+    var replenishmentStartTime = getKeyTime().startTime;
     //结束时间
-    var sreplenishmentEndTime = '';
+    var sreplenishmentEndTime = getKeyTime().endTime;
     laydate.render({
         elem: '#test8',
         range: true,
+        value: getKeyTime().keyTimeData,
         done: function (value, date, endDate) {
             // console.log(value); //得到日期生成的值，如：2017-08-18
             var timerKey = value.split(' - ');
@@ -1903,6 +1920,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
     });
     $('.replenishment .RQueryBtn').click(function () {
+        if (timeFlag(replenishmentStartTime, sreplenishmentEndTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
         replenishmentList.reload({
             where: {
                 start_time: replenishmentStartTime ? replenishmentStartTime : null,
@@ -1912,8 +1933,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
 
     // 修改价格记录部分
-    var priceTable=null;
-    function priceFun(){
+    var priceTable = null;
+    function priceFun() {
         priceTable = table.render({
             elem: '#priceEdit',
             url: `${vApi}/machine/getPriceRecord`,
@@ -1930,7 +1951,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 { field: 'user_name', width: 150, title: '修改人', align: 'center', },
                 {
                     field: 'way', width: 250, title: '修改时间', align: 'center', templet: function (d) {
-                        return d.change_time?timeStamp(d.change_time):'-'
+                        return d.change_time ? timeStamp(d.change_time) : '-'
                     }
                 },
             ]]

@@ -625,7 +625,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       transferArr.forEach((item, index) => {
         var transferObj = ({
           value: item.machineId,
-          title: item.info ? item.info : '(此为未命名的新售货机)'
+          title: item.info ? item.info+'('+item.number+')' : '(此为未命名的新售货机)'
         });
         transferListArr.push(transferObj)
         console.log(transferListArr);

@@ -2,7 +2,7 @@
 document.write("<script type='text/javascript' src='../assets/public/jquery.animateNumber.min.js'></script>");
 // 删除商品数据列表数据
 // 传id
-const vApi=`/api`;
+const vApi = `/api`;
 var token = sessionStorage.token;
 var machineId = sessionStorage.machineID;
 function Goodsdel(id, indexs, obj, index, tableID, classTag) {
@@ -211,7 +211,7 @@ function treeList(marchantName) {
     }
   })
   // console.log(JSON.stringify(dataList))
-  if(dataList.length==0){
+  if (dataList.length == 0) {
     $('.left-mian').hide();
     $('.on-left').hide();
   }
@@ -237,7 +237,7 @@ function treeFun(tree, element, tableID, data, key, goodsCLass, selectData, cond
       }
       if (flag) {
         sessionStorage.classTag = obj.data.id,
-        sessionStorage.machineGoodsId=obj.data.id
+          sessionStorage.machineGoodsId = obj.data.id
       }
       // sessionStorage.merchantIdData = obj.data.id;
       varData = obj.data.id;
@@ -370,7 +370,7 @@ function leftMerchantsList(list, element) {
 function ajaxFun(url, type, data, userToken) {
   return $.ajax({
     type,
-    url:`/api${url}`,
+    url: `/api${url}`,
     timeout: 10000,
     data,
     headers: {
@@ -495,8 +495,8 @@ function animateNumberFun(ele, num, type) {
         var str = c.split('.');
         if (type == 1) {
           if (str.length == 1) { c = c + '.00'; } else { if (str[1].length == 1) { c = c + '0'; } }
-          target.text('￥'+c);
-        }else{
+          target.text('￥' + c);
+        } else {
           target.text(c);
         }
         // target.text(c);
@@ -505,20 +505,20 @@ function animateNumberFun(ele, num, type) {
     500
   )
 }
-function numFormat1(num) {
-        var oldNum = num;
-        num = Number(Number(num).toFixed(2));
-        if (!isNaN(num)) {
-            var c = (num.toString().indexOf('.') !== -1) ? num.toLocaleString() : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
-            var str = c.split(".");
+function numFormat1(num) {
+  var oldNum = num;
+  num = Number(Number(num).toFixed(2));
+  if (!isNaN(num)) {
+    var c = (num.toString().indexOf('.') !== -1) ? num.toLocaleString() : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+    var str = c.split(".");
     // console.log(str)
-            if (str.length == 1) { c = c + '.00'; } else { if (str[1].length == 1) { c = c + '0'; } }
-            return c;
-        } else {
-            return oldNum;
-        }
+    if (str.length == 1) { c = c + '.00'; } else { if (str[1].length == 1) { c = c + '0'; } }
+    return c;
+  } else {
+    return oldNum;
+  }
 
-    }
+}
 //获取用户权限
 function permissionsFun(url, type, userToken, layer) {
   return new Promise(function (resolve, reject) {
@@ -537,16 +537,16 @@ function permissionsFun(url, type, userToken, layer) {
   })
 }
 //权限判断
-async function permissionsVal(addIndex, editIndex, delIndex,four,five,six) {
+async function permissionsVal(addIndex, editIndex, delIndex, four, five, six) {
   var dataFlag = {
     addFlag: false,
     editFlag: false,
     delFlag: false,
-    fourFlag:false,
-    fiveFlag:false,
-    sixFlag:false,
+    fourFlag: false,
+    fiveFlag: false,
+    sixFlag: false,
   }
-  await permissionsFun('/role/findUserPermission', 'post', sessionStorage.token,layer).then(res => {
+  await permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
     // console.log(res.data)
     dataFlag.addFlag = res.data.some((item, index) => {
       return item.id == addIndex
@@ -574,7 +574,7 @@ async function permissionsVal(addIndex, editIndex, delIndex,four,five,six) {
 
 
 // 时间戳转时间问题
-function timeStamp(time){
+function timeStamp(time) {
   var myDate = new Date(time);
   var y = myDate.getFullYear();
   var m = (myDate.getMonth() + 1) < 10 ? '0' + (myDate.getMonth() + 1) : (myDate.getMonth() + 1);
@@ -585,3 +585,33 @@ function timeStamp(time){
   return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
 }
 
+// 查询条件默认一个月
+
+function getKeyTime() {
+  var initialTime = new Date(),
+    initialTime1 = {},
+    y = initialTime.getFullYear(),
+    m = initialTime.getMonth(),
+    d = initialTime.getDate(),
+    //开始时间
+    startTime = y + '-' + ((m + 1) < 10 ? '0' + (m) : (m)) + '-' + d,
+    //结束时间
+    endTime = y + '-' + ((m + 1) < 10 ? '0' + (m + 1) : (m + 1)) + '-' + d;
+  initialTime1 = startTime + ' - ' + endTime;
+  initialTime1={
+    keyTimeData:startTime + ' - ' + endTime,
+    startTime,
+    endTime,
+  }
+  return initialTime1
+}
+
+function timeFlag(start,end){
+  console.log(start,end)
+  var start1=new Date(start);
+  var end1=new Date(end);
+  var flagNum=24*60*60*1000*92;
+  var timeFlag3=true;
+  flagNum>=end1-start1?timeFlag3=false:timeFlag3=true;
+  return timeFlag3
+}

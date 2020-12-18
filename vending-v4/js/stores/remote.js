@@ -313,10 +313,10 @@ layui.use(['table', 'form', 'layer','tree'], function () {
             },
             cols: [[
                 { checkbox: true },
-                { field: 'number', width: 180, title: '终端编号', align: 'center',templet:function(d){
+                { field: 'number', width: 180, title: '售货机编号', align: 'center',templet:function(d){
                     return d.number?d.number:'-'
                 } },
-                { field: '终端信息', width: 180, title: '终端信息', align: 'center',templet:function(d){
+                { field: '终端信息', width: 180, title: '售货机信息', align: 'center',templet:function(d){
                     return d.info ? `<div>${d.info}</div>` : `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>`
                 } },
                 { field: 'location', width: 180, title: '地址', align: 'center' ,templet:function(d){
