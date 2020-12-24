@@ -2,35 +2,35 @@ import '../MyCss/operation.scss';
 import { loadAjax, prompt, getQueryString, decrypt1,loadAjax1  } from '../common/common.js';
 var machineId = decrypt1(getQueryString('machineId')),
     machineInformtion = null;
-$.ajax({
-    type: 'post',
-    url: '/api/machine/getStatus',
-    timeout: 10000,
-    async: false,
-    data: JSON.stringify({
-        machineId,
-    }),
-    headers: {
-        "Content-Type": "application/json",
-        token: sessionStorage.token
-    },
-    success: function (res) {
-        if (res.code == 200) {
-            machineInformtion = res.data;
-        } else {
-            prompt(res.message)
-        }
-    }, error: function (err) {
-        prompt('服务器请求超时')
-    }
-});
+// $.ajax({
+//     type: 'post',
+//     url: '/api/machine/getStatus',
+//     timeout: 10000,
+//     async: false,
+//     data: JSON.stringify({
+//         machineId,
+//     }),
+//     headers: {
+//         "Content-Type": "application/json",
+//         token: sessionStorage.token
+//     },
+//     success: function (res) {
+//         if (res.code == 200) {
+//             machineInformtion = res.data;
+//         } else {
+//             prompt(res.message)
+//         }
+//     }, error: function (err) {
+//         prompt('服务器请求超时')
+//     }
+// });
 
 // 灯光与音量状态
-var lamFlag = machineInformtion.is_light,
-    soundFlag = machineInformtion.is_volume;
+// var lamFlag = machineInformtion.is_light,
+//     soundFlag = machineInformtion.is_volume;
 
-lamFlag == 1 ? $('.lamp p').html('售货机关灯') : $('.lamp p').html('售货机开灯');
-soundFlag == 1 ? $('.sound p').html('售货机静音') : $('.sound p').html('售货机开启声音');
+// lamFlag == 1 ? $('.lamp p').html('售货机关灯') : $('.lamp p').html('售货机开灯');
+// soundFlag == 1 ? $('.sound p').html('售货机静音') : $('.sound p').html('售货机开启声音');
 
 // 开门部分
 $('.openTheDoor').click(function () {
@@ -50,91 +50,91 @@ $('.aloneContent .confirmBtn').click(function () {
     }
     
     var alonePassObj = JSON.stringify({
-        alonePwd: hex_md5($('.aloneContent input[name="alonePass"]').val())
+        alonePsd: hex_md5($('.aloneContent input[name="alonePass"]').val()),
+        machineId:machineId
     });
-    loadAjax1('/api/user/verifyAlonePwd','post',sessionStorage.token,alonePassObj).then(res=>{
-        $('.aloneContent').fadeOut(100).children('.aloneBox').removeClass('top30')
-        loadAjax1('/api/openTheDoor','post',sessionStorage.token,JSON.stringify({machine:machineId}),'mask').then(res=>{
-        }).catch(err=>{
-            if(err=='false'){
-                prompt('开门失败')
-            }else{
-                prompt('开门成功')
-            }
-        })
+    loadAjax1('/api/machine/openDoor','post',sessionStorage.token,alonePassObj).then(res=>{
+        prompt('开门成功')
     }).catch(err=>{
         prompt(err.message)
     })
+    // loadAjax1('/api/user/verifyAlonePwd','post',sessionStorage.token,alonePassObj).then(res=>{
+    //     $('.aloneContent').fadeOut(100).children('.aloneBox').removeClass('top30')
+    //     loadAjax1('/api/openTheDoor','post',sessionStorage.token,JSON.stringify({machine:machineId}),'mask').then(res=>{
+    //     }).catch(err=>{
+    //         if(err=='false'){
+    //             prompt('开门失败')
+    //         }else{
+    //             prompt('开门成功')
+    //         }
+    //     })
+    // }).catch(err=>{
+    //     prompt(err.message)
+    // })
 })
 
 //indexFlag  1开灯 2声音
 $('.lamp').click(function () {
     $('.inquiryBox .confirm').attr('indexFlag', 1);
-    $('.inquiry h2').html(lamFlag==1?'确定关灯？':'确定开灯？')
+    $('.inquiryBox .confirm').attr('openFlag', 1);
+    $('.inquiry h2').html('确定开灯？')
+    $('.inquiry').show();
+});
+$('.lamp1').click(function () {
+    $('.inquiryBox .confirm').attr('indexFlag', 1);
+    $('.inquiryBox .confirm').attr('openFlag', 2);
+    $('.inquiry h2').html('确定关灯？')
     $('.inquiry').show();
 });
 $('.sound').click(function(){
     $('.inquiryBox .confirm').attr('indexFlag', 2);
-    $('.inquiry h2').html(soundFlag==1?'确定静音？':'售货机开启声音？')
+    $('.inquiryBox .confirm').attr('openFlag', 1);
+    $('.inquiry h2').html('确定开启声音？')
+    $('.inquiry').show();
+})
+$('.sound1').click(function(){
+    $('.inquiryBox .confirm').attr('indexFlag', 2);
+    $('.inquiryBox .confirm').attr('openFlag', 2);
+    $('.inquiry h2').html('确定静音？')
     $('.inquiry').show();
 })
 // 取消
 $('.cancel').click(function () {
     $('.inquiry').hide();
     $('.inquiryBox .confirm').attr('indexFlag', '');
+    $('.inquiryBox .confirm').attr('openFlag', '');
 })
 $('.inquiryBox .confirm').click(function () {
     $('.inquiry').hide();
     $('.mask').show();
     if($(this).attr('indexFlag')==1){
         var lamObj=JSON.stringify({
-            action:lamFlag==1?'false':'true',
+            action:$(this).attr('openFlag')==1?'true':'false',
             machine:machineId
         })
         loadAjax1('/api/switchLight','post',sessionStorage.token,lamObj,'mask').then(res=>{
             $('.mask').hide();
         }).catch(err=>{
             $('.mask').hide();
-            if(err=='false'){
-                prompt('操作失败')
-            }else if(err=='true'){
-               
-                prompt('操作成功');
-                // lamFlag=0;
-                // lamFlag=lamFlag==1?0:1;
-                if(lamFlag==1){
-                    lamFlag=0
-                }else{
-                    lamFlag=1
-                }
-                console.log(lamFlag)
-                lamFlag == 1 ? $('.lamp p').html('售货机关灯') : $('.lamp p').html('售货机开灯');
+            if(err=='true'){
+                prompt('操作成功')
             }else{
-                prompt(err.message)
+                prompt('操作失败')
             }
         })
     }else{
         var soundObj=JSON.stringify({
-            action:soundFlag==1?'false':'true',
+            action:$(this).attr('openFlag')==1?'true':'false',
             machine:machineId
         });
         loadAjax1('/api/switchVolume','post',sessionStorage.token,soundObj,'mask').then(res=>{
             $('.mask').hide();
         }).catch(err=>{
             $('.mask').hide();
-            if(err=='false'){
-                prompt('操作失败')
-            }else if(err=='true'){
-                prompt('操作成功');
-                // soundFlag=soundFlag==1?0:1;
-                if(soundFlag==1){
-                    soundFlag=0
-                }else{
-                    soundFlag=1
-                }
-                soundFlag == 1 ? $('.sound p').html('售货机静音') : $('.sound p').html('售货机开启声音');
+            if(err=='true'){
+                prompt('操作成功')
             }else{
-                prompt(err.message)
+                prompt('操作失败')
             }
         })
     }

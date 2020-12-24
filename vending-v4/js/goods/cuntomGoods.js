@@ -277,14 +277,16 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   $('body').on('click', '.anUp .previewDetails', function () {
     indexFlag = null;
     $('.anUp').slideUp();
-    $('.Goods-wrap').addClass('fixed');
-    $('.reading').fadeIn();
-    $('.reading-header').css({
-      'left': $('.reading-contnet').offset().left + 'px',
-      'top': $('.reading-contnet').offset().top + 'px',
-    });
+    popupShow('reading','margin0');
+
+    // $('.Goods-wrap').addClass('fixed');
+    // $('.reading').fadeIn();
+    // $('.reading-header').css({
+    //   'left': $('.reading-contnet').offset().left + 'px',
+    //   'top': $('.reading-contnet').offset().top + 'px',
+    // });
     $('.reading-box').html(singleData.goods_Descript)
-    console.log(singleData.goods_Descript)
+    // console.log(singleData.goods_Descript)
   })
   // wangEditor 富文本编辑器创建
   var editWangEditor = new E('#editWangEditor')
@@ -300,6 +302,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     var EditValData = form.val("EditValData");
     console.log(EditValData)
     if (EditValData.goodsParam && EditValData.goodsBarcode && EditValData.goodsName && EditValData.goodsType && EditValData.goodsPrice && EditValData.goodsCost) {
+      if(!(EditValData.goodsPrice>0)){
+        layer.msg('同一销售价必须大于0',{icon:7});
+        return ;
+      }
       var editGoodsDateils = editWangEditor.txt.html().replace(/iframe/g, 'video  controls="false"')
       var editGoodsObj = JSON.stringify({
         goods_Id: singleData.goods_Id,
@@ -307,7 +313,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         goods_Name: EditValData.goodsName,   //商品名
         classify_Id: EditValData.goodsType,     //商品类型
         brand: EditValData.goodsBrand,        //品牌
-        goods_Price: EditValData.goodsPrice,  //同意零售价
+        goods_Price: EditValData.goodsPrice,  //零售价
         goods_Cost: EditValData.goodsCost,    //成本价
         goods_Param: EditValData.goodsParam,  //规格
         goods_Status: EditValData.goodsStatus, //状态
@@ -446,13 +452,17 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     // &&addValData.goodsBrand
     if (addValData.goodsParam && addValData.goodsBarcode && addValData.goodsName && addValData.goodsType && addValData.goodsPrice && addValData.goodsCost) {
       if (addGoodsImg) {
+        if(!(addValData.goodsPrice>0)){
+          layer.msg('同一销售价必须大于0',{icon:7});
+          return ;
+        }
         var addGoodsDateails = addWangEditor.txt.html().replace(/iframe/g, 'video controls="false"');
         var addGoodsObj = JSON.stringify({
           goods_Core: addValData.goodsBarcode, //商品条码
           goods_Name: addValData.goodsName,   //商品名
           classify_Id: addValData.goodsType,     //商品类型
           brand: addValData.goodsBrand,        //品牌
-          goods_Price: addValData.goodsPrice,  //同意零售价
+          goods_Price: addValData.goodsPrice,  //零售价
           goods_Cost: addValData.goodsCost,    //成本价
           goods_Param: addValData.goodsParam,  //规格
           goods_Status: addValData.goodsStatus, //状态
@@ -500,12 +510,13 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   // 富文本阅览部分
   $('.reading-btn').click(function () {
     // add为添加的富文本  edit为编辑的富文本
-    $('.Goods-wrap').addClass('fixed');
-    $('.reading').fadeIn();
-    $('.reading-header').css({
-      'left': $('.reading-contnet').offset().left + 'px',
-      'top': $('.reading-contnet').offset().top + 'px',
-    })
+    // $('.Goods-wrap').addClass('fixed');
+    // $('.reading').fadeIn();
+    // $('.reading-header').css({
+    //   'left': $('.reading-contnet').offset().left + 'px',
+    //   'top': $('.reading-contnet').offset().top + 'px',
+    // })
+    popupShow('reading','margin0');
     if ($(this).attr('id') == 'add') {
       $('.reading').fadeIn();
       // $('.reading .reading-header h1').html('详情页预览')

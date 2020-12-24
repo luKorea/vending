@@ -15,7 +15,7 @@ $('.searchCont .btn').click(function(){
     var loginObj=JSON.stringify({
         username: $('.formCont input[name="name"]').val(),
         password:  hex_md5($('.formCont input[name="pass"]').val()),
-        machineId:'pLlUsvC149AqJuc4rDgpjkQfhqqOxkiYN6ofGru4uyY='
+        machineId:machineId
     })
     loadAjax('/api/user/login','post',loginObj).then(res=>{
         sessionStorage.token=res.data.token;
@@ -58,12 +58,6 @@ $('.searchCont .btn').click(function(){
                 token:sessionStorage.token
             },
             success:function(res){
-                $('.mask').hide();
-                if(res=='true'){
-                    window.location.href=`operation.html?machineId=${getQueryString('machineId')}`
-                }else{
-                    prompt('售货机离线,登录失败') 
-                }
             },
             error:function(err){
                 $('.mask').hide();

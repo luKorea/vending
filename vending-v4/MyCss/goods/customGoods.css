@@ -240,7 +240,7 @@
     border-radius: 4px;
 }
 /* 编辑自定义商品部分 */
-.editor-content,.reading-contnet,.goodsMaterialBox,.materialBox{
+.editor-content,.reading-contnet,.goodsMaterialBox,.materialBox,.readingBox{
     width: 800px;
     position: relative;
     margin: 2vh auto 50px;
@@ -440,11 +440,12 @@
     color: #be954a;
 }
 .reading-box{
-    width: 88%;
-    margin: 0 auto ;
+    width: 100%;
     box-sizing: border-box;
-    margin-top: 75px;
-    padding-bottom: 30px;
+    padding: 0 6% 35px;
+    margin-top: 25px;
+    height: 620px;
+    overflow-y: auto;
 }
 .reading-box  img {
     width: 100%;

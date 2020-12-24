@@ -1,3 +1,22 @@
+
 /vending-v2/node_modules
 /vending-v2/.idea
+/vending-v3/node_modules
+/vending-v3/.idea
+/vending-v4/node_modules
+/vending-v4/.idea
+/mail/node_modules
+/mail/.idea
 /.idea
+
+# /vending-v3/node_modules
+# /vending-v3/.idea
+# /.idea
+
+# /vending-v4/node_modules
+# /vending-v4/.idea
+# /.idea
+
+# /mail/node_modules
+# /mail/.idea
+# /.idea

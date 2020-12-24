@@ -316,7 +316,7 @@ layui.use(['table', 'form', 'layer','tree'], function () {
                 { field: 'number', width: 180, title: '售货机编号', align: 'center',templet:function(d){
                     return d.number?d.number:'-'
                 } },
-                { field: '终端信息', width: 180, title: '售货机信息', align: 'center',templet:function(d){
+                { field: '售货机信息', width: 180, title: '售货机信息', align: 'center',templet:function(d){
                     return d.info ? `<div>${d.info}</div>` : `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>`
                 } },
                 { field: 'location', width: 180, title: '地址', align: 'center' ,templet:function(d){
@@ -396,6 +396,16 @@ layui.use(['table', 'form', 'layer','tree'], function () {
             loadingAjax('/app/updateMachineApp','post',updataObj,sessionStorage.token,'mask','machineListCOnt','machineBox',layer).then(res=>{
                 console.log(res);
                 layer.msg(res.message,{icon:1})
+                var machineStr='';
+                machineIdArr.forEach(item=>{
+                    machineStr+=item+','
+                })
+                var appWebSocketsObj=JSON.stringify({
+                    machine:machineStr
+                });
+                loadingAjax('/updateApp','post',appWebSocketsObj,sessionStorage.token,'','','',layer).then(res=>{
+
+                }).catch(err=>{})
             }).catch(err=>{
                 layer.msg(err.message,{icon:2})
             })

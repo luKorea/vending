@@ -138,7 +138,7 @@
                                     <div class="newKeyItem">
                                         <label for="">关键字</label>
                                         <div class="layui-form" lay-filter="myDiv">
-                                            <input type="text" placeholder="素材名">
+                                            <input type="text" name="machineKeyText" placeholder="请输入关键字">
                                         </div>
                                     </div>
                                 </div>
@@ -237,6 +237,7 @@
                     <li class="payTypeSet">收款账户</li>
                     <li class="shmentSet">补货记录</li>
                     <li class="editPriceTab">修改价格记录</li>
+                    <li class="editPriceTab">开门记录</li>
                     <div class="tabLine">
                     </div>
                 </ul>
@@ -245,7 +246,7 @@
                     <!-- 终端详情 -->
                     <li class="setCoreListOne" style="display: block;">
                         <div class="terminalState">
-                            <h1 style="color:#606266;font-size:16px;line-height:24px;font-weight:bold;">终端状态</h1>
+                            <h1 style="color:#606266;font-size:16px;line-height:24px;font-weight:bold;">售货机状态</h1>
                             <!-- 基本信息 -->
                             <div class="basic">
                                 <p>基本信息</p>
@@ -253,7 +254,7 @@
                                     <form class="layui-form" lay-filter="setDataVal" style="width: 100%;">
                                         <div class="formFlex">
                                             <div style="max-width: 370px;" class="key-contnet">
-                                                <div class="key-text">终端名</div>
+                                                <div class="key-text">售货机名</div>
                                                 <input type="text" class="notAllowed" disabled name="info"
                                                     class="KyeText">
                                             </div>
@@ -289,7 +290,7 @@
                                                     class="KyeText">
                                             </div>
                                             <div style="max-width: 370px;" class="key-contnet">
-                                                <div class="key-text">终端地址</div>
+                                                <div class="key-text">售货机地址</div>
                                                 <input type="text" class="notAllowed" disabled name="location"
                                                     class="KyeText">
                                             </div>
@@ -724,15 +725,41 @@
                     </li>
                     <!-- 价格修改记录 -->
                     <li class="price">
-                        <div>
-                            <header>修改价格记录</header>
-                        </div>
                         <div style="box-sizing: border-box;">
                             <div class="priceEditBox">
                                 <table class="layui-hide" id="priceEdit" lay-filter="priceEdit">
                                 </table>
                             </div>
                         </div>
+                    </li>
+                    <!-- 开门记录 -->
+                    <li class="openDoorRecord">
+                        <div class="newHeader">
+                            <div class="newHeaderText">
+                                条件查询
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">关键字</label>
+                                    <div>
+                                        <input type="text" name="keyName" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary opeQuery">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                    <span>查询</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div style="box-sizing: border-box;">
+                            <div class="priceEditBox">
+                                <table class="layui-hide" id="openTheDoor" lay-filter="openTheDoor">
+                                </table>
+                            </div>
+                        </div>
+
                     </li>
                 </ul>
                 <!-- </div> -->
@@ -742,7 +769,7 @@
         <!-- 编辑部分 -->
         <div class="editMachineCont" style="overflow-y: auto;">
             <div class="playHeader">
-                <span>终端基本信息</span>
+                <span>售货机基本信息</span>
                 <button class="close" type="button">
                     <i class="layui-icon layui-icon-close"></i>
                 </button>
@@ -753,15 +780,15 @@
                         <form class="layui-form" style="width: 100%;" lay-filter="editmachine">
                             <ul>
                                 <li class="listFlex">
-                                    <label for=""><span style="color: red;">*</span>终端编号</label>
+                                    <label for=""><span style="color: red;">*</span>售货机编号</label>
                                     <input type="text" name="sNumber">
                                 </li>
                                 <li class="listFlex">
-                                    <label for=""><span style="color: red;">*</span>终端名</label>
+                                    <label for=""><span style="color: red;">*</span>售货机名</label>
                                     <input type="text" name="tName">
                                 </li>
-                                <li class="listFlex">
-                                    <label for=""><span style="color: red;">*</span>终端序列号</label>
+                                <li class="listFlex sequence">
+                                    <label for=""><span style="color: red;">*</span>售货机序列号</label>
                                     <input type="text" disabled style="cursor: not-allowed;" name="number">
                                 </li>
                                 <!-- <li class="listFlex">

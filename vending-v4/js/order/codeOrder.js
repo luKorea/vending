@@ -30,10 +30,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             },
             cols: [[
                 { field: 'activity_name', width: 130, title: '活动名', align: 'center' },
-                { field: 'good_code', width: 210, title: '取货码', align: 'center' },
+                { field: 'good_code', width: 180, title: '取货码', align: 'center' },
                 { field: 'machineName', width: 200, title: '售货机名', align: 'center',templet:function(d){
                     return `<div>${d.machineName}</div>
-                    <div>(${d.number})</div>`
+                    <div>(${d.machineNumber})</div>`
                 } },
                 { field: 'machineAddress', width: 210, title: '终端地址', align: 'center' },
                 {
@@ -50,7 +50,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                     }
                 },
                 {
-                    field: 'operate_time', width: 150, align: 'center', title: '取货时间', templet: function (d) {
+                    field: 'operate_time', width: 160, align: 'center', title: '取货时间', templet: function (d) {
                         if (d.operate_time) {
                             return timeStamp(d.operate_time)
                         } else {

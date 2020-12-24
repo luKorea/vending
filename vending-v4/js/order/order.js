@@ -47,7 +47,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         // { field: 'machineId', width: 220, title: '设备编号', },
         // { field: 'CreationTime', width: 100, title: '下单时间', },
 
-        { field: 'number', width: 180, title: '订单编号', align: 'center' },
+        { field: 'number', width: 190, title: '订单编号', align: 'center' },
         // { field: 'bili', width: 100, title: '购买数量' },
         // { field: 'bili', width: 120, title: '订单金额', },
         // { field: 'bili', width: 120, title: '支付金额', },

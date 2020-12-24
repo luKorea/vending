@@ -26,7 +26,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
           }
         },
         {
-          field: 'roleSign', width: 150, align: 'center', title: '终端管理员', templet: function (d) {
+          field: 'roleSign', width: 150, align: 'center', title: '售货机管理员', templet: function (d) {
             return d.roleSign == 0 ? '否' : '是'
           }
         },
@@ -195,7 +195,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
 
     }else if(obj.event=='stores'){
       if(data.roleSign==0){
-        layer.msg('该用户不是终端管理员',{icon:7});
+        layer.msg('该用户不是售货机管理员',{icon:7});
         return ;
       }
       storesFun(obj.data.uuid)

@@ -62,7 +62,7 @@
     font-weight: bold;
 }
 .account{
-    height: 430px;
+    height: 520px;
     width: 100%;
     float: left;
     overflow-y: auto;
@@ -81,7 +81,7 @@
     font-size: 14px;
 }
 .equipment{
-    height: 430px;
+    height: 520px;
     width: 100%;
     float: left;
     overflow-y: auto;
@@ -109,7 +109,7 @@
     overflow: hidden;
 }
 .data-right .layui-table-body{
-    max-height: 391px;
+    max-height: 468px;
 }
 .goodsListBody .layui-table-body{
     max-height: 120px;

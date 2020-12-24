@@ -183,7 +183,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'roleSign', width: 150, align: 'center', title: '终端管理员', templet: function (d) {
+                    field: 'roleSign', width: 150, align: 'center', title: '售货机管理员', templet: function (d) {
                         return d.roleSign == 0 ? '否' : '是'
                     }
                 },

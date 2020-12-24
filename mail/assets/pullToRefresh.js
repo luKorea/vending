@@ -3,11 +3,11 @@ var refresher = {
 	info: {
 		"pullDownLable": "下拉刷新",
 		"pullingDownLable": "释放立即刷新",
-		"pullUpLable": "上拉加载更多",
-		"pullingUpLable": "释放加载更多",
+		"pullUpLable": "已加载全部",
+		"pullingUpLable": "已加载全部",
 		"loadingLable": "加载中..."
 	},
-	init: function(parameter) {
+	init: function (parameter) {
 		var wrapper = document.getElementById(parameter.id);
 		var div = document.createElement("div");
 		div.className = "scroller";
@@ -41,9 +41,9 @@ var refresher = {
 		var pullUpOffset = pullUpEle.offsetHeight;
 		this.scrollIt(parameter, pullDownEle, pullDownOffset, pullUpEle, pullUpOffset);
 	},
-	scrollIt: function(parameter, pullDownEle, pullDownOffset, pullUpEle, pullUpOffset) {
+	scrollIt: function (parameter, pullDownEle, pullDownOffset, pullUpEle, pullUpOffset) {
 		eval(
-		parameter.id + "= new iScroll(\
+			parameter.id + "= new iScroll(\
 									parameter.id,\
 									 {\
 										 useTransition: true,\
@@ -59,31 +59,31 @@ var refresher = {
 													       refresher.onScrollEnd(pullDownEle,parameter.pullDownAction,pullUpEle,parameter.pullUpAction);\
 																		}\
 										})"
-					);
+		);
 	},
-	onScrolling: function(e, pullDownEle, pullUpEle, pullUpOffset) {
-		if (e.y > -(pullUpOffset)&&!pullDownEle.className.match('loading')) {
+	onScrolling: function (e, pullDownEle, pullUpEle, pullUpOffset) {
+		if (e.y > -(pullUpOffset) && !pullDownEle.className.match('loading')) {
 			pullDownEle.classList.remove("flip");
 			pullDownEle.querySelector('.pullDownLabel').innerHTML = refresher.info.pullDownLable;
 			pullDownEle.querySelector('.pullDownIcon').style.display = "block";
 			e.minScrollY = -pullUpOffset;
 		}
-		if (e.scrollerH < e.wrapperH &&e.y>e.maxScrollY-pullUpOffset&&pullUpEle.className.match("flip") || e.scrollerH > e.wrapperH &&e.y>e.maxScrollY-pullUpOffset&&pullUpEle.className.match("flip") ) {
+		if (e.scrollerH < e.wrapperH && e.y > e.maxScrollY - pullUpOffset && pullUpEle.className.match("flip") || e.scrollerH > e.wrapperH && e.y > e.maxScrollY - pullUpOffset && pullUpEle.className.match("flip")) {
 			pullUpEle.classList.remove("flip");
 			pullUpEle.querySelector('.pullUpLabel').innerHTML = refresher.info.pullUpLable;
-		}		
-		if (e.y > 0&&!pullUpEle.className.match('loading')&&!pullDownEle.className.match('loading')) {
+		}
+		if (e.y > 0 && !pullUpEle.className.match('loading') && !pullDownEle.className.match('loading')) {
 			pullDownEle.classList.add("flip");
 			pullDownEle.querySelector('.pullDownLabel').innerHTML = refresher.info.pullingDownLable;
 			e.minScrollY = 0;
 		}
-		if (e.scrollerH < e.wrapperH && e.y < (e.minScrollY - pullUpOffset) &&!pullDownEle.className.match('loading')&&!pullUpEle.className.match('loading')|| e.scrollerH > e.wrapperH && e.y < (e.maxScrollY - pullUpOffset)&&!pullDownEle.className.match('loading')&&!pullUpEle.className.match('loading')) {
+		if (e.scrollerH < e.wrapperH && e.y < (e.minScrollY - pullUpOffset) && !pullDownEle.className.match('loading') && !pullUpEle.className.match('loading') || e.scrollerH > e.wrapperH && e.y < (e.maxScrollY - pullUpOffset) && !pullDownEle.className.match('loading') && !pullUpEle.className.match('loading')) {
 			pullUpEle.classList.add("flip");
 			pullUpEle.querySelector('.pullUpLabel').innerHTML = refresher.info.pullingUpLable;
 		}
 
 	},
-	onRelease: function(pullDownEle, pullUpEle) {
+	onRelease: function (pullDownEle, pullUpEle) {
 		if (pullDownEle.className.match('loading')) {
 			pullDownEle.classList.toggle("loading");
 			pullDownEle.querySelector('.pullDownLabel').innerHTML = refresher.info.pullDownLable;
@@ -93,14 +93,14 @@ var refresher = {
 			pullUpEle.querySelector('.pullUpLabel').innerHTML = refresher.info.pullUpLable;
 		}
 	},
-	onScrollEnd: function(pullDownEle, pullDownAction, pullUpEle, pullUpAction) {
-		if (pullDownEle.className.match('flip')&&!pullDownEle.className.match('loading')) {
+	onScrollEnd: function (pullDownEle, pullDownAction, pullUpEle, pullUpAction) {
+		if (pullDownEle.className.match('flip') && !pullDownEle.className.match('loading')) {
 			pullDownEle.classList.add("loading");
 			pullDownEle.classList.remove("flip");
 			pullDownEle.querySelector('.pullDownLabel').innerHTML = refresher.info.loadingLable;
-			if (pullDownAction) pullDownAction();	
+			if (pullDownAction) pullDownAction();
 		}
-		if (pullUpEle.className.match('flip')&&!pullUpEle.className.match('loading')) {
+		if (pullUpEle.className.match('flip') && !pullUpEle.className.match('loading')) {
 			pullUpEle.classList.add("loading");
 			pullUpEle.classList.remove("flip");
 			pullUpEle.querySelector('.pullUpLabel').innerHTML = refresher.info.loadingLable;

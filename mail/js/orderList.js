@@ -16,7 +16,7 @@ function encrypts(content) {
     return result
 };
 // 解密
- function decrypts(cipher) {
+function decrypts(cipher) {
     // const CryptoJS = require('crypto-js');
     var content = cipher;
     var key = CryptoJS.enc.Utf8.parse("yuebaowenhua2020");
@@ -62,11 +62,11 @@ function GetCode() {
 GetCode();
 
 
-var codeFlag=null;
+var codeFlag = null;
 $('.formCont .btn').click(function () {
-    if (!($('.list input[name="name"]').val() && $('.list input[name="phone"]').val()&&$('.list input[name="code"]').val())) {
+    if (!($('.list input[name="name"]').val() && $('.list input[name="phone"]').val() && $('.list input[name="code"]').val())) {
         prompt('收货人、手机号与验证码不能为空');
-        return ;
+        return;
     };
     if (!(/^1[3456789]\d{9}$/.test($('.list input[name="phone"').val()))) {
         prompt('请填写正确的手机号码');
@@ -82,18 +82,18 @@ $('.formCont .btn').click(function () {
         data: encrypts(nameInformation)
     });
     loadAjax('/api/order/getMailByUser', 'post', data).then(res => {
-        var ress= decrypts(res.data);
-        if(JSON.parse(ress).length==0){
+        var ress = decrypts(res.data);
+        if (JSON.parse(ress).length == 0) {
             prompt('查询无数据');
-            return ;
+            return;
         };
-        codeFlag=$('.list input[name="code"]').val();
+        codeFlag = $('.list input[name="code"]').val();
         $('.searchCont').hide();
         orderListFun(JSON.parse(ress))
         console.log(JSON.parse(ress))
         $('.orderListCont').show()
     }).catch(err => {
-        
+
         prompt(err.message);
     });
 });
@@ -105,25 +105,26 @@ $('.codeImg').click(function () {
     };
     GetCode();
 });
-// ;
 
 // 订单列表渲染
+var refIndex=1;
 var orderListVal = null;
 function orderListFun(listStr) {
+
     orderListVal = listStr
     var str = '';
     listStr.forEach((item, index) => {
-        var orderNum=0;
-        item.goodsList.forEach(ele=>{
-            orderNum+=Number(ele.count)*Number(ele.goods_Price)
+        var orderNum = 0;
+        item.goodsList.forEach(ele => {
+            orderNum += Number(ele.count) * Number(ele.goods_Price)
         });
-        str+=`<div class="orderNameList" indexs="${index}">
+        str += `<li class="orderNameList" indexs="${index}">
                     <div class="listHeader flexC">
                         <h3>${item.sign_name}/${item.sign_phone}</h3>
-                        <p>${item.dispatch_status==0?'未发货':'已发货'}</p>
+                        <p>${item.dispatch_status == 0 ? '未发货' : '已发货'}</p>
                     </div>
                     <div class="orderListS">
-                        <div class="${item.express_type?'show':'hide'}">
+                        <div class="${item.express_type ? 'show' : 'hide'}">
                             <div class="orderList flex">
                                 <h5>物流/快递公司:<span>${item.express_type}</span></h5>
                             </div>
@@ -131,7 +132,7 @@ function orderListFun(listStr) {
                                 <h5>物流/快递单号:<span>${item.express_number}</span></h5>
                             </div>
                             <div class="orderList flex">
-                                <h5>发货时间:<span>${item.express_time?timeStamp(item.express_time):''}</span></h5>
+                                <h5>发货时间:<span>${item.express_time ? timeStamp(item.express_time) : ''}</span></h5>
                             </div>
                         </div>
                        
@@ -145,10 +146,21 @@ function orderListFun(listStr) {
                             <h5>订单金额：<span>￥${orderNum}</span></h5>
                         </div>
                     </div>
-                </div>`
+                </li>`
     });
-    
     $('.ordertListBox ul').html(str);
+    setTimeout(function () {// <-- Simulate network congestion, remove setTimeout from production!
+        if(refIndex==1){
+            refIndex++
+            refresher.init({
+                id: "ordertListBox",
+                pullDownAction: Refresh,
+                pullUpAction: Load
+            });
+        }
+        ordertListBox.refresh();/****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
+    }, 500);
+    // ordertListBox.refresh();
 };
 
 function goodsListFun(goodsList) {
@@ -165,7 +177,7 @@ function goodsListFun(goodsList) {
                         <p>X ${item.count}</p>
                     </div>
                     <h5>总价：￥${Number(item.price) * Number(item.count)}</h5>
-                    <p style="margin:5px 0;">已退款数量：${item.refund_count?item.refund_count:0}</p>
+                    <p style="margin:5px 0;">已退款数量：${item.refund_count ? item.refund_count : 0}</p>
                 </div>
             </li>`
     });
@@ -181,7 +193,7 @@ $('.goodsBox').click(function () {
 $('.goodsCont').click(function () {
     $(this).hide();
 });
-$('.goodsHeader img').click(function(){
+$('.goodsHeader img').click(function () {
     $('.goodsCont').hide();
 });
 $('.back').click(function () {
@@ -194,30 +206,26 @@ $('.back').click(function () {
     GetCode();
 });
 
-
-refresher.init({
-	id:"ordertListBox",
-	pullDownAction:Refresh, 																		
-	});																																							
-function Refresh() {																
-	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
-		var el, li, i;																		
-		// el =document.querySelector("#ordertListBox ul");					
-        //这里写你的刷新代码		
+function Refresh() {
+    setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+        var el, li, i;
+        // el =document.querySelector("#ordertListBox ul");					
+        //这里写你的刷新代码	
+        
         var nameInformation = JSON.stringify({
             phone: $('.list input[name="phone"]').val(),
             name: $('.list input[name="name"]').val(),
-            code:codeFlag,
+            code: codeFlag,
             random: randomNum
         })
         var data = JSON.stringify({
             data: encrypts(nameInformation)
         });
         loadAjax('/api/order/getMailByUser', 'post', data).then(res => {
-            var ress= decrypts(res.data);
-            if(JSON.parse(ress).length==0){
+            var ress = decrypts(res.data);
+            if (JSON.parse(ress).length == 0) {
                 prompt('查询无数据');
-                return ;
+                return;
             };
             orderListFun(JSON.parse(ress))
             prompt('刷新成功');
@@ -226,12 +234,18 @@ function Refresh() {
             $('.searchCont').show();
             prompt('请重新查询');
         });
-		document.getElementById("ordertListBox").querySelector(".pullDownIcon").style.display="none";		
-		document.getElementById("ordertListBox").querySelector(".pullDownLabel").innerHTML="刷新成功";																					 
-		setTimeout(function () {
-			ordertListBox.refresh();
-			document.getElementById("ordertListBox").querySelector(".pullDownLabel").innerHTML="";								
-			},1000);//模拟qq下拉刷新显示成功效果
-		/****remember to refresh after  action completed！ ---yourId.refresh(); ----| ****/
-	}, 1000);
+        document.getElementById("ordertListBox").querySelector(".pullDownIcon").style.display = "none";
+        document.getElementById("ordertListBox").querySelector(".pullDownLabel").innerHTML = "刷新成功";
+        setTimeout(function () {	
+            ordertListBox.refresh();
+            document.getElementById("ordertListBox").querySelector(".pullDownLabel").innerHTML = "";
+        }, 1000);//模拟qq下拉刷新显示成功效果
+        /****remember to refresh after  action completed！ ---yourId.refresh(); ----| ****/
+    }, 1000);
+}
+
+function Load() {
+    // setTimeout(function () {// <-- Simulate network congestion, remove setTimeout from production!
+        ordertListBox.refresh();/****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
+    // }, 500);
 }

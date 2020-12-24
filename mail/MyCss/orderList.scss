@@ -152,16 +152,13 @@ label.label {
     }
 }
 .orderListCont{
-    width: 100%;
-    padding-top: 0.4rem;
+    // width: 100%;
     // background: url('../img/backgroud.jpg');
-    background-size: cover;
-    min-height: 100vh;
-    background: #EEEEEE;
-    padding-bottom: 0.5rem;
+    // background-size: cover;
+    // min-height: 100vh;
+    // background: #EEEEEE;
     .orderNameList{
         width: 94%;
-        // border-bottom: 0.15rem solid rgba(190, 149, 74,1);
         padding:0.2rem 0;
         overflow: hidden;
         margin-bottom: 0.3rem;
@@ -347,7 +344,7 @@ label.label {
     }
 }
 .scroller li {
-	height:60px;
+	// height:220px;
 	border-bottom: 1px solid #eee;
 	background-color: #fff;
 	font-size: 14px;
@@ -357,5 +354,19 @@ label.label {
 .game-info{ padding:15px 10px; background:#FFF; line-height:22px; color:#333; font-size:14px;}
 .game-info p{color:#999; font-size:12px;}
 .pullUp{
-    display: none !important;
+    // display: none !important;
+    opacity: 0;
+}
+#ordertListBox{
+    padding-top: 1.2rem;
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    // overflow-y: auto !important;
+    width: 100%;
+    // padding-bottom: 0.35rem;
+    background: #EEEEEE;
+}
+.marginTop60{
+    margin-top: 60px;
 }

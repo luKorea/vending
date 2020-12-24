@@ -202,7 +202,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 replenishmenFun(machineSetData.machineId);
                 break;
             case 6:
-                priceFun()
+                priceFun();
+                break;
+            case 7:
+                openDoorFun();
+                break;
         }
     });
     // 监听售货机列表操作
@@ -1056,6 +1060,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
             activateFlag ? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
             paySetFlag ? $('.payTypeSet').removeClass('hide') : $('.payTypeSet').addClass('hide');
+            paySetFlag ? $('.sequence').removeClass('hide') : $('.sequence').addClass('hide');
             delAisleFlag ? $('.detailsDel').removeClass('hide') : $('.detailsDel').addClass('hide');
             AisleDetailsFlag ? $('aisleDetailsTab').removeClass('hide') : $('aisleDetailsTab').addClass('hide');
             salesListFlag ? $('.salesDetails').removeClass('hide') : $('.salesDetails').addClass('hide');
@@ -1995,4 +2000,71 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         });
     }
+
+    // 开门记录部分
+    var openDoorTable = null;
+    function openDoorFun() {
+        openDoorTable = table.render({
+            elem: '#openTheDoor',
+            url: `${vApi}/machine/getDoorRecord`,
+            method: 'post',
+            contentType: "application/json",
+            headers: {
+                token,
+            },
+            cols: [[
+                { field: 'info', width: 250, title: '售货机名', align: 'center', },
+                { field: 'openType', width: 150, title: '类型', align: 'center', },
+                { field: 'username', width: 150, title: '操作人', align: 'center', },
+                { field: 'goods_Name', width: 250, title: '开门时间', align: 'center', templet:function(d){
+                    return d.open_time ? timeStamp(d.open_time) : '-'
+                }},
+            ]]
+            , id: 'openTheDoorId'
+            , page: true
+            , loading: true
+            , limits: [10, 20, 50, 100]
+            ,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where: {
+                machineId: machineSetData.machineId
+            },
+            parseData: function (res) {
+                // console.log(res)
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    window.parent.location.href = "login.html";
+                }
+            }
+        });
+    };
+    $('.openDoorRecord .opeQuery').click(function(){
+        openDoorTable.reload({
+            where:{
+                keyword:$('.openDoorRecord input[name="keyName"]').val()
+            }
+        })
+    })
 });
