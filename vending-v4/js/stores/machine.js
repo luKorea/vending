@@ -762,13 +762,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // },
                 {
                     field: 'payStatus', width: 150, title: '支付状态', templet: function (d) {
-                        return `<div><span class="${d.payStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payStatus == 1 ? '等待支付' : d.payStatus == 2 ? '已支付' : '未支付'}</span></div>`
+                        return `<div><span class="${d.payStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payResult}</span></div>`
                     }
                 },
                 {
-                    field: 'payType', width: 150, title: '支付方式', templet: function (d) {
-                        return `<div><span class="${d.payType == 3 ? 'tableStateCellFalse' : d.payType != 0 ? 'tableStateCellTrue' : 'tableStateCellAli'}">${d.payType == 3 ? '工行支付' : d.payType != 0 ? '微信' : '支付宝'}</span></div>`
-                    }
+                    field: 'payTypes', width: 150, title: '支付方式', 
                 },
                 { field: 'payee', width: 150, title: '收款方', },
                 { field: 'amount', width: 150, title: '金额', },
@@ -939,7 +937,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             where: {
                 conditionTwo: startTime,
                 conditionThree: endTime,
-                conditionFour: $('.shipmentRecord input[name="keyName"]').val()
+                // conditionFour: $('.shipmentRecord input[name="keyName"]').val()
             }
 
         })

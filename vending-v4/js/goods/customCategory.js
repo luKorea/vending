@@ -84,7 +84,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
   $('.queryBtn').click(function () {
     tableIns.reload({
       where: {
-        classifyName: $('.keyText').val()
+        // classifyName: $('.keyText').val()
       }
     })
   })

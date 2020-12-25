@@ -726,6 +726,7 @@
   .treeList  a {
         text-decoration: none;
         color: #434b5a;
+        cursor: auto !important;
     }
     
   .treeList  .synTree .iconxiangyou{

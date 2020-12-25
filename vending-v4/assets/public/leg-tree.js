@@ -241,19 +241,19 @@
 	  
 			  //使点击a标签等同于点击  
 			  $(tree).on("click", "a", function() {
-				  if ($(this).prev().prev().prev()[0].checked) {
-					  $(this).prev().prev().prev().removeAttr("checked");
-					  $(this).prev().prev().children('i').removeClass("iconicon-checkbox");
-					  $(this).prev().prev().children('i').removeClass("iconjianhao");
-				  } else {
-					  $(this).prev().prev().prev().prop("checked", 'true');
-					  $(this).prev().prev().children('i').addClass("iconicon-checkbox");
-				  }
-				  //判断是否为子父级联
-				  if (cascade) {
-					  checkChildren($(this).prev().prev().prev()[0]);
-					  checkParent($(this).prev().prev().prev()[0]);
-				  }
+				//   if ($(this).prev().prev().prev()[0].checked) {
+				// 	  $(this).prev().prev().prev().removeAttr("checked");
+				// 	  $(this).prev().prev().children('i').removeClass("iconicon-checkbox");
+				// 	  $(this).prev().prev().children('i').removeClass("iconjianhao");
+				//   } else {
+				// 	  $(this).prev().prev().prev().prop("checked", 'true');
+				// 	  $(this).prev().prev().children('i').addClass("iconicon-checkbox");
+				//   }
+				//   //判断是否为子父级联
+				//   if (cascade) {
+				// 	  checkChildren($(this).prev().prev().prev()[0]);
+				// 	  checkParent($(this).prev().prev().prev()[0]);
+				//   }
 			  })
 	  
 			  //id相等就选中
