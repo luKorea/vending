@@ -963,7 +963,12 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       type: PType
     })
     loadingAjax('/goods/sendGoods', 'post', pushData, token, 'mask', 'chooseLower', 'chooseBox', layer).then((res) => {
-      console.log(res)
+      console.log(res);
+      if(parentGoods){
+        parentGoods.reload({
+          where:{}
+        })
+      }
       popupHide('PushMandatory', 'MandatoryBox')
       layer.msg(res.message, { icon: 1 })
     }).catch((err) => {
