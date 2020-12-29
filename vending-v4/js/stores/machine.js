@@ -752,7 +752,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'time', width: 200, title: '时间'
+                    field: 'time', width: 200, title: '时间',templet:function(d){
+                        return timeStamp(d.time)
+                    }
                 },
                 { field: 'number', width: 250, title: '订单号', },
                 // {

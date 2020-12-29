@@ -18,21 +18,8 @@ layui.use(['table', 'form', 'layer','tree'], function () {
                 { field: 'version_name', width: 180, title: '版本名', align: 'center' },
                 { field: 'apk_url', width: 350, title: '下载地址' , align: 'center'},
                 { field: 'content', width: 350, title: '描述' , align: 'center'},
-                { field: 'upload_user', width: 150, title: '创建人' , align: 'center'},
-                { field: 'upload_time', width: 180, title: '创建时间', align: 'center',templet:function(d){
-                    if (d.upload_time) {
-                        var myDate = new Date(d.upload_time);
-                        var y = myDate.getFullYear();
-                        var m = myDate.getMonth() + 1;
-                        var d = myDate.getDate();
-                        var h = myDate.getHours();
-                        var min = myDate.getMinutes();
-                        var s = myDate.getSeconds();
-                        return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
-                      } else {
-                        return '';
-                      }
-                }},
+                { field: 'addUser', width: 150, title: '创建人' , align: 'center'},
+                { field: 'addTime', width: 180, title: '创建时间', align: 'center'},
                 { field: 'operation', fixed: 'right', right: 0, width: 180, title: '操作', toolbar: '#barDemo', align: 'center' },
             ]]
             , id: 'tableId'

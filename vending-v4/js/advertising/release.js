@@ -401,13 +401,12 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
                     },
                     { field: 'addUser', width: 150, align: 'center', title: '创建人 ', },
                     { field: 'creationTime', width: 160, title: '创建时间', align: 'center' },
-
                 ]],
                 page: true,
                 id: 'chooesId',
                 height: 450,
                 loading: true,
-                width: 1100,
+                // width: 1100,
                 request: {
                     'pageName': 'pageNum',
                     'limitName': 'pageSize'

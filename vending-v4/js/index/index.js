@@ -168,16 +168,15 @@ window.onload = function () {
                     socketFlag = false
                 }
             }
-        };
-        
-        // setInterval(() => {
-        //     if (sessionStorage.token) {
-        //         if (!socketFlag) {
-        //             socketFlag = true;
-        //             openSocket()
-        //         }
-        //     }
-        // }, 10000)
+        }; 
+        setInterval(() => {
+            if (sessionStorage.token) {
+                if (!socketFlag) {
+                    socketFlag = true;
+                    openSocket()
+                }
+            }
+        }, 10000)
 
         //退出登录
         function loginOut() {
@@ -309,7 +308,7 @@ window.onload = function () {
             // var accountsListFlag = res.data.some((item, index) => {
             //     return item.id == 423
             // });
-            accountsListFlag ? $('.accountsListFlag').removeClass('hide').parents('.accountsCont').removeClass('hide') : $('.accountsListFlag').addClass('hide').parents('.accountsCont').addClass('hide');
+            // accountsListFlag ? $('.accountsListFlag').removeClass('hide').parents('.accountsCont').removeClass('hide') : $('.accountsListFlag').addClass('hide').parents('.accountsCont').addClass('hide');
 
             //订单模块
             // var orderListFlag = res.data.some((item, index) => {

@@ -25,9 +25,9 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             },
             cols: [[
                 { field: 'activity_name', width: 200, title: '活动名', event: 'pickup', align: 'center' },
-                { field: 'code_count', width: 150, title: '取货码数量', event: 'pickup', align: 'center' },
+                { field: 'code_count', width: 120, title: '取货码数量', event: 'pickup', align: 'center' },
                 {
-                    field: 'open', width: 150, title: '已兑换数量', event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'open', width: 120, title: '已兑换数量', event: 'pickup', align: 'center', templet: function (d) {
                         var tatol = 0;
                         d.good_codes.forEach(item => {
                             if (item.code_status == 1) {
@@ -38,7 +38,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                     }
                 },
                 {
-                    field: 'roleSign', width: 230, title: '开始时间', event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'roleSign', width: 180, title: '开始时间', event: 'pickup', align: 'center', templet: function (d) {
                         if (d.start_time) {
                             return timeStamp(d.start_time)
                         } else {
@@ -47,7 +47,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                     }
                 },
                 {
-                    field: 'alias', width: 230, title: '结束时间', event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'alias', width: 180, title: '结束时间', event: 'pickup', align: 'center', templet: function (d) {
                         if (d.start_time) {
                             return timeStamp(d.end_time)
                         } else {
@@ -56,14 +56,14 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                     }
                 },
                 {
-                    field: 'phone', width: 180, title: '活动状态', event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'phone', width: 130, title: '活动状态', event: 'pickup', align: 'center', templet: function (d) {
                         var time = new Date().getTime();
                         return d.activity_status == 1 ? '已暂停' : d.activity_status == 2 ? '已取消' : time > d.end_time ? '已过期' : '活动正常'
                     }
                 },
-                { field: 'create_user', width: 190, title: '创建人', event: 'pickup', align: 'center' },
+                { field: 'create_user', width: 180, title: '创建人', event: 'pickup', align: 'center' },
                 {
-                    field: 'addUser', width: 190, title: '创建时间', event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'addUser', width: 180, title: '创建时间', event: 'pickup', align: 'center', templet: function (d) {
                         if (d.start_time) {
                             return timeStamp(d.create_time)
                         } else {

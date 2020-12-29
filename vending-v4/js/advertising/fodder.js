@@ -400,9 +400,13 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     // 编辑确定修改
     $('.editConfirmBtn').click(function () {
         var editValDataConfirm = form.val("editValData");
+       
+        if(!editValDataConfirm.materialName){
+            layer.msg('素材名不能空',{icon:7});
+            return ;
+        }
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-
         if (valData.checkStatus == '0') {
             loadingAjax('/advertising/findAdvertising', 'post', JSON.stringify({ id: valData.vid }), sessionStorage.token, '', '', '', layer).then(res => {
                 if (res.data == '0') {

@@ -40,9 +40,9 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         token,
       },
       cols: [[
-        { field: 'info', width: 210, title: '售货机名', align: 'center' ,templet:function(d){
+        { field: 'info', width: 220, title: '售货机名(编号)', align: 'center' ,templet:function(d){
           return `<div>${d.info}</div>
-                  <div>(${d.number})</div>`
+                  <div>(${d.machineId})</div>`
         }},
         // { field: 'machineId', width: 220, title: '设备编号', },
         // { field: 'CreationTime', width: 100, title: '下单时间', },

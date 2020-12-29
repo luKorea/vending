@@ -831,7 +831,7 @@ function salesListArr(mId,mNum){
             str+=`<li>
                     <div class="keyText flex">
                         <label for="">时间:</label>
-                        <p>${item.time}</p>
+                        <p>${ timeStamp(item.time)}</p>
                     </div>
                     <div class="keyText flex">
                         <label for="">订单号:</label>
@@ -839,11 +839,11 @@ function salesListArr(mId,mNum){
                     </div>
                     <div class="keyText flex">
                         <label for="">支付状态:</label>
-                        <p>${item.payStatus==1?'等待支付':item.payStatus==2?'已支付':'未支付'} </p>
+                        <p>${item.payResult} </p>
                     </div>
                     <div class="keyText flex">
                         <label for="">支付方式:</label>
-                        <p>${item.payType==0?'支付宝':'微信'} </p>
+                        <p>${item.payTypes} </p>
                     </div>
                     <div class="keyText flex">
                         <label for="">收款方:</label>

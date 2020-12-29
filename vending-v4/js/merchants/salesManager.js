@@ -70,7 +70,9 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
             'limitName': 'pageSize'
         },
         where: {
-            merchantId: Number(sessionStorage.machineID)
+            merchantId: Number(sessionStorage.machineID),
+            start_time: startTime,
+            end_time: endTime
         },
         parseData: function (res) {
             // console.log(res)

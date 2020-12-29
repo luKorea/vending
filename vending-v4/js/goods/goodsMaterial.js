@@ -160,7 +160,9 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       },
       where: {
         conditionFour: '0',
-        conditionSix: sessionStorage.machineID
+        conditionSix: sessionStorage.machineID,
+        condition: startTime,
+        conditionTwo: endTime,
       },
       response: {
         statusCode: 200 //规定成功的状态码，默认：0
@@ -213,7 +215,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         layer.msg(err.message, { icon: 2 });
       })
     } else {
-      layer.msg('名不能为空', { icon: 7 });
+      layer.msg('素材名不能为空', { icon: 7 });
     }
   })
 
@@ -225,7 +227,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     }
     advertisingLis.reload({
       where: {
-        conditionThree: $('.key-contnet input[name="KeyImgName"]').val(),
+        conditionThree: $('.newKeyContent input[name="KeyImgName"]').val(),
         conditionFour: '0',
         condition: startTime,
         conditionTwo: endTime,
@@ -235,13 +237,13 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   });
   // 视频查询
   $('.VideoQueryBtnClick').click(function () {
-    if (timeFlag(startTime2, endTime2)) {
-      layer.msg('时间选择范围最多三个月', { icon: 7 });
-      return;
-    }
+    // if (timeFlag(startTime2, endTime2)) {
+    //   layer.msg('时间选择范围最多三个月', { icon: 7 });
+    //   return;
+    // }
     videoTable.reload({
       where: {
-        conditionThree: $('.key-contnet input[name="keyVideoName"]').val(),
+        conditionThree: $('.newKeyContent input[name="keyVideoName"]').val(),
         conditionFour: '1',
         condition: startTime2,
         conditionTwo: endTime2,
@@ -320,7 +322,9 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       },
       where: {
         conditionFour: '1',
-        conditionSix: sessionStorage.machineID
+        conditionSix: sessionStorage.machineID,
+        condition: startTime2,
+        conditionTwo: endTime2,
       },
       response: {
         statusCode: 200 //规定成功的状态码，默认：0
@@ -812,7 +816,9 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       },
       where: {
         conditionFour: '2',
-        conditionSix: sessionStorage.machineID
+        conditionSix: sessionStorage.machineID,
+        condition: startTime3,
+        conditionTwo: endTime3,
       },
       response: {
         statusCode: 200 //规定成功的状态码，默认：0
