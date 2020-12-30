@@ -375,7 +375,7 @@ function aisleEdit() {
     console.log(goodsDetails);
     $('.editiAsleBody input[name="goodsName"]').val(goodsDetails.mail==1?'(邮寄)'+goodsDetails.goods_Name:goodsDetails.goods_Name);
     $('.editiAsleBody input[name="goodsName"]').attr('IVal', goodsDetails.goods_Id);
-    $('.editiAsleBody input[name="price"]').val(goodsDetails.goods_Price);
+    $('.editiAsleBody input[name="price"]').val(goodsDetails.price);
     $('.editiAsleBody input[name="count"]').val(goodsDetails.count);
     $('.editiAsleBody input[name="total"]').val(goodsDetails.total);
     $('.editiAsleBody input[name="openText"]').val(goodsDetails.open == 1 ? '是' : '否');
@@ -471,7 +471,7 @@ function goodsLoad() {
 function goodsDrawing(gData) {
     var goodsStr = '';
     gData.forEach((item, index) => {
-        goodsStr += `<div class="chooseList myScale3d" mail="${item.mail}" gID="${item.goods_Id}" gName="${item.goods_Name}" gPrice="${item.goods_Price}" >
+        goodsStr += `<div class="chooseList myScale3d" mail="${item.mail}" gID="${item.goods_Id}" gName="${item.goods_Name}" gPrice="${item.price}" >
                         <div class="goodsImg">
                             <img src="${item.goods_images}"
                                 alt="">
@@ -485,7 +485,7 @@ function goodsDrawing(gData) {
                             </div>
                             <div class="flexThree">
                                 <p>销售价</p>
-                                <span>￥${item.goods_Price}</span>
+                                <span>￥${item.price}</span>
                             </div>
                         </div>
                     </div>`
@@ -532,6 +532,8 @@ $('.editAisleContent .confirmBtn').click(function () {
         newTotal: Number($('.editiAsleBody input[name="total"]').val()),
         status: goodsDetails.open,
         newStatus: Number($('.editiAsleBody input[name="openVal"]').val()),
+        newPrice:$('.editAisleContent input[name="price"]').val(),
+        price:goodsDetails.goods_Id?goodsDetails.price+'':'0'
         // open: $('.editAisle input[name="openVal"]').val()
     });
     loadAjax('/machine/updateGoodWay', 'post', sessionStorage.token, editObj, 'mask', '.editAisleContent', 'top50').then(res => {

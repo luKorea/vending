@@ -1,5 +1,8 @@
 import '../../../MyCss/mobile/my/my.scss';
 import { loadAjax, loadingWith, loadingOut, toastTitle ,showPopup,closeParents,closeWindow,passRegular,outLogin} from '../../../common/common.js'
+if(!sessionStorage.token){
+    window.location.href='M_login.html'
+}
 $('.loginPassBtn').click(function(){
     showPopup('.loginPassCont','.changeBox','top30');
 })

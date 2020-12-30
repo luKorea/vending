@@ -52,7 +52,7 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
             { field: 'sm_classify', width: 230, title: '类别', align: 'center' },
             { field: 'create_name', width: 230, title: '创建人', align: 'center' },
             {
-                field: 'create_time', width: 200, title: '创建时间', templet: function (d) {
+                field: 'create_time', width: 200, align: 'center', title: '创建时间', templet: function (d) {
                     if (d.create_time) {
                         return timeStamp(d.create_time)
                     } else {

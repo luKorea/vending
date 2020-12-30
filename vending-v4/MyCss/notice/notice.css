@@ -15,7 +15,7 @@
 }
 .BoxTableList .layui-form{
     width: 100%;
-    overflow-x: auto;
+    /* overflow-x: auto; */
 }
 .modificationBox,.previewBox,.editBox{
     width: 950px;
@@ -27,6 +27,7 @@
     box-sizing: border-box;
     transition: all 0.3s;
     padding-bottom: 15px;
+    padding: 20px;
 }
 .previewContent .playHeader{
     border-bottom: 1px solid #ebeef5;
@@ -65,7 +66,7 @@
     color: #606266;
     line-height: 24px;
     display: inline-block;
-    margin-left: 70px;
+    margin-left: 42px;
 }
 #addWangEditor{
     /* width: 90%;
@@ -102,4 +103,14 @@
     overflow:visible;
     text-overflow:inherit;
     white-space:normal;
+}
+.playHeader{
+    border-bottom: 1px solid #e6e6e6;
+}
+.previewBody{
+    min-height: 65vh;
+    margin-top: 25px;
+    border: 1px solid #c0ccda;
+    box-sizing: border-box;
+    padding: 15px 15px 25px;
 }

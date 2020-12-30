@@ -797,6 +797,7 @@ jeDate("#test10",{
         var timerKey = obj.val.split(' - ');
         saStart_time=timerKey[0];
         saend_time=timerKey[1]
+        console.log(saStart_time,saend_time)
         salesListArr(machineDetails.machineId,1)
     },
     clearfun:function(ele,val){
@@ -811,7 +812,7 @@ function salesListArr(mId,mNum){
         condition:mId,
         pageNum:mNum,
         pageSize:10,
-        conditionTwo:saend_time,
+        conditionTwo:saStart_time,
         conditionThree:saend_time
     });
     loadAjax('/machine/getSalesList','post',sessionStorage.token,salesObj).then(res=>{

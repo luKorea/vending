@@ -1,5 +1,11 @@
 import 'babel-polyfill';
 // 请求方法
+if(document.documentElement.clientWidth>600){
+    if(sessionStorage.token){
+        window.location.href='index.html'
+    }
+    
+}
 var vApi='/api';
 function ajaxFun(url, type, userToken, data) {
     return $.ajax({

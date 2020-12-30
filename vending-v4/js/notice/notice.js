@@ -8,7 +8,7 @@ layui.use(['table', 'form', 'layer',], function () {
         noticeTableIns = table.render({
             elem: '#noticeTable',
             method: 'post',
-            url: '/api/notices/getNoticeList',
+            url: `${vApi}/notices/getNoticeList`,
             contentType: "application/json",
             headers: {
                 token: sessionStorage.token
@@ -16,7 +16,7 @@ layui.use(['table', 'form', 'layer',], function () {
             cols: [[
                 { field: 'n_number', width: 200, title: '公告编号', align: 'center' },
                 { field: 'title', width: 210, title: '标题', align: 'center' },
-                { field: 'isShow', width: 150, title: '是否首页展示', align: 'center', templet:function(d){
+                { field: 'isShow', width: 135, title: '是否首页展示', align: 'center', templet:function(d){
                     return d.is_show==1?'是':'否'
                 }},
                 { field: 'status', width: 130, title: '状态', align: 'center',templet:function(d){
@@ -108,7 +108,7 @@ layui.use(['table', 'form', 'layer',], function () {
         $('.maskSpan').addClass('maskIcon');
         $.ajax({
             type: 'post',
-            url: '/api/fileUpload',
+            url: `${vApi}/fileUpload`,
             processData: false,
             contentType: false,
             timeout:10000,
@@ -153,7 +153,7 @@ layui.use(['table', 'form', 'layer',], function () {
         upDetails.append('file', files[0]);
         $.ajax({
             type: 'post',
-            url: '/api/fileUpload',
+            url: `${vApi}/fileUpload`,
             processData: false,
             contentType: false,
             timeout:10000,
@@ -212,14 +212,15 @@ layui.use(['table', 'form', 'layer',], function () {
             attach_url:$('.addEditCont input[name="address"]').val(),
             merchantId:sessionStorage.machineID
         });
-        loadingAjax('/api/notices/addNotice','post',addPushObj,sessionStorage.token,'mask','addEditCont','modificationBox',layer).then(res=>{
+        loadingAjax('/notices/addNotice','post',addPushObj,sessionStorage.token,'mask','addEditCont','modificationBox',layer).then(res=>{
             layer.msg(res.message,{icon:1});
             noticeTableIns.reload({
                 where:{}
             });
             if(($(taht).attr('pushType')==1)&&($('.addEditCont input[name="indexShow"]:checked').val()==1)){
-                loadingAjax('/api/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+                loadingAjax('/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
             }
+            window.parent.shuffling();
             console.log($(taht).attr('pushType'));
             console.log($('.addEditCont input[name="indexShow"]:checked').val())
          
@@ -245,7 +246,7 @@ layui.use(['table', 'form', 'layer',], function () {
         upDetails.append('file', files[0]);
         $.ajax({
             type: 'post',
-            url: '/api/fileUpload',
+            url: `${vApi}/fileUpload`,
             processData: false,
             contentType: false,
             timeout:10000,
@@ -301,12 +302,12 @@ layui.use(['table', 'form', 'layer',], function () {
                     merchantId:sessionStorage.machineID,
                     id:noticeData.id
                 });
-                loadingAjax('/api/notices/updateNotice','post',editPushObj,sessionStorage.token,'mask','EditCont','editBox',layer).then(res=>{
+                loadingAjax('/notices/updateNotice','post',editPushObj,sessionStorage.token,'mask','EditCont','editBox',layer).then(res=>{
                     layer.msg(res.message,{icon:1});
                     noticeTableIns.reload({
                         where:{}
                     });
-                    loadingAjax('/api/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+                    loadingAjax('/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
                 }).catch(err=>{
                     console.log(err)
                     layer.msg(err.message,{icon:2});
@@ -344,7 +345,7 @@ layui.use(['table', 'form', 'layer',], function () {
         $('.maskSpan').addClass('maskIcon');
         $.ajax({
             type: 'post',
-            url: '/api/fileUpload',
+            url: `${vApi}/fileUpload`,
             processData: false,
             contentType: false,
             timeout:10000,
@@ -400,13 +401,13 @@ layui.use(['table', 'form', 'layer',], function () {
             merchantId:sessionStorage.machineID,
             id:noticeData.id
         });
-        loadingAjax('/api/notices/updateNotice','post',editPushObj,sessionStorage.token,'mask','EditCont','editBox',layer).then(res=>{
+        loadingAjax('/notices/updateNotice','post',editPushObj,sessionStorage.token,'mask','EditCont','editBox',layer).then(res=>{
             layer.msg(res.message,{icon:1});
             noticeTableIns.reload({
                 where:{}
             })
             if($(this).attr('pushType')==1){
-                loadingAjax('/api/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+                loadingAjax('/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
             }
         }).catch(err=>{
             console.log(err)

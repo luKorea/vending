@@ -57,7 +57,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
         },
         {
           field: 'dispatch_status', width: 210, title: '快递/物流状态', align: 'center', templet: function (d) {
-            return d.dispatch_status == 0 ? '未发货' : d.dispatch_status == 1 ? '已发货' : '已售货'
+            return d.dispatch_status == 0 ? '未发货' : d.dispatch_status == 1 ? '已发货' : '已收货'
           }
         },
         {

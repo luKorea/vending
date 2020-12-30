@@ -2,6 +2,7 @@
 document.write("<script type='text/javascript' src='../assets/public/jquery.animateNumber.min.js'></script>");
 // 删除商品数据列表数据
 // 传id
+
 const vApi = `/api`;
 var token = sessionStorage.token;
 var machineId = sessionStorage.machineID;
@@ -232,6 +233,7 @@ function treeFun(tree, element, tableID, data, key, goodsCLass, selectData, cond
       none: '您没有权限，请联系管理员授权!'
     },
     click: function (obj) {
+      $('.addbs').hide();
       if (goodsCLass) {
         selectData(obj.data.id + '');
       }

@@ -22,7 +22,6 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             startTime = timerKey[0];
             endTime = timerKey[1];
         }
-
     });
     var table = layui.table;
     var tableIns = table.render({

@@ -481,7 +481,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     obj.data.goodsList.forEach((item, index) => {
       payNum += item.count;
     })
-    $('.payType').html((obj.data.payStatus == 0 ? '支付宝' : obj.data.payStatus == 1 ? '微信' : '工行支付'));
+    $('.payType').html((obj.data.payType == 0 ? '支付宝' : obj.data.payType == 1 ? '微信' : '工行支付'));
     $('.payNUmber').html(payNum);
     // $('.paidInSum').html(orderData.amount);
     $('.orderSum').html('￥' + orderData.amount);

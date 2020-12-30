@@ -1,5 +1,5 @@
 import '../../MyCss/notice/message.scss';
-var massageTableIn=null;
+var massageTableIn = null;
 layui.use(['table', 'form', 'layer', 'tree'], function () {
     var table = layui.table,
         form = layui.form,
@@ -24,17 +24,22 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     massageTableIn = table.render({
         elem: '#massageTable',
         method: 'post',
-        url: '/api/notices/getHistoryMsg',
+        url: `${vApi}/notices/getHistoryMsg`,
         contentType: "application/json",
         headers: {
             token: sessionStorage.token
         },
         cols: [[
             { field: 'title', width: 200, title: '消息标题', align: 'center' },
-            { field: 'is_read', width: 200, title: '状态', align: 'center' ,templet:function(d){
-                return d.is_read==0?'未读':'已读'
+            {
+                field: 'name', width: 200, title: '状态', align: 'center', templet: function (d) {
+                    return d.is_read == 0 ? '未读' : '已读'
+                }
+            },
+         
+            { field: 'create_user', width: 230, title: '创建人', align: 'center' ,templet:function(d){
+                return `<div>${d.usName}</div><div>(${d.um})</div>`
             }},
-            { field: 'create_user', width: 230, title: '创建人', align: 'center' },
             {
                 field: 'create_time', width: 200, title: '创建时间', align: 'center', templet: function (d) {
                     if (d.create_time) {
@@ -53,8 +58,8 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             'pageName': 'pageNum',
             'limitName': 'pageSize'
         },
-        where:{
-            type:1
+        where: {
+            type: 1
         },
         parseData: function (res) {
             // console.log(res)
@@ -94,10 +99,10 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         upDetails.append('file', files[0]);
         $.ajax({
             type: 'post',
-            url: '/api/fileUpload',
+            url: `${vApi}/fileUpload`,
             processData: false,
             contentType: false,
-            timeout:10000,
+            timeout: 10000,
             headers: {
                 token,
             },
@@ -117,21 +122,21 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     addWangEditor.create();
 
     // 点击选择用户
-    $('.pushMessageCont .chooseUserBtn').click(function(){
-        if(!Mtree){
+    $('.pushMessageCont .chooseUserBtn').click(function () {
+        if (!Mtree) {
             treeFun();
             userListFun();
         }
-        popupShow('userContent','userBox')
+        popupShow('userContent', 'userBox')
     })
     // 树部分
     var dataList = treeList();
-    var sendMessageID=sessionStorage.machineID;//发送商户id
-    var senMessageName=dataList[0].title;
+    var sendMessageID = sessionStorage.machineID;//发送商户id
+    var senMessageName = dataList[0]?dataList[0].title:'';
     // treeFun(tree, 'test1', tableIns, dataList, 'condition');
-    var Mtree=null;
-    function treeFun(){
-       Mtree=  tree.render({
+    var Mtree = null;
+    function treeFun() {
+        Mtree = tree.render({
             elem: `#test1`,
             id: 'treelist',
             showLine: !0 //连接线
@@ -151,7 +156,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     }
                 })
                 sendMessageID = obj.data.id;
-                senMessageName=obj.data.title
+                senMessageName = obj.data.title
                 var nodes = $(`#test1 .layui-tree-txt`)
                 for (var i = 0; i < nodes.length; i++) {
                     if (nodes[i].innerHTML === obj.data.title)
@@ -162,12 +167,13 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             },
         });
     }
+    dataList.length==0?$('.addPushBtn').hide():$('.addPushBtn').show()
     // 用户列表
-    var userTableIn =null;
-    function userListFun(){
-         userTableIn = table.render({
+    var userTableIn = null;
+    function userListFun() {
+        userTableIn = table.render({
             elem: '#userList',
-            url: `/api/user/findUser`,
+            url: `${vApi}/user/findUser`,
             method: 'post',
             contentType: "application/json",
             headers: {
@@ -228,11 +234,11 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 console.log(userListArr)
                 currentUserList = [];
                 if (res.code == 200) {
-                    res.data.forEach(item=>{
+                    res.data.forEach(item => {
                         currentUserList.push(item.uuid);
-                        for(var i in userListArr){
-                            var ele=userListArr[i]
-                            if(item.uuid==ele){
+                        for (var i in userListArr) {
+                            var ele = userListArr[i]
+                            if (item.uuid == ele) {
                                 $('.userContent tr[data-index=' + i + '] input[type="checkbox"]').prop('checked', true);
                                 form.render();// 重新渲染一下
                             }
@@ -244,12 +250,12 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     }
     // 用户列表部分
     var currentUserList = [];
-   
+
     var userListArr = [];
-    var confirmListArr=[];
+    var confirmListArr = [];
     // 取消选择用户
-    $('.userContent .cancelBtn').click(function(){
-        popupHide('userContent','userBox')
+    $('.userContent .cancelBtn').click(function () {
+        popupHide('userContent', 'userBox')
     })
     // 监听选择用户
     table.on('checkbox(userList)', function (obj) {
@@ -259,19 +265,19 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             console.log(userListArr)
             if (obj.checked) {
                 currentUserList.forEach(item => {
-                    if (!(userListArr.includes(item))){
+                    if (!(userListArr.includes(item))) {
                         userListArr.push(item)
-                    }             
+                    }
                 })
-               console.log(userListArr)
+                console.log(userListArr)
             } else {
-                var arr=[];
-                userListArr.forEach(item=>{
-                    if(!currentUserList.includes(item)){
+                var arr = [];
+                userListArr.forEach(item => {
+                    if (!currentUserList.includes(item)) {
                         arr.push(item)
                     }
                 });
-                userListArr=arr;
+                userListArr = arr;
 
             }
         } else {
@@ -284,212 +290,218 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         // userListArr.length>0?$('.chooseTitle').html('已选择'):$('.chooseTitle').html('未选择');
     });
     // 确定选择用户
-    $('.userContent .confirmBtn').click(function(){
-        confirmListArr=userListArr;
-        popupHide('userContent','userBox')
-        confirmListArr.length>0?$('.chooseTitle').html('已选择'):$('.chooseTitle').html('未选择');
+    $('.userContent .confirmBtn').click(function () {
+        confirmListArr = userListArr;
+        popupHide('userContent', 'userBox')
+        confirmListArr.length > 0 ? $('.chooseTitle').html('已选择') : $('.chooseTitle').html('未选择');
     });
 
     // 取消发送
-    $('.pushMessageCont .cancelBtn').click(function(){
-        popupHide('pushMessageCont','pushMessageBox')
+    $('.pushMessageCont .cancelBtn').click(function () {
+        popupHide('pushMessageCont', 'pushMessageBox')
     })
     // 发送消息
-    $('.addPushBtn').click(function(){
-        popupShow('pushMessageCont','pushMessageBox')
+    $('.addPushBtn').click(function () {
+        popupShow('pushMessageCont', 'pushMessageBox')
     })
     // 确定发送消息
-    $('.pushMessageCont .confirmBtn').click(function(){
-        if(!$('.pushMessageCont input[name="title"]').val()){
-            layer.msg('带*未必填',{icon:7})
-            return ;
+    $('.pushMessageCont .confirmBtn').click(function () {
+        if (!$('.pushMessageCont input[name="title"]').val()) {
+            layer.msg('带*未必填', { icon: 7 })
+            return;
         }
-        if(!(addWangEditor.txt.html().length>11)){
-            layer.msg('公告详情最少五个字',{icon:7});
-            return ;
+        if (!(addWangEditor.txt.html().length > 11)) {
+            layer.msg('公告详情最少五个字', { icon: 7 });
+            return;
         };
-        if(userListArr.length==0){
-            var messageObj=JSON.stringify({
-                title:$('.pushMessageCont input[name="title"]').val(),
-                content:addWangEditor.txt.html(),
-                merchantId:userListArr.length==0?Number(sendMessageID) :'',
+        if (userListArr.length == 0) {
+            var messageObj = JSON.stringify({
+                title: $('.pushMessageCont input[name="title"]').val(),
+                content: addWangEditor.txt.html(),
+                merchantId: userListArr.length == 0 ? Number(sendMessageID) : '',
                 // UUId:userListArr,
             })
-            layer.confirm(`您没有选择用户,消息将发送给${senMessageName}商户的所有用户`,function(index){
+            layer.confirm(`您没有选择用户,消息将发送给${senMessageName}商户的所有用户`, function (index) {
                 layer.close(index);
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
-                pushMessageFun(messageObj,1)
+                pushMessageFun(messageObj, 1)
             })
-        }else{
-            var messageObj=JSON.stringify({
-                title:$('.pushMessageCont input[name="title"]').val(),
-                content:addWangEditor.txt.html(),
+        } else {
+            var messageObj = JSON.stringify({
+                title: $('.pushMessageCont input[name="title"]').val(),
+                content: addWangEditor.txt.html(),
                 // merchantId:userListArr.length==0?Number(sendMessageID) :'',
-                uuid:userListArr,
+                uuid: userListArr,
             })
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon');
-            pushMessageFun(messageObj,2)
+            pushMessageFun(messageObj, 2)
         }
     });
     // 发送信息方法
-    function pushMessageFun(data,type){
-        loadingAjax('/api/notices/addMessage','post',data,sessionStorage.token,'mask','pushMessageCont','pushMessageBox',layer).then(res=>{
-            layer.msg(res.message,{icon:1});
-            popupHide('pushMessageCont','pushMessageBox');
-            if(type==1){
+    function pushMessageFun(data, type) {
+        loadingAjax('/notices/addMessage', 'post', data, sessionStorage.token, 'mask', 'pushMessageCont', 'pushMessageBox', layer).then(res => {
+            layer.msg(res.message, { icon: 1 });
+            popupHide('pushMessageCont', 'pushMessageBox');
+            if (type == 1) {
                 socketPush(currentUserList)
-            }else if(type==2){
+            } else if (type == 2) {
                 socketPush(userListArr)
             }
-            userListArr=[];
+            userListArr = [];
             $('.pushMessageCont input[name="title"]').val('');
             $('.chooseTitle').html('未选择');
             addWangEditor.txt.html('')
-            if(pushMessageListTable){
-                pushMessageListFun.reload({
-                    where:{}
+            if (pushMessageListTable) {
+                pushMessageListTable.reload({
+                    where: {}
                 })
             }
-        }).catch(err=>{
-            layer.msg(err.message,{icon:2})
+        }).catch(err => {
+            console.log(err)
+            layer.msg(err.message, { icon: 2 })
         })
     }
     // 查询消息
-    $('.queryBtn').click(function(){
+    $('.queryBtn').click(function () {
         massageTableIn.reload({
-            where:{
-                keyword:$('.KyeText').val()
+            where: {
+                keyword: $('.KyeText').val()
             }
         })
     })
     // 监听点击信息
-    var messageTableData=null;//存储点击消息
-  table.on('row(massageTable)', function(obj){
-    var messageTableData = obj.data; 
-    if(messageTableData.is_read==0){
-        status(messageTableData.id)
-    }
-    $('.messageDetails .playHeader span').html(`${messageTableData.title}`)
-    $('.messageDetails .detailsHtml ').html(messageTableData.content)
-    popupShow('messageDetails','detailsBox'); 
-  });
-//   改变消息状态方法
-  function status(id){
-    var messageObj=JSON.stringify({
-        message_id:id
+    var messageTableData = null;//存储点击消息
+    table.on('row(massageTable)', function (obj) {
+        var messageTableData = obj.data;
+        if (messageTableData.is_read == 0) {
+            status(messageTableData.id)
+        }
+        $('.messageDetails .playHeader span').html(`${messageTableData.title}`)
+        $('.messageDetails .detailsHtml ').html(messageTableData.content)
+        popupShow('messageDetails', 'detailsBox');
     });
-    loadingAjax('/api/notices/readMessage','post',messageObj,sessionStorage.token,'','','',layer).then(res=>{
-        massageTableIn.reload({
-            where:{}
+    //   改变消息状态方法
+    function status(id) {
+        var messageObj = JSON.stringify({
+            message_id: id
         });
-        window.parent.messageFunList();
-    }).catch(err=>{
-        console.log(err)
-        layer.msg('阅读消息失败',{icon:2})
-    })
-  };
-
-//   发送socket通知父页面改变已读状态
-    function socketPush(userId){
-        console.log(userId)
-        userId.forEach(item=>{
-            var socketKey=JSON.stringify({
-                uid:item,
-                msg:'消息通知',
-                tag:3
+        loadingAjax('/notices/readMessage', 'post', messageObj, sessionStorage.token, '', '', '', layer).then(res => {
+            massageTableIn.reload({
+                where: {}
             });
-            loadingAjax('/api/pushWebMsg','post',socketKey,sessionStorage.token).then(res=>{
+            window.parent.messageFunList();
+        }).catch(err => {
+            console.log(err)
+            layer.msg('阅读消息失败', { icon: 2 })
+        })
+    };
+
+    //   发送socket通知父页面改变已读状态
+    function socketPush(userId) {
+        console.log(userId)
+        userId.forEach(item => {
+            var socketKey = JSON.stringify({
+                uid: item,
+                msg: '消息通知',
+                tag: 3
+            });
+            loadingAjax('/pushWebMsg', 'post', socketKey, sessionStorage.token).then(res => {
                 console.log(res)
-            }).catch(err=>{
+            }).catch(err => {
                 console.log(err)
             })
         })
     }
 
-      // 已发送信息列表
-      var pushMessageListTable=null;
-      function pushMessageListFun(){
-          pushMessageListTable = table.render({
-              elem: '#massagePushList',
-              method: 'post',
-              url: '/api/notices/getHistoryMsg',
-              contentType: "application/json",
-              headers: {
-                  token: sessionStorage.token
-              },
-              cols: [[
-                  { field: 'title', width: 200, title: '消息标题', align: 'center' },
-                  { field: 'create_user', width: 230, title: '创建人', align: 'center' },
-                  {
-                      field: 'create_time', width: 200, align: 'center', title: '创建时间', templet: function (d) {
-                          if (d.create_time) {
-                              return timeStamp(d.create_time)
-                          } else {
-                              return '-'
-                          }
-                      }
-                  },
-                  // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo' },
-              ]],
-              id: 'messageListID',
-              page: true,
-              loading: true,
-              request: {
-                  'pageName': 'pageNum',
-                  'limitName': 'pageSize'
-              },
-              where:{
-                  type:0
-              },
-              parseData: function (res) {
-                  // console.log(res)
-                  //res 即为原始返回的数据
-                  if (res.code == 200) {
-                      return {
-                          "code": res.code, //解析接口状态
-                          "msg": res.message, //解析提示文本
-                          "count": res.data.total, //解析数据长度
-                          "data": res.data.list //解析数据列表
-                      };
-                  } else if (res.code == 403) {
-                      window.parent.location.href = "login.html";
-                  }
-                  else {
-                      return {
-                          "code": res.code, //解析接口状态
-                          "msg": res.message,   //解析提示文本
-                      }
-                  }
-      
-              },
-              response: {
-                  statusCode: 200 //规定成功的状态码，默认：0
-              },
-              done: function (res) {
-      
-              }
-          });
-      }
-    $('.messageListBtn').click(function(){
-        if(!pushMessageListTable){
+    // 已发送信息列表
+    var pushMessageListTable = null;
+    function pushMessageListFun() {
+        pushMessageListTable = table.render({
+            elem: '#massagePushList',
+            method: 'post',
+            url: `${vApi}/notices/getHistoryMsg`,
+            contentType: "application/json",
+            headers: {
+                token: sessionStorage.token
+            },
+            cols: [[
+                { field: 'title', width: 200, title: '消息标题', align: 'center' },
+                { field: 'create_user', width: 230, title: '创建人', align: 'center' },
+                {
+                    field: 'is_read', width: 150, title: '接收人', align: 'center', templet: function (d) {
+                        return `<div>${d.name}</div><div>(${d.username})</div>`
+                    }
+                },
+                {
+                    field: 'create_time', width: 200, align: 'center', title: '创建时间', templet: function (d) {
+                        if (d.create_time) {
+                            return timeStamp(d.create_time)
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo' },
+            ]],
+            id: 'messageListID',
+            page: true,
+            loading: true,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where: {
+                type: 0
+            },
+            parseData: function (res) {
+                // console.log(res)
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else if (res.code == 403) {
+                    window.parent.location.href = "login.html";
+                }
+                else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+
+            }
+        });
+    }
+    $('.messageListBtn').click(function () {
+        if (!pushMessageListTable) {
             pushMessageListFun();
         }
-        popupShow('pushMessageList','pushMessageListBox')
+        popupShow('pushMessageList', 'pushMessageListBox')
     });
 
-    table.on('row(massagePushList)', function(obj){
-        var messageTableData = obj.data; 
+    table.on('row(massagePushList)', function (obj) {
+        var messageTableData = obj.data;
         $('.messageDetails .playHeader span').html(`${messageTableData.title}`)
         $('.messageDetails .detailsHtml ').html(messageTableData.content)
-        popupShow('messageDetails','detailsBox'); 
+        popupShow('messageDetails', 'detailsBox');
     })
 })
-  // 父页面调用方法
-   function reloadFun (){
+// 父页面调用方法
+function reloadFun() {
     massageTableIn.reload({
-        where:{}
+        where: {}
     });
 }
-window.reloadFun=reloadFun;
+window.reloadFun = reloadFun;

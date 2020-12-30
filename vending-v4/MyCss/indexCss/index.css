@@ -286,12 +286,16 @@
     transition: all 0.3s;
 	padding-bottom: 15px;
 }
-.messageBox,.previewBox{
+/* .messageBox{
 	height: 60vh;
 	overflow-y: auto;
-}
+} */
 .previewHtml,.messageHtml{
-	min-height: 45vh;
+	margin-top: 25px;
+	min-height: 55vh;
+	border: 1px solid rgb(192, 204, 218);
+	box-sizing: border-box;
+	padding: 15px;
 }
 .noticeBox{
 	width: 1000px;
@@ -358,6 +362,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border-bottom: 1px solid #e6e6e6;
 }
 .previewTitle>div{
 	display: flex;

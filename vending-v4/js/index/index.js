@@ -4,7 +4,9 @@ import { navList } from '../../assets/public/navData.js'
 if (!sessionStorage.token) {
     window.location.href = "login.html"
 }
-
+if(document.documentElement.clientWidth<=600){
+    window.location.href='M_my.html'
+  }
 window.onload = function () {
     var userName = sessionStorage.username;
     $('#userLogin .userName').html(userName)
@@ -130,7 +132,7 @@ window.onload = function () {
                 socket.onmessage = function (msg) {
 
                     var gainData = JSON.parse(msg.data)
-                    // console.log(gainData);
+                    console.log(gainData);
                     //type 1角色编辑或者删除 2用户编辑
                     if (gainData.type == 1) {
                         // console.log(gainData);
@@ -443,6 +445,7 @@ window.onload = function () {
         }
         messageFunList();
         window.messageFunList = messageFunList;
+        
         // 点击展示消息
         $('.messageContentList').on('click', '.messageDow', function () {
             var messageDetails = messageListArr[$(this).attr('messageIndex')]
@@ -554,10 +557,11 @@ window.onload = function () {
                 }
             })
         }
-        noticeFun();
-
+        
+        window.shuffling = shuffling;
         // 更多
         $('.more').click(function () {
+            noticeFun();
             popupShow('noticeContent', 'noticeBox')
         });
         // 点击遮罩关闭

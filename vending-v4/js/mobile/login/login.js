@@ -8,11 +8,11 @@ function swiperFun() {
 }
 if (sessionStorage.accountPass) {
     var accountPass = JSON.parse(sessionStorage.accountPass);
-    $('.keep input[name="aihao[]"]').prop('checked', true);
+    $('#c1').attr('checked', true);
     $('.flex input[name="account"]').val(accountPass.account);
     $('.flex input[name="pass"]').val(accountPass.pass)
 } else {
-    $('.keep input[name="aihao[]"]').prop('checked', false)
+    $('#c1').attr('checked', false);
 }
 swiperFun();
 $('.loginBtn').click(function () {
@@ -47,7 +47,9 @@ function loginFUn(){
         sessionStorage.token = res.data.token;
         sessionStorage.machineID = res.data.merchantId;
         sessionStorage.UserId = res.data.UUId
-        if ($('.keep input[name="aihao[]"]').prop('checked')) {
+        // console.log($('#c1').prop('checked'));
+        // return ;
+        if ($('#c1').prop('checked')) {
             sessionStorage.accountPass = JSON.stringify({
                 account: $('.flex input[name="account"]').val(),
                 pass:passType==1?accountPass.pass: hex_md5($('.flex input[name="pass"]').val())

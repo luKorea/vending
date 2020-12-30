@@ -26,6 +26,7 @@ var entry = {
         mailOrder:'./js/order/mailOrder.js',
         codeOrder:'./js/order/codeOrder.js',
         salesResults:'./js/merchants/salesResults.js',
+        orderSummary:'./js/order/orderSummary.js',
         //移动端版本
         M_login:'./js/mobile/login/login.js',
         M_my:'./js/mobile/my/my.js',
@@ -111,6 +112,9 @@ var htmlConfig = [
     },
     {
         name: "salesResults",
+    },
+    {
+        name: "orderSummary",
     },
     //移动端部分
     {

@@ -54,6 +54,7 @@ $('.aloneContent .confirmBtn').click(function () {
         machineId:machineId
     });
     loadAjax1('/api/machine/openDoor','post',sessionStorage.token,alonePassObj).then(res=>{
+        $('.aloneContent').fadeOut(100).children('.aloneBox').removeClass('top30');
         prompt('开门成功')
     }).catch(err=>{
         prompt(err.message)

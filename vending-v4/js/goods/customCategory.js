@@ -121,7 +121,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
           layer.msg(err.message, { icon: 2 });
         });
     } else {
-      layer.msg('请填写类型名');
+      layer.msg('请填写类目名');
     }
   })
   // 监听操作
@@ -182,7 +182,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         layer.msg(err.message, { icon: 2 });
       })
     } else {
-      layer.msg('请填写类型名');
+      layer.msg('请填写类目名');
     }
   })
 

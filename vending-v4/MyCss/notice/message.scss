@@ -93,6 +93,17 @@
 .messageTableList,.detailsBody{
     padding: 20px;
 }
+.detailsBody{
+    margin-top: 25px;
+    min-height: 65vh;
+    border: 1px solid #c0ccda;
+    box-sizing: border-box;
+    padding: 15px 15px 25px;
+    
+}
 .messageTableList{
     padding: 10px 0;
+}
+.playHeader{
+    border-bottom: 1px solid #e6e6e6;
 }
