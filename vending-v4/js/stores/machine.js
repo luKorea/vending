@@ -47,6 +47,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
+                    field: 'trafficInfo', width: 200, title: '流量使用情况(MB)', align: 'center', templet: function (d) {
+                        return d.location ? d.location : ' - '
+                    }
+                },
+                {
                     field: 'CreationTime', width: 130, title: '缺货状态', align: 'center', templet: function (d) {
                         return `<div><span class="${d.stockStatus == 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.stockStatus == 0 ? '正常' : d.stockStatus == 1 ? '一般' : '严重'}</span></div>`
                     }

@@ -40,10 +40,12 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         token,
       },
       cols: [[
-        { field: 'info', width: 220, title: '售货机名(编号)', align: 'center' ,templet:function(d){
-          return `<div>${d.info}</div>
+        {
+          field: 'info', width: 220, title: '售货机名(编号)', align: 'center', templet: function (d) {
+            return `<div>${d.info}</div>
                   <div>(${d.machineId})</div>`
-        }},
+          }
+        },
         // { field: 'machineId', width: 220, title: '设备编号', },
         // { field: 'CreationTime', width: 100, title: '下单时间', },
 
@@ -350,14 +352,14 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     var myDate = new Date(),
       // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
       xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-    xhr.open("POST", `${vApi}/order/exportExcel`, true);
+    xhr.open("GET", `${vApi}/exportExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}`, true);
     xhr.setRequestHeader("token", sessionStorage.token);
 
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+    // xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
     xhr.responseType = 'blob';//设置ajax的响应类型为blob;
 
     xhr.onload = function (res) {
-      console.log(xhr)
+      // console.log(xhr)
       if (xhr.status == 200) {
         $('.mask').fadeOut();
         $('.maskSpan').removeClass('maskIcon');
@@ -367,7 +369,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         // } else {
         var content = xhr.response;
         // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-        var fileName = `${marchantName}订单(${startTime}-${endTime}).xlsx`
+        var fileName = `${marchantName}订单(${startTime}-${endTime}).xls`
         var elink = document.createElement('a');
         elink.download = fileName;
         elink.style.display = 'none';
@@ -384,12 +386,12 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         return;
       }
     }
-    var orderObj = JSON.stringify({
-      start_time: startTime,
-      end_time: endTime,
-      merchantId: merchantId
-    })
-    xhr.send(orderObj);
+    // var orderObj = JSON.stringify({
+    //   start_time: startTime,
+    //   end_time: endTime,
+    //   merchantId: merchantId
+    // })
+    xhr.send();
   })
 
   // 订单商品列表

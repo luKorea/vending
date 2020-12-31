@@ -596,7 +596,7 @@ function getKeyTime() {
     m = initialTime.getMonth(),
     d = initialTime.getDate(),
     //开始时间
-    startTime = y + '-' + ((m + 1) < 10 ? '0' + (m) : (m)) + '-' + d,
+    startTime = y + '-' + ((m + 1) < 10 ? '0' + (m) : (m)) + '-' + (d==31?30:d),
     //结束时间
     endTime = y + '-' + ((m + 1) < 10 ? '0' + (m + 1) : (m + 1)) + '-' + d;
   initialTime1 = startTime + ' - ' + endTime;

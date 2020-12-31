@@ -301,7 +301,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     indexFlag = null;
     var EditValData = form.val("EditValData");
     console.log(EditValData)
-    if (EditValData.goodsParam && EditValData.goodsBarcode && EditValData.goodsName && EditValData.goodsType && EditValData.goodsPrice && EditValData.goodsCost) {
+    if (EditValData.goodsParam && EditValData.goodsBarcode && EditValData.goodsName && EditValData.goodsType && EditValData.goodsPrice ) {
       if(!(EditValData.goodsPrice>0)){
         layer.msg('同一销售价必须大于0',{icon:7});
         return ;
@@ -314,7 +314,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         classify_Id: EditValData.goodsType,     //商品类型
         brand: EditValData.goodsBrand,        //品牌
         goods_Price: EditValData.goodsPrice,  //零售价
-        goods_Cost: EditValData.goodsCost,    //成本价
+        goods_Cost: EditValData.goodsCost?EditValData.goodsCost:0,    //成本价
         goods_Param: EditValData.goodsParam,  //规格
         goods_Status: EditValData.goodsStatus, //状态
         goods_Images: $('#editImg').attr("src"), //商品图片 不在form里
@@ -450,7 +450,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     console.log($('.addGoods input[name="mail"]'));
     console.log($('.addGoods input[name="mail"]').prop('checked'));
     // &&addValData.goodsBrand
-    if (addValData.goodsParam && addValData.goodsBarcode && addValData.goodsName && addValData.goodsType && addValData.goodsPrice && addValData.goodsCost) {
+    if (addValData.goodsParam && addValData.goodsBarcode && addValData.goodsName && addValData.goodsType && addValData.goodsPrice ) {
       if (addGoodsImg) {
         if(!(addValData.goodsPrice>0)){
           layer.msg('同一销售价必须大于0',{icon:7});
@@ -463,7 +463,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           classify_Id: addValData.goodsType,     //商品类型
           brand: addValData.goodsBrand,        //品牌
           goods_Price: addValData.goodsPrice,  //零售价
-          goods_Cost: addValData.goodsCost,    //成本价
+          goods_Cost: addValData.goodsCost?addValData.goodsCost:0,    //成本价
           goods_Param: addValData.goodsParam,  //规格
           goods_Status: addValData.goodsStatus, //状态
           goods_Images: addGoodsImg, //商品图片 不在form里
@@ -790,7 +790,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   // var dataList1 = treeList();
   console.log(dataList)
   treeFun(tree, 'testGoods', tableIns, dataList, 'condition', 'goodsClass', selectData)
-  // treeFunCheck(tree, 'testGoodsCheck', tableIns, dataList1, 'merchantId',layer)
 
 
   // 接收列表非强制

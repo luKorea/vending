@@ -5,9 +5,10 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
         editFlag = false,
         delFlag = false;
     // 权限控制
-    permissionsVal(436, 437).then(res => {
+    permissionsVal(436, 437,465).then(res => {
         addFlag = res.addFlag;
         editFlag = res.editFlag;
+        delFlag=res.delFlag;
         console.log(addFlag)
         permissions();
     });
@@ -653,8 +654,10 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
 
 
     // 监听操作部分
+    var pickupObj=null;
     table.on('tool(tableactivity)', function (obj) {
         console.log(obj)
+         pickupObj=obj.data;
         var stamp = new Date().getTime();
         if (obj.event == 'stop') {
             if (stamp > obj.data.end_time) {
@@ -826,7 +829,9 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
     // 权限控制
     function permissions() {
         addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-        editFlag ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide')
+        editFlag ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
+        delFlag?$('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
+
     };
     // 售货机穿梭框
     function transferFun(data, value) {
@@ -886,5 +891,40 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
     //     console.log(res)
     // });
 
-
+    // 导出取货码
+    $('.pushBtn').click(function(){
+          $('.mask').fadeIn();
+          $('.maskSpan').addClass('maskIcon');
+          var myDate = new Date(),
+            // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+            xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+          xhr.open("GET", `${vApi}/exportCodes?id=${pickupObj.id}`, true);
+          xhr.setRequestHeader("token", sessionStorage.token);
+        //   xhr.setRequestHeader('Content-Type', 'charset=utf-8');
+          xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+      
+          xhr.onload = function (res) {
+            if (xhr.status == 200) {
+              $('.mask').fadeOut();
+              $('.maskSpan').removeClass('maskIcon');
+              var content = xhr.response;
+              // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+              var fileName = `${pickupObj.activity_name}取货码.xls`
+              var elink = document.createElement('a');
+              elink.download = fileName;
+              elink.style.display = 'none';
+              var blob = new Blob([content]);
+              elink.href = URL.createObjectURL(blob);
+              document.body.appendChild(elink);
+              elink.click();
+              document.body.removeChild(elink);
+            } else {
+              $('.mask').fadeOut();
+              $('.maskSpan').removeClass('maskIcon');
+              layer.msg('服务器请求超时', { icon: 2 });
+              return;
+            }
+          }
+          xhr.send();
+    })
 })

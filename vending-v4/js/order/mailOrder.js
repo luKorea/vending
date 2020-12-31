@@ -242,10 +242,9 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
     $('.mask').fadeIn();
     $('.maskSpan').addClass('maskIcon');
     var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-    xhr.open("POST", `${vApi}/order/exportMailExcel`, true);
+    xhr.open("GET", `${vApi}/exportMailExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${sessionStorage.machineID}`, true);
     xhr.setRequestHeader("token", sessionStorage.token);
-
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+    // xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
     xhr.responseType = 'blob';//设置ajax的响应类型为blob;
 
     xhr.onload = function (res) {
@@ -255,7 +254,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
         $('.maskSpan').removeClass('maskIcon');
         var content = xhr.response;
         // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-        var fileName = `${sessionStorage.marchantName}邮寄订单(${startTime}-${endTime}).xlsx`
+        var fileName = `${sessionStorage.marchantName}邮寄订单(${startTime}-${endTime}).xls`
         var elink = document.createElement('a');
         elink.download = fileName;
         elink.style.display = 'none';
@@ -271,12 +270,12 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
         return;
       }
     }
-    var orderObj = JSON.stringify({
-      start_time: startTime,
-      end_time: endTime,
-      merchantId: Number(sessionStorage.machineID)
-    })
-    xhr.send(orderObj);
+    // var orderObj = JSON.stringify({
+    //   start_time: startTime,
+    //   end_time: endTime,
+    //   merchantId: Number(sessionStorage.machineID)
+    // })
+    xhr.send();
   });
   // 日期选择
   var laydate = layui.laydate;

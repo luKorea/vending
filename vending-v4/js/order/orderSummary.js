@@ -7,6 +7,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
         tree = layui.tree,
         rank = null,
         laydate = layui.laydate,
+        marchantName =sessionStorage.marchantName,
+        merchantId=sessionStorage.machineID,
         //数据表格
         token = sessionStorage.token,
         //开始时间
@@ -130,7 +132,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             'limitName': 'pageSize'
         },
         where: {
-            merchant_id: sessionStorage.machineID
+            merchant_id: merchantId,
+            startTime,
+            endTime,
         },
         parseData: function (res) {
             // console.log(res)
@@ -173,16 +177,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
     });
 
     var dataList = treeList();
-    treeFun(tree, 'testGoods', tableIns, dataList, 'merchant_id', '', '', '', 'true');
+    orderTreeFun(tree,'testGoods',dataList)
+    // treeFun(tree, 'testGoods', tableIns, dataList, 'merchant_id', '', '', '', 'true');
     // 刷新商户列表
     $('.refreshBtnList').click(function () {
         var dataList1 = treeList();
         if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
             dataList = dataList1;
-            treeFun(tree, 'testGoods', tableIns, dataList, 'merchant_id', '', '', '', 'true');
+            orderTreeFun(tree,'testGoods',dataList)
             tableIns.reload({
                 where: {
-                    merchantId: sessionStorage.machineID,
+                    merchant_id: sessionStorage.machineID,
                 }
             })
             layer.msg('已刷新', { icon: 1 })
@@ -206,21 +211,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             f5Fun()
         }
     });
-    var addFlag = false,
-        editFlag = false,
-        delFlag = false,
-        fourFlag = false;
-    permissionsVal(373, 374, 372, 403).then(res => {
+    var addFlag = false;
+    permissionsVal(464).then(res => {
         addFlag = res.addFlag;
-        editFlag = res.editFlag;
-        delFlag = res.delFlag;
-        fourFlag = res.fourFlag;
         permissions();
     }).catch(err => {
         layer.msg('服务器请求超时', { icon: 7 })
     })
     function permissions() {
-
+        addFlag?$('.pushBtn').removeClass('hide'):addClass('hide');
     };
     $('.pushBtn').click(function () {
         if (!(startTime && endTime)) {
@@ -236,20 +235,18 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
         var myDate = new Date(),
           // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
           xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("POST", `${vApi}/order/exportExcel`, true);
+        xhr.open("GET", `${vApi}/complete?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
-    
-        xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+        // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
     
         xhr.onload = function (res) {
-          console.log(xhr)
           if (xhr.status == 200) {
             $('.mask').fadeOut();
             $('.maskSpan').removeClass('maskIcon');
             var content = xhr.response;
             // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-            var fileName = `${marchantName}订单(${startTime}-${endTime}).xlsx`
+            var fileName = `${marchantName}订单汇总(${startTime}-${endTime}).xls`
             var elink = document.createElement('a');
             elink.download = fileName;
             elink.style.display = 'none';
@@ -258,7 +255,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             document.body.appendChild(elink);
             elink.click();
             document.body.removeChild(elink);
-            // }
           } else {
             $('.mask').fadeOut();
             $('.maskSpan').removeClass('maskIcon');
@@ -266,11 +262,63 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             return;
           }
         }
-        var orderObj = JSON.stringify({
+        var orderObj = {
           start_time: startTime,
           end_time: endTime,
-          merchantId: merchantId
+          merchant_id: sessionStorage.machineID
+        }
+        xhr.send();
+      });
+
+
+       // 树方法
+      
+  function orderTreeFun(tree, element, data,) {
+    tree.render({
+      elem: `#${element}`,
+      id: 'treelist',
+      showLine: !0 //连接线
+      ,
+      onlyIconControl: true, //左侧图标控制展开收缩 
+      data,
+      spread: true,
+      text: {
+        defaultNodeName: '无数据',
+        none: '您没有权限，请联系管理员授权!'
+      },
+      click: function (obj) {
+        console.log(obj);
+        marchantName = obj.data.title
+        var nodes = $(`#${element} .layui-tree-txt`)
+        for (var i = 0; i < nodes.length; i++) {
+          if (nodes[i].innerHTML === obj.data.title)
+            nodes[i].style.color = "#be954a";
+          else
+            nodes[i].style.color = "#555";
+        }
+        if (merchantId == obj.data.id) {
+          return;
+        }
+        merchantId = obj.data.id;
+        tableIns.reload({
+            where: {
+                merchant_id: merchantId,
+            }
         })
-        xhr.send(orderObj);
-      })
+      },
+    });
+  };
+//   查询
+  $('.queryBtn').click(function(){
+    if (timeFlag(startTime, endTime)) {
+        layer.msg('时间选择范围最多三个月', { icon: 7 });
+        return;
+      }
+      tableIns.reload({
+        where: {
+            startTime,
+            endTime
+        }
+    })
+  })
 })                                                      

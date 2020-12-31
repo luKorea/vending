@@ -217,7 +217,9 @@ window.onload = function () {
                 RMListFlag = false,
                 ReListFlag = false,
                 salesFlag = false,
-                pickupFlag = false;
+                pickupFlag = false,
+                orderSummaryFlag=false,
+                codeOrderFlag=false;
             res.data.forEach(item => {
                 if (item.id == 408) {
                     userListFlag = true
@@ -261,70 +263,37 @@ window.onload = function () {
                 if (item.id == 448) {
                     pickupFlag = true
                 }
+                if (item.id == 463) {
+                    orderSummaryFlag = true
+                }
+                if (item.id == 455) {
+                    codeOrderFlag = true
+                }
             })
-            // console.log(a) 
-            // var userListFlag = res.data.some((item, index) => {
-            //     return item.id == 408
-            // })
             userListFlag ? $('.userListFlag').removeClass('hide') : $('.userListFlag').addClass('hide');
-            // var roleListFlag = res.data.some((item, index) => {
-            //     return item.id == 407
-            // });
-            // roleListFlag?$('.noticeCont').removeClass('hide'):$('.noticeCont').addClass('hide')
             roleListFlag ? $('.roleListFlag').removeClass('hide') : $('.roleListFlag').addClass('hide');
             (userListFlag || roleListFlag) ? $('.userCont').removeClass('hide') : $('.userCont').addClass('hide');
             //售货机模块
-            // var machineListFlag = res.data.some((item, index) => {
-            //     return item.id == 413
-            // });
             machineListFlag ? $('.machineListFlag').removeClass('hide').parents('.machineCont').removeClass('hide') : $('.machineListFlag').addClass('hide').parents('.machineCont').addClass('hide');
             //商品管理模块
-            // var goodsClassFlag = res.data.some((item, index) => {
-            //     return item.id == 414
-            // });
             goodsClassFlag ? $('.goodsClassFlag').removeClass('hide') : $('.goodsClassFlag').addClass('hide');
-
-            // var goodsListFlag = res.data.some((item, index) => {
-            //     return item.id == 409
-            // });
             goodsListFlag ? $('.goodsListFlag').removeClass('hide') : $('.goodsListFlag').addClass('hide');
-
-            // var materialListFlag = res.data.some((item, index) => {
-            //     return item.id == 410
-            // });
             materialListFlag ? $('.materialListFlag').removeClass('hide') : $('.materialListFlag').addClass('hide');
             (goodsClassFlag || goodsListFlag || materialListFlag) ? $('.goodsCont').removeClass('hide') : $('.goodsCont').addClass('hide');
 
             //   商户模块
-            // var merchantsListFlag = res.data.some((item, index) => {
-            //     return item.id == 400
-            // });
             merchantsListFlag ? $('.merchantsListFlag').removeClass('hide').parents('.merchantsCont').removeClass('hide') : $('.merchantsListFlag').addClass('hide').parents('.merchantsCont').addClass('hide');
-            // var paySetFlag=res.data.some((item,index)=>{
-            //     return item.id == 431
-            // })
             paySetFlag ? $('.merchantsPay').removeClass('hide') : $('.merchantsPay').addClass('hide');
             roleListFlag ? $('.merchantsPayType').removeClass('hide') : $('.merchantsPayType').addClass('hide');
             salesFlag ? $('.sales').removeClass('hide') : $('.sales').addClass('hide')
             //账目模块
-            // var accountsListFlag = res.data.some((item, index) => {
-            //     return item.id == 423
-            // });
-            // accountsListFlag ? $('.accountsListFlag').removeClass('hide').parents('.accountsCont').removeClass('hide') : $('.accountsListFlag').addClass('hide').parents('.accountsCont').addClass('hide');
-
             //订单模块
-            // var orderListFlag = res.data.some((item, index) => {
-            //     return item.id == 419
-            // });
-            orderListFlag ? $('.orderListFlag').removeClass('hide').parents('.orderCont').removeClass('hide') : $('.orderListFlag').addClass('hide').parents('.orderCont').addClass('hide');
+            orderListFlag ? $('.orderListFlag').removeClass('hide'):$('.orderListFlag').addClass('hide');
+            orderSummaryFlag?$('.orderSummaryFlag').removeClass('hide'):$('.orderSummaryFlag').addClass('hide');
+            codeOrderFlag?$('.codeORderFlag').removeClass('hide'):$('.codeORderFlag').addClass('hide');
+            (orderListFlag||orderSummaryFlag||codeOrderFlag)?$('.orderCont').removeClass('hide'):$('.orderCont').addClass('hide');
             //广告模块
-            // var RMListFlag = res.data.some((item, index) => {
-            //     return item.id == 412
-            // });
             RMListFlag ? $('.RMListFlag').removeClass('hide') : $('.RMListFlag').addClass('hide');
-            // var ReListFlag = res.data.some((item, index) => {
-            //     return item.id == 411
-            // });
             ReListFlag ? $('.ReListFlag').removeClass('hide') : $('.ReListFlag').addClass('hide');
             (RMListFlag || ReListFlag) ? $('.releaseCont').removeClass('hide') : $('.releaseCont').addClass('hide');
             // 营销模块
