@@ -43,6 +43,9 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     box-sizing: border-box;
     transition: all 0.3s;
+    .layui-transfer-box{
+        overflow-y: auto;
+    }
 }
 .goodsBox,.chooseGoodsBox,.activityMachineBox,.pickCodeBox{
     width: 900px;

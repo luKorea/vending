@@ -47,9 +47,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'trafficInfo', width: 200, title: '流量使用情况(MB)', align: 'center', templet: function (d) {
-                        return d.location ? d.location : ' - '
-                    }
+                    field: 'trafficInfo', width: 200, title: '流量使用情况(MB)', align: 'center'
                 },
                 {
                     field: 'CreationTime', width: 130, title: '缺货状态', align: 'center', templet: function (d) {
@@ -2065,10 +2063,30 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         });
     };
+     //开始时间
+     var openSTime = getKeyTime().startTime;
+     //结束时间
+     var openETime = getKeyTime().endTime;
+    laydate.render({
+        elem: '#test9',
+        range: true,
+        value: getKeyTime().keyTimeData,
+        done: function (value, date, endDate) {
+            // console.log(value); //得到日期生成的值，如：2017-08-18
+            var timerKey = value.split(' - ');
+            openSTime = timerKey[0];
+            openETime = timerKey[1];
+        }
+    });
     $('.openDoorRecord .opeQuery').click(function(){
+        if (timeFlag(openSTime, openETime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
         openDoorTable.reload({
             where:{
-                keyword:$('.openDoorRecord input[name="keyName"]').val()
+                start_time: openSTime ? openSTime : null,
+                end_time: openETime ? openETime : null
             }
         })
     })

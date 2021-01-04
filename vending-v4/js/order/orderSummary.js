@@ -219,7 +219,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
         layer.msg('服务器请求超时', { icon: 7 })
     })
     function permissions() {
-        addFlag?$('.pushBtn').removeClass('hide'):addClass('hide');
+        addFlag?$('.pushBtn').removeClass('hide'):$('.pushBtn').addClass('hide');
     };
     $('.pushBtn').click(function () {
         if (!(startTime && endTime)) {

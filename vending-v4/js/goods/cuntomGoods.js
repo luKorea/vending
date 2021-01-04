@@ -483,7 +483,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             , "goodsType": ''
             , "goodsBrand": ''
             , "goodsPrice": ''
-            , "goodsCost": ''
+            , "goodsCost": 0
             , "goodsParam": ''
           });
           addGoodsDateails = '';

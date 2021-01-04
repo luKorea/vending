@@ -260,9 +260,9 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
     // machineAdvertisingFun();
     // 监听售货机复选框操作
     table.on('checkbox(machineDetailsList)', function (obj) {
-        console.log(obj.checked); //当前是否选中状态
-        console.log(obj.data); //选中行的相关数据
-        console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
+        // console.log(obj.checked); //当前是否选中状态
+        // console.log(obj.data); //选中行的相关数据
+        // console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
         if (obj.type == 'all') {
             var arr = [];
             if (obj.checked) {
@@ -279,15 +279,15 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                     }
                 });
                 machineList = arr;
-                console.log(machineList)
+                // console.log(machineList)
             }
         } else {
             if (obj.checked) {
                 machineList.push(obj.data.machineId);
-                console.log(machineList)
+                // console.log(machineList)
             } else {
                 machineList.splice(machineList.indexOf(obj.data.machineId), 1)
-                console.log(machineList)
+                // console.log(machineList)
             }
         }
         if (machineList.length > 0) {
@@ -400,7 +400,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                     goods_images: obj.data.goods_images,
                     goods_Core: obj.data.goods_Core,
                 });
-                console.log(goodsList);
+                // console.log(goodsList);
             } else {
                 goodsList.forEach((item, index) => {
                     if (item.goodsId == obj.data.goods_Id) {
@@ -656,7 +656,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
     // 监听操作部分
     var pickupObj=null;
     table.on('tool(tableactivity)', function (obj) {
-        console.log(obj)
+        // console.log(obj)
          pickupObj=obj.data;
         var stamp = new Date().getTime();
         if (obj.event == 'stop') {

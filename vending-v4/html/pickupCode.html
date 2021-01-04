@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="./assets/public/datepicker.css">
     <title>取货码管理</title>
 </head>
+
 <body>
     <div class="wrap">
         <div class="margin">
@@ -44,7 +46,7 @@
                     <button type="button" class="layui-btn layui-btn-primary queryBtnClick">
                         <i class="layui-icon layui-icon-search"></i>
                         <span>查询</span>
-                        
+
                     </button>
                 </div>
                 <div class="newKeyContent">
@@ -88,12 +90,12 @@
                         <label for=""><span style="color: red;">*</span> 有效时间:</label>
                         <div class="mt40">
                             <div class="c-datepicker-date-editor J-datepicker-range mt10">
-                              <!--<i class="c-datepicker-range__icon kxiconfont icon-clock"></i>-->
-                              <input placeholder="开始日期" name="" class="c-datepicker-data-input" value="" >
-                              <span class="c-datepicker-range-separator">-</span>
-                              <input placeholder="结束日期" name="" class="c-datepicker-data-input" value="" >
+                                <!--<i class="c-datepicker-range__icon kxiconfont icon-clock"></i>-->
+                                <input placeholder="开始日期" name="" class="c-datepicker-data-input" value="">
+                                <span class="c-datepicker-range-separator">-</span>
+                                <input placeholder="结束日期" name="" class="c-datepicker-data-input" value="">
                             </div>
-                          </div>
+                        </div>
                     </div>
                     <div class="listFlex machineChoose">
                         <button class="layui-btn layui-btn-normal machineChooseBtn  btn " type="button">
@@ -117,45 +119,46 @@
                             <span>查看已选商品</span>
                         </button> -->
                     </div>
-                   <div class="seniorSet">
-                    <div class="listFlex">
-                        <label for="">取货码长度:</label>
-                        <input type="number" name="codeLen" value="12">
-                    </div>
-                    <div class="listFlex complex">
-                        <label for=""><span style="color: red;">*</span> 复杂度:</label>
-                        <form class="layui-form" lay-filter="information">
-                            <div class="layui-form-item">
-                                <div class="layui-input-block">
-                                    <input type="radio" name="complexNum" value="4" title="默认" checked>
-                                  <input type="radio" name="complexNum" value="0" title="纯数字" >
-                                  <input type="radio" name="complexNum" value="1" title="纯字母">
-                                  <input type="radio" name="complexNum" value="2" title="数字+字母">
-                                  <input type="radio" name="complexNum" value="3" title="字母+特殊字符">
-                               
+                    <div class="seniorSet">
+                        <div class="listFlex">
+                            <label for="">取货码长度:</label>
+                            <input type="number" name="codeLen" value="12">
+                        </div>
+                        <div class="listFlex complex">
+                            <label for=""><span style="color: red;">*</span> 复杂度:</label>
+                            <form class="layui-form" lay-filter="information">
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="complexNum" value="4" title="默认" checked>
+                                        <input type="radio" name="complexNum" value="0" title="纯数字">
+                                        <input type="radio" name="complexNum" value="1" title="纯字母">
+                                        <input type="radio" name="complexNum" value="2" title="数字+字母">
+                                        <input type="radio" name="complexNum" value="3" title="字母+特殊字符">
+
+                                    </div>
                                 </div>
-                              </div>
-                        </form>
-                    </div>
-                    <div class="listFlex remove">
-                        <button class="layui-btn layui-btn-normal cleanBtn  btn " type="button">
-                            <i class="layui-icon layui-icon-fonts-clear"></i>
-                            <span>清理无效取货码</span>
-                        </button>
+                            </form>
+                        </div>
+                        <div class="listFlex remove">
+                            <button class="layui-btn layui-btn-normal cleanBtn  btn " type="button">
+                                <i class="layui-icon layui-icon-fonts-clear"></i>
+                                <span>清理无效取货码</span>
+                            </button>
                             <div class="c-datepicker-date-editor c-datepicker-single-editor J-datepicker mt10">
-                                <input type="text" autocomplete="off" name="" placeholder="选择日期" class=" c-datepicker-data-input">
+                                <input type="text" autocomplete="off" name="" placeholder="选择日期"
+                                    class=" c-datepicker-data-input">
                             </div>
+                        </div>
                     </div>
-                   </div>
-                  
+
                     <div class="moreList">
                         <p>高级设置</p>
                         <span>
-                          <img src="../img/under.png" alt="">
+                            <img src="../img/under.png" alt="">
                         </span>
                     </div>
                 </div>
-                <div class="addFooter" >
+                <div class="addFooter">
                     <button class="layui-btn layui-btn-normal btn submitBtn" type="button">
                         <span>提交</span>
                     </button>
@@ -167,7 +170,7 @@
         </div>
 
         <!-- 选择售货机 -->
-        <div class="machineDetailsCont maskContnet"  >
+        <div class="machineDetailsCont maskContnet">
             <div class="machineDetailsBox margin0">
                 <div class="playHeader">
                     <span>选择售货机</span>
@@ -193,7 +196,7 @@
                         <div id="test6" class="demo-transfer"></div>
                     </div>
                 </div>
-                <div class="machineFooter" >
+                <div class="machineFooter">
                     <button class="layui-btn layui-btn-normal btn determineBtn" type="button">
                         <span>确定</span>
                     </button>
@@ -201,24 +204,24 @@
             </div>
         </div>
         <!-- 选择商品 -->
-             <!-- 商品列表 -->
-             <div class="goodsCont maskContnet" style="overflow-y: auto;">
-                <div class="goodsBox margin0">
-                    <div class="playHeader">
-                        <span>商品信息</span>
-                        <button class="close" type="button">
-                            <i class="layui-icon layui-icon-close"></i>
-                        </button>
-                    </div>
-                    <div class="goodsBody">
-                        <div class="flex" style="margin-left: 35px;">
-                            <p style="color: red;">温馨提示：商品没同步更新可以按查询键进行同步!</p>
-                            <div class="materialKeyCont" style="margin-top: 25px;">
-                                <div style="max-width: 350px;" class="key-contnet">
-                                    <div class="key-text">关键字</div>
-                                    <input type="text" placeholder="商品名" class="KyeText" name="GoodsKyeText">
-                                </div>
-                                <!-- <div class="key-contnet">
+        <!-- 商品列表 -->
+        <div class="goodsCont maskContnet" style="overflow-y: auto;">
+            <div class="goodsBox margin0">
+                <div class="playHeader">
+                    <span>商品信息</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="goodsBody">
+                    <div class="flex" style="margin-left: 35px;">
+                        <p style="color: red;">温馨提示：商品没同步更新可以按查询键进行同步!</p>
+                        <div class="materialKeyCont" style="margin-top: 25px;">
+                            <div style="max-width: 350px;" class="key-contnet">
+                                <div class="key-text">关键字</div>
+                                <input type="text" placeholder="商品名" class="KyeText" name="GoodsKyeText">
+                            </div>
+                            <!-- <div class="key-contnet">
                                     <div class="key-text">商品类目</div>
                                     <form class="layui-form" action="" style="width: 85%;">
                                         <div class="layui-form" lay-filter="myDiv" style="width: 100%;">
@@ -227,58 +230,58 @@
                                         </div>
                                     </form>
                                 </div> -->
-                                <button class="layui-btn layui-btn-normal goodsKeyBtn btn" style="margin: 0 0 0 15px;">
-                                    <i class="layui-icon layui-icon-search"></i>
-                                    <span>查询</span>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="data-list-contnet">
-                            <div class="goodsChooseList">
-                                <table class="layui-hide" id="goodsTable" lay-filter="goodsTable"></table>
-                            </div>
+                            <button class="layui-btn layui-btn-normal goodsKeyBtn btn" style="margin: 0 0 0 15px;">
+                                <i class="layui-icon layui-icon-search"></i>
+                                <span>查询</span>
+                            </button>
                         </div>
                     </div>
-                    <div class="goodsFooter" >
-                        <button class="layui-btn layui-btn-normal btn determineBtn" type="button">
-                            <span>确定</span>
-                        </button>
-                        <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
-                            <span>取消</span>
-                        </button>
+
+                    <div class="data-list-contnet">
+                        <div class="goodsChooseList">
+                            <table class="layui-hide" id="goodsTable" lay-filter="goodsTable"></table>
+                        </div>
                     </div>
                 </div>
+                <div class="goodsFooter">
+                    <button class="layui-btn layui-btn-normal btn determineBtn" type="button">
+                        <span>确定</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
+                        <span>取消</span>
+                    </button>
+                </div>
             </div>
-            <!-- 已选择商品 -->
-            <div class="chooseGoods maskContnet" style="overflow-y: auto;" >
-                <div class="margin0 chooseGoodsBox">
-                    <div class="playHeader">
-                        <span>已选择商品</span>
-                        <button class="close" type="button">
-                            <i class="layui-icon layui-icon-close"></i>
-                        </button>
-                    </div>
-                    <div class="chooseBody">
-                        <ul class="SetTitle">
-                            <li class="abbreviateImg">
-                                <div>图片</div>
-                            </li>
-                            <li class="SetName">
-                                <div>商品名</div>
-                            </li>
-                            <li class="SetName">
-                                <div>商品编号</div>
-                            </li>
-                            <li class="duration">
-                                <div>数量</div>
-                            </li>
-                            <!-- <li class="SetOperation">
+        </div>
+        <!-- 已选择商品 -->
+        <div class="chooseGoods maskContnet" style="overflow-y: auto;">
+            <div class="margin0 chooseGoodsBox">
+                <div class="playHeader">
+                    <span>已选择商品</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="chooseBody">
+                    <ul class="SetTitle">
+                        <li class="abbreviateImg">
+                            <div>图片</div>
+                        </li>
+                        <li class="SetName">
+                            <div>商品名</div>
+                        </li>
+                        <li class="SetName">
+                            <div>商品编号</div>
+                        </li>
+                        <li class="duration">
+                            <div>数量</div>
+                        </li>
+                        <!-- <li class="SetOperation">
                                 <div>操作</div>
                             </li> -->
-                        </ul>
-                        <ul class="SetContList">
-                            <!-- <li class="setMateraialList">
+                    </ul>
+                    <ul class="SetContList">
+                        <!-- <li class="setMateraialList">
                                 <div class="abbreviateImg">
                                     <img src="http://pic.hnzczy.cn/1587690837362_36729533.jpg" alt="">
                                 </div>
@@ -299,66 +302,68 @@
                                     </button>
                                 </div>
                             </li> -->
-                        </ul>
-                    </div>
-                    <div class="chooseFooter" >
-                        <button class="layui-btn layui-btn-normal btn determineBtn" type="button">
-                            <span>确定</span>
-                        </button>
-                        <button class="layui-btn layui-btn-normal btn moreChoose" type="button">
-                            <span>选择更多商品</span>
-                        </button>
-                        <!-- <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
+                    </ul>
+                </div>
+                <div class="chooseFooter">
+                    <button class="layui-btn layui-btn-normal btn determineBtn" type="button">
+                        <span>确定</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn moreChoose" type="button">
+                        <span>选择更多商品</span>
+                    </button>
+                    <!-- <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
                             <span>取消</span>
                         </button> -->
-                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- 活动中机器 -->
-            <div class="maskContnet activityMachine" >
-                <div class="activityMachineBox margin">
-                    <div class="playHeader">
-                        <span>活动售货机</span>
-                        <button class="close" type="button">
-                            <i class="layui-icon layui-icon-close"></i>
-                        </button>
+        <!-- 活动中机器 -->
+        <div class="maskContnet activityMachine">
+            <div class="activityMachineBox margin">
+                <div class="playHeader">
+                    <span>活动售货机</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div>
+                    <div class="machineDetailsList">
+                        <div>
+                            <table class="layui-hide" id="activityMachine" lay-filter="activityMachine"></table>
+                        </div>
                     </div>
-                    <div >
-                        <div class="machineDetailsList">
+                </div>
+            </div>
+        </div>
+        <!--取货码列表  -->
+        <div class="maskContnet pickCode">
+            <div class="pickCodeBox margin0">
+                <div class="playHeader">
+                    <span>取货码列表</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+
+                <div class="pickCodeBody">
+                    <div>
+                        <div class="pickCod">
                             <div>
-                                <table class="layui-hide" id="activityMachine" lay-filter="activityMachine"></table>
+                                <table class="layui-hide" id="pickCodeIn" lay-filter="pickCodeIn"></table>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!--取货码列表  -->
-            <div class="maskContnet pickCode">
-                <div class="pickCodeBox margin0">
-                    <div class="playHeader">
-                        <span>取货码列表</span>
-                        <button class="close" type="button">
-                            <i class="layui-icon layui-icon-close"></i>
-                        </button>
-                    </div>
-                    <div class="newKeyContent">
-                        <button type="button" class="layui-btn layui-btn-primary pushBtn ">
-                            <i class="layui-icon layui-icon-app"></i>
-                            <span>导出取货码</span>
-                        </button>
-                    </div>
-                    <div class="pickCodeBody">
-                        <div >
-                            <div class="pickCod">
-                                <div>
-                                    <table class="layui-hide" id="pickCodeIn" lay-filter="pickCodeIn"></table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div style="z-index: 99;position: absolute;bottom: 12px;right: 20px;">
+                    <button type="button" class="layui-btn layui-btn-primary pushBtn" >
+                        <i class="layui-icon layui-icon-print"></i>
+                        <span>导出取货码</span>
+                    </button>
                 </div>
+              
             </div>
+        </div>
 
     </div>
     <div class="mask maskContnet">
@@ -392,6 +397,7 @@
     </script>
     <script src="./assets/public/moment.min.js"></script>
     <script src="./assets/public/datepicker.all.min.js"></script>
-    
+
 </body>
+
 </html>

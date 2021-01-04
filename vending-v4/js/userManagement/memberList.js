@@ -97,7 +97,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
   table.on('tool(test)', function (obj) {
     var data = obj.data;
     memData = obj.data;
-    console.log(obj)
+    // console.log(obj)
     uuID = data.uuid;
     if (obj.event === 'edit') {
       if (addEditData.length == 0) {
@@ -283,7 +283,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       for (let i in roleLIstData) {
         roleListArray.push(Number(roleLIstData[i]))
       }
-      console.log(roleListArray);
+      // console.log(roleListArray);
     }
     var aliasText = null;
     merchantsListData.forEach((item, index) => {
@@ -293,7 +293,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     })
     var openStart = informData.startThe ? 1 : 0;
     var roleSignStart = informData.administrator ? 1 : 0;
-    console.log(informData)
+    // console.log(informData)
     if (urlApi) {
       $.ajax({
         type: 'post',
@@ -319,7 +319,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         success: function (res) {
           $('.mask').fadeOut();
           $('.maskSpan').removeClass('maskIcon')
-          console.log(res)
+          // console.log(res)
           if (res.code == 200) {
             if (informationType == 2) {
               socketFun(uuID)
@@ -449,7 +449,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
   form.on('select(stateSelect)', function (data) {
 
     // marchantsListname
-    console.log(data.value); //得到被选中的值
+    // console.log(data.value); //得到被选中的值
     if (data.value == 0) {
 
       $('.checkCont input[name="100001"]').prop('disabled', false);
@@ -535,7 +535,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       none: ''
     },
     click: function (obj) {
-      console.log(obj);
+      // console.log(obj);
       $('.terminal input[name="marchantsListname"]').val(obj.data.title);
       $('.terminal input[name="topmachantsVal"]').val(obj.data.id);
       tableIns.reload({
@@ -569,7 +569,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       none: ''
     },
     click: function (obj) {
-      console.log(obj);
+      // console.log(obj);
       $('.terminal input[name="marchantsListname"]').val(obj.data.title);
       $('.terminal input[name="topmachantsVal"]').val(obj.data.id)
       if (obj.data.id == 1) {
@@ -614,7 +614,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     transferVal = [];
   function storesFun(uid) {
     loadingAjax('/user/getUserMachine', 'post', JSON.stringify({ UUId: uid }), sessionStorage.token).then(res => {
-      console.log(res)
+      // console.log(res)
       transferListArr = [];
       transferVal=[]
       // transferVal = res.data.select;
@@ -628,8 +628,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
           title: item.info ? item.info+'('+item.number+')' : '(此为未命名的新售货机)'
         });
         transferListArr.push(transferObj)
-        console.log(transferListArr);
-        console.log(transferVal)
+        // console.log(transferListArr);
+        // console.log(transferVal)
         transferFun(transferListArr, transferVal)
       });
       if((transferListArr.length==0)&&(transferVal.length==0)){
@@ -654,7 +654,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       height: 500, //定义高度
       value,
       onchange: function (obj, indexs) {
-        console.log(indexs)
+        // console.log(indexs)
         var machineId=[];  
         layer.confirm('确定修改配置？', function (index) {
           obj.forEach((item, index) => {
@@ -662,7 +662,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             machineId.push(item.value)
           });
           layer.close(index);
-          console.log(indexs)
+          // console.log(indexs)
           var editStores=JSON.stringify({
             UUID:memData.uuid,
             machineId,
@@ -675,7 +675,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             layer.msg(err.message,{icon:2});
             transferFun(transferListArr,transferVal)
           })
-          console.log(editStores)
+          // console.log(editStores)
         }, function (index) {
           transferFun(transferListArr,transferVal)
         });
