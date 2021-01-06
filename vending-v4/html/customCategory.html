@@ -9,28 +9,17 @@
 </head>
 
 <body>
-    <div class="addbs">sadadadas</div>
+    <!-- <div class="addbs">sadadadas</div> -->
     <div class="custom-warp">
         <div style="width: 100%;display: flex;">
             <!-- 左边部分 -->
             <div class="left-mian">
                 <div class="accountContnet" style="margin-left:15px;">
-                    <!-- <div class="input-account">
-						  <input type="text" placeholder="输入用户账号">
-                      </div> -->
-                    <!-- <button class="layui-btn layui-btn-normal  btn refreshBtnList" type="button"
-                        style="margin:10px 20px 0px ;">
-                        <i class="layui-icon layui-icon-refresh "></i>
-                        <span>刷新</span>
-                    </button> -->
                     <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表" data-direction="bottom" type="button">
                         <i class="layui-icon layui-icon-refresh-3 "></i>
                         <!-- 刷新 -->
                     </button>
                     <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
-                    <!-- <div class="fixed-account">
-						  <span> 粤宝商户-中邮广州</span>
-					  </div> -->
                     <div id="testGoods" class="demo-tree demo-tree-box"></div>
                 </div>
                 <!-- 右侧栏 -->
@@ -38,44 +27,12 @@
             </div>
             <i class="layui-icon layui-icon-right  on-left"></i>
             <div class="warp-margin">
-                <!-- <div class="header-query">
-                    <button class="layui-btn layui-btn-normal  addBtn btn hide" style="margin-right: 50px;">
-                        <i class="layui-icon layui-icon-app"></i>
-                        <span>添加类目</span>
-                    </button>
-                    <div style="max-width: 330px;" class="key-contnet">
-                        <div class="key-text">关键字</div>
-                        <input type="text" class="keyText">
-                    </div>
-                    <button class="layui-btn layui-btn-normal queryBtn btn">
-                        <i class="layui-icon layui-icon-search"></i>
-                        <span>查询</span>
-                    </button>
-                    <button class="layui-btn layui-btn-normal  btn queryBtn" type="button">
-                        <i class="layui-icon layui-icon-refresh "></i>
-                        <span>刷新</span>
-                    </button>
-                </div> -->
                 <div class="newHeader">
                     <div class="newHeaderText">
                         操作
                     </div>
                     <div class="newKeyContent">
-                        <!-- <div class="newKeyItem">
-                            <label for="">关键字</label>
-                            <div>
-                                <input type="text" class="keyText" placeholder="类目名">
-                            </div>
-                        </div> -->
                     </div>
-                    <!-- <div class="newKeyContent">
-                        <button type="button" class="layui-btn layui-btn-primary queryBtn">
-
-                            <i class="layui-icon layui-icon-search"></i>
-                            <span>查询</span>
-
-                        </button>
-                    </div> -->
                     <div class="newKeyContent">
                         <button type="button" class="layui-btn layui-btn-primary hide addBtn">
                             <i class="layui-icon layui-icon-app"></i>
@@ -110,6 +67,7 @@
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
                 </div>
+                <p style="color: red;text-align: center;">只能添加自己商户的类目</p>
                 <div>
                     <form action="" class="layui-form" lay-filter="aDDValData"
                         style="width: 460px;display: block;margin: 0 auto ;">

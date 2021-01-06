@@ -1,4 +1,4 @@
-import '../../MyCss/goods/customCategory.css';
+import '../../MyCss/order/orderSummary.scss';
 layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
     tooltip('.refreshBtnList', { transition: true, time: 200 });
     sessionStorage.classTag = sessionStorage.machineID;
@@ -100,15 +100,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
                 }
             },
             {
-                field: 'ship_info', width: 200, title: '邮寄信息', align: 'center', templet: function (d) {
+                field: 'ship_info', width: 230, title: '邮寄信息', align: 'center', templet: function (d) {
                     if(d.mail == 1){
                         return `
-                                <div>收货人:${d.sign_name}</div>
-                                <div>收货人电话:${d.sign_phone}</div>
-                                <div>s收货地址:${d.sign_address}</div>
-                                <div>快递/物流状态:${d.dispatch_status == 0 ? '未发货' : d.dispatch_status == 1 ? '已发货' : '已收货'}</div>
-                                <div>快递/物流公司:${d.express_type ? d.express_type : '-'}</div>
-                                <div>快递/物流单号:${d.express_number ? d.express_number : '-'}</div>
+                                <div class="mailFlex"><span> 收货人:</span><span>${d.sign_name}</span></div>
+                                <div class="mailFlex"> <span>收货人电话:</span><span>${d.sign_phone}</span></div>
+                                <div class="mailFlex"><span>收货地址:</span><span>${d.sign_address}</span></div>
+                                <div class="mailFlex"><span>快递/物流状态:</span><span>${d.dispatch_status == 0 ? '未发货' : d.dispatch_status == 1 ? '已发货' : '已收货'}</span></div>
+                                <div class="mailFlex"><span>快递/物流公司:</span><span>${d.express_type ? d.express_type : '-'}</span></div>
+                                <div class="mailFlex"><span>快递/物流单号:</span><span>${d.express_number ? d.express_number : '-'}</span></div>
                                `
                     }else{
                         return '-'

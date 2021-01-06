@@ -50,10 +50,34 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     field: 'trafficInfo', width: 200, title: '流量使用情况(MB)', align: 'center'
                 },
                 {
-                    field: 'CreationTime', width: 130, title: '缺货状态', align: 'center', templet: function (d) {
-                        return `<div><span class="${d.stockStatus == 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.stockStatus == 0 ? '正常' : d.stockStatus == 1 ? '一般' : '严重'}</span></div>`
+                    field: 'trafficInfo', width: 200, title: '离线时长', align: 'center',templet:function(d){
+                        
+                        if(d.onlineStatus!=0){
+                            return '0天0小时0分'
+                        }else{
+                            var nData=new Date().getTime(),
+                            cDate =nData-d.offline_time;
+                            return d.offline_time?(cDate.getHours()<10?'0'+cDate.getHours():cDate.getHours())+'小时'+(cDate.getMinutes()<10?'0'+cDate.getMinutes():cDate.getMinutes())+'分钟':'0天0小时0分'
+                        }
                     }
                 },
+                {
+                    field: 'trafficInfo', width: 150, title: '缺货状态', align: 'center',templet:function(d){
+                        return` <div>
+                                    <span class="${d.storage_warning[0].way_count < 10 ? 'tableStateCellTrue' : d.storage_warning[0].way_count < 30? 'tableStateCellFalse':'red'}">${d.storage_warning[0].warning}</span>
+                                </div>`
+                    }
+                },
+                {
+                    field: 'trafficInfo', width: 150, title: '缺货货道数量', align: 'center',templet:function(d){
+                        return d.storage_warning[0].way_count
+                    }
+                },
+                // {
+                //     field: 'CreationTime', width: 130, title: '缺货状态', align: 'center', templet: function (d) {
+                //         return `<div><span class="${d.stockStatus == 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.stockStatus == 0 ? '正常' : d.stockStatus == 1 ? '一般' : '严重'}</span></div>`
+                //     }
+                // },
                 {
                     field: 'onlineStatus', width: 130, title: '在线状态', align: 'center', templet: function (d) {
                         return `<div><span class="${d.onlineStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.onlineStatus == 0 ? '离线' : '在线'}</span></div>`
@@ -141,7 +165,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 statusCode: 200 //规定成功的状态码，默认：0
             },
             done: function (res) {
-                permissions();
+                // permissions();
+                permissions1();
                 if (res.code == 403) {
                     window.parent.location.href = "login.html";
                 } else if (res.code == 405) {
@@ -422,113 +447,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     layer.msg(Derr.message, { icon: 2 })
                 })
             })
-            // } else {
-            //     layer.confirm('确定暂停营业？', function (index) {
-            //         layer.close(index);
-            //         $('.mask').fadeIn();
-            //         $('.maskSpan').addClass('maskIcon');
-            //         loadingAjax('/machine/getStatus', 'post', JSON.stringify({ machineId: machineSetData.machineId }), sessionStorage.token).then(Dres => {
-            //             var statusType = Dres.data;
-            //             if (statusType.actionStatus == 1) {
-            //                 loadingAjax('/pushActive','post',)
-            //             }else{
-            //                 $('.mask').fadeOut();
-            //                 $('.maskSpan').removeClass('maskIcon')
-            //                 layer.msg('该设备未激活,无法进行营业操作', { icon: 7 })
-            //             }
-            //         }).catch(Derr=>{
-            //             $('.mask').fadeOut();
-            //             $('.maskSpan').removeClass('maskIcon')
-            //             layer.msg(Derr.message, { icon: 2 })
-            //         })
-
-
-            //         $.ajax({
-            //             type: 'post',
-            //             url: `${vApi}/machine/getStatus`,
-            //             headers: {
-            //                 "Content-Type": "application/json",
-            //                 token,
-            //             },
-            //             data: JSON.stringify({
-            //                 machineId: machineSetData.machineId,
-            //             }),
-            //             success: function (Dres) {
-            //                 if (Dres.code == 200) {
-            //                     console.log(Dres)
-            //                     // return ;
-            //                     // var statusType = JSON.parse(Dres.data);
-            //                     var statusType = Dres.data;
-            //                     if (statusType.actionStatus == 1) {
-            //                         $.ajax({
-            //                             type: 'post',
-            //                             url: '/api/pushActive',
-            //                             headers: {
-            //                                 "Content-Type": "application/json",
-            //                                 token,
-            //                             },
-            //                             data: JSON.stringify({
-            //                                 machine: machineSetData.machineId,
-            //                                 action: 'false'
-            //                             }),
-            //                             success: function (res) {
-            //                                 // $('.mask').fadeOut();
-            //                                 // $('.maskSpan').removeClass('maskIcon');
-            //                                 // layer.msg('暂停营业成功', { icon: 1 });
-            //                                 // machineList.reload({
-            //                                 //     where: {}
-            //                                 // })
-            //                                 if (res == 'true') {
-            //                                     $.ajax({
-            //                                         type: 'post',
-            //                                         url: '/api/machine/activeMachine',
-            //                                         headers: {
-            //                                             "Content-Type": "application/json",
-            //                                             token,
-            //                                         },
-            //                                         data: JSON.stringify({
-            //                                             machineId: machineSetData.machineId,
-            //                                             openStatus: '0'
-            //                                         }),
-            //                                         success: function (Sres) {
-            //                                             $('.mask').fadeOut();
-            //                                             $('.maskSpan').removeClass('maskIcon')
-            //                                             if (Sres.code == 200) {
-            //                                                 layer.msg('暂停营业成功', { icon: 1 });
-            //                                                 machineList.reload({
-            //                                                     where: {}
-            //                                                 })
-            //                                             } else {
-
-            //                                                 layer.msg(Sres.message, { icon: 2 })
-            //                                             }
-            //                                         }
-            //                                     })
-            //                                 } else {
-            //                                     $('.mask').fadeOut();
-            //                                     $('.maskSpan').removeClass('maskIcon');
-            //                                     layer.msg('操作失败', { icon: 2 });
-            //                                 }
-            //                             }
-            //                         })
-
-            //                     } else {
-            //                         $('.mask').fadeOut();
-            //                         $('.maskSpan').removeClass('maskIcon')
-            //                         layer.msg('该设备未激活,无法进行营业操作', { icon: 7 })
-            //                     }
-            //                 } else if (Dres.code == 403) {
-            //                     window.parent.location.href = "login.html";
-            //                 } else {
-            //                     $('.mask').fadeOut();
-            //                     $('.maskSpan').removeClass('maskIcon')
-            //                     layer.msg(Dres.message, { icon: 2 })
-            //                 }
-
-            //             }
-            //         })
-            //     })
-            // }
         }
     });
     // 关闭设置
@@ -771,7 +689,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'payTypes', width: 150, title: '支付方式', 
+                    field: 'payTypes', width: 150, title: '支付类型', 
                 },
                 { field: 'payee', width: 150, title: '收款方', },
                 { field: 'amount', width: 150, title: '金额', },
@@ -816,8 +734,47 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 }
             }
         });
-    }
-
+    };
+    // 销售详情导出
+    $('.selesPushBtn').click(function(){
+        if (timeFlag(selesStartTime, selesEndTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        var myDate = new Date(),
+          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+          xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        xhr.open("GET", `${vApi}/exportMachineOrder?startDate=${selesStartTime}&endDate=${selesEndTime}&condition=${machineSetData.machineId}`, true);
+        xhr.setRequestHeader("token", sessionStorage.token);
+        // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
+        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+    
+        xhr.onload = function (res) {
+          if (xhr.status == 200) {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            var content = xhr.response;
+            // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+            var fileName = `${machineSetData.info}(${machineSetData.number})销售详情(${selesStartTime}-${selesEndTime}).xls`
+            var elink = document.createElement('a');
+            elink.download = fileName;
+            elink.style.display = 'none';
+            var blob = new Blob([content]);
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            document.body.removeChild(elink);
+          } else {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            layer.msg('服务器请求超时', { icon: 2 });
+            return;
+          }
+        }
+        xhr.send();
+    })
     // 销售详情查询
     $('.selesQueryBtn').click(function () {
         if (timeFlag(selesStartTime, selesEndTime)) {
@@ -932,6 +889,46 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         });
     }
+
+    // 导出出货记录
+    $('.shipmentPushBtn').click(function(){
+        if (timeFlag(startTime, endTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+        var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        xhr.open("GET", `${vApi}/excelShipping?startDate=${startTime}&endDate=${endTime}&machineId=${machineSetData.machineId}`, true);
+        xhr.setRequestHeader("token", sessionStorage.token);
+        // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
+        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+    
+        xhr.onload = function (res) {
+          if (xhr.status == 200) {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            var content = xhr.response;
+            // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+            var fileName = `${machineSetData.info}(${machineSetData.number})出货记录(${startTime}-${endTime}).xls`
+            var elink = document.createElement('a');
+            elink.download = fileName;
+            elink.style.display = 'none';
+            var blob = new Blob([content]);
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            document.body.removeChild(elink);
+          } else {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            layer.msg('服务器请求超时', { icon: 2 });
+            return;
+          }
+        }
+        xhr.send();
+    })
     // 出货记录列表
     $('.shipmentQueryBtn').click(function () {
         if (timeFlag(startTime, endTime)) {
@@ -1022,7 +1019,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         salesListFlag = false,//销售记录
         shipmentListFlag = false,//出货记录
         shmentListFlag = false,
-        editPriceFlag = false;//修改价格记录
+        editPriceFlag = false,//修改价格记录
+        selesPushBtnFlag=false,//导出销售详情
+        shipmentPushBtnFlag=false,//导出出货记录
+        replenishmentPushBtnFlag=false,//补货记录
+        editPircePushBtnFlag=false,//修改价格记录
+        openDoorPushBtnFlag=false;//导出开门记录
     function permissions() {
         permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
             res.data.forEach(item => {
@@ -1056,33 +1058,52 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if (item.id == '456') {
                     shmentListFlag = true;
                 }
+                if(item.id=='467'){
+                    selesPushBtnFlag=true;
+                }
+                if(item.id=='466'){
+                    shipmentPushBtnFlag=true;
+                }
+                if(item.id=='468'){
+                    replenishmentPushBtnFlag=true;
+                }
+                if(item.id=='469'){
+                    editPircePushBtnFlag=true
+                }
+                if(item.id=='470'){
+                    openDoorPushBtnFlag=true;
+                }
                 // if(item.id=='461'){
                 //     editPriceFlag=true
                 // }
             })
-
-            activateFlag ? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
-            paySetFlag ? $('.payTypeSet').removeClass('hide') : $('.payTypeSet').addClass('hide');
-            paySetFlag ? $('.sequence').removeClass('hide') : $('.sequence').addClass('hide');
-            delAisleFlag ? $('.detailsDel').removeClass('hide') : $('.detailsDel').addClass('hide');
-            AisleDetailsFlag ? $('aisleDetailsTab').removeClass('hide') : $('aisleDetailsTab').addClass('hide');
-            salesListFlag ? $('.salesDetails').removeClass('hide') : $('.salesDetails').addClass('hide');
-            shipmentListFlag ? $('.shipmentDetails').removeClass('hide') : $('.shipmentDetails').addClass('hide');
-            shmentListFlag ? $('.shmentSet').removeClass('hide') : $('.shmentSet').addClass('hide');
+            permissions1();
             // editPriceFlag ? $('.editPriceTab').removeClass('hide') : $('.editPriceTab').addClass('hide');
         }).catch(err => {
             layer.msg(err.message, { icon: 2 })
         });
     }
-
+    permissions();
+    function permissions1(){
+        activateFlag ? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
+        paySetFlag ? $('.payTypeSet').removeClass('hide') : $('.payTypeSet').addClass('hide');
+        paySetFlag ? $('.sequence').removeClass('hide') : $('.sequence').addClass('hide');
+        delAisleFlag ? $('.detailsDel').removeClass('hide') : $('.detailsDel').addClass('hide');
+        AisleDetailsFlag ? $('aisleDetailsTab').removeClass('hide') : $('aisleDetailsTab').addClass('hide');
+        salesListFlag ? $('.salesDetails').removeClass('hide') : $('.salesDetails').addClass('hide');
+        shipmentListFlag ? $('.shipmentDetails').removeClass('hide') : $('.shipmentDetails').addClass('hide');
+        shmentListFlag ? $('.shmentSet').removeClass('hide') : $('.shmentSet').addClass('hide');
+        selesPushBtnFlag?$('.selesPushBtn').removeClass('hide') : $('.selesPushBtn').addClass('hide');
+        shipmentPushBtnFlag?$('.shipmentPushBtn').removeClass('hide') : $('.shipmentPushBtn').addClass('hide');
+        replenishmentPushBtnFlag?$('.replenishmentPushBtn').removeClass('hide') : $('.replenishmentPushBtn').addClass('hide');
+        editPircePushBtnFlag?$('.editPircePushBtn').removeClass('hide') : $('.editPircePushBtn').addClass('hide');
+        openDoorPushBtnFlag?$('.openDoorPushBtn').removeClass('hide') : $('.openDoorPushBtn').addClass('hide');
+    }
     // 关闭弹窗
     $('.playHeader .close').click(function () {
         $(this).parent().parent().addClass('margin0')
         $(this).parents('.maskContnet').fadeOut();
     });
-
-
-
     // 请求商品分类
     function selectData(merchantId) {
         loadingAjax('/classify/findAll', 'post', JSON.stringify({ pageNum: 1, pageSize: 200, merchantId, }), sessionStorage.token).then(res => {
@@ -1194,7 +1215,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 渲染方法
     var wayFlagArr = [];
     function againFun(res) {
-        console.log(res)
+        // console.log(res)
         wayList = [
             [], [], [], [], [], []
         ];
@@ -1206,7 +1227,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
 
         })
-        console.log(wayList)
         aisleHtml1(wayList);
     };
     //选择商品
@@ -1820,7 +1840,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
 
     // 补货记录
-    var replenishmentList
+    var replenishmentList=null;
     function replenishmenFun() {
         replenishmentList = table.render({
             elem: '#replenishmentTable',
@@ -1939,7 +1959,60 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         })
     });
-
+    // 导出补货记录
+    $('.replenishmentPushBtn').click(function(){
+        if (timeFlag(replenishmentStartTime, sreplenishmentEndTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+        var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        xhr.open("GET", `${vApi}/excelReplenish?startDate=${replenishmentStartTime}&endDate=${sreplenishmentEndTime}&machineId=${machineSetData.machineId}`, true);
+        xhr.setRequestHeader("token", sessionStorage.token);
+        // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
+        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+    
+        xhr.onload = function (res) {
+          if (xhr.status == 200) {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            var content = xhr.response;
+            // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+            var fileName = `${machineSetData.info}(${machineSetData.number})补货记录(${replenishmentStartTime}-${sreplenishmentEndTime}).xls`
+            var elink = document.createElement('a');
+            elink.download = fileName;
+            elink.style.display = 'none';
+            var blob = new Blob([content]);
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            document.body.removeChild(elink);
+          } else {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            layer.msg('服务器请求超时', { icon: 2 });
+            return;
+          }
+        }
+        xhr.send();
+    })
+       //开始时间
+       var editStartTime = getKeyTime().startTime;
+       //结束时间
+       var editEndTime = getKeyTime().endTime;
+       laydate.render({
+           elem: '#test10',
+           range: true,
+           value: getKeyTime().keyTimeData,
+           done: function (value, date, endDate) {
+               // console.log(value); //得到日期生成的值，如：2017-08-18
+               var timerKey = value.split(' - ');
+               editStartTime = timerKey[0];
+               editEndTime = timerKey[1];
+           }
+       });
     // 修改价格记录部分
     var priceTable = null;
     function priceFun() {
@@ -1952,7 +2025,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                { field: 'way', width: 150, title: '货道', align: 'center', },
+                // { field: 'way', width: 150, title: '货道', align: 'center', },
                 { field: 'old_price', width: 150, title: '修改前价格', align: 'center', },
                 { field: 'new_price', width: 150, title: '修改后价格', align: 'center', },
                 { field: 'goods_Name', width: 150, title: '商品名', align: 'center', },
@@ -1973,7 +2046,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 'limitName': 'pageSize'
             },
             where: {
-                machineId: machineSetData.machineId
+                machineId: machineSetData.machineId,
+                startDate:editStartTime,
+                endDate:editEndTime
             },
             parseData: function (res) {
                 // console.log(res)
@@ -2003,7 +2078,58 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         });
     }
-
+    // 修改价格查询
+    $('.editQueryBtn').click(function () {
+        if (timeFlag(editStartTime, editEndTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
+        priceTable.reload({
+            where: {
+                startDate: editStartTime ? editStartTime : null,
+                endDate: editEndTime ? editEndTime : null
+            }
+        })
+    });
+    // 修改价格导出
+    $('.editPircePushBtn').click(function(){
+        if (timeFlag(editStartTime, editEndTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        };
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+        var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        xhr.open("GET", `${vApi}/excelPriceRecord?startDate=${editStartTime}&endDate=${editEndTime}&machineId=${machineSetData.machineId}`, true);
+        xhr.setRequestHeader("token", sessionStorage.token);
+        // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
+        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+    
+        xhr.onload = function (res) {
+          if (xhr.status == 200) {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            var content = xhr.response;
+            // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+            var fileName = `${machineSetData.info}(${machineSetData.number})修改价格记录(${editStartTime}-${editEndTime}).xls`
+            var elink = document.createElement('a');
+            elink.download = fileName;
+            elink.style.display = 'none';
+            var blob = new Blob([content]);
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            document.body.removeChild(elink);
+          } else {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            layer.msg('服务器请求超时', { icon: 2 });
+            return;
+          }
+        }
+        xhr.send();
+    })
     // 开门记录部分
     var openDoorTable = null;
     function openDoorFun() {
@@ -2089,5 +2215,189 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 end_time: openETime ? openETime : null
             }
         })
+    });
+    // 开门记录导出
+    $('.openDoorPushBtn').click(function(){
+        if (timeFlag(openSTime, openETime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        };
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+        var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        xhr.open("GET", `${vApi}/excelDoorRecord?startDate=${openSTime}&endDate=${openETime}&machineId=${machineSetData.machineId}`, true);
+        xhr.setRequestHeader("token", sessionStorage.token);
+        // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
+        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+    
+        xhr.onload = function (res) {
+          if (xhr.status == 200) {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            var content = xhr.response;
+            // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+            var fileName = `${machineSetData.info}(${machineSetData.number})开门记录(${openSTime}-${openETime}).xls`
+            var elink = document.createElement('a');
+            elink.download = fileName;
+            elink.style.display = 'none';
+            var blob = new Blob([content]);
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            document.body.removeChild(elink);
+          } else {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            layer.msg('服务器请求超时', { icon: 2 });
+            return;
+          }
+        }
+        xhr.send();
+    });
+    laydate.render({
+        elem: '#test101'
+      });
+    // 导出补货单
+    var repairInvoiceData=null;
+    $('.invoicePushBtn').click(function(){
+        loadingAjax('/machine/getGoodReplenish','post',JSON.stringify({machineId:machineSetData.machineId}),sessionStorage.token,'','',layer).then(res=>{
+            
+            repairInvoiceData=res.data;
+            RgoodsFun(repairInvoiceData.good_info);
+            $('.repairInvoiceBody input[name="iMachineName"]').val(`${repairInvoiceData.info}(${repairInvoiceData.number})`);
+            $('.repairInvoiceBody input[name="supplier"]').val(repairInvoiceData.supplier);
+            $('.repairInvoiceBody input[name="supplyName"]').val(repairInvoiceData.supplyName);
+            $('.repairInvoiceBody input[name="supplyPhone"]').val(repairInvoiceData.supplyPhone);
+            $('.repairInvoiceBody input[name="checkFlagName"]').val(repairInvoiceData.checkFlagName);
+            $('.repairInvoiceBody input[name="acceptanceName"]').val(repairInvoiceData.acceptanceName);
+            $('.repairInvoiceBody input[name="acceptancePhone"]').val(repairInvoiceData.acceptancePhone);
+            $('.repairInvoiceBody input[name="wareManagement"]').val(repairInvoiceData.wareManagement);
+            $('.repairInvoiceBody input[name="operator"]').val(repairInvoiceData.operator);
+            $('.repairInvoiceBody input[name="consignee"]').val(repairInvoiceData.consignee);
+            popupShow('repairInvoice','repairInvoiceBox');
+        }).catch(err=>{
+            layer.msg(err.message,{icon:7})
+        })
+    });
+    function RgoodsFun(list){
+        var Rstr='';
+        list.forEach((item,index)=>{
+            Rstr+=`<li class="detaillHeader">
+                        <div class="headerIndex1">
+                            <label for="">${index+1}</label>
+                        </div>
+                        <div class="headerGoods">
+                            <label for="">${item.goodName}</label>
+                        </div>
+                        <div class="headerNum oldNums">
+                            <!-- <label for="">原机货数</label> -->
+                            <input type="number" name="oloNum" value="${item.oldCount}" disabled>
+                        </div>
+                        <div class="headerNum reNums">
+                            <!-- <label for="">应补货数</label> -->
+                            <input type="number" name="shouldName" value="${item.replenish}">
+                        </div>
+                        <div class="headerNum newNums">
+                            <input type="number" name="newNum" disabled value="${item.newCount}">
+                        </div>
+                        <div class="headerNum inNums">
+                            <input type="number" name="panelNam" value="${item.showCount}">
+                        </div>
+                        <div class="headerNum totalNums">
+                            <input type="number" name="totalNum" disabled value="${item.replenish+item.showCount}">
+                        </div>
+                     </li>`
+
+                    
+        })
+       $('.detaillBody').html(Rstr)
+    };
+
+    // 应补货数量改变
+    var CNumber=1;
+    $('.detaillBody').on('input','input[name="shouldName"]',function(){
+       var re = /^\d*$/;
+       if (!re.test($(this).val())) {
+        layer.msg('只能输入正整数', { icon: 7 });
+        $(this).val(CNumber);
+        return ;
+      }
+       CNumber=$(this).val();
+       $(this).parent().siblings('.newNums').children().val(Number(CNumber)+Number($(this).parent().siblings('.oldNums').children().val()));
+       $(this).parent().siblings('.totalNums').children().val(Number(CNumber)+Number($(this).parent().siblings('.inNums').children().val()));
+    });
+    // 应补展板数改变
+    var DNum=1;
+    $('.detaillBody').on('input','input[name="panelNam"]',function(){
+        var re = /^\d*$/;
+        if (!re.test($(this).val())) {
+         layer.msg('只能输入正整数', { icon: 7 });
+         $(this).val(DNum);
+         return ;
+       };
+       DNum=$(this).val();
+       $(this).parent().siblings('.totalNums').children().val(Number(DNum)+Number($(this).parent().siblings('.reNums').children().val()));
+    });
+    $('.repairInvoiceFooter .ReBtn').click(function(){
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        var good_infoAyy=[];
+        for(let i=0;i<repairInvoiceData.good_info.length;i++){
+            var goodsInfoObj={
+                goodName:repairInvoiceData.good_info[i].goodName,
+                newCount: Number($('.detaillBody .detaillHeader').eq(i).find('input[name="newNum"]').val()),
+                oldCount:repairInvoiceData.good_info[i].oldCount,
+                replenish:Number($('.detaillBody .detaillHeader').eq(i).find('input[name="shouldName"]').val()) ,
+                showCount: Number($('.detaillBody .detaillHeader').eq(i).find('input[name="panelNam"]').val()),
+                totalCount:Number($('.detaillBody .detaillHeader').eq(i).find('input[name="totalNum"]').val()),
+                id:i+1
+            };
+            good_infoAyy.push(goodsInfoObj)
+        }
+        var repairInvoiceObj=JSON.stringify({
+            machineName:$('.repairInvoiceBody input[name="iMachineName"]').val(),
+            deliverTime:$('#test101').val(),
+            supplier:$('.repairInvoiceBody input[name="supplier"]').val(),
+            supplyName:$('.repairInvoiceBody input[name="supplyName"]').val(),
+            supplyPhone:$('.repairInvoiceBody input[name="supplyPhone"]').val(),
+            checkFlagName:$('.repairInvoiceBody input[name="checkFlagName"]').val(),
+            acceptanceName:$('.repairInvoiceBody input[name="acceptanceName"]').val(),
+            acceptancePhone:$('.repairInvoiceBody input[name="acceptancePhone"]').val(),
+            wareManagement:$('.repairInvoiceBody input[name="wareManagement"]').val(),
+            operator:$('.repairInvoiceBody input[name="operator"]').val(),
+            consignee:$('.repairInvoiceBody input[name="consignee"]').val(),
+            number:repairInvoiceData.number,
+            good_info:good_infoAyy
+        });
+       
+          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+        var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        xhr.open("POST", `${vApi}/machine/exportGoodReplenish`, true);
+        xhr.setRequestHeader("token", sessionStorage.token);
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+        xhr.onload = function (res) {
+          if (xhr.status == 200) {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            var content = xhr.response;     
+            var fileName = `${repairInvoiceData.supplier}商品调拨（补货）单.xls`
+            var elink = document.createElement('a');
+            elink.download = fileName;
+            elink.style.display = 'none';
+            var blob = new Blob([content]);
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            document.body.removeChild(elink);
+          } else {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            layer.msg('服务器请求超时', { icon: 2 });
+            return;
+          }
+        }
+        xhr.send(repairInvoiceObj);
     })
 });

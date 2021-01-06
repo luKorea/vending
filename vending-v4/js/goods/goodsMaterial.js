@@ -7,10 +7,12 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     if ($(this).index() == 2) {
       if (!videoTable) {
         videoTableFun();
+        treeFunMaterial(tree, 'dataGoodsVideo', videoTable, dataGoodsVideoList, 'conditionSix', 'treelistThree',);
       }
     } else if ($(this).index() == 1) {
       if (!detailsTable) {
         detailsTableFun();
+        treeFunMaterial(tree, 'detailsIMG', detailsTable, detailsIMGList, 'conditionSix', 'treelistTwo',);
       }
     }
     $(this).addClass('active').siblings().removeClass('active');
@@ -933,9 +935,9 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   dataListGoodsImg = detailsIMGList = dataGoodsVideoList = treeList();
   treeFunMaterial(tree, 'LogoIMG', advertisingLis, dataListGoodsImg, 'conditionSix', 'treelistOne',);
   // var  = treeList();
-  treeFunMaterial(tree, 'detailsIMG', detailsTable, detailsIMGList, 'conditionSix', 'treelistTwo',);
+  
   // var dataGoodsVideoList = treeList();
-  treeFunMaterial(tree, 'dataGoodsVideo', videoTable, dataGoodsVideoList, 'conditionSix', 'treelistThree',);
+ 
   //左边商户列表部分显示隐藏
   $('.sidebar i').click(function () {
     console.log($(this).parent())

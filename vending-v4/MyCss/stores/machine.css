@@ -355,6 +355,11 @@ input{
     padding: 0 10px;
     line-height: 30px;
 }
+.red{
+    color: #fd6967 !important;
+    background: #fee !important;
+    border: 1px solid #fd6967;
+}
 .key-contnet .notAllowed{
     cursor: not-allowed;
     background-color: #f5f7fa;
@@ -776,4 +781,65 @@ input:hover{
 .promptP{
     color: red;
     text-align: center;
+}
+.repairInvoiceBox{
+    width: 1100px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    padding: 0 25px;
+}
+.repairInvoiceBox h1{
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #000000;
+    padding-bottom: 25px;
+}
+.repairInvoiceBox label{
+    width: 100px;
+}
+.rInfo>div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.partyFlex>div{
+    width: 33%;
+}
+.goodsDetail{
+    padding: 10px 25px;
+}
+.detaillHeader{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.headerIndex1{
+    width: 80px;
+}
+.headerGoods{
+    width: 200px;
+}
+.headerNum{
+    width: 150px;
+}
+.goodsDetail div{
+    /* margin-top: 10px; */
+    border: 1px solid rgba(0, 0, 0,0.8);
+    padding: 5px;
+    line-height: 24px;
+    text-align: center;
+}
+.headerNum input{
+    display: inline-block;
+    height: 100%;
+    width: 90%;
+    border: 0;
+    text-align: center;
+   color: #000000;
 }

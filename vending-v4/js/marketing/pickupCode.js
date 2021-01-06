@@ -27,17 +27,17 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             cols: [[
                 { field: 'activity_name', width: 200, title: '活动名', event: 'pickup', align: 'center' },
                 { field: 'code_count', width: 120, title: '取货码数量', event: 'pickup', align: 'center' },
-                {
-                    field: 'open', width: 120, title: '已兑换数量', event: 'pickup', align: 'center', templet: function (d) {
-                        var tatol = 0;
-                        d.good_codes.forEach(item => {
-                            if (item.code_status == 1) {
-                                tatol++
-                            }
-                        });
-                        return tatol
-                    }
-                },
+                // {
+                //     field: 'open', width: 120, title: '已兑换数量', event: 'pickup', align: 'center', templet: function (d) {
+                //         // var tatol = 0;
+                //         // d.good_codes.forEach(item => {
+                //         //     if (item.code_status == 1) {
+                //         //         tatol++
+                //         //     }
+                //         // });
+                //         // return tatol
+                //     }
+                // },
                 {
                     field: 'roleSign', width: 180, title: '开始时间', event: 'pickup', align: 'center', templet: function (d) {
                         if (d.start_time) {
@@ -164,6 +164,9 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
     // 选择商品
     $('.goodsChooseBtn').click(function () {
         if (goodsList.length == 0) {
+            if(!goodsTableIns){
+                goodsreload();
+            }
             popupShow('goodsCont', 'goodsBox');
         } else {
             chooseFun(goodsList);
@@ -386,7 +389,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             }
         })
     }
-    goodsreload();
+    // goodsreload();
     var goodsList = [];
     table.on('checkbox(goodsTable)', function (obj) {
         // console.log(obj.data); //选中行的相关数据
@@ -723,10 +726,12 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             // console.log(1)   
             if (!pickupCodeIn) {
                 pickupCodeFun()
+            }else{
+                pickupCodeIn.reload({
+                    id: obj.data.id
+                });
             }
-            pickupCodeIn.reload({
-                data: obj.data.good_codes
-            });
+           
             $('.pickCode .playHeader span').html(obj.data.activity_name + '取货码列表')
             popupShow('pickCode', 'pickCodeBox')
         }
@@ -753,6 +758,11 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
     function pickupCodeFun() {
         pickupCodeIn = table.render({
             elem: '#pickCodeIn',
+            method: 'get',
+            url: `${vApi}/activity/getCode`,
+            headers: {
+                token: sessionStorage.token
+            },
             cols: [[
                 { field: 'good_code', width: 150, title: '取货码', align: 'center' },
                 {
@@ -761,22 +771,12 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                     }
                 },
                 {
-                    field: 'operate_machine', width: 210, title: '使用的售货机', align: 'center', templet: function (d) {
+                    field: 'info', width: 210, title: '使用的售货机', align: 'center', templet: function (d) {
                         return d.info ? d.info : '-'
                     }
                 },
                 {
-                    field: 'ship_info', width: 250, title: '出货情况', align: 'center', templet: function (d) {
-                        if (d.ship_info.length == 0) {
-                            return '-'
-                        } else {
-                            var str = '';
-                            d.ship_info.forEach(item => {
-                                str += `<div>${item.goods_Name}(${item.way}货道${item.ship_status == 0 ? '出货失败' : item.ship_status == 1 ? '出货成功' : '货道故障'})</div>`
-                            });
-                            return str
-                        }
-                    }
+                    field: 'ship_statusStr', width: 250, title: '出货情况', align: 'center', 
                 },
                 {
                     field: 'operate_time', width: 175, title: '使用时间', align: 'center', templet: function (d) {
@@ -789,7 +789,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                     }
                 },
                 {
-                    field: 'operate_time', width: 100, title: '退货状态', align: 'center', templet: function (d) {
+                    field: 'refund', width: 100, title: '退货状态', align: 'center', templet: function (d) {
                         return d.refund == 1 ? '已退货' : '未退货'
                     }
                 },
@@ -797,8 +797,42 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             data: [
             ],
             id: 'pickIn',
-            loading: true,
             page: true,
+            loading: true,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where:{
+                id:pickupObj.id
+            },
+            parseData: function (res) {
+                // console.log(res)
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else if (res.code == 403) {
+                    window.parent.location.href = "login.html";
+                }
+                else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                permissions();
+            }
         })
     };
 

@@ -373,7 +373,7 @@ function ajaxFun(url, type, data, userToken) {
   return $.ajax({
     type,
     url: `/api${url}`,
-    timeout: 10000,
+    timeout: 60000,
     data,
     headers: {
       token: userToken,

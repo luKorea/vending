@@ -471,7 +471,7 @@ function goodsLoad() {
 function goodsDrawing(gData) {
     var goodsStr = '';
     gData.forEach((item, index) => {
-        goodsStr += `<div class="chooseList myScale3d" mail="${item.mail}" gID="${item.goods_Id}" gName="${item.goods_Name}" gPrice="${item.price}" >
+        goodsStr += `<div class="chooseList myScale3d" mail="${item.mail}" gID="${item.goods_Id}" gName="${item.goods_Name}" gPrice="${item.goods_Price}" >
                         <div class="goodsImg">
                             <img src="${item.goods_images}"
                                 alt="">
@@ -485,7 +485,7 @@ function goodsDrawing(gData) {
                             </div>
                             <div class="flexThree">
                                 <p>销售价</p>
-                                <span>￥${item.price}</span>
+                                <span>￥${item.goods_Price}</span>
                             </div>
                         </div>
                     </div>`

@@ -115,7 +115,7 @@ window.onload = function () {
                 // var socketUrl = `ws://119.29.104.217:8086/webs/pushServer/${sessionStorage.UserId}`;
                 // var socketUrl = `http://119.29.104.217:8086/pushServer/${sessionStorage.UserId}`;
                  var socketUrl = `https://vd.ybtech.gold/websocket/pushServer/${sessionStorage.UserId}`;
-                socketUrl = socketUrl.replace("https", "WSS").replace("http", "ws");
+                socketUrl = socketUrl.replace("https", "wss").replace("http", "ws");
                 // console.log(socketUrl);
                 if (socket != null) {
                     socket.close();

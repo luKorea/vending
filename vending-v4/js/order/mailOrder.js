@@ -1,8 +1,9 @@
 import '../../MyCss/order/mailOrder.scss'
-layui.use(['table', 'layer', 'form', 'laydate'], function () {
+layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
   var table = layui.table,
     layer = layui.layer,
     form = layui.form,
+    tree =layui.tree ,
     laydate = layui.laydate,
      startTime = getKeyTime().startTime,
     //结束时间
@@ -254,7 +255,7 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
         $('.maskSpan').removeClass('maskIcon');
         var content = xhr.response;
         // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-        var fileName = `${sessionStorage.marchantName}邮寄订单(${startTime}-${endTime}).xls`
+        var fileName = `${sessionStorage.marchantName}邮寄订单(${startTime}-${endTime}).xlsx`
         var elink = document.createElement('a');
         elink.download = fileName;
         elink.style.display = 'none';
@@ -519,4 +520,31 @@ layui.use(['table', 'layer', 'form', 'laydate'], function () {
     elem: '#test7'
     ,type: 'datetime',
   });
+  $('.sidebar i').click(function () {
+    $('.left-mian').hide();
+    $('.on-left').show()
+  });
+  $('.on-left').click(function () {
+    $('.left-mian').show();
+    $('.on-left').hide()
+  });
+  var dataList = treeList();
+  treeFun(tree, 'testGoods', mailTable, dataList, 'conditionFive', '', '', '', '');
+  // 刷新商户列表
+  $('.refreshBtnList').click(function () {
+    var dataList1 = treeList();
+    if (JSON.stringify(dataList1)  != JSON.stringify(dataList)) {
+      dataList = dataList1;
+      treeFun(tree, 'testGoods', mailTable, dataList, 'conditionFive', '', '', '', '');
+      mailTable.reload({
+        where: {
+          conditionFive: sessionStorage.machineID,
+        }
+      })
+      layer.msg('已刷新',{icon:1})
+    } else {
+      layer.msg('已刷新',{icon:1})
+    }
+
+  })
 })

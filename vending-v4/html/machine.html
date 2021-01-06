@@ -195,7 +195,6 @@
                                     <button type="button" class="layui-btn layui-btn-primary machineListKeyBtn">
                                         <i class="layui-icon layui-icon-search"></i>
                                         <span>查询</span>
-
                                     </button>
                                 </div>
                                 <div class="newKeyContent">
@@ -246,10 +245,10 @@
                     <!-- 终端详情 -->
                     <li class="setCoreListOne" style="display: block;">
                         <div class="terminalState">
-                            <h1 style="color:#606266;font-size:16px;line-height:24px;font-weight:bold;">售货机状态</h1>
+                            <h1 style="color:#606266;font-size:16px;line-height:24px;font-weight:bold;">基本信息</h1>
                             <!-- 基本信息 -->
                             <div class="basic">
-                                <p>基本信息</p>
+                                <!-- <p>基本信息</p> -->
                                 <div class="FormCont">
                                     <form class="layui-form" lay-filter="setDataVal" style="width: 100%;">
                                         <div class="formFlex">
@@ -392,11 +391,12 @@
                     </li>
                     <!-- 货道详情 -->
                     <li class="aisleDetails" style="display: none;">
-                        <!-- <div class="detailsDel" style="margin-bottom: 10px;">
-                            <button class="layui-btn layui-btn-normal  delBtn  btn " type="button">
-                                <span>删除</span>
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary invoicePushBtn">
+                                <i class="layui-icon layui-icon-print"></i>
+                                <span>导出补货单</span>
                             </button>
-                        </div> -->
+                        </div>
                         <form action="" class="layui-form" lay-filter="delDetalis" style="width: 100%;">
                             <div class="aisleGoodsCont">
                                 <div class="aisleListCont flexTwo">
@@ -566,7 +566,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="newKeyContent">
+                                <!-- <div class="newKeyContent">
                                     <div class="newKeyItem">
                                         <label for="">出货状态</label>
                                         <div class="layui-form">
@@ -578,7 +578,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="newKeyContent">
                                     <div class="newKeyItem">
                                         <label for="">支付状态</label>
@@ -609,6 +609,12 @@
                                     <button type="button" class="layui-btn layui-btn-primary selesQueryBtn">
                                         <i class="layui-icon layui-icon-search"></i>
                                         <span>查询</span>
+                                    </button>
+                                </div>
+                                <div class="newKeyContent">
+                                    <button type="button" class="layui-btn layui-btn-primary selesPushBtn">
+                                        <i class="layui-icon layui-icon-print"></i>
+                                        <span>导出</span>
                                     </button>
                                 </div>
                             </form>
@@ -646,6 +652,12 @@
                                 <button type="button" class="layui-btn layui-btn-primary shipmentQueryBtn">
                                     <i class="layui-icon layui-icon-search"></i>
                                     <span>查询</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary shipmentPushBtn">
+                                    <i class="layui-icon layui-icon-print"></i>
+                                    <span>导出</span>
                                 </button>
                             </div>
                         </div>
@@ -716,6 +728,12 @@
                                     <span>查询</span>
                                 </button>
                             </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary replenishmentPushBtn">
+                                    <i class="layui-icon layui-icon-print"></i>
+                                    <span>导出</span>
+                                </button>
+                            </div>
                         </div>
                         <div style="box-sizing: border-box;">
                             <div class="rTableList">
@@ -726,6 +744,32 @@
                     </li>
                     <!-- 价格修改记录 -->
                     <li class="price">
+                        <div class="newHeader">
+                            <div class="newHeaderText">
+                                条件查询
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">时间</label>
+                                    <div>
+                                        <input type="text" class="layui-input" id="test10" placeholder="  - "
+                                            autocomplete="off" style="text-align: center;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary editQueryBtn">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                    <span>查询</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary editPircePushBtn">
+                                    <i class="layui-icon layui-icon-print"></i>
+                                    <span>导出</span>
+                                </button>
+                            </div>
+                        </div>
                         <div style="box-sizing: border-box;">
                             <div class="priceEditBox">
                                 <table class="layui-hide" id="priceEdit" lay-filter="priceEdit">
@@ -752,6 +796,12 @@
                                 <button type="button" class="layui-btn layui-btn-primary opeQuery">
                                     <i class="layui-icon layui-icon-search"></i>
                                     <span>查询</span>
+                                </button>
+                            </div>
+                            <div class="newKeyContent">
+                                <button type="button" class="layui-btn layui-btn-primary openDoorPushBtn">
+                                    <i class="layui-icon layui-icon-print"></i>
+                                    <span>导出</span>
                                 </button>
                             </div>
                         </div>
@@ -1144,6 +1194,143 @@
                 </div>
             </div>
         </div>
+
+        <!-- 补货单部分 -->
+        <div class="repairInvoice maskContnet">
+            <div class="repairInvoiceBox margin0">
+                <div class="playHeader">
+                    <span>广东粤宝文化科技商品调拨(补货)单</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="repairInvoiceBody">
+                    <div class="rInfo">
+                        <div class="mInfo">
+                            <div class="listFlex" style="width: 67%;">
+                                <label for="">设备名称:</label>
+                                <input type="text" name="iMachineName" disabled>
+                            </div>
+                            <div class="listFlex" style="width: 33%;">
+                                <label for="">发货日期:</label>
+                                <input type="text" id="test101">
+                            </div>
+                        </div>
+                        <div class="partyFlex">
+                            <div class="listFlex">
+                                <label for="">供应方:</label>
+                                <input type="text" disabled name="supplier">
+                            </div>
+                            <div class="listFlex">
+                                <label for="">联系人:</label>
+                                <input type="text" name="supplyName">
+                            </div>
+                            <div class="listFlex">
+                                <label for="">联系电话:</label>
+                                <input type="number" name="supplyPhone">
+                            </div>
+                        </div>
+                        <div class="partyFlex">
+                            <div class="listFlex">
+                                <label for="">验收方:</label>
+                                <input type="text" name="checkFlagName">
+                            </div>
+                            <div class="listFlex">
+                                <label for="">联系人:</label>
+                                <input type="text" name="acceptanceName">
+                            </div>
+                            <div class="listFlex">
+                                <label for="">联系电话:</label>
+                                <input type="number" name="acceptancePhone">
+                            </div>
+                        </div>
+                    </div>
+                    <h1>商品调拨(补货)明细</h1>
+                    <ul class="goodsDetail">
+                        <li class="detaillHeader ">
+                            <div class="headerIndex1">
+                                <label for="">序号</label>
+                            </div>
+                            <div class="headerGoods">
+                                <label for="">商品名称:</label>
+                            </div>
+                            <div class="headerNum">
+                                <label for="">原机货量数</label>
+                                <!-- <input type="text" placeholder="d"> -->
+                            </div>
+                            <div class="headerNum">
+                                <label for="">应补货量数</label>
+                                <!-- <input type="text"> -->
+                            </div>
+                            <div class="headerNum">
+                                <label for="">补后机货量数</label>
+                                <!-- <input type="text"> -->
+                            </div>
+                            <div class="headerNum">
+                                <!-- <input type="text"> -->
+                                <label for="">应补展板数</label>
+                            </div>
+                            <div class="headerNum">
+                                <label for="">总补货数量sa.  </label>
+                                <!-- <input type="text"> -->
+                            </div>
+                        </li>
+                        <li class="detaillBody">
+                            <!-- <li class="detaillHeader ">
+                                <div class="headerIndex1">
+                                    <label for="">1</label>
+                                </div>
+                                <div class="headerGoods">
+                                    <label for="">商品名称</label>
+                                </div>
+                                <div class="headerNum">
+                                    <input type="number" name="oloNum" disabled>
+                                </div>
+                                <div class="headerNum">
+                                    <input type="number" name="shouldName" >
+                                </div>
+                                <div class="headerNum">
+                                    <input type="number" name="newNum" disabled>
+                                </div>
+                                <div class="headerNum">
+                                    <input type="number" name="panelNam">
+                                </div>
+                                <div class="headerNum">
+                                    <input type="number" name="totalNum" disabled>
+                                </div>
+                            </li> -->
+                        </li>
+
+                    </ul>
+                    <div class="partyFlex"
+                        style="display: flex;justify-content: start;align-items: center;margin-top: 15px;">
+                        <div class="listFlex">
+                            <label for="">库管:</label>
+                            <input type="text" name="wareManagement">
+                        </div>
+                        <div class="listFlex">
+                            <label for="">运营:</label>
+                            <input type="text" name="operator">
+                        </div>
+                        <div class="listFlex">
+                            <label for="">收货人:</label>
+                            <input type="text" name="consignee">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="repairInvoiceFooter">
+                    <div style="text-align: center;padding-bottom: 22px;margin-right: 22px;">
+                        <button class="layui-btn layui-btn-normal btn ReBtn" type="button">
+                            <span>确定</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn rCancelBtn cancel-btn" type="button">
+                            <span>取消</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="mask maskContnet">
             <div class="TitleContentWith">
                 <span class="maskSpan" style="display: inline-block;">
@@ -1151,6 +1338,7 @@
                 </span>
                 数据处理中，请稍候
             </div>
+
         </div>
     </div>
 </body>

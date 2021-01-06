@@ -589,7 +589,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       where: {
         conditionFour: conditionFour,
         conditionFive: '2',
-        conditionSix: sessionStorage.machineID
+        conditionSix: materialId
       },
       response: {
         statusCode: 200 //规定成功的状态码，默认：0
@@ -693,7 +693,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       where: {
         conditionFour: '1',
         conditionFive: '2',
-        conditionSix: sessionStorage.machineID,
+        conditionSix: materialId,
       },
       parseData: function (res) {
         // console.log(res)
@@ -773,7 +773,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     var dataList1 = treeList();
     if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
       dataList = dataList1;
-      treeFun(tree, 'testGoods', tableIns, dataList, 'condition', 'goodsClass', selectData)
+      treeFun1(tree, 'testGoods', tableIns, dataList, 'condition', 'goodsClass', selectData)
       tableIns.reload({
         where: {
           condition: sessionStorage.machineID,
@@ -785,12 +785,54 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     }
   })
   //树状图
+  var materialId=sessionStorage.machineID;
   var dataList1 = null;
   var dataList = dataList1 = treeList();
   // var dataList1 = treeList();
   console.log(dataList)
-  treeFun(tree, 'testGoods', tableIns, dataList, 'condition', 'goodsClass', selectData)
-
+  treeFun1(tree, 'testGoods', tableIns, dataList, 'condition', 'goodsClass', selectData)
+  function treeFun1(tree, element, tableID, data, key, goodsCLass, selectData,) {
+    tree.render({
+      elem: `#${element}`,
+      id: 'treelist',
+      showLine: !0 //连接线
+      ,
+      onlyIconControl: true, //左侧图标控制展开收缩 
+      data,
+      spread: true,
+      text: {
+        defaultNodeName: '无数据',
+        none: '您没有权限，请联系管理员授权!'
+      },
+      click: function (obj) {
+        if(addFlag){
+          if(obj.data.id==sessionStorage.machineID){
+            $('.add-btn').show()
+          }else{
+            $('.add-btn').hide()
+          }
+        }
+        materialId=obj.data.id + '';
+        if (goodsCLass) {
+          selectData(obj.data.id + '');
+        }
+        // sessionStorage.merchantIdData = obj.data.id;
+        tableID.reload({
+          where: {
+            [key]: obj.data.id + '',
+          }
+        })
+        var nodes = $(`#${element} .layui-tree-txt`)
+        for (var i = 0; i < nodes.length; i++) {
+          if (nodes[i].innerHTML === obj.data.title)
+            nodes[i].style.color = "#be954a";
+          else
+            nodes[i].style.color = "#555";
+        }
+  
+      },
+    });
+  }
 
   // 接收列表非强制
   var parentGoods = null;

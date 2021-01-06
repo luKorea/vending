@@ -71,7 +71,7 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
         },
         where: {
             merchantId: Number(sessionStorage.machineID),
-            refund:1,
+            refund:0,
             start_time: startTime,
             end_time: endTime,
             // start_time:startTime,
@@ -115,7 +115,7 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
             where: {
                 start_time: startTime,
                 end_time: endTime,
-                refund: $('.newKeyItem input[name="open"]').prop('checked') ? 1 : 0,
+                refund: $('.newKeyItem input[name="open"]').prop('checked') ? 0 : 1,
             }
         })
     });
@@ -174,6 +174,7 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
                 sm_no: managerID,
                 start_time: startTime,
                 end_time: endTime,
+                machineId:Number(sessionStorage.machineID),
             },
             parseData: function (res) {
                 // console.log(res)
@@ -289,7 +290,7 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
                 end_time: endTime,
                 // end_time:'2020-12-30',
                 merchantId: Number(sessionStorage.machineID),
-                refund: $('.newKeyItem input[name="open"]').prop('checked') ? 1 : 0,
+                refund: $('.newKeyItem input[name="open"]').prop('checked') ? 0 : 1,
             })
             xhr.send(orderObj);
         })
