@@ -46,89 +46,6 @@
                     </div>
                     <i class="layui-icon layui-icon-right  on-left"></i>
                     <div class="contnet-right">
-                        <!-- <div class="query">
-                            <form class="layui-form" lay-filter="machineData">
-                                <div class="layui-row">
-                                    <div class=" layui-col-sm9 layui-col-md6 layui-col-lg4 margin-top">
-                                     
-                                        <div class="key-contnet">
-                                            <div class="key-text">是否在线</div>
-
-                                            <div class="layui-form" lay-filter="myDiv">
-                                                <select name="onlineStatus" id="" lay-filter="mySelect">
-                                                    <option value="">全部</option>
-                                                    <option value="1">在线</option>
-                                                    <option value="0">离线</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class=" layui-col-sm9 layui-col-md6 layui-col-lg4 margin-top">
-                                       
-                                        <div class="key-contnet">
-                                            <div class="key-text">是否激活</div>
-
-                                            <div class="layui-form" lay-filter="myDiv">
-                                                <select name="actionStatus" id="" lay-filter="mySelect">
-                                                    <option value="">全部</option>
-                                                    <option value="1">已激活</option>
-                                                    <option value="0">未激活</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class=" layui-col-sm9 layui-col-md6 layui-col-lg4 margin-top ">
-                                        
-                                        <div class="key-contnet">
-                                            <div class="key-text">营业状态</div>
-
-                                            <div class="layui-form" lay-filter="myDiv">
-                                                <select name="permissions" id="" lay-filter="mySelect">
-                                                    <option value="">全部</option>
-                                                    <option value="1">营业</option>
-                                                    <option value="0">无营业</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class=" layui-col-sm9 layui-col-md6 layui-col-lg4 margin-top">
-                                       
-                                        <div class="key-contnet">
-                                            <div class="key-text">缺货状态</div>
-
-                                            <div class="layui-form" lay-filter="myDiv">
-                                                <select name="CreationTime" id="" lay-filter="mySelect">
-                                                    <option value="">全部</option>
-                                                    <option value="0">正常</option>
-                                                    <option value="1">一般</option>
-                                                    <option value="2">严重</option>
-                                                </select>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div class=" layui-col-sm9 layui-col-md6 layui-col-lg4 margin-top">
-                                        <div style="max-width: 320px;" class="key-contnet">
-                                            <div class="key-text">关键字</div>
-                                            <input type="text" placeholder="终端,账号,物联卡号,设备编号,设备型号" name="machineKeyText">
-                                        </div>
-                                    </div>
-                                    <div class=" layui-col-sm9 layui-col-md6 layui-col-lg3 margin-top">
-                                        <button class="layui-btn layui-btn-normal query-btn btn machineListKeyBtn"
-                                            type="button">
-                                            <i class="layui-icon layui-icon-search"></i>
-                                            <span>查询</span>
-                                        </button>
-                                        <button class="layui-btn layui-btn-normal machineListKeyBtn btn refreshBtn"
-                                            type="button">
-                                            <i class="layui-icon layui-icon-refresh "></i>
-                                            <span>刷新</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div> -->
                         <div class="newHeader" style="margin-top: 10px;">
                             <div class="newHeaderText">
                                 条件查询
@@ -195,6 +112,12 @@
                                     <button type="button" class="layui-btn layui-btn-primary machineListKeyBtn">
                                         <i class="layui-icon layui-icon-search"></i>
                                         <span>查询</span>
+                                    </button>
+                                </div>
+                                <div class="newKeyContent">
+                                    <button type="button" class="layui-btn layui-btn-primary pushMachineBtn">
+                                        <i class="layui-icon layui-icon-print"></i>
+                                        <span>导出售货机</span>
                                     </button>
                                 </div>
                                 <div class="newKeyContent">
@@ -391,10 +314,16 @@
                     </li>
                     <!-- 货道详情 -->
                     <li class="aisleDetails" style="display: none;">
-                        <div class="newKeyContent">
+                        <div class="newKeyContent hide invoicePushBtn1">
                             <button type="button" class="layui-btn layui-btn-primary invoicePushBtn">
                                 <i class="layui-icon layui-icon-print"></i>
                                 <span>导出补货单</span>
+                            </button>
+                        </div>
+                        <div class="newKeyContent hide invoicePushBtn1">
+                            <button type="button" class="layui-btn layui-btn-primary clearingBtn">
+                                <i class="layui-icon layui-icon-util"></i>
+                                <span>清除货道故障</span>
                             </button>
                         </div>
                         <form action="" class="layui-form" lay-filter="delDetalis" style="width: 100%;">
@@ -1199,7 +1128,7 @@
         <div class="repairInvoice maskContnet">
             <div class="repairInvoiceBox margin0">
                 <div class="playHeader">
-                    <span>广东粤宝文化科技商品调拨(补货)单</span>
+                    <span class="supplierName">广东粤宝文化科技商品调拨(补货)单</span>
                     <button class="close" type="button">
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
@@ -1271,7 +1200,7 @@
                                 <label for="">应补展板数</label>
                             </div>
                             <div class="headerNum">
-                                <label for="">总补货数量sa.  </label>
+                                <label for="">总补货数量</label>
                                 <!-- <input type="text"> -->
                             </div>
                         </li>

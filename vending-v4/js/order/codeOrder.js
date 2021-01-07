@@ -20,6 +20,8 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         layer = layui.layer,
         table = layui.table,
         form = layui.form,
+        tree =layui.tree ,
+        merchantId=sessionStorage.machineID,
         orderTable = table.render({
             elem: '#moneyData',
             url: `${vApi}/order/getCodeOrder`,
@@ -73,7 +75,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 'limitName': 'pageSize'
             },
             where: {
-                merchant_id: Number(sessionStorage.machineID),
+                merchant_id: Number(merchantId),
                 start_time: startTime ? startTime : null,
                 end_time: endTime ? endTime : null,
             },
@@ -119,10 +121,11 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                     // for (var i = 0; i < 3; i++) {
                     //   lis.push('<span>荔湾西堤邮政支局' + page + '</span>')
                     // }
-                    next(lis.join(''), page < 3); //假设总页数为 10
+                    next(lis.join(''), page < 1000); //假设总页数为 10
                     var machineData = JSON.stringify({
                         pageNum: page,
                         pageSize: 10,
+                        merchant_id:merchantId
                     })
                     loadingAjax('/activity/getActivityList', 'post', machineData, sessionStorage.token).then(res => {
                         res.data.list.forEach((item, index) => {
@@ -200,4 +203,73 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         })
 
     });
+    var  dataList = treeList();
+    orderTreeFun(tree, 'test1', dataList);
+     // 树方法
+     var marchantName=sessionStorage.marchantName,
+     machineCode=null;
+  function orderTreeFun(tree, element, data,) {
+    tree.render({
+      elem: `#${element}`,
+      id: 'treelist',
+      showLine: !0 //连接线
+      ,
+      onlyIconControl: true, //左侧图标控制展开收缩 
+      data,
+      spread: true,
+      text: {
+        defaultNodeName: '无数据',
+        none: '您没有权限，请联系管理员授权!'
+      },
+      click: function (obj) {
+        marchantName = obj.data.title
+        var nodes = $(`#${element} .layui-tree-txt`)
+        for (var i = 0; i < nodes.length; i++) {
+          if (nodes[i].innerHTML === obj.data.title)
+            nodes[i].style.color = "#be954a";
+          else
+            nodes[i].style.color = "#555";
+        }
+        if (merchantId == obj.data.id) {
+          return;
+        }
+        merchantId = obj.data.id;
+        $("#demo").remove();
+        $(document).unbind();
+        $('.activityList1').append(`<div class="activityArr" id="demo"></div>`);
+        getFlow();
+        
+        $('.activityList1 span').removeClass('active');
+        $('.allmachine').addClass('active');
+        machineCode = '';
+        orderTable.reload({
+          where: {
+            activity_id: null,
+            merchant_id: merchantId
+          }
+        })
+      },
+    });
+  };
+
+  $('body').on('click', '.activityList1 span', function () {
+    $('.allmachine').removeClass('active')
+    $(this).addClass('active').siblings().removeClass('active');
+    // machineCode = $(this).attr('machineID');
+    orderTable.reload({
+      where: {
+        activity_id: $(this).attr('activityid')
+      }
+    })
+  });
+  $('.allmachine').click(function () {
+    $(this).addClass('active');
+    $('.machineList span').removeClass('active');
+    machineCode = '';
+    orderTable.reload({
+      where: {
+        activity_id: null
+      }
+    })
+  })
 })

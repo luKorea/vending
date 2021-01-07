@@ -8,8 +8,16 @@
             overflow: hidden;
             position: relative;
             padding-right: 40px;
-            width: 250;
-            flex: 0 0 250px;
+            width: 1000px;
+            flex: 0 0 400px;
+            .width50{
+                float: left;
+                cursor: pointer;
+                white-space: nowrap;
+                flex: 1 1 0%;
+                overflow: auto;
+                width: 50%;
+            }
             p{
                 margin: 10px;
                 color: #be954a;
@@ -19,7 +27,7 @@
                 height: 530px;
                 width: 100%;
                 float: left;
-                overflow-y: auto;
+                overflow: auto;
                 border: 1px solid #ccc;
                 padding: 10px;
                 box-sizing: border-box;
@@ -27,18 +35,25 @@
                 cursor: default;
                 background: #fff;
                 color: #606266;
-                overflow: hidden;
-                span{
-                    display: block;
-                    padding: 5px 0;
-                    cursor: pointer;
-                }
+                overflow: auto;
+               
                 .active{
                     color: #be954a;
                     font-weight: bold;
                 }
                 #demo{
                     padding-left: 10px;
+                }
+            }
+            .activityList1{
+                span{
+                    display: block !important;
+                    padding: 5px 0;
+                    cursor: pointer;
+                }
+                .active{
+                    color: #be954a;
+                    font-weight: bold;
                 }
             }
         }

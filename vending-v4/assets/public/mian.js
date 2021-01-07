@@ -233,13 +233,13 @@ function treeFun(tree, element, tableID, data, key, goodsCLass, selectData, cond
       none: '您没有权限，请联系管理员授权!'
     },
     click: function (obj) {
-      $('.addbs').hide();
       if (goodsCLass) {
         selectData(obj.data.id + '');
       }
       if (flag) {
-        sessionStorage.classTag = obj.data.id,
-          sessionStorage.machineGoodsId = obj.data.id
+        sessionStorage.classTag = obj.data.id;
+          sessionStorage.machineGoodsId = obj.data.id;
+          sessionStorage.machineName=obj.data.title;
       }
       // sessionStorage.merchantIdData = obj.data.id;
       varData = obj.data.id;

@@ -646,15 +646,15 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     } else {
       if (addGoodsImgIndex == 2) {
         if (addWangEditor.txt.html().length > 11) {
-          addWangEditor.txt.append(`<p><img src="${obj.data.img}"></img></p>`);
+          addWangEditor.txt.append(`<p style="text-align: center;"><img src="${obj.data.img}"></img></p>`);
         } else {
-          addWangEditor.txt.html(`<p><img src="${obj.data.img}"></img></p>`);
+          addWangEditor.txt.html(`<p style="text-align: center;"><img src="${obj.data.img}"></img></p>`);
         }
       } else {
         if (editWangEditor.txt.html().length > 11) {
-          editWangEditor.txt.append(`<p><img src="${obj.data.img}"></img></p>`);
+          editWangEditor.txt.append(`<p style="text-align: center;"><img src="${obj.data.img}"></img></p>`);
         } else {
-          editWangEditor.txt.html(`<p><img src="${obj.data.img}"></img></p>`);
+          editWangEditor.txt.html(`<p style="text-align: center;"><img src="${obj.data.img}"></img></p>`);
         }
       }
       popupHide('GoodsMaterial', 'goodsMaterialBox');
@@ -759,7 +759,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     logoCont = $(this).attr('contType');
     addGoodsImgIndex = $(this).attr('goodsIndex');
     conditionFour = 2
-    console.log(logoCont, addGoodsImgIndex);
+    // console.log(logoCont, addGoodsImgIndex);
     popupShow('GoodsMaterial', 'goodsMaterialBox');
     materialCont();
 

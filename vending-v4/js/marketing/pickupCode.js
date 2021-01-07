@@ -81,6 +81,9 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                 'pageName': 'pageNum',
                 'limitName': 'pageSize'
             },
+            where:{
+                merchant_id:sessionStorage.machineID
+            },
             parseData: function (res) {
                 // console.log(res)
                 //res 即为原始返回的数据

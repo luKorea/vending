@@ -231,6 +231,8 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
     popupHide('exportCont', 'exportBox')
   })
   // 导出
+  var pushMId=null,
+  pushMName =null;
   $('.pushBtn').click(function () {
     if (!(startTime && endTime)) {
       layer.msg('请选择时间', { icon: 7 });
@@ -243,7 +245,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
     $('.mask').fadeIn();
     $('.maskSpan').addClass('maskIcon');
     var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-    xhr.open("GET", `${vApi}/exportMailExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${sessionStorage.machineID}`, true);
+    xhr.open("GET", `${vApi}/exportMailExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${pushMId}`, true);
     xhr.setRequestHeader("token", sessionStorage.token);
     // xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
     xhr.responseType = 'blob';//设置ajax的响应类型为blob;
@@ -255,7 +257,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
         $('.maskSpan').removeClass('maskIcon');
         var content = xhr.response;
         // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-        var fileName = `${sessionStorage.marchantName}邮寄订单(${startTime}-${endTime}).xlsx`
+        var fileName = `${pushMName}邮寄订单(${startTime}-${endTime}).xlsx`
         var elink = document.createElement('a');
         elink.download = fileName;
         elink.style.display = 'none';
@@ -529,13 +531,13 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
     $('.on-left').hide()
   });
   var dataList = treeList();
-  treeFun(tree, 'testGoods', mailTable, dataList, 'conditionFive', '', '', '', '');
+  treeFun1(tree, 'testGoods', mailTable, dataList, 'conditionFive');
   // 刷新商户列表
   $('.refreshBtnList').click(function () {
     var dataList1 = treeList();
     if (JSON.stringify(dataList1)  != JSON.stringify(dataList)) {
       dataList = dataList1;
-      treeFun(tree, 'testGoods', mailTable, dataList, 'conditionFive', '', '', '', '');
+      treeFun1(tree, 'testGoods', mailTable, dataList, 'conditionFive');
       mailTable.reload({
         where: {
           conditionFive: sessionStorage.machineID,
@@ -545,6 +547,37 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
     } else {
       layer.msg('已刷新',{icon:1})
     }
-
-  })
+  });
+  function treeFun1(tree, element, tableID, data, key,) {
+    tree.render({
+      elem: `#${element}`,
+      id: 'treelist',
+      showLine: !0 //连接线
+      ,
+      onlyIconControl: true, //左侧图标控制展开收缩 
+      data,
+      spread: true,
+      text: {
+        defaultNodeName: '无数据',
+        none: '您没有权限，请联系管理员授权!'
+      },
+      click: function (obj) {
+        pushMId=obj.data.id + '';
+        pushMName=obj.data.title;
+        tableID.reload({
+          where: {
+            [key]: obj.data.id + '',
+          }
+        })
+        var nodes = $(`#${element} .layui-tree-txt`)
+        for (var i = 0; i < nodes.length; i++) {
+          if (nodes[i].innerHTML === obj.data.title)
+            nodes[i].style.color = "#be954a";
+          else
+            nodes[i].style.color = "#555";
+        }
+  
+      },
+    });
+  }
 })

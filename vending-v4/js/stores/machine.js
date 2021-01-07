@@ -51,25 +51,27 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {
                     field: 'trafficInfo', width: 200, title: '离线时长', align: 'center',templet:function(d){
-                        
                         if(d.onlineStatus!=0){
                             return '0天0小时0分'
                         }else{
                             var nData=new Date().getTime(),
-                            cDate =nData-d.offline_time;
-                            return d.offline_time?(cDate.getHours()<10?'0'+cDate.getHours():cDate.getHours())+'小时'+(cDate.getMinutes()<10?'0'+cDate.getMinutes():cDate.getMinutes())+'分钟':'0天0小时0分'
+                            cDate =nData-d.offline_time,
+                            day=Math.floor(cDate/86400000),
+                            hour=Math.floor((cDate-86400000*day)/3600000),
+                            miute=Math.floor((cDate-86400000*day-3600000*hour)/60000);
+                            return day+'天'+hour+'小时'+miute+'分钟'
                         }
                     }
                 },
                 {
-                    field: 'trafficInfo', width: 150, title: '缺货状态', align: 'center',templet:function(d){
+                    field: 'trafficInfo', width: 130, title: '缺货情况', align: 'center',templet:function(d){
                         return` <div>
                                     <span class="${d.storage_warning[0].way_count < 10 ? 'tableStateCellTrue' : d.storage_warning[0].way_count < 30? 'tableStateCellFalse':'red'}">${d.storage_warning[0].warning}</span>
                                 </div>`
                     }
                 },
                 {
-                    field: 'trafficInfo', width: 150, title: '缺货货道数量', align: 'center',templet:function(d){
+                    field: 'trafficInfo', width: 130, title: '缺货货道数量', align: 'center',templet:function(d){
                         return d.storage_warning[0].way_count
                     }
                 },
@@ -1024,7 +1026,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         shipmentPushBtnFlag=false,//导出出货记录
         replenishmentPushBtnFlag=false,//补货记录
         editPircePushBtnFlag=false,//修改价格记录
-        openDoorPushBtnFlag=false;//导出开门记录
+        openDoorPushBtnFlag=false,//导出开门记录
+        invoicePushBtnFlag=false;//导出补货单
     function permissions() {
         permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
             res.data.forEach(item => {
@@ -1073,6 +1076,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if(item.id=='470'){
                     openDoorPushBtnFlag=true;
                 }
+                if(item.id=='472'){
+                    invoicePushBtnFlag=true
+                }
                 // if(item.id=='461'){
                 //     editPriceFlag=true
                 // }
@@ -1098,6 +1104,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         replenishmentPushBtnFlag?$('.replenishmentPushBtn').removeClass('hide') : $('.replenishmentPushBtn').addClass('hide');
         editPircePushBtnFlag?$('.editPircePushBtn').removeClass('hide') : $('.editPircePushBtn').addClass('hide');
         openDoorPushBtnFlag?$('.openDoorPushBtn').removeClass('hide') : $('.openDoorPushBtn').addClass('hide');
+        invoicePushBtnFlag?$('.invoicePushBtn1').removeClass('hide') : $('.invoicePushBtn1').addClass('hide');
     }
     // 关闭弹窗
     $('.playHeader .close').click(function () {
@@ -1118,6 +1125,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     }
     selectData(sessionStorage.machineID);
     sessionStorage.machineGoodsId = sessionStorage.machineID;
+    sessionStorage.machineName=sessionStorage.marchantName;
     var goodsTableIns = null;
     // 商品列表
     function goodsreload() {
@@ -2261,10 +2269,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 导出补货单
     var repairInvoiceData=null;
     $('.invoicePushBtn').click(function(){
-        loadingAjax('/machine/getGoodReplenish','post',JSON.stringify({machineId:machineSetData.machineId}),sessionStorage.token,'','',layer).then(res=>{
-            
+        loadingAjax('/machine/getGoodReplenish','post',JSON.stringify({machineId:machineSetData.machineId}),sessionStorage.token,'','',layer).then(res=>{   
             repairInvoiceData=res.data;
+            layer.msg('未查询到缺货商品',{icon:7})
             RgoodsFun(repairInvoiceData.good_info);
+            $('.supplierName').html(repairInvoiceData.supplier+'商品调拨(补货)单')
             $('.repairInvoiceBody input[name="iMachineName"]').val(`${repairInvoiceData.info}(${repairInvoiceData.number})`);
             $('.repairInvoiceBody input[name="supplier"]').val(repairInvoiceData.supplier);
             $('.repairInvoiceBody input[name="supplyName"]').val(repairInvoiceData.supplyName);
@@ -2391,6 +2400,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             document.body.appendChild(elink);
             elink.click();
             document.body.removeChild(elink);
+            popupHide('repairInvoice','repairInvoiceBox')
           } else {
             $('.mask').fadeOut();
             $('.maskSpan').removeClass('maskIcon');
@@ -2399,5 +2409,48 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
           }
         }
         xhr.send(repairInvoiceObj);
+    });
+
+    // 取消补货单
+    $('.rCancelBtn').click(function(){
+        popupHide('repairInvoice','repairInvoiceBox')
+    });
+
+    // 清除货道故障
+    $('.clearingBtn').click(function(){
+        
+    });
+    // 导出售货机
+    $('.pushMachineBtn').click(function(){
+        $('.mask').fadeIn();
+    $('.maskSpan').addClass('maskIcon');
+    var myDate = new Date(),
+      // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+      xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+    xhr.open("GET", `${vApi}/excelMachine?merchantId=${sessionStorage.machineGoodsId}`, true);
+    xhr.setRequestHeader("token", sessionStorage.token);
+    xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+    xhr.onload = function (res) {
+      if (xhr.status == 200) {
+        $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon');
+        var content = xhr.response;
+        var fileName = `${sessionStorage.machineName}售后机列表.xls`
+        var elink = document.createElement('a');
+        elink.download = fileName;
+        elink.style.display = 'none';
+        var blob = new Blob([content]);
+        elink.href = URL.createObjectURL(blob);
+        document.body.appendChild(elink);
+        elink.click();
+        document.body.removeChild(elink);
+      } else {
+        $('.mask').fadeOut();
+        $('.maskSpan').removeClass('maskIcon');
+        layer.msg('服务器请求超时', { icon: 2 });
+        return;
+      }
+    }
+    xhr.send();
     })
 });

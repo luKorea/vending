@@ -142,6 +142,13 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
                 // { checkbox: true },
                 { field: 'number', width: 200, title: '订单号', align: 'center' },
                 { field: 'amount', width: 180, title: '订单金额(￥)', align: 'center' },
+                { field: 'refundAmount', width: 145, title: '退款金额', align: 'center' ,templet:function(d){
+                    if(d.refundAmount.length==0){
+                        return '-'
+                    }else{
+                        return d.refundAmount[0]
+                    }
+                }},
                 { field: 'sm_phone', width: 130, title: '是否邮寄订单', align: 'center',templet:function(d){
                     return d.mail==1?'是':'否'
                 } },

@@ -217,7 +217,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
           // for (var i = 0; i < 3; i++) {
           //   lis.push('<span>荔湾西堤邮政支局' + page + '</span>')
           // }
-          next(lis.join(''), page < 3); //假设总页数为 10
+          next(lis.join(''), page < 1000); //假设总页数为 10
           var machineData = JSON.stringify({
             pageNum: page,
             pageSize: 10,

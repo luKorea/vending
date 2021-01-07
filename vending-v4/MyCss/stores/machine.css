@@ -381,12 +381,12 @@ input{
     color: red;
     margin-bottom: 22px;
 }
-.cancelBtn,.editCancelBtn{
+.cancelBtn,.editCancelBtn,.rCancelBtn{
     background: #fff !important;
     border: 1px solid #dcdfe6 !important;
     color: #606266;
 }
-.cancelBtn:hover,.editCancelBtn:hover{
+.cancelBtn:hover,.editCancelBtn:hover,.rCancelBtn:hover{
     border-color: #be954a !important;
     color: #be954a !important;
 }

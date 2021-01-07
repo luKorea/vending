@@ -830,23 +830,23 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         editFlag = false,
         delFlag = false,
         auditFla = false;
-    permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
-        // console.log(res.data)
-        addFlag = res.data.some((item, index) => {
-            return item.id == '362'
-        });
-        editFlag = res.data.some((item, index) => {
-            return item.id == '371'
-        });
-        delFlag = res.data.some((item, index) => {
-            return item.id == '369'
-        })
-        auditFla = res.data.some((item, index) => {
-            return item.id == '387'
-        })
-    }).catch(err => {
-        layer.msg(err.message, { icon: 2 })
-    });
+    // permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
+    //     // console.log(res.data)
+    //     addFlag = res.data.some((item, index) => {
+    //         return item.id == '362'
+    //     });
+    //     editFlag = res.data.some((item, index) => {
+    //         return item.id == '371'
+    //     });
+    //     delFlag = res.data.some((item, index) => {
+    //         return item.id == '369'
+    //     })
+    //     auditFla = res.data.some((item, index) => {
+    //         return item.id == '387'
+    //     })
+    // }).catch(err => {
+    //     layer.msg(err.message, { icon: 2 })
+    // });
     var addFlag = false,
         editFlag = false,
         delFlag = false,
