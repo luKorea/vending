@@ -381,12 +381,12 @@ input{
     color: red;
     margin-bottom: 22px;
 }
-.cancelBtn,.editCancelBtn,.rCancelBtn{
+.cancelBtn,.editCancelBtn,.rCancelBtn,.addPanelCance{
     background: #fff !important;
     border: 1px solid #dcdfe6 !important;
     color: #606266;
 }
-.cancelBtn:hover,.editCancelBtn:hover,.rCancelBtn:hover{
+.cancelBtn:hover,.editCancelBtn:hover,.rCancelBtn:hover,.addPanelCance:hover{
     border-color: #be954a !important;
     color: #be954a !important;
 }
@@ -570,7 +570,7 @@ input:hover{
     background-color: rgb(108, 109, 113);
     font-size: 12px;
 }
-.passwordCont,.editAisleBox,.addCont{
+.passwordCont,.editAisleBox,.addCont,.addPanelBox{
     width: 600px;
     position: relative;
     margin: 10vh auto 50px;
@@ -648,13 +648,16 @@ input:hover{
 .goodsCont .layui-form{
     width: 100%;
 }
-.relative{
+.relative,.relative1{
     position: relative;
 }
-.relative input[name="goodsName"]{
+.relative input[name="goodsName"],.relative1 input[name="panelGoodsName"]{
+    border-color: #e4e7ed;
+    color: #c0c4cc;
+    background-color: #f5f7fa;
     cursor: pointer !important;
 }
-.relative button{
+.relative button,.relative1 button{
     border: 1px solid #dcdfe6;
     position: absolute;
     top: 0;
@@ -667,7 +670,7 @@ input:hover{
     border-color: transparent;
     cursor: pointer;
 }
-.relative button img{
+.relative button img,.relative1 button img{
     width: 15px;
 }
 .listFlex .layui-form{
@@ -842,4 +845,7 @@ input:hover{
     border: 0;
     text-align: center;
    color: #000000;
+}
+.addPanelBody{
+    padding: 15px;
 }

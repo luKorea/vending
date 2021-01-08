@@ -160,6 +160,7 @@
                     <li class="shmentSet">补货记录</li>
                     <li class="editPriceTab">修改价格记录</li>
                     <li class="editPriceTab">开门记录</li>
+                    <!-- <li class="editPriceTab">展板详情</li> -->
                     <div class="tabLine">
                     </div>
                 </ul>
@@ -629,7 +630,7 @@
                         </div> -->
                     </li>
                     <!-- 补货记录 -->
-                    <li class="replenishment">
+                    <li class="replenishment" style="display: none;">
                         <div class="newHeader">
                             <div class="newHeaderText">
                                 条件查询
@@ -672,7 +673,7 @@
                         </div>
                     </li>
                     <!-- 价格修改记录 -->
-                    <li class="price">
+                    <li class="price" style="display: none;">
                         <div class="newHeader">
                             <div class="newHeaderText">
                                 条件查询
@@ -707,7 +708,7 @@
                         </div>
                     </li>
                     <!-- 开门记录 -->
-                    <li class="openDoorRecord">
+                    <li class="openDoorRecord" style="display: none;">
                         <div class="newHeader">
                             <div class="newHeaderText">
                                 条件查询
@@ -741,6 +742,20 @@
                             </div>
                         </div>
 
+                    </li>
+                    <!-- 展板部分 -->
+                    <li style="display: none;width: 100%;">
+                        <div class="newKeyContent">
+                            <button type="button" class="layui-btn layui-btn-primary addpanelBtn">
+                                <i class="layui-icon layui-icon-add-circle"></i>
+                                <span>添加展板</span>
+                            </button>
+                        </div>
+                        <div style="box-sizing: border-box;">
+                            <div class="priceEditBox">
+                                <table class="layui-hide" id="panelTable" lay-filter="panelTable"></table>
+                            </div>
+                        </div>
                     </li>
                 </ul>
                 <!-- </div> -->
@@ -1057,45 +1072,7 @@
             </div>
 
         </div>
-        <!-- 商品列表 -->
-        <div class="goodsCont maskContnet" style="overflow-y: auto;">
-            <div class="goodsBox margin0">
-                <div class="playHeader">
-                    <span>商品信息</span>
-                    <button class="close" type="button">
-                        <i class="layui-icon layui-icon-close"></i>
-                    </button>
-                </div>
-                <div class="goodsBody">
-                    <p style="color: red;">温馨提示：商品没同步更新可以按查询键进行同步!</p>
-                    <div class="materialKeyCont">
-                        <div style="max-width: 350px;" class="key-contnet">
-                            <div class="key-text">关键字</div>
-                            <input type="text" placeholder="商品名、商品编号" class="KyeText" name="GoodsKyeText">
-                        </div>
-                        <div class="key-contnet">
-                            <!-- 商品类目: -->
-                            <div class="key-text">商品类目</div>
-                            <form class="layui-form" action="" style="width: 85%;">
-                                <div class="layui-form" lay-filter="myDiv" style="width: 100%;">
-                                    <select name="" id="GoodsType" lay-filter="mySelect">
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                        <button class="layui-btn layui-btn-normal queryBtnClick btn" style="margin: 0 0 0 15px;">
-                            <i class="layui-icon layui-icon-search"></i>
-                            <span>查询</span>
-                        </button>
-                    </div>
-                    <div class="data-list-contnet">
-                        <div class="list-table">
-                            <table class="layui-hide" id="goodsTable" lay-filter="goodsTable"></table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <!-- 添加货道详情数量 -->
         <div class=" addDetalis maskContnet">
             <div class="addCont margin0">
@@ -1260,6 +1237,113 @@
                 </div>
             </div>
         </div>
+        <!-- 添加展板 -->
+        <div class="addPanelCont maskContnet">
+            <div class="addPanelBox margin0">
+                <div class="playHeader">
+                    <span>添加展板商品</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="addPanelBody">
+                    <div class="listFlex relative1">
+                        <label style="width: 130px;" for=""><span style="color: red;">*</span>商品名:</label>
+                        <input type="text" name="panelGoodsName" disabled>
+                        <button>
+                            <img src="../img/nextB1.png" alt="">
+                        </button>
+                    </div>
+                    <div class="listFlex">
+                        <label style="width: 130px;" for=""><span style="color: red;">*</span>数量:</label>
+                        <input type="text" name="panelGoodsNum">
+                    </div>
+                </div>
+                <div class="addPanelFooter" style="padding:20px 0;">
+                    <div style="text-align: center;">
+                        <button class="layui-btn layui-btn-normal btn panelAddBtn" style="margin: 0 0 0 15px;">
+                            <span>确定</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn addPanelCance">
+                            <span>取消</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 编辑展板 -->
+        <!-- <div class="editPanelCont maskContnet">
+            <div class="editPanelBox margin0">
+                <div class="playHeader">
+                    <span>添加展板商品</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="editPanelBody">
+                    <div class="listFlex relative2">
+                        <label style="width: 130px;" for=""><span style="color: red;">*</span>商品名:</label>
+                        <input type="text" name="panelGoodsName" disabled>
+                        <button>
+                            <img src="../img/nextB1.png" alt="">
+                        </button>
+                    </div>
+                    <div class="listFlex">
+                        <label style="width: 130px;" for=""><span style="color: red;">*</span>数量:</label>
+                        <input type="text" name="panelGoodsNum">
+                    </div>
+                </div>
+                <div class="editPanelFooter" style="padding:20px 0;">
+                    <div style="text-align: center;">
+                        <button class="layui-btn layui-btn-normal btn panelAddBtn" style="margin: 0 0 0 15px;">
+                            <span>确定</span>
+                        </button>
+                        <button class="layui-btn layui-btn-normal btn addPanelCance">
+                            <span>取消</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- 商品列表 -->
+        <div class="goodsCont maskContnet" style="overflow-y: auto;">
+            <div class="goodsBox margin0">
+                <div class="playHeader">
+                    <span>商品信息</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="goodsBody">
+                    <p style="color: red;">温馨提示：商品没同步更新可以按查询键进行同步!</p>
+                    <div class="materialKeyCont">
+                        <div style="max-width: 350px;" class="key-contnet">
+                            <div class="key-text">关键字</div>
+                            <input type="text" placeholder="商品名、商品编号" class="KyeText" name="GoodsKyeText">
+                        </div>
+                        <div class="key-contnet">
+                            <!-- 商品类目: -->
+                            <div class="key-text">商品类目</div>
+                            <form class="layui-form" action="" style="width: 85%;">
+                                <div class="layui-form" lay-filter="myDiv" style="width: 100%;">
+                                    <select name="" id="GoodsType" lay-filter="mySelect">
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <button class="layui-btn layui-btn-normal queryBtnClick btn" style="margin: 0 0 0 15px;">
+                            <i class="layui-icon layui-icon-search"></i>
+                            <span>查询</span>
+                        </button>
+                    </div>
+                    <div class="data-list-contnet">
+                        <div class="list-table">
+                            <table class="layui-hide" id="goodsTable" lay-filter="goodsTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="mask maskContnet">
             <div class="TitleContentWith">
                 <span class="maskSpan" style="display: inline-block;">
@@ -1296,6 +1380,19 @@
 </script>
 <script type="text/html" id="imgtmp">
     <div><img src="{{d.goods_images}}  " style="width: 40px; height: 40px;object-fit:cover"></div>
+</script>
+<script type="text/html" id="panelImg">
+    <div><img src="{{d.goods_images}}  " style="width: 40px; height: 40px;object-fit:cover"></div>
+</script>
+<script type="text/html" id="panelId">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn  " lay-event="edit">
+            <span style="color:#fff;">编辑</span>
+        </button>
+        <button class="layui-btn layui-btn-sm btn "  lay-event="del">
+            <span style="color:#fff;">移除</span>
+        </button>
+    </div>
 </script>
 <script src="../assets/public/area.js"></script>
 

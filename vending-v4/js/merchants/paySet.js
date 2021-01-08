@@ -99,6 +99,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 $('.changePay .WeChat').show();
                 $('.changePay .Alipay').hide();
                 $('.changePay .IcbcPay').hide();
+                editUploadVal=payData.cert_dir;
             } else if (payData.payName == '支付宝') {
                 $('.changePay .WeChat').hide();
                 $('.changePay .IcbcPay').hide();
@@ -234,7 +235,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     mchId:payFormData.mchId,
                     app_id:payFormData.app_id,
                     app_key:payFormData.ICBC_app_key,
-                    app_private_key:payFormData.ICBC_app_private_key
+                    app_private_key:payFormData.ICBC_app_private_key,
                 });
                 loadingAjax('/pay/updatePayParam', 'post', editPayObj1, sessionStorage.token, 'mask', 'changePay', 'changeBox', layer).then(res => {
                     layer.msg(res.message, { icon: 1 });
@@ -269,7 +270,8 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 app_key: payFormData.typeIndex == '2' ? payFormData.app_key : '',
                 mchId: payFormData.typeIndex == '2' ? payFormData.MerchantsId : '',
                 alipay_public_key: payFormData.typeIndex == '1' ? payFormData.alipay_public_key : '',
-                app_private_key: payFormData.typeIndex == '1' ? payFormData.app_private_key : payFormData.MerchantsKey
+                app_private_key: payFormData.typeIndex == '1' ? payFormData.app_private_key : payFormData.MerchantsKey,
+                cert_dir:payFormData.typeIndex == 2?editUploadVal:null
             });
             loadingAjax('/pay/updatePayParam', 'post', editPay, sessionStorage.token, 'mask', 'changePay', 'changeBox', layer).then(res => {
                 layer.msg(res.message, { icon: 1 });
@@ -387,6 +389,10 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 layer.msg('带*为必填', { icon: 7 });
                 return;
             }
+            if(!addUploadVal){
+                layer.msg('请上传微信证书', { icon: 7 });
+                return;
+            }
         } else if (addData.typeIndex == '1') {
             if (!(addData.payee && addData.aliPayId && addData.alipay_public_key && addData.app_private_key)) {
                 layer.msg('带*为必填', { icon: 7 });
@@ -472,7 +478,8 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     mchId:addData.mchId,
                     app_id:addData.app_id,
                     app_key:addData.ICBC_app_key,
-                    app_private_key:addData.ICBC_app_private_key
+                    app_private_key:addData.ICBC_app_private_key,
+                    cert_dir:addData.typeIndex==2?addUploadVal:null
                 });
                 loadingAjax('/pay/newPayParam', 'post', addPayObj1, sessionStorage.token, 'mask', 'addePay', 'addBox', layer).then(res => {
                     layer.msg(res.message, { icon: 1 });
@@ -487,7 +494,9 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                         'app_id': '',
                         'ICBC_app_key': '',
                         'ICBC_app_private_key': '',
-                    })
+                    });
+                    $('.uploadFlag').html('未上传');
+                    addUploadVal=null
                 }).catch(err => {
                     layer.msg(err.message, { icon: 2 })
                 })
@@ -550,5 +559,67 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         } else {
             layer.msg('已刷新', { icon: 1 })
         }
+    });
+
+      // 上传附件
+      var addUploadVal=null,
+          editUploadVal=null;
+      $('.addBody .WeChat input[name="addUpload"]').change(function(e){
+        if(!$(this).val()){
+            return ;
+        }
+        var that = this;
+        var upDetails = new FormData();
+        upDetails.append('file', e.target.files[0]);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        uploadFun(upDetails,1,that);
+    });
+    $('.changePay .WeChat input[name="addUpload"]').change(function(e){
+        if(!$(this).val()){
+            return ;
+        }
+        var that = this;
+        var upDetails = new FormData();
+        upDetails.append('file', e.target.files[0]);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        uploadFun(upDetails,2,that);
     })
+    function uploadFun(data,index,that){
+        $.ajax({
+            type: 'post',
+            url: `${vApi}/uploading`,
+            processData: false,
+            contentType: false,
+            timeout:60000,
+            headers: {
+                token,
+            },
+            data,
+            success: function (res) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                $(that).val('')
+                if (res.code == 0) {
+                    layer.msg('上传成功',{icon:1})
+                    if(index==1){
+                        addUploadVal=res.data.src;
+                        $('.uploadFlag').html('已上传');
+                    }else if(index==2){
+                        editUploadVal=res.data.src;
+                        console.log(editUploadVal)
+                    }
+                } else {
+                    layer.msg(res.message, { icon: 7 });
+                }
+            },
+            error: function (err) {
+                $(that).val('')
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon')
+                layer.msg('上传失败', { icon: 2 })
+            }
+        })
+    }
 })

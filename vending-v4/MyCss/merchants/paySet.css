@@ -68,3 +68,14 @@ input:hover,textarea:hover{
     max-height: 750px;
 }
 textarea{resize:none}
+.relative{
+    position: relative;
+}
+.relative input{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}

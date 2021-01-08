@@ -54,12 +54,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         if(d.onlineStatus!=0){
                             return '0天0小时0分'
                         }else{
+                            
                             var nData=new Date().getTime(),
                             cDate =nData-d.offline_time,
                             day=Math.floor(cDate/86400000),
                             hour=Math.floor((cDate-86400000*day)/3600000),
                             miute=Math.floor((cDate-86400000*day-3600000*hour)/60000);
-                            return day+'天'+hour+'小时'+miute+'分钟'
+                            return d.offline_time? day+'天'+hour+'小时'+miute+'分钟':'-'
                         }
                     }
                 },
@@ -221,6 +222,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 break;
             case 2:
                 salesFun(machineSetData.machineId);
+                goodKeyFlag=1;
                 break;
             case 3:
                 recordFun(machineSetData.machineId);
@@ -236,6 +238,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 break;
             case 7:
                 openDoorFun();
+                break;
+            case 8:
+                panelFun();
+                goodKeyFlag=2;
                 break;
         }
     });
@@ -1396,11 +1402,19 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     }
 
     // 选择商品 
+    var goodKeyFlag=null;
     table.on('row(goodsTable)', function (obj) {
-        $('.editAisle input[name="goodsName"]').val(obj.data.mail == 1 ? '(邮寄)' + obj.data.goods_Name : obj.data.goods_Name);
-        $('.editAisle input[name="goodsName"]').attr('IVal', obj.data.goods_Id);
-        $('.editAisle input[name="price"]').val(obj.data.goods_Price);
-        popupHide('goodsCont', 'goodsBox')
+        if(goodKeyFlag==1){
+            $('.editAisle input[name="goodsName"]').val(obj.data.mail == 1 ? '(邮寄)' + obj.data.goods_Name : obj.data.goods_Name);
+            $('.editAisle input[name="goodsName"]').attr('IVal', obj.data.goods_Id);
+            $('.editAisle input[name="price"]').val(obj.data.goods_Price);
+            popupHide('goodsCont', 'goodsBox')
+        }else{
+            $('.addPanelBody input[name="panelGoodsName"]').val(obj.data.mail == 1 ? '(邮寄)' + obj.data.goods_Name : obj.data.goods_Name);
+            $('.editAisle input[name="goodsName"]').attr('IVal', obj.data.goods_Id);
+            popupHide('goodsCont', 'goodsBox');
+        }
+      
     });
     // 修改详情
     $('.editAisle .ediaisleBtn').click(function () {
@@ -2418,7 +2432,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 清除货道故障
     $('.clearingBtn').click(function(){
-        
+        layer.confirm('确定清除货道故障？', function (index) {
+            layer.close(index);
+            $('.mask').fadeIn();
+            $('.maskSpan').addClass('maskIcon');
+            loadingAjax('/machine/clearLockMachineWay','post',JSON.stringify({machineId:machineSetData.machineId}),sessionStorage.token,'mask','','',layer).then(res=>{
+                layer.msg(res.message,{icon:1})
+            }).catch(err=>{
+                layer.msg(err.message,{icon:2})
+            })
+        })
     });
     // 导出售货机
     $('.pushMachineBtn').click(function(){
@@ -2452,5 +2475,110 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
       }
     }
     xhr.send();
+    });
+
+    // 展板部分
+    var panelTableIn=null;
+    function panelFun(){
+        panelTableIn = table.render({
+            elem: '#panelTable',
+            url: `${vApi}/machine/getDisplayGood`,
+            method: 'post',
+            contentType: "application/json",
+            headers: {
+                token,
+            },
+            cols: [[
+                { field: 'goods_Name', width: 150, title: '图片', align: 'center',templet:"#panelImg" },
+                { field: 'goods_Name', width: 150, title: '商品名', align: 'center', },
+                { field: 'goodCount', width: 150, title: '数量', align: 'center', },
+                { field: 'oldGoodCount', width: 150, title: '原数量', align: 'center', },
+                { field: 'last_user', width: 150, title: '修改人', align: 'center', },
+                {
+                    field: 'last_time', width: 180, title: '修改时间', align: 'center', templet: function (d) {
+                        return d.last_time ? timeStamp(d.last_time) : '-'
+                    }
+                },
+                { field: 'operation', fixed: 'right', right: 0, width: 150, title: '操作', toolbar: '#panelId', align: 'center' },
+            ]]
+            , id: 'panelID'
+            , page: true
+            , loading: true
+            , limits: [ 10,20, 30,50, 100]
+            ,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where: {
+                machineId: machineSetData.machineId,
+            },
+            parseData: function (res) {
+                // console.log(res)
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.length, //解析数据长度
+                        "data": res.data //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    window.parent.location.href = "login.html";
+                }
+            }
+        });
+    };
+    // 添加展板
+    $('.addpanelBtn').click(function(){
+        popupShow('addPanelCont','addPanelBox');
+    });
+    // 展板选择商品
+    $('.relative1').click(function () {
+        popupShow('goodsCont', 'goodsBox')
+        if (goodsTableIns) {
+            goodsTableIns.reload({
+                where: {
+                    condition: sessionStorage.machineGoodsId,
+                }
+            })
+        } else {
+            goodsreload();
+        }
+    });
+    // 添加
+    $('.addPanelCont .panelAddBtn').click(function(){
+        if(!($('.addPanelCont input[name="panelGoodsNum"]').val()&&$('.addPanelCont input[name="panelGoodsNum"]').val())){
+            layer.msg('带*为必填',{icon:7});
+            return ;
+        };
+        var panelAddObj=JSON.stringify({
+            machineId:machineSetData.machineId,
+            goodId:$('.addPanelCont input[name="panelGoodsNum"]').attr('IVal'),
+            goodCount:$('.addPanelCont input[name="panelGoodsNum"]').val(),
+        });
+        loadingAjax('/machine/newDisplayGood','post',panelAddObj,sessionStorage.token,'mask','addPanelCont','addPanelBox',layer).then(res=>{
+            layer.msg(res.message,{icon:1});
+            panelTableIn.reload({
+                where:{}
+            })
+        }).catch(err=>{
+            layer.msg(err.message,{icon:7});
+        })
+    });
+    table.on('tool(panelTable)', function (obj) {
+        console.log(obj)
     })
 });

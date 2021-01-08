@@ -116,8 +116,19 @@
                                 <label><span style="color: red;">*</span>微信API秘钥：</label>
                                 <!-- <input type="text" name="app_key"> -->
                                 <textarea name="app_key" rows="5"></textarea autocomplete="off">
-                        </div>
+                            </div>
                       </div>
+                      <div class="WeChat">
+                        <div class="listFlex">
+                            <button class="layui-btn layui-btn-normal addUploadBtn relative btn " type="button"
+                                style="margin-left: 120px;">
+                                <i class="layui-icon layui-icon-upload-circle"></i>
+                                <span>上传证书</span>
+                                <input type="file" name="addUpload">
+                            </button>
+                            <p  style="color: red;margin-left: 25px;">已上传</p>
+                        </div>
+                    </div>
                         <!-- <div class="WeChat">
                             <div class="listFlex  ">
                                 <label><span style="color: red;">*</span>公众号密钥：</label>
@@ -165,13 +176,13 @@
                         <div class="IcbcPay">
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>网关公钥：</label>
-                                <textarea name="ICBC_alipay_public_key"  rows="5" autocomplete="off"></textarea>
+                                <textarea name="ICBC_alipay_public_key" rows="5" autocomplete="off"></textarea>
                             </div>
                         </div>
                         <div class="IcbcPay">
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>网关私钥：</label>
-                                <textarea name="ICBC_app_private_key"  rows="5" autocomplete="off"></textarea>
+                                <textarea name="ICBC_app_private_key" rows="5" autocomplete="off"></textarea>
                             </div>
                         </div>
                     </form>
@@ -275,15 +286,27 @@
                         <div class="IcbcPay">
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>网关公钥：</label>
-                                <textarea name="ICBC_alipay_public_key"  rows="5" autocomplete="off"></textarea>
+                                <textarea name="ICBC_alipay_public_key" rows="5" autocomplete="off"></textarea>
                             </div>
                         </div>
                         <div class="IcbcPay">
                             <div class="listFlex">
                                 <label><span style="color: red;">*</span>网关私钥：</label>
-                                <textarea name="ICBC_app_private_key"  rows="5" autocomplete="off"></textarea>
+                                <textarea name="ICBC_app_private_key" rows="5" autocomplete="off"></textarea>
                             </div>
                         </div>
+                        <div class="WeChat">
+                            <div class="listFlex">
+                                <button class="layui-btn layui-btn-normal addUploadBtn relative btn " type="button"
+                                    style="margin-left: 120px;">
+                                    <i class="layui-icon layui-icon-upload-circle"></i>
+                                    <span>上传证书</span>
+                                    <input type="file" name="addUpload">
+                                </button>
+                                <p class="uploadFlag" style="color: red;margin-left: 25px;">未上传</p>
+                            </div>
+                        </div>
+
                     </form>
                     <div style="text-align: center; margin-top: 15px;" class="Medit">
                         <button class="layui-btn layui-btn-normal btn submit_btn" type="button">
