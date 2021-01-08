@@ -69,9 +69,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {
                     field: 'trafficInfo', width: 130, title: '缺货情况', align: 'center',templet:function(d){
-                        return` <div>
-                                    <span class="${d.storage_warning[0].way_count < 10 ? 'tableStateCellTrue' : d.storage_warning[0].way_count < 30? 'tableStateCellFalse':'red'}">${d.storage_warning[0].warning}</span>
-                                </div>`
+                        if(d.storage_warning[0].warning){
+                            return '-'
+                        }else{
+                            return` <div>
+                                        <span class="${d.storage_warning[0].way_count < 10 ? 'tableStateCellTrue' : d.storage_warning[0].way_count < 30? 'tableStateCellFalse':'red'}">${d.storage_warning[0].warning}</span>
+                                    </div>`
+                        }
+                        
                     }
                 },
                 {
@@ -1037,7 +1042,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         replenishmentPushBtnFlag=false,//补货记录
         editPircePushBtnFlag=false,//修改价格记录
         openDoorPushBtnFlag=false,//导出开门记录
-        invoicePushBtnFlag=false;//导出补货单
+        invoicePushBtnFlag=false,//导出补货单
+        panelFlag=false;
     function permissions() {
         permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
             res.data.forEach(item => {
@@ -1089,6 +1095,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if(item.id=='472'){
                     invoicePushBtnFlag=true
                 }
+                if(item.id=='471'){
+                    panelFlag=true;
+                }
                 // if(item.id=='461'){
                 //     editPriceFlag=true
                 // }
@@ -1115,6 +1124,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         editPircePushBtnFlag?$('.editPircePushBtn').removeClass('hide') : $('.editPircePushBtn').addClass('hide');
         openDoorPushBtnFlag?$('.openDoorPushBtn').removeClass('hide') : $('.openDoorPushBtn').addClass('hide');
         invoicePushBtnFlag?$('.invoicePushBtn1').removeClass('hide') : $('.invoicePushBtn1').addClass('hide');
+        panelFlag?$('.panelFlagClass').removeClass('hide') : $('.panelFlagClass').addClass('hide');
     }
     // 关闭弹窗
     $('.playHeader .close').click(function () {
@@ -1321,6 +1331,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         tooltip('.chooseCheck', { transition: true, time: 200 });
     };
     // 判断页面打开后有没有输入独立密码
+    var aisleType=null;
     sessionStorage.independentPass = '';
     var ArrIndex = null;
     $('body').on('click', '.aisleNumderClick', function () {
@@ -1331,6 +1342,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('您没有编辑货道的权限!', { icon: 7 })
             return;
         }
+        aisleType=1
         if (sessionStorage.independentPass) {
             aisleEdit();
             popupShow('editAisle', 'editAisleBox');
@@ -1347,21 +1359,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
         loadingAjax('/user/verifyAlonePwd', 'post', IPassWord, sessionStorage.token, 'mask', 'iPasswprd', 'passwordCont', layer).then(res => {
             sessionStorage.independentPass = 'true';
-            if (delIndex == 1) {
-                var delData = JSON.stringify({
-                    machineId: machineSetData.machineId,
-                    ways: delArr
-                });
-                delFun(delData)
-            } else if (!addIndex) {
-                console.log(1)
+             if (aisleType==1) {
                 aisleEdit();
                 popupHide('iPasswprd', 'passwordCont')
                 popupShow('editAisle', 'editAisleBox');
+            } else{
 
-            } else {
-                popupHide('iPasswprd', 'passwordCont')
-                popupShow('addDetalis', 'addCont');
             }
 
         }).catch(err => {
@@ -2542,6 +2545,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 statusCode: 200 //规定成功的状态码，默认：0
             },
             done: function (res) {
+                permissions1();
                 if (res.code == 403) {
                     window.parent.location.href = "login.html";
                 }
@@ -2549,7 +2553,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         });
     };
     // 添加展板
+    var panelIndex=null;
     $('.addpanelBtn').click(function(){
+        panelIndex=1
         popupShow('addPanelCont','addPanelBox');
     });
     // 展板选择商品
@@ -2571,12 +2577,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('带*为必填',{icon:7});
             return ;
         };
+        var panelApi=panelIndex==1?'/machine/newDisplayGood':'/machine/updateDisplayGoodCount';
         var panelAddObj=JSON.stringify({
             machineId:machineSetData.machineId,
             goodId:Number($('.addPanelCont input[name="panelGoodsName"]').attr('IVal')) ,
             goodCount:Number($('.addPanelCont input[name="panelGoodsNum"]').val()) ,
         });
-        loadingAjax('/machine/newDisplayGood','post',panelAddObj,sessionStorage.token,'mask','addPanelCont','addPanelBox',layer).then(res=>{
+        loadingAjax(panelApi,'post',panelAddObj,sessionStorage.token,'mask','addPanelCont','addPanelBox',layer).then(res=>{
             layer.msg(res.message,{icon:1});
             panelTableIn.reload({
                 where:{}
@@ -2592,23 +2599,44 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.addPanelCont .addPanelCance').click(function(){
         popupHide('addPanelCont','addPanelBox');
     })
+    // 展板监听
     table.on('tool(panelTable)', function (obj) {
         console.log(obj)
         if (obj.event == 'del') {
             layer.confirm('确定移除？', function (index) {
                 layer.close(index);
-                ('.mask').fadeIn();
+                $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
                 var delObj=JSON.stringify({
                     machineId:machineSetData.machineId,
                     goodId:obj.data.goods_Id
                 });
                 loadingAjax('/machine/removeDisplayGoodCount','post',delObj,sessionStorage.token,'mask','','',layer).then(res=>{
-
+                    layer.msg(res.message,{icon:1});
+                    panelTableIn.reload({
+                        where:{}
+                    });
                 }).catch(err=>{
-                    
+                    layer.msg(err.message,{icon:2})
                 })
             })
+        }else if(obj.event == 'edit'){
+            panelIndex=2
+            $('.addPanelCont input[name="panelGoodsName"]').attr('IVal',obj.data.goods_Id);
+            $('.addPanelCont input[name="panelGoodsName"]').val(obj.data.goods_Name);
+            $('.addPanelCont input[name="panelGoodsNum"]').val(obj.data.goodCount);
+            popupShow('addPanelCont','addPanelBox');
         }
+    });
+    // 撤销货道
+    $('.undoAisleBtn').click(function(){
+        layer.confirm('确定撤销货道?', function (index) {
+            loadingAjax('/machine/removeGoodWay','post',JSON.stringify({machineId:machineSetData.machineId,}),'mask','','').then(res=>{
+                layer.msg(res.message,{icon:1});
+                getGoodsWay(machineSetData.machineId)
+            }).catch(err=>{
+                layer.msg(err.message,{icon:2})
+            })
+        })
     })
 });

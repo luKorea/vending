@@ -125,6 +125,13 @@ function decrypt1(cipher) {
     });
     var decryptResult = bytes.toString(CryptoJS.enc.Utf8);
     return decryptResult
+};
+
+// 记住密码
+function keepPass(old,news){
+    var flagNum=news-old,
+        flag=flagNum<2592000000?true:false;
+    return flag
 }
 export {
     loadAjax,
@@ -136,5 +143,6 @@ export {
     timeStamp,
     keyText,
     decrypt1,
-    loadAjax1
+    loadAjax1,
+    keepPass
 }

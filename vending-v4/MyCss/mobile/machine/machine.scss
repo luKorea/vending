@@ -331,6 +331,12 @@ body{
     top: -100%;
     .sire{
         padding: 0.2rem;
+        >li{
+            .navFocus{
+                color: #be954a;
+                font-weight: bold;
+            }
+        }
     }
     .parent{
         padding: 0.2rem 0.2rem 0.2rem 0;
@@ -356,10 +362,7 @@ body{
         transform:rotate(0deg);
         transition: all 0.3s;
     }
-    .navFocus{
-        color: #be954a;
-        font-weight: bold;
-    }
+   
 }
 .jeinpbox{
     width: 60%;

@@ -894,7 +894,7 @@ let dom='<ul class="sire">';
 	function getTree(data){
 		$.each(data,(index,item )=>{
 			if(item.children&&item.children.length){
-				dom+=`<li class="parent "> <img indexFlag="1" class="nextImg" src="${require('../../../img/next.png')}" alt=""> <span class="navFocus" mId="${item.id}">${item.title}</span> <ul class="parentOne">`				
+				dom+=`<li class="parent "> <img indexFlag="1" class="nextImg" src="${require('../../../img/next.png')}" alt=""> <span class="${index==0?'navFocus':''}" mId="${item.id}">${item.title}</span> <ul class="parentOne">`				
 				 getTree(item.children)
 				dom+=`</ul>`
 			}else{

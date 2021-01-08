@@ -105,3 +105,56 @@
         transform: translate(-50%, -50%);
     }
 }
+.icon-radio{
+    text-align: left;
+    margin-left: 15px;
+}
+.icon-radio .r1 {
+    display: none;
+}
+
+.icon-radio label {
+    position: relative;
+    display: block;
+    font-size: 14px;
+    padding-left: 24px;
+    color: #b18e5d;
+}
+
+.icon-radio label:before {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: 1px solid #BE954A;
+    border-radius: 100%;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.icon-radio .r1+label:after {
+    position: absolute;
+    top: 7px;
+    left: 4px;
+    content: '';
+    width: 0;
+    height: 0;
+    border: 4px solid #BE954A;
+    border-radius: 100%;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    opacity: 0;
+    -moz-opacity: 0;
+    -webkit-opacity: 0;
+}
+
+.icon-radio .r1:checked+label:after {
+    opacity: 1;
+    -moz-opacity: 1;
+    -webkit-opacity: 1;
+}

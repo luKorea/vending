@@ -160,7 +160,7 @@
                     <li class="shmentSet">补货记录</li>
                     <li class="editPriceTab">修改价格记录</li>
                     <li class="editPriceTab">开门记录</li>
-                    <!-- <li class="editPriceTab">展板详情</li> -->
+                    <li class="editPriceTab">展板详情</li>
                     <div class="tabLine">
                     </div>
                 </ul>
@@ -316,15 +316,21 @@
                     <!-- 货道详情 -->
                     <li class="aisleDetails" style="display: none;">
                         <div class="newKeyContent hide invoicePushBtn1">
-                            <button type="button" class="layui-btn layui-btn-primary invoicePushBtn">
+                            <button type="button" class="layui-btn layui-btn-primary hide invoicePushBtn">
                                 <i class="layui-icon layui-icon-print"></i>
                                 <span>导出补货单</span>
                             </button>
                         </div>
-                        <div class="newKeyContent hide invoicePushBtn1">
+                        <div class="newKeyContent  ">
                             <button type="button" class="layui-btn layui-btn-primary clearingBtn">
                                 <i class="layui-icon layui-icon-util"></i>
                                 <span>清除货道故障</span>
+                            </button>
+                        </div>
+                        <div class="newKeyContent ">
+                            <button type="button" class="layui-btn layui-btn-primary undoAisleBtn">
+                                <i class="layui-icon layui-icon-util"></i>
+                                <span>撤货</span>
                             </button>
                         </div>
                         <form action="" class="layui-form" lay-filter="delDetalis" style="width: 100%;">
@@ -745,7 +751,7 @@
                     </li>
                     <!-- 展板部分 -->
                     <li style="display: none;width: 100%;">
-                        <div class="newKeyContent">
+                        <div class="newKeyContent panelFlagClass">
                             <button type="button" class="layui-btn layui-btn-primary addpanelBtn">
                                 <i class="layui-icon layui-icon-add-circle"></i>
                                 <span>添加展板</span>
@@ -1256,7 +1262,7 @@
                     </div>
                     <div class="listFlex">
                         <label style="width: 130px;" for=""><span style="color: red;">*</span>数量:</label>
-                        <input type="text" name="panelGoodsNum">
+                        <input type="number" name="panelGoodsNum">
                     </div>
                 </div>
                 <div class="addPanelFooter" style="padding:20px 0;">
@@ -1386,10 +1392,10 @@
 </script>
 <script type="text/html" id="panelId">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm btn  " lay-event="edit">
+        <button class="layui-btn layui-btn-sm btn hide panelFlagClass" lay-event="edit">
             <span style="color:#fff;">编辑</span>
         </button>
-        <button class="layui-btn layui-btn-sm btn "  lay-event="del">
+        <button class="layui-btn layui-btn-sm btn hide panelFlagClass "  lay-event="del">
             <span style="color:#fff;">移除</span>
         </button>
     </div>
