@@ -117,7 +117,8 @@
     <div>
         <img src="../img/alipay.jpg" style="width: 40px; height: 40px;" class="hide {{d.name=='支付宝'?'show1':''}}" alt="">
         <img src="../img/wechat.jpg"  class=" hide {{d.name=='微信'?'show1':''}}" style="width: 40px; height: 40px;">
-        <img src="{{d.logo}} " class=" hide {{d.name!='微信'?d.name!='支付宝'?'show1':'':''}}" style="width: 40px; height: 40px;">
+        <img src="../img/gh.png"  class=" hide {{d.id==3?'show1':''}}" style="width: 40px; height: 40px;">
+        <img src="{{d.logo}} " class=" hide {{d.name!='微信'?d.name!='支付宝'?d.id!=3?'show1':'':'':''}}" style="width: 40px; height: 40px;">
     </div>
 </script>
 <script type="text/html" id="barDemo">

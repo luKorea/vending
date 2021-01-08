@@ -47,10 +47,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'trafficInfo', width: 200, title: '流量使用情况(MB)', align: 'center'
+                    field: 'trafficInfo', width: 160, title: '流量使用情况(MB)', align: 'center'
                 },
                 {
-                    field: 'trafficInfo', width: 200, title: '离线时长', align: 'center',templet:function(d){
+                    field: 'iot_card', width: 160, title: '物联网卡号', align: 'center'
+                },
+                {
+                    field: 'trafficInfo', width: 160, title: '离线时长', align: 'center',templet:function(d){
                         if(d.onlineStatus!=0){
                             return '0天0小时0分'
                         }else{
@@ -393,6 +396,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 return;
             }
             layer.confirm('确定激活该设备？', function (index) {
+                layer.close(index);
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
                 var activeMachineObj = JSON.stringify({
@@ -1411,7 +1415,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             popupHide('goodsCont', 'goodsBox')
         }else{
             $('.addPanelBody input[name="panelGoodsName"]').val(obj.data.mail == 1 ? '(邮寄)' + obj.data.goods_Name : obj.data.goods_Name);
-            $('.editAisle input[name="goodsName"]').attr('IVal', obj.data.goods_Id);
+            $('.addPanelBody input[name="panelGoodsName"]').attr('IVal', obj.data.goods_Id);
             popupHide('goodsCont', 'goodsBox');
         }
       
@@ -2285,7 +2289,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.invoicePushBtn').click(function(){
         loadingAjax('/machine/getGoodReplenish','post',JSON.stringify({machineId:machineSetData.machineId}),sessionStorage.token,'','',layer).then(res=>{   
             repairInvoiceData=res.data;
-            layer.msg('未查询到缺货商品',{icon:7})
+            if(repairInvoiceData.good_info.length==0){
+                layer.msg('未查询到缺货商品',{icon:7});
+                return ;
+            }
             RgoodsFun(repairInvoiceData.good_info);
             $('.supplierName').html(repairInvoiceData.supplier+'商品调拨(补货)单')
             $('.repairInvoiceBody input[name="iMachineName"]').val(`${repairInvoiceData.info}(${repairInvoiceData.number})`);
@@ -2560,25 +2567,48 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     // 添加
     $('.addPanelCont .panelAddBtn').click(function(){
-        if(!($('.addPanelCont input[name="panelGoodsNum"]').val()&&$('.addPanelCont input[name="panelGoodsNum"]').val())){
+        if(!($('.addPanelCont input[name="panelGoodsName"]').val()&&$('.addPanelCont input[name="panelGoodsNum"]').val())){
             layer.msg('带*为必填',{icon:7});
             return ;
         };
         var panelAddObj=JSON.stringify({
             machineId:machineSetData.machineId,
-            goodId:$('.addPanelCont input[name="panelGoodsNum"]').attr('IVal'),
-            goodCount:$('.addPanelCont input[name="panelGoodsNum"]').val(),
+            goodId:Number($('.addPanelCont input[name="panelGoodsName"]').attr('IVal')) ,
+            goodCount:Number($('.addPanelCont input[name="panelGoodsNum"]').val()) ,
         });
         loadingAjax('/machine/newDisplayGood','post',panelAddObj,sessionStorage.token,'mask','addPanelCont','addPanelBox',layer).then(res=>{
             layer.msg(res.message,{icon:1});
             panelTableIn.reload({
                 where:{}
-            })
+            });
+            $('.addPanelCont input[name="panelGoodsName"]').attr('IVal','');
+            $('.addPanelCont input[name="panelGoodsName"]').val('');
+            $('.addPanelCont input[name="panelGoodsNum"]').val('');
         }).catch(err=>{
             layer.msg(err.message,{icon:7});
         })
     });
+    // 取消添加
+    $('.addPanelCont .addPanelCance').click(function(){
+        popupHide('addPanelCont','addPanelBox');
+    })
     table.on('tool(panelTable)', function (obj) {
         console.log(obj)
+        if (obj.event == 'del') {
+            layer.confirm('确定移除？', function (index) {
+                layer.close(index);
+                ('.mask').fadeIn();
+                $('.maskSpan').addClass('maskIcon');
+                var delObj=JSON.stringify({
+                    machineId:machineSetData.machineId,
+                    goodId:obj.data.goods_Id
+                });
+                loadingAjax('/machine/removeDisplayGoodCount','post',delObj,sessionStorage.token,'mask','','',layer).then(res=>{
+
+                }).catch(err=>{
+                    
+                })
+            })
+        }
     })
 });
