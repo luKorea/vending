@@ -317,6 +317,11 @@ window.onload = function () {
         function shuffling() {
             loadingAjax('/notices/getNoticeList', 'post', noticeObj, sessionStorage.token).then(res => {
                 noticeList = res.data.list;
+                if(noticeList.length==0){
+                    $('.swipe-content-carousel').hide()
+                }else{
+                    $('.swipe-content-carousel').show()
+                }
                 noticeDrawing(noticeList)
             }).catch(err => {
                 layer.msg('获取公告失败', { icon: 2 })

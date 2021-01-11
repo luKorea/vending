@@ -38,7 +38,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {
                     field: 'info', width: 330, title: '售货机信息', align: 'center', templet: function (d) {
-                        return d.info ? `<div>${d.info}</div>` : `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>`
+                        if(d.info){
+                            return d.info
+                        }else{
+                            return  `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>
+                            <div><span style="color:red;">*</span>(序列号:${d.machineId})</div>`
+                        }
                     }
                 },
                 {
@@ -68,7 +73,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'trafficInfo', width: 130, title: '缺货情况', align: 'center',templet:function(d){
+                    field: 'warning', width: 130, title: '缺货情况', align: 'center',templet:function(d){
                         if(d.storage_warning[0].warning){
                             return '-'
                         }else{
@@ -80,7 +85,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'trafficInfo', width: 130, title: '缺货货道数量', align: 'center',templet:function(d){
+                    field: 'way_count', width: 130, title: '缺货货道数量', align: 'center',templet:function(d){
                         return d.storage_warning[0].way_count
                     }
                 },

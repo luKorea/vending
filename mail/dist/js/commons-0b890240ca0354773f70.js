@@ -12,6 +12,7 @@
 /* unused harmony export keyText */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return decrypt1; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadAjax1; });
+/* unused harmony export keepPass */
 // import 'babel-polyfill';
 // 请求方法
 function ajaxFun(url, type, data) {
@@ -160,6 +161,14 @@ function decrypt1(cipher) {
   });
   var decryptResult = bytes.toString(CryptoJS.enc.Utf8);
   return decryptResult;
+}
+
+; // 记住密码
+
+function keepPass(old, news) {
+  var flagNum = news - old,
+      flag = flagNum < 2592000000 ? true : false;
+  return flag;
 }
 
 

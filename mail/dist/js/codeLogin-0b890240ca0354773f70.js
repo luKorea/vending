@@ -166,7 +166,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_common_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
 
 
-var machineId = Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* getQueryString */ "b"])('machineId'); // 点击登录事件
+var machineId = Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* getQueryString */ "b"])('machineId');
+
+if (sessionStorage.accountPass) {
+  var passFlag = keepPass(sessionStorage.old, new Date().getTime());
+
+  if (passFlag) {
+    var accountPass = JSON.parse(sessionStorage.accountPass);
+    $('.formCont input[name="name"]').val(accountPass.username);
+    $('.formCont input[name="pass"]').val(accountPass.password);
+  }
+}
+
+var passIndex = 1,
+    passType = 1;
+$('.list input[name="pass"]').focus(function () {
+  if (passIndex == 1) {
+    $(this).val('');
+    passIndex = 2;
+  } else {
+    return;
+  }
+});
+$('.list input[name="pass"]').keyup(function () {
+  passType = 2;
+}); // 点击登录事件
 
 $('.searchCont .btn').click(function () {
   if (!$('.formCont input[name="name"]').val()) {
@@ -183,7 +207,7 @@ $('.searchCont .btn').click(function () {
   $('.mask').show();
   var loginObj = JSON.stringify({
     username: $('.formCont input[name="name"]').val(),
-    password: hex_md5($('.formCont input[name="pass"]').val()),
+    password: passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val()),
     machineId: machineId
   });
   Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* loadAjax */ "c"])('/api/user/login', 'post', loginObj).then(function (res) {
@@ -204,6 +228,16 @@ $('.searchCont .btn').click(function () {
         $('.mask').hide();
 
         if (res == 'true') {
+          if ($('.r1').prop('checked')) {
+            sessionStorage.old = new Date().getTime();
+            sessionStorage.accountPass = JSON.stringify({
+              username: $('.formCont input[name="name"]').val(),
+              password: passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val())
+            });
+          } else {
+            sessionStorage.accountPass = '';
+          }
+
           window.location.href = "operation.html?machineId=".concat(Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* getQueryString */ "b"])('machineId'));
         } else {
           Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])('售货机离线,登录失败');
