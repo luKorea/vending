@@ -75,11 +75,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 {
                     field: 'warning', width: 130, title: '缺货情况', align: 'center',templet:function(d){
                         if(d.storage_warning[0].warning){
-                            return '-'
-                        }else{
                             return` <div>
-                                        <span class="${d.storage_warning[0].way_count < 10 ? 'tableStateCellTrue' : d.storage_warning[0].way_count < 30? 'tableStateCellFalse':'red'}">${d.storage_warning[0].warning}</span>
-                                    </div>`
+                            <span class="${d.storage_warning[0].way_count < 10 ? 'tableStateCellTrue' : d.storage_warning[0].way_count < 30? 'tableStateCellFalse':'red'}">${d.storage_warning[0].warning}</span>
+                        </div>`
+                            
+                        }else{
+                            return '-'
                         }
                         
                     }
