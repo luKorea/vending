@@ -239,7 +239,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 break;
             case 2:
                 salesFun(machineSetData.machineId);
-                
                 break;
             case 3:
                 recordFun(machineSetData.machineId);
@@ -261,12 +260,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 goodKeyFlag=2;
                 break;
         }
-        // if(that.index()==2){
-        //     alert
-            
-        // }else if(that.index()==8){
-        //    
-        // }
     });
     // 监听售货机列表操作
     var machineSetData = null

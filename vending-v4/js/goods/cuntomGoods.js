@@ -1126,6 +1126,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   // 同步价格部分
   $('.syncBtn').click(function () {
     popupShow('synchronousCont', 'synchronousBox');
+    $('.synchronousGoodsName').val();
+    $('.synchronousMachineName').val();
     synchronousGoodsFun();
     machineTableFun();
   })
@@ -1215,7 +1217,15 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       }
 
     });
-  }
+  };
+  // 查询同步价格商品
+  $('.synchronousGoodsQuery').click(function(){
+    synchronousGoodsTable.reload({
+      where:{
+        conditionTwo:$('.synchronousGoodsName').val()
+      }
+    })
+  })
   // 同步商品价格售货机
   var machineTableS = null;
   function machineTableFun() {
@@ -1287,7 +1297,13 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       }
     });
   }
-
+  $('.synchronousMachineQuery').click(function(){
+    machineTableS.reload({
+      where:{
+        keyword:$('.synchronousMachineName').val()
+      }
+    })
+  })
   // 确定同步价格
   $('.synchronousCont .synchronousCancel').click(function () {
     popupHide('synchronousCont', 'synchronousBox');

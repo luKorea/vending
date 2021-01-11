@@ -16,7 +16,7 @@ layui.use(['table', 'form', 'layer',], function () {
             cols: [[
                 { field: 'n_number', width: 200, title: '公告编号', align: 'center' },
                 { field: 'title', width: 210, title: '标题', align: 'center' },
-                { field: 'isShow', width: 135, title: '是否首页展示', align: 'center', templet:function(d){
+                { field: 'isShow', width: 135, title: '是否展示', align: 'center', templet:function(d){
                     return d.is_show==1?'是':'否'
                 }},
                 { field: 'status', width: 130, title: '状态', align: 'center',templet:function(d){

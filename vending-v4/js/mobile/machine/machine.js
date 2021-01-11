@@ -16,7 +16,8 @@ paySetFlag = false,//配置机器支付方式
 AisleDetailsFlag = false,//货道详情
 salesListFlag = false,//销售记录
 shipmentListFlag = false,//出货记录
-replenishmentFlag=false;//补货记录
+replenishmentFlag=false,//补货记录
+editWayFlag=false;
 function permissions(){
     permissionsFun('/role/findUserPermission', 'post', sessionStorage.token).then(res=>{
         res.data.forEach(item => {
@@ -41,17 +42,24 @@ function permissions(){
             if(item.id=='456'){
                 replenishmentFlag=true;
             }
+            if(item.id=='424'){
+                editWayFlag=true;
+            }
         });
-        activateFlag?$('.remoteOperation').show():$('.remoteOperation').hide();
-        AisleDetailsFlag?$('.aisleDetalis').show():$('.aisleDetalis').hide();
-        paySetFlag?$('.paySetBtn').show():$('.paySetBtn').hide();
-        shipmentListFlag?$('.shipmentRd').show():$('.shipmentRd').hide();
-        replenishmentFlag?$('.Rrecord').show():$('.Rrecord').hide();
+        permissions1()
     }).catch(err=>{
         console.log(err)
     })
 }
 permissions();
+function permissions1(){
+    activateFlag?$('.remoteOperation').show():$('.remoteOperation').hide();
+    AisleDetailsFlag?$('.aisleDetalis').show():$('.aisleDetalis').hide();
+    paySetFlag?$('.paySetBtn').show():$('.paySetBtn').hide();
+    shipmentListFlag?$('.shipmentRd').show():$('.shipmentRd').hide();
+    replenishmentFlag?$('.Rrecord').show():$('.Rrecord').hide();
+    editWayFlag?$('.editWayBtn').show():$('.editWayBtn').hide();
+}
 //条件筛选数据、事件
 var merchantIdStr=sessionStorage.machineID;
 var pageNum = 1,
@@ -513,7 +521,7 @@ $('.businessBtn').click(function(){
                 toastTitle(err.message,'error')
             })
         },function(){
-            console.log('取消后执行...');
+            // console.log('取消后执行...');
         });
 });
 // 激活操作
@@ -961,5 +969,36 @@ let dom='<ul class="sire">';
     //             toastTitle
     //         })
     // })
-// 引入底部导航栏
+// 引入底部导航栏;
+// 清除货道故障
+$('.clearingBtn').click(function(){
+    hui.confirm('清除货道故障?', ['取消','确定'], function(){
+        loadAjax('/machine/clearLockMachineWay','post',sessionStorage.token,JSON.stringify({machineId:machineListId})).then(res=>{
+        
+            toastTitle(res.message, 'success');
+        }).catch(err=>{
+            toastTitle(err.message, 'error')
+        })
+    })
+  
+});
+$('.undoAisleBtn').click(function(){
+    hui.confirm('清除货道故障?', ['取消','确定'], function(){
+        loadAjax('/machine/clearLockMachineWay','post',sessionStorage.token,JSON.stringify({machineId:machineListId})).then(res=>{
+            toastTitle(res.message, 'success');
+        }).catch(err=>{
+            toastTitle(err.message, 'error')
+        })
+    })
+});
+$('.undoAisleBtn').click(function(){
+    hui.confirm('确定撤货?', ['取消','确定'], function(){
+        loadAjax('/machine/removeGoodWay','post',sessionStorage.token,JSON.stringify({machineId:machineListId})).then(res=>{
+            toastTitle(res.message, 'success');
+        }).catch(err=>{
+            toastTitle(err.message, 'error')
+        })
+    })
+})
+hui.swipeDo();
 $('#footer').load('M_footerNav.html');
