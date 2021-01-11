@@ -101,6 +101,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         },
         done: function (res) {
             permissions();
+            fixedFun();
             if (res.code == 403) {
                 window.parent.location.href = "login.html";
             } else if (res.code == 405) {

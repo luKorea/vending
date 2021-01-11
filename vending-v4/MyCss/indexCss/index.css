@@ -345,7 +345,7 @@
 .layui-nav .header-message a{
 	padding: 0 20px;
 }
-.previewBody{
+.previewBody,.messageBody{
 	padding: 20px;
 }
 .downloadBtn{

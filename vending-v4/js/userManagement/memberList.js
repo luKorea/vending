@@ -53,6 +53,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       parseData: function (res) {
         // console.log(res)
         //res 即为原始返回的数据
+        fixedFun();
         if (res.code == 200) {
           return {
             "code": res.code, //解析接口状态
@@ -370,11 +371,22 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     }
   });
   $('.listInput input[name="userPwd"]').blur(function () {
-    passRegular(this, layer)
+    passRegular1(this, layer)
   });
   $('.listInput input[name="alonePwd"]').blur(function () {
-    passRegular(this, layer)
+    passRegular1(this, layer)
   })
+  function passRegular1(that, layer) {
+    var reg = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,.\/]).{6,64}$/;
+    var passwork = $(that).val();
+    if (passwork) {
+      if (!(reg.test(passwork))) {
+        layer.msg('密码必须包含英文和数字以及特殊字符且不少于6位数', { icon: 7 });
+        $(that).val('')
+        return false;
+      }
+    }
+  };
   // 监听终端权限
   //   form.on('checkbox(permissions)', function(data){
   //     console.log(data.elem.checked); //是否被选中，true或者false

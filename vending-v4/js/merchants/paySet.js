@@ -69,6 +69,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             },
             done: function (res) {
                 rank = res.data;
+                fixedFun();
                 if (res.code == 403) {
                     window.parent.location.href = "login.html";
                 }

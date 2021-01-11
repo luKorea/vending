@@ -617,3 +617,9 @@ function timeFlag(start,end){
   flagNum>=end1-start1?timeFlag3=false:timeFlag3=true;
   return timeFlag3
 }
+// table固定列对齐方法
+function fixedFun(){
+  $(".layui-table-main tr").each(function (index ,val) {
+    $($(".layui-table-fixed .layui-table-body tbody tr")[index]).height($(val).height());
+});
+}

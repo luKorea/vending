@@ -3,6 +3,7 @@ import { provinceChange, cityChange } from '../../assets/public/selectMore';
 // console.log()
 layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     var funNum = 1;
+    var goodKeyFlag=null;
     tooltip('.refreshBtnList', { transition: true, time: 200 });
     // console.log(provinceChange)
     // 收起
@@ -189,6 +190,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 } else if (res.code == 405) {
                     $('.hangContent').show();
                 }
+                fixedFun();
             }
         });
     // 查询
@@ -233,10 +235,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         switch (that.index()) {
             case 1:
                 getGoodsWay(machineSetData.machineId);
+                goodKeyFlag=1;
                 break;
             case 2:
                 salesFun(machineSetData.machineId);
-                goodKeyFlag=1;
+                
                 break;
             case 3:
                 recordFun(machineSetData.machineId);
@@ -258,6 +261,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 goodKeyFlag=2;
                 break;
         }
+        // if(that.index()==2){
+        //     alert
+            
+        // }else if(that.index()==8){
+        //    
+        // }
     });
     // 监听售货机列表操作
     var machineSetData = null
@@ -1415,8 +1424,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     }
 
     // 选择商品 
-    var goodKeyFlag=null;
+   
     table.on('row(goodsTable)', function (obj) {
+        console.log(goodKeyFlag)
         if(goodKeyFlag==1){
             $('.editAisle input[name="goodsName"]').val(obj.data.mail == 1 ? '(邮寄)' + obj.data.goods_Name : obj.data.goods_Name);
             $('.editAisle input[name="goodsName"]').attr('IVal', obj.data.goods_Id);
@@ -2518,9 +2528,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 { field: 'operation', fixed: 'right', right: 0, width: 150, title: '操作', toolbar: '#panelId', align: 'center' },
             ]]
             , id: 'panelID'
-            , page: true
+            // , page: true
             , loading: true
-            , limits: [ 10,20, 30,50, 100]
+            // , limits: [ 10,20, 30,50, 100]
             ,
             request: {
                 'pageName': 'pageNum',
