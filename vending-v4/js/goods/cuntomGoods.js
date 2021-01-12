@@ -110,7 +110,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     , page: true
     , loading: true,
     // ,method:'post'
-    // ,limits: [10,20,50]
+    limits: [100,50,20,10],
 
     request: {
       'pageName': 'pageNum',

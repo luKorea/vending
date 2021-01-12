@@ -2564,7 +2564,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 添加展板
     var panelIndex=null;
     $('.addpanelBtn').click(function(){
-        panelIndex=1
+        panelIndex=1;
+        $('.addPanelCont input[name="panelGoodsName"]').attr('IVal','');
+        $('.addPanelCont input[name="panelGoodsName"]').val('');
+        $('.addPanelCont input[name="panelGoodsNum"]').val('');
         popupShow('addPanelCont','addPanelBox');
     });
     // 展板选择商品

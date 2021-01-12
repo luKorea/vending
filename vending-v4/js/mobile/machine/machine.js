@@ -58,7 +58,7 @@ function permissions1(){
     paySetFlag?$('.paySetBtn').show():$('.paySetBtn').hide();
     shipmentListFlag?$('.shipmentRd').show():$('.shipmentRd').hide();
     replenishmentFlag?$('.Rrecord').show():$('.Rrecord').hide();
-    editWayFlag?$('.editWayBtn').show():$('.editWayBtn').hide();
+    // editWayFlag?$('.editWayBtn').show():$('.editWayBtn').hide();
 }
 //条件筛选数据、事件
 var merchantIdStr=sessionStorage.machineID;
@@ -973,8 +973,8 @@ let dom='<ul class="sire">';
 // 清除货道故障
 $('.clearingBtn').click(function(){
     hui.confirm('清除货道故障?', ['取消','确定'], function(){
-        loadAjax('/machine/clearLockMachineWay','post',sessionStorage.token,JSON.stringify({machineId:machineListId})).then(res=>{
-        
+        loadingWith('正在操作，请稍后');
+        loadAjax('/machine/clearLockMachineWay','post',sessionStorage.token,JSON.stringify({machineId:machineListId}),'mask').then(res=>{
             toastTitle(res.message, 'success');
         }).catch(err=>{
             toastTitle(err.message, 'error')
@@ -982,23 +982,84 @@ $('.clearingBtn').click(function(){
     })
   
 });
+// $('.undoAisleBtn').click(function(){
+//     hui.confirm('清除货道故障？', ['取消','确定'], function(){
+//         loadingWith('正在操作，请稍后');
+//         loadAjax('/machine/clearLockMachineWay','post',sessionStorage.token,JSON.stringify({machineId:machineListId})).then(res=>{
+//             toastTitle(res.message, 'success');
+//             closeWindow('.operationList','top0');
+//         }).catch(err=>{
+//             toastTitle(err.message, 'error')
+//         })
+//     })
+// });
 $('.undoAisleBtn').click(function(){
-    hui.confirm('清除货道故障?', ['取消','确定'], function(){
-        loadAjax('/machine/clearLockMachineWay','post',sessionStorage.token,JSON.stringify({machineId:machineListId})).then(res=>{
+    hui.confirm('确定撤货？', ['取消','确定'], function(){
+        loadingWith('正在操作，请稍后');
+        loadAjax('/machine/removeGoodWay','post',sessionStorage.token,JSON.stringify({machineId:machineListId}),'mask').then(res=>{
             toastTitle(res.message, 'success');
-        }).catch(err=>{
-            toastTitle(err.message, 'error')
-        })
-    })
-});
-$('.undoAisleBtn').click(function(){
-    hui.confirm('确定撤货?', ['取消','确定'], function(){
-        loadAjax('/machine/removeGoodWay','post',sessionStorage.token,JSON.stringify({machineId:machineListId})).then(res=>{
-            toastTitle(res.message, 'success');
+            closeWindow('.operationList','top0');
         }).catch(err=>{
             toastTitle(err.message, 'error')
         })
     })
 })
-hui.swipeDo();
+
+// 展板列表
+var panelArrVal=null;
+    function panelListFun(){
+        loadAjax('/machine/getDisplayGood','post',sessionStorage.token,JSON.stringify({machineId:machineListId})).then(res=>{
+            console.log(res);
+            panelArrVal=res.data;
+            panelaList(panelArrVal);
+        }).catch(err=>{
+            toastTitle(err.message, 'error');
+        })
+    };
+    $('.panelDetails').click(function(){
+        panelListFun();
+        showPopup('.panelContent', '.panelBox', 'top0'); 
+    })
+    function panelaList(list){
+        var pStr='';
+        list.forEach((item,index)=>{
+            pStr+=`  <div class="hui-swipe-do ">
+            <div class="hui-swipe-do-doms ">
+                <div class="hui-swipe-do-content panelList">
+                    <div class=" flex">
+                        <img src="${item.goods_images}" alt="">
+                        <div class="panelRight">
+                            <h4>${item.goods_Name}</h4>
+                            <p><span>数量:</span>${item.goodCount}</p>
+                            <p><span>原数量:</span>${item.oldGoodCount}</p>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="hui-swipe-do-btn delBtn" delIndex="${index}">移除</div>
+            </div>
+        </div>`
+        });
+        $('.panelDrawing').html(pStr);
+        hui.swipeDo();
+    };
+    $('.panelDrawing').on('click','.delBtn',function(){
+        var taht=this;
+        console.log($(this).attr('delIndex'));
+        console.log(panelArrVal[$(this).attr('delIndex')])
+        // return ;
+        hui.confirm('确定移除？', ['取消','确定'], function(){
+            loadingWith('正在操作，请稍后');
+            var panelDelObj=JSON.stringify({
+                machineId:machineListId,
+                goodId:panelArrVal[$(taht).attr('delIndex')].goods_Id
+            })
+            loadAjax('/machine/removeDisplayGoodCount','post',sessionStorage.token,panelDelObj,'mask').then(res=>{
+                toastTitle(res.message, 'success');
+                panelListFun();
+            }).catch(err=>{
+                toastTitle(err.message, 'error');
+            })
+        })
+    })
 $('#footer').load('M_footerNav.html');

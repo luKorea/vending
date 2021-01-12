@@ -726,14 +726,15 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             $('.activityMachine .playHeader span').html(obj.data.activity_name + '活动商品')
             popupShow('chooseGoods', 'chooseGoodsBox')
         } else if (obj.event == 'pickup') {
-            // console.log(1)   
-            if (!pickupCodeIn) {
-                pickupCodeFun()
-            }else{
-                pickupCodeIn.reload({
-                    id: obj.data.id
-                });
-            }
+
+            console.log(obj.data.id)   
+            // if (!pickupCodeIn) {
+                pickupCodeFun(obj.data.id)
+            // }else{
+            //     pickupCodeIn.reload({
+            //         id: obj.data.id
+            //     });
+            // }
            
             $('.pickCode .playHeader span').html(obj.data.activity_name + '取货码列表')
             popupShow('pickCode', 'pickCodeBox')
@@ -758,7 +759,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
     }
     // 取货码列表
     var pickupCodeIn = null;
-    function pickupCodeFun() {
+    function pickupCodeFun(id) {
         pickupCodeIn = table.render({
             elem: '#pickCodeIn',
             method: 'get',
@@ -779,7 +780,17 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                     }
                 },
                 {
-                    field: 'ship_statusStr', width: 250, title: '出货情况', align: 'center', 
+                    field: 'excelShipInfos', width: 250, title: '出货情况', align: 'center', templet:function(d){
+                        if(d.excelShipInfos.length==0){
+                            return '-'
+                        }else{
+                            var exStr='';
+                            d.excelShipInfos.forEach(item=>{
+                                exStr+=`<div>${item.goods_Name}(${item.ship_statusStr})</div><div></div>`
+                            });
+                            return exStr
+                        }
+                    }
                 },
                 {
                     field: 'operate_time', width: 175, title: '使用时间', align: 'center', templet: function (d) {
@@ -807,7 +818,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                 'limitName': 'pageSize'
             },
             where:{
-                id:pickupObj.id
+                id,
             },
             parseData: function (res) {
                 // console.log(res)

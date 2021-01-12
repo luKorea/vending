@@ -252,24 +252,24 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     });
   };
 
-  $('body').on('click', '.activityList1 span', function () {
-    $('.allmachine').removeClass('active')
-    $(this).addClass('active').siblings().removeClass('active');
-    // machineCode = $(this).attr('machineID');
-    orderTable.reload({
-      where: {
-        activity_id: $(this).attr('activityid')
-      }
-    })
-  });
-  $('.allmachine').click(function () {
-    $(this).addClass('active');
-    $('.machineList span').removeClass('active');
-    machineCode = '';
-    orderTable.reload({
-      where: {
-        activity_id: null
-      }
-    })
-  })
+//   $('body').on('click', '.activityList1 span', function () {
+//     $('.allmachine').removeClass('active')
+//     $(this).addClass('active').siblings().removeClass('active');
+//     // machineCode = $(this).attr('machineID');
+//     orderTable.reload({
+//       where: {
+//         activity_id: $(this).attr('activityid')
+//       }
+//     })
+//   });
+//   $('.allmachine').click(function () {
+//     $(this).addClass('active');
+//     $('.machineList span').removeClass('active');
+//     machineCode = '';
+//     orderTable.reload({
+//       where: {
+//         activity_id: null
+//       }
+//     })
+//   })
 })

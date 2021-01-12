@@ -88,7 +88,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 			i.index = ++d.index, i.config = t.extend({}, i.config, d.config, e), i.render()
 		};
 	F.prototype.config = {
-			limit: 10,
+			limit: 100,
 			loading: !0,
 			cellMinWidth: 60,
 			defaultToolbar: ["filter", "exports", "print"],
@@ -360,7 +360,8 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 				elem: "layui-table-page" + s.index,
 				count: o,
 				limit: s.limit,
-				limits: s.limits || [10, 20, 30, 40, 50, 60, 70, 80, 90],
+				// limits: s.limits || [ 20, 30, 40, 50, 60, 70, 80, 90],
+				limits: [ 100,50,20,10],
 				groups: 3,
 				layout: ["prev", "page", "next", "skip", "count", "limit"],
 				prev: '<i class="layui-icon">&#xe603;</i>',
