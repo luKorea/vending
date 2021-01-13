@@ -849,3 +849,6 @@ input:hover{
 .addPanelBody{
     padding: 15px;
 }
+.redF10{
+    background-color: #ff1100 !important;
+}
