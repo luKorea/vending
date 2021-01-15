@@ -1077,15 +1077,18 @@
                 </span>
                 数据处理中，请稍候
             </div>
-        </div>
+		</div>
+		<img src="" id="pic101" alt="">
 	</div>
 </body>
 
 <script type="text/html" id="barDemo">
 		<div class="layui-btn-container">
-			<button class="layui-btn layui-btn-sm btn operation" lay-event="add">
-				<span>操作</span>
-				<i class="layui-icon layui-icon-down" style="font-size:12px !important;"></i>
+			<button class="layui-btn layui-btn-sm btn operation" lay-event="edit">
+				<span>编辑</span>
+			</button>
+			<button class="layui-btn layui-btn-sm btn operation" lay-event="preview1">
+				<span>预览</span>
 			</button>
 			<button class="layui-btn layui-btn-sm btn del-btn hide" lay-event="delete">删除</button>
 			<div class="anUp">
@@ -1116,13 +1119,13 @@
 		</div>
 	</script>
 <script type="text/html" id="imgtmp">
-        <div><img src="{{d.goods_images}}  " style="width: 40px; height: 40px;"></div>
+        <div><img src="{{d.goods_images}}" class="pic102" style="width: 40px; height: 40px;"></div>
 </script>
 <script type="text/html" id="Listimgtmp">
-	<div><img src="{{d.goods_images}}  " style="width: 40px; height: 40px;"></div>
+	<div><img src="{{d.goods_images}}" class="pic102" style="width: 40px; height: 40px;"></div>
 </script>
 <script type="text/html" id="materiaImgtmp">
-	<div><img src="{{d.img}}  " style="width: 40px;"></div>
+	<div><img src="{{d.img}}" class="pic102" style="width: 40px;"></div>
 </script>
 <!-- <script src="../../js/public/wangEditor.min.js"></script> -->
 <script src="../assets/public/wangEditor.min.js"></script>

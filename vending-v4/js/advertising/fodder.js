@@ -889,8 +889,16 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         }
 
     })
-    $('body').on('error', 'img', function () {
-        console.log(1999)
-        $(this).prop("src", '../../img/failure.png');
+
+    // 图片放大事件
+    $('.data-list').on('mouseenter','.pic102',function(e){
+        $('#pic101').attr('src',$(this).attr('src'));
+        $("#pic101").css({
+            "top":(e.pageY-100)+"px",
+            "left":(e.pageX+20)+"px"
+        }).fadeIn("fast");
+    });
+    $('.data-list').on('mouseleave','.pic102',function(){
+        $('#pic101').hide();
     })
 });

@@ -238,12 +238,12 @@
     width: 100%;
     text-align: center;
 }
-.chooseCan,.cancelBtn{
+.chooseCan,.cancelBtn,.passCancelBtn{
     color: #606266;
     background: #fff !important;
     border: 1px solid #dcdfe6 !important;
 }
-.chooseCan:hover,.cancelBtn:hover{
+.chooseCan:hover,.cancelBtn:hover,.passCancelBtn:hover{
     color: #be954a;
     border: 1px solid #be954a !important;;
 }
@@ -256,4 +256,19 @@
     text-align: center;
     color: red;
     margin-bottom: 15px;
+}
+.passwordCont{
+    width: 600px;
+    position: relative;
+    margin: 10vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.passBody{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
 }

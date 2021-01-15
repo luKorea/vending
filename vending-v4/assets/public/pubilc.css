@@ -196,7 +196,7 @@ body .layui-form-checked[lay-skin=primary] i{
     top: 0;
     bottom: 0;
     width: 100%;
-    z-index: 999;
+    z-index: 199;
     background: rgba(0, 0, 0, 0.3);
     display: none;
     overflow-y: auto;
@@ -595,4 +595,18 @@ input:hover{
     text-overflow:inherit !important;
     white-space:normal !important;
     word-break: break-all !important;
+}
+#pic101{
+    position: absolute;
+    /* top: -50px;
+    left: 50px; */
+    width: 550px;
+    border-radius: 5px;
+    -webkit-box-shadow: 5px 5px 5px 5px hsla(0,0%,5%,1.00);
+    box-shadow: 5px 5px 5px 0px hsla(0,0%,5%,0.3);
+    z-index: 999;
+    display: none;
+}
+.pic102{
+    cursor: pointer;
 }

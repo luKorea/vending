@@ -974,5 +974,17 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             }
           }
           xhr.send();
-    })
+    });
+
+        // 图片放大事件
+        $('body').on('mouseenter','.pic102',function(e){
+            $('#pic101').attr('src',$(this).attr('src'));
+            $("#pic101").css({
+                "top":(e.pageY-100)+"px",
+                "left":(e.pageX+20)+"px"
+            }).fadeIn("fast");
+        });
+        $('body').on('mouseleave','.pic102',function(){
+            $('#pic101').hide();
+        })
 })

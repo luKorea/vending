@@ -1195,5 +1195,17 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         } else {
             layer.msg('已刷新', { icon: 1 })
         }
+    });
+       // 图片放大事件
+       $('.pubilshMaterialCont').on('mouseenter','.pic102',function(e){
+           console.log(1)
+        $('#pic101').attr('src',$(this).attr('src'));
+        $("#pic101").css({
+            "top":(e.pageY-100)+"px",
+            "left":(e.pageX+20)+"px"
+        }).fadeIn("fast");
+    });
+    $('.pubilshMaterialCont').on('mouseleave','.pic102',function(){
+        $('#pic101').hide();
     })
 });

@@ -103,14 +103,14 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         }
       },
 
-      { field: 'operation', align: 'center', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
+      { field: 'operation', fixed: 'right', align: 'center', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
       // { fixed: 'right', width: 160, align: 'center', toolbar: '#barDemo' }
     ]]
     , id: 'tableId'
     , page: true
     , loading: true,
     // ,method:'post'
-    limits: [100,50,20,10],
+    limits: [100, 50, 20, 10],
 
     request: {
       'pageName': 'pageNum',
@@ -208,35 +208,37 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   var EditIndex = null;
   table.on('tool(test)', function (obj) {
     // 操作事件
-    if (obj.event === 'add') {
+    
+    if (obj.event === 'edit') {
       singleData = obj.data;
-      console.log(singleData)
       $('.anUp').slideUp();
-      if (indexFlag != singleData.goods_Id) {
-        indexFlag = singleData.goods_Id
-        $(this).siblings('.anUp').slideDown()
-      } else {
-        indexFlag = null;
-      }
-      // 点击优惠事件
-      $('.preferentialClick').click(function () {
-        $('.anUp').slideUp();
-        $('.preferential').fadeIn();
-        $('input[name="GoodsName"]').val(singleData.goods_Name);
-        $('input[name="goods_Price"]').val(singleData.goods_Price);
-        $('input[name="vip_Price"]').val(singleData.vipPrice);
-        $('input[name="integral"]').val(singleData.integral);
-      })
+      // $('.editor').fadeIn();
+      popupShow('editor', 'editor-content');
+      $('.editor').scrollTop(0)
+      form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+        "goodsBarcode": singleData.goods_Core // "商品条码
+        , "goodsName": singleData.goods_Name //商品名
+        , "goodsType": singleData.classify_Id //商品类型
+        // , "goodsBrand": singleData.brand  //品牌
+        , "goodsPrice": singleData.goods_Price //零售价
+        , "goodsCost": singleData.goods_Cost //成本价
+        , "goodsParam": singleData.goods_Param //规格描述
+        , 'goodsStatus': singleData.goods_Status //商品状态
+      });
+      console.log(singleData.goods_images)
+      singleData.mail == 1 ? $('.editor input[name="editmail"]').prop('checked', true) : $('.editor input[name="editmail"]').prop('checked', false)
+      $('#editImg').attr("src", singleData.goods_images)
+      var singGoodsDateils = singleData.goods_Descript.replace(/video/g, 'iframe')
+      editWangEditor.txt.html(singGoodsDateils);
+      form.render();// 重新渲染一下
 
     } else if (obj.event === 'delete') {
       layer.confirm('确定删除？', function (index) {
-
-        // obj.del();
-        // layer.close(index);
         Goodsdel(obj.data.goods_Id, 1, obj, index);
       });
-    } else {
-      console.log(obj)
+    } else if (obj.event == 'preview1') {
+      popupShow('reading', 'margin0');
+      $('.reading-box').html(obj.data.goods_Descript)
     }
   });
 
@@ -249,45 +251,45 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     popupShow('GoodsMaterial', 'goodsMaterialBox');
   });
   // 点击商品信息事件
-  $('body').on('click', '.GoodsInformation', function () {
-    indexFlag = null;
-    $('.anUp').slideUp();
-    // $('.editor').fadeIn();
-    popupShow('editor', 'editor-content');
-    $('.editor').scrollTop(0)
-    form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
-      "goodsBarcode": singleData.goods_Core // "商品条码
-      , "goodsName": singleData.goods_Name //商品名
-      , "goodsType": singleData.classify_Id //商品类型
-      // , "goodsBrand": singleData.brand  //品牌
-      , "goodsPrice": singleData.goods_Price //零售价
-      , "goodsCost": singleData.goods_Cost //成本价
-      , "goodsParam": singleData.goods_Param //规格描述
-      , 'goodsStatus': singleData.goods_Status //商品状态
-    });
-    console.log(singleData.goods_images)
-    singleData.mail == 1 ? $('.editor input[name="editmail"]').prop('checked', true) : $('.editor input[name="editmail"]').prop('checked', false)
-    $('#editImg').attr("src", singleData.goods_images)
-    var singGoodsDateils = singleData.goods_Descript.replace(/video/g, 'iframe')
-    editWangEditor.txt.html(singGoodsDateils);
-    form.render();// 重新渲染一下
-  });
+  // $('body').on('click', '.GoodsInformation', function () {
+  //   indexFlag = null;
+  //   $('.anUp').slideUp();
+  //   // $('.editor').fadeIn();
+  //   popupShow('editor', 'editor-content');
+  //   $('.editor').scrollTop(0)
+  //   form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+  //     "goodsBarcode": singleData.goods_Core // "商品条码
+  //     , "goodsName": singleData.goods_Name //商品名
+  //     , "goodsType": singleData.classify_Id //商品类型
+  //     // , "goodsBrand": singleData.brand  //品牌
+  //     , "goodsPrice": singleData.goods_Price //零售价
+  //     , "goodsCost": singleData.goods_Cost //成本价
+  //     , "goodsParam": singleData.goods_Param //规格描述
+  //     , 'goodsStatus': singleData.goods_Status //商品状态
+  //   });
+  //   console.log(singleData.goods_images)
+  //   singleData.mail == 1 ? $('.editor input[name="editmail"]').prop('checked', true) : $('.editor input[name="editmail"]').prop('checked', false)
+  //   $('#editImg').attr("src", singleData.goods_images)
+  //   var singGoodsDateils = singleData.goods_Descript.replace(/video/g, 'iframe')
+  //   editWangEditor.txt.html(singGoodsDateils);
+  //   form.render();// 重新渲染一下
+  // });
 
   // 点击预览事件
-  $('body').on('click', '.anUp .previewDetails', function () {
-    indexFlag = null;
-    $('.anUp').slideUp();
-    popupShow('reading','margin0');
+  // $('body').on('click', '.anUp .previewDetails', function () {
+  //   indexFlag = null;
+  //   $('.anUp').slideUp();
+  //   popupShow('reading', 'margin0');
 
-    // $('.Goods-wrap').addClass('fixed');
-    // $('.reading').fadeIn();
-    // $('.reading-header').css({
-    //   'left': $('.reading-contnet').offset().left + 'px',
-    //   'top': $('.reading-contnet').offset().top + 'px',
-    // });
-    $('.reading-box').html(singleData.goods_Descript)
-    // console.log(singleData.goods_Descript)
-  })
+  //   // $('.Goods-wrap').addClass('fixed');
+  //   // $('.reading').fadeIn();
+  //   // $('.reading-header').css({
+  //   //   'left': $('.reading-contnet').offset().left + 'px',
+  //   //   'top': $('.reading-contnet').offset().top + 'px',
+  //   // });
+  //   $('.reading-box').html(singleData.goods_Descript)
+  //   // console.log(singleData.goods_Descript)
+  // })
   // wangEditor 富文本编辑器创建
   var editWangEditor = new E('#editWangEditor')
   editWangEditor.customConfig.uploadImgHooks = {
@@ -301,10 +303,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     indexFlag = null;
     var EditValData = form.val("EditValData");
     console.log(EditValData)
-    if (EditValData.goodsParam && EditValData.goodsBarcode && EditValData.goodsName && EditValData.goodsType && EditValData.goodsPrice ) {
-      if(!(EditValData.goodsPrice>0)){
-        layer.msg('同一销售价必须大于0',{icon:7});
-        return ;
+    if (EditValData.goodsParam && EditValData.goodsBarcode && EditValData.goodsName && EditValData.goodsType && EditValData.goodsPrice) {
+      if (!(EditValData.goodsPrice > 0)) {
+        layer.msg('同一销售价必须大于0', { icon: 7 });
+        return;
       }
       var editGoodsDateils = editWangEditor.txt.html().replace(/iframe/g, 'video  controls="false"')
       var editGoodsObj = JSON.stringify({
@@ -314,7 +316,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         classify_Id: EditValData.goodsType,     //商品类型
         brand: EditValData.goodsBrand,        //品牌
         goods_Price: EditValData.goodsPrice,  //零售价
-        goods_Cost: EditValData.goodsCost?EditValData.goodsCost:0,    //成本价
+        goods_Cost: EditValData.goodsCost ? EditValData.goodsCost : 0,    //成本价
         goods_Param: EditValData.goodsParam,  //规格
         goods_Status: EditValData.goodsStatus, //状态
         goods_Images: $('#editImg').attr("src"), //商品图片 不在form里
@@ -450,11 +452,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     console.log($('.addGoods input[name="mail"]'));
     console.log($('.addGoods input[name="mail"]').prop('checked'));
     // &&addValData.goodsBrand
-    if (addValData.goodsParam && addValData.goodsBarcode && addValData.goodsName && addValData.goodsType && addValData.goodsPrice ) {
+    if (addValData.goodsParam && addValData.goodsBarcode && addValData.goodsName && addValData.goodsType && addValData.goodsPrice) {
       if (addGoodsImg) {
-        if(!(addValData.goodsPrice>0)){
-          layer.msg('同一销售价必须大于0',{icon:7});
-          return ;
+        if (!(addValData.goodsPrice > 0)) {
+          layer.msg('同一销售价必须大于0', { icon: 7 });
+          return;
         }
         var addGoodsDateails = addWangEditor.txt.html().replace(/iframe/g, 'video controls="false"');
         var addGoodsObj = JSON.stringify({
@@ -463,7 +465,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           classify_Id: addValData.goodsType,     //商品类型
           brand: addValData.goodsBrand,        //品牌
           goods_Price: addValData.goodsPrice,  //零售价
-          goods_Cost: addValData.goodsCost?addValData.goodsCost:0,    //成本价
+          goods_Cost: addValData.goodsCost ? addValData.goodsCost : 0,    //成本价
           goods_Param: addValData.goodsParam,  //规格
           goods_Status: addValData.goodsStatus, //状态
           goods_Images: addGoodsImg, //商品图片 不在form里
@@ -516,7 +518,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     //   'left': $('.reading-contnet').offset().left + 'px',
     //   'top': $('.reading-contnet').offset().top + 'px',
     // })
-    popupShow('reading','margin0');
+    popupShow('reading', 'margin0');
     if ($(this).attr('id') == 'add') {
       $('.reading').fadeIn();
       // $('.reading .reading-header h1').html('详情页预览')
@@ -785,11 +787,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     }
   })
   //树状图
-  var materialId=sessionStorage.machineID;
+  var materialId = sessionStorage.machineID;
   var dataList1 = null;
   var dataList = dataList1 = treeList();
   // var dataList1 = treeList();
-  console.log(dataList)
+  // console.log(dataList)
   treeFun1(tree, 'testGoods', tableIns, dataList, 'condition', 'goodsClass', selectData)
   function treeFun1(tree, element, tableID, data, key, goodsCLass, selectData,) {
     tree.render({
@@ -805,14 +807,14 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         none: '您没有权限，请联系管理员授权!'
       },
       click: function (obj) {
-        if(addFlag){
-          if(obj.data.id==sessionStorage.machineID){
+        if (addFlag) {
+          if (obj.data.id == sessionStorage.machineID) {
             $('.add-btn').show()
-          }else{
+          } else {
             $('.add-btn').hide()
           }
         }
-        materialId=obj.data.id + '';
+        materialId = obj.data.id + '';
         if (goodsCLass) {
           selectData(obj.data.id + '');
         }
@@ -829,7 +831,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
           else
             nodes[i].style.color = "#555";
         }
-  
+
       },
     });
   }
@@ -1005,9 +1007,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     })
     loadingAjax('/goods/sendGoods', 'post', pushData, token, 'mask', 'chooseLower', 'chooseBox', layer).then((res) => {
       console.log(res);
-      if(parentGoods){
+      if (parentGoods) {
         parentGoods.reload({
-          where:{}
+          where: {}
         })
       }
       popupHide('PushMandatory', 'MandatoryBox')
@@ -1120,7 +1122,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     fourFlag ? $('.pushGoodsBtn').removeClass('hide') : $('.pushGoodsBtn').addClass('hide');
     fiveFlag ? $('.pushListBtn').removeClass('hide') : $('.pushListBtn').addClass('hide');
     sixFlag ? $('.syncBtn').removeClass('hide') : $('.syncBtn').addClass('hide');
-    console.log(sixFlag)
+    // console.log(sixFlag)
   };
 
   // 同步价格部分
@@ -1170,7 +1172,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             return d.mail == 0 ? '否' : '是'
           }
         },
-      
+
       ]]
       , id: 'goodsTableS'
       , page: true
@@ -1219,10 +1221,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     });
   };
   // 查询同步价格商品
-  $('.synchronousGoodsQuery').click(function(){
+  $('.synchronousGoodsQuery').click(function () {
     synchronousGoodsTable.reload({
-      where:{
-        conditionTwo:$('.synchronousGoodsName').val()
+      where: {
+        conditionTwo: $('.synchronousGoodsName').val()
       }
     })
   })
@@ -1297,10 +1299,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       }
     });
   }
-  $('.synchronousMachineQuery').click(function(){
+  $('.synchronousMachineQuery').click(function () {
     machineTableS.reload({
-      where:{
-        keyword:$('.synchronousMachineName').val()
+      where: {
+        keyword: $('.synchronousMachineName').val()
       }
     })
   })
@@ -1348,11 +1350,23 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         });
         popupHide('synchronousCont', 'synchronousBox');
       }).catch(err => {
-        layer.msg(err.message,{icon:2})
+        layer.msg(err.message, { icon: 2 })
         console.log(err)
       })
-      
+
     });
 
-  })
+  });
+  // 图片放大事件
+  $('body').on('mouseenter','.pic102',function(e){
+    console.log(1)
+    $('#pic101').attr('src',$(this).attr('src'));
+    $("#pic101").css({
+        "top":(e.pageY-100)+"px",
+        "left":(e.pageX+20)+"px"
+    }).fadeIn("fast");
+});
+$('body').on('mouseleave','.pic102',function(){
+    $('#pic101').hide();
+})
 });

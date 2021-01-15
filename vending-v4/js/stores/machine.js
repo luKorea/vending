@@ -59,21 +59,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     field: 'iot_card', width: 160, title: '物联网卡号', align: 'center'
                 },
                 {
-                    field: 'trafficInfo', width: 160, title: '离线时长', align: 'center',templet:function(d){
-                        if(d.onlineStatus!=0){
-                            return '0天0小时0分'
-                        }else{
-                            
-                            var nData=new Date().getTime(),
-                            cDate =nData-d.offline_time,
-                            day=Math.floor(cDate/86400000),
-                            hour=Math.floor((cDate-86400000*day)/3600000),
-                            miute=Math.floor((cDate-86400000*day-3600000*hour)/60000);
-                            return d.offline_time? day+'天'+hour+'小时'+miute+'分钟':'-'
-                        }
-                    }
-                },
-                {
                     field: 'warning', width: 130, title: '缺货情况', align: 'center',templet:function(d){
                         if(d.storage_warning[0].warning){
                             return` <div>
@@ -99,6 +84,21 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 {
                     field: 'onlineStatus', width: 130, title: '在线状态', align: 'center', templet: function (d) {
                         return `<div><span class="${d.onlineStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.onlineStatus == 0 ? '离线' : '在线'}</span></div>`
+                    }
+                },
+                {
+                    field: 'trafficInfo', width: 160, title: '离线时长', align: 'center',templet:function(d){
+                        if(d.onlineStatus!=0){
+                            return '0天0小时0分'
+                        }else{
+                            
+                            var nData=new Date().getTime(),
+                            cDate =nData-d.offline_time,
+                            day=Math.floor(cDate/86400000),
+                            hour=Math.floor((cDate-86400000*day)/3600000),
+                            miute=Math.floor((cDate-86400000*day-3600000*hour)/60000);
+                            return d.offline_time? day+'天'+hour+'小时'+miute+'分钟':'-'
+                        }
                     }
                 },
                 {
