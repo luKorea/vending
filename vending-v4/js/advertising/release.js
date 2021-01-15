@@ -1198,12 +1198,22 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
        // 图片放大事件
        $('.pubilshMaterialCont').on('mouseenter','.pic102',function(e){
-           console.log(1)
-        $('#pic101').attr('src',$(this).attr('src'));
-        $("#pic101").css({
-            "top":(e.pageY-100)+"px",
-            "left":(e.pageX+20)+"px"
-        }).fadeIn("fast");
+        var that = this; 
+        console.log(e.pageX)
+        $('#pic101').attr('src',$(that).attr('src'));
+        var img = new Image();
+        img.onload = function () {
+            console.log(this.width);
+            console.log(this.height);
+            
+            $("#pic101").css({
+                "width":this.width>this.height?500+'px':'auto',
+                "height":this.height>this.width?500+'px':'auto'
+            }).fadeIn("fast");
+            this.onload = null;
+           
+        };
+        img.src = $(that).attr('src');
     });
     $('.pubilshMaterialCont').on('mouseleave','.pic102',function(){
         $('#pic101').hide();

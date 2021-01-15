@@ -1358,15 +1358,41 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
 
   });
   // 图片放大事件
+  var PImgSHow=true;
   $('body').on('mouseenter','.pic102',function(e){
-    console.log(1)
-    $('#pic101').attr('src',$(this).attr('src'));
-    $("#pic101").css({
-        "top":(e.pageY-100)+"px",
-        "left":(e.pageX+20)+"px"
-    }).fadeIn("fast");
+    var that = this;
+    $('#pic101').attr('src',$(that).attr('src'));
+        var img = new Image();
+        img.onload = function () {
+            console.log(this.width);
+            console.log(this.height);
+            
+            $("#pic101").css({
+                "width":this.width>=this.height?350+'px':'auto',
+                "height":this.height>this.width?450+'px':'auto'
+            }).fadeIn("fast");
+            this.onload = null;
+           
+        };
+        img.src = $(that).attr('src');
 });
+$('body').on('click','.pic102',function(){
+  event.stopPropagation();
+  PImgSHow=false;
+}); 
 $('body').on('mouseleave','.pic102',function(){
     $('#pic101').hide();
+});
+$('.data-list').on('mouseleave', '.pic102', function () {
+  if(PImgSHow){
+      $('#pic101').hide();
+  }
+});
+$('#pic101').click(function(){
+  event.stopPropagation();
+});
+$('body').click(function(){
+  PImgSHow=true;
+  $('#pic101').hide();
 })
 });

@@ -1369,9 +1369,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         if (sessionStorage.independentPass) {
             aisleEdit();
             popupShow('editAisle', 'editAisleBox');
-
         } else {
-            popupShow('iPasswprd', 'passwordCont')
+            popupShow('iPasswprd', 'passwordCont');
         }
 
     })

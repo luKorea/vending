@@ -9,8 +9,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         tree = layui.tree;
     //开始时间
     var startTime = getKeyTime().startTime,
-    //结束时间
-     endTime = getKeyTime().endTime;
+        //结束时间
+        endTime = getKeyTime().endTime;
     laydate.render({
         elem: '#test6',
         range: true,
@@ -76,7 +76,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         where: {
             'merchantId': Number(sessionStorage.machineID),
             startTime: startTime,//开始时间
-                endTime: endTime//结束时间
+            endTime: endTime//结束时间
             // merchantId: sessionStorage.machineID
         },
         parseData: function (res) {
@@ -400,10 +400,10 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     // 编辑确定修改
     $('.editConfirmBtn').click(function () {
         var editValDataConfirm = form.val("editValData");
-       
-        if(!editValDataConfirm.materialName){
-            layer.msg('素材名不能空',{icon:7});
-            return ;
+
+        if (!editValDataConfirm.materialName) {
+            layer.msg('素材名不能空', { icon: 7 });
+            return;
         }
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
@@ -716,12 +716,12 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                                 $('.mask').fadeOut();
                                 $('.maskSpan').removeClass('maskIcon')
                                 layer.msg('上传图片失败', { icon });
-                                return false ;
+                                return false;
                             }
                         })
                     };
                     // 提交
-                    var addFooderObj=JSON.stringify({
+                    var addFooderObj = JSON.stringify({
                         advertisingAttribute: addList.materiaAttribute,//属性
                         advertisingStatus: addList.materiaStatus,//是否启用
                         advertisingType: addList.materiaType,//横竖屏
@@ -731,7 +731,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         size: ImgVideoSize.slice(0, 4),//大小
                         merchantId: sessionStorage.machineID
                     })
-                    loadingAjax('/advertising/saveAdvertising','post',addFooderObj,sessionStorage.token,'mask','uploadMaterialCont','uploadMateriaBox',layer).then(res=>{
+                    loadingAjax('/advertising/saveAdvertising', 'post', addFooderObj, sessionStorage.token, 'mask', 'uploadMaterialCont', 'uploadMateriaBox', layer).then(res => {
                         tableIns.reload({
                             where: {
                             }
@@ -750,7 +750,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         $('.uploadMaterialCont .VideoBtn').hide();
                         imgVideoHttp = null;
                         ImgFile = null;
-                    }).catch(err=>{
+                    }).catch(err => {
                         layer.msg(err.message, { icon: 2 })
                     })
                 }, 300)
@@ -891,14 +891,39 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     })
 
     // 图片放大事件
-    $('.data-list').on('mouseenter','.pic102',function(e){
-        $('#pic101').attr('src',$(this).attr('src'));
-        $("#pic101").css({
-            "top":(e.pageY-100)+"px",
-            "left":(e.pageX+20)+"px"
-        }).fadeIn("fast");
+    var PImgSHow=true;
+    $('.data-list').on('mouseenter', '.pic102', function (e) {
+        var that = this; 
+        console.log(e.pageX)
+        $('#pic101').attr('src',$(that).attr('src'));
+        var img = new Image();
+        img.onload = function () {
+            console.log(this.width);
+            console.log(this.height);
+            
+            $("#pic101").css({
+                "width":this.width>=this.height?350+'px':'auto',
+                "height":this.height>this.width?350+'px':'auto'
+            }).fadeIn("fast");
+            this.onload = null;
+           
+        };
+        img.src = $(that).attr('src');
     });
-    $('.data-list').on('mouseleave','.pic102',function(){
+    $('.data-list').on('click','.pic102',function(){
+        event.stopPropagation();
+        PImgSHow=false;
+    }); 
+    $('.data-list').on('mouseleave', '.pic102', function () {
+        if(PImgSHow){
+            $('#pic101').hide();
+        }
+    });
+    $('#pic101').click(function(){
+        event.stopPropagation();
+    });
+    $('body').click(function(){
+        PImgSHow=true;
         $('#pic101').hide();
     })
 });
