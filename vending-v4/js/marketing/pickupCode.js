@@ -927,7 +927,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             console.log(machineListArr)
             transferFun(machineListArr, chooseMachine);
         }).catch(err => {
-            layer.msg('获取售货机失败', { icon: 2 })
+            layer.msg(err.message, { icon: 2 });
         })
     };
     var abcd = JSON.stringify({
@@ -976,15 +976,36 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
           xhr.send();
     });
 
-        // 图片放大事件
-        $('body').on('mouseenter','.pic102',function(e){
-            $('#pic101').attr('src',$(this).attr('src'));
-            $("#pic101").css({
-                "top":(e.pageY-100)+"px",
-                "left":(e.pageX+20)+"px"
-            }).fadeIn("fast");
-        });
-        $('body').on('mouseleave','.pic102',function(){
-            $('#pic101').hide();
-        })
+      // 图片放大事件
+  var PImgSHow = true;
+  $('.data-list-contnet').on('mouseenter', '.pic102', function (e) {
+    var that = this;
+    $('#pic101').attr('src', $(that).attr('src'));
+    var img = new Image();
+    img.onload = function () {
+      $("#pic101").css({
+        "width": this.width >= this.height ? 350 + 'px' : 'auto',
+        "height": this.height > this.width ? 450 + 'px' : 'auto'
+      }).fadeIn("fast");
+      this.onload = null;
+
+    };
+    img.src = $(that).attr('src');
+  });
+  $('.data-list-contnet').on('click', '.pic102', function () {
+    event.stopPropagation();
+    PImgSHow = false;
+  });
+  $('.data-list-contnet').on('mouseleave', '.pic102', function () {
+    if (PImgSHow) {
+      $('#pic101').hide();
+    }
+  });
+  $('#pic101').click(function () {
+    event.stopPropagation();
+  });
+  $('body').click(function () {
+    PImgSHow = true;
+    $('#pic101').hide();
+  })
 })

@@ -4,15 +4,15 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadAjax; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return prompt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return numFormat1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadAjax; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return prompt; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return numFormat1; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getQueryString; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return timeStamp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return timeStamp; });
 /* unused harmony export keyText */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return decrypt1; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadAjax1; });
-/* unused harmony export keepPass */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loadAjax1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return keepPass; });
 // import 'babel-polyfill';
 // 请求方法
 function ajaxFun(url, type, data) {

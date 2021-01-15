@@ -1056,7 +1056,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         invoicePushBtnFlag=false,//导出补货单
         panelFlag=false,
         undoListFlag=false,//撤货列表
-        undoPushFlag=false;//导出撤货
+        undoPushFlag=false,//导出撤货
+        machinePushFalg=false;//导出售货机
     function permissions() {
         permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
             res.data.forEach(item => {
@@ -1117,6 +1118,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if(item.id=='474'){
                     undoPushFlag=true
                 }
+                if(item.id=='475'){
+                    machinePushFalg=true
+                }
                 // if(item.id=='461'){
                 //     editPriceFlag=true
                 // }
@@ -1146,6 +1150,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         panelFlag?$('.panelFlagClass').removeClass('hide') : $('.panelFlagClass').addClass('hide');
         undoListFlag?$('.undoRecord').removeClass('hide') : $('.undoRecord').addClass('hide');
         undoPushFlag?$('.undoPushBtn').removeClass('hide') : $('.undoPushBtn').addClass('hide');
+        machinePushFalg?$('.pushMachineBtn').removeClass('hide') : $('.pushMachineBtn').addClass('hide');
     }
     // 关闭弹窗
     $('.playHeader .close').click(function () {
@@ -2499,7 +2504,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.mask').fadeOut();
         $('.maskSpan').removeClass('maskIcon');
         var content = xhr.response;
-        var fileName = `${sessionStorage.machineName}售后机列表.xls`
+        var fileName = `${sessionStorage.machineName}售货机列表.xls`
         var elink = document.createElement('a');
         elink.download = fileName;
         elink.style.display = 'none';
@@ -2778,5 +2783,35 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
           }
         }
         xhr.send();
-  })
+  });
+  // 图片放大事件
+  var PImgSHow = true;
+  $('.goodsCont').on('mouseenter', '.pic102', function (e) {
+    var that = this;
+    $('#pic101').attr('src', $(that).attr('src'));
+    var img = new Image();
+    img.onload = function () {
+      $("#pic101").css({
+        "width": this.width >= this.height ? 350 + 'px' : 'auto',
+        "height": this.height > this.width ? 450 + 'px' : 'auto'
+      }).fadeIn("fast");
+      this.onload = null;
+
+    };
+    img.src = $(that).attr('src');
+  });
+//   $('.goodsCont').on('click', '.pic102', function () {
+//     event.stopPropagation();
+//     PImgSHow = false;
+//   });
+  $('.goodsCont').on('mouseleave', '.pic102', function () {
+      $('#pic101').hide();
+  });
+//   $('#pic101').click(function () {
+//     event.stopPropagation();
+//   });
+//   $('body').click(function () {
+//     PImgSHow = true;
+//     $('#pic101').hide();
+//   })
 });

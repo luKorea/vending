@@ -599,7 +599,7 @@ input:hover{
 #pic101{
     position: fixed;
     top:8%;
-    left: 1%;
+    left: 0;
     width: 550px;
     border-radius: 5px;
     z-index: 9999;

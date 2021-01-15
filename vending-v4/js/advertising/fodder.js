@@ -894,13 +894,9 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     var PImgSHow=true;
     $('.data-list').on('mouseenter', '.pic102', function (e) {
         var that = this; 
-        console.log(e.pageX)
         $('#pic101').attr('src',$(that).attr('src'));
         var img = new Image();
         img.onload = function () {
-            console.log(this.width);
-            console.log(this.height);
-            
             $("#pic101").css({
                 "width":this.width>=this.height?350+'px':'auto',
                 "height":this.height>this.width?350+'px':'auto'

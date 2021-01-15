@@ -208,7 +208,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   var EditIndex = null;
   table.on('tool(test)', function (obj) {
     // 操作事件
-    
+
     if (obj.event === 'edit') {
       singleData = obj.data;
       $('.anUp').slideUp();
@@ -238,6 +238,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       });
     } else if (obj.event == 'preview1') {
       popupShow('reading', 'margin0');
+      $('.reading .playHeader span').html('商品详情页预览')
       $('.reading-box').html(obj.data.goods_Descript)
     }
   });
@@ -521,10 +522,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     popupShow('reading', 'margin0');
     if ($(this).attr('id') == 'add') {
       $('.reading').fadeIn();
-      // $('.reading .reading-header h1').html('详情页预览')
+      $('.reading .playHeader span').html('商品详情页预览')
       $('.reading-box').html(addWangEditor.txt.html())
     } else if ($(this).attr('id') == 'edit') {
-      // $('.reading .reading-header h1').html('详情页预览')
+      $('.reading .playHeader span').html('商品详情页预览')
       $('.reading-box').html(editWangEditor.txt.html())
     }
   });
@@ -562,7 +563,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         // { field: 'number', width: 200, title: '图片编号', },
         { field: 'publishTime', width: 180, title: '发布时间', align: 'center' },
         { field: 'addUser', width: 150, title: '发布人', align: 'center', },
-        { field: 'operationa', right: 0, align: 'center', width: 150, title: '操作', toolbar: '#materiaImg', fixed: 'right' },
+        { field: 'operationa', right: 0, align: 'center', width: 180, title: '操作', toolbar: '#materiaImg', fixed: 'right' },
       ]]
       , page: true
       , id: 'ImgListData'
@@ -630,37 +631,42 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
 
   // 监听素材图片确定
   table.on('tool(materiaImgTable)', function (obj) {
-    console.log(obj);
     // 1为商品图片 2为内容图片
-    console.log(logoCont, addGoodsImg)
-    if (logoCont == 1) {
-      // 1为编辑 2为添加
-      if (addGoodsImgIndex == 2) {
-        addGoodsImg = obj.data.img;
-        $('#GoodsImg').attr("src", addGoodsImg);
-        $('.upload-demo2 .upload-list2').fadeIn();
-        popupHide('GoodsMaterial', 'goodsMaterialBox');
-      } else {
-        editGoodsImg = obj.data.img;
-        $('#editImg').attr("src", editGoodsImg);
-        popupHide('GoodsMaterial', 'goodsMaterialBox');
-      }
-    } else {
-      if (addGoodsImgIndex == 2) {
-        if (addWangEditor.txt.html().length > 11) {
-          addWangEditor.txt.append(`<p style="text-align: center;"><img src="${obj.data.img}"></img></p>`);
+    if (obj.event == 'add') {
+      if (logoCont == 1) {
+        // 1为编辑 2为添加
+        if (addGoodsImgIndex == 2) {
+          addGoodsImg = obj.data.img;
+          $('#GoodsImg').attr("src", addGoodsImg);
+          $('.upload-demo2 .upload-list2').fadeIn();
+          popupHide('GoodsMaterial', 'goodsMaterialBox');
         } else {
-          addWangEditor.txt.html(`<p style="text-align: center;"><img src="${obj.data.img}"></img></p>`);
+          editGoodsImg = obj.data.img;
+          $('#editImg').attr("src", editGoodsImg);
+          popupHide('GoodsMaterial', 'goodsMaterialBox');
         }
       } else {
-        if (editWangEditor.txt.html().length > 11) {
-          editWangEditor.txt.append(`<p style="text-align: center;"><img src="${obj.data.img}"></img></p>`);
+        if (addGoodsImgIndex == 2) {
+          if (addWangEditor.txt.html().length > 11) {
+            addWangEditor.txt.append(`<p style="text-align: center;"><img src="${obj.data.img}"></img></p>`);
+          } else {
+            addWangEditor.txt.html(`<p style="text-align: center;"><img src="${obj.data.img}"></img></p>`);
+          }
         } else {
-          editWangEditor.txt.html(`<p style="text-align: center;"><img src="${obj.data.img}"></img></p>`);
+          if (editWangEditor.txt.html().length > 11) {
+            editWangEditor.txt.append(`<p style="text-align: center;"><img src="${obj.data.img}"></img></p>`);
+          } else {
+            editWangEditor.txt.html(`<p style="text-align: center;"><img src="${obj.data.img}"></img></p>`);
+          }
         }
+        popupHide('GoodsMaterial', 'goodsMaterialBox');
       }
-      popupHide('GoodsMaterial', 'goodsMaterialBox');
+    } else if (obj.event == 'previewD') {
+      popupShow('reading', 'margin0');
+      $('.reading .playHeader span').html('商品图片预览')
+      $('.reading-box').html(`<img src="${obj.data.img}"/>`)
     }
+
   });
 
 
@@ -856,17 +862,17 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             return (d.mail == 1 ? '(邮寄)' + d.goods_Name : d.goods_Name)
           }
         },
-        { field: `classifyName`, width: 160, title: '商品类目', align: 'center', },
-        { field: `tempMerchant`, width: 160, title: '商品所属商户', align: 'center', },
-        { field: `topMerchant`, width: 160, title: '推送商户', align: 'center', },
-        { field: `targetMerchant`, width: 160, title: '接收商户', align: 'center', },
+        { field: `classifyName`, width: 140, title: '商品类目', align: 'center', },
+        { field: `tempMerchant`, width: 150, title: '商品所属商户', align: 'center', },
+        { field: `topMerchant`, width: 150, title: '推送商户', align: 'center', },
+        { field: `targetMerchant`, width: 140, title: '接收商户', align: 'center', },
         {
-          field: 'goods_Param', width: 130, title: '接收状态 ', align: 'center', templet: function (d) {
+          field: 'goods_Param', width: 120, title: '接收状态 ', align: 'center', templet: function (d) {
             return d.received == 0 ? '未接收' : '已接收'
           }
         },
         {
-          field: 'sendTime', width: 200, title: '推送时间 ', align: 'center', templet: function (d) {
+          field: 'sendTime', width: 180, title: '推送时间 ', align: 'center', templet: function (d) {
             var myDate = new Date(d.sendTime);
             var y = myDate.getFullYear();
             var m = myDate.getMonth() + 1;
@@ -915,8 +921,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         if (res.code == 403) {
           window.parent.location.href = "login.html";
         };
-        var statusList = res.data.list;
-
         for (var i in res.data) {
           var item = res.data[i];
           if (item.childMerchantId != sessionStorage.machineID || item.received == 1) {// 这里是判断需要禁用的条件（如：状态为0的）
@@ -925,18 +929,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             form.render();// 重新渲染一下
           }
         }
-
-        // if(state == "1"){
-        //   // 根据条件移除全选 checkbox
-        //   $('th[data-field=0] div').replaceWith('<div class="layui-table-cell laytable-cell-5-0-0"><span></span></div>');
-        // }else {
-        //    //翻页显示全选按钮 checkbox
-        //    $('th[data-field=0] div').replaceWith('<div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary" lay-filter="layTableAllChoose"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div>');
-        // }
-
-
-
-
       }
     });
   }
@@ -1029,9 +1021,13 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
 
   // 推送列表
   $('.pushListBtn').click(function () {
-    popupShow('topGoodsList', 'topBox')
+    popupShow('topGoodsList', 'topBox');
     if (!parentGoods) {
       parentGoodsList();
+    }else{
+      parentGoods.reload({
+        where:{}
+      })
     }
   })
   // 推送列表查询
@@ -1358,41 +1354,35 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
 
   });
   // 图片放大事件
-  var PImgSHow=true;
-  $('body').on('mouseenter','.pic102',function(e){
+  var PImgSHow = true;
+  $('body').on('mouseenter', '.pic102', function (e) {
     var that = this;
-    $('#pic101').attr('src',$(that).attr('src'));
-        var img = new Image();
-        img.onload = function () {
-            console.log(this.width);
-            console.log(this.height);
-            
-            $("#pic101").css({
-                "width":this.width>=this.height?350+'px':'auto',
-                "height":this.height>this.width?450+'px':'auto'
-            }).fadeIn("fast");
-            this.onload = null;
-           
-        };
-        img.src = $(that).attr('src');
-});
-$('body').on('click','.pic102',function(){
-  event.stopPropagation();
-  PImgSHow=false;
-}); 
-$('body').on('mouseleave','.pic102',function(){
-    $('#pic101').hide();
-});
-$('.data-list').on('mouseleave', '.pic102', function () {
-  if(PImgSHow){
+    $('#pic101').attr('src', $(that).attr('src'));
+    var img = new Image();
+    img.onload = function () {
+      $("#pic101").css({
+        "width": this.width >= this.height ? 335 + 'px' : 'auto',
+        "height": this.height > this.width ? 450 + 'px' : 'auto'
+      }).fadeIn("fast");
+      this.onload = null;
+
+    };
+    img.src = $(that).attr('src');
+  });
+  $('.Goods-wrap').on('click', '.pic102', function () {
+    event.stopPropagation();
+    PImgSHow = false;
+  });
+  $('body').on('mouseleave', '.pic102', function () {
+    if (PImgSHow) {
       $('#pic101').hide();
-  }
-});
-$('#pic101').click(function(){
-  event.stopPropagation();
-});
-$('body').click(function(){
-  PImgSHow=true;
-  $('#pic101').hide();
-})
+    }
+  });
+  $('#pic101').click(function () {
+    event.stopPropagation();
+  });
+  $('body').click(function () {
+    PImgSHow = true;
+    $('#pic101').hide();
+  })
 });

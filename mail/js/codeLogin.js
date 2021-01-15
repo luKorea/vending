@@ -1,5 +1,5 @@
 import '../MyCss/codeLogin.scss'
-import { loadAjax, prompt, getQueryString, decrypt1 } from '../common/common.js';
+import { loadAjax, prompt, getQueryString, decrypt1 ,keepPass} from '../common/common.js';
 var machineId = getQueryString('machineId');
 if (sessionStorage.accountPass) {
     var passFlag=keepPass(sessionStorage.old,new Date().getTime())

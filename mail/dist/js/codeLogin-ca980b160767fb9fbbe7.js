@@ -169,7 +169,7 @@ __webpack_require__.r(__webpack_exports__);
 var machineId = Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* getQueryString */ "b"])('machineId');
 
 if (sessionStorage.accountPass) {
-  var passFlag = keepPass(sessionStorage.old, new Date().getTime());
+  var passFlag = Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* keepPass */ "c"])(sessionStorage.old, new Date().getTime());
 
   if (passFlag) {
     var accountPass = JSON.parse(sessionStorage.accountPass);
@@ -194,12 +194,12 @@ $('.list input[name="pass"]').keyup(function () {
 
 $('.searchCont .btn').click(function () {
   if (!$('.formCont input[name="name"]').val()) {
-    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])('请输入账号');
+    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])('请输入账号');
     return;
   }
 
   if (!$('.formCont input[name="pass"]').val()) {
-    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])('请输入密码');
+    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])('请输入密码');
     return;
   }
 
@@ -210,7 +210,7 @@ $('.searchCont .btn').click(function () {
     password: passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val()),
     machineId: machineId
   });
-  Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* loadAjax */ "c"])('/api/user/login', 'post', loginObj).then(function (res) {
+  Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* loadAjax */ "d"])('/api/user/login', 'post', loginObj).then(function (res) {
     sessionStorage.token = res.data.token;
     $.ajax({
       type: 'post',
@@ -240,12 +240,12 @@ $('.searchCont .btn').click(function () {
 
           window.location.href = "operation.html?machineId=".concat(Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* getQueryString */ "b"])('machineId'));
         } else {
-          Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])('售货机离线,登录失败');
+          Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])('售货机离线,登录失败');
         }
       },
       error: function error(err) {
         $('.mask').hide();
-        Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])('服务器请求超时');
+        Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])('服务器请求超时');
       }
     });
   })["catch"](function (err) {
@@ -264,11 +264,11 @@ $('.searchCont .btn').click(function () {
       success: function success(res) {},
       error: function error(err) {
         $('.mask').hide();
-        Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])('服务器请求超时');
+        Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])('服务器请求超时');
       }
     });
     $('.mask').hide();
-    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])(err.message);
+    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])(err.message);
   }); // window.location.href=`operation.html?machineId=${getQueryString('machineId')}`
 });
 

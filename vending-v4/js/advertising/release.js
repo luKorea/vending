@@ -1197,25 +1197,34 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         }
     });
        // 图片放大事件
+       var PImgSHow=true;
        $('.pubilshMaterialCont').on('mouseenter','.pic102',function(e){
         var that = this; 
-        console.log(e.pageX)
         $('#pic101').attr('src',$(that).attr('src'));
         var img = new Image();
         img.onload = function () {
-            console.log(this.width);
-            console.log(this.height);
-            
             $("#pic101").css({
-                "width":this.width>this.height?500+'px':'auto',
-                "height":this.height>this.width?500+'px':'auto'
+                "width":this.width>=this.height?350+'px':'auto',
+                "height":this.height>this.width?350+'px':'auto'
             }).fadeIn("fast");
             this.onload = null;
-           
         };
         img.src = $(that).attr('src');
     });
+    $('.pubilshMaterialCont').on('click','.pic102',function(){
+        event.stopPropagation();
+        PImgSHow=false;
+    }); 
     $('.pubilshMaterialCont').on('mouseleave','.pic102',function(){
+        if(PImgSHow){
+            $('#pic101').hide();
+        }
+    });
+    $('#pic101').click(function(){
+        event.stopPropagation();
+    });
+    $('body').click(function(){
+        PImgSHow=true;
         $('#pic101').hide();
     })
 });

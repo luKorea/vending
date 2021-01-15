@@ -207,7 +207,7 @@ $('.aloneContent').click(function () {
 });
 $('.aloneContent .confirmBtn').click(function () {
   if (!$('.aloneContent input[name="alonePass"]').val()) {
-    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])('请输入独立密码');
+    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])('请输入独立密码');
     return;
   }
 
@@ -215,11 +215,11 @@ $('.aloneContent .confirmBtn').click(function () {
     alonePsd: hex_md5($('.aloneContent input[name="alonePass"]').val()),
     machineId: machineId
   });
-  Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* loadAjax1 */ "d"])('/api/machine/openDoor', 'post', sessionStorage.token, alonePassObj).then(function (res) {
+  Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* loadAjax1 */ "e"])('/api/machine/openDoor', 'post', sessionStorage.token, alonePassObj).then(function (res) {
     $('.aloneContent').fadeOut(100).children('.aloneBox').removeClass('top30');
-    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])('开门成功');
+    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])('开门成功');
   })["catch"](function (err) {
-    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])(err.message);
+    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])(err.message);
   }); // loadAjax1('/api/user/verifyAlonePwd','post',sessionStorage.token,alonePassObj).then(res=>{
   //     $('.aloneContent').fadeOut(100).children('.aloneBox').removeClass('top30')
   //     loadAjax1('/api/openTheDoor','post',sessionStorage.token,JSON.stringify({machine:machineId}),'mask').then(res=>{
@@ -274,15 +274,15 @@ $('.inquiryBox .confirm').click(function () {
       action: $(this).attr('openFlag') == 1 ? 'true' : 'false',
       machine: machineId
     });
-    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* loadAjax1 */ "d"])('/api/switchLight', 'post', sessionStorage.token, lamObj, 'mask').then(function (res) {
+    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* loadAjax1 */ "e"])('/api/switchLight', 'post', sessionStorage.token, lamObj, 'mask').then(function (res) {
       $('.mask').hide();
     })["catch"](function (err) {
       $('.mask').hide();
 
       if (err == 'true') {
-        Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])('操作成功');
+        Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])('操作成功');
       } else {
-        Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])('操作失败');
+        Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])('操作失败');
       }
     });
   } else {
@@ -290,15 +290,15 @@ $('.inquiryBox .confirm').click(function () {
       action: $(this).attr('openFlag') == 1 ? 'true' : 'false',
       machine: machineId
     });
-    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* loadAjax1 */ "d"])('/api/switchVolume', 'post', sessionStorage.token, soundObj, 'mask').then(function (res) {
+    Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* loadAjax1 */ "e"])('/api/switchVolume', 'post', sessionStorage.token, soundObj, 'mask').then(function (res) {
       $('.mask').hide();
     })["catch"](function (err) {
       $('.mask').hide();
 
       if (err == 'true') {
-        Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])('操作成功');
+        Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])('操作成功');
       } else {
-        Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "f"])('操作失败');
+        Object(_common_common_js__WEBPACK_IMPORTED_MODULE_1__[/* prompt */ "g"])('操作失败');
       }
     });
   }

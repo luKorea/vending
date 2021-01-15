@@ -123,7 +123,7 @@
 							<div class="newKeyContent">
 								<div class="newKeyItem">
 									<label for="">关键字</label>
-									<div >
+									<div>
 										<input type="text" class="KyeText" placeholder="商品编号、商品名">
 									</div>
 								</div>
@@ -352,7 +352,7 @@
 										<div class="editor-list" style="margin-bottom:22px">
 											<label for=""><span style="color:red;">*</span> 统一销售价</label>
 											<div class="editorWidthInput">
-												<input type="number" name="goodsPrice" >
+												<input type="number" name="goodsPrice">
 											</div>
 										</div>
 									</li>
@@ -708,7 +708,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- 详情预览 -->
 		<!-- <div class="reading maskContnet">
 			<div class="reading-contnet">
 				<div class="reading-header">
@@ -720,19 +719,6 @@
 				</div>
 			</div>
 		</div> -->
-		<div class="reading maskContnet">
-			<div class="readingBox margin0">
-				<div class="playHeader">
-					<span>商品详情页预览</span>
-					<button class="close" type="button">
-						<i class="layui-icon layui-icon-close"></i>
-					</button>
-				</div>
-				<div class="reading-box">
-
-				</div>
-			</div>
-		</div>
 		<!-- 商品素材列表 -->
 		<div class="GoodsMaterial maskContnet">
 			<div class="goodsMaterialBox margin0">
@@ -803,9 +789,9 @@
 				</div>
 			</div>
 		</div>
-
+		
 		<!--上级商户商品列表 -->
-		<div class="topGoodsList maskContnet" >
+		<div class="topGoodsList maskContnet">
 			<div class="topBox margin0">
 				<div class="playHeader">
 					<span>推送列表</span>
@@ -1000,7 +986,7 @@
 			</div>
 		</div>
 		<!-- 同步商品价格 -->
-		<div class="synchronousCont maskContnet" >
+		<div class="synchronousCont maskContnet">
 			<div class="synchronousBox margin0">
 				<div class="playHeader">
 					<span>同步商品价格</span>
@@ -1011,10 +997,10 @@
 				<div class="synchronousBody">
 					<div class="goodsSynchrouos">
 						<div style="margin:15px;">
-							<div class="newKeyContent" >
+							<div class="newKeyContent">
 								<div class="newKeyItem">
 									<label for="">关键字</label>
-									<div >
+									<div>
 										<input type="text" class="synchronousGoodsName" placeholder="商品编号、商品名">
 									</div>
 								</div>
@@ -1026,17 +1012,17 @@
 								</button>
 							</div>
 						</div>
-						
-							<div class="list-table">
-								<table class="layui-hide" id="cGoodsTable" lay-filter="cGoodsTable"></table>
-							</div>
+
+						<div class="list-table">
+							<table class="layui-hide" id="cGoodsTable" lay-filter="cGoodsTable"></table>
+						</div>
 					</div>
 					<div class="machineSynchrouos">
 						<div style="margin:15px;">
-							<div class="newKeyContent" >
+							<div class="newKeyContent">
 								<div class="newKeyItem">
 									<label for="">关键字</label>
-									<div >
+									<div>
 										<input type="text" class="synchronousMachineName" placeholder="售货机信息">
 									</div>
 								</div>
@@ -1055,8 +1041,7 @@
 				</div>
 				<div class="sFooter">
 					<div style="text-align: center;">
-						<button class="layui-btn layui-btn-normal btn synchronousBtn"
-							style="margin: 0 0 0 15px;">
+						<button class="layui-btn layui-btn-normal btn synchronousBtn" style="margin: 0 0 0 15px;">
 							<span>确定</span>
 						</button>
 						<button class="layui-btn layui-btn-normal btn synchronousCancel">
@@ -1066,17 +1051,31 @@
 				</div>
 			</div>
 		</div>
+		<!-- 详情预览 -->
+		<div class="reading maskContnet" style="z-index: 9999;">
+			<div class="readingBox margin0">
+				<div class="playHeader">
+					<span>商品详情页预览</span>
+					<button class="close" type="button">
+						<i class="layui-icon layui-icon-close"></i>
+					</button>
+				</div>
+				<div class="reading-box">
+
+				</div>
+			</div>
+		</div>
 		<!-- 没有权限时显示白屏 -->
 		<div class="hangContent">
 			<p>您没有访问的权限!</p>
 		</div>
 		<div class="mask maskContnet">
-            <div class="TitleContentWith">
-                <span class="maskSpan" style="display: inline-block;">
-                    <i class="layui-icon layui-icon-loading "></i>
-                </span>
-                数据处理中，请稍候
-            </div>
+			<div class="TitleContentWith">
+				<span class="maskSpan" style="display: inline-block;">
+					<i class="layui-icon layui-icon-loading "></i>
+				</span>
+				数据处理中，请稍候
+			</div>
 		</div>
 		<img src="" id="pic101" alt="">
 	</div>
@@ -1106,6 +1105,9 @@
 			<button class="layui-btn layui-btn-sm btn ImgDetermineBtn" lay-event="add">
 				<span>确定</span>
 			</button>
+			<button class="layui-btn layui-btn-sm btn {{d.attribute==2?'':'hide'}}" lay-event="previewD">
+				<span>预览</span>
+			</button>
 		</div>
 	</script>
 <script type="text/html" id="barDemoVideo">
@@ -1125,7 +1127,7 @@
 	<div><img src="{{d.goods_images}}" class="pic102" style="width: 40px; height: 40px;"></div>
 </script>
 <script type="text/html" id="materiaImgtmp">
-	<div><img src="{{d.img}}" class="pic102" style="width: 40px;"></div>
+	<div><img src="{{d.img}}" class="{{d.attribute==0?'pic102':''}}"  style="width: 40px;"></div>
 </script>
 <!-- <script src="../../js/public/wangEditor.min.js"></script> -->
 <script src="../assets/public/wangEditor.min.js"></script>

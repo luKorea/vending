@@ -721,15 +721,37 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     addFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
     editFlag ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
   };
-   // 图片放大事件
-   $('body').on('mouseenter','.pic102',function(e){
-    $('#pic101').attr('src',$(this).attr('src'));
-    $("#pic101").css({
-        "top":(e.pageY-100)+"px",
-        "left":(e.pageX+20)+"px"
-    }).fadeIn("fast");
-});
-$('body').on('mouseleave','.pic102',function(){
+
+  // 图片放大事件
+  var PImgSHow = true;
+  $('.goodsListBody').on('mouseenter', '.pic102', function (e) {
+    var that = this;
+    $('#pic101').attr('src', $(that).attr('src'));
+    var img = new Image();
+    img.onload = function () {
+      $("#pic101").css({
+        "width": this.width >= this.height ? 350 + 'px' : 'auto',
+        "height": this.height > this.width ? 450 + 'px' : 'auto'
+      }).fadeIn("fast");
+      this.onload = null;
+
+    };
+    img.src = $(that).attr('src');
+  });
+  $('.goodsListBody').on('click', '.pic102', function () {
+    event.stopPropagation();
+    PImgSHow = false;
+  });
+  $('.goodsListBody').on('mouseleave', '.pic102', function () {
+    if (PImgSHow) {
+      $('#pic101').hide();
+    }
+  });
+  $('#pic101').click(function () {
+    event.stopPropagation();
+  });
+  $('body').click(function () {
+    PImgSHow = true;
     $('#pic101').hide();
-})
+  })
 })
