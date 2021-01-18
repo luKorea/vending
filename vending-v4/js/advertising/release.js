@@ -1226,5 +1226,13 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     $('body').click(function(){
         PImgSHow=true;
         $('#pic101').hide();
-    })
+    });
+    $('#pic101').mouseenter(function(){
+        $('#pic101').show();
+      })
+      $('#pic101').mouseleave(function(){
+        if (PImgSHow) {
+          $('#pic101').hide();
+        }
+      })
 });

@@ -36,7 +36,8 @@ var entry = {
         M_machineChild:'./js/mobile/machine/machineChild.js',//移动端售货机子页面
         // M_machine
         // 移动端商品模块
-        M_class:'./js/mobile/goods/class.js'
+        M_class:'./js/mobile/goods/class.js',
+        M_MachineOrder:'./js/mobile/order/machineOrder.js'
     }
     //页面配置
 var htmlConfig = [
@@ -140,6 +141,9 @@ var htmlConfig = [
     },
     {
         name: "mailOrder",
+    },
+    {
+        name: "M_MachineOrder",
     },
 ];
 module.exports = {

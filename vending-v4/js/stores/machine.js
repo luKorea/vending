@@ -268,7 +268,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     var machineSetData = null
     table.on('tool(machineTable)', function (obj) {
         machineSetData = obj.data;
-        console.log(machineSetData)
+        console.log(machineSetData);
+        aisleNum();
         $('.maskHeader span').html(machineSetData.info ? machineSetData.info + '详细信息' : '-详细信息')
         if (obj.event == 'set') {
             $('.setUpCont').show();
@@ -477,6 +478,21 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             })
         }
     });
+
+    // 货道数
+    function aisleNum(){
+        loadingAjax('/machine/findWay','get',{machineId:machineSetData.machineId},sessionStorage.token).then(res=>{
+            var optionList = `<option value="">全部</option>`;
+            res.data.forEach(item=>{
+                optionList += `<option value="${item}">${item}</option>`
+            });
+            $('.shipmentRecord select[name="shipSelect"]').html(optionList);
+            $('.replenishment select[name="shipSelect"]').html(optionList);
+            form.render('select');
+        }).catch(err=>{
+
+        })
+    }
     // 关闭设置
     $('.setUpCont .close').click(function () {
         $('.setUpCont').hide();
@@ -843,13 +859,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'goodName', width: 200, title: '商品名', align: 'center', templet: function (d) {
-                        if (d.good_info.length != 0) {
-                            return d.good_info[0].goods_Name
-                        } else {
-                            return '-'
-                        }
-                    }
+                    field: 'goods_Name', width: 200, title: '商品名', align: 'center'
                 },
                 {
                     field: 'ship_status', width: 165, title: '出货状态', align: 'center', templet: function (d) {
@@ -965,6 +975,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
         recordDataList.reload({
             where: {
+                way:$('.shipmentRecord select[name="shipSelect"]').val(),
+                goods_Name:$('.shipmentRecord input[name="shipGoodName"]').val(),
                 conditionTwo: startTime,
                 conditionThree: endTime,
                 // conditionFour: $('.shipmentRecord input[name="keyName"]').val()
@@ -1931,13 +1943,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 { field: 'way', width: 100, title: '补货货道', align: 'center' },
                 {
-                    field: 'ship_f', width: 180, title: '商品名', align: 'center', templet: function (d) {
-                        if (d.good_info.length != 0) {
-                            return d.good_info[0].goods_Name
-                        } else {
-                            return '-'
-                        }
-                    }
+                    field: 'goods_Name', width: 180, title: '商品名', align: 'center', 
                 },
                 {
                     field: 'replenish_count', width: 150, title: '补货前数量', align: 'center', templet: function (d) {
@@ -2018,6 +2024,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
         replenishmentList.reload({
             where: {
+                way:$('.replenishment select[name="shipSelect"]').val(),
+                goods_Name:$('.replenishment input[name="replenishmentGoodName"]').val(),
                 start_time: replenishmentStartTime ? replenishmentStartTime : null,
                 end_time: sreplenishmentEndTime ? sreplenishmentEndTime : null
             }
@@ -2150,6 +2158,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
         priceTable.reload({
             where: {
+                goods_Name:$('.price input[name="priceGoodName"]').val(),
                 startDate: editStartTime ? editStartTime : null,
                 endDate: editEndTime ? editEndTime : null
             }
@@ -2784,34 +2793,44 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
         xhr.send();
   });
-  // 图片放大事件
-  var PImgSHow = true;
-  $('.goodsCont').on('mouseenter', '.pic102', function (e) {
-    var that = this;
-    $('#pic101').attr('src', $(that).attr('src'));
-    var img = new Image();
-    img.onload = function () {
-      $("#pic101").css({
-        "width": this.width >= this.height ? 350 + 'px' : 'auto',
-        "height": this.height > this.width ? 450 + 'px' : 'auto'
-      }).fadeIn("fast");
-      this.onload = null;
-
-    };
-    img.src = $(that).attr('src');
-  });
-//   $('.goodsCont').on('click', '.pic102', function () {
-//     event.stopPropagation();
-//     PImgSHow = false;
-//   });
-  $('.goodsCont').on('mouseleave', '.pic102', function () {
-      $('#pic101').hide();
-  });
-//   $('#pic101').click(function () {
-//     event.stopPropagation();
-//   });
-//   $('body').click(function () {
-//     PImgSHow = true;
-//     $('#pic101').hide();
-//   })
+ // 图片放大事件
+ var PImgSHow=true;
+ $('.goodsCont').on('mouseenter', '.pic102', function (e) {
+     var that = this; 
+     $('#pic101').attr('src',$(that).attr('src'));
+     var img = new Image();
+     img.onload = function () {
+         $("#pic101").css({
+             "width":this.width>=this.height?350+'px':'auto',
+             "height":this.height>this.width?350+'px':'auto'
+         }).fadeIn("fast");
+         this.onload = null;
+        
+     };
+     img.src = $(that).attr('src');
+ });
+//  $('.goodsCont').on('click','.pic102',function(){
+//      event.stopPropagation();
+//      PImgSHow=false;
+//  }); 
+ $('.goodsCont').on('mouseleave', '.pic102', function () {
+    //  if(PImgSHow){
+         $('#pic101').hide();
+    //  }
+ });
+//  $('#pic101').click(function(){
+//      event.stopPropagation();
+//  });
+//  $('body').click(function(){
+//      PImgSHow=true;
+//      $('#pic101').hide();
+//  });
+ $('#pic101').mouseenter(function(){
+     $('#pic101').show();
+   })
+   $('#pic101').mouseleave(function(){
+    //  if (PImgSHow) {
+       $('#pic101').hide();
+    //  }
+   })
 });

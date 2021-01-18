@@ -634,7 +634,7 @@ function shipmenListArr(mId,mNum){
                     </div>
                     <div class="keyText flex">
                         <label for="">商品名:</label>
-                        <p>${item.good_info.length!=0?item.good_info[0].goods_Name:'-'}</p>
+                        <p>${item.goods_Name}</p>
                     </div>
                     <div class="keyText flex">
                         <label for="">出货状态:</label>
@@ -754,7 +754,7 @@ function rMentListArr(mId,mNum){
                         </div>
                         <div class="keyText flex">
                             <label for="">商品名:</label>
-                            <p>${item.good_info.length!=0?item.good_info[0].goods_Name:'-'}</p>
+                            <p>${item.goods_Name}</p>
                         </div>
                         <div class="keyText flex">
                             <label for="">补货前数量:</label>

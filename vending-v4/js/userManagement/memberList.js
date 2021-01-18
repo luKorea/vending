@@ -650,6 +650,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       }
       popupShow('storesCont','storesBox');
     }).catch(err => {
+      console.log(err)
       layer.msg(err.message, { icon: 2 })
 
     });
