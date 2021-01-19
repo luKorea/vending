@@ -42,13 +42,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
         },
         {
           field: 'sign_name', width: 180, title: '退款状态', align: 'center', templet: function (d) {
-            var total = 0;
-            var result = 0;
-            d.goodsList.forEach(item => {
-              total += item.count;
-              result += item.refund_count
-            })
-            return result == 0 ? '未退款' : total - result == 0 ? '全部退款' : '部分退款'
+            return d.refund == 1 ? '未退款' : d.refund == 2 ? '部分退款' : d.refund == 3?'全部退款':'-'
           }
         },
         {
@@ -245,7 +239,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
     $('.mask').fadeIn();
     $('.maskSpan').addClass('maskIcon');
     var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-    xhr.open("GET", `${vApi}/exportMailExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${pushMId}`, true);
+    xhr.open("GET", `${vApi}/exportMailExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${pushMId}&dispatch_status=${$('.newKeyContent select[name="takeStatus"]').val()}&sign_name=${$('.newKeyContent input[name="takeName"]').val()}&sign_phone=${$('.newKeyContent input[name="takePhone"]').val()}&refund=${$('.newKeyContent select[name="keyrefundStatus"]').val()}`, true);
     xhr.setRequestHeader("token", sessionStorage.token);
     // xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
     xhr.responseType = 'blob';//设置ajax的响应类型为blob;
@@ -255,6 +249,10 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
       if (xhr.status == 200) {
         $('.mask').fadeOut();
         $('.maskSpan').removeClass('maskIcon');
+        if (xhr.response.size < 30) {
+          layer.msg('导出失败', { icon: 7 })
+          return
+        } 
         var content = xhr.response;
         // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
         var fileName = `${pushMName}邮寄订单(${startTime}-${endTime}).xlsx`
@@ -303,6 +301,10 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
         condition: startTime,
         conditionTwo: endTime,
         conditionThree: $('.key-contnet input[name="orderCode"]').val(),
+        dispatch_status:$('.newKeyContent select[name="takeStatus"]').val(),
+        sign_name:$('.newKeyContent input[name="takeName"]').val(),
+        sign_phone:$('.newKeyContent input[name="takePhone"]').val(),
+        refund:$('.newKeyContent select[name="keyrefundStatus"]').val(),
       }
     })
   });
@@ -563,6 +565,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
       },
       click: function (obj) {
         pushMId=obj.data.id + '';
+        console.log(pushMId)
         pushMName=obj.data.title;
         tableID.reload({
           where: {

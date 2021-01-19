@@ -49,6 +49,48 @@
                         </div>
                     </div>
                     <div class="newKeyContent">
+                        <div class="newKeyItem">
+                            <label for="关键字">收货人</label>
+                            <div class="key-contnet">
+                                <input type="text" name="takeName" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newKeyContent">
+                        <div class="newKeyItem">
+                            <label for="关键字">收货人电话</label>
+                            <div class="key-contnet">
+                                <input type="number" name="takePhone" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newKeyContent">
+                        <div class="newKeyItem">
+                            <label for="">退款状态</label>
+                            <div class="layui-form">
+                                <select name="keyrefundStatus" id="" lay-filter="mySelect">
+                                    <option value="">全部</option>
+                                    <option value="1">未退款</option>
+                                    <option value="2">部分退款</option>
+                                    <option value="3">全部退款</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newKeyContent">
+                        <div class="newKeyItem">
+                            <label for="">快递/物流状态</label>
+                            <div class="layui-form">
+                                <select name="takeStatus" id="" lay-filter="mySelect">
+                                    <option value="">全部</option>
+                                    <option value="0">未发货</option>
+                                    <option value="1">已发货</option>
+                                    <option value="2">已收货</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newKeyContent">
                         <button type="button" class="layui-btn layui-btn-primary queryBtn">
                             <i class="layui-icon layui-icon-search"></i>
                             <span>查询</span>

@@ -76,7 +76,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
           }
         },
         {
-          field: 'time', width: 180, title: '支付时间', align: 'center', templet: function (d) {
+          field: 'time', width: 180, title: '下单时间', align: 'center', templet: function (d) {
             if (d.time) {
               return timeStamp(d.time)
             } else {
@@ -91,13 +91,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         },
         {
           field: 'sign_name', width: 210, title: '退款状态', align: 'center', templet: function (d) {
-            var total = 0;
-            var result = 0;
-            d.goodsList.forEach(item => {
-              total += item.count;
-              result += item.refund_count
-            })
-            return result == 0 ? '未退款' : total - result == 0 ? '全部退款' : '部分退款'
+            return d.refund == 1 ? '未退款' : d.refund == 2 ? '部分退款' : d.refund == 3?'全部退款':'-'
           }
         },
         // { field: 'shipStatus', align: 'center', width: 160, title: '出货状态', templet:function(d){
@@ -217,17 +211,17 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
           // for (var i = 0; i < 3; i++) {
           //   lis.push('<span>荔湾西堤邮政支局' + page + '</span>')
           // }
-          next(lis.join(''), page < 1000); //假设总页数为 10
+          next(lis.join(''), page < 10000); //假设总页数为 10
           var machineData = JSON.stringify({
             pageNum: page,
-            pageSize: 10,
+            pageSize: 100,
             merchantId,
           })
           loadingAjax('/machine/getMachineList', 'post', machineData, sessionStorage.token).then(res => {
             res.data.list.forEach((item, index) => {
               lis.push(`<span machineID="${item.machineId}">${item.info ? item.info : '未命名售货机'}</span>`)
             })
-            next(lis.join(''), res.data.list >= 10);
+            next(lis.join(''), res.data.list.length >= 100);
           }).catch(err => {
             console.log(err)
             layer.msg(err.message, { icon: 7 })
@@ -350,23 +344,21 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     $('.mask').fadeIn();
     $('.maskSpan').addClass('maskIcon');
     var myDate = new Date(),
-      // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
       xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-    xhr.open("GET", `${vApi}/exportExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}`, true);
+    xhr.open("GET", `${vApi}/exportExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}&conditionSix=${$('.newKeyContent select[name="keyPayStatus"]').val()}&shipStatus=${$('.newKeyContent select[name="keyShipStatus"]').val()}&refund=${$('.newKeyContent select[name="keyrefundStatus"]').val()}`, true);
     xhr.setRequestHeader("token", sessionStorage.token);
 
     // xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
     xhr.responseType = 'blob';//设置ajax的响应类型为blob;
 
     xhr.onload = function (res) {
-      // console.log(xhr)
       if (xhr.status == 200) {
         $('.mask').fadeOut();
         $('.maskSpan').removeClass('maskIcon');
-        // if (xhr.response.size < 100) {
-        //   layer.msg('您没有导出订单的权限！', { icon: 7 })
-        //   return
-        // } else {
+        if (xhr.response.size < 30) {
+          layer.msg('导出失败', { icon: 7 })
+          return
+        } 
         var content = xhr.response;
         // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
         var fileName = `${marchantName}订单(${startTime}-${endTime}).xls`
@@ -507,6 +499,9 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         condition: startTime,
         conditionTwo: endTime,
         conditionThree: $('.key-contnet input[name="orderCode"]').val(),
+        conditionSix:$('.newKeyContent select[name="keyPayStatus"]').val(),
+        shipStatus:$('.newKeyContent select[name="keyShipStatus"]').val(),
+        refund:$('.newKeyContent select[name="keyrefundStatus"]').val(),
       }
     })
   });

@@ -34,6 +34,7 @@ function loadAjax(url, type, userToken, data, mask, element, top) {
                 }
                 resolve(res)
             } else if (res.code == 403) {
+                return ;
                 window.location.href = "M_login.html"
             } else {
                 reject(res);
@@ -208,7 +209,23 @@ function timeStamp(time) {
         }
       })
       return dataList
-}
+};
+
+// 金额处理
+function numFormat2(num) {
+    var oldNum = num;
+    num = Number(Number(num).toFixed(2));
+    if (!isNaN(num)) {
+      var c = (num.toString().indexOf('.') !== -1) ? num.toLocaleString() : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+      var str = c.split(".");
+      // console.log(str)
+      if (str.length == 1) { c = c + '.00'; } else { if (str[1].length == 1) { c = c + '0'; } }
+      return c;
+    } else {
+      return oldNum;
+    }
+  
+  }
 
 export {
     loadAjax,
@@ -226,4 +243,5 @@ export {
     permissionsVal,
     timeStamp,
     treeList,
+    numFormat2  
 }

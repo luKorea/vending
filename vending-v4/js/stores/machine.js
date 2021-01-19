@@ -430,14 +430,15 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 })
             })
         } else if (obj.event == 'startThe') {
-            if (machineSetData.onlineStatus != 1) {
-                layer.msg('售货机处于离线状态不可以操作此功能', { icon: 7 });
+            // if (machineSetData.onlineStatus != 1) {
+            //     layer.msg('售货机处于离线状态不可以操作此功能', { icon: 7 });
+            //     return;
+            // } else {
+               
+            // }
+            if (!activateFlag) {
+                layer.msg('您没有更改营业状态的权限!');
                 return;
-            } else {
-                if (!activateFlag) {
-                    layer.msg('您没有更改营业状态的权限!');
-                    return;
-                }
             }
             // if (machineSetData.openStatus != 1) {
             layer.confirm(machineSetData.openStatus != 1 ? '确定营业？' : '确定暂停营业？', function (index) {
@@ -450,21 +451,22 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     if (Dres.data.actionStatus == 1) {
                         loadingAjax('/pushActive', 'post', JSON.stringify({ machine: machineSetData.machineId, action: machineSetData.openStatus != 1 ? 'true' : 'false' }), token).then(res => {
                         }).catch(err => {
-                            if (err == 'true') {
-                                loadingAjax('/machine/activeMachine', 'post', JSON.stringify({ machineId: machineSetData.machineId, openStatus: openStatusIndex }), token, 'mask').then(Sres => {
-                                    layer.msg('操作成功', { icon: 1 });
-                                    machineList.reload({
-                                        where: {}
-                                    })
-                                }).catch(Serr => {
-                                    layer.msg(Serr.message, { icon: 2 })
+                            loadingAjax('/machine/activeMachine', 'post', JSON.stringify({ machineId: machineSetData.machineId, openStatus: openStatusIndex }), token, 'mask').then(Sres => {
+                                layer.msg('操作成功', { icon: 1 });
+                                machineList.reload({
+                                    where: {}
                                 })
-                            } else {
-                                $('.mask').fadeOut();
-                                $('.maskSpan').removeClass('maskIcon');
-                                layer.msg('操作失败', { icon: 2 });
-                            }
+                            }).catch(Serr => {
+                                layer.msg(Serr.message, { icon: 2 })
+                            })
+                            // if (err == 'true') {
+                            // } else {
+                            //     $('.mask').fadeOut();
+                            //     $('.maskSpan').removeClass('maskIcon');
+                            //     layer.msg('操作失败', { icon: 2 });
+                            // }
                         })
+                     
                     } else {
                         $('.mask').fadeOut();
                         $('.maskSpan').removeClass('maskIcon');
@@ -938,7 +940,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.maskSpan').addClass('maskIcon');
           // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
         var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/excelShipping?startDate=${startTime}&endDate=${endTime}&machineId=${machineSetData.machineId}`, true);
+        xhr.open("GET", `${vApi}/excelShipping?startDate=${startTime}&endDate=${endTime}&machineId=${machineSetData.machineId}&way=${$('.shipmentRecord select[name="shipSelect"]').val()}&goods_Name=${$('.shipmentRecord input[name="shipGoodName"]').val()}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
@@ -2041,7 +2043,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.maskSpan').addClass('maskIcon');
           // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
         var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/excelReplenish?startDate=${replenishmentStartTime}&endDate=${sreplenishmentEndTime}&machineId=${machineSetData.machineId}`, true);
+        xhr.open("GET", `${vApi}/excelReplenish?startDate=${replenishmentStartTime}&endDate=${sreplenishmentEndTime}&machineId=${machineSetData.machineId}&way=${$('.replenishment select[name="shipSelect"]').val()}&goods_Name=${$('.replenishment input[name="replenishmentGoodName"]').val()}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
@@ -2174,7 +2176,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.maskSpan').addClass('maskIcon');
           // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
         var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/excelPriceRecord?startDate=${editStartTime}&endDate=${editEndTime}&machineId=${machineSetData.machineId}`, true);
+        xhr.open("GET", `${vApi}/excelPriceRecord?startDate=${editStartTime}&endDate=${editEndTime}&machineId=${machineSetData.machineId}&goods_Name=${$('.price input[name="priceGoodName"]').val()}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;

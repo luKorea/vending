@@ -3,9 +3,9 @@ import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents,
 // loadingWith('正在加载');
 //返回上一页
 $('#topHeader .back').click(function () {
-    window.history.go(-1);
+    // window.history.go(-1);
     window.location.href='M_managementCenter.html'
-})
+});
 // 获取权限
 var editFlag = false,//修改设备
 activateFlag = false,//启动设备
@@ -896,7 +896,6 @@ $('.merchantsContent').click(function(){
 });
 
 
-console.log(merchantsArr)
 
 let dom='<ul class="sire">';
 	function getTree(data){

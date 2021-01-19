@@ -9,7 +9,171 @@
 </head>
 <body>
     <div class="orderWrap">
-        <!-- <span class="avvv">sadad</span> -->
+        <div class="topHeader flexThree" >
+            <span class="hui-icons hui-icons-left back" id="back"></span>
+            <h2>售货机订单</h2>
+            <span class="hui-icons hui-icons-menu-point"></span>
+        </div>
+        <div class="marginTop90 OrderContent">
+            <div class="searchHeader">
+                <input type="text" id="search" placeholder="订单编号">
+            </div>
+            <ul class="orderList">
+                <!-- <li>
+                    <div class="flex">
+                        <label for="">售货机名(编号):</label>
+                        <p>云升科学园售货机(zj202101112)</p>
+                    </div>
+                    <div class="flex">
+                        <label for="">订单编号:</label>
+                        <p>ICBC20210115160700935043</p>
+                    </div>
+                    <div class="flex">
+                        <label for="">订单金额:</label>
+                        <p>0.01</p>
+                    </div>
+                    <div class="flex">
+                        <label for="">支付状态:</label>
+                        <p>未支付</p>
+                    </div>
+                    <div class="flex">
+                        <label for="">下单时间:</label>
+                        <p> 2021-01-15 11:33:35</p>
+                    </div>
+                    <div class="flex">
+                        <label for="">支付类型:</label>
+                        <p>未支付</p>
+                    </div>
+                    <div class="flex">
+                        <label for="">退款状态:</label>
+                        <p>未支付</p>
+                    </div>
+                    <div class="flex">
+                        <label for="">出货状态:</label>
+                        <p>未支付</p>
+                    </div>
+                    <div class="flex">
+                        <label for="">出货详情:</label>
+                        <p>象纪念币(29货道出货失败)</p>
+                    </div>
+                    <div class="flex">
+                        <label for="">销售经理:</label>
+                        <p>未支付</p>
+                    </div>
+                    <div class="flex">
+                        <label for="">收款方:</label>
+                        <p>未支付</p>
+                    </div>
+                </li> -->
+            </ul>
+            <div class="pages3">
+                <div class="hui-pager" style="padding:10px 30px 10px 40vw;">
+                    <div><a href="javascript:hui.toast('第1页');" class="hui-pager-active">1</a></div>
+                    <div><a href="javascript:hui.toast('第2页');">2</a></div>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- 商品部分 -->
+     <div class="goodsCont" style="display: none;">
+        <div class="goodsBox">
+            <ul class="goodsList">
+                <div class="goodsHeader">
+                    <h1>订单商品列表</h1>
+                    <img src="../../img/clonepng.png" alt="">
+                </div>
+                <div class="goodsListCont">
+                    <li class="list flex">
+                        <div class="img">
+                            <img
+                                src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1603087445&di=a4ad1b7211323421f7fe3d5e8080edf5&src=http://a0.att.hudong.com/70/91/01300000261284122542917592865.jpg" />
+                        </div>
+                        <div class="goodsInform">
+                            <h5>金币足球</h5>
+                            <div class="flexThree of">
+                                <p>￥128.00</p>
+                                <p>x3</p>
+                            </div>
+                            <p style="margin:5px 0;">已退款数量：1</p>
+                        </div>
+                    </li>
+                </div>
+
+
+            </ul>
+        </div>
+    </div>
+     <!-- 商户树部分 -->
+     <div class="merchantsContent maskContent" >
+        <div class="merchantsBox maskBox ">
+            <!-- <ul class="sire">
+                <li class="parent">
+                    <img class="nextImg" src="../../img/next.png" alt="">
+                    <span class="navFocus">海南中钞</span>
+                    <ul>
+                        <li>
+                            <img src="../../img/account.png" alt="">
+                            <span>海南中钞</span>
+                        </li>
+                        <li>
+                            <img src="../../img/account.png" alt="">
+                            <span>海南中钞</span>
+                        </li>
+                        <li>
+                            <img src="../../img/account.png" alt="">
+                            <span>海南中钞</span>
+                        </li>
+                    </ul>
+                </li>
+            </ul> -->
+        </div>
+    </div>
+    <!-- 退款部分 -->
+    <div class="refundCont independentPassCont maskContent" >
+        <div class="changeBox maskBox">
+            <div class="header">
+                <h1>请输入需要退款商品的数量（最少为1,最多为1）</h1>
+                <button class="close">
+                    <span class="hui-icons hui-icons-close"></span>
+                </button>
+            </div>
+            <div class="changeBody">
+                <div class="flex inputList refundNumber">
+                    <label>数量:</label>
+                    <input type="number" >
+                </div>
+                <div class="flex inputList blur sumInput">
+                    <label>金额:</label>
+                    <input type="number" disabled  name="sum">
+                </div>
+                <div class="footerCont">
+                    <div class="confirmBtn" >
+                        确定
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- 验证独立密码 -->
+     <div class="validationContent maskContent">
+        <div class="validationBox centerMaskWindow maskBox">
+            <div class="header">
+                <h1>验证独立密码</h1>
+                <button class="close">
+                    <span class="hui-icons hui-icons-close"></span>
+                </button>
+            </div>
+            <div class="validationBody">
+                <div class="flex inputList">
+                    <label>独立密码:</label>
+                    <input type="password" name="oldPass">
+                </div>
+            </div>
+            <div class="validationFooter">
+                <button type="button" class="hui-button hui-primary  confirmBtn">确定</button>
+            </div>
+        </div>
+    </div>
+    <script src="../../assets/public/md5.js"></script>
 </body>
 </html>

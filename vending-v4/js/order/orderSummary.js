@@ -235,7 +235,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
         var myDate = new Date(),
           // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
           xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/complete?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}`, true);
+        xhr.open("GET", `${vApi}/complete?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}&conditionThree=${$('.key-contnet input[name="orderCode"]').val()}&conditionSix=${$('.newKeyContent select[name="keyPayStatus"]').val()}&refund=${$('.newKeyContent select[name="keyrefundStatus"]').val()}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
@@ -244,6 +244,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
           if (xhr.status == 200) {
             $('.mask').fadeOut();
             $('.maskSpan').removeClass('maskIcon');
+            if (xhr.response.size < 30) {
+                layer.msg('导出失败', { icon: 7 })
+                return
+              } 
             var content = xhr.response;
             // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
             var fileName = `${marchantName}订单汇总(${startTime}-${endTime}).xls`
@@ -317,7 +321,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
       tableIns.reload({
         where: {
             startTime,
-            endTime
+            endTime,
+            conditionThree: $('.key-contnet input[name="orderCode"]').val(),
+            conditionSix:$('.newKeyContent select[name="keyPayStatus"]').val(),
+            refund:$('.newKeyContent select[name="keyrefundStatus"]').val(),
+            
         }
     })
   })

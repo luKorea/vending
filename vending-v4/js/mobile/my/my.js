@@ -56,7 +56,7 @@ $('.confirmBtn').click(function(){
             type:passTypeIndex
         });
         loadAjax('//user/updatePsw','post',sessionStorage.token,passData,'mask',`.${ele}`).then(res=>{
-            loadingWith('正在修改');
+            // loadingWith('正在修改');
             toastTitle(res.message)
             // toastTitle(res.message+(passTypeIndex==0?'请重新登录！':''))
             // if(passTypeIndex==0){

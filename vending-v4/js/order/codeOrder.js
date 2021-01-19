@@ -124,14 +124,14 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                     next(lis.join(''), page < 1000); //假设总页数为 10
                     var machineData = JSON.stringify({
                         pageNum: page,
-                        pageSize: 10,
+                        pageSize: 100,
                         merchant_id:merchantId
                     })
                     loadingAjax('/activity/getActivityList', 'post', machineData, sessionStorage.token).then(res => {
                         res.data.list.forEach((item, index) => {
                             lis.push(`<span activityID="${item.id}">${item.activity_name}</span>`)
                         })
-                        next(lis.join(''), res.data.list >= 10);
+                        next(lis.join(''), res.data.list.length >= 100);
                     }).catch(err => {
                         console.log(err)
                         layer.msg(err.message, { icon: 7 })
@@ -150,6 +150,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     $('.queryBtn').click(function () {
         orderTable.reload({
             where: {
+                good_code:$('.newKeyContent input[name="codeNumber"]').val(),
                 start_time: startTime ? startTime : null,
                 end_time: endTime ? endTime : null,
             }

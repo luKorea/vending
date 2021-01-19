@@ -21,9 +21,15 @@ layui.use(['table', 'form', 'layer','tree'], function () {
                 { field: 'addUser', width: 150, title: '创建人' , align: 'center'},
                 { field: 'addTime', width: 180, title: '创建时间', align: 'center'},
                 { field: 'operation', fixed: 'right', right: 0, width: 180, title: '操作', toolbar: '#barDemo', align: 'center' },
-            ]]
-            , id: 'tableId'
-            , loading: true,
+            ]],
+            id: 'tableId',
+            page: true,
+            loading: true,
+            // limits: [10, 20, 50],
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+                    },
             parseData: function (res) {
                 // console.log(res)
                 //res 即为原始返回的数据
@@ -32,7 +38,7 @@ layui.use(['table', 'form', 'layer','tree'], function () {
                         "code": res.code, //解析接口状态
                         "msg": res.message, //解析提示文本
                         "count": res.data.total, //解析数据长度
-                        "data": res.data //解析数据列表
+                        "data": res.data.list //解析数据列表
                     };
                 } else if (res.code == 403) {
                     window.parent.location.href = "login.html";
@@ -255,6 +261,7 @@ layui.use(['table', 'form', 'layer','tree'], function () {
 
 
     // 树部分
+    
     var dataList = treeList();
       // treeFun(tree, 'test1', tableIns, dataList, 'condition');
       tree.render({

@@ -34,7 +34,46 @@
                                 <div class="newKeyItem">
                                     <label for="">订单编号</label>
                                     <div class="key-contnet ">
-                                        <input type="text" name="orderCode"  placeholder="订单编号">
+                                        <input type="text" name="orderCode" placeholder="订单编号">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">支付状态</label>
+                                    <div class="layui-form">
+                                        <select name="keyPayStatus" id="" lay-filter="mySelect">
+                                            <option value="">全部</option>
+                                            <option value="2">已支付</option>
+                                            <option value="0">未支付</option>
+                                            <option value="1">等待支付</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">退款状态</label>
+                                    <div class="layui-form">
+                                        <select name="keyrefundStatus" id="" lay-filter="mySelect">
+                                            <option value="">全部</option>
+                                            <option value="1">未退款</option>
+                                            <option value="2">部分退款</option>
+                                            <option value="3">全部退款</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">出货状态</label>
+                                    <div class="layui-form">
+                                        <select name="keyShipStatus" id="" lay-filter="mySelect">
+                                            <option value="">全部</option>
+                                            <option value="0">未出货</option>
+                                            <option value="1">部分出货失败</option>
+                                            <option value="2">全部出货成功</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -287,7 +326,8 @@
                                 <!-- <p style="float: right;width: 25%;">退款金额：<span class="refundNum">0</span></p> -->
                             </div>
 
-                            <button class="layui-btn layui-btn-normal delBtn refundBtn  hide btn" style="padding: 0 18px;">
+                            <button class="layui-btn layui-btn-normal delBtn refundBtn  hide btn"
+                                style="padding: 0 18px;">
                                 <span>退款</span>
                             </button>
                         </div>
@@ -328,8 +368,8 @@
             </div>
         </div>
 
-          <!-- 输入独立密码 -->
-        <div class=" iPasswprd maskContnet" >
+        <!-- 输入独立密码 -->
+        <div class=" iPasswprd maskContnet">
             <div class="passwordCont margin0">
                 <div class="playHeader">
                     <span>验证独立密码</span>
@@ -369,8 +409,8 @@
                     <div class="listFlex">
                         <label><span style="color: red;">*</span>时间：</label>
                         <div class="layui-input-inline" style="width: 60%;">
-                            <input type="text" class="layui-input" id="test8" placeholder=" - "
-                            autocomplete="off"   style="text-align: center;">
+                            <input type="text" class="layui-input" id="test8" placeholder=" - " autocomplete="off"
+                                style="text-align: center;">
                         </div>
                     </div>
                 </div>

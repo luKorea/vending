@@ -235,10 +235,11 @@
                         <div class="goodsInform">
                             <h5>金币足球</h5>
                             <div class="flexC of">
-                                <p>￥128.00</p>
-                                <p>x3</p>
+                                <p>￥${item.price}</p>
+                                <p>X ${item.count}</p>
                             </div>
                             <!-- <h5>总价：384.00</h5> -->
+                            <p style="margin:5px 0;">已退款数量：${item.refund_count ? item.refund_count : 0}</p>
                         </div>
                     </li>
                 </div>
