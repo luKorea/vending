@@ -72,13 +72,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             },
             {
                 field: 'sign_name', width: 150, title: '退款状态', align: 'center', templet: function (d) {
-                    var total = 0;
-                    var result = 0;
-                    d.goodsList.forEach(item => {
-                        total += item.count;
-                        result += item.refund_count
-                    })
-                    return result == 0 ? '未退款' : total - result == 0 ? '全部退款' : '部分退款'
+                    return d.refund == 1 ? '未退款' : d.refund == 2 ? '部分退款' : d.refund == 3?'全部退款':'-'
                 }
             },
             {
@@ -241,10 +235,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
     
         xhr.onload = function (res) {
+            console.log(res)
           if (xhr.status == 200) {
             $('.mask').fadeOut();
             $('.maskSpan').removeClass('maskIcon');
-            if (xhr.response.size < 30) {
+            if (xhr.response.size < 50) {
                 layer.msg('导出失败', { icon: 7 })
                 return
               } 

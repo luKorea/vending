@@ -355,7 +355,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       if (xhr.status == 200) {
         $('.mask').fadeOut();
         $('.maskSpan').removeClass('maskIcon');
-        if (xhr.response.size < 30) {
+        if (xhr.response.size < 50) {
           layer.msg('导出失败', { icon: 7 })
           return
         } 
