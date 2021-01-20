@@ -34,12 +34,6 @@ function orderArrList(mId, mNum) {
         var str = '';
         orderListArr = res.data.list;
         res.data.list.forEach((item, index) => {
-            var total = 0;
-            var result = 0;
-            item.goodsList.forEach(item => {
-                total += item.count;
-                result += item.refund_count
-            });
             var shipDetails = '';
             item.ship_info.forEach(items => {
                 shipDetails += `<p>
@@ -73,7 +67,7 @@ function orderArrList(mId, mNum) {
                         </div>
                         <div class="flex">
                             <label for="">退款状态:</label>
-                            <p>${result == 0 ? '未退款' : total - result == 0 ? '全部退款' : '部分退款'}</p>
+                            <p>${item.refund == 1 ? '未退款' : item.refund == 2 ? '部分退款' : item.refund == 3?'全部退款':'-'}</p>
                         </div>
                         <div class="flex">
                             <label for="">出货状态:</label>

@@ -38,7 +38,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'info', width: 330, title: '售货机信息', align: 'center', templet: function (d) {
+                    field: 'info', width: 330, title: '售货机名', align: 'center', templet: function (d) {
                         if(d.info){
                             return d.info
                         }else{
