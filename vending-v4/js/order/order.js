@@ -345,7 +345,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     $('.maskSpan').addClass('maskIcon');
     var myDate = new Date(),
       xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-    xhr.open("GET", `${vApi}/exportExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}&conditionSix=${$('.newKeyContent select[name="keyPayStatus"]').val()}&shipStatus=${$('.newKeyContent select[name="keyShipStatus"]').val()}&refund=${$('.newKeyContent select[name="keyrefundStatus"]').val()}`, true);
+    xhr.open("GET", `${vApi}/exportExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}&conditionSix=${$('.newKeyContent select[name="keyPayStatus"]').val()}&shipStatus=${$('.newKeyContent select[name="keyShipStatus"]').val()}&refund=${$('.newKeyContent select[name="keyrefundStatus"]').val()}&conditionThree=${$('.key-contnet input[name="orderCode"]').val()}`, true);
     xhr.setRequestHeader("token", sessionStorage.token);
 
     // xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');

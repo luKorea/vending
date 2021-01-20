@@ -225,7 +225,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
     popupHide('exportCont', 'exportBox')
   })
   // 导出
-  var pushMId=null,
+  var pushMId=sessionStorage.machineID,
   pushMName =null;
   $('.pushBtn').click(function () {
     if (!(startTime && endTime)) {
@@ -239,7 +239,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
     $('.mask').fadeIn();
     $('.maskSpan').addClass('maskIcon');
     var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-    xhr.open("GET", `${vApi}/exportMailExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${pushMId}&dispatch_status=${$('.newKeyContent select[name="takeStatus"]').val()}&sign_name=${$('.newKeyContent input[name="takeName"]').val()}&sign_phone=${$('.newKeyContent input[name="takePhone"]').val()}&refund=${$('.newKeyContent select[name="keyrefundStatus"]').val()}`, true);
+    xhr.open("GET", `${vApi}/exportMailExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${pushMId}&dispatch_status=${$('.newKeyContent select[name="takeStatus"]').val()}&sign_name=${$('.newKeyContent input[name="takeName"]').val()}&sign_phone=${$('.newKeyContent input[name="takePhone"]').val()}&refund=${$('.newKeyContent select[name="keyrefundStatus"]').val()}&conditionThree=${$('.key-contnet input[name="orderCode"]').val()}`, true);
     xhr.setRequestHeader("token", sessionStorage.token);
     // xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
     xhr.responseType = 'blob';//设置ajax的响应类型为blob;
