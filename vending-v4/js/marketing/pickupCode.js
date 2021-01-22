@@ -1,17 +1,32 @@
 // import { loadAjax, showPopup } from '../../common/common';
 import '../../MyCss/marketing/pickupCode.scss';
 layui.use(['form', 'layer', 'table', 'transfer'], function () {
-    var addFlag = false,
-        editFlag = false,
-        delFlag = false;
-    // 权限控制
-    permissionsVal(436, 437,465).then(res => {
-        addFlag = res.addFlag;
-        editFlag = res.editFlag;
-        delFlag=res.delFlag;
-        console.log(addFlag)
-        permissions();
-    });
+    var permissionsData0=window.parent.permissionsData1(),
+     permissionsObj={
+        436:false,
+        437:false,
+        465:false,
+    },
+    permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
+      // 权限控制
+      function permissions() {
+        permissionsObjFlag[436] ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+        permissionsObjFlag[437] ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
+        permissionsObjFlag[465]?$('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
+
+    };
+    permissions();
+    // var addFlag = false,
+    //     editFlag = false,
+    //     delFlag = false;
+    // // 权限控制
+    // permissionsVal(436, 437,465).then(res => {
+    //     addFlag = res.addFlag;
+    //     editFlag = res.editFlag;
+    //     delFlag=res.delFlag;
+    // });
+  
+
     var form = layui.form,
         layer = layui.layer,
         table = layui.table,
@@ -882,13 +897,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             }
         })
     });
-    // 权限控制
-    function permissions() {
-        addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-        editFlag ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
-        delFlag?$('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
-
-    };
+    
     // 售货机穿梭框
     function transferFun(data, value) {
         transfer.render({

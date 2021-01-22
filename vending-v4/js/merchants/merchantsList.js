@@ -17,7 +17,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
         },
         cols: [[
-            { field: 'title', width: 180, title: '商户名' , align: 'center'},
+            { field: 'title', width: 180, title: '商户名', align: 'center' },
             {
                 field: 'merchantName', width: 150, title: '上级商户', align: 'center', templet: function (d) {
                     return d.id == 0 ? '' : d.merchantName
@@ -25,17 +25,21 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             { field: 'alias', width: 160, title: '商户编号', align: 'center' },
             { field: 'addUser', width: 150, title: '创建人', align: 'center', },
-            { field: 'addTime', width: 180, title: '创建时间' , align: 'center',templet:function(d){
-                return timeStamp(d.addTime)
-            }},
-            { field: 'lastUser', width: 150, title: '最后修改人', align: 'center', },
-            { field: 'lastTime', width: 180, title: '最后修改时间', align: 'center' ,templet:function(d){
-                if(d.lastTime){
-                    return timeStamp(d.lastTime)
-                }else{
-                    return '-'
+            {
+                field: 'addTime', width: 180, title: '创建时间', align: 'center', templet: function (d) {
+                    return timeStamp(d.addTime)
                 }
-            }},
+            },
+            { field: 'lastUser', width: 150, title: '最后修改人', align: 'center', },
+            {
+                field: 'lastTime', width: 180, title: '最后修改时间', align: 'center', templet: function (d) {
+                    if (d.lastTime) {
+                        return timeStamp(d.lastTime)
+                    } else {
+                        return '-'
+                    }
+                }
+            },
             { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },
         ]]
         , id: 'tableId'
@@ -96,7 +100,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // var marchantsList = merchantsListMian('');
     //监听工具条
     var data = null,
-        editServiceFlag=false; 
+        editServiceFlag = false;
     table.on('tool(test)', function (obj) {
         data = obj.data;
         if (obj.event === 'edit') {
@@ -115,43 +119,43 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             $('.marchantsList').val(data.topMerchant);
             $('.MemberOperation input[name="service_phone"]').val(data.service_phone);
             $('.editMerchants input[name="customPhone"]').val(data.custom_phone)
-            if(data.service_code){
+            if (data.service_code) {
                 $('.editImg').show()
                 $('.editImg img').prop('src', data.service_code);
-            }else{
+            } else {
                 $('.editImg').hide()
                 $('.editImg img').prop('src', '');
             }
-            if(data.custom_code){
+            if (data.custom_code) {
                 $('.customImg').show();
-                $('.customImg img').prop('src',data.custom_code);
-            }else{
+                $('.customImg img').prop('src', data.custom_code);
+            } else {
                 $('.customImg').hide();
-                $('.customImg img').prop('src','');
+                $('.customImg img').prop('src', '');
             }
             // 判断客服
-            if(data.is_service==1){
-                $('.editMerchants input[name="editServiceOpen"]').prop('checked',true);
+            if (data.is_service == 1) {
+                $('.editMerchants input[name="editServiceOpen"]').prop('checked', true);
                 $('.editServiceContent').show();
-                editServiceFlag=true;
-            }else{
-                $('.editMerchants input[name="editServiceOpen"]').prop('checked',false);
+                editServiceFlag = true;
+            } else {
+                $('.editMerchants input[name="editServiceOpen"]').prop('checked', false);
                 $('.editServiceContent').hide();
-                editServiceFlag=false;
+                editServiceFlag = false;
             }
             // 判断定制
-            if(data.is_custom==1){
-                $('.editMerchants input[name="editCustomOpen"]').prop('checked',true);
+            if (data.is_custom == 1) {
+                $('.editMerchants input[name="editCustomOpen"]').prop('checked', true);
                 $('.editCustomCont').show();
-                customFlag=true;
-            }else{
-                $('.editMerchants input[name="editCustomOpen"]').prop('checked',false);
+                customFlag = true;
+            } else {
+                $('.editMerchants input[name="editCustomOpen"]').prop('checked', false);
                 $('.editCustomCont').hide();
-                customFlag=false;
+                customFlag = false;
             }
             // 判断销售经理类别
-            salseList=[]
-            salesClassList(data.id,1);
+            salseList = []
+            salesClassList(data.id, 1);
             // if(data.is_sales==1){
             //     salseFlag=true;
             //     $('.listFlex input[name="salse"]').prop('checked',true);
@@ -161,7 +165,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             //     $('.listFlex input[name="salse"]').prop('checked',false);
             //     $('.salseList').hide();
             // }
-           $('.MemberOperation input[name="order"]').prop('checked', data.follow_mail==1?true:false);
+            $('.MemberOperation input[name="order"]').prop('checked', data.follow_mail == 1 ? true : false);
             form.render();
         } else if (obj.event === 'delete') {
             if (data.id == 1) {
@@ -170,7 +174,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             }
             layer.confirm('确定删除？', function (index) {
                 layer.close(index);
-                loadingAjax('/merchant/deleteMerchant','post',JSON.stringify({id: data.id,topMerchant: data.topMerchant}),sessionStorage.token,'mask','','',layer).then(res=>{
+                loadingAjax('/merchant/deleteMerchant', 'post', JSON.stringify({ id: data.id, topMerchant: data.topMerchant }), sessionStorage.token, 'mask', '', '', layer).then(res => {
                     layer.msg('删除成功', { icon: 1 })
                     dataList = treeList();
                     var addEditData = treeList();
@@ -180,7 +184,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     tableIns.reload({
                         where: {}
                     })
-                }).catch(err=>{
+                }).catch(err => {
                     layer.msg(err.msg, { icon: 7 })
                 })
             });
@@ -226,8 +230,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var addImg = null;
     // 添加选择图片
     $('.addBox .addUpload').change(function (e) {
-        if(!$(this).val()){
-            return ;
+        if (!$(this).val()) {
+            return;
         }
         var that = this;
         var upDetails = new FormData();
@@ -274,9 +278,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         //     }
         // })
         if ($('.addBox input[name="merchantsName"]').val() && $('.addBox input[name="addmarchantsVal"]').val()) {
-             
+
             // console.log($('.addBox input[name="service_phone"]').val())
-            if (!(addImg||$('.addBox input[name="service_phone"]').val())&&addServiceFlag) {
+            if (!(addImg || $('.addBox input[name="service_phone"]').val()) && addServiceFlag) {
                 layer.msg('请填写客服电话或上传客服微信二维码', { icon: 7 });
                 return;
             }
@@ -284,10 +288,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 name: $('.addBox input[name="merchantsName"]').val(),
                 topMerchant: Number(topVal[0]),
                 alias: topVal[1],
-                is_service:addServiceFlag?1:0,
-                service_phone: addServiceFlag?$('.addBox input[name="service_phone"]').val():'',
-                service_code: addServiceFlag?addImg:'',
-                follow_mail:$('.addMerchants input[name="order"]').prop('checked')?1:0
+                is_service: addServiceFlag ? 1 : 0,
+                service_phone: addServiceFlag ? $('.addBox input[name="service_phone"]').val() : '',
+                service_code: addServiceFlag ? addImg : '',
+                follow_mail: $('.addMerchants input[name="order"]').prop('checked') ? 1 : 0
             })
             loadingAjax('/merchant/newMerchant', 'post', addMerchantsData, sessionStorage.token, '', 'addMerchants', 'addBox', layer).then((res) => {
                 $('.addBox input[name="merchantsName"]').val('');
@@ -312,9 +316,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         }
     })
     // 编辑选择客服图片
-    $('.editMerchants .editUpload').change(function(e){
-        if(!$(this).val()){
-            return ;
+    $('.editMerchants .editUpload').change(function (e) {
+        if (!$(this).val()) {
+            return;
         }
         var that = this;
         var upDetails = new FormData();
@@ -359,24 +363,24 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             //         return ;
             //     }
             // }
-            if(!((($('.MemberOperation input[name="max_ship"]').val()>0)&&(Number.isInteger(Number($('.MemberOperation input[name="max_ship"]').val())))))){
+            if (!((($('.MemberOperation input[name="max_ship"]').val() > 0) && (Number.isInteger(Number($('.MemberOperation input[name="max_ship"]').val())))))) {
                 layer.msg('最大出货数必须是正整数', { icon: 7 });
-                return ;
+                return;
             }
             var editdMerchantsData = JSON.stringify({
                 id: data.id,
                 name: $('.editMerchants input[name="merchantsName"]').val(),
                 topMerchant: Number($('.marchantsList').val()),
-                service_phone:editServiceFlag? $('.editMerchants input[name="service_phone"]').val():'',
-                service_code:editServiceFlag? $('.editImg img').attr('src'):'',
-                is_service:editServiceFlag?1:0,
-                is_custom:customFlag?1:0,
-                custom_phone:customFlag?$('.editMerchants input[name="customPhone"]').val():'',
-                custom_code:customFlag?$('.customImg img').attr('src'):'',
-                is_sales:salseFlag?1:0,
-                sales_type:$('.salseCont input[name="salseClassName"]:checked').val(),
-                follow_mail:$('.MemberOperation input[name="order"]').prop('checked')?1:0,
-                max_ship:Number($('.MemberOperation input[name="max_ship"]').val()) 
+                service_phone: editServiceFlag ? $('.editMerchants input[name="service_phone"]').val() : '',
+                service_code: editServiceFlag ? $('.editImg img').attr('src') : '',
+                is_service: editServiceFlag ? 1 : 0,
+                is_custom: customFlag ? 1 : 0,
+                custom_phone: customFlag ? $('.editMerchants input[name="customPhone"]').val() : '',
+                custom_code: customFlag ? $('.customImg img').attr('src') : '',
+                is_sales: salseFlag ? 1 : 0,
+                sales_type: $('.salseCont input[name="salseClassName"]:checked').val(),
+                follow_mail: $('.MemberOperation input[name="order"]').prop('checked') ? 1 : 0,
+                max_ship: Number($('.MemberOperation input[name="max_ship"]').val())
             });
             loadingAjax('/merchant/updateMerchant', 'post', editdMerchantsData, sessionStorage.token, '', 'MemberOperation', 'MemberContent', layer).then((res) => {
                 var addEditData = treeList();
@@ -398,7 +402,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     //树状图 
     var addEditData = null;
     var dataList = addEditData = treeList();
-    var eleColor=null; //商户列表颜色
+    var eleColor = null; //商户列表颜色
     // treeFun(tree, 'test1', tableIns, dataList, 'conditionTwo', '', '', 'conditionThree');
     $('.addBox input[name="marchantsListname"]').prop('placeholder', addEditData[0].title)
     $('.addBox input[name="addmarchantsVal"]').val(addEditData[0].id + ' ' + addEditData[0].alias);
@@ -412,13 +416,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 刷新商户列表
     // $('.refreshBtnList').click(function(){
     //     tree.reload('treelistEdit', {
-            
+
     //       });
     //       console.log(eleColor)
     //       setTimeout(_=>{
     //         eleColor.style.color = "#be954a";
     //       },150)
-          
+
     // })
     var inst2 = tree.render({
         elem: '#test1',
@@ -446,36 +450,50 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             })
             var nodesEdti = $(`#test1 .layui-tree-txt`);
             for (var i = 0; i < nodesEdti.length; i++) {
-                if (nodesEdti[i].innerHTML === obj.data.title){
+                if (nodesEdti[i].innerHTML === obj.data.title) {
                     nodesEdti[i].style.color = "#be954a";
-                    eleColor=nodesEdti[i];
-                }              
-                else{
+                    eleColor = nodesEdti[i];
+                }
+                else {
                     nodesEdti[i].style.color = "#555";
-                }   
+                }
             };
             $('.addBox input[name="marchantsListname"]').prop('placeholder', obj.data.title)
             $('.addBox input[name="addmarchantsVal"]').val(obj.data.id + ' ' + obj.data.alias);
         },
     });
-    var addFlag = false,
-        editFlag = false,
-        delFlag = false;
-    permissionsVal(393, 394, 395).then(res => {
-        // console.log(res)
-        addFlag = res.addFlag;
-        editFlag = res.editFlag;
-        delFlag = res.delFlag;
-        permissions();
-    }).catch(err => {
-        layer.msg('服务器请求超时', { icon: 7 })
-    });
 
+    var permissionsData0 = window.parent.permissionsData1(),
+    permissionsObj = {
+        393: false,
+        394: false,
+        395: false,
+    },
+        permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
     function permissions() {
-        addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-        editFlag ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
-        delFlag ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
+        permissionsObjFlag[393] ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+        permissionsObjFlag[394] ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
+        permissionsObjFlag[395] ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
     };
+    permissions();
+    // var addFlag = false,
+    //     editFlag = false,
+    //     delFlag = false;
+    // permissionsVal(393, 394, 395).then(res => {
+    //     // console.log(res)
+    //     addFlag = res.addFlag;
+    //     editFlag = res.editFlag;
+    //     delFlag = res.delFlag;
+    //     permissions();
+    // }).catch(err => {
+    //     layer.msg('服务器请求超时', { icon: 7 })
+    // });
+
+    // function permissions() {
+    //     addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+    //     editFlag ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
+    //     delFlag ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
+    // };
 
     // 刷新页面
     $('.refreshBtn').click(function () {
@@ -483,39 +501,39 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
 
     // 监听添加客服开关
-    var addServiceFlag=false;
-    form.on('switch(switchTest)', function(data){
+    var addServiceFlag = false;
+    form.on('switch(switchTest)', function (data) {
         // console.log(data.elem.checked); //开关是否开启，true或者false
-        addServiceFlag=data.elem.checked;
-        if(data.elem.checked){
+        addServiceFlag = data.elem.checked;
+        if (data.elem.checked) {
             $('.serviceCont').slideDown();
-        }else{
+        } else {
             $('.serviceCont').slideUp();
         }
-      });  
+    });
     //   监听编辑客服开关
-      form.on('switch(editService)', function(data){
-        editServiceFlag=data.elem.checked;
-        if(data.elem.checked){
+    form.on('switch(editService)', function (data) {
+        editServiceFlag = data.elem.checked;
+        if (data.elem.checked) {
             $('.editServiceContent').slideDown();
-        }else{
+        } else {
             $('.editServiceContent').slideUp();
         }
-      }); 
-      var customFlag=false;
+    });
+    var customFlag = false;
     //   监听编辑定制开关
-    form.on('switch(editCustomOpen)', function(data){
-        customFlag=data.elem.checked;
-        if(data.elem.checked){
+    form.on('switch(editCustomOpen)', function (data) {
+        customFlag = data.elem.checked;
+        if (data.elem.checked) {
             $('.editCustomCont').slideDown();
-        }else{
+        } else {
             $('.editCustomCont').slideUp();
         }
-      }); 
+    });
     //   编辑选中定制图片
-      $('.customBtn .customInput').change(function(e){
-        if(!$(this).val()){
-            return ;
+    $('.customBtn .customInput').change(function (e) {
+        if (!$(this).val()) {
+            return;
         }
         var that = this;
         var upDetails = new FormData();
@@ -551,61 +569,61 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         })
     });
     // 清除定制图片
-    $('.editDelImgBtn').click(function(){
+    $('.editDelImgBtn').click(function () {
         layer.confirm('确定定制图片？', function (index) {
             layer.close(index);
             $('.customImg').hide();
-            $('.customImg img').prop('src','');
+            $('.customImg img').prop('src', '');
         })
     })
 
     // 销售经理类别
-    var salseList=[];
+    var salseList = [];
     // 获取商户销售经理类别
-    function salesClassList(mid,mNum){
-        var salesObj=JSON.stringify({
-            merchantId:mid,
-            pageSize:10,
-            pageNum:mNum
+    function salesClassList(mid, mNum) {
+        var salesObj = JSON.stringify({
+            merchantId: mid,
+            pageSize: 10,
+            pageNum: mNum
         })
-        loadingAjax('/sales_manager/getSalesType','post',salesObj,sessionStorage.token,'mask','','',layer).then(res=>{
+        loadingAjax('/sales_manager/getSalesType', 'post', salesObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
             // console.log(res)
-            if(res.data.list!=0){
-                salseList=salseList.concat(res.data.list);
+            if (res.data.list != 0) {
+                salseList = salseList.concat(res.data.list);
                 ToSalseListFun(salseList)
             }
-            if (salseList.length==0){
+            if (salseList.length == 0) {
                 $('.salseCont').html(`<input type="radio" name="salseClassName" value="" title="无" checked>`);
                 form.render();
             }
-            if(res.data.list.length==10){
+            if (res.data.list.length == 10) {
                 $('.loadMore').show();
-            }else{
+            } else {
                 $('.loadMore').hide();
             }
-        }).catch(err=>{
-            layer.msg(err.message,{icon:2})
+        }).catch(err => {
+            layer.msg(err.message, { icon: 2 })
         })
     }
 
     // 渲染销售经理列表
-    function ToSalseListFun(ToList){
-        var salseStr='';
-        ToList.forEach(item=>{
-            salseStr+=`<input type="radio" name="salseClassName" ${data.sales_type==item.sm_classify?'checked':''} value="${item.sm_classify}" title="${item.sm_classify}">`
+    function ToSalseListFun(ToList) {
+        var salseStr = '';
+        ToList.forEach(item => {
+            salseStr += `<input type="radio" name="salseClassName" ${data.sales_type == item.sm_classify ? 'checked' : ''} value="${item.sm_classify}" title="${item.sm_classify}">`
         });
         $('.salseCont').html(salseStr);
         form.render();
     };
     // 监听销售经理开关
-    var salseFlag=false;
-    form.on('switch(salseOpne)', function(data){
-        salseFlag=data.elem.checked;
-        if(data.elem.checked){
+    var salseFlag = false;
+    form.on('switch(salseOpne)', function (data) {
+        salseFlag = data.elem.checked;
+        if (data.elem.checked) {
             // $('.salseList').slideDown();
-        }else{
+        } else {
             // $('.salseList').slideUp();
         }
-      });   
+    });
     //   console.log($('.MemberOperation input[name="order"]').prop('checked'))
 });

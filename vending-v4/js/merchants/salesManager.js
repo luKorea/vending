@@ -1,5 +1,18 @@
 import '../../MyCss/merchants/salesManager.scss';
 layui.use(['table', 'form', 'layer', 'laydate'], function () {
+    var permissionsData0 = window.parent.permissionsData1(),
+     permissionsObj = {
+        436: false,
+        437: false,
+        446: false,
+    },
+        permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
+    function permissions() {
+        permissionsObjFlag[436] ? $('.addSalesBtn').removeClass('hide') : $('.addSalesBtn').addClass('hide');
+        permissionsObjFlag[437] ? $('.pushImportBtn').removeClass('hide') : $('.pushImportBtn').addClass('hide');
+        permissionsObjFlag[446] ? $('.delBtn').removeClass('hide') : $('.delBtn').addClass('hide')
+    };
+    permissions();
     var table = layui.table,
         form = layui.form,
         layer = layui.layer,
@@ -99,7 +112,12 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
             statusCode: 200 //规定成功的状态码，默认：0
         },
         done: function (res) {
-
+            if (res.code == 403) {
+                window.parent.location.href = "login.html";
+            } else if (res.code == 405) {
+                $('.hangContent').show();
+            }
+            permissions();
         }
     });
     // 查询
@@ -239,19 +257,16 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
                 layer.msg(err.message, { icon: 2 })
             })
         })
-    })
-
-    // 权限控制
-    permissionsVal(436, 437, 446).then(res => {
-        res.addFlag ? $('.addSalesBtn').removeClass('hide') : $('.addSalesBtn').addClass('hide');
-        res.editFlag ? $('.pushImportBtn').removeClass('hide') : $('.pushImportBtn').addClass('hide');
-        res.delFlag ? $('.delBtn').removeClass('hide') : $('.delBtn').addClass('hide')
     });
-
-
-
-
-    //   $('.importBtn').click(function(){
-    //       $('.importBtn input[name="addUpload"]').click()
-    //   })
+    //     // 权限控制
+    //     permissionsVal(436, 437, 446).then(res => {
+    //         res.addFlag ? $('.addSalesBtn').removeClass('hide') : $('.addSalesBtn').addClass('hide');
+    //         res.editFlag ? $('.pushImportBtn').removeClass('hide') : $('.pushImportBtn').addClass('hide');
+    //         res.delFlag ? $('.delBtn').removeClass('hide') : $('.delBtn').addClass('hide')
+    //     });
+    // function permissions() {
+    //     res.addFlag ? $('.addSalesBtn').removeClass('hide') : $('.addSalesBtn').addClass('hide');
+    //     res.editFlag ? $('.pushImportBtn').removeClass('hide') : $('.pushImportBtn').addClass('hide');
+    //     res.delFlag ? $('.delBtn').removeClass('hide') : $('.delBtn').addClass('hide')
+    //   };
 })

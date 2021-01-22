@@ -2,7 +2,27 @@ import '../../MyCss/goods/customGoods.css'
 layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   tooltip('.refreshBtnList', { transition: true, time: 200 },);
   var $ = layui.jquery,
-    tree = layui.tree;
+    tree = layui.tree,
+    permissionsData0 = window.parent.permissionsData1(),
+    permissionsObj = {
+      377: false,
+      378: false,
+      375: false,
+      416: false,
+      415: false,
+      461: false,
+    },
+    permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
+  function permissions() {
+    permissionsObjFlag[377] ? $('.add-btn').removeClass('hide') : $('.add-btn').addClass('hide');
+    permissionsObjFlag[378] ? $('.GoodsInformation').removeClass('hide') : $('.GoodsInformation').addClass('hide');
+    permissionsObjFlag[375] ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
+    permissionsObjFlag[416] ? $('.pushGoodsBtn').removeClass('hide') : $('.pushGoodsBtn').addClass('hide');
+    permissionsObjFlag[415] ? $('.pushListBtn').removeClass('hide') : $('.pushListBtn').addClass('hide');
+    permissionsObjFlag[461] ? $('.syncBtn').removeClass('hide') : $('.syncBtn').addClass('hide');
+  };
+  permissions();
+
   // 收起
   $('.sidebar i').click(function () {
     $('.left-mian').hide();
@@ -813,7 +833,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         none: '您没有权限，请联系管理员授权!'
       },
       click: function (obj) {
-        if (addFlag) {
+        if (permissionsObjFlag[377]) {
           if (obj.data.id == sessionStorage.machineID) {
             $('.add-btn').show()
           } else {
@@ -1023,11 +1043,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   $('.pushListBtn').click(function () {
     popupShow('topGoodsList', 'topBox');
     if (!parentGoods) {
-      parentGoodsList();
-    }else{
-      parentGoods.reload({
-        where:{}
-      })
+      setTimeout(()=>{
+      
+        parentGoodsList();
+      },500)
     }
   })
   // 推送列表查询
@@ -1094,32 +1113,32 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       // location = location;
     }
   });
-  var addFlag = true,
-    editFlag = true,
-    delFlag = true,
-    fourFlag = true,
-    fiveFlag = true,
-    sixFlag = false;
-  permissionsVal(377, 378, 375, 416, 415, 461).then(res => {
-    addFlag = res.addFlag;
-    editFlag = res.editFlag;
-    delFlag = res.delFlag;
-    fourFlag = res.fourFlag;
-    fiveFlag = res.fiveFlag;
-    sixFlag = res.sixFlag;
-    permissions();
-  }).catch(err => {
-    layer.msg('服务器请求超时', { icon: 7 })
-  });
-  function permissions() {
-    addFlag ? $('.add-btn').removeClass('hide') : $('.add-btn').addClass('hide');
-    editFlag ? $('.GoodsInformation').removeClass('hide') : $('.GoodsInformation').addClass('hide');
-    delFlag ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
-    fourFlag ? $('.pushGoodsBtn').removeClass('hide') : $('.pushGoodsBtn').addClass('hide');
-    fiveFlag ? $('.pushListBtn').removeClass('hide') : $('.pushListBtn').addClass('hide');
-    sixFlag ? $('.syncBtn').removeClass('hide') : $('.syncBtn').addClass('hide');
-    // console.log(sixFlag)
-  };
+
+  // var addFlag = true,
+  //   editFlag = true,
+  //   delFlag = true,
+  //   fourFlag = true,
+  //   fiveFlag = true,
+  //   sixFlag = false;
+  // permissionsVal(377, 378, 375, 416, 415, 461).then(res => {
+  //   addFlag = res.addFlag;
+  //   editFlag = res.editFlag;
+  //   delFlag = res.delFlag;
+  //   fourFlag = res.fourFlag;
+  //   fiveFlag = res.fiveFlag;
+  //   sixFlag = res.sixFlag;
+  //   permissions();
+  // }).catch(err => {
+  //   layer.msg('服务器请求超时', { icon: 7 })
+  // });
+  // function permissions() {
+  //   addFlag ? $('.add-btn').removeClass('hide') : $('.add-btn').addClass('hide');
+  //   editFlag ? $('.GoodsInformation').removeClass('hide') : $('.GoodsInformation').addClass('hide');
+  //   delFlag ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
+  //   fourFlag ? $('.pushGoodsBtn').removeClass('hide') : $('.pushGoodsBtn').addClass('hide');
+  //   fiveFlag ? $('.pushListBtn').removeClass('hide') : $('.pushListBtn').addClass('hide');
+  //   sixFlag ? $('.syncBtn').removeClass('hide') : $('.syncBtn').addClass('hide');
+  // };
 
   // 同步价格部分
   $('.syncBtn').click(function () {
@@ -1385,10 +1404,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     PImgSHow = true;
     $('#pic101').hide();
   });
-  $('#pic101').mouseenter(function(){
+  $('#pic101').mouseenter(function () {
     $('#pic101').show();
   })
-  $('#pic101').mouseleave(function(){
+  $('#pic101').mouseleave(function () {
     if (PImgSHow) {
       $('#pic101').hide();
     }

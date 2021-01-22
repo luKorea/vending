@@ -1,6 +1,22 @@
 import '../../MyCss/advertising/release.css'
 layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function () {
     tooltip('.refreshBtnList', { transition: true, time: 200 });
+    var permissionsData0=window.parent.permissionsData1(),
+     permissionsObj={
+        383:false,
+        384:false,
+        386:false,
+        404:false,
+        406:false,
+    },
+    permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
+    function permissions() {
+        permissionsObjFlag[383] ? $('.publicAdvertisingBtn').removeClass('hide') : $('.publicAdvertisingBtn').addClass('hide');
+        permissionsObjFlag[386] ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
+        permissionsObjFlag[404] ? $('.pushReleaseBtn').removeClass('hide') : $('.pushReleaseBtn').addClass('hide');
+        permissionsObjFlag[406] ? $('.RpushListBtn').removeClass('hide') : $('.RpushListBtn').addClass('hide');
+    };
+    permissions();
     var token = sessionStorage.token,
         tree = layui.tree,
         form = layui.form;
@@ -214,7 +230,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
 
     // 广告详情确定修改事件
     $('.detailsFooter .confirmBtn').click(function () {
-        if (!editFlag) {
+        if (!permissionsObjFlag[384]) {
             layer.msg('您没有编辑广告的权限', { icon: 7 });
             return;
         }
@@ -647,10 +663,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
     // 发布广告弹窗事件
     $('.publicAdvertisingBtn').click(function () {
-        if (!addFlag) {
-            layer.msg('您没有添加广告的权限', { icon: 7 });
-            return;
-        }
         $('.setAdvertising').css('left', 0);
         $('.stepsTwo').css('borderColor', '#909399');
         $('.stepsTwo>div').css('color', '#909399');
@@ -758,10 +770,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
     // 审核通过
     $('.approvedBtn').click(function () {
-        if (!addFlag) {
-            layer.msg('您没有审核广告的权限', { icon: 7 });
-            return;
-        }
         var approveCheckStatus = table.checkStatus('advertisingData');
         var approveList = [];
         if (approveCheckStatus.data.length > 0) {
@@ -785,10 +793,6 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
     // 审核不通过
     $('.noPassBtn').click(function () {
-        if (!addFlag) {
-            layer.msg('您没有审核广告的权限', { icon: 7 });
-            return;
-        }
         var noPassCheckStatus = table.checkStatus('advertisingData');
         var noPassList = [];
         if (noPassCheckStatus.data.length > 0) {
@@ -1154,31 +1158,28 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     $('.chooseLower .chooseCan').click(function () {
         popupHide('chooseLower', 'chooseBox')
     });
-
-
-    var addFlag = false,
-        editFlag = false,
-        delFlag = false,
-        fourFlag = false,
-        fiveFlag = false;
-    //增,改,审,发,接
-    permissionsVal(383, 384, 386, 404, 406).then(res => {
-        console.log(res)
-        addFlag = res.addFlag;
-        editFlag = res.editFlag
-        delFlag = res.delFlag;
-        fourFlag = res.fourFlag;
-        fiveFlag = res.fiveFlag;
-        permissions();
-    }).catch(err => {
-        layer.msg('服务器请求超时', { icon: 7 })
-    });
-    function permissions() {
-        addFlag ? $('.publicAdvertisingBtn').removeClass('hide') : $('.publicAdvertisingBtn').addClass('hide');
-        delFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
-        fourFlag ? $('.pushReleaseBtn').removeClass('hide') : $('.pushReleaseBtn').addClass('hide');
-        fiveFlag ? $('.RpushListBtn').removeClass('hide') : $('.RpushListBtn').addClass('hide');
-    };
+    // var addFlag = false,
+    //     editFlag = false,
+    //     delFlag = false,
+    //     fourFlag = false,
+    //     fiveFlag = false;
+    // //增,改,审,发,接
+    // permissionsVal(383, 384, 386, 404, 406).then(res => {
+    //     addFlag = res.addFlag;
+    //     editFlag = res.editFlag
+    //     delFlag = res.delFlag;
+    //     fourFlag = res.fourFlag;
+    //     fiveFlag = res.fiveFlag;
+    //     permissions();
+    // }).catch(err => {
+    //     layer.msg('服务器请求超时', { icon: 7 })
+    // });
+    // function permissions() {
+    //     addFlag ? $('.publicAdvertisingBtn').removeClass('hide') : $('.publicAdvertisingBtn').addClass('hide');
+    //     delFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
+    //     fourFlag ? $('.pushReleaseBtn').removeClass('hide') : $('.pushReleaseBtn').addClass('hide');
+    //     fiveFlag ? $('.RpushListBtn').removeClass('hide') : $('.RpushListBtn').addClass('hide');
+    // };
 
     // 商户刷新
     $('.refreshBtnList').click(function () {

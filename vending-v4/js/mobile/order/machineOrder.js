@@ -71,7 +71,7 @@ function orderArrList(mId, mNum) {
                         </div>
                         <div class="flex">
                             <label for="">出货状态:</label>
-                            <p>${item.shipStatus == 0 ? '未出货' : item.shipStatus == 1 ? '部分出货失败' : '全部出货成功'}</p>
+                            <p>${item.shipStatus == 0 ? '未出货' : item.shipStatus == 1 ? '部分出货失败' :item.shipStatus == 2 ?  '全部出货成功':'出货中'}</p>
                         </div>
                         <div class="flex">
                             <label for="">出货详情:</label>

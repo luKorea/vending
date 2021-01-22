@@ -2,6 +2,51 @@ import '../../MyCss/stores/machine.css';
 import { provinceChange, cityChange } from '../../assets/public/selectMore';
 // console.log()
 layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
+    var permissionsData0=window.parent.permissionsData1(),
+    permissionsObj={
+        396:false,
+        392:false,
+        424:false,
+        432:false,
+        426:false,
+        425:false,
+        427:false,
+        401:false,
+        402:false,
+        456:false,
+        467:false,
+        466:false,
+        468:false,
+        469:false,
+        470:false,
+        472:false,
+        471:false,
+        473:false,
+        474:false,
+        475:false,
+    },
+    permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
+    function permissions1(){
+        permissionsObjFlag[392]? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
+        permissionsObjFlag[432]? $('.payTypeSet').removeClass('hide') : $('.payTypeSet').addClass('hide');
+        permissionsObjFlag[432]? $('.sequence').removeClass('hide') : $('.sequence').addClass('hide');
+        // delAisleFlag ? $('.detailsDel').removeClass('hide') : $('.detailsDel').addClass('hide');
+        permissionsObjFlag[427] ? $('aisleDetailsTab').removeClass('hide') : $('aisleDetailsTab').addClass('hide');
+        permissionsObjFlag[401] ? $('.salesDetails').removeClass('hide') : $('.salesDetails').addClass('hide');
+        permissionsObjFlag[402] ? $('.shipmentDetails').removeClass('hide') : $('.shipmentDetails').addClass('hide');
+        permissionsObjFlag[456] ? $('.shmentSet').removeClass('hide') : $('.shmentSet').addClass('hide');
+        permissionsObjFlag[467]?$('.selesPushBtn').removeClass('hide') : $('.selesPushBtn').addClass('hide');
+        permissionsObjFlag[466]?$('.shipmentPushBtn').removeClass('hide') : $('.shipmentPushBtn').addClass('hide');
+        permissionsObjFlag[468]?$('.replenishmentPushBtn').removeClass('hide') : $('.replenishmentPushBtn').addClass('hide');
+        permissionsObjFlag[469]?$('.editPircePushBtn').removeClass('hide') : $('.editPircePushBtn').addClass('hide');
+        permissionsObjFlag[470]?$('.openDoorPushBtn').removeClass('hide') : $('.openDoorPushBtn').addClass('hide');
+        permissionsObjFlag[472]?$('.invoicePushBtn1').removeClass('hide') : $('.invoicePushBtn1').addClass('hide');
+        permissionsObjFlag[471]?$('.panelFlagClass').removeClass('hide') : $('.panelFlagClass').addClass('hide');
+        permissionsObjFlag[473]?$('.undoRecord').removeClass('hide') : $('.undoRecord').addClass('hide');
+        permissionsObjFlag[474]?$('.undoPushBtn').removeClass('hide') : $('.undoPushBtn').addClass('hide');
+        permissionsObjFlag[475]?$('.pushMachineBtn').removeClass('hide') : $('.pushMachineBtn').addClass('hide');
+    }
+    permissions1()
     var funNum = 1;
     var goodKeyFlag=null;
     tooltip('.refreshBtnList', { transition: true, time: 200 });
@@ -317,7 +362,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (machineSetData.openStatus == 1) {
                 layer.msg('温馨提示！该售货机正在营业，不可进行编辑！', { icon: 7 })
             } else {
-                if (!editFlag) {
+                if (!permissionsObjFlag[396]) {
                     layer.msg('温馨提示！您没有编辑售货机的权限！', { icon: 7 })
                 }
             }
@@ -408,10 +453,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
             geoCode();
         } else if (obj.event == 'activate') {
-            if (!activateFlag) {
-                layer.msg('您没有激活售货机的权限!');
-                return;
-            }
             layer.confirm('确定激活该设备？', function (index) {
                 layer.close(index);
                 $('.mask').fadeIn();
@@ -436,10 +477,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             // } else {
                
             // }
-            if (!activateFlag) {
-                layer.msg('您没有更改营业状态的权限!');
-                return;
-            }
             // if (machineSetData.openStatus != 1) {
             layer.confirm(machineSetData.openStatus != 1 ? '确定营业？' : '确定暂停营业？', function (index) {
                 var openStatusIndex = machineSetData.openStatus != 1 ? '1' : '0'
@@ -1051,121 +1088,122 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             f5Fun()
         }
     });
-    var editFlag = false,
-        activateFlag = false,
-        editAisleFlag = false,
-        paySetFlag = false,
-        delAisleFlag = false,
-        addAisleFlag = false,
-        AisleDetailsFlag = false,//货道详情
-        salesListFlag = false,//销售记录
-        shipmentListFlag = false,//出货记录
-        shmentListFlag = false,
-        editPriceFlag = false,//修改价格记录
-        selesPushBtnFlag=false,//导出销售详情
-        shipmentPushBtnFlag=false,//导出出货记录
-        replenishmentPushBtnFlag=false,//补货记录
-        editPircePushBtnFlag=false,//修改价格记录
-        openDoorPushBtnFlag=false,//导出开门记录
-        invoicePushBtnFlag=false,//导出补货单
-        panelFlag=false,
-        undoListFlag=false,//撤货列表
-        undoPushFlag=false,//导出撤货
-        machinePushFalg=false;//导出售货机
-    function permissions() {
-        permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
-            res.data.forEach(item => {
-                if (item.id == '396') {
-                    editFlag = true;
-                }
-                if (item.id == '392') {
-                    activateFlag = true;
-                }
-                if (item.id == '424') {
-                    editAisleFlag = true;
-                }
-                if (item.id == '432') {
-                    paySetFlag = true;
-                }
-                if (item.id == '426') {
-                    delAisleFlag = true;
-                }
-                if (item.id == '425') {
-                    addAisleFlag = true;
-                }
-                if (item.id == '427') {
-                    AisleDetailsFlag = true;
-                }
-                if (item.id == '401') {
-                    salesListFlag = true;
-                }
-                if (item.id == '402') {
-                    shipmentListFlag = true;
-                }
-                if (item.id == '456') {
-                    shmentListFlag = true;
-                }
-                if(item.id=='467'){
-                    selesPushBtnFlag=true;
-                }
-                if(item.id=='466'){
-                    shipmentPushBtnFlag=true;
-                }
-                if(item.id=='468'){
-                    replenishmentPushBtnFlag=true;
-                }
-                if(item.id=='469'){
-                    editPircePushBtnFlag=true
-                }
-                if(item.id=='470'){
-                    openDoorPushBtnFlag=true;
-                }
-                if(item.id=='472'){
-                    invoicePushBtnFlag=true
-                }
-                if(item.id=='471'){
-                    panelFlag=true;
-                }
-                if(item.id=='473'){
-                    undoListFlag=true;
-                }
-                if(item.id=='474'){
-                    undoPushFlag=true
-                }
-                if(item.id=='475'){
-                    machinePushFalg=true
-                }
-                // if(item.id=='461'){
-                //     editPriceFlag=true
-                // }
-            })
-            permissions1();
-            // editPriceFlag ? $('.editPriceTab').removeClass('hide') : $('.editPriceTab').addClass('hide');
-        }).catch(err => {
-            layer.msg(err.message, { icon: 2 })
-        });
-    }
-    permissions();
-    function permissions1(){
-        activateFlag ? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
-        paySetFlag ? $('.payTypeSet').removeClass('hide') : $('.payTypeSet').addClass('hide');
-        paySetFlag ? $('.sequence').removeClass('hide') : $('.sequence').addClass('hide');
-        delAisleFlag ? $('.detailsDel').removeClass('hide') : $('.detailsDel').addClass('hide');
-        AisleDetailsFlag ? $('aisleDetailsTab').removeClass('hide') : $('aisleDetailsTab').addClass('hide');
-        salesListFlag ? $('.salesDetails').removeClass('hide') : $('.salesDetails').addClass('hide');
-        shipmentListFlag ? $('.shipmentDetails').removeClass('hide') : $('.shipmentDetails').addClass('hide');
-        shmentListFlag ? $('.shmentSet').removeClass('hide') : $('.shmentSet').addClass('hide');
-        selesPushBtnFlag?$('.selesPushBtn').removeClass('hide') : $('.selesPushBtn').addClass('hide');
-        shipmentPushBtnFlag?$('.shipmentPushBtn').removeClass('hide') : $('.shipmentPushBtn').addClass('hide');
-        replenishmentPushBtnFlag?$('.replenishmentPushBtn').removeClass('hide') : $('.replenishmentPushBtn').addClass('hide');
-        editPircePushBtnFlag?$('.editPircePushBtn').removeClass('hide') : $('.editPircePushBtn').addClass('hide');
-        openDoorPushBtnFlag?$('.openDoorPushBtn').removeClass('hide') : $('.openDoorPushBtn').addClass('hide');
-        invoicePushBtnFlag?$('.invoicePushBtn1').removeClass('hide') : $('.invoicePushBtn1').addClass('hide');
-        panelFlag?$('.panelFlagClass').removeClass('hide') : $('.panelFlagClass').addClass('hide');
-        undoListFlag?$('.undoRecord').removeClass('hide') : $('.undoRecord').addClass('hide');
-        undoPushFlag?$('.undoPushBtn').removeClass('hide') : $('.undoPushBtn').addClass('hide');
-        machinePushFalg?$('.pushMachineBtn').removeClass('hide') : $('.pushMachineBtn').addClass('hide');
-    }
+   
+    // var editFlag = false,
+    //     activateFlag = false,
+    //     editAisleFlag = false,
+    //     paySetFlag = false,
+    //     delAisleFlag = false,
+    //     addAisleFlag = false,
+    //     AisleDetailsFlag = false,//货道详情
+    //     salesListFlag = false,//销售记录
+    //     shipmentListFlag = false,//出货记录
+    //     shmentListFlag = false,
+    //     editPriceFlag = false,//修改价格记录
+    //     selesPushBtnFlag=false,//导出销售详情
+    //     shipmentPushBtnFlag=false,//导出出货记录
+    //     replenishmentPushBtnFlag=false,//补货记录
+    //     editPircePushBtnFlag=false,//修改价格记录
+    //     openDoorPushBtnFlag=false,//导出开门记录
+    //     invoicePushBtnFlag=false,//导出补货单
+    //     panelFlag=false,
+    //     undoListFlag=false,//撤货列表
+    //     undoPushFlag=false,//导出撤货
+    //     machinePushFalg=false;//导出售货机
+    // function permissions() {
+    //     permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
+    //         res.data.forEach(item => {
+    //             if (item.id == '396') {
+    //                 editFlag = true;
+    //             }
+    //             if (item.id == '392') {
+    //                 activateFlag = true;
+    //             }
+    //             if (item.id == '424') {
+    //                 editAisleFlag = true;
+    //             }
+    //             if (item.id == '432') {
+    //                 paySetFlag = true;
+    //             }
+    //             if (item.id == '426') {
+    //                 delAisleFlag = true;
+    //             }
+    //             if (item.id == '425') {
+    //                 addAisleFlag = true;
+    //             }
+    //             if (item.id == '427') {
+    //                 AisleDetailsFlag = true;
+    //             }
+    //             if (item.id == '401') {
+    //                 salesListFlag = true;
+    //             }
+    //             if (item.id == '402') {
+    //                 shipmentListFlag = true;
+    //             }
+    //             if (item.id == '456') {
+    //                 shmentListFlag = true;
+    //             }
+    //             if(item.id=='467'){
+    //                 selesPushBtnFlag=true;
+    //             }
+    //             if(item.id=='466'){
+    //                 shipmentPushBtnFlag=true;
+    //             }
+    //             if(item.id=='468'){
+    //                 replenishmentPushBtnFlag=true;
+    //             }
+    //             if(item.id=='469'){
+    //                 editPircePushBtnFlag=true
+    //             }
+    //             if(item.id=='470'){
+    //                 openDoorPushBtnFlag=true;
+    //             }
+    //             if(item.id=='472'){
+    //                 invoicePushBtnFlag=true
+    //             }
+    //             if(item.id=='471'){
+    //                 panelFlag=true;
+    //             }
+    //             if(item.id=='473'){
+    //                 undoListFlag=true;
+    //             }
+    //             if(item.id=='474'){
+    //                 undoPushFlag=true
+    //             }
+    //             if(item.id=='475'){
+    //                 machinePushFalg=true
+    //             }
+    //             // if(item.id=='461'){
+    //             //     editPriceFlag=true
+    //             // }
+    //         })
+    //         permissions1();
+    //         // editPriceFlag ? $('.editPriceTab').removeClass('hide') : $('.editPriceTab').addClass('hide');
+    //     }).catch(err => {
+    //         layer.msg(err.message, { icon: 2 })
+    //     });
+    // }
+    // permissions();
+    // function permissions1(){
+    //     activateFlag ? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
+    //     paySetFlag ? $('.payTypeSet').removeClass('hide') : $('.payTypeSet').addClass('hide');
+    //     paySetFlag ? $('.sequence').removeClass('hide') : $('.sequence').addClass('hide');
+    //     delAisleFlag ? $('.detailsDel').removeClass('hide') : $('.detailsDel').addClass('hide');
+    //     AisleDetailsFlag ? $('aisleDetailsTab').removeClass('hide') : $('aisleDetailsTab').addClass('hide');
+    //     salesListFlag ? $('.salesDetails').removeClass('hide') : $('.salesDetails').addClass('hide');
+    //     shipmentListFlag ? $('.shipmentDetails').removeClass('hide') : $('.shipmentDetails').addClass('hide');
+    //     shmentListFlag ? $('.shmentSet').removeClass('hide') : $('.shmentSet').addClass('hide');
+    //     selesPushBtnFlag?$('.selesPushBtn').removeClass('hide') : $('.selesPushBtn').addClass('hide');
+    //     shipmentPushBtnFlag?$('.shipmentPushBtn').removeClass('hide') : $('.shipmentPushBtn').addClass('hide');
+    //     replenishmentPushBtnFlag?$('.replenishmentPushBtn').removeClass('hide') : $('.replenishmentPushBtn').addClass('hide');
+    //     editPircePushBtnFlag?$('.editPircePushBtn').removeClass('hide') : $('.editPircePushBtn').addClass('hide');
+    //     openDoorPushBtnFlag?$('.openDoorPushBtn').removeClass('hide') : $('.openDoorPushBtn').addClass('hide');
+    //     invoicePushBtnFlag?$('.invoicePushBtn1').removeClass('hide') : $('.invoicePushBtn1').addClass('hide');
+    //     panelFlag?$('.panelFlagClass').removeClass('hide') : $('.panelFlagClass').addClass('hide');
+    //     undoListFlag?$('.undoRecord').removeClass('hide') : $('.undoRecord').addClass('hide');
+    //     undoPushFlag?$('.undoPushBtn').removeClass('hide') : $('.undoPushBtn').addClass('hide');
+    //     machinePushFalg?$('.pushMachineBtn').removeClass('hide') : $('.pushMachineBtn').addClass('hide');
+    // }
     // 关闭弹窗
     $('.playHeader .close').click(function () {
         $(this).parent().parent().addClass('margin0')
@@ -1380,7 +1418,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         console.log($(this).attr("fireIndex"))
         ArrIndex = $(this).attr("fireIndex").split(',');
         console.log(ArrIndex)
-        if (!editAisleFlag) {
+        if (!permissionsObjFlag[424]) {
             layer.msg('您没有编辑货道的权限!', { icon: 7 })
             return;
         }
@@ -2606,6 +2644,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.addPanelCont input[name="panelGoodsName"]').attr('IVal','');
         $('.addPanelCont input[name="panelGoodsName"]').val('');
         $('.addPanelCont input[name="panelGoodsNum"]').val('');
+        $('.addPanelBox .playHeader span').html('添加展板商品')
         popupShow('addPanelCont','addPanelBox');
     });
     // 展板选择商品
@@ -2675,6 +2714,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             $('.addPanelCont input[name="panelGoodsName"]').attr('IVal',obj.data.goods_Id);
             $('.addPanelCont input[name="panelGoodsName"]').val(obj.data.goods_Name);
             $('.addPanelCont input[name="panelGoodsNum"]').val(obj.data.goodCount);
+            $('.addPanelBox .playHeader span').html('编辑展板商品')
             popupShow('addPanelCont','addPanelBox');
         }
     });

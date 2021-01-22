@@ -1,6 +1,21 @@
   import '../../MyCss/userManagement/memberList.css'
 layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
   tooltip('.refreshBtnList', {transition: true, time: 200});
+  var permissionsData0=window.parent.permissionsData1(),
+  permissionsObj={
+    389:false,
+    390:false,
+    397:false,
+    451:false,
+  },
+  permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
+  function permissions() {
+    permissionsObjFlag[389] ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+    permissionsObjFlag[390] ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
+    permissionsObjFlag[397] ? $('.del-btn').removeClass('hides') : $('.del-btn').addClass('hides');
+    permissionsObjFlag[451]? $('.userMachine').removeClass('hides') : $('.userMachine').addClass('hides');
+  };
+  permissions();
   var table = layui.table;
   var layer = layui.layer,
     layer = layui.layer,
@@ -77,7 +92,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       },
       done: function (res) {
         permissions();
-        if (res.code == 405) {
+        if (res.code == 403) {
+          window.parent.location.href = "login.html";
+        } else if (res.code == 405) {
           $('.hangContent').show();
         }
       }
@@ -600,26 +617,25 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       }
     },
   });
-
-  var addFlag = true,
-    editFlag = true,
-    delFlag = true,
-    fourFlag=true;
-  permissionsVal(389, 390, 397,451).then(res => {
-    addFlag = res.addFlag;
-    editFlag = res.editFlag;
-    delFlag = res.delFlag;
-    fourFlag=res.fourFlag;
-    permissions();
-  }).catch(err => {
-    layer.msg('服务器请求超时', { icon: 7 })
-  });
-  function permissions() {
-    addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-    editFlag ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
-    delFlag ? $('.del-btn').removeClass('hides') : $('.del-btn').addClass('hides');
-    fourFlag? $('.userMachine').removeClass('hides') : $('.userMachine').addClass('hides');
-  };
+  // var addFlag = true,
+  //   editFlag = true,
+  //   delFlag = true,
+  //   fourFlag=true;
+  // permissionsVal(389, 390, 397,451).then(res => {
+  //   addFlag = res.addFlag;
+  //   editFlag = res.editFlag;
+  //   delFlag = res.delFlag;
+  //   fourFlag=res.fourFlag;
+  //   permissions();
+  // }).catch(err => {
+  //   layer.msg('服务器请求超时', { icon: 7 })
+  // });
+  // function permissions() {
+  //   addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+  //   editFlag ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
+  //   delFlag ? $('.del-btn').removeClass('hides') : $('.del-btn').addClass('hides');
+  //   fourFlag? $('.userMachine').removeClass('hides') : $('.userMachine').addClass('hides');
+  // };
 
   var transferArr = [],
     transferListArr = [],

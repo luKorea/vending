@@ -7,8 +7,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
         tree = layui.tree,
         rank = null,
         laydate = layui.laydate,
-        marchantName =sessionStorage.marchantName,
-        merchantId=sessionStorage.machineID,
+        marchantName = sessionStorage.marchantName,
+        merchantId = sessionStorage.machineID,
         //数据表格
         token = sessionStorage.token,
         //开始时间
@@ -72,7 +72,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             },
             {
                 field: 'sign_name', width: 150, title: '退款状态', align: 'center', templet: function (d) {
-                    return d.refund == 1 ? '未退款' : d.refund == 2 ? '部分退款' : d.refund == 3?'全部退款':'-'
+                    return d.refund == 1 ? '未退款' : d.refund == 2 ? '部分退款' : d.refund == 3 ? '全部退款' : '-'
                 }
             },
             {
@@ -95,7 +95,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             },
             {
                 field: 'ship_info', width: 230, title: '邮寄信息', align: 'center', templet: function (d) {
-                    if(d.mail == 1){
+                    if (d.mail == 1) {
                         return `
                                 <div class="mailFlex"><span> 收货人:</span><span>${d.sign_name}</span></div>
                                 <div class="mailFlex"> <span>收货人电话:</span><span>${d.sign_phone}</span></div>
@@ -104,10 +104,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
                                 <div class="mailFlex"><span>快递/物流公司:</span><span>${d.express_type ? d.express_type : '-'}</span></div>
                                 <div class="mailFlex"><span>快递/物流单号:</span><span>${d.express_number ? d.express_number : '-'}</span></div>
                                `
-                    }else{
+                    } else {
                         return '-'
                     }
-                    
+
                 }
             },
             {
@@ -171,14 +171,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
     });
 
     var dataList = treeList();
-    orderTreeFun(tree,'testGoods',dataList)
+    orderTreeFun(tree, 'testGoods', dataList)
     // treeFun(tree, 'testGoods', tableIns, dataList, 'merchant_id', '', '', '', 'true');
     // 刷新商户列表
     $('.refreshBtnList').click(function () {
         var dataList1 = treeList();
         if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
             dataList = dataList1;
-            orderTreeFun(tree,'testGoods',dataList)
+            orderTreeFun(tree, 'testGoods', dataList)
             tableIns.reload({
                 where: {
                     merchant_id: sessionStorage.machineID,
@@ -205,123 +205,135 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             f5Fun()
         }
     });
-    var addFlag = false;
-    permissionsVal(464).then(res => {
-        addFlag = res.addFlag;
-        permissions();
-    }).catch(err => {
-        layer.msg('服务器请求超时', { icon: 7 })
-    })
+
+    var permissionsData0 = window.parent.permissionsData1(),
+     permissionsObj = {
+        464: false,
+    },
+        permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
     function permissions() {
-        addFlag?$('.pushBtn').removeClass('hide'):$('.pushBtn').addClass('hide');
+        permissionsObjFlag[464] ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
     };
+    permissions();
+    // var addFlag = false;
+    // permissionsVal(464).then(res => {
+    //     addFlag = res.addFlag;
+    //     permissions();
+    // }).catch(err => {
+    //     layer.msg('服务器请求超时', { icon: 7 })
+    // })
+    // function permissions() {
+    //     addFlag?$('.pushBtn').removeClass('hide'):$('.pushBtn').addClass('hide');
+    // };
+
+
     $('.pushBtn').click(function () {
         if (!(startTime && endTime)) {
-          layer.msg('请选择时间', { icon: 7 });
-          return;
+            layer.msg('请选择时间', { icon: 7 });
+            return;
         }
         if (timeFlag(startTime, endTime)) {
-          layer.msg('时间选择范围最多三个月', { icon: 7 });
-          return;
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
         }
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         var myDate = new Date(),
-          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-          xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+            // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+            xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
         xhr.open("GET", `${vApi}/complete?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}&conditionThree=${$('.key-contnet input[name="orderCode"]').val()}&conditionSix=${$('.newKeyContent select[name="keyPayStatus"]').val()}&refund=${$('.newKeyContent select[name="keyrefundStatus"]').val()}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-    
+
         xhr.onload = function (res) {
             console.log(res)
-          if (xhr.status == 200) {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            if (xhr.response.size < 50) {
-                layer.msg('导出失败', { icon: 7 })
-                return
-              } 
-            var content = xhr.response;
-            // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-            var fileName = `${marchantName}订单汇总(${startTime}-${endTime}).xls`
-            var elink = document.createElement('a');
-            elink.download = fileName;
-            elink.style.display = 'none';
-            var blob = new Blob([content]);
-            elink.href = URL.createObjectURL(blob);
-            document.body.appendChild(elink);
-            elink.click();
-            document.body.removeChild(elink);
-          } else {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            layer.msg('服务器请求超时', { icon: 2 });
-            return;
-          }
+            if (xhr.status == 200) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                if (xhr.response.size < 50) {
+                    layer.msg('导出失败', { icon: 7 })
+                    return
+                }
+                var content = xhr.response;
+                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+                var fileName = `${marchantName}订单汇总(${startTime}-${endTime}).xls`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
+            } else {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('服务器请求超时', { icon: 2 });
+                return;
+            }
         }
         var orderObj = {
-          start_time: startTime,
-          end_time: endTime,
-          merchant_id: sessionStorage.machineID
+            start_time: startTime,
+            end_time: endTime,
+            merchant_id: sessionStorage.machineID
         }
         xhr.send();
-      });
+    });
 
 
-       // 树方法
-      
-  function orderTreeFun(tree, element, data,) {
-    tree.render({
-      elem: `#${element}`,
-      id: 'treelist',
-      showLine: !0 //连接线
-      ,
-      onlyIconControl: true, //左侧图标控制展开收缩 
-      data,
-      spread: true,
-      text: {
-        defaultNodeName: '无数据',
-        none: '您没有权限，请联系管理员授权!'
-      },
-      click: function (obj) {
-        console.log(obj);
-        marchantName = obj.data.title
-        var nodes = $(`#${element} .layui-tree-txt`)
-        for (var i = 0; i < nodes.length; i++) {
-          if (nodes[i].innerHTML === obj.data.title)
-            nodes[i].style.color = "#be954a";
-          else
-            nodes[i].style.color = "#555";
+    // 树方法
+
+    function orderTreeFun(tree, element, data,) {
+        tree.render({
+            elem: `#${element}`,
+            id: 'treelist',
+            showLine: !0 //连接线
+            ,
+            onlyIconControl: true, //左侧图标控制展开收缩 
+            data,
+            spread: true,
+            text: {
+                defaultNodeName: '无数据',
+                none: '您没有权限，请联系管理员授权!'
+            },
+            click: function (obj) {
+                console.log(obj);
+                marchantName = obj.data.title
+                var nodes = $(`#${element} .layui-tree-txt`)
+                for (var i = 0; i < nodes.length; i++) {
+                    if (nodes[i].innerHTML === obj.data.title)
+                        nodes[i].style.color = "#be954a";
+                    else
+                        nodes[i].style.color = "#555";
+                }
+                if (merchantId == obj.data.id) {
+                    return;
+                }
+                merchantId = obj.data.id;
+                tableIns.reload({
+                    where: {
+                        merchant_id: merchantId,
+                    }
+                })
+            },
+        });
+    };
+    //   查询
+    $('.queryBtn').click(function () {
+        if (timeFlag(startTime, endTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
         }
-        if (merchantId == obj.data.id) {
-          return;
-        }
-        merchantId = obj.data.id;
         tableIns.reload({
             where: {
-                merchant_id: merchantId,
+                startTime,
+                endTime,
+                conditionThree: $('.key-contnet input[name="orderCode"]').val(),
+                conditionSix: $('.newKeyContent select[name="keyPayStatus"]').val(),
+                refund: $('.newKeyContent select[name="keyrefundStatus"]').val(),
+
             }
         })
-      },
-    });
-  };
-//   查询
-  $('.queryBtn').click(function(){
-    if (timeFlag(startTime, endTime)) {
-        layer.msg('时间选择范围最多三个月', { icon: 7 });
-        return;
-      }
-      tableIns.reload({
-        where: {
-            startTime,
-            endTime,
-            conditionThree: $('.key-contnet input[name="orderCode"]').val(),
-            conditionSix:$('.newKeyContent select[name="keyPayStatus"]').val(),
-            refund:$('.newKeyContent select[name="keyrefundStatus"]').val(),
-            
-        }
     })
-  })
 })                                                      

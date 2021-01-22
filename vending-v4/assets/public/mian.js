@@ -547,9 +547,10 @@ async function permissionsVal(addIndex, editIndex, delIndex, four, five, six) {
     fourFlag: false,
     fiveFlag: false,
     sixFlag: false,
-  }
+  };
   await permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
     // console.log(res.data)
+    data=res
     dataFlag.addFlag = res.data.some((item, index) => {
       return item.id == addIndex
     });
@@ -573,8 +574,14 @@ async function permissionsVal(addIndex, editIndex, delIndex, four, five, six) {
   })
   return dataFlag
 }
-
-
+function permissionsVal1(data,res){
+  for(var i in data){
+    data[i]=res.some(item=>{
+      return  i==item.id;
+    })
+  };
+  return data
+}
 // 时间戳转时间问题
 function timeStamp(time) {
   var myDate = new Date(time);

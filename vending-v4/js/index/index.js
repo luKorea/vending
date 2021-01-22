@@ -4,9 +4,9 @@ import { navList } from '../../assets/public/navData.js'
 if (!sessionStorage.token) {
     window.location.href = "login.html"
 }
-if(document.documentElement.clientWidth<=600){
-    window.location.href='M_my.html'
-  }
+if (document.documentElement.clientWidth <= 600) {
+    window.location.href = 'M_my.html'
+}
 window.onload = function () {
     var userName = sessionStorage.username;
     $('#userLogin .userName').html(userName)
@@ -114,7 +114,7 @@ window.onload = function () {
                 //  var socketUrl="http://172.16.71.142:8086/push?machine=8fc9d742bd0772c6&message=123456";
                 // var socketUrl = `ws://119.29.104.217:8086/webs/pushServer/${sessionStorage.UserId}`;
                 // var socketUrl = `http://119.29.104.217:8086/pushServer/${sessionStorage.UserId}`;
-                 var socketUrl = `https://vd.ybtech.gold/websocket/pushServer/${sessionStorage.UserId}`;
+                var socketUrl = `https://vd.ybtech.gold/websocket/pushServer/${sessionStorage.UserId}`;
                 socketUrl = socketUrl.replace("https", "wss").replace("http", "ws");
                 // console.log(socketUrl);
                 if (socket != null) {
@@ -170,7 +170,7 @@ window.onload = function () {
                     socketFlag = false
                 }
             }
-        }; 
+        };
         setInterval(() => {
             if (sessionStorage.token) {
                 if (!socketFlag) {
@@ -199,110 +199,155 @@ window.onload = function () {
             loginOut();
         });
 
-
+        var permissionsObj={
+            408:false,
+            407:false,
+            413:false,
+            414:false,
+            409:false,
+            410:false,
+            400:false,
+            431:false,
+            423:false,
+            419:false,
+            412:false,
+            411:false,
+            447:false,
+            448:false,
+            463:false,
+            455:false,
+        },
+         permissionsData2=null;
         // 权限控制
         permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
+            permissionsData2=res.data
             // console.log(res.data)
             // 用户模块
-            var userListFlag = false,
-                roleListFlag = false,
-                machineListFlag = false,
-                goodsClassFlag = false,
-                goodsListFlag = false,
-                materialListFlag = false,
-                merchantsListFlag = false,
-                paySetFlag = false,
-                accountsListFlag = false,
-                orderListFlag = false,
-                RMListFlag = false,
-                ReListFlag = false,
-                salesFlag = false,
-                pickupFlag = false,
-                orderSummaryFlag=false,
-                codeOrderFlag=false;
-            res.data.forEach(item => {
-                if (item.id == 408) {
-                    userListFlag = true
-                }
-                if (item.id == 407) {
-                    roleListFlag = true
-                }
-                if (item.id == 413) {
-                    machineListFlag = true
-                }
-                if (item.id == 414) {
-                    goodsClassFlag = true
-                }
-                if (item.id == 409) {
-                    goodsListFlag = true
-                }
-                if (item.id == 410) {
-                    materialListFlag = true
-                }
-                if (item.id == 400) {
-                    merchantsListFlag = true
-                }
-                if (item.id == 431) {
-                    paySetFlag = true
-                }
-                if (item.id == 423) {
-                    accountsListFlag = true
-                }
-                if (item.id == 419) {
-                    orderListFlag = true
-                }
-                if (item.id == 412) {
-                    RMListFlag = true
-                }
-                if (item.id == 411) {
-                    ReListFlag = true
-                }
-                if (item.id == 447) {
-                    salesFlag = true
-                }
-                if (item.id == 448) {
-                    pickupFlag = true
-                }
-                if (item.id == 463) {
-                    orderSummaryFlag = true
-                }
-                if (item.id == 455) {
-                    codeOrderFlag = true
-                }
-            })
-            userListFlag ? $('.userListFlag').removeClass('hide') : $('.userListFlag').addClass('hide');
-            roleListFlag ? $('.roleListFlag').removeClass('hide') : $('.roleListFlag').addClass('hide');
-            (userListFlag || roleListFlag) ? $('.userCont').removeClass('hide') : $('.userCont').addClass('hide');
+            // var userListFlag = false,
+            //     roleListFlag = false,
+            //     machineListFlag = false,
+            //     goodsClassFlag = false,
+            //     goodsListFlag = false,
+            //     materialListFlag = false,
+            //     merchantsListFlag = false,
+            //     paySetFlag = false,
+            //     accountsListFlag = false,
+            //     orderListFlag = false,
+            //     RMListFlag = false,
+            //     ReListFlag = false,
+            //     salesFlag = false,
+            //     pickupFlag = false,
+            //     orderSummaryFlag = false,
+            //     codeOrderFlag = false;
+            // res.data.forEach(item => {
+            //     if (item.id == 408) {
+            //         userListFlag = true
+            //     }
+            //     if (item.id == 407) {
+            //         roleListFlag = true
+            //     }
+            //     if (item.id == 413) {
+            //         machineListFlag = true
+            //     }
+            //     if (item.id == 414) {
+            //         goodsClassFlag = true
+            //     }
+            //     if (item.id == 409) {
+            //         goodsListFlag = true
+            //     }
+            //     if (item.id == 410) {
+            //         materialListFlag = true
+            //     }
+            //     if (item.id == 400) {
+            //         merchantsListFlag = true
+            //     }
+            //     if (item.id == 431) {
+            //         paySetFlag = true
+            //     }
+            //     if (item.id == 423) {
+            //         accountsListFlag = true
+            //     }
+            //     if (item.id == 419) {
+            //         orderListFlag = true
+            //     }
+            //     if (item.id == 412) {
+            //         RMListFlag = true
+            //     }
+            //     if (item.id == 411) {
+            //         ReListFlag = true
+            //     }
+            //     if (item.id == 447) {
+            //         salesFlag = true
+            //     }
+            //     if (item.id == 448) {
+            //         pickupFlag = true
+            //     }
+            //     if (item.id == 463) {
+            //         orderSummaryFlag = true
+            //     }
+            //     if (item.id == 455) {
+            //         codeOrderFlag = true
+            //     }
+            // });
+          var permissionsObjFlag= permissionsVal1(permissionsObj,res.data)
+          console.log(permissionsObjFlag)
+            // userListFlag ? $('.userListFlag').removeClass('hide') : $('.userListFlag').addClass('hide');
+            permissionsObjFlag[408] ? $('.userListFlag').removeClass('hide') : $('.userListFlag').addClass('hide');
+            // roleListFlag ? $('.roleListFlag').removeClass('hide') : $('.roleListFlag').addClass('hide');
+            permissionsObjFlag[407] ? $('.roleListFlag').removeClass('hide') : $('.roleListFlag').addClass('hide');
+            // (userListFlag || roleListFlag) ? $('.userCont').removeClass('hide') : $('.userCont').addClass('hide');
+            (permissionsObjFlag[408] || permissionsObjFlag[407]) ? $('.userCont').removeClass('hide') : $('.userCont').addClass('hide');
             //售货机模块
-            machineListFlag ? $('.machineListFlag').removeClass('hide').parents('.machineCont').removeClass('hide') : $('.machineListFlag').addClass('hide').parents('.machineCont').addClass('hide');
+            // machineListFlag ? $('.machineListFlag').removeClass('hide').parents('.machineCont').removeClass('hide') : $('.machineListFlag').addClass('hide').parents('.machineCont').addClass('hide');
+            permissionsObjFlag[413]  ? $('.machineListFlag').removeClass('hide').parents('.machineCont').removeClass('hide') : $('.machineListFlag').addClass('hide').parents('.machineCont').addClass('hide');
             //商品管理模块
-            goodsClassFlag ? $('.goodsClassFlag').removeClass('hide') : $('.goodsClassFlag').addClass('hide');
-            goodsListFlag ? $('.goodsListFlag').removeClass('hide') : $('.goodsListFlag').addClass('hide');
-            materialListFlag ? $('.materialListFlag').removeClass('hide') : $('.materialListFlag').addClass('hide');
-            (goodsClassFlag || goodsListFlag || materialListFlag) ? $('.goodsCont').removeClass('hide') : $('.goodsCont').addClass('hide');
+            // goodsClassFlag ? $('.goodsClassFlag').removeClass('hide') : $('.goodsClassFlag').addClass('hide');
+            permissionsObjFlag[414] ? $('.goodsClassFlag').removeClass('hide') : $('.goodsClassFlag').addClass('hide');
+            // goodsListFlag ? $('.goodsListFlag').removeClass('hide') : $('.goodsListFlag').addClass('hide');
+            permissionsObjFlag[409] ? $('.goodsListFlag').removeClass('hide') : $('.goodsListFlag').addClass('hide');
+            // materialListFlag ? $('.materialListFlag').removeClass('hide') : $('.materialListFlag').addClass('hide');
+            permissionsObjFlag[410] ? $('.materialListFlag').removeClass('hide') : $('.materialListFlag').addClass('hide');
+            // (goodsClassFlag || goodsListFlag || materialListFlag) ? $('.goodsCont').removeClass('hide') : $('.goodsCont').addClass('hide');
+            (permissionsObjFlag[414] || permissionsObjFlag[409] || permissionsObjFlag[410]) ? $('.goodsCont').removeClass('hide') : $('.goodsCont').addClass('hide');
 
             //   商户模块
-            merchantsListFlag ? $('.merchantsListFlag').removeClass('hide').parents('.merchantsCont').removeClass('hide') : $('.merchantsListFlag').addClass('hide').parents('.merchantsCont').addClass('hide');
-            paySetFlag ? $('.merchantsPay').removeClass('hide') : $('.merchantsPay').addClass('hide');
-            roleListFlag ? $('.merchantsPayType').removeClass('hide') : $('.merchantsPayType').addClass('hide');
-            salesFlag ? $('.sales').removeClass('hide') : $('.sales').addClass('hide')
+            // merchantsListFlag ? $('.merchantsListFlag').removeClass('hide').parents('.merchantsCont').removeClass('hide') : $('.merchantsListFlag').addClass('hide').parents('.merchantsCont').addClass('hide');
+            permissionsObjFlag[400] ? $('.merchantsListFlag').removeClass('hide').parents('.merchantsCont').removeClass('hide') : $('.merchantsListFlag').addClass('hide').parents('.merchantsCont').addClass('hide');
+            // paySetFlag ? $('.merchantsPay').removeClass('hide') : $('.merchantsPay').addClass('hide');
+            permissionsObjFlag[431] ? $('.merchantsPay').removeClass('hide') : $('.merchantsPay').addClass('hide');
+            // roleListFlag ? $('.merchantsPayType').removeClass('hide') : $('.merchantsPayType').addClass('hide');
+            permissionsObjFlag[407] ? $('.merchantsPayType').removeClass('hide') : $('.merchantsPayType').addClass('hide');
+            // salesFlag ? $('.sales').removeClass('hide') : $('.sales').addClass('hide')
+            permissionsObjFlag[447] ? $('.sales').removeClass('hide') : $('.sales').addClass('hide')
             //账目模块
             //订单模块
-            orderListFlag ? $('.orderListFlag').removeClass('hide'):$('.orderListFlag').addClass('hide');
-            orderSummaryFlag?$('.orderSummaryFlag').removeClass('hide'):$('.orderSummaryFlag').addClass('hide');
-            codeOrderFlag?$('.codeORderFlag').removeClass('hide'):$('.codeORderFlag').addClass('hide');
-            (orderListFlag||orderSummaryFlag||codeOrderFlag)?$('.orderCont').removeClass('hide'):$('.orderCont').addClass('hide');
+            // orderListFlag ? $('.orderListFlag').removeClass('hide') : $('.orderListFlag').addClass('hide');
+            permissionsObjFlag[419] ? $('.orderListFlag').removeClass('hide') : $('.orderListFlag').addClass('hide');
+            // orderSummaryFlag ? $('.orderSummaryFlag').removeClass('hide') : $('.orderSummaryFlag').addClass('hide');
+            permissionsObjFlag[463] ? $('.orderSummaryFlag').removeClass('hide') : $('.orderSummaryFlag').addClass('hide');
+            // codeOrderFlag ? $('.codeORderFlag').removeClass('hide') : $('.codeORderFlag').addClass('hide');
+            permissionsObjFlag[455] ? $('.codeORderFlag').removeClass('hide') : $('.codeORderFlag').addClass('hide');
+            // (orderListFlag || orderSummaryFlag || codeOrderFlag) ? $('.orderCont').removeClass('hide') : $('.orderCont').addClass('hide');
+            (permissionsObjFlag[419] || permissionsObjFlag[463] || permissionsObjFlag[455]) ? $('.orderCont').removeClass('hide') : $('.orderCont').addClass('hide');
             //广告模块
-            RMListFlag ? $('.RMListFlag').removeClass('hide') : $('.RMListFlag').addClass('hide');
-            ReListFlag ? $('.ReListFlag').removeClass('hide') : $('.ReListFlag').addClass('hide');
-            (RMListFlag || ReListFlag) ? $('.releaseCont').removeClass('hide') : $('.releaseCont').addClass('hide');
+            // RMListFlag ? $('.RMListFlag').removeClass('hide') : $('.RMListFlag').addClass('hide');
+            permissionsObjFlag[412] ? $('.RMListFlag').removeClass('hide') : $('.RMListFlag').addClass('hide');
+            // ReListFlag ? $('.ReListFlag').removeClass('hide') : $('.ReListFlag').addClass('hide');
+            permissionsObjFlag[411] ? $('.ReListFlag').removeClass('hide') : $('.ReListFlag').addClass('hide');
+            (permissionsObjFlag[412] || permissionsObjFlag[411]) ? $('.releaseCont').removeClass('hide') : $('.releaseCont').addClass('hide');
             // 营销模块
-            pickupFlag ? $('.pickupCode').removeClass('hide').parents('.marketingCont').removeClass('hide') : $('.pickupCode').addClass('hide').parents('.marketingCont').addClass('hide');
+            // pickupFlag ? $('.pickupCode').removeClass('hide').parents('.marketingCont').removeClass('hide') : $('.pickupCode').addClass('hide').parents('.marketingCont').addClass('hide');
+            permissionsObjFlag[448] ? $('.pickupCode').removeClass('hide').parents('.marketingCont').removeClass('hide') : $('.pickupCode').addClass('hide').parents('.marketingCont').addClass('hide');
         }).catch(err => {
             layer.msg(err.message, { icon: 2 })
         })
-
-
+        // 储存权限
+        
+        function permissionsData1(){
+            // return permissionsData2
+            return permissionsData2
+        }
+        window.permissionsData1=permissionsData1
         // 获取公告列表
         var noticeObj = JSON.stringify({
             pageSize: 10,
@@ -317,9 +362,9 @@ window.onload = function () {
         function shuffling() {
             loadingAjax('/notices/getNoticeList', 'post', noticeObj, sessionStorage.token).then(res => {
                 noticeList = res.data.list;
-                if(noticeList.length==0){
+                if (noticeList.length == 0) {
                     $('.swipe-content-carousel').hide()
-                }else{
+                } else {
                     $('.swipe-content-carousel').show()
                 }
                 noticeDrawing(noticeList)
@@ -419,7 +464,7 @@ window.onload = function () {
         }
         messageFunList();
         window.messageFunList = messageFunList;
-        
+
         // 点击展示消息
         $('.messageContentList').on('click', '.messageDow', function () {
             var messageDetails = messageListArr[$(this).attr('messageIndex')]
@@ -519,7 +564,7 @@ window.onload = function () {
                 },
                 done: function (res) {
                     noticeList = [];
-                    if(res.code==200){
+                    if (res.code == 200) {
                         res.data.forEach(item => {
                             if ((item.is_show == 1) && (item.n_status == 1)) {
                                 noticeList.push(item);
@@ -527,11 +572,11 @@ window.onload = function () {
                             }
                         })
                     }
-                   
+
                 }
             })
         }
-        
+
         window.shuffling = shuffling;
         // 更多
         $('.more').click(function () {

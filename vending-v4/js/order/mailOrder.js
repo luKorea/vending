@@ -452,20 +452,33 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
       layer.msg('请按照提示填写数量', { icon: 7 })
     }
   });
-  var addFlag = false,
-    editFlag = false;
 
-  permissionsVal(420, 421).then(res => {
-    addFlag = res.addFlag;
-    editFlag = res.editFlag;
-    permissions();
-  }).catch(err => {
-    layer.msg('服务器请求超时', { icon: 7 })
-  });
+
+  var permissionsData0=window.parent.permissionsData1(),
+  permissionsObj={
+    420:false,
+    421:false,
+  },
+  permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
   function permissions() {
-    addFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
-    editFlag ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
+    permissionsObjFlag[420] ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
+    permissionsObjFlag[421] ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
   };
+  permissions();
+  // var addFlag = false,
+  //   editFlag = false;
+
+  // permissionsVal(420, 421).then(res => {
+  //   addFlag = res.addFlag;
+  //   editFlag = res.editFlag;
+  //   permissions();
+  // }).catch(err => {
+  //   layer.msg('服务器请求超时', { icon: 7 })
+  // });
+  // function permissions() {
+  //   addFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
+  //   editFlag ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
+  // };
 
 
 

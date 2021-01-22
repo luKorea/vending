@@ -1,6 +1,21 @@
 import '../../MyCss/goods/goodsMaterial.css'
 layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   // tab切换
+  var permissionsData0=window.parent.permissionsData1(),
+   permissionsObj={
+    380:false,
+    381:false,
+    379:false,
+    382:false,
+  },
+  permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
+  function permissions() {
+    permissionsObjFlag[380] ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+    permissionsObjFlag[381] ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
+    permissionsObjFlag[379] ? $('.dleBtn').removeClass('hide') : $('.dleBtn').addClass('hide');
+    permissionsObjFlag[382] ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
+  };
+  permissions();
   var index = 0
   $('.navTab li').click(function () {
     console.log($(this).index())
@@ -955,26 +970,28 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   $('.refreshBtn').click(function () {
     location.reload();
   });
-  var addFlag = false,
-    editFlag = false,
-    delFlag = false,
-    fourFlag = false;
-  permissionsVal(380, 381, 379, 382).then(res => {
-    console.log(res)
-    addFlag = res.addFlag;
-    editFlag = res.editFlag;
-    delFlag = res.delFlag;
-    fourFlag = res.fourFlag;
-    permissions();
-  }).catch(err => {
-    layer.msg('服务器请求超时', { icon: 7 })
-  });
-  function permissions() {
-    addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-    editFlag ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
-    delFlag ? $('.dleBtn').removeClass('hide') : $('.dleBtn').addClass('hide');
-    fourFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
-  };
+
+ 
+  // var addFlag = false,
+  //   editFlag = false,
+  //   delFlag = false,
+  //   fourFlag = false;
+  // permissionsVal(380, 381, 379, 382).then(res => {
+  //   console.log(res)
+  //   addFlag = res.addFlag;
+  //   editFlag = res.editFlag;
+  //   delFlag = res.delFlag;
+  //   fourFlag = res.fourFlag;
+  //   permissions();
+  // }).catch(err => {
+  //   layer.msg('服务器请求超时', { icon: 7 })
+  // });
+  // function permissions() {
+  //   addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
+  //   editFlag ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
+  //   delFlag ? $('.dleBtn').removeClass('hide') : $('.dleBtn').addClass('hide');
+  //   fourFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
+  // };
      
 // 图片放大事件
   var PImgSHow = true;

@@ -3,9 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <!-- <link rel="icon" type="image/png" sizes="144x144" href="../../img/icon.png" /> -->
-    <link rel="icon" type="image/png" sizes="144x144" href="../../img/logo.png"/>
+    <link rel="icon" type="image/png" sizes="144x144" href="../../img/logo.png" />
     <script src="../../assets/public/documentMobile.js"></script>
     <script type="text/javascript"
         src="https://webapi.amap.com/maps?v=1.4.15&key=4b78c5cee1f0f8c37a2a2f8283e256b9&plugin=AMap.Geocoder"></script>
@@ -31,7 +32,7 @@
                 </div>
             </div>
             <div class="KeyInput flex">
-                <input type="text" name="key" placeholder="售货机编号、信息">
+                <input type="text" name="key" placeholder="售货机编号、售货机名">
                 <!-- <button>条件选择</button> -->
                 <button type="button" class="hui-button hui-primary">条件筛选</button>
             </div>
@@ -139,7 +140,7 @@
                         <img src="../../img/set.png" alt="">
                         <p>远程操作</p>
                     </li>
-                    <li class="panelDetails" style="display: none;">
+                    <li class="panelDetails">
                         <img src="../../img/panel1.png" alt="">
                         <p>展板详情</p>
                     </li>
@@ -270,7 +271,8 @@
                 <span></span>
             </div>
             <div class="shipmentBody">
-                <div class="jeinpbox"><input type="text" class="jeinput" id="test08" style="text-align: center;" placeholder="请选择日期"></div>
+                <div class="jeinpbox"><input type="text" class="jeinput" id="test08" style="text-align: center;"
+                        placeholder="请选择日期"></div>
                 <!-- <p class="ppp">ppp</p> -->
                 <ul class="shipmenList recordList">
                     <!-- <li>
@@ -337,7 +339,8 @@
                 <span></span>
             </div>
             <div class="rMentBody">
-                <div class="jeinpbox"><input type="text" class="jeinput" id="test09" style="text-align: center;" placeholder="请选择日期"></div>
+                <div class="jeinpbox"><input type="text" class="jeinput" id="test09" style="text-align: center;"
+                        placeholder="请选择日期"></div>
                 <ul class="rMentList recordList">
                     <!-- <li>
                         <div class="keyText flex">
@@ -393,7 +396,8 @@
                 <span></span>
             </div>
             <div class="salesBody">
-                <div class="jeinpbox"><input type="text" class="jeinput" id="test10" style="text-align: center;" placeholder="请选择日期"></div>
+                <div class="jeinpbox"><input type="text" class="jeinput" id="test10" style="text-align: center;"
+                        placeholder="请选择日期"></div>
                 <ul class="salesList recordList">
                     <!-- <li>
                         <div class="keyText flex">
@@ -436,7 +440,7 @@
         </div>
     </div>
     <!-- 商户树部分 -->
-    <div class="merchantsContent maskContent" >
+    <div class="merchantsContent maskContent">
         <div class="merchantsBox maskBox ">
             <!-- <ul class="sire">
                 <li class="parent">
@@ -501,9 +505,13 @@
                 <span></span>
             </div>
             <div class="panelBody">
+                <div style="text-align: center;">
+                    <button type="button" class="hui-button hui-primary addPanelBtn"  >添加展板</button>
+                </div>
+                
                 <div class="panelGoods">
                     <div class="panelDrawing">
-                        <div class="hui-swipe-do ">
+                        <!-- <div class="hui-swipe-do ">
                             <div class="hui-swipe-do-doms panelList">
                                 <div class="hui-swipe-do-content  ">
                                     <div class=" flex">
@@ -514,25 +522,96 @@
                                             <p><span>原数量:</span>10</p>
                                         </div>
                                     </div>
-                                   
+
                                 </div>
                                 <div class="hui-swipe-do-btn delBtn">删除</div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
-                 
+
                 </div>
             </div>
         </div>
     </div>
+     <!-- 添加展板 -->
+     <div class="maskContent editAisleContent" style="display: none;">
+        <div class="maskBox centerMaskWindow editAisleBox">
+            <div class="header">
+                <h1>添加展板商品</h1>
+                <button class="close">
+                    <span class="hui-icons hui-icons-close"></span>
+                </button>
+            </div>
+            <div class="editiAsleBody">
+                <div class="flex inputList relative goodsChoose">
+                    <label>商品名：</label>
+                    <input type="text" disabled name="goodsName"  disabled>
+                    <button><span>V</span></button>
+                </div>
+                <div class="flex inputList" >
+                    <label>数量：</label>
+                    <input type="number" name="goodsNum" >
+                </div>
+            </div>
+            <div class="editFooter flexCenter" style="padding-bottom: 0.15rem;">
+                <button type="button" class="hui-button hui-primary  panelConfirmBtn">确定</button>
+            </div>
+        </div>
+    </div>
+    <!-- 商品列表 -->
+    <div class="maskContent goodsContnet" style="display: none;">
+        <div class="maskBox centerMaskWindow goodsBox top50">
+            <div class="header">
+                <h1>选择商品</h1>
+                <button class="close">
+                    <span class="hui-icons hui-icons-close"></span>
+                </button>
+            </div>
+            <div class="goodsBody">
+                <div class="flexThree inputList">
+                    <input type="text" name="editName" placeholder="请输入商品编号、商品名">
+                    <button type="button" class="hui-button hui-primary  goodConfirmBtn">确定</button>
+                </div>
+                <div class="goodsWrap">
+                    <div class="goodsList flexThree" id="goodsList">
+                        <div class="chooseList">
+                                <div class="goodsImg">
+                                    <img src="https://vd.ybtech.gold/files/vd/743d835c-413a-4170-84b9-5147555afed0.jpg"
+                                        alt="">
+                                </div>
+                                <div class="goodsInformation">
+                                    <p>红包牛</p>
+                                    <p>红包</p>
+                                    <div class="flexThree">
+                                        <p>编号</p>
+                                        <span>100581</span>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pages4">
+                <div class="hui-pager" style="padding:10px 30px 10px 40vw;">
+                    <div><a href="javascript:hui.toast('第1页');" class="hui-pager-active">1</a></div>
+                    <div><a href="javascript:hui.toast('第2页');">2</a></div>
+                    <div><a href="javascript:hui.toast('第3页');">3</a></div>
+                    <div><a href="javascript:hui.toast('第4页');">4</a></div>
+                    <div><a href="javascript:hui.toast('第5页');">5</a></div>
+                    <div><a href="javascript:hui.toast('第2页');">6</a></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <!-- 输入独立密码 -->
-    <div class="aloneContent maskContent" >
+    <div class="aloneContent maskContent">
         <div class="aloneBox maskBox">
-           <header>验证独立密码</header>
-           <div class="aloneBody">
+            <header>验证独立密码</header>
+            <div class="aloneBody">
                 <input type="password" name="alonePass" placeholder="请输入独立密码">
-           </div>
-           <footer class="confirmBtn">确定</footer>
+            </div>
+            <footer class="confirmBtn">确定</footer>
         </div>
     </div>
 

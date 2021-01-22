@@ -1,6 +1,21 @@
 import '../../MyCss/advertising/fodder.css'
 layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     tooltip('.refreshBtnList', { transition: true, time: 200 });
+    var permissionsData0 = window.parent.permissionsData1(),
+     permissionsObj = {
+        362: false,
+        371: false,
+        369: false,
+        387: false,
+    },
+        permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
+    function permissions() {
+        permissionsObjFlag[362] ? $('.uploadBtn').removeClass('hide') : $('.uploadBtn').addClass('hide');
+        permissionsObjFlag[371] ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
+        permissionsObjFlag[369] ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
+        permissionsObjFlag[387] ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
+    };
+    permissions();
     var token = sessionStorage.token,
         layer = layui.layer,
         form = layui.form,
@@ -134,10 +149,6 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     })
     // 上传素材弹出说明框
     $('.uploadBtn').click(function () {
-        if (!addFlag) {
-            layer.msg('您没有上传广告素材权限!', { iocn: 7 });
-            return
-        }
         $('.uploadTitle').fadeIn();
         $('.titleBox').removeClass('margin0')
     });
@@ -158,10 +169,6 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     })
     //   删除文件
     $('.del-btn').click(function () {
-        if (!delFlag) {
-            layer.msg('您没有删除广告素材权限!', { iocn: 7 });
-            return
-        }
         var checkStatus = table.checkStatus('tableId');
         console.log(checkStatus)
         console.log
@@ -225,10 +232,6 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             }
             popupShow('materialPreview', 'previewBox');
         } else if (obj.event == 'edit') {
-            if (!editFlag) {
-                layer.msg('您没有编辑广告素材权限!', { iocn: 7 });
-                return
-            }
             popupShow('editMaterialCont', 'uploadMateriaBox');
             form.val("editValData", {
                 "materialName": valData.name,
@@ -321,10 +324,6 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
 
     // 提交审核
     $('.submitAuditBtn').click(function () {
-        // if (!auditFla) {
-        //     layer.msg('您没有审核广告素材权限!', { iocn: 7 });
-        //     return
-        // }
         var submitCheckStatus = table.checkStatus('tableId');
         console.log(submitCheckStatus);
         var checkList = [];
@@ -372,10 +371,6 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
 
     // 审核不通过
     $('.noPassBtn').click(function () {
-        if (!auditFla) {
-            layer.msg('您没有审核广告素材权限!', { iocn: 7 });
-            return
-        }
         var noPassCheckStatus = table.checkStatus('tableId');
         var noPassList = [];
         if (noPassCheckStatus.data.length > 0) {
@@ -826,47 +821,25 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             f5Fun()
         }
     });
-
-    var addFlag = false,
-        editFlag = false,
-        delFlag = false,
-        auditFla = false;
-    // permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
-    //     // console.log(res.data)
-    //     addFlag = res.data.some((item, index) => {
-    //         return item.id == '362'
-    //     });
-    //     editFlag = res.data.some((item, index) => {
-    //         return item.id == '371'
-    //     });
-    //     delFlag = res.data.some((item, index) => {
-    //         return item.id == '369'
-    //     })
-    //     auditFla = res.data.some((item, index) => {
-    //         return item.id == '387'
-    //     })
+    // var addFlag = false,
+    //     editFlag = false,
+    //     delFlag = false,
+    //     fourFlag = false;
+    // permissionsVal(362, 371, 369, 387).then(res => {
+    //     addFlag = res.addFlag;
+    //     editFlag = res.editFlag;
+    //     delFlag = res.delFlag;
+    //     fourFlag = res.fourFlag;
+    //     permissions();
     // }).catch(err => {
-    //     layer.msg(err.message, { icon: 2 })
+    //     layer.msg('服务器请求超时', { icon: 7 })
     // });
-    var addFlag = false,
-        editFlag = false,
-        delFlag = false,
-        fourFlag = false;
-    permissionsVal(362, 371, 369, 387).then(res => {
-        addFlag = res.addFlag;
-        editFlag = res.editFlag;
-        delFlag = res.delFlag;
-        fourFlag = res.fourFlag;
-        permissions();
-    }).catch(err => {
-        layer.msg('服务器请求超时', { icon: 7 })
-    });
-    function permissions() {
-        addFlag ? $('.uploadBtn').removeClass('hide') : $('.uploadBtn').addClass('hide');
-        editFlag ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
-        delFlag ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
-        fourFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
-    };
+    // function permissions() {
+    //     addFlag ? $('.uploadBtn').removeClass('hide') : $('.uploadBtn').addClass('hide');
+    //     editFlag ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
+    //     delFlag ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
+    //     fourFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
+    // };
     //刷新
     $('.refreshBtn').click(function () {
         location.reload();
@@ -891,43 +864,43 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     })
 
     // 图片放大事件
-    var PImgSHow=true;
+    var PImgSHow = true;
     $('.data-list').on('mouseenter', '.pic102', function (e) {
-        var that = this; 
-        $('#pic101').attr('src',$(that).attr('src'));
+        var that = this;
+        $('#pic101').attr('src', $(that).attr('src'));
         var img = new Image();
         img.onload = function () {
             $("#pic101").css({
-                "width":this.width>=this.height?350+'px':'auto',
-                "height":this.height>this.width?350+'px':'auto'
+                "width": this.width >= this.height ? 350 + 'px' : 'auto',
+                "height": this.height > this.width ? 350 + 'px' : 'auto'
             }).fadeIn("fast");
             this.onload = null;
-           
+
         };
         img.src = $(that).attr('src');
     });
-    $('.data-list').on('click','.pic102',function(){
+    $('.data-list').on('click', '.pic102', function () {
         event.stopPropagation();
-        PImgSHow=false;
-    }); 
+        PImgSHow = false;
+    });
     $('.data-list').on('mouseleave', '.pic102', function () {
-        if(PImgSHow){
+        if (PImgSHow) {
             $('#pic101').hide();
         }
     });
-    $('#pic101').click(function(){
+    $('#pic101').click(function () {
         event.stopPropagation();
     });
-    $('body').click(function(){
-        PImgSHow=true;
+    $('body').click(function () {
+        PImgSHow = true;
         $('#pic101').hide();
     });
-    $('#pic101').mouseenter(function(){
+    $('#pic101').mouseenter(function () {
         $('#pic101').show();
-      })
-      $('#pic101').mouseleave(function(){
+    })
+    $('#pic101').mouseleave(function () {
         if (PImgSHow) {
-          $('#pic101').hide();
+            $('#pic101').hide();
         }
-      })
+    })
 });

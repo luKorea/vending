@@ -99,7 +99,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         // }},
         {
           field: 'shipStatus', width: 210, title: '出货状态', align: 'center', templet: function (d) {
-            return d.shipStatus == 0 ? '未出货' : d.shipStatus == 1 ? '部分出货失败' : '全部出货成功'
+            return d.shipStatus == 0 ? '未出货' : d.shipStatus == 1 ? '部分出货失败' : d.shipStatus == 2? '全部出货成功':'出货中'
           }
         },
         {
@@ -701,21 +701,33 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       })
     })
 
-  })
-  var addFlag = false,
-    editFlag = false;
-
-  permissionsVal(420, 421).then(res => {
-    addFlag = res.addFlag;
-    editFlag = res.editFlag;
-    permissions();
-  }).catch(err => {
-    layer.msg('服务器请求超时', { icon: 7 })
   });
+
+  var permissionsData0=window.parent.permissionsData1(),
+   permissionsObj={
+    420:false,
+    421:false,
+  },
+  permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
   function permissions() {
-    addFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
-    editFlag ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
+    permissionsObjFlag[420] ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
+    permissionsObjFlag[421] ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
   };
+  permissions();
+
+  // var addFlag = false,
+  //   editFlag = false;
+  // permissionsVal(420, 421).then(res => {
+  //   addFlag = res.addFlag;
+  //   editFlag = res.editFlag;
+  //   permissions();
+  // }).catch(err => {
+  //   layer.msg('服务器请求超时', { icon: 7 })
+  // });
+  // function permissions() {
+  //   addFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
+  //   editFlag ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
+  // };
 
   // 图片放大事件
   var PImgSHow = true;
