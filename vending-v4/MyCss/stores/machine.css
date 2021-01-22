@@ -852,3 +852,6 @@ input:hover{
 .redF10{
     background-color: #ff1100 !important;
 }
+.bodys::-webkit-scrollbar {
+    display: none;
+}

@@ -153,14 +153,14 @@
             <div class="setMaskBox">
                 <ul class="setNav">
                     <li class="active">售货机详情</li>
+                    <li class="payTypeSet">收款账户</li>
                     <li class="aisleDetailsTab">货道详情</li>
+                    <li class="">展板详情</li>
                     <li class="salesDetails">销售详情</li>
                     <li class="shipmentDetails">出货记录</li>
-                    <li class="payTypeSet">收款账户</li>
                     <li class="shmentSet">补货记录</li>
                     <li class="editPriceTab">修改价格记录</li>
                     <li class="">开门记录</li>
-                    <li class="">展板详情</li>
                     <li class="undoRecord">撤货记录</li>
                     <div class="tabLine">
                     </div>
@@ -314,6 +314,38 @@
                             </div> -->
                         </div>
                     </li>
+                    <!-- 设置支付类型 -->
+                    <li class="paySet" style="display: none;">
+                        <div>
+                            <header>售货机收款账户设置</header>
+                        </div>
+                        <div class="payChoose">
+                            <form class="layui-form" id="setPayList" lay-filter="paySetData" style="width: 100%;">
+                                <div class="layui-form-item">
+                                    <!-- <label class="layui-form-label">微信：</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="sex" value="" title="无" checked>
+                                        <input type="radio" name="sex" value="男" title="男" >
+                                         <input type="radio" name="sex" value="女" title="女" >
+                                    </div> -->
+                                </div>
+
+                                <!-- <div style="max-width: 370px;" class="key-contnet">
+                                    <div class="key-text">支付类型</div>
+                                    <div style="width: 100%;" class="layui-form" lay-filter="">
+                                        <select name="payTypeChoose" id="payTypeChoose" lay-filter="payTypeChoose">
+                                        </select>
+                                    </div>
+                                </div> -->
+                            </form>
+                        </div>
+                        <!-- <div class="setFooter" style="margin-top: 35px;">
+                            <button class="layui-btn layui-btn-normal paySetBtn btn"
+                                style="margin-top: 0;">
+                                <span>确定</span>
+                            </button>
+                        </div> -->
+                    </li>
                     <!-- 货道详情 -->
                     <li class="aisleDetails" style="display: none;">
                         <div class="newKeyContent hide invoicePushBtn1">
@@ -421,6 +453,20 @@
                                 </div>
                             </div>
                         </form>
+                    </li>
+                     <!-- 展板部分 -->
+                     <li style="display: none;width: 100%;">
+                        <div class="newKeyContent panelFlagClass">
+                            <button type="button" class="layui-btn layui-btn-primary addpanelBtn">
+                                <i class="layui-icon layui-icon-add-circle"></i>
+                                <span>添加展板</span>
+                            </button>
+                        </div>
+                        <div style="box-sizing: border-box;">
+                            <div class="priceEditBox">
+                                <table class="layui-hide" id="panelTable" lay-filter="panelTable"></table>
+                            </div>
+                        </div>
                     </li>
                     <!-- 销售详情 -->
                     <li class="salesTwo details" style="display: none;">
@@ -586,14 +632,22 @@
                                 </div>
                             </div>
                             <div class="newKeyContent">
-								<div class="newKeyItem">
-									<label for="">货道</label>
-									<div class="layui-form" lay-filter="">
-										<select name="shipSelect" id=""  lay-filter="stateSelect">
-										</select>
-									</div>
-								</div>
-							</div>
+                                <div class="newKeyItem">
+                                    <label for="">订单号/取货码</label>
+                                    <div>
+                                        <input type="text" name="order_code" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="newKeyContent">
+                                <div class="newKeyItem">
+                                    <label for="">货道</label>
+                                    <div class="layui-form" lay-filter="">
+                                        <select name="shipSelect" id="" lay-filter="stateSelect">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="newKeyContent">
                                 <button type="button" class="layui-btn layui-btn-primary shipmentQueryBtn">
                                     <i class="layui-icon layui-icon-search"></i>
@@ -613,38 +667,7 @@
                             </div>
                         </div>
                     </li>
-                    <!-- 设置支付类型 -->
-                    <li class="paySet" style="display: none;">
-                        <div>
-                            <header>售货机收款账户设置</header>
-                        </div>
-                        <div class="payChoose">
-                            <form class="layui-form" id="setPayList" lay-filter="paySetData" style="width: 100%;">
-                                <div class="layui-form-item">
-                                    <!-- <label class="layui-form-label">微信：</label>
-                                    <div class="layui-input-block">
-                                        <input type="radio" name="sex" value="" title="无" checked>
-                                        <input type="radio" name="sex" value="男" title="男" >
-                                         <input type="radio" name="sex" value="女" title="女" >
-                                    </div> -->
-                                </div>
 
-                                <!-- <div style="max-width: 370px;" class="key-contnet">
-                                    <div class="key-text">支付类型</div>
-                                    <div style="width: 100%;" class="layui-form" lay-filter="">
-                                        <select name="payTypeChoose" id="payTypeChoose" lay-filter="payTypeChoose">
-                                        </select>
-                                    </div>
-                                </div> -->
-                            </form>
-                        </div>
-                        <!-- <div class="setFooter" style="margin-top: 35px;">
-                            <button class="layui-btn layui-btn-normal paySetBtn btn"
-                                style="margin-top: 0;">
-                                <span>确定</span>
-                            </button>
-                        </div> -->
-                    </li>
                     <!-- 补货记录 -->
                     <li class="replenishment" style="display: none;">
                         <div class="newHeader">
@@ -669,14 +692,14 @@
                                 </div>
                             </div>
                             <div class="newKeyContent">
-								<div class="newKeyItem">
-									<label for="">货道</label>
-									<div class="layui-form" lay-filter="">
-										<select name="shipSelect" id=""  lay-filter="stateSelect">
-										</select>
-									</div>
-								</div>
-							</div>
+                                <div class="newKeyItem">
+                                    <label for="">货道</label>
+                                    <div class="layui-form" lay-filter="">
+                                        <select name="shipSelect" id="" lay-filter="stateSelect">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="newKeyContent">
                                 <button type="button" class="layui-btn layui-btn-primary RQueryBtn">
                                     <i class="layui-icon layui-icon-search"></i>
@@ -775,23 +798,9 @@
                             </div>
                         </div>
 
-                    </li>
-                    <!-- 展板部分 -->
-                    <li style="display: none;width: 100%;">
-                        <div class="newKeyContent panelFlagClass">
-                            <button type="button" class="layui-btn layui-btn-primary addpanelBtn">
-                                <i class="layui-icon layui-icon-add-circle"></i>
-                                <span>添加展板</span>
-                            </button>
-                        </div>
-                        <div style="box-sizing: border-box;">
-                            <div class="priceEditBox">
-                                <table class="layui-hide" id="panelTable" lay-filter="panelTable"></table>
-                            </div>
-                        </div>
-                    </li>
+                    </li>   
                     <!-- 撤货记录 -->
-                    <li  style="display: none;">
+                    <li style="display: none;">
                         <div class="newKeyContent panelFlagClass">
                             <button type="button" class="layui-btn layui-btn-primary undoPushBtn">
                                 <i class="layui-icon layui-icon-print"></i>

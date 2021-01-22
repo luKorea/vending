@@ -488,6 +488,28 @@ input:hover{
     width: 14px;
     height: 14px;
 }
+.iframe_show::-webkit-scrollbar {
+    width: 2px !important;
+    height: 2px;
+}
+.iframe_show::-webkit-scrollbar-thumb {
+    background-color: #be954a !important;
+}
+.iframe_show::-webkit-scrollbar-track {
+    background: #ccc !important;
+}
+.content-tbas-iframe-html::-webkit-scrollbar {
+    width: 2px !important;
+    height: 2px;
+}
+.layui-show::-webkit-scrollbar {
+    width: 2px !important;
+    height: 2px;
+}
+.layui-tab-content::-webkit-scrollbar {
+    width: 2px !important;
+    height: 2px;
+}
 ::-webkit-scrollbar-thumb {
     background-color: #be954a !important;
 }

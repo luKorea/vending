@@ -2,53 +2,53 @@ import '../../MyCss/stores/machine.css';
 import { provinceChange, cityChange } from '../../assets/public/selectMore';
 // console.log()
 layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
-    var permissionsData0=window.parent.permissionsData1(),
-    permissionsObj={
-        396:false,
-        392:false,
-        424:false,
-        432:false,
-        426:false,
-        425:false,
-        427:false,
-        401:false,
-        402:false,
-        456:false,
-        467:false,
-        466:false,
-        468:false,
-        469:false,
-        470:false,
-        472:false,
-        471:false,
-        473:false,
-        474:false,
-        475:false,
-    },
-    permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
-    function permissions1(){
-        permissionsObjFlag[392]? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
-        permissionsObjFlag[432]? $('.payTypeSet').removeClass('hide') : $('.payTypeSet').addClass('hide');
-        permissionsObjFlag[432]? $('.sequence').removeClass('hide') : $('.sequence').addClass('hide');
+    var permissionsData0 = window.parent.permissionsData1(),
+        permissionsObj = {
+            396: false,
+            392: false,
+            424: false,
+            432: false,
+            426: false,
+            425: false,
+            427: false,
+            401: false,
+            402: false,
+            456: false,
+            467: false,
+            466: false,
+            468: false,
+            469: false,
+            470: false,
+            472: false,
+            471: false,
+            473: false,
+            474: false,
+            475: false,
+        },
+        permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
+    function permissions1() {
+        permissionsObjFlag[392] ? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
+        permissionsObjFlag[432] ? $('.payTypeSet').removeClass('hide') : $('.payTypeSet').addClass('hide');
+        permissionsObjFlag[432] ? $('.sequence').removeClass('hide') : $('.sequence').addClass('hide');
         // delAisleFlag ? $('.detailsDel').removeClass('hide') : $('.detailsDel').addClass('hide');
         permissionsObjFlag[427] ? $('aisleDetailsTab').removeClass('hide') : $('aisleDetailsTab').addClass('hide');
         permissionsObjFlag[401] ? $('.salesDetails').removeClass('hide') : $('.salesDetails').addClass('hide');
         permissionsObjFlag[402] ? $('.shipmentDetails').removeClass('hide') : $('.shipmentDetails').addClass('hide');
         permissionsObjFlag[456] ? $('.shmentSet').removeClass('hide') : $('.shmentSet').addClass('hide');
-        permissionsObjFlag[467]?$('.selesPushBtn').removeClass('hide') : $('.selesPushBtn').addClass('hide');
-        permissionsObjFlag[466]?$('.shipmentPushBtn').removeClass('hide') : $('.shipmentPushBtn').addClass('hide');
-        permissionsObjFlag[468]?$('.replenishmentPushBtn').removeClass('hide') : $('.replenishmentPushBtn').addClass('hide');
-        permissionsObjFlag[469]?$('.editPircePushBtn').removeClass('hide') : $('.editPircePushBtn').addClass('hide');
-        permissionsObjFlag[470]?$('.openDoorPushBtn').removeClass('hide') : $('.openDoorPushBtn').addClass('hide');
-        permissionsObjFlag[472]?$('.invoicePushBtn1').removeClass('hide') : $('.invoicePushBtn1').addClass('hide');
-        permissionsObjFlag[471]?$('.panelFlagClass').removeClass('hide') : $('.panelFlagClass').addClass('hide');
-        permissionsObjFlag[473]?$('.undoRecord').removeClass('hide') : $('.undoRecord').addClass('hide');
-        permissionsObjFlag[474]?$('.undoPushBtn').removeClass('hide') : $('.undoPushBtn').addClass('hide');
-        permissionsObjFlag[475]?$('.pushMachineBtn').removeClass('hide') : $('.pushMachineBtn').addClass('hide');
+        permissionsObjFlag[467] ? $('.selesPushBtn').removeClass('hide') : $('.selesPushBtn').addClass('hide');
+        permissionsObjFlag[466] ? $('.shipmentPushBtn').removeClass('hide') : $('.shipmentPushBtn').addClass('hide');
+        permissionsObjFlag[468] ? $('.replenishmentPushBtn').removeClass('hide') : $('.replenishmentPushBtn').addClass('hide');
+        permissionsObjFlag[469] ? $('.editPircePushBtn').removeClass('hide') : $('.editPircePushBtn').addClass('hide');
+        permissionsObjFlag[470] ? $('.openDoorPushBtn').removeClass('hide') : $('.openDoorPushBtn').addClass('hide');
+        permissionsObjFlag[472] ? $('.invoicePushBtn1').removeClass('hide') : $('.invoicePushBtn1').addClass('hide');
+        permissionsObjFlag[471] ? $('.panelFlagClass').removeClass('hide') : $('.panelFlagClass').addClass('hide');
+        permissionsObjFlag[473] ? $('.undoRecord').removeClass('hide') : $('.undoRecord').addClass('hide');
+        permissionsObjFlag[474] ? $('.undoPushBtn').removeClass('hide') : $('.undoPushBtn').addClass('hide');
+        permissionsObjFlag[475] ? $('.pushMachineBtn').removeClass('hide') : $('.pushMachineBtn').addClass('hide');
     }
     permissions1()
     var funNum = 1;
-    var goodKeyFlag=null;
+    var goodKeyFlag = null;
     tooltip('.refreshBtnList', { transition: true, time: 200 });
     // console.log(provinceChange)
     // 收起
@@ -84,10 +84,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {
                     field: 'info', width: 330, title: '售货机名', align: 'center', templet: function (d) {
-                        if(d.info){
+                        if (d.info) {
                             return d.info
-                        }else{
-                            return  `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>
+                        } else {
+                            return `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>
                             <div><span style="color:red;">*</span>(序列号:${d.machineId})</div>`
                         }
                     }
@@ -104,20 +104,20 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     field: 'iot_card', width: 160, title: '物联网卡号', align: 'center'
                 },
                 {
-                    field: 'warning', width: 130, title: '缺货情况', align: 'center',templet:function(d){
-                        if(d.storage_warning[0].warning){
-                            return` <div>
-                            <span class="${d.storage_warning[0].way_count < 10 ? 'tableStateCellTrue' : d.storage_warning[0].way_count < 30? 'tableStateCellFalse':'red'}">${d.storage_warning[0].warning}</span>
+                    field: 'warning', width: 130, title: '缺货情况', align: 'center', templet: function (d) {
+                        if (d.storage_warning[0].warning) {
+                            return ` <div>
+                            <span class="${d.storage_warning[0].way_count < 10 ? 'tableStateCellTrue' : d.storage_warning[0].way_count < 30 ? 'tableStateCellFalse' : 'red'}">${d.storage_warning[0].warning}</span>
                         </div>`
-                            
-                        }else{
+
+                        } else {
                             return '-'
                         }
-                        
+
                     }
                 },
                 {
-                    field: 'way_count', width: 130, title: '缺货货道数量', align: 'center',templet:function(d){
+                    field: 'way_count', width: 130, title: '缺货货道数量', align: 'center', templet: function (d) {
                         return d.storage_warning[0].way_count
                     }
                 },
@@ -132,17 +132,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'trafficInfo', width: 160, title: '离线时长', align: 'center',templet:function(d){
-                        if(d.onlineStatus!=0){
+                    field: 'trafficInfo', width: 160, title: '离线时长', align: 'center', templet: function (d) {
+                        if (d.onlineStatus != 0) {
                             return '0天0小时0分'
-                        }else{
-                            
-                            var nData=new Date().getTime(),
-                            cDate =nData-d.offline_time,
-                            day=Math.floor(cDate/86400000),
-                            hour=Math.floor((cDate-86400000*day)/3600000),
-                            miute=Math.floor((cDate-86400000*day-3600000*hour)/60000);
-                            return d.offline_time? day+'天'+hour+'小时'+miute+'分钟':'-'
+                        } else {
+
+                            var nData = new Date().getTime(),
+                                cDate = nData - d.offline_time,
+                                day = Math.floor(cDate / 86400000),
+                                hour = Math.floor((cDate - 86400000 * day) / 3600000),
+                                miute = Math.floor((cDate - 86400000 * day - 3600000 * hour) / 60000);
+                            return d.offline_time ? day + '天' + hour + '小时' + miute + '分钟' : '-'
                         }
                     }
                 },
@@ -279,33 +279,33 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.navSetCont li').eq($(this).index()).fadeIn().siblings().hide();
         switch (that.index()) {
             case 1:
-                getGoodsWay(machineSetData.machineId);
-                goodKeyFlag=1;
+                supportpay(machineSetData.machineId, machineSetData.userNum); //收款账户
                 break;
             case 2:
-                salesFun(machineSetData.machineId);
+                getGoodsWay(machineSetData.machineId); //货道详情
+                goodKeyFlag = 1;
                 break;
             case 3:
-                recordFun(machineSetData.machineId);
+                panelFun(); //展板详情
+                goodKeyFlag = 2;
                 break;
             case 4:
-                supportpay(machineSetData.machineId, machineSetData.userNum);
+                salesFun(machineSetData.machineId); //销售详情
                 break;
             case 5:
-                replenishmenFun(machineSetData.machineId);
+                recordFun(machineSetData.machineId); //出货记录
                 break;
             case 6:
-                priceFun();
+                replenishmenFun(machineSetData.machineId); //补货记录
                 break;
             case 7:
-                openDoorFun();
+                priceFun(); //修改价格记录
                 break;
             case 8:
-                panelFun();
-                goodKeyFlag=2;
+                openDoorFun(); //开门记录
                 break;
             case 9:
-                undoFun();
+                undoFun(); //撤货记录
                 break;
         }
     });
@@ -318,6 +318,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.maskHeader span').html(machineSetData.info ? machineSetData.info + '详细信息' : '-详细信息')
         if (obj.event == 'set') {
             $('.setUpCont').show();
+            $('body').addClass('bodys');
             var setAddress = null;
             if (machineSetData.location) {
                 setAddress = machineSetData.location.split(' ')
@@ -359,6 +360,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             // }
 
         } else if (obj.event == 'edit') {
+            $('body').addClass('bodys');
             if (machineSetData.openStatus == 1) {
                 layer.msg('温馨提示！该售货机正在营业，不可进行编辑！', { icon: 7 })
             } else {
@@ -475,7 +477,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             //     layer.msg('售货机处于离线状态不可以操作此功能', { icon: 7 });
             //     return;
             // } else {
-               
+
             // }
             // if (machineSetData.openStatus != 1) {
             layer.confirm(machineSetData.openStatus != 1 ? '确定营业？' : '确定暂停营业？', function (index) {
@@ -503,7 +505,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                             //     layer.msg('操作失败', { icon: 2 });
                             // }
                         })
-                     
+
                     } else {
                         $('.mask').fadeOut();
                         $('.maskSpan').removeClass('maskIcon');
@@ -519,29 +521,32 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
 
     // 货道数
-    function aisleNum(){
-        loadingAjax('/machine/findWay','get',{machineId:machineSetData.machineId},sessionStorage.token).then(res=>{
+    function aisleNum() {
+        loadingAjax('/machine/findWay', 'get', { machineId: machineSetData.machineId }, sessionStorage.token).then(res => {
             var optionList = `<option value="">全部</option>`;
-            res.data.forEach(item=>{
+            res.data.forEach(item => {
                 optionList += `<option value="${item}">${item}</option>`
             });
             $('.shipmentRecord select[name="shipSelect"]').html(optionList);
             $('.replenishment select[name="shipSelect"]').html(optionList);
             form.render('select');
-        }).catch(err=>{
+        }).catch(err => {
 
         })
     }
     // 关闭设置
     $('.setUpCont .close').click(function () {
         $('.setUpCont').hide();
+        $('body').removeClass('bodys');
     });
 
     // 关闭编辑
     $('.editMachineCont .close').click(function () {
+        $('body').removeClass('bodys');
         $('.editMachineCont').hide();
     })
     $('.editMachineCont .editCancelBtn').click(function () {
+        $('body').removeClass('bodys');
         $('.editMachineCont').hide();
     })
 
@@ -756,7 +761,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'time', width: 200, title: '时间',templet:function(d){
+                    field: 'time', width: 200, title: '时间', templet: function (d) {
                         return timeStamp(d.time)
                     }
                 },
@@ -772,7 +777,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'payTypes', width: 150, title: '支付类型', 
+                    field: 'payTypes', width: 150, title: '支付类型',
                 },
                 { field: 'payee', width: 150, title: '收款方', },
                 { field: 'amount', width: 150, title: '金额', },
@@ -819,7 +824,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         });
     };
     // 销售详情导出
-    $('.selesPushBtn').click(function(){
+    $('.selesPushBtn').click(function () {
         if (timeFlag(selesStartTime, selesEndTime)) {
             layer.msg('时间选择范围最多三个月', { icon: 7 });
             return;
@@ -827,34 +832,34 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         var myDate = new Date(),
-          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-          xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+            // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+            xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
         xhr.open("GET", `${vApi}/exportMachineOrder?startDate=${selesStartTime}&endDate=${selesEndTime}&condition=${machineSetData.machineId}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-    
+
         xhr.onload = function (res) {
-          if (xhr.status == 200) {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            var content = xhr.response;
-            // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-            var fileName = `${machineSetData.info}(${machineSetData.number})销售详情(${selesStartTime}-${selesEndTime}).xls`
-            var elink = document.createElement('a');
-            elink.download = fileName;
-            elink.style.display = 'none';
-            var blob = new Blob([content]);
-            elink.href = URL.createObjectURL(blob);
-            document.body.appendChild(elink);
-            elink.click();
-            document.body.removeChild(elink);
-          } else {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            layer.msg('服务器请求超时', { icon: 2 });
-            return;
-          }
+            if (xhr.status == 200) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                var content = xhr.response;
+                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+                var fileName = `${machineSetData.info}(${machineSetData.number})销售详情(${selesStartTime}-${selesEndTime}).xls`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
+            } else {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('服务器请求超时', { icon: 2 });
+                return;
+            }
         }
         xhr.send();
     })
@@ -898,7 +903,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'goods_Name', width: 200, title: '商品名', align: 'center'
+                    field: 'good_name_core', width: 295, title: '商品名(编号)', align: 'center', templet: function (d) {
+                        return d.good_name_core ? d.good_name_core : '-'
+                    }
                 },
                 {
                     field: 'ship_status', width: 165, title: '出货状态', align: 'center', templet: function (d) {
@@ -968,41 +975,41 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     }
 
     // 导出出货记录
-    $('.shipmentPushBtn').click(function(){
+    $('.shipmentPushBtn').click(function () {
         if (timeFlag(startTime, endTime)) {
             layer.msg('时间选择范围最多三个月', { icon: 7 });
             return;
         }
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-        var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/excelShipping?startDate=${startTime}&endDate=${endTime}&machineId=${machineSetData.machineId}&way=${$('.shipmentRecord select[name="shipSelect"]').val()}&goods_Name=${$('.shipmentRecord input[name="shipGoodName"]').val()}`, true);
+        // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        xhr.open("GET", `${vApi}/excelShipping?startDate=${startTime}&endDate=${endTime}&machineId=${machineSetData.machineId}&way=${$('.shipmentRecord select[name="shipSelect"]').val()}&goods_Name=${$('.shipmentRecord input[name="shipGoodName"]').val()}&order_code=${$('.shipmentRecord input[name="order_code"]').val()}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-    
+
         xhr.onload = function (res) {
-          if (xhr.status == 200) {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            var content = xhr.response;
-            // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-            var fileName = `${machineSetData.info}(${machineSetData.number})出货记录(${startTime}-${endTime}).xls`
-            var elink = document.createElement('a');
-            elink.download = fileName;
-            elink.style.display = 'none';
-            var blob = new Blob([content]);
-            elink.href = URL.createObjectURL(blob);
-            document.body.appendChild(elink);
-            elink.click();
-            document.body.removeChild(elink);
-          } else {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            layer.msg('服务器请求超时', { icon: 2 });
-            return;
-          }
+            if (xhr.status == 200) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                var content = xhr.response;
+                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+                var fileName = `${machineSetData.info}(${machineSetData.number})出货记录(${startTime}-${endTime}).xls`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
+            } else {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('服务器请求超时', { icon: 2 });
+                return;
+            }
         }
         xhr.send();
     })
@@ -1014,8 +1021,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
         recordDataList.reload({
             where: {
-                way:$('.shipmentRecord select[name="shipSelect"]').val(),
-                goods_Name:$('.shipmentRecord input[name="shipGoodName"]').val(),
+                way: $('.shipmentRecord select[name="shipSelect"]').val(),
+                goods_Name: $('.shipmentRecord input[name="shipGoodName"]').val(),
+                order_code: $('.shipmentRecord input[name="order_code"]').val(),
                 conditionTwo: startTime,
                 conditionThree: endTime,
                 // conditionFour: $('.shipmentRecord input[name="keyName"]').val()
@@ -1088,7 +1096,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             f5Fun()
         }
     });
-   
+
     // var editFlag = false,
     //     activateFlag = false,
     //     editAisleFlag = false,
@@ -1223,7 +1231,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     }
     selectData(sessionStorage.machineID);
     sessionStorage.machineGoodsId = sessionStorage.machineID;
-    sessionStorage.machineName=sessionStorage.marchantName;
+    sessionStorage.machineName = sessionStorage.marchantName;
     var goodsTableIns = null;
     // 商品列表
     function goodsreload() {
@@ -1371,12 +1379,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     aisleStr += `<div class="aisleNumderGoods" >
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">                                   
-                                        <img class="${child.status==1?'':'hide'}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt=""> 
-                                        <img class="${child.status==1?'hide':''}" src="${require('../../img/fault1.png')}" alt="">
+                                        <img class="${child.status == 1 ? '' : 'hide'}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt=""> 
+                                        <img class="${child.status == 1 ? 'hide' : ''}" src="${require('../../img/fault1.png')}" alt="">
                                     <span>${child.way}</span>
                                     </div>
                                 <div class="numderBottom">
-                                        <div class="status1 ${child.status==1?'':'redF10'}">${child.status==1?'正常':'货道故障'}</div>
+                                        <div class="status1 ${child.status == 1 ? '' : 'redF10'}">${child.status == 1 ? '正常' : '货道故障'}</div>
                                     <div>数量:${child.count}</div>
                                     </div>
                                     </div>  
@@ -1388,12 +1396,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     aisleStr += `<div class="aisleNumderGoods" >
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">
-                                    <img class="${child.status==1?'':'hide'}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt="">
-                                    <img class="${child.status==1?'hide':''}" src="${require('../../img/fault1.png')}" alt="">
+                                    <img class="${child.status == 1 ? '' : 'hide'}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt="">
+                                    <img class="${child.status == 1 ? 'hide' : ''}" src="${require('../../img/fault1.png')}" alt="">
                                         <span>${child.way}</span>
                                     </div>
                                     <div class="numderBottom">
-                                        <div class="status2">${child.status==1?'禁用':'货道故障'}</div>
+                                        <div class="status2">${child.status == 1 ? '禁用' : '货道故障'}</div>
                                         <div>数量:${child.count}</div>
                                     </div>
                                     </div>  
@@ -1411,7 +1419,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         tooltip('.chooseCheck', { transition: true, time: 200 });
     };
     // 判断页面打开后有没有输入独立密码
-    var aisleType=null;
+    var aisleType = null;
     sessionStorage.independentPass = '';
     var ArrIndex = null;
     $('body').on('click', '.aisleNumderClick', function () {
@@ -1422,7 +1430,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('您没有编辑货道的权限!', { icon: 7 })
             return;
         }
-        aisleType=1
+        aisleType = 1
         if (sessionStorage.independentPass) {
             aisleEdit();
             popupShow('editAisle', 'editAisleBox');
@@ -1438,18 +1446,18 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
         loadingAjax('/user/verifyAlonePwd', 'post', IPassWord, sessionStorage.token, 'mask', 'iPasswprd', 'passwordCont', layer).then(res => {
             sessionStorage.independentPass = 'true';
-             if (aisleType==1) {
+            if (aisleType == 1) {
                 aisleEdit();
                 popupHide('iPasswprd', 'passwordCont')
                 popupShow('editAisle', 'editAisleBox');
-            } else if(aisleType==2){
+            } else if (aisleType == 2) {
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
-                loadingAjax('/machine/removeGoodWay','post',JSON.stringify({machineId:machineSetData.machineId,}),sessionStorage.token,'mask','','').then(res=>{
-                    layer.msg(res.message,{icon:1});
+                loadingAjax('/machine/removeGoodWay', 'post', JSON.stringify({ machineId: machineSetData.machineId, }), sessionStorage.token, 'mask', '', '').then(res => {
+                    layer.msg(res.message, { icon: 1 });
                     getGoodsWay(machineSetData.machineId);
-                }).catch(err=>{
-                    layer.msg(err.message,{icon:2})
+                }).catch(err => {
+                    layer.msg(err.message, { icon: 2 })
                 });
             }
 
@@ -1495,20 +1503,20 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     }
 
     // 选择商品 
-   
+
     table.on('row(goodsTable)', function (obj) {
         console.log(goodKeyFlag)
-        if(goodKeyFlag==1){
+        if (goodKeyFlag == 1) {
             $('.editAisle input[name="goodsName"]').val(obj.data.mail == 1 ? '(邮寄)' + obj.data.goods_Name : obj.data.goods_Name);
             $('.editAisle input[name="goodsName"]').attr('IVal', obj.data.goods_Id);
             $('.editAisle input[name="price"]').val(obj.data.goods_Price);
             popupHide('goodsCont', 'goodsBox')
-        }else{
+        } else {
             $('.addPanelBody input[name="panelGoodsName"]').val(obj.data.mail == 1 ? '(邮寄)' + obj.data.goods_Name : obj.data.goods_Name);
             $('.addPanelBody input[name="panelGoodsName"]').attr('IVal', obj.data.goods_Id);
             popupHide('goodsCont', 'goodsBox');
         }
-      
+
     });
     // 修改详情
     $('.editAisle .ediaisleBtn').click(function () {
@@ -1956,7 +1964,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
 
     // 补货记录
-    var replenishmentList=null;
+    var replenishmentList = null;
     function replenishmenFun() {
         replenishmentList = table.render({
             elem: '#replenishmentTable',
@@ -1983,7 +1991,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 { field: 'way', width: 100, title: '补货货道', align: 'center' },
                 {
-                    field: 'goods_Name', width: 180, title: '商品名', align: 'center', 
+                    field: 'goods_Name', width: 180, title: '商品名', align: 'center',
                 },
                 {
                     field: 'replenish_count', width: 150, title: '补货前数量', align: 'center', templet: function (d) {
@@ -2064,67 +2072,67 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
         replenishmentList.reload({
             where: {
-                way:$('.replenishment select[name="shipSelect"]').val(),
-                goods_Name:$('.replenishment input[name="replenishmentGoodName"]').val(),
+                way: $('.replenishment select[name="shipSelect"]').val(),
+                goods_Name: $('.replenishment input[name="replenishmentGoodName"]').val(),
                 start_time: replenishmentStartTime ? replenishmentStartTime : null,
                 end_time: sreplenishmentEndTime ? sreplenishmentEndTime : null
             }
         })
     });
     // 导出补货记录
-    $('.replenishmentPushBtn').click(function(){
+    $('.replenishmentPushBtn').click(function () {
         if (timeFlag(replenishmentStartTime, sreplenishmentEndTime)) {
             layer.msg('时间选择范围最多三个月', { icon: 7 });
             return;
         }
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-        var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
         xhr.open("GET", `${vApi}/excelReplenish?startDate=${replenishmentStartTime}&endDate=${sreplenishmentEndTime}&machineId=${machineSetData.machineId}&way=${$('.replenishment select[name="shipSelect"]').val()}&goods_Name=${$('.replenishment input[name="replenishmentGoodName"]').val()}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-    
+
         xhr.onload = function (res) {
-          if (xhr.status == 200) {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            var content = xhr.response;
-            // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-            var fileName = `${machineSetData.info}(${machineSetData.number})补货记录(${replenishmentStartTime}-${sreplenishmentEndTime}).xls`
-            var elink = document.createElement('a');
-            elink.download = fileName;
-            elink.style.display = 'none';
-            var blob = new Blob([content]);
-            elink.href = URL.createObjectURL(blob);
-            document.body.appendChild(elink);
-            elink.click();
-            document.body.removeChild(elink);
-          } else {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            layer.msg('服务器请求超时', { icon: 2 });
-            return;
-          }
+            if (xhr.status == 200) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                var content = xhr.response;
+                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+                var fileName = `${machineSetData.info}(${machineSetData.number})补货记录(${replenishmentStartTime}-${sreplenishmentEndTime}).xls`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
+            } else {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('服务器请求超时', { icon: 2 });
+                return;
+            }
         }
         xhr.send();
     })
-       //开始时间
-       var editStartTime = getKeyTime().startTime;
-       //结束时间
-       var editEndTime = getKeyTime().endTime;
-       laydate.render({
-           elem: '#test10',
-           range: true,
-           value: getKeyTime().keyTimeData,
-           done: function (value, date, endDate) {
-               // console.log(value); //得到日期生成的值，如：2017-08-18
-               var timerKey = value.split(' - ');
-               editStartTime = timerKey[0];
-               editEndTime = timerKey[1];
-           }
-       });
+    //开始时间
+    var editStartTime = getKeyTime().startTime;
+    //结束时间
+    var editEndTime = getKeyTime().endTime;
+    laydate.render({
+        elem: '#test10',
+        range: true,
+        value: getKeyTime().keyTimeData,
+        done: function (value, date, endDate) {
+            // console.log(value); //得到日期生成的值，如：2017-08-18
+            var timerKey = value.split(' - ');
+            editStartTime = timerKey[0];
+            editEndTime = timerKey[1];
+        }
+    });
     // 修改价格记录部分
     var priceTable = null;
     function priceFun() {
@@ -2159,8 +2167,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             where: {
                 machineId: machineSetData.machineId,
-                startDate:editStartTime,
-                endDate:editEndTime
+                startDate: editStartTime,
+                endDate: editEndTime
             },
             parseData: function (res) {
                 // console.log(res)
@@ -2198,48 +2206,48 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
         priceTable.reload({
             where: {
-                goods_Name:$('.price input[name="priceGoodName"]').val(),
+                goods_Name: $('.price input[name="priceGoodName"]').val(),
                 startDate: editStartTime ? editStartTime : null,
                 endDate: editEndTime ? editEndTime : null
             }
         })
     });
     // 修改价格导出
-    $('.editPircePushBtn').click(function(){
+    $('.editPircePushBtn').click(function () {
         if (timeFlag(editStartTime, editEndTime)) {
             layer.msg('时间选择范围最多三个月', { icon: 7 });
             return;
         };
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-        var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
         xhr.open("GET", `${vApi}/excelPriceRecord?startDate=${editStartTime}&endDate=${editEndTime}&machineId=${machineSetData.machineId}&goods_Name=${$('.price input[name="priceGoodName"]').val()}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-    
+
         xhr.onload = function (res) {
-          if (xhr.status == 200) {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            var content = xhr.response;
-            // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-            var fileName = `${machineSetData.info}(${machineSetData.number})修改价格记录(${editStartTime}-${editEndTime}).xls`
-            var elink = document.createElement('a');
-            elink.download = fileName;
-            elink.style.display = 'none';
-            var blob = new Blob([content]);
-            elink.href = URL.createObjectURL(blob);
-            document.body.appendChild(elink);
-            elink.click();
-            document.body.removeChild(elink);
-          } else {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            layer.msg('服务器请求超时', { icon: 2 });
-            return;
-          }
+            if (xhr.status == 200) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                var content = xhr.response;
+                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+                var fileName = `${machineSetData.info}(${machineSetData.number})修改价格记录(${editStartTime}-${editEndTime}).xls`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
+            } else {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('服务器请求超时', { icon: 2 });
+                return;
+            }
         }
         xhr.send();
     })
@@ -2258,9 +2266,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 { field: 'info', width: 250, title: '售货机名', align: 'center', },
                 { field: 'openType', width: 150, title: '类型', align: 'center', },
                 { field: 'username', width: 150, title: '操作人', align: 'center', },
-                { field: 'goods_Name', width: 250, title: '开门时间', align: 'center', templet:function(d){
-                    return d.open_time ? timeStamp(d.open_time) : '-'
-                }},
+                {
+                    field: 'goods_Name', width: 250, title: '开门时间', align: 'center', templet: function (d) {
+                        return d.open_time ? timeStamp(d.open_time) : '-'
+                    }
+                },
             ]]
             , id: 'openTheDoorId'
             , page: true
@@ -2302,10 +2312,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         });
     };
-     //开始时间
-     var openSTime = getKeyTime().startTime;
-     //结束时间
-     var openETime = getKeyTime().endTime;
+    //开始时间
+    var openSTime = getKeyTime().startTime;
+    //结束时间
+    var openETime = getKeyTime().endTime;
     laydate.render({
         elem: '#test9',
         range: true,
@@ -2317,71 +2327,71 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             openETime = timerKey[1];
         }
     });
-    $('.openDoorRecord .opeQuery').click(function(){
+    $('.openDoorRecord .opeQuery').click(function () {
         if (timeFlag(openSTime, openETime)) {
             layer.msg('时间选择范围最多三个月', { icon: 7 });
             return;
         }
         openDoorTable.reload({
-            where:{
+            where: {
                 start_time: openSTime ? openSTime : null,
                 end_time: openETime ? openETime : null
             }
         })
     });
     // 开门记录导出
-    $('.openDoorPushBtn').click(function(){
+    $('.openDoorPushBtn').click(function () {
         if (timeFlag(openSTime, openETime)) {
             layer.msg('时间选择范围最多三个月', { icon: 7 });
             return;
         };
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-        var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
         xhr.open("GET", `${vApi}/excelDoorRecord?startDate=${openSTime}&endDate=${openETime}&machineId=${machineSetData.machineId}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-    
+
         xhr.onload = function (res) {
-          if (xhr.status == 200) {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            var content = xhr.response;
-            // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-            var fileName = `${machineSetData.info}(${machineSetData.number})开门记录(${openSTime}-${openETime}).xls`
-            var elink = document.createElement('a');
-            elink.download = fileName;
-            elink.style.display = 'none';
-            var blob = new Blob([content]);
-            elink.href = URL.createObjectURL(blob);
-            document.body.appendChild(elink);
-            elink.click();
-            document.body.removeChild(elink);
-          } else {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            layer.msg('服务器请求超时', { icon: 2 });
-            return;
-          }
+            if (xhr.status == 200) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                var content = xhr.response;
+                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+                var fileName = `${machineSetData.info}(${machineSetData.number})开门记录(${openSTime}-${openETime}).xls`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
+            } else {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('服务器请求超时', { icon: 2 });
+                return;
+            }
         }
         xhr.send();
     });
     laydate.render({
         elem: '#test101'
-      });
+    });
     // 导出补货单
-    var repairInvoiceData=null;
-    $('.invoicePushBtn').click(function(){
-        loadingAjax('/machine/getGoodReplenish','post',JSON.stringify({machineId:machineSetData.machineId}),sessionStorage.token,'','',layer).then(res=>{   
-            repairInvoiceData=res.data;
-            if(repairInvoiceData.good_info.length==0){
-                layer.msg('未查询到缺货商品',{icon:7});
-                return ;
+    var repairInvoiceData = null;
+    $('.invoicePushBtn').click(function () {
+        loadingAjax('/machine/getGoodReplenish', 'post', JSON.stringify({ machineId: machineSetData.machineId }), sessionStorage.token, '', '', layer).then(res => {
+            repairInvoiceData = res.data;
+            if (repairInvoiceData.good_info.length == 0) {
+                layer.msg('未查询到缺货商品', { icon: 7 });
+                return;
             }
             RgoodsFun(repairInvoiceData.good_info);
-            $('.supplierName').html(repairInvoiceData.supplier+'商品调拨(补货)单')
+            $('.supplierName').html(repairInvoiceData.supplier + '商品调拨(补货)单')
             $('.repairInvoiceBody input[name="iMachineName"]').val(`${repairInvoiceData.info}(${repairInvoiceData.number})`);
             $('.repairInvoiceBody input[name="supplier"]').val(repairInvoiceData.supplier);
             $('.repairInvoiceBody input[name="supplyName"]').val(repairInvoiceData.supplyName);
@@ -2392,17 +2402,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             $('.repairInvoiceBody input[name="wareManagement"]').val(repairInvoiceData.wareManagement);
             $('.repairInvoiceBody input[name="operator"]').val(repairInvoiceData.operator);
             $('.repairInvoiceBody input[name="consignee"]').val(repairInvoiceData.consignee);
-            popupShow('repairInvoice','repairInvoiceBox');
-        }).catch(err=>{
-            layer.msg(err.message,{icon:7})
+            popupShow('repairInvoice', 'repairInvoiceBox');
+        }).catch(err => {
+            layer.msg(err.message, { icon: 7 })
         })
     });
-    function RgoodsFun(list){
-        var Rstr='';
-        list.forEach((item,index)=>{
-            Rstr+=`<li class="detaillHeader">
+    function RgoodsFun(list) {
+        var Rstr = '';
+        list.forEach((item, index) => {
+            Rstr += `<li class="detaillHeader">
                         <div class="headerIndex1">
-                            <label for="">${index+1}</label>
+                            <label for="">${index + 1}</label>
                         </div>
                         <div class="headerGoods">
                             <label for="">${item.goodName}</label>
@@ -2422,159 +2432,159 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                             <input type="number" name="panelNam" value="${item.showCount}">
                         </div>
                         <div class="headerNum totalNums">
-                            <input type="number" name="totalNum" disabled value="${item.replenish+item.showCount}">
+                            <input type="number" name="totalNum" disabled value="${item.replenish + item.showCount}">
                         </div>
                      </li>`
 
-                    
+
         })
-       $('.detaillBody').html(Rstr)
+        $('.detaillBody').html(Rstr)
     };
 
     // 应补货数量改变
-    var CNumber=1;
-    $('.detaillBody').on('input','input[name="shouldName"]',function(){
-       var re = /^\d*$/;
-       if (!re.test($(this).val())) {
-        layer.msg('只能输入正整数', { icon: 7 });
-        $(this).val(CNumber);
-        return ;
-      }
-       CNumber=$(this).val();
-       $(this).parent().siblings('.newNums').children().val(Number(CNumber)+Number($(this).parent().siblings('.oldNums').children().val()));
-       $(this).parent().siblings('.totalNums').children().val(Number(CNumber)+Number($(this).parent().siblings('.inNums').children().val()));
-    });
-    // 应补展板数改变
-    var DNum=1;
-    $('.detaillBody').on('input','input[name="panelNam"]',function(){
+    var CNumber = 1;
+    $('.detaillBody').on('input', 'input[name="shouldName"]', function () {
         var re = /^\d*$/;
         if (!re.test($(this).val())) {
-         layer.msg('只能输入正整数', { icon: 7 });
-         $(this).val(DNum);
-         return ;
-       };
-       DNum=$(this).val();
-       $(this).parent().siblings('.totalNums').children().val(Number(DNum)+Number($(this).parent().siblings('.reNums').children().val()));
+            layer.msg('只能输入正整数', { icon: 7 });
+            $(this).val(CNumber);
+            return;
+        }
+        CNumber = $(this).val();
+        $(this).parent().siblings('.newNums').children().val(Number(CNumber) + Number($(this).parent().siblings('.oldNums').children().val()));
+        $(this).parent().siblings('.totalNums').children().val(Number(CNumber) + Number($(this).parent().siblings('.inNums').children().val()));
     });
-    $('.repairInvoiceFooter .ReBtn').click(function(){
+    // 应补展板数改变
+    var DNum = 1;
+    $('.detaillBody').on('input', 'input[name="panelNam"]', function () {
+        var re = /^\d*$/;
+        if (!re.test($(this).val())) {
+            layer.msg('只能输入正整数', { icon: 7 });
+            $(this).val(DNum);
+            return;
+        };
+        DNum = $(this).val();
+        $(this).parent().siblings('.totalNums').children().val(Number(DNum) + Number($(this).parent().siblings('.reNums').children().val()));
+    });
+    $('.repairInvoiceFooter .ReBtn').click(function () {
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        var good_infoAyy=[];
-        for(let i=0;i<repairInvoiceData.good_info.length;i++){
-            var goodsInfoObj={
-                goodName:repairInvoiceData.good_info[i].goodName,
+        var good_infoAyy = [];
+        for (let i = 0; i < repairInvoiceData.good_info.length; i++) {
+            var goodsInfoObj = {
+                goodName: repairInvoiceData.good_info[i].goodName,
                 newCount: Number($('.detaillBody .detaillHeader').eq(i).find('input[name="newNum"]').val()),
-                oldCount:repairInvoiceData.good_info[i].oldCount,
-                replenish:Number($('.detaillBody .detaillHeader').eq(i).find('input[name="shouldName"]').val()) ,
+                oldCount: repairInvoiceData.good_info[i].oldCount,
+                replenish: Number($('.detaillBody .detaillHeader').eq(i).find('input[name="shouldName"]').val()),
                 showCount: Number($('.detaillBody .detaillHeader').eq(i).find('input[name="panelNam"]').val()),
-                totalCount:Number($('.detaillBody .detaillHeader').eq(i).find('input[name="totalNum"]').val()),
-                id:i+1
+                totalCount: Number($('.detaillBody .detaillHeader').eq(i).find('input[name="totalNum"]').val()),
+                id: i + 1
             };
             good_infoAyy.push(goodsInfoObj)
         }
-        var repairInvoiceObj=JSON.stringify({
-            machineName:$('.repairInvoiceBody input[name="iMachineName"]').val(),
-            deliverTime:$('#test101').val(),
-            supplier:$('.repairInvoiceBody input[name="supplier"]').val(),
-            supplyName:$('.repairInvoiceBody input[name="supplyName"]').val(),
-            supplyPhone:$('.repairInvoiceBody input[name="supplyPhone"]').val(),
-            checkFlagName:$('.repairInvoiceBody input[name="checkFlagName"]').val(),
-            acceptanceName:$('.repairInvoiceBody input[name="acceptanceName"]').val(),
-            acceptancePhone:$('.repairInvoiceBody input[name="acceptancePhone"]').val(),
-            wareManagement:$('.repairInvoiceBody input[name="wareManagement"]').val(),
-            operator:$('.repairInvoiceBody input[name="operator"]').val(),
-            consignee:$('.repairInvoiceBody input[name="consignee"]').val(),
-            number:repairInvoiceData.number,
-            good_info:good_infoAyy
+        var repairInvoiceObj = JSON.stringify({
+            machineName: $('.repairInvoiceBody input[name="iMachineName"]').val(),
+            deliverTime: $('#test101').val(),
+            supplier: $('.repairInvoiceBody input[name="supplier"]').val(),
+            supplyName: $('.repairInvoiceBody input[name="supplyName"]').val(),
+            supplyPhone: $('.repairInvoiceBody input[name="supplyPhone"]').val(),
+            checkFlagName: $('.repairInvoiceBody input[name="checkFlagName"]').val(),
+            acceptanceName: $('.repairInvoiceBody input[name="acceptanceName"]').val(),
+            acceptancePhone: $('.repairInvoiceBody input[name="acceptancePhone"]').val(),
+            wareManagement: $('.repairInvoiceBody input[name="wareManagement"]').val(),
+            operator: $('.repairInvoiceBody input[name="operator"]').val(),
+            consignee: $('.repairInvoiceBody input[name="consignee"]').val(),
+            number: repairInvoiceData.number,
+            good_info: good_infoAyy
         });
-       
-          // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-        var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+
+        // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
         xhr.open("POST", `${vApi}/machine/exportGoodReplenish`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
         xhr.onload = function (res) {
-          if (xhr.status == 200) {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            var content = xhr.response;     
-            var fileName = `${repairInvoiceData.supplier}商品调拨（补货）单.xls`
-            var elink = document.createElement('a');
-            elink.download = fileName;
-            elink.style.display = 'none';
-            var blob = new Blob([content]);
-            elink.href = URL.createObjectURL(blob);
-            document.body.appendChild(elink);
-            elink.click();
-            document.body.removeChild(elink);
-            popupHide('repairInvoice','repairInvoiceBox')
-          } else {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            layer.msg('服务器请求超时', { icon: 2 });
-            return;
-          }
+            if (xhr.status == 200) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                var content = xhr.response;
+                var fileName = `${repairInvoiceData.supplier}商品调拨（补货）单.xls`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
+                popupHide('repairInvoice', 'repairInvoiceBox')
+            } else {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('服务器请求超时', { icon: 2 });
+                return;
+            }
         }
         xhr.send(repairInvoiceObj);
     });
 
     // 取消补货单
-    $('.rCancelBtn').click(function(){
-        popupHide('repairInvoice','repairInvoiceBox')
+    $('.rCancelBtn').click(function () {
+        popupHide('repairInvoice', 'repairInvoiceBox')
     });
 
     // 清除货道故障
-    $('.clearingBtn').click(function(){
+    $('.clearingBtn').click(function () {
         layer.confirm('确定清除货道故障？', function (index) {
             layer.close(index);
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon');
-            loadingAjax('/machine/clearLockMachineWay','post',JSON.stringify({machineId:machineSetData.machineId}),sessionStorage.token,'mask','','',layer).then(res=>{
-                layer.msg(res.message,{icon:1});
+            loadingAjax('/machine/clearLockMachineWay', 'post', JSON.stringify({ machineId: machineSetData.machineId }), sessionStorage.token, 'mask', '', '', layer).then(res => {
+                layer.msg(res.message, { icon: 1 });
                 getGoodsWay(machineSetData.machineId);
-            }).catch(err=>{
-                layer.msg(err.message,{icon:2})
+            }).catch(err => {
+                layer.msg(err.message, { icon: 2 })
             })
         })
     });
     // 导出售货机
-    $('.pushMachineBtn').click(function(){
+    $('.pushMachineBtn').click(function () {
         $('.mask').fadeIn();
-    $('.maskSpan').addClass('maskIcon');
-    var myDate = new Date(),
-      // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-      xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-    xhr.open("GET", `${vApi}/excelMachine?merchantId=${sessionStorage.machineGoodsId}`, true);
-    xhr.setRequestHeader("token", sessionStorage.token);
-    xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-    xhr.onload = function (res) {
-      if (xhr.status == 200) {
-        $('.mask').fadeOut();
-        $('.maskSpan').removeClass('maskIcon');
-        var content = xhr.response;
-        var fileName = `${sessionStorage.machineName}售货机列表.xls`
-        var elink = document.createElement('a');
-        elink.download = fileName;
-        elink.style.display = 'none';
-        var blob = new Blob([content]);
-        elink.href = URL.createObjectURL(blob);
-        document.body.appendChild(elink);
-        elink.click();
-        document.body.removeChild(elink);
-      } else {
-        $('.mask').fadeOut();
-        $('.maskSpan').removeClass('maskIcon');
-        layer.msg('服务器请求超时', { icon: 2 });
-        return;
-      }
-    }
-    xhr.send();
+        $('.maskSpan').addClass('maskIcon');
+        var myDate = new Date(),
+            // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
+            xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        xhr.open("GET", `${vApi}/excelMachine?merchantId=${sessionStorage.machineGoodsId}`, true);
+        xhr.setRequestHeader("token", sessionStorage.token);
+        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+        xhr.onload = function (res) {
+            if (xhr.status == 200) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                var content = xhr.response;
+                var fileName = `${sessionStorage.machineName}售货机列表.xls`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
+            } else {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('服务器请求超时', { icon: 2 });
+                return;
+            }
+        }
+        xhr.send();
     });
 
     // 展板部分
-    var panelTableIn=null;
-    function panelFun(){
+    var panelTableIn = null;
+    function panelFun() {
         panelTableIn = table.render({
             elem: '#panelTable',
             url: `${vApi}/machine/getDisplayGood`,
@@ -2584,7 +2594,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                { field: 'goods_Name', width: 150, title: '图片', align: 'center',templet:"#panelImg" },
+                { field: 'goods_Name', width: 150, title: '图片', align: 'center', templet: "#panelImg" },
                 { field: 'goods_Name', width: 150, title: '商品名', align: 'center', },
                 { field: 'goodCount', width: 150, title: '数量', align: 'center', },
                 { field: 'oldGoodCount', width: 150, title: '原数量', align: 'center', },
@@ -2638,14 +2648,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         });
     };
     // 添加展板
-    var panelIndex=null;
-    $('.addpanelBtn').click(function(){
-        panelIndex=1;
-        $('.addPanelCont input[name="panelGoodsName"]').attr('IVal','');
+    var panelIndex = null;
+    $('.addpanelBtn').click(function () {
+        panelIndex = 1;
+        $('.addPanelCont input[name="panelGoodsName"]').attr('IVal', '');
         $('.addPanelCont input[name="panelGoodsName"]').val('');
         $('.addPanelCont input[name="panelGoodsNum"]').val('');
         $('.addPanelBox .playHeader span').html('添加展板商品')
-        popupShow('addPanelCont','addPanelBox');
+        popupShow('addPanelCont', 'addPanelBox');
     });
     // 展板选择商品
     $('.relative1').click(function () {
@@ -2661,32 +2671,32 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
     });
     // 添加
-    $('.addPanelCont .panelAddBtn').click(function(){
-        if(!($('.addPanelCont input[name="panelGoodsName"]').val()&&$('.addPanelCont input[name="panelGoodsNum"]').val())){
-            layer.msg('带*为必填',{icon:7});
-            return ;
+    $('.addPanelCont .panelAddBtn').click(function () {
+        if (!($('.addPanelCont input[name="panelGoodsName"]').val() && $('.addPanelCont input[name="panelGoodsNum"]').val())) {
+            layer.msg('带*为必填', { icon: 7 });
+            return;
         };
-        var panelApi=panelIndex==1?'/machine/newDisplayGood':'/machine/updateDisplayGoodCount';
-        var panelAddObj=JSON.stringify({
-            machineId:machineSetData.machineId,
-            goodId:Number($('.addPanelCont input[name="panelGoodsName"]').attr('IVal')) ,
-            goodCount:Number($('.addPanelCont input[name="panelGoodsNum"]').val()) ,
+        var panelApi = panelIndex == 1 ? '/machine/newDisplayGood' : '/machine/updateDisplayGoodCount';
+        var panelAddObj = JSON.stringify({
+            machineId: machineSetData.machineId,
+            goodId: Number($('.addPanelCont input[name="panelGoodsName"]').attr('IVal')),
+            goodCount: Number($('.addPanelCont input[name="panelGoodsNum"]').val()),
         });
-        loadingAjax(panelApi,'post',panelAddObj,sessionStorage.token,'mask','addPanelCont','addPanelBox',layer).then(res=>{
-            layer.msg(res.message,{icon:1});
+        loadingAjax(panelApi, 'post', panelAddObj, sessionStorage.token, 'mask', 'addPanelCont', 'addPanelBox', layer).then(res => {
+            layer.msg(res.message, { icon: 1 });
             panelTableIn.reload({
-                where:{}
+                where: {}
             });
-            $('.addPanelCont input[name="panelGoodsName"]').attr('IVal','');
+            $('.addPanelCont input[name="panelGoodsName"]').attr('IVal', '');
             $('.addPanelCont input[name="panelGoodsName"]').val('');
             $('.addPanelCont input[name="panelGoodsNum"]').val('');
-        }).catch(err=>{
-            layer.msg(err.message,{icon:7});
+        }).catch(err => {
+            layer.msg(err.message, { icon: 7 });
         })
     });
     // 取消添加
-    $('.addPanelCont .addPanelCance').click(function(){
-        popupHide('addPanelCont','addPanelBox');
+    $('.addPanelCont .addPanelCance').click(function () {
+        popupHide('addPanelCont', 'addPanelBox');
     })
     // 展板监听
     table.on('tool(panelTable)', function (obj) {
@@ -2696,183 +2706,183 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 layer.close(index);
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
-                var delObj=JSON.stringify({
-                    machineId:machineSetData.machineId,
-                    goodId:obj.data.goods_Id
+                var delObj = JSON.stringify({
+                    machineId: machineSetData.machineId,
+                    goodId: obj.data.goods_Id
                 });
-                loadingAjax('/machine/removeDisplayGoodCount','post',delObj,sessionStorage.token,'mask','','',layer).then(res=>{
-                    layer.msg(res.message,{icon:1});
+                loadingAjax('/machine/removeDisplayGoodCount', 'post', delObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
+                    layer.msg(res.message, { icon: 1 });
                     panelTableIn.reload({
-                        where:{}
+                        where: {}
                     });
-                }).catch(err=>{
-                    layer.msg(err.message,{icon:2})
+                }).catch(err => {
+                    layer.msg(err.message, { icon: 2 })
                 })
             })
-        }else if(obj.event == 'edit'){
-            panelIndex=2
-            $('.addPanelCont input[name="panelGoodsName"]').attr('IVal',obj.data.goods_Id);
+        } else if (obj.event == 'edit') {
+            panelIndex = 2
+            $('.addPanelCont input[name="panelGoodsName"]').attr('IVal', obj.data.goods_Id);
             $('.addPanelCont input[name="panelGoodsName"]').val(obj.data.goods_Name);
             $('.addPanelCont input[name="panelGoodsNum"]').val(obj.data.goodCount);
             $('.addPanelBox .playHeader span').html('编辑展板商品')
-            popupShow('addPanelCont','addPanelBox');
+            popupShow('addPanelCont', 'addPanelBox');
         }
     });
     // 撤销货道
-    $('.undoAisleBtn').click(function(){
+    $('.undoAisleBtn').click(function () {
         layer.confirm('确定撤销货道?', function (index) {
-           
+
             layer.close(index);
-            aisleType=2;
-            if(sessionStorage.independentPass){
+            aisleType = 2;
+            if (sessionStorage.independentPass) {
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
-                loadingAjax('/machine/removeGoodWay','post',JSON.stringify({machineId:machineSetData.machineId,}),sessionStorage.token,'mask','','').then(res=>{
-                    layer.msg(res.message,{icon:1});
+                loadingAjax('/machine/removeGoodWay', 'post', JSON.stringify({ machineId: machineSetData.machineId, }), sessionStorage.token, 'mask', '', '').then(res => {
+                    layer.msg(res.message, { icon: 1 });
                     getGoodsWay(machineSetData.machineId);
-                }).catch(err=>{
-                    layer.msg(err.message,{icon:2})
+                }).catch(err => {
+                    layer.msg(err.message, { icon: 2 })
                 });
-            }else{
+            } else {
                 popupShow('iPasswprd', 'passwordCont')
             }
-            
-           
+
+
         })
     });
 
     // 撤货记录
-      var undoTableIn=null;
-      function undoFun(){
+    var undoTableIn = null;
+    function undoFun() {
         undoTableIn = table.render({
-              elem: '#undoTable',
-              url: `${vApi}/machine/findRemove`,
-              method: 'get',
+            elem: '#undoTable',
+            url: `${vApi}/machine/findRemove`,
+            method: 'get',
             //   contentType: "application/json",
-              headers: {
-                  token,
-              },
-              cols: [[
-                  { field: 'goodName', width: 150, title: '商品名', align: 'center', },
-                  { field: 'way', width: 130, title: '货道', align: 'center', },
-                  { field: 'count', width: 150, title: '数量', align: 'center', },
-                  { field: 'price', width: 150, title: '价格', align: 'center', },
-                  { field: 'userName', width: 215, title: '撤货人', align: 'center', },
-                  { field: 'removeDate', width: 200, title: '撤货时间', align: 'center', },
-              ]]
-              , id: 'undoId'
-              , page: true
-              , loading: true
-              // , limits: [ 10,20, 30,50, 100]
-              ,
-              request: {
-                  'pageName': 'pageNum',
-                  'limitName': 'pageSize'
-              },
-              where: {
+            headers: {
+                token,
+            },
+            cols: [[
+                { field: 'goodName', width: 150, title: '商品名', align: 'center', },
+                { field: 'way', width: 130, title: '货道', align: 'center', },
+                { field: 'count', width: 150, title: '数量', align: 'center', },
+                { field: 'price', width: 150, title: '价格', align: 'center', },
+                { field: 'userName', width: 215, title: '撤货人', align: 'center', },
+                { field: 'removeDate', width: 200, title: '撤货时间', align: 'center', },
+            ]]
+            , id: 'undoId'
+            , page: true
+            , loading: true
+            // , limits: [ 10,20, 30,50, 100]
+            ,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where: {
                 machineId: machineSetData.machineId,
-              },
-              parseData: function (res) {
-                  // console.log(res)
-                  //res 即为原始返回的数据
-                  if (res.code == 200) {
-                      return {
-                          "code": res.code, //解析接口状态
-                          "msg": res.message, //解析提示文本
-                          "count": res.data.total, //解析数据长度
-                          "data": res.data.list //解析数据列表
-                      };
-                  } else {
-                      return {
-                          "code": res.code, //解析接口状态
-                          "msg": res.message,   //解析提示文本
-                      }
-                  }
-  
-              },
-              response: {
-                  statusCode: 200 //规定成功的状态码，默认：0
-              },
-              done: function (res) {
-                  permissions1();
-                  if (res.code == 403) {
-                      window.parent.location.href = "login.html";
-                  }
-              }
-          });
-      };
+            },
+            parseData: function (res) {
+                // console.log(res)
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                permissions1();
+                if (res.code == 403) {
+                    window.parent.location.href = "login.html";
+                }
+            }
+        });
+    };
     //   导出撤货记录
-    $('.undoPushBtn').click(function(){
+    $('.undoPushBtn').click(function () {
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-       var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
         xhr.open("GET", `${vApi}/excelRemove?machineId=${machineSetData.machineId}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
-      //   xhr.setRequestHeader('Content-Type', 'charset=utf-8');
+        //   xhr.setRequestHeader('Content-Type', 'charset=utf-8');
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-    
+
         xhr.onload = function (res) {
-          if (xhr.status == 200) {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            var content = xhr.response;
-            // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-            var fileName = `${machineSetData.info}撤货记录.xls`
-            var elink = document.createElement('a');
-            elink.download = fileName;
-            elink.style.display = 'none';
-            var blob = new Blob([content]);
-            elink.href = URL.createObjectURL(blob);
-            document.body.appendChild(elink);
-            elink.click();
-            document.body.removeChild(elink);
-          } else {
-            $('.mask').fadeOut();
-            $('.maskSpan').removeClass('maskIcon');
-            layer.msg('服务器请求超时', { icon: 2 });
-            return;
-          }
+            if (xhr.status == 200) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                var content = xhr.response;
+                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+                var fileName = `${machineSetData.info}撤货记录.xls`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
+            } else {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('服务器请求超时', { icon: 2 });
+                return;
+            }
         }
         xhr.send();
-  });
- // 图片放大事件
- var PImgSHow=true;
- $('.goodsCont').on('mouseenter', '.pic102', function (e) {
-     var that = this; 
-     $('#pic101').attr('src',$(that).attr('src'));
-     var img = new Image();
-     img.onload = function () {
-         $("#pic101").css({
-             "width":this.width>=this.height?350+'px':'auto',
-             "height":this.height>this.width?350+'px':'auto'
-         }).fadeIn("fast");
-         this.onload = null;
-        
-     };
-     img.src = $(that).attr('src');
- });
-//  $('.goodsCont').on('click','.pic102',function(){
-//      event.stopPropagation();
-//      PImgSHow=false;
-//  }); 
- $('.goodsCont').on('mouseleave', '.pic102', function () {
-    //  if(PImgSHow){
-         $('#pic101').hide();
-    //  }
- });
-//  $('#pic101').click(function(){
-//      event.stopPropagation();
-//  });
-//  $('body').click(function(){
-//      PImgSHow=true;
-//      $('#pic101').hide();
-//  });
- $('#pic101').mouseenter(function(){
-     $('#pic101').show();
-   })
-   $('#pic101').mouseleave(function(){
-    //  if (PImgSHow) {
-       $('#pic101').hide();
-    //  }
-   })
+    });
+    // 图片放大事件
+    var PImgSHow = true;
+    $('.goodsCont').on('mouseenter', '.pic102', function (e) {
+        var that = this;
+        $('#pic101').attr('src', $(that).attr('src'));
+        var img = new Image();
+        img.onload = function () {
+            $("#pic101").css({
+                "width": this.width >= this.height ? 350 + 'px' : 'auto',
+                "height": this.height > this.width ? 350 + 'px' : 'auto'
+            }).fadeIn("fast");
+            this.onload = null;
+
+        };
+        img.src = $(that).attr('src');
+    });
+    //  $('.goodsCont').on('click','.pic102',function(){
+    //      event.stopPropagation();
+    //      PImgSHow=false;
+    //  }); 
+    $('.goodsCont').on('mouseleave', '.pic102', function () {
+        //  if(PImgSHow){
+        $('#pic101').hide();
+        //  }
+    });
+    //  $('#pic101').click(function(){
+    //      event.stopPropagation();
+    //  });
+    //  $('body').click(function(){
+    //      PImgSHow=true;
+    //      $('#pic101').hide();
+    //  });
+    $('#pic101').mouseenter(function () {
+        $('#pic101').show();
+    })
+    $('#pic101').mouseleave(function () {
+        //  if (PImgSHow) {
+        $('#pic101').hide();
+        //  }
+    })
 });

@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" sizes="144x144" href="../../img/logo.png"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="icon" type="image/png" sizes="144x144" href="../../img/logo.png" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <link rel="icon" type="image/png" sizes="144x144" href="../../img/logo.png" />
     <script src="../../assets/public/documentMobile.js"></script>
+    <link rel="stylesheet" href="../../assets/public/jedate.css">
+    <script src="../../assets/public/jedate.js"></script>
     <title>售货机订单</title>
 </head>
+
 <body>
     <div class="orderWrap">
-        <div class="topHeader flexThree" >
+        <div class="topHeader flexThree">
             <span class="hui-icons hui-icons-left back" id="back"></span>
             <h2>售货机订单</h2>
             <span class="hui-icons hui-icons-menu-point"></span>
@@ -18,6 +24,8 @@
             <div class="searchHeader">
                 <input type="text" id="search" placeholder="订单编号">
             </div>
+            <div class="jeinpbox"><input type="text" class="jeinput" id="test10" style="text-align: center;"
+                    placeholder="请选择日期"></div>
             <ul class="orderList">
                 <!-- <li>
                     <div class="flex">
@@ -69,13 +77,12 @@
             <div class="pages3">
                 <div class="hui-pager" style="padding:10px 30px 10px 40vw;">
                     <div><a href="javascript:hui.toast('第1页');" class="hui-pager-active">1</a></div>
-                    <div><a href="javascript:hui.toast('第2页');">2</a></div>
                 </div>
             </div>
         </div>
     </div>
     <!-- 商品部分 -->
-     <div class="goodsCont" style="display: none;">
+    <div class="goodsCont" style="display: none;">
         <div class="goodsBox">
             <ul class="goodsList">
                 <div class="goodsHeader">
@@ -103,8 +110,8 @@
             </ul>
         </div>
     </div>
-     <!-- 商户树部分 -->
-     <div class="merchantsContent maskContent" >
+    <!-- 商户树部分 -->
+    <div class="merchantsContent maskContent">
         <div class="merchantsBox maskBox ">
             <!-- <ul class="sire">
                 <li class="parent">
@@ -129,7 +136,7 @@
         </div>
     </div>
     <!-- 退款部分 -->
-    <div class="refundCont independentPassCont maskContent" >
+    <div class="refundCont independentPassCont maskContent">
         <div class="changeBox maskBox">
             <div class="header">
                 <h1>请输入需要退款商品的数量（最少为1,最多为1）</h1>
@@ -140,22 +147,22 @@
             <div class="changeBody">
                 <div class="flex inputList refundNumber">
                     <label>数量:</label>
-                    <input type="number" >
+                    <input type="number">
                 </div>
                 <div class="flex inputList blur sumInput">
                     <label>金额:</label>
-                    <input type="number" disabled  name="sum">
+                    <input type="number" disabled name="sum">
                 </div>
                 <div class="footerCont">
-                    <div class="confirmBtn" >
+                    <div class="confirmBtn">
                         确定
                     </div>
                 </div>
             </div>
         </div>
     </div>
-     <!-- 验证独立密码 -->
-     <div class="validationContent maskContent">
+    <!-- 验证独立密码 -->
+    <div class="validationContent maskContent">
         <div class="validationBox centerMaskWindow maskBox">
             <div class="header">
                 <h1>验证独立密码</h1>
@@ -176,4 +183,5 @@
     </div>
     <script src="../../assets/public/md5.js"></script>
 </body>
+
 </html>

@@ -257,3 +257,14 @@
 .validationContent{
     z-index: 90;
 }
+.jeinpbox{
+    width: 75%;
+    margin: 0.25rem auto;
+    input {
+        width: 100%;
+        padding: 0.2rem 0;
+        border-radius: 0.32rem;
+        outline: none;
+        border: none !important;
+    }
+}
