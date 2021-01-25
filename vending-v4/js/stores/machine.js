@@ -171,7 +171,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 //     }
                 // },
                 { field: 'merchantName', width: 150, title: '所属商户', align: 'center', },
-                { field: 'appVersion', width: 135, title: '软件版本', align: 'center', },
+                { field: 'version', width: 135, title: '软件版本', align: 'center', },
                 // { field: 'controllerVersion', width: 135, title: '控制器版本', },
                 {
                     field: 'connectTime', width: 170, title: '联机时间', align: 'center', templet: function (d) {
