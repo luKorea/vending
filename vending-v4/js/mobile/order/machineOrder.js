@@ -338,19 +338,19 @@ $('.validationContent .confirmBtn').click(function () {
     // 时间
     var saStart_time = null,
     saend_time = null;
-jeDate("#test10", {
-    format: "YYYY-MM-DD",
-    range: " - ",
-    donefun: function (obj) {
-        console.log(obj);
-        var timerKey = obj.val.split(' - ');
-        saStart_time = timerKey[0];
-        saend_time = timerKey[1]
-        console.log(saStart_time, saend_time)
-    },
-    clearfun: function (ele, val) {
-        saend_time = null;
-        saend_time = null;
-    }
-});
+// jeDate("#test10", {
+//     format: "YYYY-MM-DD",
+//     range: " - ",
+//     donefun: function (obj) {
+//         // console.log(obj);
+//         // var timerKey = obj.val.split(' - ');
+//         // saStart_time = timerKey[0];
+//         // saend_time = timerKey[1]
+//         // console.log(saStart_time, saend_time)
+//     },
+//     clearfun: function (ele, val) {
+//         // saend_time = null;
+//         // saend_time = null;
+//     }
+// });
 })
