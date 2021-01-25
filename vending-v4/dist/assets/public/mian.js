@@ -595,7 +595,6 @@ function timeStamp(time) {
 }
 
 // 查询条件默认一个月
-
 function getKeyTime() {
   var initialTime = new Date(),
     initialTime1 = {},
@@ -614,7 +613,7 @@ function getKeyTime() {
   }
   return initialTime1
 }
-
+// 判断查询时间是否大于三个月
 function timeFlag(start,end){
   console.log(start,end)
   var start1=new Date(start);

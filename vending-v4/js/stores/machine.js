@@ -171,7 +171,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 //     }
                 // },
                 { field: 'merchantName', width: 150, title: '所属商户', align: 'center', },
-                { field: 'version', width: 135, title: '软件版本', align: 'center', },
+                { field: 'versions', width: 200, title: '当前版本(待升级版本)', align: 'center', templet:function(d){
+                    return `${d.versions?d.versions:'-'}(${d.appVersion?d.appVersion:'-'})`
+                }},
                 // { field: 'controllerVersion', width: 135, title: '控制器版本', },
                 {
                     field: 'connectTime', width: 170, title: '联机时间', align: 'center', templet: function (d) {
@@ -325,7 +327,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
             form.val("setDataVal", {
                 'info': machineSetData.info,
-                'appVersion': machineSetData.appVersion,
+                'appVersion': machineSetData.versions,
                 'longitude': machineSetData.longitude,
                 'latitude': machineSetData.latitude,
                 'location': machineSetData.location,

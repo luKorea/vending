@@ -336,7 +336,9 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                         return d.location ? d.location : ' - '
                     }
                 },
-                { field: 'appVersion', width: 180, align: 'center', title: '软件版本' },
+                { field: 'versions', width: 200, align: 'center', title: '当前版本(待升级版本)',templet:function(d){
+                    return `${d.versions?d.versions:'-'}(${d.appVersion?d.appVersion:'-'})`
+                } },
                 { field: 'merchantName', width: 150, align: 'center', title: '所属商户' }
             ]],
             id: 'mId',
