@@ -787,7 +787,7 @@
                             PrevYM = jet.nextMonth(year, month);
                             NextYM = jet.prevMonth(PrevYM.y, PrevYM.m);
                         }
-                        console.log(NextYM, PrevYM)
+                        // console.log(NextYM, PrevYM)
                         exarr = [jet.extend({ YYYY: PrevYM.y, MM: PrevYM.m, DD: dateD }, tmval[0]), { YYYY: NextYM.y, MM: NextYM.m, DD: dateD }];
                     } else {
                         var PNYM = (type == "mprev") ? jet.prevMonth(year, month) : jet.nextMonth(year, month);

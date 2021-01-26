@@ -1,5 +1,5 @@
 import '../../../MyCss/mobile/machine/machine.scss';
-import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow, permissionsFun, timeStamp, treeList } from '../../../common/common.js';
+import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow, permissionsFun, timeStamp, treeList, getKeyTime, timeFlag } from '../../../common/common.js';
 // loadingWith('正在加载');
 //返回上一页
 $('#topHeader .back').click(function () {
@@ -571,7 +571,31 @@ function geoCode() {
     });
 };
 
-
+// 时间初始化
+var sStart_time = getKeyTime().startTime,
+    send_time = getKeyTime().endTime;
+$('#test08').val(getKeyTime().keyTimeData)
+jeDate("#test08", {
+    format: "YYYY-MM-DD",
+    range: " - ",
+    donefun: function (obj) {
+        console.log(obj);
+        var timerKey = obj.val.split(' - ');
+        sStart_time = timerKey[0];
+        send_time = timerKey[1]
+        if (timeFlag(sStart_time, send_time)) {
+            toastTitle('时间选择范围最多三个月', 'warn')
+            return;
+        }
+        shipmenListArr(machineDetails.machineId, 1)
+    },
+    clearfun: function (ele, val) {
+        // console.log(9999);
+        sStart_time = getKeyTime().startTime;
+        send_time = getKeyTime().endTime;
+        shipmenListArr(machineDetails.machineId, 1)
+    }
+});
 // 出货记录部分
 $('.shipmentRd').click(function () {
     // console.log(machineDetails);
@@ -585,26 +609,7 @@ $('.shipmentContent .close').click(function () {
     closeParents(this, 'top0');
     $('.hui-picker').hide();
 });
-// 时间初始化
-var sStart_time = null,
-    send_time = null;
-jeDate("#test08", {
-    format: "YYYY-MM-DD",
-    range: " - ",
-    donefun: function (obj) {
-        console.log(obj);
-        var timerKey = obj.val.split(' - ');
-        sStart_time = timerKey[0];
-        send_time = timerKey[1]
-        shipmenListArr(machineDetails.machineId, 1)
-    },
-    clearfun: function (ele, val) {
-        // console.log(9999);
-        sStart_time = null;
-        send_time = null;
-        shipmenListArr(machineDetails.machineId, 1)
-    }
-});
+
 // 获取出货记录
 function shipmenListArr(mId, mNum) {
     var sObj = JSON.stringify({
@@ -635,8 +640,8 @@ function shipmenListArr(mId, mNum) {
                         <p>${item.create_time ? timeStamp(item.create_time) : '-'}</p>
                     </div>
                     <div class="keyText flex">
-                        <label for="">商品名:</label>
-                        <p>${item.goods_Name}</p>
+                        <label for="">商品名(编号):</label>
+                        <p>${item.good_name_core ? item.good_name_core : ''}</p>
                     </div>
                     <div class="keyText flex">
                         <label for="">出货状态:</label>
@@ -701,8 +706,9 @@ $('.rMentContent .close').click(function () {
     $('.hui-picker').hide();
 });
 
-var rStart_time = null,
-    rend_time = null;
+var rStart_time = getKeyTime().startTime,
+    rend_time = getKeyTime().endTime;
+    $('#test09').val(getKeyTime().keyTimeData)
 jeDate("#test09", {
     format: "YYYY-MM-DD",
     range: " - ",
@@ -711,11 +717,15 @@ jeDate("#test09", {
         var timerKey = obj.val.split(' - ');
         rStart_time = timerKey[0];
         rend_time = timerKey[1]
+        if (timeFlag(rStart_time, rend_time)) {
+            toastTitle('时间选择范围最多三个月', 'warn')
+            return;
+        }
         rMentListArr(machineDetails.machineId, 1)
     },
     clearfun: function (ele, val) {
-        rStart_time = null;
-        rend_time = null;
+        rStart_time = getKeyTime().startTime;
+        rend_time = getKeyTime().endTime;
         rMentListArr(machineDetails.machineId, 1)
     }
 });
@@ -797,8 +807,9 @@ $('.salesContent .close').click(function () {
     closeParents(this, 'top0');
     $('.hui-picker').hide();
 });
-var saStart_time = null,
-    saend_time = null;
+var saStart_time = getKeyTime().startTime,
+    saend_time = getKeyTime().endTime;
+    $('#test10').val(getKeyTime().keyTimeData)
 jeDate("#test10", {
     format: "YYYY-MM-DD",
     range: " - ",
@@ -807,12 +818,16 @@ jeDate("#test10", {
         var timerKey = obj.val.split(' - ');
         saStart_time = timerKey[0];
         saend_time = timerKey[1]
-        console.log(saStart_time, saend_time)
+        console.log(saStart_time, saend_time);
+        if (timeFlag(saStart_time, saend_time)) {
+            toastTitle('时间选择范围最多三个月', 'warn')
+            return;
+        }
         salesListArr(machineDetails.machineId, 1)
     },
     clearfun: function (ele, val) {
-        saend_time = null;
-        saend_time = null;
+        saend_time = getKeyTime().startTime;
+        saend_time = getKeyTime().endTime;
         salesListArr(machineDetails.machineId, 1)
     }
 });
@@ -1067,22 +1082,22 @@ $('.panelDrawing').on('click', '.delBtn', function () {
     })
 });
 // 点击添加展板
-var panelIndex=null;
+var panelIndex = null;
 $('.addPanelBtn').click(function () {
-    panelIndex=1
-    $('.editiAsleBody input[name="goodsName"]').attr('IVal','');
+    panelIndex = 1
+    $('.editiAsleBody input[name="goodsName"]').attr('IVal', '');
     $('.editiAsleBody input[name="goodsName"]').val('');
     $('.editiAsleBody input[name="goodsNum"]').val('');
     showPopup('.editAisleContent', '.editAisleBox', 'top30');
 });
 // 点击编辑
-$('.panelDrawing').on('click','.panelList',function(){
-    panelIndex=2;
-    var paneldata=$(this).data('paneldata');
-    $('.editiAsleBody input[name="goodsName"]').attr('IVal',paneldata.goods_Id);
+$('.panelDrawing').on('click', '.panelList', function () {
+    panelIndex = 2;
+    var paneldata = $(this).data('paneldata');
+    $('.editiAsleBody input[name="goodsName"]').attr('IVal', paneldata.goods_Id);
     $('.editiAsleBody input[name="goodsName"]').val(paneldata.goods_Name);
     $('.editiAsleBody input[name="goodsNum"]').val(paneldata.goodCount);
-    console.log( $(this).data('paneldata'));
+    console.log($(this).data('paneldata'));
     showPopup('.editAisleContent', '.editAisleBox', 'top30');
 })
 // 关闭添加展板
@@ -1164,29 +1179,29 @@ $('.pages4').on('click', '.pageVal', function () {
 });
 
 //展板确定
-$('.editAisleBox  .panelConfirmBtn').click(function(){
-    if(!$('.editAisleBox input[name="goodsName"]').val()){
-        toastTitle('请选择商品','warn');
-        return ;
+$('.editAisleBox  .panelConfirmBtn').click(function () {
+    if (!$('.editAisleBox input[name="goodsName"]').val()) {
+        toastTitle('请选择商品', 'warn');
+        return;
     }
-    if(!$('.editAisleBox input[name="goodsNum"]').val()){
-        toastTitle('请填写数量','warn');
-        return ;
+    if (!$('.editAisleBox input[name="goodsNum"]').val()) {
+        toastTitle('请填写数量', 'warn');
+        return;
     };
     loadingWith('正在操作，请稍后');
-    var panelApi=panelIndex==1?'/machine/newDisplayGood':'/machine/updateDisplayGoodCount';
-    var panelAddObj=JSON.stringify({
-        machineId:machineDetails.machineId,
-        goodId:Number($('.editiAsleBody input[name="goodsName"]').attr('IVal')) ,
-        goodCount:Number($('.editAisleBox input[name="goodsNum"]').val()) ,
+    var panelApi = panelIndex == 1 ? '/machine/newDisplayGood' : '/machine/updateDisplayGoodCount';
+    var panelAddObj = JSON.stringify({
+        machineId: machineDetails.machineId,
+        goodId: Number($('.editiAsleBody input[name="goodsName"]').attr('IVal')),
+        goodCount: Number($('.editAisleBox input[name="goodsNum"]').val()),
     });
-    loadAjax(panelApi,'post',sessionStorage.token,panelAddObj,'mask','.editAisleContent').then(res=>{
+    loadAjax(panelApi, 'post', sessionStorage.token, panelAddObj, 'mask', '.editAisleContent').then(res => {
         toastTitle(res.message, 'success');
         panelListFun();
-        $('.editiAsleBody input[name="goodsName"]').attr('IVal','');
+        $('.editiAsleBody input[name="goodsName"]').attr('IVal', '');
         $('.editiAsleBody input[name="goodsName"]').val('');
         $('.editiAsleBody input[name="goodsNum"]').val('');
-    }).catch(err=>{
+    }).catch(err => {
         toastTitle(err.message, 'error');
     })
 })

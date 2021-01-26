@@ -1,7 +1,10 @@
-import { loadAjax, loadingWith, toastTitle, showPopup, closeParents, closeWindow, permissionsFun, timeStamp, treeList, numFormat2 } from '../../../common/common';
+import { loadAjax, loadingWith, toastTitle, showPopup, closeParents, closeWindow, timeStamp, treeList, numFormat2, getKeyTime, timeFlag } from '../../../common/common';
 import '../../../MyCss/mobile/order/machineOrder.scss';
-var NumderIndex=1,//页数
-    keyWord='';
+// 时间
+var saStart_time = getKeyTime().startTime,
+    saend_time = getKeyTime().endTime;
+var NumderIndex = 1,//页数
+    keyWord = '';
 $('#back').click(function () {
     // window.history.go(-1);
     window.location.href = 'M_managementCenter.html';
@@ -14,10 +17,10 @@ function orderArrList(mId, mNum) {
         conditionFive: mId,
         pageNum: mNum,
         pageSize: 100,
-        // condition:'2020-12-19',
-        // conditionTwo:'2021-01-19',
+        condition:saStart_time,
+        conditionTwo:saend_time,
         conditionSeven: 0,
-        conditionThree:keyWord
+        conditionThree: keyWord
     });
     loadAjax('/order/getOrderList', 'post', sessionStorage.token, orderObj).then(res => {
         if (mNum == 1) {
@@ -67,11 +70,11 @@ function orderArrList(mId, mNum) {
                         </div>
                         <div class="flex">
                             <label for="">退款状态:</label>
-                            <p>${item.refund == 1 ? '未退款' : item.refund == 2 ? '部分退款' : item.refund == 3?'全部退款':'-'}</p>
+                            <p>${item.refund == 1 ? '未退款' : item.refund == 2 ? '部分退款' : item.refund == 3 ? '全部退款' : '-'}</p>
                         </div>
                         <div class="flex">
                             <label for="">出货状态:</label>
-                            <p>${item.shipStatus == 0 ? '未出货' : item.shipStatus == 1 ? '部分出货失败' :item.shipStatus == 2 ?  '全部出货成功':'出货中'}</p>
+                            <p>${item.shipStatus == 0 ? '未出货' : item.shipStatus == 1 ? '部分出货失败' : item.shipStatus == 2 ? '全部出货成功' : '出货中'}</p>
                         </div>
                         <div class="flex">
                             <label for="">出货详情:</label>
@@ -96,7 +99,7 @@ orderArrList(merchantIdStr, NumderIndex)
 //订单点击分页
 $('.pages3').on('click', '.pageVal', function () {
     $(this).addClass('hui-pager-active').siblings().removeClass('hui-pager-active')
-    NumderIndex=Number($(this).attr('val'))
+    NumderIndex = Number($(this).attr('val'))
     orderArrList(merchantIdStr, Number($(this).attr('val')));
 });
 // 分页页面方法
@@ -152,7 +155,7 @@ $('.merchantsBox').on('click', '.parent span', function () {
     // console.log($(this).attr('mId'))
     merchantIdStr = Number($(this).attr('mId'));
     orderArrList(merchantIdStr, 1);
-    NumderIndex=1
+    NumderIndex = 1
 });
 
 // 商户树展开收起
@@ -175,7 +178,7 @@ $('.orderList').on('click', '.orderIn', function () {
     $('.goodsCont').show();
 });
 // 关闭商品
-$('.goodsCont .goodsHeader img').click(function(){
+$('.goodsCont .goodsHeader img').click(function () {
     $('.goodsCont').hide();
 })
 // 渲染商品列表
@@ -201,9 +204,9 @@ function goodDrawing(list) {
     $('.goodsListCont').html(goodsStr);
 };
 // 点击商品退款
-var goodsVal=null;//商品数据
-$('.goodsListCont').on('click','.list',function(){
-    goodsVal=orderData.goodsList[$(this).attr('goodsIndex')];
+var goodsVal = null;//商品数据
+$('.goodsListCont').on('click', '.list', function () {
+    goodsVal = orderData.goodsList[$(this).attr('goodsIndex')];
     // console.log(goodsVal);
     if (orderData.payStatus != 2) {
         return;
@@ -212,50 +215,50 @@ $('.goodsListCont').on('click','.list',function(){
         $('.twoPoles span').html(goodsVal.count - goodsVal.refund_count);
         $('.refundNumber input').val(1)
         $('.sumInput input[name="sum"]').val(goodsVal.price);
-        showPopup('.refundCont','.changeBox','top30');
-    }else{
-        return ;
+        showPopup('.refundCont', '.changeBox', 'top30');
+    } else {
+        return;
     }
-    
+
 });
 // 关闭
-$('.close').click(function(){
-    closeParents(this,'top30');
-    event.stopPropagation(); 
+$('.close').click(function () {
+    closeParents(this, 'top30');
+    event.stopPropagation();
 });
-$('.maskBox ').click(function(){
-    event.stopPropagation(); 
+$('.maskBox ').click(function () {
+    event.stopPropagation();
 });
-$('.refundCont ').click(function(){
-    closeWindow(this,'top30');
+$('.refundCont ').click(function () {
+    closeWindow(this, 'top30');
 });
- // 正则检验只能输入正整数
+// 正则检验只能输入正整数
 var reduction = 1;
 $('.refundNumber input').keyup(function () {
-  var num = $(this).val(),
-    re = /^\d*$/;
-  if (!re.test(num)) {
-    toastTitle('只能输入正整数','warn')
-    $(this).val(reduction);
+    var num = $(this).val(),
+        re = /^\d*$/;
+    if (!re.test(num)) {
+        toastTitle('只能输入正整数', 'warn')
+        $(this).val(reduction);
+        $('.sumInput input[name="sum"]').val(Number($(this).val() * goodsVal.price));
+    } else {
+        reduction = $(this).val();
+        $('.sumInput input[name="sum"]').val(Number($(this).val() * goodsVal.price));
+    }
     $('.sumInput input[name="sum"]').val(Number($(this).val() * goodsVal.price));
-  } else {
-    reduction = $(this).val();
-    $('.sumInput input[name="sum"]').val(Number($(this).val() * goodsVal.price));
-  }
-  $('.sumInput input[name="sum"]').val(Number($(this).val() * goodsVal.price));
 });
 $('.refundNumber input').change(function () {
-  $('.sumInput input[name="sum"]').val(Number($(this).val() * goodsVal.price));
+    $('.sumInput input[name="sum"]').val(Number($(this).val() * goodsVal.price));
 });
 
 // 确定退款
-$('.refundCont .confirmBtn').click(function(){
-    if($('.refundNumber input').val() > 0 && $('.refundNumber input').val() <= goodsVal.count - goodsVal.refund_count){
-        hui.confirm('确定退款？', ['取消','确定'], function(){
-            showPopup('.validationContent','.validationBox','top50');
+$('.refundCont .confirmBtn').click(function () {
+    if ($('.refundNumber input').val() > 0 && $('.refundNumber input').val() <= goodsVal.count - goodsVal.refund_count) {
+        hui.confirm('确定退款？', ['取消', '确定'], function () {
+            showPopup('.validationContent', '.validationBox', 'top50');
         })
-    }else{
-        toastTitle('请按照提示填写数量','warn')
+    } else {
+        toastTitle('请按照提示填写数量', 'warn')
     }
 });
 // 点击独立密码验证
@@ -268,8 +271,8 @@ $('.validationContent .confirmBtn').click(function () {
     var IPassWord = JSON.stringify({
         alonePwd: hex_md5($('.validationBody input[name="oldPass"]').val())
     });
-    loadAjax('/user/verifyAlonePwd', 'post', sessionStorage.token, IPassWord, '','.validationContent','top').then(res => {
-        if(orderData.payType==0){
+    loadAjax('/user/verifyAlonePwd', 'post', sessionStorage.token, IPassWord, '', '.validationContent', 'top').then(res => {
+        if (orderData.payType == 0) {
             //阿里退款
             var refundData = JSON.stringify({
                 machineId: orderData.machineId,
@@ -279,15 +282,15 @@ $('.validationContent .confirmBtn').click(function () {
                 amount: Number($('.sumInput input[name="sum"]').val()),
                 pay_id: orderData.pay_id
                 // amount:0.01
-              });
-              loadAjax('/pay/refund_alipay','post',sessionStorage.token,refundData,'mask','.refundCont','top30').then(res=>{
+            });
+            loadAjax('/pay/refund_alipay', 'post', sessionStorage.token, refundData, 'mask', '.refundCont', 'top30').then(res => {
                 toastTitle(res.message, 'success');
                 orderArrList(merchantIdStr, NumderIndex);
                 $('.goodsCont').hide();
-              }).catch(err=>{
+            }).catch(err => {
                 toastTitle(err.message, 'error')
-              })
-        }else if(orderData.payType == 1){
+            })
+        } else if (orderData.payType == 1) {
             var refundData = JSON.stringify({
                 machineId: orderData.machineId,
                 orderId: orderData.number,
@@ -297,15 +300,15 @@ $('.validationContent .confirmBtn').click(function () {
                 transaction_id: orderData.transaction_id,
                 total: orderData.amount,
                 pay_id: orderData.pay_id
-              });
-              loadAjax('/pay/refund_wxpay','post',sessionStorage.token,refundData,'mask','.refundCont','top30').then(res=>{
+            });
+            loadAjax('/pay/refund_wxpay', 'post', sessionStorage.token, refundData, 'mask', '.refundCont', 'top30').then(res => {
                 toastTitle(res.message, 'success');
                 orderArrList(merchantIdStr, NumderIndex);
                 $('.goodsCont').hide();
-            }).catch(err=>{
+            }).catch(err => {
                 toastTitle(err.message, 'error')
             })
-        }else if(orderData.payType == 3){
+        } else if (orderData.payType == 3) {
             var refundData = JSON.stringify({
                 machineId: orderData.machineId,
                 orderId: orderData.number,
@@ -314,12 +317,12 @@ $('.validationContent .confirmBtn').click(function () {
                 transaction_id: orderData.transaction_id,
                 amount: Number($('.sumInput input[name="sum"]').val()),
                 pay_id: orderData.pay_id
-              });
-              loadAjax('/pay/refund_icbc','post',sessionStorage.token,refundData,'mask','.refundCont','top30').then(res=>{
+            });
+            loadAjax('/pay/refund_icbc', 'post', sessionStorage.token, refundData, 'mask', '.refundCont', 'top30').then(res => {
                 toastTitle(res.message, 'success');
                 orderArrList(merchantIdStr, NumderIndex);
                 $('.goodsCont').hide();
-            }).catch(err=>{
+            }).catch(err => {
                 toastTitle(err.message, 'error')
             })
         }
@@ -328,27 +331,32 @@ $('.validationContent .confirmBtn').click(function () {
         toastTitle(err.message, 'error')
     });
 });
- // 搜索
- $('#search').keydown(function(e){
-    if(e.keyCode == 13){
-        keyWord=$(this).val();
-        orderArrList(merchantIdStr, NumderIndex);
+// 搜索
+$('#search').keydown(function (e) {
+    if (e.keyCode == 13) {
+        keyWord = $(this).val();
+        orderArrList(merchantIdStr, 1);
     };
 });
-   // 时间
-   var saStart_time = null,
-   saend_time = null;
-// jeDate("#test20", {
-//    format: "YYYY-MM-DD",
-//    range: " - ",
-//    donefun: function (obj) {
-//        var timerKey = obj.val.split(' - ');
-//        saStart_time = timerKey[0];
-//        saend_time = timerKey[1]
-//        console.log(saStart_time, saend_time)
-//    },
-//    clearfun: function (ele, val) {
-//        saend_time = null;
-//        saend_time = null;
-//    }
-// });
+$('#test20').val(getKeyTime().keyTimeData)
+jeDate("#test20", {
+    format: "YYYY-MM-DD",
+    range: " - ",
+    isinitVal: true,
+    donefun: function (obj) {
+        var timerKey = obj.val.split(' - ');
+        saStart_time = timerKey[0];
+        saend_time = timerKey[1];
+        if (timeFlag(saStart_time, saend_time)) {
+            toastTitle('时间选择范围最多三个月', 'warn')
+            return;
+        }
+        orderArrList(merchantIdStr, 1);
+    },
+    clearfun: function (ele, val) {
+        saStart_time = getKeyTime().startTime;
+        saend_time = getKeyTime().endTime;
+        $('#test20').val(getKeyTime().keyTimeData)
+        orderArrList(merchantIdStr, 1);
+    }
+});

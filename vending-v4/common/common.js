@@ -34,7 +34,6 @@ function loadAjax(url, type, userToken, data, mask, element, top) {
                 }
                 resolve(res)
             } else if (res.code == 403) {
-                return ;
                 window.location.href = "M_login.html"
             } else {
                 reject(res);
@@ -226,7 +225,35 @@ function numFormat2(num) {
     }
   
   }
-
+// 查询条件默认一个月
+  function getKeyTime() {
+    var initialTime = new Date(),
+      initialTime1 = {},
+      y = initialTime.getFullYear(),
+      m = initialTime.getMonth(),
+      d = initialTime.getDate(),
+      //开始时间
+      startTime = (m==0?y-1:y) + '-' + ((m==0)?12: m < 10 ? '0' + (m) : (m)) + '-' + (d==31?30:d<10?'0'+d:d),
+      //结束时间
+      endTime = y + '-' + ((m + 1) < 10 ? '0' + (m + 1) : (m + 1)) + '-' + (d<10?'0'+d:d);
+    initialTime1 = startTime + ' - ' + endTime;
+    initialTime1={
+      keyTimeData:startTime + ' - ' + endTime,
+      startTime,
+      endTime,
+    }
+    return initialTime1
+  }
+  // 判断查询时间是否大于三个月
+  function timeFlag(start,end){
+    console.log(start,end)
+    var start1=new Date(start);
+    var end1=new Date(end);
+    var flagNum=24*60*60*1000*92;
+    var timeFlag3=true;
+    flagNum>=end1-start1?timeFlag3=false:timeFlag3=true;
+    return timeFlag3
+  }
 export {
     loadAjax,
     loadingWith,
@@ -243,5 +270,7 @@ export {
     permissionsVal,
     timeStamp,
     treeList,
-    numFormat2  
+    numFormat2,
+    getKeyTime,
+    timeFlag
 }
