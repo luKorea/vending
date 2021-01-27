@@ -248,6 +248,8 @@ body{
 .recordList {
     width: 98%;
     margin: 0 auto;
+    height: 74.2vh;
+    overflow-y: auto;
     li{
         background: #ffffff;
         border-radius: 0.1rem;

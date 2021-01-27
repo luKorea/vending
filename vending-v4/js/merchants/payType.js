@@ -25,7 +25,7 @@ layui.use(['table', 'form', 'layer'], function () {
                         return '-';
                       }
                 }},
-                { field: 'operation', fixed: 'right', align: 'center', right: 0, width: 180, title: '操作', toolbar: '#barDemo' },
+                { field: 'operation', fixed: 'right', align: 'center', right: 0, width: 250, title: '操作', toolbar: '#barDemo' },
             ]]
             , id: 'tableId'
             , loading: true,

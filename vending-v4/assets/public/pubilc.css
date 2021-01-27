@@ -153,14 +153,15 @@ h1{
     height: auto !important;
     line-height: auto !important;
 }
-.layui-table .layui-btn-container .layui-btn{
-    margin-top: 9px;
+.layui-form .layui-table .layui-btn-container .layui-btn{
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .layui-form-radio>i:hover, .layui-form-radioed>i{
     color:#be954a !important ;
 }
-td{
-    padding: 10px 0 !important;
+.layui-table-body .layui-table-cell{
+    line-height: 22px;
 }
 body .layui-form-checked[lay-skin=primary] i{
     border-color: #be954a !important;

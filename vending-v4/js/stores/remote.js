@@ -155,9 +155,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                             $(that).val('');
                         }
                     })
-
                 }
-
             },
             frOnerror = function () {
                 $('.mask').fadeOut();

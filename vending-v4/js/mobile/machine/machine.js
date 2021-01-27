@@ -1115,6 +1115,16 @@ $('.editAisleContent .goodsChoose').click(function () {
     showPopup('.goodsContnet', '.goodsBox', 'top50');
     goodsListArr(merchantIdStr, 1);
 });
+// 关闭商品
+$('.goodsContnet .close').click(function(){
+    closeParents(this, 'top30')
+});
+$('.goodsBox').click(function () {
+    event.stopPropagation();
+});
+$('.goodsContnet').click(function () {
+    closeWindow(this, 'top30')
+});
 // 商品列表
 function goodsListArr(mId, mNum) {
     var goodsObj = JSON.stringify({
