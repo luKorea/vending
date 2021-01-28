@@ -1,6 +1,9 @@
 import '../../../MyCss/mobile/machine/machine.scss';
 import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow, permissionsFun, timeStamp, treeList, getKeyTime, timeFlag } from '../../../common/common.js';
 // loadingWith('正在加载');
+hui('#select1').selectBeautify();
+hui('#select2').selectBeautify();
+hui('#select3').selectBeautify();
 //返回上一页
 $('#topHeader .back').click(function () {
     // window.history.go(-1);
@@ -583,17 +586,11 @@ jeDate("#test08", {
         var timerKey = obj.val.split(' - ');
         sStart_time = timerKey[0];
         send_time = timerKey[1]
-        if (timeFlag(sStart_time, send_time)) {
-            toastTitle('时间选择范围最多三个月', 'warn')
-            return;
-        }
-        shipmenListArr(machineDetails.machineId, 1)
     },
     clearfun: function (ele, val) {
         // console.log(9999);
         sStart_time = getKeyTime().startTime;
         send_time = getKeyTime().endTime;
-        shipmenListArr(machineDetails.machineId, 1)
     }
 });
 // 出货记录部分
@@ -615,9 +612,12 @@ function shipmenListArr(mId, mNum) {
     var sObj = JSON.stringify({
         machineId: mId,
         pageNum: mNum,
-        pageSize: 10,
+        pageSize: 100,
         start_time: sStart_time,
-        end_time: send_time
+        end_time: send_time,
+        goods_Name:$('.shipmentContent input[name="goodsName"]').val(),
+        order_code:$('.shipmentContent input[name="shipCode"]').val(),
+
     });
     loadAjax(`/machine/getShippingList`, 'post', sessionStorage.token, sObj).then(res => {
         console.log(res)
@@ -678,7 +678,7 @@ function shipmenListArr(mId, mNum) {
 
 // 分页页面方法
 function pageN(conut, ele) {
-    var Num = (Number(conut) / 10)
+    var Num = (Number(conut) / 100)
     Num = Num % 1 == 0 ? Num : Num + 1
     // console.log(Math.floor(Num))
     var ForNum = Math.floor(Num)
@@ -716,26 +716,21 @@ jeDate("#test09", {
         console.log(obj);
         var timerKey = obj.val.split(' - ');
         rStart_time = timerKey[0];
-        rend_time = timerKey[1]
-        if (timeFlag(rStart_time, rend_time)) {
-            toastTitle('时间选择范围最多三个月', 'warn')
-            return;
-        }
-        rMentListArr(machineDetails.machineId, 1)
+        rend_time = timerKey[1] 
     },
     clearfun: function (ele, val) {
         rStart_time = getKeyTime().startTime;
         rend_time = getKeyTime().endTime;
-        rMentListArr(machineDetails.machineId, 1)
     }
 });
 function rMentListArr(mId, mNum) {
     var rObj = JSON.stringify({
         machineId: mId,
         pageNum: mNum,
-        pageSize: 10,
+        pageSize: 100,
         start_time: rStart_time,
-        end_time: rend_time
+        end_time: rend_time,
+        goods_Name:$('.rMentContent input[name="goodsName"]').val()
     });
     loadAjax(`/machine/getReplenish`, 'post', sessionStorage.token, rObj).then(res => {
         if (mNum == 1) {
@@ -765,8 +760,8 @@ function rMentListArr(mId, mNum) {
                             <p>${item.way}</p>
                         </div>
                         <div class="keyText flex">
-                            <label for="">商品名:</label>
-                            <p>${item.goods_Name}</p>
+                            <label for="">商品名(编号):</label>
+                            <p>${item.good_name_core?item.good_name_core:'-'}</p>
                         </div>
                         <div class="keyText flex">
                             <label for="">补货前数量:</label>
@@ -819,16 +814,10 @@ jeDate("#test10", {
         saStart_time = timerKey[0];
         saend_time = timerKey[1]
         console.log(saStart_time, saend_time);
-        if (timeFlag(saStart_time, saend_time)) {
-            toastTitle('时间选择范围最多三个月', 'warn')
-            return;
-        }
-        salesListArr(machineDetails.machineId, 1)
     },
     clearfun: function (ele, val) {
         saend_time = getKeyTime().startTime;
         saend_time = getKeyTime().endTime;
-        salesListArr(machineDetails.machineId, 1)
     }
 });
 // 销售详情方法
@@ -836,9 +825,11 @@ function salesListArr(mId, mNum) {
     var salesObj = JSON.stringify({
         condition: mId,
         pageNum: mNum,
-        pageSize: 10,
+        pageSize: 100,
         conditionTwo: saStart_time,
-        conditionThree: saend_time
+        conditionThree: saend_time,
+        conditionSix:hui('#select1').val(),//支付状态
+        conditionSeven:hui('#select2').val(),//支付类型
     });
     loadAjax('/machine/getSalesList', 'post', sessionStorage.token, salesObj).then(res => {
         if (mNum == 1) {
@@ -1048,7 +1039,7 @@ function panelaList(list) {
                     <div class=" flex">
                         <img src="${item.goods_images}" alt="">
                         <div class="panelRight">
-                            <h4>${item.goods_Name}</h4>
+                            <h4>${item.good_name_core}</h4>
                             <p><span>数量:</span>${item.goodCount}</p>
                             <p><span>原数量:</span>${item.oldGoodCount}</p>
                         </div>
@@ -1095,7 +1086,7 @@ $('.panelDrawing').on('click', '.panelList', function () {
     panelIndex = 2;
     var paneldata = $(this).data('paneldata');
     $('.editiAsleBody input[name="goodsName"]').attr('IVal', paneldata.goods_Id);
-    $('.editiAsleBody input[name="goodsName"]').val(paneldata.goods_Name);
+    $('.editiAsleBody input[name="goodsName"]').val(paneldata.good_name_core);
     $('.editiAsleBody input[name="goodsNum"]').val(paneldata.goodCount);
     console.log($(this).data('paneldata'));
     showPopup('.editAisleContent', '.editAisleBox', 'top30');
@@ -1117,19 +1108,19 @@ $('.editAisleContent .goodsChoose').click(function () {
 });
 // 关闭商品
 $('.goodsContnet .close').click(function(){
-    closeParents(this, 'top30')
+    closeParents(this, 'top50')
 });
 $('.goodsBox').click(function () {
     event.stopPropagation();
 });
 $('.goodsContnet').click(function () {
-    closeWindow(this, 'top30')
+    closeWindow(this, 'top50')
 });
 // 商品列表
 function goodsListArr(mId, mNum) {
     var goodsObj = JSON.stringify({
         pageNum: mNum,
-        pageSize: 10,
+        pageSize: 100,
         condition: mId,
         conditionFour: '1',
         conditionTwo: $('.goodsBody input[name="editName"]').val()
@@ -1214,5 +1205,63 @@ $('.editAisleBox  .panelConfirmBtn').click(function () {
     }).catch(err => {
         toastTitle(err.message, 'error');
     })
-})
+});
+
+// 点击查询展开方法
+var SalesDowIndex=1;
+$('.salesContent .dowImg').click(function () {
+    $('.dowContent').slideToggle();
+    if (SalesDowIndex==1) {　　//如果node是隐藏的则显示node元素，否则隐藏
+        SalesDowIndex=2;
+        $(this).children('img').addClass('active')
+    } else {
+        SalesDowIndex=1;
+        $(this).children('img').removeClass('active');
+    }
+});
+$('.salesContent .keyConfirmBtn').click(function(){
+    if (timeFlag(saStart_time, saend_time)) {
+        toastTitle('时间选择范围最多三个月', 'warn')
+        return;
+    }
+    salesListArr(machineDetails.machineId, 1)
+});
+// 点击查询展开方法
+var shipDowIndex=1;
+$('.shipmentContent .dowImg').click(function () {
+    $('.dowContent').slideToggle();
+    if (shipDowIndex==1) {　　//如果node是隐藏的则显示node元素，否则隐藏
+        shipDowIndex=2;
+        $(this).children('img').addClass('active')
+    } else {
+        shipDowIndex=1;
+        $(this).children('img').removeClass('active');
+    }
+});
+$('.shipmentContent .keyConfirmBtn').click(function(){
+    if (timeFlag(sStart_time, send_time)) {
+        toastTitle('时间选择范围最多三个月', 'warn')
+        return;
+    }
+    shipmenListArr(machineDetails.machineId, 1)
+});
+// 点击查询展开方法
+var rmenDowIndex=1;
+$('.rMentContent .dowImg').click(function () {
+    $('.dowContent').slideToggle();
+    if (rmenDowIndex==1) {　　//如果node是隐藏的则显示node元素，否则隐藏
+        rmenDowIndex=2;
+        $(this).children('img').addClass('active')
+    } else {
+        rmenDowIndex=1;
+        $(this).children('img').removeClass('active');
+    }
+});
+$('.rMentContent .keyConfirmBtn').click(function(){
+    if (timeFlag(rStart_time, rend_time)) {
+        toastTitle('时间选择范围最多三个月', 'warn')
+        return;
+    }
+    rMentListArr(machineDetails.machineId, 1);
+});
 $('#footer').load('M_footerNav.html');

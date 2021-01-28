@@ -1,5 +1,11 @@
 import { loadAjax, loadingWith, toastTitle, showPopup, closeParents, closeWindow, timeStamp, treeList, numFormat2, getKeyTime, timeFlag } from '../../../common/common';
 import '../../../MyCss/mobile/order/machineOrder.scss';
+hui('#select1').selectBeautify();
+hui('#select2').selectBeautify();
+hui('#select3').selectBeautify();
+// function showVal(val){
+//     hui.toast('选项值 : ' + val);
+// }
 // 时间
 var saStart_time = getKeyTime().startTime,
     saend_time = getKeyTime().endTime;
@@ -17,10 +23,13 @@ function orderArrList(mId, mNum) {
         conditionFive: mId,
         pageNum: mNum,
         pageSize: 100,
-        condition:saStart_time,
-        conditionTwo:saend_time,
+        condition: saStart_time,
+        conditionTwo: saend_time,
         conditionSeven: 0,
-        conditionThree: keyWord
+        conditionThree: $('#search').val(),
+        conditionSix:hui('#select1').val(), //支付状态
+        refund:hui('#select2').val(), //退款状态
+        shipStatus:hui('#select3').val() //出货状态
     });
     loadAjax('/order/getOrderList', 'post', sessionStorage.token, orderObj).then(res => {
         if (mNum == 1) {
@@ -332,12 +341,12 @@ $('.validationContent .confirmBtn').click(function () {
     });
 });
 // 搜索
-$('#search').keydown(function (e) {
-    if (e.keyCode == 13) {
-        keyWord = $(this).val();
-        orderArrList(merchantIdStr, 1);
-    };
-});
+// $('#search').keydown(function (e) {
+//     if (e.keyCode == 13) {
+//         keyWord = $(this).val();
+//         orderArrList(merchantIdStr, 1);
+//     };
+// });
 $('#test20').val(getKeyTime().keyTimeData)
 jeDate("#test20", {
     format: "YYYY-MM-DD",
@@ -347,16 +356,31 @@ jeDate("#test20", {
         var timerKey = obj.val.split(' - ');
         saStart_time = timerKey[0];
         saend_time = timerKey[1];
-        if (timeFlag(saStart_time, saend_time)) {
-            toastTitle('时间选择范围最多三个月', 'warn')
-            return;
-        }
-        orderArrList(merchantIdStr, 1);
     },
     clearfun: function (ele, val) {
         saStart_time = getKeyTime().startTime;
         saend_time = getKeyTime().endTime;
         $('#test20').val(getKeyTime().keyTimeData)
-        orderArrList(merchantIdStr, 1);
     }
 });
+// 点击查询展开方法
+var dowIndex=1;
+$('.dowImg').click(function () {
+    $('.dowContent').slideToggle();
+    var node = $('.dowContent');
+    if (dowIndex==1) {　　//如果node是隐藏的则显示node元素，否则隐藏
+        dowIndex=2;
+        $(this).children('img').addClass('active')
+    } else {
+        dowIndex=1;
+        $(this).children('img').removeClass('active');
+    }
+});
+// 查询
+$('.keyConfirmBtn').click(function(){
+    if (timeFlag(saStart_time, saend_time)) {
+        toastTitle('时间选择范围最多三个月', 'warn')
+        return;
+    }
+    orderArrList(merchantIdStr, 1);
+})

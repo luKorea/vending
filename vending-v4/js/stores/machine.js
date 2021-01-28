@@ -1303,11 +1303,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         })
     }
-    var x = null;
-    var y = null;
-    var aisleList = [];
-    var withList = [];
-
     //货道详情部分
     var wayList = [];
     function getGoodsWay(machineId) {
@@ -1387,7 +1382,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                     </div>
                                 <div class="numderBottom">
                                         <div class="status1 ${child.status == 1 ? '' : 'redF10'}">${child.status == 1 ? '正常' : '货道故障'}</div>
-                                    <div>数量:${child.count}</div>
+                                    <div title="${child.count}">数量:${child.count}</div>
                                     </div>
                                     </div>  
                                     <div class="chooseCheck" data-tip="${child.goods_Name ? child.goods_Name : ''}" data-direction="bottom">
@@ -1404,7 +1399,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                     </div>
                                     <div class="numderBottom">
                                         <div class="status2">${child.status == 1 ? '禁用' : '货道故障'}</div>
-                                        <div>数量:${child.count}</div>
+                                        <div title="${child.count}">数量:${child.count}</div>
                                     </div>
                                     </div>  
                                     <div class="chooseCheck" data-tip="${child.goods_Name ? child.goods_Name : ''}" data-direction="bottom">
@@ -1507,14 +1502,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 选择商品 
 
     table.on('row(goodsTable)', function (obj) {
-        console.log(goodKeyFlag)
+        console.log(obj)
         if (goodKeyFlag == 1) {
             $('.editAisle input[name="goodsName"]').val(obj.data.mail == 1 ? '(邮寄)' + obj.data.goods_Name : obj.data.goods_Name);
             $('.editAisle input[name="goodsName"]').attr('IVal', obj.data.goods_Id);
             $('.editAisle input[name="price"]').val(obj.data.goods_Price);
             popupHide('goodsCont', 'goodsBox')
         } else {
-            $('.addPanelBody input[name="panelGoodsName"]').val(obj.data.mail == 1 ? '(邮寄)' + obj.data.goods_Name : obj.data.goods_Name);
+            $('.addPanelBody input[name="panelGoodsName"]').val(obj.data.mail == 1 ? '(邮寄)' + obj.data.goods_Name+'('+obj.data.goods_Core+')' : obj.data.goods_Name+'('+obj.data.goods_Core+')');
             $('.addPanelBody input[name="panelGoodsName"]').attr('IVal', obj.data.goods_Id);
             popupHide('goodsCont', 'goodsBox');
         }
@@ -1993,7 +1988,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 { field: 'way', width: 100, title: '补货货道', align: 'center' },
                 {
-                    field: 'goods_Name', width: 180, title: '商品名', align: 'center',
+                    field: 'good_name_core', width: 220, title: '商品名(编号)', align: 'center',
                 },
                 {
                     field: 'replenish_count', width: 150, title: '补货前数量', align: 'center', templet: function (d) {
@@ -2150,7 +2145,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // { field: 'way', width: 150, title: '货道', align: 'center', },
                 { field: 'old_price', width: 150, title: '修改前价格', align: 'center', },
                 { field: 'new_price', width: 150, title: '修改后价格', align: 'center', },
-                { field: 'goods_Name', width: 150, title: '商品名', align: 'center', },
+                { field: 'goods_Name', width: 220, title: '商品名(编号)', align: 'center', },
                 { field: 'user_name', width: 150, title: '修改人', align: 'center', },
                 {
                     field: 'way', width: 250, title: '修改时间', align: 'center', templet: function (d) {
@@ -2596,8 +2591,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                { field: 'goods_Name', width: 150, title: '图片', align: 'center', templet: "#panelImg" },
-                { field: 'goods_Name', width: 150, title: '商品名', align: 'center', },
+                { field: 'goods_images', width: 150, title: '图片', align: 'center', templet: "#panelImg" },
+                { field: 'good_name_core', width: 150, title: '商品名(编号)', align: 'center', },
                 { field: 'goodCount', width: 150, title: '数量', align: 'center', },
                 { field: 'oldGoodCount', width: 150, title: '原数量', align: 'center', },
                 { field: 'last_user', width: 150, title: '修改人', align: 'center', },
@@ -2652,6 +2647,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 添加展板
     var panelIndex = null;
     $('.addpanelBtn').click(function () {
+        $('.relative1 input').removeClass('cursorDefault');
         panelIndex = 1;
         $('.addPanelCont input[name="panelGoodsName"]').attr('IVal', '');
         $('.addPanelCont input[name="panelGoodsName"]').val('');
@@ -2661,6 +2657,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     // 展板选择商品
     $('.relative1').click(function () {
+        if(panelIndex==2){
+            return ;
+        }
         popupShow('goodsCont', 'goodsBox')
         if (goodsTableIns) {
             goodsTableIns.reload({
@@ -2693,11 +2692,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             $('.addPanelCont input[name="panelGoodsName"]').val('');
             $('.addPanelCont input[name="panelGoodsNum"]').val('');
         }).catch(err => {
-            layer.msg(err.message, { icon: 7 });
+            layer.msg(err.message, { icon: 2 });
         })
     });
     // 取消添加
     $('.addPanelCont .addPanelCance').click(function () {
+        $('.relative1 input').removeClass('cursorDefault');
         popupHide('addPanelCont', 'addPanelBox');
     })
     // 展板监听
@@ -2710,7 +2710,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 $('.maskSpan').addClass('maskIcon');
                 var delObj = JSON.stringify({
                     machineId: machineSetData.machineId,
-                    goodId: obj.data.goods_Id
+                    goodId: obj.data.goodId
                 });
                 loadingAjax('/machine/removeDisplayGoodCount', 'post', delObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
                     layer.msg(res.message, { icon: 1 });
@@ -2722,9 +2722,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 })
             })
         } else if (obj.event == 'edit') {
+            $('.relative1 input').addClass('cursorDefault')
             panelIndex = 2
-            $('.addPanelCont input[name="panelGoodsName"]').attr('IVal', obj.data.goods_Id);
-            $('.addPanelCont input[name="panelGoodsName"]').val(obj.data.goods_Name);
+            $('.addPanelCont input[name="panelGoodsName"]').attr('IVal', obj.data.goodId);
+            $('.addPanelCont input[name="panelGoodsName"]').val(obj.data.good_name_core);
             $('.addPanelCont input[name="panelGoodsNum"]').val(obj.data.goodCount);
             $('.addPanelBox .playHeader span').html('编辑展板商品')
             popupShow('addPanelCont', 'addPanelBox');

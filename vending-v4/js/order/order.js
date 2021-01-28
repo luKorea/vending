@@ -395,8 +395,8 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       cols: [[
         // { checkbox: true },
         { field: 'goods_images', width: 120, title: '图片', templet: "#imgtmp", align: 'center' },
-        { field: 'goods_Name', width: 140, title: '商品名', align: 'center', },
-        { field: 'goods_Core', width: 140, title: '商品编号', align: 'center', },
+        { field: 'good_name_core', width: 250, title: '商品名(编号)', align: 'center', },
+        // { field: 'goods_Core', width: 140, title: '商品编号', align: 'center', },
         { field: 'count', width: 120, title: '购买数量', align: 'center' },
         // {
         //   field: 'ship_info', width: 300, title: '出货情况', align: 'center', templet: function (d) {
@@ -416,7 +416,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
 
 
         { field: 'price', width: 140, title: '销售价 ', align: 'center', },
-        { field: 'goods_Cost', width: 140, title: '成本价 ', align: 'center', },
+        // { field: 'goods_Cost', width: 140, title: '成本价 ', align: 'center', },
         { field: 'operation', right: 0, width: 80, align: 'center', title: '操作', toolbar: '#refundDemo', fixed: 'right' },
       ]],
       data: [
