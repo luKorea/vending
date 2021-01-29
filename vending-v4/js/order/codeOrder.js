@@ -33,7 +33,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             cols: [[
                 { field: 'activity_name', width: 130, title: '活动名', align: 'center' },
                 { field: 'good_code', width: 180, title: '取货码', align: 'center' },
-                { field: 'machineName', width: 200, title: '售货机名', align: 'center',templet:function(d){
+                { field: 'machineName', width: 200, title: '售货机名(编号)', align: 'center',templet:function(d){
                     return `<div>${d.machineName}</div>
                     <div>(${d.machineNumber})</div>`
                 } },

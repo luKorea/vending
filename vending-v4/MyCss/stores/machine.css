@@ -858,3 +858,6 @@ input:hover{
 .bodys::-webkit-scrollbar {
     display: none;
 }
+.salesTwo .data-list-table .layui-form{
+    width: auto;
+}

@@ -49,7 +49,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     permissions1()
     var funNum = 1;
     var goodKeyFlag = null;
-    tooltip('.refreshBtnList', { transition: true, time: 200 });
+    // tooltip('.refreshBtnList', { transition: true, time: 200 });
     // console.log(provinceChange)
     // 收起
     $('.sidebar i').click(function () {
@@ -763,26 +763,26 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'time', width: 200, title: '时间', templet: function (d) {
+                    field: 'time', width: 200, title: '时间', align: 'center', templet: function (d) {
                         return timeStamp(d.time)
                     }
                 },
-                { field: 'number', width: 250, title: '订单号', },
+                { field: 'number', width: 250, title: '订单号', align: 'center', },
                 // {
                 //     field: 'shipStatus', width: 150, title: '出货状态', templet: function (d) {
                 //         return `<div><span class="${d.shipStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.shipStatus == 0 ? '出货失败' : d.shipStatus == 1 ? '出货成功' : '货道故障'}</span></div>`
                 //     }
                 // },
                 {
-                    field: 'payResult', width: 150, title: '支付状态', templet: function (d) {
+                    field: 'payResult', width: 150, align: 'center', title: '支付状态', templet: function (d) {
                         return `<div><span class="${d.payStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payResult}</span></div>`
                     }
                 },
                 {
-                    field: 'payTypes', width: 150, title: '支付类型',
+                    field: 'payTypes', width: 150, align: 'center', title: '支付类型',
                 },
-                { field: 'payee', width: 150, title: '收款方', },
-                { field: 'amount', width: 150, title: '金额', },
+                { field: 'payee', width: 150, align: 'center', title: '收款方', },
+                { field: 'amount', width: 150, align: 'center', title: '金额', },
             ]],
             id: 'salesId',
             page: true,
@@ -2157,8 +2157,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // { field: 'way', width: 150, title: '货道', align: 'center', },
                 { field: 'old_price', width: 150, title: '修改前价格', align: 'center', },
                 { field: 'new_price', width: 150, title: '修改后价格', align: 'center', },
-                { field: 'goods_Name', width: 220, title: '商品名(编号)', align: 'center', },
-                { field: 'user_name', width: 150, title: '修改人', align: 'center', },
+                { field: 'goods_Name', width: 275, title: '商品名(编号)', align: 'center', },
+                { field: 'user_name', width: 250, title: '修改人', align: 'center', },
                 {
                     field: 'way', width: 250, title: '修改时间', align: 'center', templet: function (d) {
                         return d.change_time ? timeStamp(d.change_time) : '-'

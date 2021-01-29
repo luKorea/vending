@@ -39,7 +39,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             {
                 field: 'info', width: 220, title: '售货机名(编号)', align: 'center', templet: function (d) {
                     return `<div>${d.info}</div>
-                      <div>(${d.machineId})</div>`
+                      <div>(${d.machineNumber})</div>`
                 }
             },
             { field: 'number', width: 190, title: '订单编号', align: 'center' },
