@@ -617,7 +617,7 @@ function shipmenListArr(mId, mNum) {
         end_time: send_time,
         goods_Name:$('.shipmentContent input[name="goodsName"]').val(),
         order_code:$('.shipmentContent input[name="shipCode"]').val(),
-
+        way:$('.shipmentContent input[name="shipWay"]').val(),
     });
     loadAjax(`/machine/getShippingList`, 'post', sessionStorage.token, sObj).then(res => {
         console.log(res)
@@ -730,7 +730,8 @@ function rMentListArr(mId, mNum) {
         pageSize: 100,
         start_time: rStart_time,
         end_time: rend_time,
-        goods_Name:$('.rMentContent input[name="goodsName"]').val()
+        goods_Name:$('.rMentContent input[name="goodsName"]').val(),
+        way:$('.rMentContent input[name="rMenWay"]').val(),
     });
     loadAjax(`/machine/getReplenish`, 'post', sessionStorage.token, rObj).then(res => {
         if (mNum == 1) {
@@ -785,7 +786,6 @@ function rMentListArr(mId, mNum) {
 }
 // 补货记录点击分页
 $('.pages2').on('click', '.pageVal', function () {
-
     $(this).addClass('hui-pager-active').siblings().removeClass('hui-pager-active')
     rMentListArr(machineDetails.machineId, Number($(this).attr('val')));
 });
@@ -1210,7 +1210,7 @@ $('.editAisleBox  .panelConfirmBtn').click(function () {
 // 点击查询展开方法
 var SalesDowIndex=1;
 $('.salesContent .dowImg').click(function () {
-    $('.dowContent').slideToggle();
+    $('.salesContent .dowContent').slideToggle();
     if (SalesDowIndex==1) {　　//如果node是隐藏的则显示node元素，否则隐藏
         SalesDowIndex=2;
         $(this).children('img').addClass('active')
@@ -1229,7 +1229,7 @@ $('.salesContent .keyConfirmBtn').click(function(){
 // 点击查询展开方法
 var shipDowIndex=1;
 $('.shipmentContent .dowImg').click(function () {
-    $('.dowContent').slideToggle();
+    $('.shipmentContent .dowContent').slideToggle();
     if (shipDowIndex==1) {　　//如果node是隐藏的则显示node元素，否则隐藏
         shipDowIndex=2;
         $(this).children('img').addClass('active')
@@ -1243,12 +1243,17 @@ $('.shipmentContent .keyConfirmBtn').click(function(){
         toastTitle('时间选择范围最多三个月', 'warn')
         return;
     }
-    shipmenListArr(machineDetails.machineId, 1)
+     var re = /^\d*$/;
+    if (!re.test($('.shipmentContent input[name="shipWay"]').val())) {
+        toastTitle('货道只能输入正整数', 'warn');
+        return;
+    }
+    shipmenListArr(machineDetails.machineId, 1);
 });
 // 点击查询展开方法
 var rmenDowIndex=1;
 $('.rMentContent .dowImg').click(function () {
-    $('.dowContent').slideToggle();
+    $('.rMentContent .dowContent').slideToggle();
     if (rmenDowIndex==1) {　　//如果node是隐藏的则显示node元素，否则隐藏
         rmenDowIndex=2;
         $(this).children('img').addClass('active')
@@ -1260,6 +1265,11 @@ $('.rMentContent .dowImg').click(function () {
 $('.rMentContent .keyConfirmBtn').click(function(){
     if (timeFlag(rStart_time, rend_time)) {
         toastTitle('时间选择范围最多三个月', 'warn')
+        return;
+    }
+    var re = /^\d*$/;
+    if (!re.test($('.rMentContent input[name="rMenWay"]').val())) {
+        toastTitle('货道只能输入正整数', 'warn');
         return;
     }
     rMentListArr(machineDetails.machineId, 1);

@@ -774,7 +774,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 //     }
                 // },
                 {
-                    field: 'payStatus', width: 150, title: '支付状态', templet: function (d) {
+                    field: 'payResult', width: 150, title: '支付状态', templet: function (d) {
                         return `<div><span class="${d.payStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payResult}</span></div>`
                     }
                 },
@@ -845,6 +845,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (xhr.status == 200) {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
+                if (xhr.response.size < 50) {
+                    layer.msg('导出失败', { icon: 2 })
+                    return
+                  } 
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                 var fileName = `${machineSetData.info}(${machineSetData.number})销售详情(${selesStartTime}-${selesEndTime}).xls`
@@ -995,6 +999,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (xhr.status == 200) {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
+                if (xhr.response.size < 50) {
+                    layer.msg('导出失败', { icon: 2 })
+                    return
+                  }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                 var fileName = `${machineSetData.info}(${machineSetData.number})出货记录(${startTime}-${endTime}).xls`
@@ -1620,7 +1628,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             re = /^\d*$/;
         if (!re.test(num)) {
             layer.msg('只能输入正整数', { icon: 7 });
-            $(this).val(reduction)
+            $(this).val(reduction);
         } else {
             reduction = $(this).val();
             console.log(reduction)
@@ -2095,6 +2103,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (xhr.status == 200) {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
+                if (xhr.response.size < 50) {
+                    layer.msg('导出失败', { icon: 2 })
+                    return
+                  } 
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                 var fileName = `${machineSetData.info}(${machineSetData.number})补货记录(${replenishmentStartTime}-${sreplenishmentEndTime}).xls`
@@ -2228,6 +2240,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (xhr.status == 200) {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
+                if (xhr.response.size < 50) {
+                    layer.msg('导出失败', { icon: 2 })
+                    return
+                  }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                 var fileName = `${machineSetData.info}(${machineSetData.number})修改价格记录(${editStartTime}-${editEndTime}).xls`
@@ -2355,6 +2371,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (xhr.status == 200) {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
+                if (xhr.response.size < 50) {
+                    layer.msg('导出失败', { icon: 2 })
+                    return
+                  }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                 var fileName = `${machineSetData.info}(${machineSetData.number})开门记录(${openSTime}-${openETime}).xls`
@@ -2559,6 +2579,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (xhr.status == 200) {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
+                if (xhr.response.size < 50) {
+                    layer.msg('导出失败', { icon: 2 })
+                    return
+                  } 
                 var content = xhr.response;
                 var fileName = `${sessionStorage.machineName}售货机列表.xls`
                 var elink = document.createElement('a');
@@ -2828,6 +2852,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (xhr.status == 200) {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
+                if (xhr.response.size < 50) {
+                    layer.msg('导出失败', { icon: 2 })
+                    return
+                  }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                 var fileName = `${machineSetData.info}撤货记录.xls`

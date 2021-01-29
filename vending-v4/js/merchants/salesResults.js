@@ -207,7 +207,7 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
                 sm_no: managerID,
                 start_time: startTime,
                 end_time: endTime,
-                machineId: Number(sessionStorage.machineID),
+                merchantId: Number(sessionStorage.machineID),
             },
             parseData: function (res) {
                 // console.log(res)
@@ -299,6 +299,10 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
                 if (xhr.status == 200) {
                     $('.mask').fadeOut();
                     $('.maskSpan').removeClass('maskIcon');
+                    if (xhr.response.size < 50) {
+                        layer.msg('导出失败', { icon: 2 })
+                        return
+                      }
                     var content = xhr.response;
                     // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                     var fileName = `${sessionStorage.marchantName}销售经理业绩(${startTime}-${endTime}).xlsx`

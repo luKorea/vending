@@ -1,18 +1,18 @@
 // import { loadAjax, showPopup } from '../../common/common';
 import '../../MyCss/marketing/pickupCode.scss';
 layui.use(['form', 'layer', 'table', 'transfer'], function () {
-    var permissionsData0=window.parent.permissionsData1(),
-     permissionsObj={
-        436:false,
-        437:false,
-        465:false,
-    },
-    permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
-      // 权限控制
-      function permissions() {
+    var permissionsData0 = window.parent.permissionsData1(),
+        permissionsObj = {
+            436: false,
+            437: false,
+            465: false,
+        },
+        permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
+    // 权限控制
+    function permissions() {
         permissionsObjFlag[436] ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
         permissionsObjFlag[437] ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
-        permissionsObjFlag[465]?$('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
+        permissionsObjFlag[465] ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
 
     };
     permissions();
@@ -25,7 +25,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
     //     editFlag = res.editFlag;
     //     delFlag=res.delFlag;
     // });
-  
+
 
     var form = layui.form,
         layer = layui.layer,
@@ -96,8 +96,8 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                 'pageName': 'pageNum',
                 'limitName': 'pageSize'
             },
-            where:{
-                merchant_id:sessionStorage.machineID
+            where: {
+                merchant_id: sessionStorage.machineID
             },
             parseData: function (res) {
                 // console.log(res)
@@ -182,7 +182,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
     // 选择商品
     $('.goodsChooseBtn').click(function () {
         if (goodsList.length == 0) {
-            if(!goodsTableIns){
+            if (!goodsTableIns) {
                 goodsreload();
             }
             popupShow('goodsCont', 'goodsBox');
@@ -341,9 +341,11 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             cols: [[
                 { type: 'checkbox', },
                 { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center' },
-                { field: 'goods_Name', width: 200, title: '商品名', color: '#409eff', align: 'center',templet:function(d){
-                    return (d.mail==1?'(邮寄)'+d.goods_Name:d.goods_Name)
-                } },
+                {
+                    field: 'goods_Name', width: 200, title: '商品名', color: '#409eff', align: 'center', templet: function (d) {
+                        return (d.mail == 1 ? '(邮寄)' + d.goods_Name : d.goods_Name)
+                    }
+                },
                 { field: `classifyName`, width: 160, title: '商品类目', align: 'center' },
                 { field: 'goods_Core', width: 250, title: '商品编号', align: 'center', },
             ]],
@@ -391,7 +393,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                 console.log(res)
                 console.log(goodsList)
                 for (var i in goodsList) {
-                    res.data.forEach((item,index )=> {
+                    res.data.forEach((item, index) => {
 
                         // var ele = ;
                         if (item.goods_Id == goodsList[i].goodsId) {
@@ -590,15 +592,15 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             codeLen = $(this).val();
         }
     });
-    var lenFlag=false
+    var lenFlag = false
     $('.addActivityBody input[name="codeLen"]').blur(function () {
         if (!($(this).val() >= 8 && $(this).val() <= 30)) {
             layer.msg('取货码长度范围为8位到30位', { icon: 7 });
             $(this).val(12);
-            lenFlag=true
+            lenFlag = true
             return;
         }
-        lenFlag=false
+        lenFlag = false
     });
 
     // 新增活动提交
@@ -619,9 +621,9 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             layer.msg('请选择商品', { icon: 7 })
             return;
         }
-        if(lenFlag){
-            lenFlag=false;
-            return ;
+        if (lenFlag) {
+            lenFlag = false;
+            return;
         }
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
@@ -675,10 +677,10 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
 
 
     // 监听操作部分
-    var pickupObj=null;
+    var pickupObj = null;
     table.on('tool(tableactivity)', function (obj) {
         // console.log(obj)
-         pickupObj=obj.data;
+        pickupObj = obj.data;
         var stamp = new Date().getTime();
         if (obj.event == 'stop') {
             if (stamp > obj.data.end_time) {
@@ -742,15 +744,15 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             popupShow('chooseGoods', 'chooseGoodsBox')
         } else if (obj.event == 'pickup') {
 
-            console.log(obj.data.id)   
+            console.log(obj.data.id)
             // if (!pickupCodeIn) {
-                pickupCodeFun(obj.data.id)
+            pickupCodeFun(obj.data.id)
             // }else{
             //     pickupCodeIn.reload({
             //         id: obj.data.id
             //     });
             // }
-           
+
             $('.pickCode .playHeader span').html(obj.data.activity_name + '取货码列表')
             popupShow('pickCode', 'pickCodeBox')
         }
@@ -795,13 +797,13 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                     }
                 },
                 {
-                    field: 'excelShipInfos', width: 250, title: '出货情况', align: 'center', templet:function(d){
-                        if(d.excelShipInfos.length==0){
+                    field: 'excelShipInfos', width: 250, title: '出货情况', align: 'center', templet: function (d) {
+                        if (d.excelShipInfos.length == 0) {
                             return '-'
-                        }else{
-                            var exStr='';
-                            d.excelShipInfos.forEach(item=>{
-                                exStr+=`<div>${item.goods_Name}(${item.ship_statusStr})</div><div></div>`
+                        } else {
+                            var exStr = '';
+                            d.excelShipInfos.forEach(item => {
+                                exStr += `<div>${item.goods_Name}(${item.ship_statusStr})</div><div></div>`
                             });
                             return exStr
                         }
@@ -832,7 +834,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                 'pageName': 'pageNum',
                 'limitName': 'pageSize'
             },
-            where:{
+            where: {
                 id,
             },
             parseData: function (res) {
@@ -874,7 +876,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
         });
     });
     // 取货码查询
-    $('.keyCodeBtn').click(function(){
+    $('.keyCodeBtn').click(function () {
         pickupCodeIn.reload({
             where: {
                 good_code: $('.newKeyContent input[name="keyGoodsCode"]').val()
@@ -897,7 +899,7 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             }
         })
     });
-    
+
     // 售货机穿梭框
     function transferFun(data, value) {
         transfer.render({
@@ -957,84 +959,83 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
     // });
 
     // 导出取货码
-    $('.pushBtn').click(function(){
-          $('.mask').fadeIn();
-          $('.maskSpan').addClass('maskIcon');
-          var myDate = new Date(),
+    $('.pushBtn').click(function () {
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        var myDate = new Date(),
             // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
             xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-          xhr.open("GET", `${vApi}/exportCodes?id=${pickupObj.id}&good_code=${$('.newKeyContent input[name="keyGoodsCode"]').val()}`, true);
-          xhr.setRequestHeader("token", sessionStorage.token);
+        xhr.open("GET", `${vApi}/exportCodes?id=${pickupObj.id}&good_code=${$('.newKeyContent input[name="keyGoodsCode"]').val()}`, true);
+        xhr.setRequestHeader("token", sessionStorage.token);
         //   xhr.setRequestHeader('Content-Type', 'charset=utf-8');
-          xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-      
-          xhr.onload = function (res) {
+        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+        xhr.onload = function (res) {
             if (xhr.status == 200) {
-              $('.mask').fadeOut();
-              $('.maskSpan').removeClass('maskIcon');
-              if (xhr.response.size < 50) {
-                layer.msg('导出失败', { icon: 7 })
-                return
-              } 
-              var content = xhr.response;
-              // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-              var fileName = `${pickupObj.activity_name}取货码.xls`
-              var elink = document.createElement('a');
-              elink.download = fileName;
-              elink.style.display = 'none';
-              var blob = new Blob([content]);
-              elink.href = URL.createObjectURL(blob);
-              document.body.appendChild(elink);
-              elink.click();
-              document.body.removeChild(elink);
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                if (xhr.response.size < 50) {
+                    layer.msg('导出失败', { icon: 7 })
+                    return
+                }
+                var content = xhr.response;
+                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
+                var fileName = `${pickupObj.activity_name}取货码.xls`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
             } else {
-              $('.mask').fadeOut();
-              $('.maskSpan').removeClass('maskIcon');
-              layer.msg('服务器请求超时', { icon: 2 });
-              return;
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('服务器请求超时', { icon: 2 });
+                return;
             }
-          }
-          xhr.send();
+        }
+        xhr.send();
     });
 
-      // 图片放大事件
-  var PImgSHow = true;
-  $('.data-list-contnet').on('mouseenter', '.pic102', function (e) {
-    var that = this;
-    $('#pic101').attr('src', $(that).attr('src'));
-    var img = new Image();
-    img.onload = function () {
-      $("#pic101").css({
-        "width": this.width >= this.height ? 350 + 'px' : 'auto',
-        "height": this.height > this.width ? 450 + 'px' : 'auto'
-      }).fadeIn("fast");
-      this.onload = null;
+    // 图片放大事件
+    var PImgSHow = true;
+    $('.data-list-contnet').on('mouseenter', '.pic102', function (e) {
+        var that = this;
+        $('#pic101').attr('src', $(that).attr('src'));
+        var img = new Image();
+        img.onload = function () {
+            $("#pic101").css({
+                "width": this.width >= this.height ? 350 + 'px' : 'auto',
+                "height": this.height > this.width ? 450 + 'px' : 'auto'
+            }).fadeIn("fast");
+            this.onload = null;
 
-    };
-    img.src = $(that).attr('src');
-  });
-  $('.data-list-contnet').on('click', '.pic102', function () {
-    event.stopPropagation();
-    PImgSHow = false;
-  });
-  $('.data-list-contnet').on('mouseleave', '.pic102', function () {
-    if (PImgSHow) {
-      $('#pic101').hide();
-    }
-  });
-  $('#pic101').click(function () {
-    event.stopPropagation();
-  });
-  $('body').click(function () {
-    PImgSHow = true;
-    $('#pic101').hide();
-  });
-  $('#pic101').mouseenter(function(){
-    $('#pic101').show();
-  })
-  $('#pic101').mouseleave(function(){
-    if (PImgSHow) {
-      $('#pic101').hide();
-    }
-  })
+        };
+        img.src = $(that).attr('src');
+    });
+    $('.data-list-contnet').on('click', '.pic102', function () {
+        event.stopPropagation();
+        PImgSHow = false;
+    });
+    $('.data-list-contnet').on('mouseleave', '.pic102', function () {
+        if (PImgSHow) {
+            $('#pic101').hide();
+        }
+    });
+    $('#pic101').click(function () {
+        event.stopPropagation();
+    });
+    $('body').click(function () {
+        PImgSHow = true;
+        $('#pic101').hide();
+    });
+    $('#pic101').mouseenter(function () {
+        $('#pic101').show();
+    })
+    $('#pic101').mouseleave(function () {
+        if (PImgSHow) {
+            $('#pic101').hide();
+        }
+    })
 })
