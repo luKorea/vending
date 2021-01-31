@@ -419,7 +419,7 @@ input:hover{
     width: 100%;
 }
 .shipmentRecord .layui-form{
-    width: fit-content;
+    /* width: fit-content; */
     /* width: 90%; */
 }
 .replenishment{
@@ -859,5 +859,5 @@ input:hover{
     display: none;
 }
 .salesTwo .data-list-table .layui-form{
-    width: auto;
+    /* width: 80%; */
 }

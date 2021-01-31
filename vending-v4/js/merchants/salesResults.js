@@ -1,9 +1,9 @@
 import '../../MyCss/merchants/salesResults.scss';
-layui.use(['table', 'form', 'layer', 'laydate'], function () {
+layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     var permissionsData0 = window.parent.permissionsData1(),
-     permissionsObj = {
-        460: false,
-    },
+        permissionsObj = {
+            460: false,
+        },
         permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
     function permissions() {
         permissionsObjFlag[460] ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide')
@@ -13,6 +13,7 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
         form = layui.form,
         layer = layui.layer,
         laydate = layui.laydate,
+        tree = layui.tree,
         token = sessionStorage.token;
     // 初始时间
     var startTime = getKeyTime().startTime,
@@ -28,6 +29,15 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
             startTime = timerKey[0];
             endTime = timerKey[1];
         }
+    });
+    // 收起
+    $('.sidebar i').click(function () {
+        $('.left-mian').hide();
+        $('.on-left').show()
+    });
+    $('.on-left').click(function () {
+        $('.left-mian').show();
+        $('.on-left').hide()
     });
     var salesTableIn = table.render({
         elem: '#salesTable',
@@ -113,9 +123,9 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
         done: function (res) {
             if (res.code == 403) {
                 window.parent.location.href = "login.html";
-              } else if (res.code == 405) {
+            } else if (res.code == 405) {
                 $('.hangContent').show();
-              }
+            }
             permissions();
         }
     });
@@ -302,7 +312,7 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
                     if (xhr.response.size < 50) {
                         layer.msg('导出失败', { icon: 2 })
                         return
-                      }
+                    }
                     var content = xhr.response;
                     // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                     var fileName = `${sessionStorage.marchantName}销售经理业绩(${startTime}-${endTime}).xlsx`
@@ -323,10 +333,8 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
             }
             var orderObj = JSON.stringify({
                 start_time: startTime,
-                // start_time:'2020-10-01',
                 end_time: endTime,
-                // end_time:'2020-12-30',
-                merchantId: Number(sessionStorage.machineID),
+                merchantId: Number(pushMid),
                 refund: $('.newKeyItem input[name="open"]').prop('checked') ? 0 : 1,
             })
             xhr.send(orderObj);
@@ -384,8 +392,54 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
         })
         xhr.send(orderObj);
     });
-    // permissionsVal(460).then(res=>{
-    //     res.addFlag?$('.pushBtn').removeClass('hide'):$('.pushBtn').addClass('hide')
-
-    // })
+    // 刷新商户列表
+    var pushMid = sessionStorage.machineID;
+    var dataList1 = null;
+    var dataList = dataList1 = treeList();
+    $('.refreshBtnList').click(function () {
+        var dataList1 = treeList();
+        if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
+            dataList = dataList1;
+            treeFun1(tree, 'testGoods', salesTableIn, dataList,)
+            salesTableIn.reload({
+                where: {
+                    merchantId: sessionStorage.machineID,
+                }
+            });
+            layer.msg('已刷新', { icon: 1 })
+        } else {
+            layer.msg('已刷新', { icon: 1 })
+        }
+    });
+    treeFun1(tree, 'testGoods', salesTableIn, dataList,);
+    function treeFun1(tree, element, tableID, data,) {
+        tree.render({
+            elem: `#${element}`,
+            id: 'treelist',
+            showLine: !0 //连接线
+            ,
+            onlyIconControl: true, //左侧图标控制展开收缩 
+            data,
+            spread: true,
+            text: {
+                defaultNodeName: '无数据',
+                none: '您没有权限，请联系管理员授权!'
+            },
+            click: function (obj) {
+                pushMid = obj.data.id;
+                tableID.reload({
+                    where: {
+                        merchantId: obj.data.id
+                    }
+                })
+                var nodes = $(`#${element} .layui-tree-txt`)
+                for (var i = 0; i < nodes.length; i++) {
+                    if (nodes[i].innerHTML === obj.data.title)
+                        nodes[i].style.color = "#be954a";
+                    else
+                        nodes[i].style.color = "#555";
+                }
+            },
+        });
+    }
 })

@@ -12,62 +12,63 @@
 
 <body>
     <div class="wrap">
-        <div class="margin">
-            <!-- <div class="header">
-                <button class="layui-btn layui-btn-normal btn addBtn hide" style="margin-right: 25px;" typeID='1'>
-                    <span>添加活动</span>
-                </button>
-                <div style="max-width: 350px" class="key-contnet activityListKey" >
-                    <div class="key-text">关键字</div>
-                    <input type="text" placeholder="活动名" name="keyMerchants" class="KyeText">
-                </div>
-                <button class="layui-btn layui-btn-normal queryBtnClick btn" style="margin: 0 0 0 25px;">
-                    <i class="layui-icon layui-icon-search"></i>
-                    <span>查询</span>
-                </button>
-                <button class="layui-btn layui-btn-normal query-btn btn refreshBtn" type="button">
-                    <i class="layui-icon layui-icon-refresh "></i>
-                    <span>刷新</span>
-                </button>
-            </div> -->
-            <div class="newHeader" style="margin-top: 30px;">
-                <div class="newHeaderText">
-                    条件查询
-                </div>
-                <div class="newKeyContent">
-                    <div class="newKeyItem">
-                        <label for="关键字">关键字</label>
-                        <div class="activityListKey">
-                            <input type="text" placeholder="活动名" name="keyMerchants" class="KyeText">
-                        </div>
-                    </div>
-                </div>
-                <div class="newKeyContent">
-                    <button type="button" class="layui-btn layui-btn-primary queryBtnClick">
-                        <i class="layui-icon layui-icon-search"></i>
-                        <span>查询</span>
-
-                    </button>
-                </div>
-                <div class="newKeyContent">
-                    <button type="button" class="layui-btn layui-btn-primary addBtn hide">
-                        <i class="layui-icon layui-icon-app"></i>
-                        <span>新建取货码</span>
-                    </button>
-                </div>
-                <div class="newKeyContent">
-                    <button type="button" class="layui-btn layui-btn-primary queryBtnClick">
+        <div style="width: 100%;display: flex;">
+            <!-- 左边部分 -->
+            <div class="left-mian">
+                <div class="accountContnet" style="margin-left:15px;">
+                    <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表"
+                        data-direction="bottom" type="button">
                         <i class="layui-icon layui-icon-refresh-3 "></i>
                         <!-- 刷新 -->
                     </button>
+                    <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
+                    <div id="testGoods" class="demo-tree demo-tree-box"></div>
                 </div>
+                <!-- 右侧栏 -->
+                <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
             </div>
-            <div class="activityList" style="margin-top: 10px;">
-                <div class="tableList">
-                    <table class="layui-hide" id="tableactivity" lay-filter="tableactivity"></table>
+            <i class="layui-icon layui-icon-right  on-left"></i>
+            <div class="margin" style="width: 100%;">
+                <div class="newHeader">
+                    <div class="newHeaderText">
+                        条件查询
+                    </div>
+                    <div class="newKeyContent">
+                        <div class="newKeyItem">
+                            <label for="关键字">关键字</label>
+                            <div class="activityListKey">
+                                <input type="text" placeholder="活动名" name="keyMerchants" class="KyeText">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newKeyContent">
+                        <button type="button" class="layui-btn layui-btn-primary queryBtnClick">
+                            <i class="layui-icon layui-icon-search"></i>
+                            <span>查询</span>
+    
+                        </button>
+                    </div>
+                    <div class="newKeyContent">
+                        <button type="button" class="layui-btn layui-btn-primary addBtn hide">
+                            <i class="layui-icon layui-icon-app"></i>
+                            <span>新建取货码</span>
+                        </button>
+                    </div>
+                    <div class="newKeyContent">
+                        <button type="button" class="layui-btn layui-btn-primary queryBtnClick">
+                            <i class="layui-icon layui-icon-refresh-3 "></i>
+                            <!-- 刷新 -->
+                        </button>
+                    </div>
+                </div>
+                <div class="activityList" style="margin-top: 10px;">
+                    <div class="tableList">
+                        <table class="layui-hide" id="tableactivity" lay-filter="tableactivity"></table>
+                    </div>
                 </div>
             </div>
         </div>
+      
         <!-- 新增活动 -->
         <div class="addActivity maskContnet" style="overflow-y: auto;">
             <div class="addActivityBox margin0">

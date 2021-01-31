@@ -1,112 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>销售经理管理</title>
     <script src="../assets/public/documentWrite.js"></script>
 </head>
+
 <body>
     <div class="wrap">
-        <div class="margin">
-            <!-- <div class="salesHeader">
-                <button class="layui-btn layui-btn-normal addSalesBtn hide btn ">
-                    <span>新增销售经理</span>
-                </button>
-             
-                <button class="layui-btn layui-btn-normal importBtn hide btn ">
-                    <span>批量导入销售经理信息</span>
-                    <input type="file" name="addUpload">
-                </button>
-                    <a href="../assets/public/exe.xlsx" class="dowloadX" download="批量导入销售经理导入模板.xlsx" style="color: #be954a;">
-                        <img src="../img/sigh.png" alt="">
-                        <span>下载批量导入销售经理模板</span>    
-                    </a>
-                <div style="max-width: 350px;margin-left: 15px;" class="key-contnet">
-                    <div class="key-text">关键字</div>
-                    <input type="text" placeholder="" name="keyMerchants" class="KyeText">
-                </div>
-                <button class="layui-btn layui-btn-normal btn queryBtn">
-                    <i class="layui-icon layui-icon-search"></i>
-                    <span>查询</span>
-                </button>
-                <button class="layui-btn layui-btn-normal btn del-btn hide delBtn">
-                    <i class="layui-icon layui-icon-delete"></i>
-                    <span>删除</span>
-                </button>
-                <button class="layui-btn layui-btn-normal btn refreshBtn">
-                    <i class="layui-icon layui-icon-refresh"></i>
-                    <span>刷新</span>
-                </button>
-            </div> -->
-            <div class="newHeader" style="margin-top: 30px;">
-                <div class="newHeaderText">
-                    条件查询
-                </div>
-                <div class="newKeyContent">
-                    <div class="newKeyItem">
-                        <label for="">关键字</label>
-                        <div>
-                            <input type="text" name="keyMerchants" class="KyeText" placeholder="请输入姓名">
-                        </div>
-                    </div>
-                   
-                </div>
-                <div class="newKeyContent">
-                    <div class="newKeyItem">
-                        <label for="">销售经理编号</label>
-                        <div>
-                            <input type="text" name="keyNumder" class="keyNumder">
-                        </div>
-                    </div>
-                </div>
-                <div class="newKeyContent">
-                    <div class="newKeyItem">
-                        <label for="">时间</label>
-                        <div>
-                            <input type="text" class="layui-input" id="test6"  style="text-align: center;"
-                                placeholder=" - " autocomplete="off">
-                        </div>
-                    </div>
-                </div>
-                <div class="newKeyContent">
-                    <button type="button" class="layui-btn layui-btn-primary queryBtn">   
-                        <i class="layui-icon layui-icon-search"></i>
-                        <span>查询</span>
-                        
-                    </button>
-                </div>
-                <div class="newKeyContent">
-                    <button type="button" class="layui-btn layui-btn-primary addSalesBtn hide">
-                        <i class="layui-icon layui-icon-app"></i>
-                        <span>新增销售经理</span>
-                    </button>
-                </div>
-                <div class="newKeyContent">
-                    <button type="button" class="layui-btn layui-btn-primary pushImportBtn hide">
-                        <i class="layui-icon layui-icon-upload-drag"></i>
-                        <span>导入销售经理</span>
-                    </button>
-                </div>
-                <div class="newKeyContent" style="margin-left: 8px;">
-                    <button type="button" class="layui-btn layui-btn-primary hide delBtn">
-                        <i class="layui-icon layui-icon-delete"></i>
-                    <span>删除</span>
-                    </button>
-                </div>
-                <div class="newKeyContent">
-                    <button type="button" class="layui-btn layui-btn-primary queryBtn">
+        <div style="width: 100%;display: flex;">
+            <!-- 左边部分 -->
+            <div class="left-mian">
+                <div class="accountContnet" style="margin-left:15px;">
+                    <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表"
+                        data-direction="bottom" type="button">
                         <i class="layui-icon layui-icon-refresh-3 "></i>
                         <!-- 刷新 -->
                     </button>
+                    <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
+                    <div id="testGoods" class="demo-tree demo-tree-box"></div>
                 </div>
+                <!-- 右侧栏 -->
+                <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
             </div>
-            <div class="salesTableList">
-                <div class="tableList">
-                    <table class="layui-hide" id="salesTable" lay-filter="salesTable"></table>
+            <i class="layui-icon layui-icon-right  on-left"></i>
+            <div class="margin">
+                <div class="newHeader" >
+                    <div class="newHeaderText">
+                        条件查询
+                    </div>
+                    <div class="newKeyContent">
+                        <div class="newKeyItem">
+                            <label for="">关键字</label>
+                            <div>
+                                <input type="text" name="keyMerchants" class="KyeText" placeholder="请输入姓名">
+                            </div>
+                        </div>
+    
+                    </div>
+                    <div class="newKeyContent">
+                        <div class="newKeyItem">
+                            <label for="">销售经理编号</label>
+                            <div>
+                                <input type="text" name="keyNumder" class="keyNumder">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newKeyContent">
+                        <div class="newKeyItem">
+                            <label for="">时间</label>
+                            <div>
+                                <input type="text" class="layui-input" id="test6" style="text-align: center;"
+                                    placeholder=" - " autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newKeyContent">
+                        <button type="button" class="layui-btn layui-btn-primary queryBtn">
+                            <i class="layui-icon layui-icon-search"></i>
+                            <span>查询</span>
+    
+                        </button>
+                    </div>
+                    <div class="newKeyContent">
+                        <button type="button" class="layui-btn layui-btn-primary addSalesBtn hide">
+                            <i class="layui-icon layui-icon-app"></i>
+                            <span>新增销售经理</span>
+                        </button>
+                    </div>
+                    <div class="newKeyContent">
+                        <button type="button" class="layui-btn layui-btn-primary pushImportBtn hide">
+                            <i class="layui-icon layui-icon-upload-drag"></i>
+                            <span>导入销售经理</span>
+                        </button>
+                    </div>
+                    <div class="newKeyContent" style="margin-left: 8px;">
+                        <button type="button" class="layui-btn layui-btn-primary hide delBtn">
+                            <i class="layui-icon layui-icon-delete"></i>
+                            <span>删除</span>
+                        </button>
+                    </div>
+                    <div class="newKeyContent">
+                        <button type="button" class="layui-btn layui-btn-primary queryBtn">
+                            <i class="layui-icon layui-icon-refresh-3 "></i>
+                            <!-- 刷新 -->
+                        </button>
+                    </div>
+                </div>
+                <div class="salesTableList" style="margin-top: 10px;">
+                    <div class="tableList">
+                        <table class="layui-hide" id="salesTable" lay-filter="salesTable"></table>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
     <!-- 新增销售经理 -->
     <div class="addSalesCont maskContnet" style="overflow-y: auto;">
@@ -147,7 +137,7 @@
     </div>
 
     <!-- 批量导入销售经理 -->
-    <div class="pushSalesCont maskContnet" >
+    <div class="pushSalesCont maskContnet">
         <div class="pushSalesBox margin0">
             <div class="playHeader">
                 <span>批量导入销售经理</span>
@@ -163,15 +153,16 @@
                     </button>
                 </div>
                 <div class="newKeyContent" style="margin-left: 15px;">
-                    <a href="../assets/public/exe.xlsx" class="dowloadX" download="批量导入销售经理模板.xlsx" style="color: #be954a;margin-top: 8px;">
+                    <a href="../assets/public/exe.xlsx" class="dowloadX" download="批量导入销售经理模板.xlsx"
+                        style="color: #be954a;margin-top: 8px;">
                         <img src="../img/sigh.png" alt="">
-                        <span>下载批量导入销售经理模板</span>    
+                        <span>下载批量导入销售经理模板</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-   <!-- 数据处理弹窗 -->
+    <!-- 数据处理弹窗 -->
     <div class="mask maskContnet">
         <div class="TitleContentWith">
             <span class="maskSpan" style="display: inline-block;">
@@ -181,4 +172,5 @@
         </div>
     </div>
 </body>
+
 </html>

@@ -1,6 +1,6 @@
 // import { loadAjax, showPopup } from '../../common/common';
 import '../../MyCss/marketing/pickupCode.scss';
-layui.use(['form', 'layer', 'table', 'transfer'], function () {
+layui.use(['form', 'layer', 'table', 'transfer','tree'], function () {
     var permissionsData0 = window.parent.permissionsData1(),
         permissionsObj = {
             436: false,
@@ -16,21 +16,20 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
 
     };
     permissions();
-    // var addFlag = false,
-    //     editFlag = false,
-    //     delFlag = false;
-    // // 权限控制
-    // permissionsVal(436, 437,465).then(res => {
-    //     addFlag = res.addFlag;
-    //     editFlag = res.editFlag;
-    //     delFlag=res.delFlag;
-    // });
-
-
+      // 收起
+  $('.sidebar i').click(function () {
+    $('.left-mian').hide();
+    $('.on-left').show()
+  });
+  $('.on-left').click(function () {
+    $('.left-mian').show();
+    $('.on-left').hide()
+  });
     var form = layui.form,
         layer = layui.layer,
         table = layui.table,
         transfer = layui.transfer,
+        tree=layui.tree,
         activityTable = table.render({
             elem: '#tableactivity',
             method: 'post',
@@ -42,17 +41,6 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             cols: [[
                 { field: 'activity_name', width: 200, title: '活动名', event: 'pickup', align: 'center' },
                 { field: 'code_count', width: 120, title: '取货码数量', event: 'pickup', align: 'center' },
-                // {
-                //     field: 'open', width: 120, title: '已兑换数量', event: 'pickup', align: 'center', templet: function (d) {
-                //         // var tatol = 0;
-                //         // d.good_codes.forEach(item => {
-                //         //     if (item.code_status == 1) {
-                //         //         tatol++
-                //         //     }
-                //         // });
-                //         // return tatol
-                //     }
-                // },
                 {
                     field: 'roleSign', width: 180, title: '开始时间', event: 'pickup', align: 'center', templet: function (d) {
                         if (d.start_time) {
@@ -77,9 +65,9 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                         return d.activity_status == 1 ? '已暂停' : d.activity_status == 2 ? '已取消' : time > d.end_time ? '已过期' : '活动正常'
                     }
                 },
-                { field: 'create_user', width: 180, title: '创建人', event: 'pickup', align: 'center' },
+                { field: 'create_user', width: 200, title: '创建人', event: 'pickup', align: 'center' },
                 {
-                    field: 'addUser', width: 180, title: '创建时间', event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'addUser', width: 200, title: '创建时间', event: 'pickup', align: 'center', templet: function (d) {
                         if (d.start_time) {
                             return timeStamp(d.create_time)
                         } else {
@@ -87,7 +75,9 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
                         }
                     }
                 },
-                { field: 'operation', width: 350, title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right', right: 0, },
+                // { field: 'operation', width: 350, title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right', right: 0, },
+                // { field: 'operation', fixed: 'right', align: 'center', right: 0, width: 350, title: '操作', toolbar: '#barDemo' },
+                { field: 'operation', fixed: 'right', right: 0, width: 350, title: '操作', toolbar: '#barDemo', align: 'center' },
             ]],
             id: 'activityId',
             page: true,
@@ -949,15 +939,6 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
             layer.msg(err.message, { icon: 2 });
         })
     };
-    var abcd = JSON.stringify({
-        pageSize: 10,
-        pageNum: 1,
-        merchant_id: 93
-    })
-    // loadingAjax('/api/order/getCodeOrder', 'post', abcd, sessionStorage.token).then(res => {
-    //     console.log(res)
-    // });
-
     // 导出取货码
     $('.pushBtn').click(function () {
         $('.mask').fadeIn();
@@ -1037,5 +1018,60 @@ layui.use(['form', 'layer', 'table', 'transfer'], function () {
         if (PImgSHow) {
             $('#pic101').hide();
         }
-    })
+    });
+       // 刷新商户列表
+       var dataList1 = null;
+       var dataList = dataList1 = treeList();
+     $('.refreshBtnList').click(function () {
+       var dataList1 = treeList();
+       if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
+         dataList = dataList1;
+         treeFun1(tree, 'testGoods', activityTable, dataList,)
+         activityTable.reload({
+           where: {
+               merchantId: sessionStorage.machineID,
+           }
+         });
+         layer.msg('已刷新', { icon: 1 })
+       } else {
+         layer.msg('已刷新', { icon: 1 })
+       }
+     });
+     treeFun1(tree, 'testGoods', activityTable, dataList,  );
+     function treeFun1(tree, element, tableID, data, ) {
+        tree.render({
+          elem: `#${element}`,
+          id: 'treelist',
+          showLine: !0 //连接线
+          ,
+          onlyIconControl: true, //左侧图标控制展开收缩 
+          data,
+          spread: true,
+          text: {
+            defaultNodeName: '无数据',
+            none: '您没有权限，请联系管理员授权!'
+          },
+          click: function (obj) {
+            if (permissionsObjFlag[436]) {
+                if (obj.data.id == sessionStorage.machineID) {
+                  $('.addBtn').show()
+                } else {
+                  $('.addBtn').hide()
+                }
+              }
+            tableID.reload({
+              where: {
+                merchant_id:obj.data.id
+              }
+            })
+            var nodes = $(`#${element} .layui-tree-txt`)
+            for (var i = 0; i < nodes.length; i++) {
+              if (nodes[i].innerHTML === obj.data.title)
+                nodes[i].style.color = "#be954a";
+              else
+                nodes[i].style.color = "#555";
+            }
+          },
+        });
+      }
 })

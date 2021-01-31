@@ -1,5 +1,5 @@
 import '../../MyCss/merchants/salesManager.scss';
-layui.use(['table', 'form', 'layer', 'laydate'], function () {
+layui.use(['table', 'form', 'layer', 'laydate','tree'], function () {
     var permissionsData0 = window.parent.permissionsData1(),
      permissionsObj = {
         436: false,
@@ -17,8 +17,17 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
         form = layui.form,
         layer = layui.layer,
         laydate = layui.laydate,
+        tree=layui.tree,
         token = sessionStorage.token;
-
+     // 收起
+     $('.sidebar i').click(function () {
+        $('.left-mian').hide();
+        $('.on-left').show()
+      });
+      $('.on-left').click(function () {
+        $('.left-mian').show();
+        $('.on-left').hide()
+      });
     // $('.pushXlsxBtn ').prop('href','../../img/exe.xlsx')
     // 关闭弹窗
     $('.playHeader .close').click(function () {
@@ -85,7 +94,7 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
         where: {
             merchantId: Number(sessionStorage.machineID),
             start_time: startTime,
-            end_time: endTime
+            end_time: endTime,
         },
         parseData: function (res) {
             // console.log(res)
@@ -258,15 +267,67 @@ layui.use(['table', 'form', 'layer', 'laydate'], function () {
             })
         })
     });
-    //     // 权限控制
-    //     permissionsVal(436, 437, 446).then(res => {
-    //         res.addFlag ? $('.addSalesBtn').removeClass('hide') : $('.addSalesBtn').addClass('hide');
-    //         res.editFlag ? $('.pushImportBtn').removeClass('hide') : $('.pushImportBtn').addClass('hide');
-    //         res.delFlag ? $('.delBtn').removeClass('hide') : $('.delBtn').addClass('hide')
-    //     });
-    // function permissions() {
-    //     res.addFlag ? $('.addSalesBtn').removeClass('hide') : $('.addSalesBtn').addClass('hide');
-    //     res.editFlag ? $('.pushImportBtn').removeClass('hide') : $('.pushImportBtn').addClass('hide');
-    //     res.delFlag ? $('.delBtn').removeClass('hide') : $('.delBtn').addClass('hide')
-    //   };
+    // 刷新商户列表
+    var dataList1 = null;
+    var dataList = dataList1 = treeList();
+  $('.refreshBtnList').click(function () {
+    var dataList1 = treeList();
+    if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
+      dataList = dataList1;
+      treeFun1(tree, 'testGoods', salesTableIn, dataList,)
+      salesTableIn.reload({
+        where: {
+            merchantId: sessionStorage.machineID,
+        }
+      });
+      layer.msg('已刷新', { icon: 1 })
+    } else {
+      layer.msg('已刷新', { icon: 1 })
+    }
+  });
+  treeFun1(tree, 'testGoods', salesTableIn, dataList,  )
+  function treeFun1(tree, element, tableID, data, ) {
+    tree.render({
+      elem: `#${element}`,
+      id: 'treelist',
+      showLine: !0 //连接线
+      ,
+      onlyIconControl: true, //左侧图标控制展开收缩 
+      data,
+      spread: true,
+      text: {
+        defaultNodeName: '无数据',
+        none: '您没有权限，请联系管理员授权!'
+      },
+      click: function (obj) {
+          console.log(obj)
+        if (permissionsObjFlag[436]) {
+          if (obj.data.id == sessionStorage.machineID) {
+            $('.addSalesBtn').show()
+          } else {
+            $('.addSalesBtn').hide()
+          }
+        }
+        if (permissionsObjFlag[437]) {
+            if (obj.data.id == sessionStorage.machineID) {
+              $('.pushImportBtn').show()
+            } else {
+              $('.pushImportBtn').hide()
+            }
+          }
+        tableID.reload({
+          where: {
+            merchantId:obj.data.id
+          }
+        })
+        var nodes = $(`#${element} .layui-tree-txt`)
+        for (var i = 0; i < nodes.length; i++) {
+          if (nodes[i].innerHTML === obj.data.title)
+            nodes[i].style.color = "#be954a";
+          else
+            nodes[i].style.color = "#555";
+        }
+      },
+    });
+  }
 })

@@ -31,7 +31,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   $('.on-left').click(function () {
     $('.left-mian').show();
     $('.on-left').hide()
-  })
+  });
   var table = layui.table;
   // wangEditor 获取全局属性
   var E = window.wangEditor;

@@ -7,6 +7,7 @@ if (!sessionStorage.token) {
 if (document.documentElement.clientWidth <= 600) {
     window.location.href = 'M_my.html'
 }
+history.replaceState(null, "",'?category_id=0'+'&page=1');
 window.onload = function () {
     var userName = sessionStorage.username;
     $('#userLogin .userName').html(userName)
@@ -220,75 +221,9 @@ window.onload = function () {
          permissionsData2=null;
         // 权限控制
         permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
-            permissionsData2=res.data
+            permissionsData2=res.data;
             // console.log(res.data)
             // 用户模块
-            // var userListFlag = false,
-            //     roleListFlag = false,
-            //     machineListFlag = false,
-            //     goodsClassFlag = false,
-            //     goodsListFlag = false,
-            //     materialListFlag = false,
-            //     merchantsListFlag = false,
-            //     paySetFlag = false,
-            //     accountsListFlag = false,
-            //     orderListFlag = false,
-            //     RMListFlag = false,
-            //     ReListFlag = false,
-            //     salesFlag = false,
-            //     pickupFlag = false,
-            //     orderSummaryFlag = false,
-            //     codeOrderFlag = false;
-            // res.data.forEach(item => {
-            //     if (item.id == 408) {
-            //         userListFlag = true
-            //     }
-            //     if (item.id == 407) {
-            //         roleListFlag = true
-            //     }
-            //     if (item.id == 413) {
-            //         machineListFlag = true
-            //     }
-            //     if (item.id == 414) {
-            //         goodsClassFlag = true
-            //     }
-            //     if (item.id == 409) {
-            //         goodsListFlag = true
-            //     }
-            //     if (item.id == 410) {
-            //         materialListFlag = true
-            //     }
-            //     if (item.id == 400) {
-            //         merchantsListFlag = true
-            //     }
-            //     if (item.id == 431) {
-            //         paySetFlag = true
-            //     }
-            //     if (item.id == 423) {
-            //         accountsListFlag = true
-            //     }
-            //     if (item.id == 419) {
-            //         orderListFlag = true
-            //     }
-            //     if (item.id == 412) {
-            //         RMListFlag = true
-            //     }
-            //     if (item.id == 411) {
-            //         ReListFlag = true
-            //     }
-            //     if (item.id == 447) {
-            //         salesFlag = true
-            //     }
-            //     if (item.id == 448) {
-            //         pickupFlag = true
-            //     }
-            //     if (item.id == 463) {
-            //         orderSummaryFlag = true
-            //     }
-            //     if (item.id == 455) {
-            //         codeOrderFlag = true
-            //     }
-            // });
           var permissionsObjFlag= permissionsVal1(permissionsObj,res.data)
           console.log(permissionsObjFlag)
             // userListFlag ? $('.userListFlag').removeClass('hide') : $('.userListFlag').addClass('hide');
