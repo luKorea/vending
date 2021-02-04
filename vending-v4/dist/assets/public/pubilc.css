@@ -665,3 +665,7 @@ input:hover{
 .ListOperation li i{
     margin: 0 !important;
 }
+.layui-btn .layui-icon-triangle-d{
+    font-size: 12px !important;
+    margin-right: 0 !important;
+}

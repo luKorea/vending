@@ -93,9 +93,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'info', width: 160, title: '售货机生产厂家', align: 'center', templet: function (d) {
+                    field: 'info', width: 150, title: '售货机类别', align: 'center', templet: function (d) {
                       if(d.machinesource){
-                        return d.machinesource==1?'中吉':'云印'
+                        return d.machinesource==1?'ZJ':'YY'
                       }else{
                           return '-'
                       }

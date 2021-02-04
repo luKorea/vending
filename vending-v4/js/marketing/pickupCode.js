@@ -987,18 +987,14 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
             value,
             onchange: function (obj, indexs) {
                 console.log(indexs)
-                console.log(obj)
                 if (indexs == 0) {
                     obj.forEach(item => {
                         chooseMachine.push(item.value)
                     })
-                    console.log(chooseMachine)
                 } else if (indexs == 1) {
                     obj.forEach(item => {
                         chooseMachine.splice(chooseMachine.indexOf(item.value), 1);
-                        console.log(chooseMachine.indexOf(item.value))
                     });
-                    console.log(chooseMachine)
                 }
                 chooseMachine.length == 0 ? $('.machineFlag').text('未选择') : $('.machineFlag').text('已选择')
             }
@@ -1010,8 +1006,9 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
     var machineListArr = [];
     function getMachineList(uId) {
         loadingAjax('/user/getUserMachine', 'post', JSON.stringify({ UUId: uId }), sessionStorage.token).then(res => {
-            var getList = res.data.unSelect.concat(res.data.select)
-            getList = res.data.unSelect.concat(res.data.select);
+            // var getList = res.data.unSelect.concat(res.data.select)
+            // getList = res.data.unSelect.concat(res.data.select);
+            var getList=res.data.select;
             getList.forEach(item => {
                 var transObj = {
                     value: item.machineId,
@@ -1019,7 +1016,7 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
                 };
                 machineListArr.push(transObj)
             });
-            console.log(machineListArr)
+            // console.log(machineListArr)
             transferFun(machineListArr, chooseMachine);
         }).catch(err => {
             layer.msg(err.message, { icon: 2 });
