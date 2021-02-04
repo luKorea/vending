@@ -61,7 +61,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             if (res.code == 403) {
                 // window.history.go(-1)
                 window.parent.location.href = "login.html";
-            }else if(res.code==405){
+            } else if (res.code == 405) {
                 $('.hangContent').show()
             }
         }
@@ -75,146 +75,257 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var indexFlag = null;
     //权限列表
     var permissionsDataList = null;
-    var permissions1=[],//广告素材
-        permissions2=[],//商品分类素材
-        permissions3=[],//商品管理权限
-        permissions4=[],//商品素材权限
-        permissions5=[],//售货机权限
-        permissions6=[],//广告权限
-        permissions10=[],//通用模块
-        permissions11=[],//订单与账目权限
-        permissions13=[];//营销中心
+    var permissions1 = [],//广告素材
+        permissions2 = [],//商品分类素材
+        permissions3 = [],//商品管理权限
+        permissions4 = [],//商品素材权限
+        permissions5 = [],//售货机权限
+        permissions6 = [],//广告权限
+        permissions10 = [],//通用模块
+        permissions11 = [],//订单与账目权限
+        permissions13 = [];//营销中心
     //监听工具条
-    var objData = null;
+    var objData = null,
+        operationFlag = null;
     table.on('tool(test)', function (obj) {
         objData = obj.data;
-        console.log(objData)
+        event.stopPropagation();
         $('.editInput input[name="userName"]').val(objData.name)
         if (obj.event === 'operation') {
-            popupShow('editRold', 'editBox');
-            if (objData.id == '100001') {
-                $('.permissionsContList').hide();
+            if (operationFlag == obj.data.id) {
+                $('.ListOperation').fadeOut();
+                operationFlag = null;
                 return;
-            } else {
-                $('.permissionsContList').show();
             }
-            if (!permissionsDataList) {
-                $.ajax({
-                    type: 'post',
-                    url: `${vApi}/role/findPermission`,
-                    headers: {
-                        "Content-Type": "application/json",
-                        token,
-                    },
-                    async: false,
-                    data: JSON.stringify({
-                        pageNum: '1',
-                        pageSize: '1000'
-                    }),
-                    success: function (res) {
-                        if (res.code == 200) {
-                            permissionsDataList = res.data.list.filter((item, index) => {
-                                return (item.classify != 6) && (item.classify != 8) && (item.classify != 9) ? item : ''
-                            });
-                            res.data.list.forEach((item,index)=>{
-                                switch(item.classify){
-                                    case 1:
-                                        permissions1.push(item)
-                                        break;
-                                    case 2:
-                                        permissions2.push(item)
-                                        break;
-                                    case 3:
-                                        permissions3.push(item)
-                                        break;
-                                    case 4:
-                                        permissions4.push(item)
-                                        break;
-                                    case 5:
-                                        permissions5.push(item)
-                                        break;
-                                    case 7:
-                                        permissions6.push(item)
-                                        break;   
-                                    case 10:
-                                        permissions10.push(item)
-                                        break;  
-                                    case 11:
-                                        permissions11.push(item) 
-                                        break; 
-                                    case 13:
-                                        permissions13.push(item)  
-                                    // default:
-                                    //     console.log(index)
-                                }
-                            })
-                        } else {
-                            return;
-                        }
-                    }
-                });
-            };
-            permissionsList(permissions1,'permissionsASF',objData);
-            permissionsList(permissions2,'permissionsGClass',objData);
-            permissionsList(permissions3,'permissionsGoods',objData);
-            permissionsList(permissions4,'permissionsGAF',objData);
-            permissionsList(permissions5,'permissionsMachine',objData);
-            permissionsList(permissions6,'permissionsASR',objData);
-            permissionsList(permissions10,'permissionsGeneral',objData);
-            permissionsList(permissions11,'permissionsOrder',objData);
-            permissionsList(permissions13,'permissionsMarketing',objData);
-            // permissionsList(permissionsDataList, 'permissionsAS', objData);
-
-        } else if (obj.event === 'delete') {
-            socketQuery(objData.id)
-            layer.confirm('确定删除？', function (index) {
-                $.ajax({
-                    type: 'post',
-                    url: `${vApi}/role/deleteRole`,
-                    headers: {
-                        "Content-Type": "application/json",
-                        token,
-                    },
-                    data: JSON.stringify({
-                        id: objData.id
-                    }),
-                    success: function (res) {
-                        layer.close(index);
-                        console.log(res)
-                        if (res.code == 200) {
-                            // userPushId.forEach((item,index)=>{
-                            //     console.log(item)
-                            //     var socketQuery=JSON.stringify({
-                            //         uid:item,
-                            //         msg:'用户角色权限发生变更,请重新登录！',
-                            //         tag:1
-                            //     })
-                            //     loadingAjax('/api/pushWebMsg','post',socketQuery,sessionStorage.token).then(res=>{
-                            //         console.log(res)
-                            //     }).catch(err=>{
-                            //         console.log(err)
-                            //     })
-                            // })
-                            socketPush(userPushId)
-                            layer.msg(res.message, { icon: 1 });
-                            tableIns.reload({
-                                where: {}
-                            });
-
-                        } else if (res.code == 403) {
-                            window.parent.location.href = "login.html";
-                        } else {
-                            layer.msg(res.message, { icon: 2 });
-                        }
-                    },
-                    error:function(err){
-                        layer.msg('服务器请求超时', { icon: 2 });
-                    }
-                })
+            operationFlag = obj.data.id;
+            $('.ListOperation').fadeIn();
+            $('.ListOperation').css({
+                left: $(this).offset().left - 35 + 'px',
+                top: $(this).offset().top + 35 + 'px'
             })
         }
-    });
+        // if (obj.event === 'operation') {
+        //     popupShow('editRold', 'editBox');
+        //     if (objData.id == '100001') {
+        //         $('.permissionsContList').hide();
+        //         return;
+        //     } else {
+        //         $('.permissionsContList').show();
+        //     }
+        //     if (!permissionsDataList) {
+        //         $.ajax({
+        //             type: 'post',
+        //             url: `${vApi}/role/findPermission`,
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //                 token,
+        //             },
+        //             async: false,
+        //             data: JSON.stringify({
+        //                 pageNum: '1',
+        //                 pageSize: '1000'
+        //             }),
+        //             success: function (res) {
+        //                 if (res.code == 200) {
+        //                     permissionsDataList = res.data.list.filter((item, index) => {
+        //                         return (item.classify != 6) && (item.classify != 8) && (item.classify != 9) ? item : ''
+        //                     });
+        //                     res.data.list.forEach((item,index)=>{
+        //                         switch(item.classify){
+        //                             case 1:
+        //                                 permissions1.push(item)
+        //                                 break;
+        //                             case 2:
+        //                                 permissions2.push(item)
+        //                                 break;
+        //                             case 3:
+        //                                 permissions3.push(item)
+        //                                 break;
+        //                             case 4:
+        //                                 permissions4.push(item)
+        //                                 break;
+        //                             case 5:
+        //                                 permissions5.push(item)
+        //                                 break;
+        //                             case 7:
+        //                                 permissions6.push(item)
+        //                                 break;   
+        //                             case 10:
+        //                                 permissions10.push(item)
+        //                                 break;  
+        //                             case 11:
+        //                                 permissions11.push(item) 
+        //                                 break; 
+        //                             case 13:
+        //                                 permissions13.push(item)  
+        //                             // default:
+        //                             //     console.log(index)
+        //                         }
+        //                     })
+        //                 } else {
+        //                     return;
+        //                 }
+        //             }
+        //         });
+        //     };
+        //     permissionsList(permissions1,'permissionsASF',objData);
+        //     permissionsList(permissions2,'permissionsGClass',objData);
+        //     permissionsList(permissions3,'permissionsGoods',objData);
+        //     permissionsList(permissions4,'permissionsGAF',objData);
+        //     permissionsList(permissions5,'permissionsMachine',objData);
+        //     permissionsList(permissions6,'permissionsASR',objData);
+        //     permissionsList(permissions10,'permissionsGeneral',objData);
+        //     permissionsList(permissions11,'permissionsOrder',objData);
+        //     permissionsList(permissions13,'permissionsMarketing',objData);
+        //     // permissionsList(permissionsDataList, 'permissionsAS', objData);
 
+        // } else if (obj.event === 'delete') {
+        //     socketQuery(objData.id)
+        //     layer.confirm('确定删除？', function (index) {
+        //         $.ajax({
+        //             type: 'post',
+        //             url: `${vApi}/role/deleteRole`,
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //                 token,
+        //             },
+        //             data: JSON.stringify({
+        //                 id: objData.id
+        //             }),
+        //             success: function (res) {
+        //                 layer.close(index);
+        //                 console.log(res)
+        //                 if (res.code == 200) {
+        //                     socketPush(userPushId)
+        //                     layer.msg(res.message, { icon: 1 });
+        //                     tableIns.reload({
+        //                         where: {}
+        //                     });
+
+        //                 } else if (res.code == 403) {
+        //                     window.parent.location.href = "login.html";
+        //                 } else {
+        //                     layer.msg(res.message, { icon: 2 });
+        //                 }
+        //             },
+        //             error:function(err){
+        //                 layer.msg('服务器请求超时', { icon: 2 });
+        //             }
+        //         })
+        //     })
+        // }
+    });
+    // 编辑
+    $('.ListOperation .edit').click(function () {
+        popupShow('editRold', 'editBox');
+        if (objData.id == '100001') {
+            $('.permissionsContList').hide();
+            return;
+        } else {
+            $('.permissionsContList').show();
+        }
+        if (!permissionsDataList) {
+            $.ajax({
+                type: 'post',
+                url: `${vApi}/role/findPermission`,
+                headers: {
+                    "Content-Type": "application/json",
+                    token,
+                },
+                async: false,
+                data: JSON.stringify({
+                    pageNum: '1',
+                    pageSize: '1000'
+                }),
+                success: function (res) {
+                    if (res.code == 200) {
+                        permissionsDataList = res.data.list.filter((item, index) => {
+                            return (item.classify != 6) && (item.classify != 8) && (item.classify != 9) ? item : ''
+                        });
+                        res.data.list.forEach((item, index) => {
+                            switch (item.classify) {
+                                case 1:
+                                    permissions1.push(item)
+                                    break;
+                                case 2:
+                                    permissions2.push(item)
+                                    break;
+                                case 3:
+                                    permissions3.push(item)
+                                    break;
+                                case 4:
+                                    permissions4.push(item)
+                                    break;
+                                case 5:
+                                    permissions5.push(item)
+                                    break;
+                                case 7:
+                                    permissions6.push(item)
+                                    break;
+                                case 10:
+                                    permissions10.push(item)
+                                    break;
+                                case 11:
+                                    permissions11.push(item)
+                                    break;
+                                case 13:
+                                    permissions13.push(item)
+                                // default:
+                                //     console.log(index)
+                            }
+                        })
+                    } else {
+                        return;
+                    }
+                }
+            });
+        };
+        permissionsList(permissions1, 'permissionsASF', objData);
+        permissionsList(permissions2, 'permissionsGClass', objData);
+        permissionsList(permissions3, 'permissionsGoods', objData);
+        permissionsList(permissions4, 'permissionsGAF', objData);
+        permissionsList(permissions5, 'permissionsMachine', objData);
+        permissionsList(permissions6, 'permissionsASR', objData);
+        permissionsList(permissions10, 'permissionsGeneral', objData);
+        permissionsList(permissions11, 'permissionsOrder', objData);
+        permissionsList(permissions13, 'permissionsMarketing', objData);
+        // permissionsList(permissionsDataList, 'permissionsAS', objData);
+    });
+    // 删除
+    $('.ListOperation .del').click(function () {
+        socketQuery(objData.id)
+        layer.confirm('确定删除？', function (index) {
+            $.ajax({
+                type: 'post',
+                url: `${vApi}/role/deleteRole`,
+                headers: {
+                    "Content-Type": "application/json",
+                    token,
+                },
+                data: JSON.stringify({
+                    id: objData.id
+                }),
+                success: function (res) {
+                    layer.close(index);
+                    if (res.code == 200) {
+                        socketPush(userPushId)
+                        layer.msg(res.message, { icon: 1 });
+                        tableIns.reload({
+                            where: {}
+                        });
+
+                    } else if (res.code == 403) {
+                        window.parent.location.href = "login.html";
+                    } else {
+                        layer.msg(res.message, { icon: 2 });
+                    }
+                },
+                error: function (err) {
+                    layer.msg('服务器请求超时', { icon: 2 });
+                }
+            })
+        })
+    })
     $('.addBtn').click(function () {
         popupShow('MemberOperation', 'MemberContent');
     })
@@ -249,8 +360,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         layer.msg(res.message, { icon: 2 });
                     }
                 },
-                error:function(err){
-                    layer.msg('服务器请求超时',{icon:2})
+                error: function (err) {
+                    layer.msg('服务器请求超时', { icon: 2 })
                 }
             })
         } else {
@@ -289,16 +400,16 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 }),
                 success: function (res) {
                     $('.mask').fadeOut();
-                    $('.maskSpan').removeClass('maskIcon');            
-                    popupHide('editRold', 'editBox'); 
-                    if (res.code == 200) {                    
+                    $('.maskSpan').removeClass('maskIcon');
+                    popupHide('editRold', 'editBox');
+                    if (res.code == 200) {
                         layer.msg(res.message, { icon: 1 });
                         tableIns.reload({
                             where: {
                             }
                         })
-                        if(objData.id!='100001'){
-                            socketQuery(objData.id,'true');
+                        if (objData.id != '100001') {
+                            socketQuery(objData.id, 'true');
                             // sleep(1)
                             // setTimeout(()=>{
                             //     socketPush(userPushId)
@@ -310,8 +421,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         layer.msg(res.message, { icon: 2 });
                     }
                 },
-                error:function(err){
-                    layer.msg('服务器请求超时',{icon:2})
+                error: function (err) {
+                    layer.msg('服务器请求超时', { icon: 2 })
                 }
             })
 
@@ -361,7 +472,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         <input type="checkbox" lay-filter="permissionsAll" name="${element}" title="全选"
             lay-skin="primary"  value="" >
          </div>`;
-    // var ListData ='';
+        // var ListData ='';
         list.forEach((ele, index) => {
             ListData += `<div>
                             <input type="checkbox" lay-filter="permissions" name="${ele.id}" title="${ele.name}"
@@ -373,7 +484,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         TrueData.permissions.forEach((item, index) => {
             // var elearr=[];
             for (var i = 1; i < $(`.${element} input`).length; i++) {
-                if (item.id == list[i-1].id) {
+                if (item.id == list[i - 1].id) {
                     $(`.${element} input`).eq(i).prop('checked', true)
                 }
             };
@@ -385,63 +496,67 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     $('.refreshBtn').click(function () {
         location.reload();
     });
-     // 监听f5刷新
-  $("body").bind("keydown",function(event){
-    if (event.keyCode == 116) {
-      f5Fun()
-  }
-});
-var userPushId=[];
-    function socketQuery(roleId,type){
-        var dataVal=JSON.stringify({
-            roleId:Number(roleId)
+    // 监听f5刷新
+    $("body").bind("keydown", function (event) {
+        if (event.keyCode == 116) {
+            f5Fun()
+        }
+    });
+    var userPushId = [];
+    function socketQuery(roleId, type) {
+        var dataVal = JSON.stringify({
+            roleId: Number(roleId)
         })
-        loadingAjax('/role/getRoleUser','post',dataVal,token).then(res=>{
+        loadingAjax('/role/getRoleUser', 'post', dataVal, token).then(res => {
             // console.log(res)
-            userPushId=res.data.map(Number);
+            userPushId = res.data.map(Number);
             console.log(userPushId)
-            if(type){
+            if (type) {
                 socketPush(userPushId);
             }
-        }).catch(err=>{
+        }).catch(err => {
             console.log(err)
         })
     };
-    function socketPush(userData){
-        userData.forEach((item,index)=>{
+    function socketPush(userData) {
+        userData.forEach((item, index) => {
             console.log(item)
-            var socketQuery=JSON.stringify({
-                uid:item,
-                msg:'用户角色权限发生变更,请重新登录！',
-                tag:1
+            var socketQuery = JSON.stringify({
+                uid: item,
+                msg: '用户角色权限发生变更,请重新登录！',
+                tag: 1
             })
-            loadingAjax('/pushWebMsg','post',socketQuery,sessionStorage.token).then(res=>{
+            loadingAjax('/pushWebMsg', 'post', socketQuery, sessionStorage.token).then(res => {
                 console.log(res)
-            }).catch(err=>{
+            }).catch(err => {
                 console.log(err)
             })
         })
     }
     // 查询
-    $('.queryBtnClick').click(function(){
+    $('.queryBtnClick').click(function () {
         tableIns.reload({
-            where:{
-                condition:$('.KyeText').val()
+            where: {
+                condition: $('.KyeText').val()
             }
         })
     });
     // 全选
-    form.on('checkbox(permissionsAll)', function(data){
+    form.on('checkbox(permissionsAll)', function (data) {
         console.log(data.elem); //得到checkbox原始DOM对象
         console.log(data.elem.checked); //是否被选中，true或者false;
-        var ele=$(data.elem).attr('name');
-        if(!data.value){
-            if(data.elem.checked){
-                $(`.${ele} input`).prop('checked',true)
-            }else{
-                $(`.${ele} input`).prop('checked',false)
+        var ele = $(data.elem).attr('name');
+        if (!data.value) {
+            if (data.elem.checked) {
+                $(`.${ele} input`).prop('checked', true)
+            } else {
+                $(`.${ele} input`).prop('checked', false)
             }
             form.render('checkbox');
         }
-      }); 
+    });
+    $('body').click(function () {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
+    });
 });

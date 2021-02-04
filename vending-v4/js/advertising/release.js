@@ -1,15 +1,15 @@
 import '../../MyCss/advertising/release.css'
 layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function () {
     tooltip('.refreshBtnList', { transition: true, time: 200 });
-    var permissionsData0=window.parent.permissionsData1(),
-     permissionsObj={
-        383:false,
-        384:false,
-        386:false,
-        404:false,
-        406:false,
-    },
-    permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
+    var permissionsData0 = window.parent.permissionsData1(),
+        permissionsObj = {
+            383: false,
+            384: false,
+            386: false,
+            404: false,
+            406: false,
+        },
+        permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
     function permissions() {
         permissionsObjFlag[383] ? $('.publicAdvertisingBtn').removeClass('hide') : $('.publicAdvertisingBtn').addClass('hide');
         permissionsObjFlag[386] ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
@@ -77,7 +77,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
         },
         cols: [[
             { type: 'checkbox', },
-            { field: 'number', width: 300, title: '发布单号', align: 'center' },
+            { field: 'number', width: 280, title: '发布单号', align: 'center' },
             {
                 field: 'advertisingTime', align: 'center', width: 120, title: '广告时长(秒)', templet: function (d) {
                     var advertisingTime = 0;
@@ -106,8 +106,7 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             // { field: 'amendTime', width: 130, title: '广告位', },
             { field: 'addUser', width: 180, title: '创建人', align: 'center', },
             { field: 'creationTime', width: 250, title: '创建时间', align: 'center' },
-
-            { field: 'operation', right: 0, align: 'center', width: 400, title: '操作', toolbar: '#barDemo', fixed: 'right' },
+            { field: 'operation', right: 0, align: 'center', width: 150, title: '操作', toolbar: '#barDemo', },//fixed: 'right'
         ]],
         page: true,
         id: 'advertisingData',
@@ -153,45 +152,94 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     });
 
     // 广告预览轮播
-    var carousel = layui.carousel;
-    // 监听操作点击事件
-    var advertisingDetailsList = null;
-    var numderID = null;
-    var durationData = null;
-    // 查看购金机列表
-    var machineList1 = null;
+    var carousel = layui.carousel,
+        // 监听操作点击事件
+        advertisingDetailsList = null,
+        numderID = null,
+        durationData = null,
+        // 查看购金机列表
+        machineList1 = null,
+        operationFlag=null,
+        releaseTabData=null;
     table.on('tool(machineListData)', function (obj) {
+        event.stopPropagation();
         numderID = obj.data.number;
-        if (obj.event === 'preview') {
-            durationData = obj.data.publicizeAdvert;
-            publisSwiperCont(obj.data.publicizeAdvert, 'previewSwiperCont', 'swiperDetails', durationData);
+        releaseTabData=obj.data;
+        if (obj.event === 'operation') {
+            if (operationFlag == obj.data.number) {
+              $('.ListOperation').fadeOut();
+              operationFlag = null;
+              return;
+            }
+            obj.data.attribute!=2?$('.ListOperation .push').addClass('hide'):$('.ListOperation .push').removeClass('hide')
+            operationFlag = obj.data.number;
+            $('.ListOperation').fadeIn();
+            $('.ListOperation').css({
+              left: $(this).offset().left - 35 + 'px',
+              top: $(this).offset().top + 35 + 'px'
+            })
+          }
+        // if (obj.event === 'preview') {
+        //     durationData = obj.data.publicizeAdvert;
+        //     publisSwiperCont(obj.data.publicizeAdvert, 'previewSwiperCont', 'swiperDetails', durationData);
+        //     var options = {
+        //         'interval': durationData[0].time * 1000
+        //     }
+        //     publis.reload(options);
+        //     popupShow('preview', 'previewContnet');
+        //     // ins.reload('swiperDetails');
+        // } else if (obj.event === 'toView') {
+        //     machineDetailsFun(numderID)
+
+        //     popupShow('toViveCont', 'toViveBox')
+        // } else if (obj.event === 'details') {
+        //     advertisingDetailsList = obj.data.publicizeAdvert;
+        //     advertisingDetails(advertisingDetailsList, 'detailsListBox')
+        //     popupShow('advertisingDetails', 'detailsBox');
+        // } else if (obj.event == 'push') {
+        //     if (obj.data.merchantId != sessionStorage.machineID) {
+        //         layer.msg('不能使用下级商户广告', { icon: 7 });
+        //         return;
+        //     }
+        //     if (!machineAdvertising) {
+        //         machineAdvertisingFun();
+        //     }
+        //     popupShow('machineDetailsCont', 'machineDetailsBox')
+        // }
+
+    });
+    // 广告预览
+    $('.ListOperation .preview').click(function(){
+        durationData = releaseTabData.publicizeAdvert;
+            publisSwiperCont(releaseTabData.publicizeAdvert, 'previewSwiperCont', 'swiperDetails', durationData);
             var options = {
                 'interval': durationData[0].time * 1000
             }
             publis.reload(options);
             popupShow('preview', 'previewContnet');
-            // ins.reload('swiperDetails');
-        } else if (obj.event === 'toView') {
-            machineDetailsFun(numderID)
-
-            popupShow('toViveCont', 'toViveBox')
-        } else if (obj.event === 'details') {
-            advertisingDetailsList = obj.data.publicizeAdvert;
-            advertisingDetails(advertisingDetailsList, 'detailsListBox')
-            popupShow('advertisingDetails', 'detailsBox');
-        } else if (obj.event == 'push') {
-            if (obj.data.merchantId != sessionStorage.machineID) {
-                layer.msg('不能使用下级商户广告', { icon: 7 });
-                return;
-            }
-            if (!machineAdvertising) {
-                machineAdvertisingFun();
-            }
-            popupShow('machineDetailsCont', 'machineDetailsBox')
-        }
-
     });
-
+    // 广告详情
+    $('.ListOperation .details').click(function(){
+        advertisingDetailsList = releaseTabData.publicizeAdvert;
+        advertisingDetails(advertisingDetailsList, 'detailsListBox')
+        popupShow('advertisingDetails', 'detailsBox');
+    });
+    // 广告使用情况
+    $('.ListOperation .toView').click(function(){
+        machineDetailsFun(numderID)
+        popupShow('toViveCont', 'toViveBox')
+    });
+    // 广告推送到售货机
+    $('.ListOperation .push').click(function(){
+        if (releaseTabData.merchantId != sessionStorage.machineID) {
+            layer.msg('不能使用下级商户广告', { icon: 7 });
+            return;
+        }
+        if (!machineAdvertising) {
+            machineAdvertisingFun();
+        }
+        popupShow('machineDetailsCont', 'machineDetailsBox')
+    })
     // 关闭弹窗
     $('.playHeader .close').click(function () {
         $(this).parent().parent().addClass('margin0')
@@ -1197,43 +1245,45 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             layer.msg('已刷新', { icon: 1 })
         }
     });
-       // 图片放大事件
-       var PImgSHow=true;
-       $('.pubilshMaterialCont').on('mouseenter','.pic102',function(e){
-        var that = this; 
-        $('#pic101').attr('src',$(that).attr('src'));
+    // 图片放大事件
+    var PImgSHow = true;
+    $('.pubilshMaterialCont').on('mouseenter', '.pic102', function (e) {
+        var that = this;
+        $('#pic101').attr('src', $(that).attr('src'));
         var img = new Image();
         img.onload = function () {
             $("#pic101").css({
-                "width":this.width>=this.height?350+'px':'auto',
-                "height":this.height>this.width?350+'px':'auto'
+                "width": this.width >= this.height ? 350 + 'px' : 'auto',
+                "height": this.height > this.width ? 350 + 'px' : 'auto'
             }).fadeIn("fast");
             this.onload = null;
         };
         img.src = $(that).attr('src');
     });
-    $('.pubilshMaterialCont').on('click','.pic102',function(){
+    $('.pubilshMaterialCont').on('click', '.pic102', function () {
         event.stopPropagation();
-        PImgSHow=false;
-    }); 
-    $('.pubilshMaterialCont').on('mouseleave','.pic102',function(){
-        if(PImgSHow){
+        PImgSHow = false;
+    });
+    $('.pubilshMaterialCont').on('mouseleave', '.pic102', function () {
+        if (PImgSHow) {
             $('#pic101').hide();
         }
     });
-    $('#pic101').click(function(){
+    $('#pic101').click(function () {
         event.stopPropagation();
     });
-    $('body').click(function(){
-        PImgSHow=true;
+    $('body').click(function () {
+        PImgSHow = true;
         $('#pic101').hide();
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
     });
-    $('#pic101').mouseenter(function(){
+    $('#pic101').mouseenter(function () {
         $('#pic101').show();
-      })
-      $('#pic101').mouseleave(function(){
+    })
+    $('#pic101').mouseleave(function () {
         if (PImgSHow) {
-          $('#pic101').hide();
+            $('#pic101').hide();
         }
-      })
+    })
 });

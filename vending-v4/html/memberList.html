@@ -255,6 +255,14 @@
                 </div>
             </div>
         </div>
+          <!-- 操作部分 -->
+          <ul class="ListOperation">
+            <li class="Status hide">启用</li>
+            <li class="edit listEdit">编辑</li>
+            <li class="stores listEdit">售货机数据</li>
+            <li class="role">角色列表</li>
+            <li class="delete listEdit">删除</li>
+        </ul>
         <!-- 没有权限时显示白屏 -->
         <div class="hangContent">
             <p>您没有访问的权限!</p>
@@ -266,7 +274,7 @@
         <!-- <button class="layui-btn layui-btn-sm btn operation" lay-event="editRole">
             <span style="color:#fff;">编辑角色</span>
         </button> -->
-        <button class="layui-btn layui-btn-sm btn operation listEdit " typeID='2' lay-event="edit">
+        <!-- <button class="layui-btn layui-btn-sm btn operation listEdit " typeID='2' lay-event="edit">
             <span style="color:#fff;">编辑</span>
         </button>
         <button class="layui-btn layui-btn-sm btn operation userMachine "  lay-event="stores">
@@ -280,8 +288,11 @@
         </button>
         <button class="layui-btn layui-btn-sm btn del-btn hides {{d.userName=='sysadmin'?'hide':''}}" lay-event="delete">
             <span style="color:#fff;">删除</span>    
+        </button> -->
+        <button class="layui-btn layui-btn-sm btn Toperation " lay-event="operation">
+            <span style="color:#fff;">操作</span>
+            <i class="layui-icon layui-icon-down"></i>
         </button>
-        
     </div>
 </script>
 <script src="../../assets/public/md5.js"></script>

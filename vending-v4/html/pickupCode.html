@@ -45,7 +45,7 @@
                         <button type="button" class="layui-btn layui-btn-primary queryBtnClick">
                             <i class="layui-icon layui-icon-search"></i>
                             <span>查询</span>
-    
+
                         </button>
                     </div>
                     <div class="newKeyContent">
@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-      
+
         <!-- 新增活动 -->
         <div class="addActivity maskContnet" style="overflow-y: auto;">
             <div class="addActivityBox margin0">
@@ -354,7 +354,7 @@
                         <div class="newKeyItem">
                             <label for="关键字">取货码</label>
                             <div class="activityListKey">
-                                <input type="text"  name="keyGoodsCode" class="KyeText">
+                                <input type="text" name="keyGoodsCode" class="KyeText">
                             </div>
                         </div>
                     </div>
@@ -365,12 +365,12 @@
                         </button>
                     </div>
                     <div class="newKeyContent">
-                        <button type="button" class="layui-btn layui-btn-primary pushBtn" >
+                        <button type="button" class="layui-btn layui-btn-primary pushBtn">
                             <i class="layui-icon layui-icon-download-circle"></i>
                             <span>导出取货码</span>
                         </button>
                     </div>
-                  
+
                 </div>
                 <div class="pickCodeBody">
                     <div>
@@ -387,11 +387,18 @@
                         <span>导出取货码</span>
                     </button>
                 </div> -->
-              
+
             </div>
         </div>
 
     </div>
+    <!-- 操作部分 -->
+    <ul class="ListOperation">
+        <li class="machineIn">活动售货机</li>
+        <li class="goodsIn">活动商品</li>
+        <li class="stop listEdit">开始</li>
+        <li class="cancel0 listEdit">取消</li>
+    </ul>
     <div class="mask maskContnet">
         <div class="TitleContentWith">
             <span class="maskSpan" style="display: inline-block;">
@@ -403,7 +410,7 @@
     <img src="" id="pic101" alt="">
     <script type="text/html" id="barDemo">
         <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm btn"  lay-event="machineIn">
+            <!-- <button class="layui-btn layui-btn-sm btn"  lay-event="machineIn">
                 <span style="color:#fff;">活动售货机</span>
             </button>
             <button class="layui-btn layui-btn-sm btn"  lay-event="goodsIn">
@@ -414,8 +421,11 @@
             </button>      
             <button class="layui-btn layui-btn-sm btn del-btn listEdit hide" lay-event="cancel">
                 <span style="color:#fff;">取消</span>    
+            </button> -->
+            <button class="layui-btn layui-btn-sm btn Toperation " lay-event="operation">
+                <span style="color:#fff;">操作</span>
+                <i class="layui-icon layui-icon-down"></i>
             </button>
-            
         </div>
     </script>
 

@@ -1,18 +1,19 @@
 import '../../MyCss/goods/customCategory.css';
 layui.use(['table', 'form', 'layer', 'tree'], function () {
-  tooltip('.refreshBtnList', {transition: true, time: 200});
-  var permissionsData0=window.parent.permissionsData1(),
-   permissionsObj={
-    373:false,
-    374:false,
-    372:false,
-    403:false,
-  },
-  permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
+  tooltip('.refreshBtnList', { transition: true, time: 200 });
+  var permissionsData0 = window.parent.permissionsData1(),
+    permissionsObj = {
+      373: false,
+      374: false,
+      372: false,
+      403: false,
+    },
+    permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
   function permissions() {
     permissionsObjFlag[373] ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-    permissionsObjFlag[374] ? $('.TEdit').removeClass('hide') : $('.TEdit').addClass('hide');
-    permissionsObjFlag[372] ? $('.TDel').removeClass('hide') : $('.TDel').addClass('hide');
+    permissionsObjFlag[374] ? $('.ListOperation .edit').removeClass('hide') : $('.ListOperation .edit').addClass('hide');
+    permissionsObjFlag[372] ? $('.ListOperation .del').removeClass('hide') : $('.ListOperation .del').addClass('hide');
+   (permissionsObjFlag[374] ||permissionsObjFlag[372])?$('.Toperation').removeClass('hide') : $('.Toperation').addClass('hide');
     permissionsObjFlag[403] ? $('.rankImg').removeClass('hide') : $('.rankImg').addClass('hide');
   };
   permissions();
@@ -51,7 +52,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         {
           field: 'lastTime', width: 190, title: '最后修改时间', align: 'center'
         },
-        { field: 'operation', align: 'center', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' }
+        { field: 'operation', align: 'center', position: 'absolute', right: 0, width: 150, title: '操作', toolbar: '#barDemo' }
       ]]
       , id: 'tableId'
       , page: true
@@ -121,22 +122,22 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
   $('.determine-btn').click(function () {
     var addVal = form.val("aDDValData");
     if (addVal.addTypeName) {
-        var addObj=JSON.stringify({
-          classifyName: addVal.addTypeName,
-          remark: addVal.addNote,
-          merchantId: Number(sessionStorage.machineID)
-        });
-        $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon');
-        loadingAjax('/classify/saveClassify','post',addObj,sessionStorage.token,'mask','addClass','addContent',layer).then(res=>{
-          layer.msg(res.message, { icon: 1 });
-          tableIns.reload({
-            where: {}
-          })
-          loadingAjax('/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
-        }).catch(err=>{
-          layer.msg(err.message, { icon: 2 });
-        });
+      var addObj = JSON.stringify({
+        classifyName: addVal.addTypeName,
+        remark: addVal.addNote,
+        merchantId: Number(sessionStorage.machineID)
+      });
+      $('.mask').fadeIn();
+      $('.maskSpan').addClass('maskIcon');
+      loadingAjax('/classify/saveClassify', 'post', addObj, sessionStorage.token, 'mask', 'addClass', 'addContent', layer).then(res => {
+        layer.msg(res.message, { icon: 1 });
+        tableIns.reload({
+          where: {}
+        })
+        loadingAjax('/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
+      }).catch(err => {
+        layer.msg(err.message, { icon: 2 });
+      });
     } else {
       layer.msg('请填写类目名');
     }
@@ -144,22 +145,25 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
   // 监听操作
   var editData = null;
   // 修改排序的商户id
-
+  var operationFlag = null;
+  var deitObj = null;
   table.on('tool(test)', function (obj) {
+    event.stopPropagation();
     // 操作事件
     editData = obj.data;
-    if (obj.event === 'edit') {
-      popupShow('editClass', 'editContent');
-      form.val("editValData", {
-        "addTypeName": editData.classifyName,
-        "addNote": editData.remark,
+    deitObj = obj;
+    if (obj.event === 'operation') {
+      if (operationFlag == obj.data.classifyId) {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
+        return;
+      }
+      operationFlag = obj.data.classifyId;
+      $('.ListOperation').fadeIn();
+      $('.ListOperation').css({
+        left: $(this).offset().left - 35 + 'px',
+        top: $(this).offset().top + 35 + 'px'
       })
-    } else if (obj.event === 'delete') {
-      console.log(obj)
-      layer.confirm('确定删除？', function (index) {
-        Goodsdel(editData, 2, obj, index, tableIns, sessionStorage.classTag);
-      });
-
     } else if (obj.event == 'rank') {
       console.log(obj)
       var rankObj = JSON.stringify({
@@ -176,12 +180,40 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         layer.msg(err.message, { icon: 2 });
       })
     }
+    // if (obj.event === 'edit') {
+    //   popupShow('editClass', 'editContent');
+    //   form.val("editValData", {
+    //     "addTypeName": editData.classifyName,
+    //     "addNote": editData.remark,
+    //   })
+    // } else if (obj.event === 'delete') {
+    //   console.log(obj)
+    //   layer.confirm('确定删除？', function (index) {
+    //     Goodsdel(editData, 2, obj, index, tableIns, sessionStorage.classTag);
+    //   });
+
+    // }
+
   });
+  // 编辑
+  $('.ListOperation .edit').click(function () {
+    popupShow('editClass', 'editContent');
+    form.val("editValData", {
+      "addTypeName": editData.classifyName,
+      "addNote": editData.remark,
+    })
+  });
+  // 删除
+  $('.ListOperation .del').click(function () {
+    layer.confirm('确定删除？', function (index) {
+      Goodsdel(editData, 2, deitObj, index, tableIns, sessionStorage.classTag);
+    });
+  })
   // 确定修改
   $('.editDetermine-btn').click(function () {
     var editInputVal = form.val("editValData");
     if (editInputVal.addTypeName) {
-      var editObj=JSON.stringify({
+      var editObj = JSON.stringify({
         classifyId: editData.classifyId,
         classifyName: editInputVal.addTypeName,
         remark: editInputVal.addNote,
@@ -189,13 +221,13 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       });
       $('.mask').fadeIn();
       $('.maskSpan').addClass('maskIcon');
-      loadingAjax('/classify/updateClassify','post',editObj,sessionStorage.token,'mask','editClass','editContent',layer).then(res=>{
+      loadingAjax('/classify/updateClassify', 'post', editObj, sessionStorage.token, 'mask', 'editClass', 'editContent', layer).then(res => {
         layer.msg(res.message, { icon: 1 });
         tableIns.reload({
           where: {}
         })
         loadingAjax('/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
-      }).catch(err=>{
+      }).catch(err => {
         layer.msg(err.message, { icon: 2 });
       })
     } else {
@@ -218,7 +250,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
   // 刷新商户列表
   $('.refreshBtnList').click(function () {
     var dataList1 = treeList();
-    if (JSON.stringify(dataList1)  != JSON.stringify(dataList)) {
+    if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
       dataList = dataList1;
       treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId', '', '', '', 'true');
       tableIns.reload({
@@ -226,9 +258,9 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
           merchantId: sessionStorage.machineID,
         }
       })
-      layer.msg('已刷新',{icon:1})
+      layer.msg('已刷新', { icon: 1 })
     } else {
-      layer.msg('已刷新',{icon:1})
+      layer.msg('已刷新', { icon: 1 })
     }
 
   })
@@ -257,19 +289,8 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       f5Fun()
     }
   });
- 
-  // var addFlag = false,
-  //   editFlag = false,
-  //   delFlag = false,
-  //   fourFlag = false;
-  // permissionsVal(373, 374, 372, 403).then(res => {
-  //   console.log(res);
-  //   // addFlag = res.addFlag;
-  //   // editFlag = res.editFlag;
-  //   // delFlag = res.delFlag;
-  //   // fourFlag = res.fourFlag;
-  //   // permissions();
-  // }).catch(err => {
-  //   layer.msg('服务器请求超时', { icon: 2 })
-  // })
+  $('body').click(function () {
+    $('.ListOperation').fadeOut();
+    operationFlag = null;
+  });
 })                                                      

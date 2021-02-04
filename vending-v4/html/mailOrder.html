@@ -277,6 +277,12 @@
             </div>
         </div>
     </div>
+      <!-- 操作部分 -->
+      <ul class="ListOperation">
+        <li class="delivery">发货</li>
+        <li class="edit0">编辑物流信息</li>
+        <li class="goods0">商品</li>
+    </ul>
     <div class="mask maskContnet">
         <div class="TitleContentWith">
             <span class="maskSpan" style="display: inline-block;">
@@ -289,7 +295,7 @@
 </body>
 <script type="text/html" id="barDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm btn operation {{d.dispatch_status==0?'':'hide'}}" lay-event="delivery">
+        <!-- <button class="layui-btn layui-btn-sm btn operation {{d.dispatch_status==0?'':'hide'}}" lay-event="delivery">
             <span style="color:#fff;">发货</span>
         </button> 
         <button class="layui-btn layui-btn-sm btn operation {{d.dispatch_status==1?'':'hide'}}" lay-event="edit">
@@ -297,7 +303,11 @@
         </button> 
         <button class="layui-btn layui-btn-sm btn operation" lay-event="goods">
             <span style="color:#fff;">商品</span>
-        </button> 
+        </button>  -->
+        <button class="layui-btn layui-btn-sm btn Toperation " lay-event="operation">
+            <span style="color:#fff;">操作</span>
+            <i class="layui-icon layui-icon-down"></i>
+        </button>
     </div>
 </script>
 <script type="text/html" id="imgtmp">

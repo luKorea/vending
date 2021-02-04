@@ -7,7 +7,6 @@ if (!sessionStorage.token) {
 if (document.documentElement.clientWidth <= 600) {
     window.location.href = 'M_my.html'
 }
-history.replaceState(null, "",'?category_id=0'+'&page=1');
 window.onload = function () {
     var userName = sessionStorage.username;
     $('#userLogin .userName').html(userName)
@@ -23,29 +22,19 @@ window.onload = function () {
         // var element = layui.element;
 
 
-        var $ = layui.jquery
-            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        var $ = layui.jquery,
+            element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
         //新增一个Tab项
         // console.log(table)
         function tabAdd(index, title) {
             element.tabAdd('demo', {
                 title,
-                // content: `<div class="content-tbas-iframe-html">
-                //             <iframe class="iframe_show" src="homePage.html"></iframe>
-                //         </div>`
                 content: `<div class="content-tbas-iframe-html">
                              ${navList[index]}
                          </div>`
                 , id: index
             });
-            // for (var i = 0; i < $('.iframe_show').length; i++) {
-            //     if ($('.iframe_show').eq(i).attr('src') == 'message.html') {
-            //         iframeChild = $('.iframe_show').eq(i);
-            //         console.log(iframeChild)
-
-            //     }
-            // }
 
         };
         //切换到指定Tab项
@@ -55,7 +44,6 @@ window.onload = function () {
 
         // 导航切换事件
         $('.navClick').click(function () {
-
             if (navStr.indexOf($(this).attr('navId')) == -1) {
                 tabAdd($(this).attr('navId'), $(this).html());
                 tabChange($(this).attr('navId'));
@@ -79,6 +67,10 @@ window.onload = function () {
         // 监听tab切换事件
         var Indexs = null;
         element.on('tab(demo)', function (data) {
+            // console.log($(this).html());
+            // console.log($(this).html().indexOf('<'))
+            var theModuleNameStr = $(this).html().substr(0, $(this).html().indexOf('<'))
+            history.replaceState(null, "", '?theModule=' + $(this).attr('lay-id') + '-' + theModuleNameStr);
             var Len = $(".navClick").length;
             for (var i = 0; i < Len; i++) {
                 if ($(this).attr('lay-id') == $(".navClick").eq(i).attr('navId')) {
@@ -94,8 +86,35 @@ window.onload = function () {
                 $('.layui-nav-item').removeClass('layui-nav-itemed');
                 $(".navClick").parent().removeClass('layui-this');
             }
-        })
-
+        });
+        // 获取地址栏参数
+        // function getQueryString(name) {
+        //     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        //     var r = window.location.search.substr(1).match(reg);
+        //     if (r != null) return unescape(r[2]);
+        //     return null;
+        // };
+        function getQueryString(key) {
+            // 获取参数
+            var url = window.location.search;
+            // 正则筛选地址栏
+            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+            // 匹配目标参数
+            var result = url.substr(1).match(reg);
+            //返回参数值
+            return result ? decodeURIComponent(result[2]) : null;
+        }
+ 
+        var theModule1 = getQueryString('theModule');
+        if (theModule1) {
+            // console.log(theModule1)
+          var  theModule = theModule1.split('-');
+            if (theModule[0] != 22 && theModule) {
+                tabAdd(theModule[0], theModule[1]);
+                tabChange(theModule[0]);
+                navStr.push(theModule[0]);
+            }
+        }
 
         // 点击导航分类，其他分类收起
         $('#nav .layui-nav-item>a').click(function () {
@@ -200,32 +219,32 @@ window.onload = function () {
             loginOut();
         });
 
-        var permissionsObj={
-            408:false,
-            407:false,
-            413:false,
-            414:false,
-            409:false,
-            410:false,
-            400:false,
-            431:false,
-            423:false,
-            419:false,
-            412:false,
-            411:false,
-            447:false,
-            448:false,
-            463:false,
-            455:false,
+        var permissionsObj = {
+            408: false,
+            407: false,
+            413: false,
+            414: false,
+            409: false,
+            410: false,
+            400: false,
+            431: false,
+            423: false,
+            419: false,
+            412: false,
+            411: false,
+            447: false,
+            448: false,
+            463: false,
+            455: false,
         },
-         permissionsData2=null;
+            permissionsData2 = null;
         // 权限控制
         permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
-            permissionsData2=res.data;
+            permissionsData2 = res.data;
             // console.log(res.data)
             // 用户模块
-          var permissionsObjFlag= permissionsVal1(permissionsObj,res.data)
-          console.log(permissionsObjFlag)
+            var permissionsObjFlag = permissionsVal1(permissionsObj, res.data)
+            //   console.log(permissionsObjFlag)
             // userListFlag ? $('.userListFlag').removeClass('hide') : $('.userListFlag').addClass('hide');
             permissionsObjFlag[408] ? $('.userListFlag').removeClass('hide') : $('.userListFlag').addClass('hide');
             // roleListFlag ? $('.roleListFlag').removeClass('hide') : $('.roleListFlag').addClass('hide');
@@ -234,7 +253,7 @@ window.onload = function () {
             (permissionsObjFlag[408] || permissionsObjFlag[407]) ? $('.userCont').removeClass('hide') : $('.userCont').addClass('hide');
             //售货机模块
             // machineListFlag ? $('.machineListFlag').removeClass('hide').parents('.machineCont').removeClass('hide') : $('.machineListFlag').addClass('hide').parents('.machineCont').addClass('hide');
-            permissionsObjFlag[413]  ? $('.machineListFlag').removeClass('hide').parents('.machineCont').removeClass('hide') : $('.machineListFlag').addClass('hide').parents('.machineCont').addClass('hide');
+            permissionsObjFlag[413] ? $('.machineListFlag').removeClass('hide').parents('.machineCont').removeClass('hide') : $('.machineListFlag').addClass('hide').parents('.machineCont').addClass('hide');
             //商品管理模块
             // goodsClassFlag ? $('.goodsClassFlag').removeClass('hide') : $('.goodsClassFlag').addClass('hide');
             permissionsObjFlag[414] ? $('.goodsClassFlag').removeClass('hide') : $('.goodsClassFlag').addClass('hide');
@@ -277,12 +296,12 @@ window.onload = function () {
             layer.msg(err.message, { icon: 2 })
         })
         // 储存权限
-        
-        function permissionsData1(){
+
+        function permissionsData1() {
             // return permissionsData2
             return permissionsData2
         }
-        window.permissionsData1=permissionsData1
+        window.permissionsData1 = permissionsData1
         // 获取公告列表
         var noticeObj = JSON.stringify({
             pageSize: 10,

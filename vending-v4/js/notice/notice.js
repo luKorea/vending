@@ -16,22 +16,32 @@ layui.use(['table', 'form', 'layer',], function () {
             cols: [[
                 { field: 'n_number', width: 200, title: '公告编号', align: 'center' },
                 { field: 'title', width: 210, title: '标题', align: 'center' },
-                { field: 'isShow', width: 135, title: '是否展示', align: 'center', templet:function(d){
-                    return d.is_show==1?'是':'否'
-                }},
-                { field: 'status', width: 130, title: '状态', align: 'center',templet:function(d){
-                    return d.n_status==1?'已发布':'草稿箱'
-                }},
-                { field: 'attach_name', width: 150, title: '附件名', align: 'center',templet:function(d){
-                    return d.attach_name?d.attach_name:'-'
-                } },
-                { field: 'attach_url', width: 320, title: '附件地址', align: 'center', templet:function(d){
-                    return d.attach_url?d.attach_url:'-'
-                }},
+                {
+                    field: 'isShow', width: 135, title: '是否展示', align: 'center', templet: function (d) {
+                        return d.is_show == 1 ? '是' : '否'
+                    }
+                },
+                {
+                    field: 'status', width: 130, title: '状态', align: 'center', templet: function (d) {
+                        return d.n_status == 1 ? '已发布' : '草稿箱'
+                    }
+                },
+                {
+                    field: 'attach_name', width: 150, title: '附件名', align: 'center', templet: function (d) {
+                        return d.attach_name ? d.attach_name : '-'
+                    }
+                },
+                {
+                    field: 'attach_url', width: 320, title: '附件地址', align: 'center', templet: function (d) {
+                        return d.attach_url ? d.attach_url : '-'
+                    }
+                },
                 { field: 'create_user', width: 130, title: '创建人', align: 'center', },
-                { field: 'create_time', width: 180, title: '创建时间', align: 'center',templet:function(d){
-                    return timeStamp(d.create_time)
-                } },
+                {
+                    field: 'create_time', width: 180, title: '创建时间', align: 'center', templet: function (d) {
+                        return timeStamp(d.create_time)
+                    }
+                },
                 { field: 'operation', width: 180, title: '操作', align: 'center', toolbar: '#barDemo' },
             ]],
             id: 'noticeId',
@@ -41,7 +51,7 @@ layui.use(['table', 'form', 'layer',], function () {
                 'pageName': 'pageNum',
                 'limitName': 'pageSize'
             },
-            where:{
+            where: {
                 // merchantId:Number(sessionStorage.machineID) 
             },
             parseData: function (res) {
@@ -84,22 +94,22 @@ layui.use(['table', 'form', 'layer',], function () {
             f5Fun()
         }
     });
-      // 刷新页面
-      $('.refreshBtn').click(function () {
+    // 刷新页面
+    $('.refreshBtn').click(function () {
         location.reload();
     });
     // 发布公告按钮
-    $('.addPushBtn').click(function(){
-        popupShow('addEditCont','modificationBox')
+    $('.addPushBtn').click(function () {
+        popupShow('addEditCont', 'modificationBox')
     });
     // 取消添加
-    $('.addEditCont .cancelBtn').click(function(){
-        popupHide('addEditCont','modificationBox')
+    $('.addEditCont .cancelBtn').click(function () {
+        popupHide('addEditCont', 'modificationBox')
     })
     // 上传附件
-    $('.addUploadBtn input[name="addUpload"]').change(function(e){
-        if(!$(this).val()){
-            return ;
+    $('.addUploadBtn input[name="addUpload"]').change(function (e) {
+        if (!$(this).val()) {
+            return;
         }
         var that = this;
         var upDetails = new FormData();
@@ -111,7 +121,7 @@ layui.use(['table', 'form', 'layer',], function () {
             url: `${vApi}/fileUpload`,
             processData: false,
             contentType: false,
-            timeout:10000,
+            timeout: 10000,
             headers: {
                 token,
             },
@@ -121,7 +131,7 @@ layui.use(['table', 'form', 'layer',], function () {
                 $('.maskSpan').removeClass('maskIcon');
                 $(that).val('')
                 if (res.code == 0) {
-                    layer.msg('上传成功',{icon:1})
+                    layer.msg('上传成功', { icon: 1 })
                     $('.addEditCont input[name="address"]').val(res.data.src)
                 } else {
                     layer.msg(res.message, { icon: 7 });
@@ -136,13 +146,13 @@ layui.use(['table', 'form', 'layer',], function () {
         })
     })
     // 删除附件
-    $('.addEditCont .delUploadBtn').click(function(){
+    $('.addEditCont .delUploadBtn').click(function () {
         layer.confirm('确定删除附件？', function (index) {
-                    layer.close(index);
-                    $('.addEditCont input[name="address"]').val('');
-                    layer.msg('已删除',{icon:1})
-                })
-       
+            layer.close(index);
+            $('.addEditCont input[name="address"]').val('');
+            layer.msg('已删除', { icon: 1 })
+        })
+
     })
     // 添加公告富文本部分
     var E = window.wangEditor;
@@ -156,7 +166,7 @@ layui.use(['table', 'form', 'layer',], function () {
             url: `${vApi}/fileUpload`,
             processData: false,
             contentType: false,
-            timeout:10000,
+            timeout: 10000,
             headers: {
                 token,
             },
@@ -175,64 +185,64 @@ layui.use(['table', 'form', 'layer',], function () {
     }
     addWangEditor.create();
     // 添加预览
-    $('.addEditCont .readingBtn').click(function(){
+    $('.addEditCont .readingBtn').click(function () {
         $('.previewContent .playHeader span').html('公告详情');
         $('.previewContent .previewHtml').html(addWangEditor.txt.html())
-        popupShow('previewContent','previewBox')
+        popupShow('previewContent', 'previewBox')
     })
     // 点击发布公告
-    $('.addEditCont .determinePushBtn').click(function(){
-        var taht=this;
+    $('.addEditCont .determinePushBtn').click(function () {
+        var taht = this;
         // console.log($('.addEditCont input[name="push"]:checked').val());
         // return ;
         // console.log(addWangEditor.txt.html().length)
         // console.log(addWangEditor.txt.html());
-        if(!($('.addEditCont input[name="title"]').val()&&$('.addEditCont input[name="number"]').val())){
-            layer.msg('带*号为必填',{icon:7});
-            return ;
+        if (!($('.addEditCont input[name="title"]').val() && $('.addEditCont input[name="number"]').val())) {
+            layer.msg('带*号为必填', { icon: 7 });
+            return;
         }
-        if(!(addWangEditor.txt.html().length>11)){
-            layer.msg('公告详情最少五个字',{icon:7});
-            return ;
+        if (!(addWangEditor.txt.html().length > 11)) {
+            layer.msg('公告详情最少五个字', { icon: 7 });
+            return;
         };
-        if((!($('.addEditCont input[name="accessoryName"]').val()&&$('.addEditCont input[name="address"]').val()))&&($('.addEditCont input[name="accessoryName"]').val()||$('.addEditCont input[name="address"]').val())){
+        if ((!($('.addEditCont input[name="accessoryName"]').val() && $('.addEditCont input[name="address"]').val())) && ($('.addEditCont input[name="accessoryName"]').val() || $('.addEditCont input[name="address"]').val())) {
             layer.msg('附近名与附件地址必须同时填写');
-            return ;
+            return;
         };
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        var addPushObj=JSON.stringify({
-            n_number:$('.addEditCont input[name="number"]').val(),
-            title:$('.addEditCont input[name="title"]').val(),
-            content:addWangEditor.txt.html(),
-            isShow:Number($('.addEditCont input[name="indexShow"]:checked').val()),
+        var addPushObj = JSON.stringify({
+            n_number: $('.addEditCont input[name="number"]').val(),
+            title: $('.addEditCont input[name="title"]').val(),
+            content: addWangEditor.txt.html(),
+            isShow: Number($('.addEditCont input[name="indexShow"]:checked').val()),
             // n_status:Number($('.addEditCont input[name="push"]:checked').val()),
-            status:Number($(this).attr('pushType')),
-            attach_name:$('.addEditCont input[name="accessoryName"]').val(),
-            attach_url:$('.addEditCont input[name="address"]').val(),
-            merchantId:sessionStorage.machineID
+            status: Number($(this).attr('pushType')),
+            attach_name: $('.addEditCont input[name="accessoryName"]').val(),
+            attach_url: $('.addEditCont input[name="address"]').val(),
+            merchantId: sessionStorage.machineID
         });
-        loadingAjax('/notices/addNotice','post',addPushObj,sessionStorage.token,'mask','addEditCont','modificationBox',layer).then(res=>{
-            layer.msg(res.message,{icon:1});
+        loadingAjax('/notices/addNotice', 'post', addPushObj, sessionStorage.token, 'mask', 'addEditCont', 'modificationBox', layer).then(res => {
+            layer.msg(res.message, { icon: 1 });
             noticeTableIns.reload({
-                where:{}
+                where: {}
             });
-            if(($(taht).attr('pushType')==1)&&($('.addEditCont input[name="indexShow"]:checked').val()==1)){
-                loadingAjax('/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+            if (($(taht).attr('pushType') == 1) && ($('.addEditCont input[name="indexShow"]:checked').val() == 1)) {
+                loadingAjax('/pushNotice', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
             }
             window.parent.shuffling();
             console.log($(taht).attr('pushType'));
             console.log($('.addEditCont input[name="indexShow"]:checked').val())
-         
+
             $('.addEditCont input[name="number"]').val('');
             $('.addEditCont input[name="title"]').val('');
             addWangEditor.txt.html('');
             $('.addEditCont input[name="accessoryName"]').val('');
             $('.addEditCont input[name="address"]').val('');
-           
-        }).catch(err=>{
+
+        }).catch(err => {
             console.log(err)
-            layer.msg(err.message,{icon:2});
+            layer.msg(err.message, { icon: 2 });
         })
     });
 
@@ -249,7 +259,7 @@ layui.use(['table', 'form', 'layer',], function () {
             url: `${vApi}/fileUpload`,
             processData: false,
             contentType: false,
-            timeout:10000,
+            timeout: 10000,
             headers: {
                 token,
             },
@@ -268,75 +278,137 @@ layui.use(['table', 'form', 'layer',], function () {
     }
     editWangEditor.create();
     // 监听
-    var noticeData=null;
-    table.on('tool(noticeTable)', function (obj) {  
-         noticeData=obj.data;
-        console.log(noticeData)
-        if(obj.event=="preview"){
-            $('.previewContent .playHeader span').html(obj.data.title+'的公告详情');
-            $('.previewContent .previewHtml').html(obj.data.content)
-            popupShow('previewContent','previewBox')
-        }else if(obj.event=='edit'){
-            $('.EditCont input[name="number"]').val(noticeData.n_number);
-            $('.EditCont input[name="title"]').val(noticeData.title);
-            $('.EditCont input[name="indexShow"][value=1]').prop("checked", noticeData.is_show == 1 ? true : false);
-            $('.EditCont input[name="indexShow"][value=0]').prop("checked", noticeData.is_show == 0 ? true : false);
-            // $('.EditCont input[name="push"][value=1]').prop("checked", noticeData.n_status == 1 ? true : false);
-            // $('.EditCont input[name="push"][value=0]').prop("checked", noticeData.n_status == 0 ? true : false);
-            $('.EditCont input[name="accessoryName"]').val(noticeData.attach_name);
-            $('.EditCont input[name="address"]').val(noticeData.attach_url);
-            editWangEditor.txt.html(noticeData.content);
-            form.render('radio');
-            popupShow('EditCont','editBox');
-        }else if(obj.event=='dow'){
-            layer.confirm(noticeData.is_show==1?'确定隐藏？':'确定展示？', function (index) {
-                layer.close(index);
-                var editPushObj=JSON.stringify({
-                    n_number:noticeData.n_number,
-                    title:noticeData.title,
-                    content:noticeData.content,
-                    is_show: noticeData.is_show==1?0:1,
-                    n_status:noticeData.n_status,
-                    attach_name:noticeData.attach_name,
-                    attach_url:noticeData.attach_url,
-                    merchantId:sessionStorage.machineID,
-                    id:noticeData.id
-                });
-                loadingAjax('/notices/updateNotice','post',editPushObj,sessionStorage.token,'mask','EditCont','editBox',layer).then(res=>{
-                    layer.msg(res.message,{icon:1});
-                    noticeTableIns.reload({
-                        where:{}
-                    });
-                    loadingAjax('/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
-                }).catch(err=>{
-                    console.log(err)
-                    layer.msg(err.message,{icon:2});
-                })
+    var noticeData = null,
+        operationFlag = null;
+    table.on('tool(noticeTable)', function (obj) {
+        event.stopPropagation();
+        noticeData = obj.data;
+        if (obj.event === 'operation') {
+            if (operationFlag == obj.data.id) {
+                $('.ListOperation').fadeOut();
+                operationFlag = null;
+                return;
+            }
+            operationFlag = obj.data.id;
+            noticeData.n_status==1?$('.ListOperation .edit0').addClass('hide'):$('.ListOperation .edit0').removeClass('hide')
+            noticeData.is_show==1?$('.ListOperation .dow').html('隐藏'):$('.ListOperation .dow').html('展示');
+            $('.ListOperation').fadeIn();
+            $('.ListOperation').css({
+                left: $(this).offset().left - 35 + 'px',
+                top: $(this).offset().top + 35 + 'px'
             })
         }
+        // if(obj.event=="preview"){
+        //     $('.previewContent .playHeader span').html(obj.data.title+'的公告详情');
+        //     $('.previewContent .previewHtml').html(obj.data.content)
+        //     popupShow('previewContent','previewBox')
+        // }else if(obj.event=='edit'){
+        //     $('.EditCont input[name="number"]').val(noticeData.n_number);
+        //     $('.EditCont input[name="title"]').val(noticeData.title);
+        //     $('.EditCont input[name="indexShow"][value=1]').prop("checked", noticeData.is_show == 1 ? true : false);
+        //     $('.EditCont input[name="indexShow"][value=0]').prop("checked", noticeData.is_show == 0 ? true : false);
+        //     // $('.EditCont input[name="push"][value=1]').prop("checked", noticeData.n_status == 1 ? true : false);
+        //     // $('.EditCont input[name="push"][value=0]').prop("checked", noticeData.n_status == 0 ? true : false);
+        //     $('.EditCont input[name="accessoryName"]').val(noticeData.attach_name);
+        //     $('.EditCont input[name="address"]').val(noticeData.attach_url);
+        //     editWangEditor.txt.html(noticeData.content);
+        //     form.render('radio');
+        //     popupShow('EditCont','editBox');
+        // }else if(obj.event=='dow'){
+        //     layer.confirm(noticeData.is_show==1?'确定隐藏？':'确定展示？', function (index) {
+        //         layer.close(index);
+        //         var editPushObj=JSON.stringify({
+        //             n_number:noticeData.n_number,
+        //             title:noticeData.title,
+        //             content:noticeData.content,
+        //             is_show: noticeData.is_show==1?0:1,
+        //             n_status:noticeData.n_status,
+        //             attach_name:noticeData.attach_name,
+        //             attach_url:noticeData.attach_url,
+        //             merchantId:sessionStorage.machineID,
+        //             id:noticeData.id
+        //         });
+        //         loadingAjax('/notices/updateNotice','post',editPushObj,sessionStorage.token,'mask','EditCont','editBox',layer).then(res=>{
+        //             layer.msg(res.message,{icon:1});
+        //             noticeTableIns.reload({
+        //                 where:{}
+        //             });
+        //             loadingAjax('/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+        //         }).catch(err=>{
+        //             console.log(err)
+        //             layer.msg(err.message,{icon:2});
+        //         })
+        //     })
+        // }
     });
-
+    // 编辑
+    $('.ListOperation .edit0').click(function () {
+        $('.EditCont input[name="number"]').val(noticeData.n_number);
+        $('.EditCont input[name="title"]').val(noticeData.title);
+        $('.EditCont input[name="indexShow"][value=1]').prop("checked", noticeData.is_show == 1 ? true : false);
+        $('.EditCont input[name="indexShow"][value=0]').prop("checked", noticeData.is_show == 0 ? true : false);
+        // $('.EditCont input[name="push"][value=1]').prop("checked", noticeData.n_status == 1 ? true : false);
+        // $('.EditCont input[name="push"][value=0]').prop("checked", noticeData.n_status == 0 ? true : false);
+        $('.EditCont input[name="accessoryName"]').val(noticeData.attach_name);
+        $('.EditCont input[name="address"]').val(noticeData.attach_url);
+        editWangEditor.txt.html(noticeData.content);
+        form.render('radio');
+        popupShow('EditCont', 'editBox');
+    });
+    // 隐藏
+    $('.ListOperation .dow').click(function () {
+        layer.confirm(noticeData.is_show == 1 ? '确定隐藏？' : '确定展示？', function (index) {
+            layer.close(index);
+            var editPushObj = JSON.stringify({
+                n_number: noticeData.n_number,
+                title: noticeData.title,
+                content: noticeData.content,
+                is_show: noticeData.is_show == 1 ? 0 : 1,
+                n_status: noticeData.n_status,
+                attach_name: noticeData.attach_name,
+                attach_url: noticeData.attach_url,
+                merchantId: sessionStorage.machineID,
+                id: noticeData.id
+            });
+            loadingAjax('/notices/updateNotice', 'post', editPushObj, sessionStorage.token, 'mask', 'EditCont', 'editBox', layer).then(res => {
+                layer.msg(res.message, { icon: 1 });
+                noticeTableIns.reload({
+                    where: {}
+                });
+                loadingAjax('/pushNotice', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
+            }).catch(err => {
+                console.log(err)
+                layer.msg(err.message, { icon: 2 });
+            })
+        })
+    });
+    // 预览
+    $('.ListOperation .preview').click(function () {
+        $('.previewContent .playHeader span').html(noticeData.title + '的公告详情');
+        $('.previewContent .previewHtml').html(noticeData.content)
+        popupShow('previewContent', 'previewBox')
+    })
     // 编辑预览
-    $('.EditCont .readingBtn').click(function(){
-        $('.previewContent .playHeader span').html(noticeData.title+'的公告详情');
+    $('.EditCont .readingBtn').click(function () {
+        $('.previewContent .playHeader span').html(noticeData.title + '的公告详情');
         $('.previewContent .previewHtml').html(editWangEditor.txt.html())
-        popupShow('previewContent','previewBox')
+        popupShow('previewContent', 'previewBox')
     });
     // 编辑取消
-    $('.EditCont .cancelBtn').click(function(){
-        popupHide('EditCont','editBox');
+    $('.EditCont .cancelBtn').click(function () {
+        popupHide('EditCont', 'editBox');
     });
     // 编辑删除附件地址
-    $('.EditCont .editDelUploadBtn').click(function(){
+    $('.EditCont .editDelUploadBtn').click(function () {
         layer.confirm('确定删除附件？', function (index) {
             layer.close(index);
             $('.EditCont input[name="address"]').val('');
         })
     });
     // 编辑上传附件
-    $('.EditCont .editUploadBtn input[name="editUpload"]').change(function(e){
-        if(!$(this).val()){
-            return ;
+    $('.EditCont .editUploadBtn input[name="editUpload"]').change(function (e) {
+        if (!$(this).val()) {
+            return;
         }
         var that = this;
         var upDetails = new FormData();
@@ -348,7 +420,7 @@ layui.use(['table', 'form', 'layer',], function () {
             url: `${vApi}/fileUpload`,
             processData: false,
             contentType: false,
-            timeout:10000,
+            timeout: 10000,
             headers: {
                 token,
             },
@@ -373,52 +445,52 @@ layui.use(['table', 'form', 'layer',], function () {
         })
     })
     // 确定编辑
-    $('.EditCont .determinePushBtn').click(function(){
-        var that=this;
-        if(!($('.EditCont input[name="title"]').val()&&$('.EditCont input[name="number"]').val())){
-            layer.msg('带*号为必填',{icon:7});
-            return ;
+    $('.EditCont .determinePushBtn').click(function () {
+        var that = this;
+        if (!($('.EditCont input[name="title"]').val() && $('.EditCont input[name="number"]').val())) {
+            layer.msg('带*号为必填', { icon: 7 });
+            return;
         }
-        if(!addWangEditor.txt.html().length>11){
-            layer.msg('公告详情最少五个字',{icon:7});
-            return ;
+        if (!addWangEditor.txt.html().length > 11) {
+            layer.msg('公告详情最少五个字', { icon: 7 });
+            return;
         };
-        if((!($('.EditCont input[name="accessoryName"]').val()&&$('.EditCont input[name="address"]').val()))&&($('.EditCont input[name="accessoryName"]').val()||$('.EditCont input[name="address"]').val())){
+        if ((!($('.EditCont input[name="accessoryName"]').val() && $('.EditCont input[name="address"]').val())) && ($('.EditCont input[name="accessoryName"]').val() || $('.EditCont input[name="address"]').val())) {
             layer.msg('附近名与附件地址必须同时填写');
-            return ;
+            return;
         };
         console.log($('.addEditCont input[name="push"]:checked').val());
         // return ;
-        var editPushObj=JSON.stringify({
-            n_number:$('.EditCont input[name="number"]').val(),
-            title:$('.EditCont input[name="title"]').val(),
-            content:editWangEditor.txt.html(),
-            is_show:Number($('.EditCont input[name="indexShow"]:checked').val()),
+        var editPushObj = JSON.stringify({
+            n_number: $('.EditCont input[name="number"]').val(),
+            title: $('.EditCont input[name="title"]').val(),
+            content: editWangEditor.txt.html(),
+            is_show: Number($('.EditCont input[name="indexShow"]:checked').val()),
             // status:Number($('.EditCont input[name="push"]:checked').val()),
-            n_status:Number($(this).attr('pushType')),
-            attach_name:$('.EditCont input[name="accessoryName"]').val(),
-            attach_url:$('.EditCont input[name="address"]').val(),
-            merchantId:sessionStorage.machineID,
-            id:noticeData.id
+            n_status: Number($(this).attr('pushType')),
+            attach_name: $('.EditCont input[name="accessoryName"]').val(),
+            attach_url: $('.EditCont input[name="address"]').val(),
+            merchantId: sessionStorage.machineID,
+            id: noticeData.id
         });
-        loadingAjax('/notices/updateNotice','post',editPushObj,sessionStorage.token,'mask','EditCont','editBox',layer).then(res=>{
-            layer.msg(res.message,{icon:1});
+        loadingAjax('/notices/updateNotice', 'post', editPushObj, sessionStorage.token, 'mask', 'EditCont', 'editBox', layer).then(res => {
+            layer.msg(res.message, { icon: 1 });
             noticeTableIns.reload({
-                where:{}
+                where: {}
             })
-            if($(this).attr('pushType')==1){
-                loadingAjax('/pushNotice','post','',sessionStorage.token).then(res=>{}).catch(err=>{})
+            if ($(this).attr('pushType') == 1) {
+                loadingAjax('/pushNotice', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
             }
-        }).catch(err=>{
+        }).catch(err => {
             console.log(err)
-            layer.msg(err.message,{icon:2});
+            layer.msg(err.message, { icon: 2 });
         })
     })
     // 查询公告
-    $('.queryBtn').click(function(){
+    $('.queryBtn').click(function () {
         noticeTableIns.reload({
-            where:{
-                keyword:$('.key-contnet input[name="keyMerchants"]').val()
+            where: {
+                keyword: $('.key-contnet input[name="keyMerchants"]').val()
             }
         })
     })
@@ -449,4 +521,8 @@ layui.use(['table', 'form', 'layer',], function () {
     //         }
     //     })
     // })
+    $('body').click(function () {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
+    });
 })

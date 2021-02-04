@@ -188,6 +188,10 @@
                 </div>
             </div>
         </div>
+        <ul class="ListOperation">
+            <li class="edit">编辑</li>
+            <li class="updataMachine">更新售货机</li>
+        </ul>
         <!-- 数据处理弹窗 -->
         <div class="mask maskContnet">
             <div class="TitleContentWith">
@@ -200,11 +204,15 @@
     </div>
     <script type="text/html" id="barDemo">
         <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm btn  editBtn"  lay-event="edit">
+            <!-- <button class="layui-btn layui-btn-sm btn  editBtn"  lay-event="edit">
                 <span style="color:#fff;">编辑</span>
             </button>
             <button class="layui-btn layui-btn-sm btn  editBtn"  lay-event="upload">
                 <span style="color:#fff;">更新售货机</span>
+            </button> -->
+            <button class="layui-btn layui-btn-sm btn Toperation " lay-event="operation">
+                <span style="color:#fff;">操作</span>
+                <i class="layui-icon layui-icon-down"></i>
             </button>
         </div>
     </script>

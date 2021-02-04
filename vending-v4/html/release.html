@@ -555,6 +555,13 @@
                 </div>
             </div>
         </div>
+        <!-- 操作部分 -->
+        <ul class="ListOperation">
+            <li class="preview">广告预览</li>
+            <li class="details">广告详情</li>
+            <li class="toView">广告使用情况</li>
+            <li class="push">广告推送到售货机</li>
+        </ul>
         <!-- 遮罩 -->
         <div class="mask maskContnet">
             <div class="TitleContentWith">
@@ -691,7 +698,7 @@
 </body>
 <script type="text/html" id="barDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm btn operation" lay-event="preview">
+        <!-- <button class="layui-btn layui-btn-sm btn operation" lay-event="preview">
             <span>广告预览</span>
         </button>
         <button class="layui-btn layui-btn-sm btn terminal" lay-event="details">
@@ -702,6 +709,10 @@
         </button>
         <button class="layui-btn layui-btn-sm btn operation {{d.attribute!=2?'hide':''}}" title="推送广告到售货机" lay-event="push">
             <span>广告推送到售货机</span>
+        </button> -->
+        <button class="layui-btn layui-btn-sm btn Toperation " lay-event="operation">
+            <span style="color:#fff;">操作</span>
+            <i class="layui-icon layui-icon-down"></i>
         </button>
     </div>
 </script>

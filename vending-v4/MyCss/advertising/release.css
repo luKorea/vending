@@ -212,7 +212,7 @@ video{
     box-shadow: 0 1px 3px rgba(0,0,0,.3);
     box-sizing: border-box;
     transition: all 0.3s;
-    max-height: 680px;
+    /* max-height: 680px; */
 }
 .detailsHeaderBox{
     /* text-align: center; */

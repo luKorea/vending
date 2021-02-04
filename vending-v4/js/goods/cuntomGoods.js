@@ -15,8 +15,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
   function permissions() {
     permissionsObjFlag[377] ? $('.add-btn').removeClass('hide') : $('.add-btn').addClass('hide');
-    permissionsObjFlag[378] ? $('.GoodsInformation').removeClass('hide') : $('.GoodsInformation').addClass('hide');
-    permissionsObjFlag[375] ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
+    permissionsObjFlag[378] ? $('.ListOperation .edit').removeClass('hide') : $('.ListOperation .edit').addClass('hide');
+    permissionsObjFlag[375] ? $('.ListOperation .del').removeClass('hide') : $('.ListOperation .del').addClass('hide');
     permissionsObjFlag[416] ? $('.pushGoodsBtn').removeClass('hide') : $('.pushGoodsBtn').addClass('hide');
     permissionsObjFlag[415] ? $('.pushListBtn').removeClass('hide') : $('.pushListBtn').addClass('hide');
     permissionsObjFlag[461] ? $('.syncBtn').removeClass('hide') : $('.syncBtn').addClass('hide');
@@ -123,7 +123,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         }
       },
 
-      { field: 'operation', fixed: 'right', align: 'center', position: 'absolute', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
+      { field: 'operation', fixed: 'right', align: 'center', position: 'absolute', right: 0, width: 150, title: '操作', toolbar: '#barDemo' },
       // { fixed: 'right', width: 160, align: 'center', toolbar: '#barDemo' }
     ]]
     , id: 'tableId'
@@ -219,50 +219,102 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   })
 
   // 监听操作删除
-  var indexFlag = null;
-  var operationId = null;
+  var indexFlag = null,
+   operationId = null,
   // 剪切图片判断条件
-  var editGoodsImg = null;
-  var addGoodsImgIndex = null;
-  var singleData = null;
-  var EditIndex = null;
+   editGoodsImg = null,
+   addGoodsImgIndex = null,
+   singleData = null,
+   EditIndex = null,
+   operationFlag=null,
+   goodsObj=null;
   table.on('tool(test)', function (obj) {
     // 操作事件
-
-    if (obj.event === 'edit') {
-      singleData = obj.data;
-      $('.anUp').slideUp();
-      // $('.editor').fadeIn();
-      popupShow('editor', 'editor-content');
-      $('.editor').scrollTop(0)
-      form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
-        "goodsBarcode": singleData.goods_Core // "商品条码
-        , "goodsName": singleData.goods_Name //商品名
-        , "goodsType": singleData.classify_Id //商品类型
-        // , "goodsBrand": singleData.brand  //品牌
-        , "goodsPrice": singleData.goods_Price //零售价
-        , "goodsCost": singleData.goods_Cost //成本价
-        , "goodsParam": singleData.goods_Param //规格描述
-        , 'goodsStatus': singleData.goods_Status //商品状态
-      });
-      console.log(singleData.goods_images)
-      singleData.mail == 1 ? $('.editor input[name="editmail"]').prop('checked', true) : $('.editor input[name="editmail"]').prop('checked', false)
-      $('#editImg').attr("src", singleData.goods_images)
-      var singGoodsDateils = singleData.goods_Descript.replace(/video/g, 'iframe')
-      editWangEditor.txt.html(singGoodsDateils);
-      form.render();// 重新渲染一下
-
-    } else if (obj.event === 'delete') {
-      layer.confirm('确定删除？', function (index) {
-        Goodsdel(obj.data.goods_Id, 1, obj, index);
-      });
-    } else if (obj.event == 'preview1') {
-      popupShow('reading', 'margin0');
-      $('.reading .playHeader span').html('商品详情页预览')
-      $('.reading-box').html(obj.data.goods_Descript)
+    event.stopPropagation();
+    singleData = obj.data;
+    goodsObj=obj
+    if (obj.event === 'operation') {
+      if (operationFlag == obj.data.goods_Id) {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
+        return;
+      }
+      operationFlag = obj.data.goods_Id;
+      $('.ListOperation').fadeIn();
+      $('.ListOperation').css({
+        left: $(this).offset().left - 35 + 'px',
+        top: $(this).offset().top + 35 + 'px'
+      })
     }
+    // if (obj.event === 'edit') {
+    //   $('.anUp').slideUp();
+    //   // $('.editor').fadeIn();
+    //   popupShow('editor', 'editor-content');
+    //   $('.editor').scrollTop(0)
+    //   form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+    //     "goodsBarcode": singleData.goods_Core // "商品条码
+    //     , "goodsName": singleData.goods_Name //商品名
+    //     , "goodsType": singleData.classify_Id //商品类型
+    //     // , "goodsBrand": singleData.brand  //品牌
+    //     , "goodsPrice": singleData.goods_Price //零售价
+    //     , "goodsCost": singleData.goods_Cost //成本价
+    //     , "goodsParam": singleData.goods_Param //规格描述
+    //     , 'goodsStatus': singleData.goods_Status //商品状态
+    //   });
+    //   console.log(singleData.goods_images)
+    //   singleData.mail == 1 ? $('.editor input[name="editmail"]').prop('checked', true) : $('.editor input[name="editmail"]').prop('checked', false)
+    //   $('#editImg').attr("src", singleData.goods_images)
+    //   var singGoodsDateils = singleData.goods_Descript.replace(/video/g, 'iframe')
+    //   editWangEditor.txt.html(singGoodsDateils);
+    //   form.render();// 重新渲染一下
+
+    // } else if (obj.event === 'delete') {
+    //   layer.confirm('确定删除？', function (index) {
+    //     Goodsdel(obj.data.goods_Id, 1, obj, index);
+    //   });
+    // } else if (obj.event == 'preview1') {
+    //   popupShow('reading', 'margin0');
+    //   $('.reading .playHeader span').html('商品详情页预览')
+    //   $('.reading-box').html(obj.data.goods_Descript)
+    // }
   });
 
+  // 编辑
+  $('.ListOperation .edit').click(function(){
+    $('.anUp').slideUp();
+    // $('.editor').fadeIn();
+    popupShow('editor', 'editor-content');
+    $('.editor').scrollTop(0)
+    form.val("EditValData", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+      "goodsBarcode": singleData.goods_Core // "商品条码
+      , "goodsName": singleData.goods_Name //商品名
+      , "goodsType": singleData.classify_Id //商品类型
+      // , "goodsBrand": singleData.brand  //品牌
+      , "goodsPrice": singleData.goods_Price //零售价
+      , "goodsCost": singleData.goods_Cost //成本价
+      , "goodsParam": singleData.goods_Param //规格描述
+      , 'goodsStatus': singleData.goods_Status //商品状态
+    });
+    console.log(singleData.goods_images)
+    singleData.mail == 1 ? $('.editor input[name="editmail"]').prop('checked', true) : $('.editor input[name="editmail"]').prop('checked', false)
+    $('#editImg').attr("src", singleData.goods_images)
+    var singGoodsDateils = singleData.goods_Descript.replace(/video/g, 'iframe')
+    editWangEditor.txt.html(singGoodsDateils);
+    form.render();// 重新渲染一下
+
+  });
+  // 预览
+  $('.ListOperation .goodsPreview').click(function(){
+    popupShow('reading', 'margin0');
+      $('.reading .playHeader span').html('商品详情页预览')
+      $('.reading-box').html(singleData.goods_Descript)
+  });
+  // 删除
+  $('.ListOperation .del').click(function(){
+    layer.confirm('确定删除？', function (index) {
+      Goodsdel(singleData.goods_Id, 1, goodsObj, index);
+    });
+  })
   // 选择商品图片
   $('.upload-btn1').click(function () {
     addGoodsImgIndex = 1;
@@ -1403,6 +1455,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
   $('body').click(function () {
     PImgSHow = true;
     $('#pic101').hide();
+    $('.ListOperation').fadeOut();
+    operationFlag = null;
   });
   $('#pic101').mouseenter(function () {
     $('#pic101').show();

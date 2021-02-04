@@ -1,6 +1,6 @@
 // import { loadAjax, showPopup } from '../../common/common';
 import '../../MyCss/marketing/pickupCode.scss';
-layui.use(['form', 'layer', 'table', 'transfer','tree'], function () {
+layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
     var permissionsData0 = window.parent.permissionsData1(),
         permissionsObj = {
             436: false,
@@ -11,25 +11,25 @@ layui.use(['form', 'layer', 'table', 'transfer','tree'], function () {
     // 权限控制
     function permissions() {
         permissionsObjFlag[436] ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-        permissionsObjFlag[437] ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
+        permissionsObjFlag[437] ? $('.ListOperation .listEdit').removeClass('hide') : $('.ListOperation .listEdit').addClass('hide');
         permissionsObjFlag[465] ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
 
     };
     permissions();
-      // 收起
-  $('.sidebar i').click(function () {
-    $('.left-mian').hide();
-    $('.on-left').show()
-  });
-  $('.on-left').click(function () {
-    $('.left-mian').show();
-    $('.on-left').hide()
-  });
+    // 收起
+    $('.sidebar i').click(function () {
+        $('.left-mian').hide();
+        $('.on-left').show()
+    });
+    $('.on-left').click(function () {
+        $('.left-mian').show();
+        $('.on-left').hide()
+    });
     var form = layui.form,
         layer = layui.layer,
         table = layui.table,
         transfer = layui.transfer,
-        tree=layui.tree,
+        tree = layui.tree,
         activityTable = table.render({
             elem: '#tableactivity',
             method: 'post',
@@ -77,7 +77,7 @@ layui.use(['form', 'layer', 'table', 'transfer','tree'], function () {
                 },
                 // { field: 'operation', width: 350, title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right', right: 0, },
                 // { field: 'operation', fixed: 'right', align: 'center', right: 0, width: 350, title: '操作', toolbar: '#barDemo' },
-                { field: 'operation', fixed: 'right', right: 0, width: 350, title: '操作', toolbar: '#barDemo', align: 'center' },
+                { field: 'operation', right: 0, width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },//fixed: 'right',
             ]],
             id: 'activityId',
             page: true,
@@ -667,73 +667,25 @@ layui.use(['form', 'layer', 'table', 'transfer','tree'], function () {
 
 
     // 监听操作部分
-    var pickupObj = null;
+    var pickupObj = null,
+        operationFlag = null;
     table.on('tool(tableactivity)', function (obj) {
-        // console.log(obj)
+        event.stopPropagation();
         pickupObj = obj.data;
-        var stamp = new Date().getTime();
-        if (obj.event == 'stop') {
-            if (stamp > obj.data.end_time) {
-                layer.msg('该活动已过期，不可进行操作', { icon: 7 });
-                return;
-            };
-            layer.confirm(obj.data.activity_status == 0 ? '确定暂停？' : '确定开始？', function (index) {
-                layer.close(index);
-                $('.mask').fadeIn();
-                $('.maskSpan').addClass('maskIcon');
-                var stopObj = JSON.stringify({
-                    activity_id: obj.data.id,
-                    activity_status: obj.data.activity_status == 0 ? 1 : 0
-                });
-                loadingAjax('/activity/operateActivity', 'post', stopObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
-                    layer.msg(res.message, { icon: 1 });
-                    activityTable.reload({
-                        where: {}
-                    })
-                }).catch(err => {
-                    layer.msg(err.message, { icon: 2 })
-                })
-            })
-        } else if (obj.event == 'cancel') {
-            if (stamp > obj.data.end_time) {
-                layer.msg('该活动已过期，不可进行取消操作', { icon: 7 });
+        if (obj.event === 'operation') {
+            if (operationFlag == obj.data.id) {
+                $('.ListOperation').fadeOut();
+                operationFlag = null;
                 return;
             }
-            layer.confirm(`确定取活动(取消后活动将停止并且取货码失效)`, function (index) {
-                layer.close(index);
-                $('.mask').fadeIn();
-                $('.maskSpan').addClass('maskIcon');
-                var cancelObj = JSON.stringify({
-                    activity_id: obj.data.id,
-                    activity_status: 2
-                })
-                loadingAjax('/activity/operateActivity', 'post', cancelObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
-                    layer.msg(res.message, { icon: 1 });
-                    activityTable.reload({
-                        where: {}
-                    })
-                }).catch(err => {
-                    layer.msg(err.message, { icon: 2 })
-                })
+            operationFlag = obj.data.id;
+            pickupObj.activity_status == 0 ? $('.ListOperation .stop').html('暂停') : $('.ListOperation .stop').html('开始')
+            $('.ListOperation').fadeIn();
+            $('.ListOperation').css({
+                left: $(this).offset().left - 35 + 'px',
+                top: $(this).offset().top + 35 + 'px'
             })
-        } else if (obj.event == 'machineIn') {
-            if (!activityMachineIn) {
-                activityMachineFun();
-            };
-            activityMachineIn.reload({
-                data: obj.data.activity_machine
-            });
-            $('.activityMachine .playHeader span').html(obj.data.activity_name + '活动售货机')
-            popupShow('activityMachine', 'activityMachineBox')
-
-        } else if (obj.event == 'goodsIn') {
-            chooseFun(obj.data.goods_list);
-            $('.chooseFooter').hide();
-            $('.chooseGoods input').prop('disabled', true);
-            $('.activityMachine .playHeader span').html(obj.data.activity_name + '活动商品')
-            popupShow('chooseGoods', 'chooseGoodsBox')
         } else if (obj.event == 'pickup') {
-
             console.log(obj.data.id)
             // if (!pickupCodeIn) {
             pickupCodeFun(obj.data.id)
@@ -742,12 +694,146 @@ layui.use(['form', 'layer', 'table', 'transfer','tree'], function () {
             //         id: obj.data.id
             //     });
             // }
-
             $('.pickCode .playHeader span').html(obj.data.activity_name + '取货码列表')
             popupShow('pickCode', 'pickCodeBox')
         }
+        // if (obj.event == 'stop') {
+        //     if (stamp > obj.data.end_time) {
+        //         layer.msg('该活动已过期，不可进行操作', { icon: 7 });
+        //         return;
+        //     };
+        //     layer.confirm(obj.data.activity_status == 0 ? '确定暂停？' : '确定开始？', function (index) {
+        //         layer.close(index);
+        //         $('.mask').fadeIn();
+        //         $('.maskSpan').addClass('maskIcon');
+        //         var stopObj = JSON.stringify({
+        //             activity_id: obj.data.id,
+        //             activity_status: obj.data.activity_status == 0 ? 1 : 0
+        //         });
+        //         loadingAjax('/activity/operateActivity', 'post', stopObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
+        //             layer.msg(res.message, { icon: 1 });
+        //             activityTable.reload({
+        //                 where: {}
+        //             })
+        //         }).catch(err => {
+        //             layer.msg(err.message, { icon: 2 })
+        //         })
+        //     })
+        // } else if (obj.event == 'cancel') {
+        //     if (stamp > obj.data.end_time) {
+        //         layer.msg('该活动已过期，不可进行取消操作', { icon: 7 });
+        //         return;
+        //     }
+        //     layer.confirm(`确定取活动(取消后活动将停止并且取货码失效)`, function (index) {
+        //         layer.close(index);
+        //         $('.mask').fadeIn();
+        //         $('.maskSpan').addClass('maskIcon');
+        //         var cancelObj = JSON.stringify({
+        //             activity_id: obj.data.id,
+        //             activity_status: 2
+        //         })
+        //         loadingAjax('/activity/operateActivity', 'post', cancelObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
+        //             layer.msg(res.message, { icon: 1 });
+        //             activityTable.reload({
+        //                 where: {}
+        //             })
+        //         }).catch(err => {
+        //             layer.msg(err.message, { icon: 2 })
+        //         })
+        //     })
+        // } else if (obj.event == 'machineIn') {
+        //     if (!activityMachineIn) {
+        //         activityMachineFun();
+        //     };
+        //     activityMachineIn.reload({
+        //         data: obj.data.activity_machine
+        //     });
+        //     $('.activityMachine .playHeader span').html(obj.data.activity_name + '活动售货机')
+        //     popupShow('activityMachine', 'activityMachineBox')
+
+        // } else if (obj.event == 'goodsIn') {
+        //     chooseFun(obj.data.goods_list);
+        //     $('.chooseFooter').hide();
+        //     $('.chooseGoods input').prop('disabled', true);
+        //     $('.activityMachine .playHeader span').html(obj.data.activity_name + '活动商品')
+        //     popupShow('chooseGoods', 'chooseGoodsBox')
+        // }
     });
+
+    // 
     // 活动售货机
+    $('.ListOperation .machineIn').click(function () {
+        if (!activityMachineIn) {
+            activityMachineFun();
+        };
+        activityMachineIn.reload({
+            data: pickupObj.activity_machine
+        });
+        $('.activityMachine .playHeader span').html(pickupObj.activity_name + '活动售货机')
+        popupShow('activityMachine', 'activityMachineBox')
+    });
+    // 活动商品
+    $('.ListOperation .goodsIn').click(function () {
+        chooseFun(pickupObj.goods_list);
+        $('.chooseFooter').hide();
+        $('.chooseGoods input').prop('disabled', true);
+        $('.activityMachine .playHeader span').html(pickupObj.activity_name + '活动商品')
+        popupShow('chooseGoods', 'chooseGoodsBox')
+    });
+    // 暂停开始
+    $('.ListOperation .stop').click(function () {
+        var stamp = new Date().getTime();
+        if (stamp > pickupObj.end_time) {
+            layer.msg('该活动已过期，不可进行操作', { icon: 7 });
+            return;
+        };
+        layer.confirm(pickupObj.activity_status == 0 ? '确定暂停？' : '确定开始？', function (index) {
+            layer.close(index);
+            $('.mask').fadeIn();
+            $('.maskSpan').addClass('maskIcon');
+            var stopObj = JSON.stringify({
+                activity_id: pickupObj.id,
+                activity_status: pickupObj.activity_status == 0 ? 1 : 0
+            });
+            loadingAjax('/activity/operateActivity', 'post', stopObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
+                layer.msg(res.message, { icon: 1 });
+                activityTable.reload({
+                    where: {}
+                })
+            }).catch(err => {
+                layer.msg(err.message, { icon: 2 })
+            })
+        })
+    });
+    // 取消
+    $('.ListOperation .cancel0').click(function () {
+        var stamp = new Date().getTime();
+        if (stamp >pickupObj.end_time) {
+            layer.msg('该活动已过期，不可进行取消操作', { icon: 7 });
+            return;
+        }
+        if(pickupObj.activity_status==2){
+            layer.msg('该活动已取消', { icon: 7 });
+            return;
+        }
+        layer.confirm(`确定取活动(取消后活动将停止并且取货码失效)`, function (index) {
+            layer.close(index);
+            $('.mask').fadeIn();
+            $('.maskSpan').addClass('maskIcon');
+            var cancelObj = JSON.stringify({
+                activity_id: pickupObj.id,
+                activity_status: 2
+            })
+            loadingAjax('/activity/operateActivity', 'post', cancelObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
+                layer.msg(res.message, { icon: 1 });
+                activityTable.reload({
+                    where: {}
+                })
+            }).catch(err => {
+                layer.msg(err.message, { icon: 2 })
+            })
+        })
+    })
     var activityMachineIn = null;
     function activityMachineFun() {
         activityMachineIn = table.render({
@@ -1019,59 +1105,63 @@ layui.use(['form', 'layer', 'table', 'transfer','tree'], function () {
             $('#pic101').hide();
         }
     });
-       // 刷新商户列表
-       var dataList1 = null;
-       var dataList = dataList1 = treeList();
-     $('.refreshBtnList').click(function () {
-       var dataList1 = treeList();
-       if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
-         dataList = dataList1;
-         treeFun1(tree, 'testGoods', activityTable, dataList,)
-         activityTable.reload({
-           where: {
-               merchantId: sessionStorage.machineID,
-           }
-         });
-         layer.msg('已刷新', { icon: 1 })
-       } else {
-         layer.msg('已刷新', { icon: 1 })
-       }
-     });
-     treeFun1(tree, 'testGoods', activityTable, dataList,  );
-     function treeFun1(tree, element, tableID, data, ) {
-        tree.render({
-          elem: `#${element}`,
-          id: 'treelist',
-          showLine: !0 //连接线
-          ,
-          onlyIconControl: true, //左侧图标控制展开收缩 
-          data,
-          spread: true,
-          text: {
-            defaultNodeName: '无数据',
-            none: '您没有权限，请联系管理员授权!'
-          },
-          click: function (obj) {
-            if (permissionsObjFlag[436]) {
-                if (obj.data.id == sessionStorage.machineID) {
-                  $('.addBtn').show()
-                } else {
-                  $('.addBtn').hide()
+    // 刷新商户列表
+    var dataList1 = null;
+    var dataList = dataList1 = treeList();
+    $('.refreshBtnList').click(function () {
+        var dataList1 = treeList();
+        if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
+            dataList = dataList1;
+            treeFun1(tree, 'testGoods', activityTable, dataList,)
+            activityTable.reload({
+                where: {
+                    merchantId: sessionStorage.machineID,
                 }
-              }
-            tableID.reload({
-              where: {
-                merchant_id:obj.data.id
-              }
-            })
-            var nodes = $(`#${element} .layui-tree-txt`)
-            for (var i = 0; i < nodes.length; i++) {
-              if (nodes[i].innerHTML === obj.data.title)
-                nodes[i].style.color = "#be954a";
-              else
-                nodes[i].style.color = "#555";
-            }
-          },
+            });
+            layer.msg('已刷新', { icon: 1 })
+        } else {
+            layer.msg('已刷新', { icon: 1 })
+        }
+    });
+    treeFun1(tree, 'testGoods', activityTable, dataList,);
+    function treeFun1(tree, element, tableID, data,) {
+        tree.render({
+            elem: `#${element}`,
+            id: 'treelist',
+            showLine: !0 //连接线
+            ,
+            onlyIconControl: true, //左侧图标控制展开收缩 
+            data,
+            spread: true,
+            text: {
+                defaultNodeName: '无数据',
+                none: '您没有权限，请联系管理员授权!'
+            },
+            click: function (obj) {
+                if (permissionsObjFlag[436]) {
+                    if (obj.data.id == sessionStorage.machineID) {
+                        $('.addBtn').show()
+                    } else {
+                        $('.addBtn').hide()
+                    }
+                }
+                tableID.reload({
+                    where: {
+                        merchant_id: obj.data.id
+                    }
+                })
+                var nodes = $(`#${element} .layui-tree-txt`)
+                for (var i = 0; i < nodes.length; i++) {
+                    if (nodes[i].innerHTML === obj.data.title)
+                        nodes[i].style.color = "#be954a";
+                    else
+                        nodes[i].style.color = "#555";
+                }
+            },
         });
-      }
+    };
+    $('body').click(function () {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
+    });
 })

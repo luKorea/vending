@@ -1,13 +1,13 @@
 import '../../MyCss/order/mailOrder.scss'
-layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
+layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
   var table = layui.table,
     layer = layui.layer,
     form = layui.form,
-    tree =layui.tree ,
+    tree = layui.tree,
     laydate = layui.laydate,
-     startTime = getKeyTime().startTime,
+    startTime = getKeyTime().startTime,
     //结束时间
-     endTime = getKeyTime().endTime,
+    endTime = getKeyTime().endTime,
     mailTable = table.render({
       elem: '#mailTableOn',
       url: `${vApi}/order/getOrderList`,
@@ -42,7 +42,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
         },
         {
           field: 'sign_name', width: 180, title: '退款状态', align: 'center', templet: function (d) {
-            return d.refund == 1 ? '未退款' : d.refund == 2 ? '部分退款' : d.refund == 3?'全部退款':'-'
+            return d.refund == 1 ? '未退款' : d.refund == 2 ? '部分退款' : d.refund == 3 ? '全部退款' : '-'
           }
         },
         {
@@ -70,7 +70,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
             return d.express_time ? timeStamp(d.express_time) : '-'
           }
         },
-        { field: 'operation', width: 200, title: '操作 ', fixed: 'right', right: 0, toolbar: '#barDemo', align: 'center' },
+        { field: 'operation', width: 150, title: '操作 ', fixed: 'right', right: 0, toolbar: '#barDemo', align: 'center' },
       ]],
       page: true,
       loading: true,
@@ -81,7 +81,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
       where: {
         conditionFive: sessionStorage.machineID,
         conditionSeven: 1,
-        condition:startTime,
+        condition: startTime,
         conditionTwo: endTime,
       },
       parseData: function (res) {
@@ -110,40 +110,72 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
       }
     });
 
-    // 渲染快递下拉框
+  // 渲染快递下拉框
 
-    // console.log(CourierList)
-    var optionList = `<option value="">全部</option>`;
-    CourierList.forEach(item=>{
-      optionList+=`<option value="${item}">${item}</option>`
-    });
-    $('#deliverySele').html(optionList);
-    $('#editSele').html(optionList);
-    form.render('select');
+  // console.log(CourierList)
+  var optionList = `<option value="">全部</option>`;
+  CourierList.forEach(item => {
+    optionList += `<option value="${item}">${item}</option>`
+  });
+  $('#deliverySele').html(optionList);
+  $('#editSele').html(optionList);
+  form.render('select');
   // 关闭弹窗
   $('.playHeader .close').click(function () {
     $(this).parent().parent().addClass('margin0')
     $(this).parents('.maskContnet').fadeOut();
   });
-  var mailOrderData = null;
+  var mailOrderData = null,
+    operationFlag = null;
   // 监听
   table.on('tool(mailTableOn)', function (obj) {
-    console.log(obj);
-    mailOrderData = obj.data;
-    if (obj.event == 'delivery') {
-      popupShow('deliveryCont', 'deliveryBox');
-    } else if (obj.event == 'edit') {
-      $('.editCont select[name="company"]').val(mailOrderData.express_type);
-      $('.editCont input[name="logisticsNumber"]').val(mailOrderData.express_number);
-      $('#test7').val(mailOrderData.express_time);
-      popupShow('editCont', 'editBox')
-    } else if (obj.event == 'goods') {
-
-      goodsDetails(obj.data.goodsList);
-      popupShow('goodsCont', 'goodsBox')
+    event.stopPropagation();
+    if (obj.event === 'operation') {
+      if (operationFlag == obj.data.number) {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
+        return;
+      }
+      operationFlag = obj.data.number;
+      $('.ListOperation').fadeIn();
+      $('.ListOperation').css({
+        left: $(this).offset().left - 35 + 'px',
+        top: $(this).offset().top + 35 + 'px'
+      })
     }
+    mailOrderData = obj.data;
+    mailOrderData.dispatch_status==0?$('.ListOperation .delivery').removeClass('hide'):$('.ListOperation .delivery').addClass('hide');
+    mailOrderData.dispatch_status==1?$('.ListOperation .edit0').removeClass('hide'):$('.ListOperation .edit0').addClass('hide');
+    // if (obj.event == 'delivery') {
+    //   popupShow('deliveryCont', 'deliveryBox');
+    // } else if (obj.event == 'edit') {
+    //   $('.editCont select[name="company"]').val(mailOrderData.express_type);
+    //   $('.editCont input[name="logisticsNumber"]').val(mailOrderData.express_number);
+    //   $('#test7').val(mailOrderData.express_time);
+    //   popupShow('editCont', 'editBox')
+    // } else if (obj.event == 'goods') {
+
+    //   goodsDetails(obj.data.goodsList);
+    //   popupShow('goodsCont', 'goodsBox')
+    // }
+    // form.render('select');
+  });
+  // 发货
+  $('.ListOperation .delivery').click(function () {
+    popupShow('deliveryCont', 'deliveryBox');
+  });
+  // 编辑物流信息
+  $('.ListOperation .edit0').click(function () {
+    $('.editCont select[name="company"]').val(mailOrderData.express_type);
+    $('.editCont input[name="logisticsNumber"]').val(mailOrderData.express_number);
+    $('#test7').val(mailOrderData.express_time);
     form.render('select');
   });
+  // 商品
+  $('.ListOperation .goods0').click(function () {
+    goodsDetails(mailOrderData.goodsList);
+    popupShow('goodsCont', 'goodsBox')
+  })
   // 取消
   $('.deliveryCont .cancelBtn').click(function () {
     popupHide('deliveryCont', 'deliveryBox')
@@ -160,7 +192,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
       number: mailOrderData.number,
       express_type: $('.deliveryBody select[name="company"]').val(),
       express_number: $('.deliveryBody input[name="logisticsNumber"]').val(),
-      express_time:$('#test5').val()?$('#test5').val():timeStamp(new Date().getTime())
+      express_time: $('#test5').val() ? $('#test5').val() : timeStamp(new Date().getTime())
     });
     loadingAjax('/order/updateMailMsg', 'post', deliveryObj, sessionStorage.token, 'mask', 'deliveryCont', 'deliveryBox', layer).then(res => {
       layer.msg(res.message, { icon: 1 });
@@ -190,7 +222,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
       number: mailOrderData.number,
       express_type: $('.editCont select[name="company"]').val(),
       express_number: $('.editCont input[name="logisticsNumber"]').val(),
-      express_time:$('#test7').val()?$('#test7').val():timeStamp(new Date().getTime())
+      express_time: $('#test7').val() ? $('#test7').val() : timeStamp(new Date().getTime())
     });
     loadingAjax('/order/updateOrder', 'post', editObj, sessionStorage.token, 'mask', 'editCont', 'deliveryBox', layer).then(res => {
       layer.msg(res.message, { icon: 1 });
@@ -225,8 +257,8 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
     popupHide('exportCont', 'exportBox')
   })
   // 导出
-  var pushMId=sessionStorage.machineID,
-  pushMName =null;
+  var pushMId = sessionStorage.machineID,
+    pushMName = null;
   $('.pushBtn').click(function () {
     if (!(startTime && endTime)) {
       layer.msg('请选择时间', { icon: 7 });
@@ -235,7 +267,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
     if (timeFlag(startTime, endTime)) {
       layer.msg('时间选择范围最多三个月', { icon: 7 });
       return;
-  }
+    }
     $('.mask').fadeIn();
     $('.maskSpan').addClass('maskIcon');
     var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
@@ -252,7 +284,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
         if (xhr.response.size < 50) {
           layer.msg('导出失败', { icon: 7 })
           return
-        } 
+        }
         var content = xhr.response;
         // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
         var fileName = `${pushMName}邮寄订单(${startTime}-${endTime}).xls`
@@ -295,16 +327,16 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
     if (timeFlag(startTime, endTime)) {
       layer.msg('时间选择范围最多三个月', { icon: 7 });
       return;
-  }
+    }
     mailTable.reload({
       where: {
         condition: startTime,
         conditionTwo: endTime,
         conditionThree: $('.key-contnet input[name="orderCode"]').val(),
-        dispatch_status:$('.newKeyContent select[name="takeStatus"]').val(),
-        sign_name:$('.newKeyContent input[name="takeName"]').val(),
-        sign_phone:$('.newKeyContent input[name="takePhone"]').val(),
-        refund:$('.newKeyContent select[name="keyrefundStatus"]').val(),
+        dispatch_status: $('.newKeyContent select[name="takeStatus"]').val(),
+        sign_name: $('.newKeyContent input[name="takeName"]').val(),
+        sign_phone: $('.newKeyContent input[name="takePhone"]').val(),
+        refund: $('.newKeyContent select[name="keyrefundStatus"]').val(),
       }
     })
   });
@@ -322,11 +354,8 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
         // { checkbox: true },
         { field: 'goods_images', width: 80, title: '图片', templet: "#imgtmp", align: 'center' },
         {
-          field: 'goods_Name', width: 140, title: '商品名', align: 'center', templet: function (d) {
-            return d.mail == 1 ? '(邮寄)' + d.goods_Name : d.goods_Name
-          }
+          field: 'good_name_core', width: 240, title: '商品名(编号)', align: 'center'
         },
-        { field: 'goods_Core', width: 140, title: '商品编号', align: 'center', },
         { field: 'count', width: 120, title: '购买数量', align: 'center' },
         { field: 'refund_count', width: 120, title: '已退款数量', align: 'center' },
         // {
@@ -344,7 +373,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
       id: 'goodsLIstTable',
       loading: true,
       done: function (res) {
-      
+
         permissions();
       }
     })
@@ -411,10 +440,10 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
             goodId: goodsData.goods_Id,
             count: Number($('.refundNumber input').val()),
             amount: Number($('.sumInput input[name="sum"]').val()),
-            pay_id:mailOrderData.pay_id
+            pay_id: mailOrderData.pay_id
             // amount:0.01
           });
-          loadingAjax('/pay/refund_alipay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox',layer).then(res => {
+          loadingAjax('/pay/refund_alipay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox', layer).then(res => {
             layer.msg(res.message, { icon: 1 });
             mailTable.reload({
               where: {}
@@ -430,13 +459,13 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
             goodId: goodsData.goods_Id,
             count: Number($('.refundNumber input').val()),
             amount: Number($('.sumInput input[name="sum"]').val()),
-            pay_id:mailOrderData.pay_id,
+            pay_id: mailOrderData.pay_id,
             // amount:0.01,
             transaction_id: mailOrderData.transaction_id,
             total: mailOrderData.amount,
             // total:0.01
           });
-          loadingAjax('/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox',layer).then(res => {
+          loadingAjax('/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox', layer).then(res => {
             layer.msg(res.message, { icon: 1 });
 
             mailTable.reload({
@@ -454,12 +483,12 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
   });
 
 
-  var permissionsData0=window.parent.permissionsData1(),
-  permissionsObj={
-    420:false,
-    421:false,
-  },
-  permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
+  var permissionsData0 = window.parent.permissionsData1(),
+    permissionsObj = {
+      420: false,
+      421: false,
+    },
+    permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
   function permissions() {
     permissionsObjFlag[420] ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
     permissionsObjFlag[421] ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
@@ -530,12 +559,12 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
   // 发货时间部分
   laydate.render({
     elem: '#test5'
-    ,type: 'datetime',
+    , type: 'datetime',
   });
-   // 编辑发货时间部分
-   laydate.render({
+  // 编辑发货时间部分
+  laydate.render({
     elem: '#test7'
-    ,type: 'datetime',
+    , type: 'datetime',
   });
   $('.sidebar i').click(function () {
     $('.left-mian').hide();
@@ -550,7 +579,7 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
   // 刷新商户列表
   $('.refreshBtnList').click(function () {
     var dataList1 = treeList();
-    if (JSON.stringify(dataList1)  != JSON.stringify(dataList)) {
+    if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
       dataList = dataList1;
       treeFun1(tree, 'testGoods', mailTable, dataList, 'conditionFive');
       mailTable.reload({
@@ -558,9 +587,9 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
           conditionFive: sessionStorage.machineID,
         }
       })
-      layer.msg('已刷新',{icon:1})
+      layer.msg('已刷新', { icon: 1 })
     } else {
-      layer.msg('已刷新',{icon:1})
+      layer.msg('已刷新', { icon: 1 })
     }
   });
   function treeFun1(tree, element, tableID, data, key,) {
@@ -577,9 +606,9 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
         none: '您没有权限，请联系管理员授权!'
       },
       click: function (obj) {
-        pushMId=obj.data.id + '';
+        pushMId = obj.data.id + '';
         console.log(pushMId)
-        pushMName=obj.data.title;
+        pushMName = obj.data.title;
         tableID.reload({
           where: {
             [key]: obj.data.id + '',
@@ -592,20 +621,24 @@ layui.use(['table', 'layer', 'form', 'laydate','tree'], function () {
           else
             nodes[i].style.color = "#555";
         }
-  
+
       },
     });
   };
 
-      // 图片放大事件
-      $('body').on('mouseenter','.pic102',function(e){
-        $('#pic101').attr('src',$(this).attr('src'));
-        $("#pic101").css({
-            "top":(e.pageY-100)+"px",
-            "left":(e.pageX+20)+"px"
-        }).fadeIn("fast");
-    });
-    $('body').on('mouseleave','.pic102',function(){
-        $('#pic101').hide();
-    })
+  // 图片放大事件
+  $('body').on('mouseenter', '.pic102', function (e) {
+    $('#pic101').attr('src', $(this).attr('src'));
+    $("#pic101").css({
+      "top": (e.pageY - 100) + "px",
+      "left": (e.pageX + 20) + "px"
+    }).fadeIn("fast");
+  });
+  $('body').on('mouseleave', '.pic102', function () {
+    $('#pic101').hide();
+  });
+  $('body').click(function () {
+    $('.ListOperation').fadeOut();
+    operationFlag = null;
+  });
 })

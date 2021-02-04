@@ -15,7 +15,8 @@
             <!-- 左边部分 -->
             <div class="left-mian">
                 <div class="accountContnet" style="margin-left:15px;">
-                    <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表" data-direction="bottom" type="button">
+                    <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表"
+                        data-direction="bottom" type="button">
                         <i class="layui-icon layui-icon-refresh-3 "></i>
                         <!-- 刷新 -->
                     </button>
@@ -40,7 +41,7 @@
                         </button>
                     </div>
                     <div class="newKeyContent">
-                        <button type="button" class="layui-btn layui-btn-primary queryBtn" >  
+                        <button type="button" class="layui-btn layui-btn-primary queryBtn">
                             <i class="layui-icon layui-icon-refresh-3 "></i>
                             <!-- 刷新 -->
                         </button>
@@ -139,6 +140,11 @@
                 </div>
             </div>
         </div>
+        <!-- 操作部分 -->
+        <ul class="ListOperation">
+            <li class="edit">编辑</li>
+            <li class="del">删除</li>
+        </ul>
         <!-- 没有权限时显示白屏 -->
         <div class="hangContent">
             <p>您没有访问的权限!</p>
@@ -160,11 +166,15 @@
 </script> -->
 <script type="text/html" id="barDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm btn TEdit operation hide" lay-event="edit">
+        <!-- <button class="layui-btn layui-btn-sm btn TEdit operation hide" lay-event="edit">
             <span style="color:#fff;">编辑</span>
         </button>
         <button class="layui-btn layui-btn-sm btn TDel noPassBtn hide" lay-event="delete">
             <span style="color:#fff;">删除</span>
+        </button> -->
+        <button class="layui-btn layui-btn-sm btn Toperation " lay-event="operation">
+            <span style="color:#fff;">操作</span>
+            <i class="layui-icon layui-icon-down"></i>
         </button>
 </div>
 </script>

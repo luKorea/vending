@@ -1066,6 +1066,12 @@
 				</div>
 			</div>
 		</div>
+		  <!-- 操作部分 -->
+		  <ul class="ListOperation">
+			<li class="edit">编辑</li>
+			<li class="goodsPreview">预览</li>
+            <li class="del">删除</li>
+        </ul>
 		<!-- 没有权限时显示白屏 -->
 		<div class="hangContent">
 			<p>您没有访问的权限!</p>
@@ -1084,20 +1090,17 @@
 
 <script type="text/html" id="barDemo">
 		<div class="layui-btn-container">
-			<button class="layui-btn layui-btn-sm btn operation" lay-event="edit">
+			<!-- <button class="layui-btn layui-btn-sm btn operation" lay-event="edit">
 				<span>编辑</span>
 			</button>
 			<button class="layui-btn layui-btn-sm btn operation" lay-event="preview1">
 				<span>预览</span>
 			</button>
-			<button class="layui-btn layui-btn-sm btn del-btn hide" lay-event="delete">删除</button>
-			<div class="anUp">
-				<ul>
-					<!-- <li class="preferentialClick">优惠策略</li> -->
-					<li class="GoodsInformation hide">商品信息</li>
-					<li class="previewDetails">预览详情</li>
-				</ul>
-			</div>
+			<button class="layui-btn layui-btn-sm btn del-btn hide" lay-event="delete">删除</button> -->
+			<button class="layui-btn layui-btn-sm btn Toperation " lay-event="operation">
+				<span style="color:#fff;">操作</span>
+				<i class="layui-icon layui-icon-down"></i>
+			</button>
 		</div>
 	</script>
 <!-- 图片素材 -->

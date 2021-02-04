@@ -1,19 +1,19 @@
-  import '../../MyCss/userManagement/memberList.css'
+import '../../MyCss/userManagement/memberList.css'
 layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
-  tooltip('.refreshBtnList', {transition: true, time: 200});
-  var permissionsData0=window.parent.permissionsData1(),
-  permissionsObj={
-    389:false,
-    390:false,
-    397:false,
-    451:false,
-  },
-  permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
+  tooltip('.refreshBtnList', { transition: true, time: 200 });
+  var permissionsData0 = window.parent.permissionsData1(),
+    permissionsObj = {
+      389: false,
+      390: false,
+      397: false,
+      451: false,
+    },
+    permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
   function permissions() {
     permissionsObjFlag[389] ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
     permissionsObjFlag[390] ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
     permissionsObjFlag[397] ? $('.del-btn').removeClass('hides') : $('.del-btn').addClass('hides');
-    permissionsObjFlag[451]? $('.userMachine').removeClass('hides') : $('.userMachine').addClass('hides');
+    permissionsObjFlag[451] ? $('.userMachine').removeClass('hides') : $('.userMachine').addClass('hides');
   };
   permissions();
   var table = layui.table;
@@ -34,7 +34,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       },
       cols: [[
         { field: 'userName', width: 180, title: '用户名', align: 'center' },
-        { field: 'name', width: 150, title: '姓名' , align: 'center'},
+        { field: 'name', width: 150, title: '姓名', align: 'center' },
         {
           field: 'open', width: 150, title: '状态', align: 'center', templet: function (d) {
             return d.open == 0 ? '不启用' : '启用'
@@ -51,9 +51,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         { field: 'addUser', width: 150, title: '创建人', align: 'center', },
         { field: 'addTime', width: 180, title: '创建时间', align: 'center' },
         { field: 'lastUser', width: 150, title: '最后修改人', align: 'center', },
-        { field: 'lastTime', width: 180, title: '最后修改时间' , align: 'center'},
+        { field: 'lastTime', width: 180, title: '最后修改时间', align: 'center' },
 
-        { field: 'operation', fixed: 'right', align: 'center', right: 0, width: 340, title: '操作', toolbar: '#barDemo' },
+        { field: 'operation', fixed: 'right', align: 'center', right: 0, width: 150, title: '操作', toolbar: '#barDemo' },
       ]]
       , id: 'tableId'
       , page: true
@@ -111,116 +111,244 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     })
   });
   //监听工具条
-  var memData = null;
+  var data = null;
+  var memData = null,
+    operationFlag = null;
   table.on('tool(test)', function (obj) {
-    var data = obj.data;
+    event.stopPropagation();
+    data = obj.data;
     memData = obj.data;
     // console.log(obj)
     uuID = data.uuid;
-    if (obj.event === 'edit') {
-      if (addEditData.length == 0) {
-        layer.msg('服务器请求超时', { icon: 7 });
+    data.userName=='sysadmin'?$('.ListOperation .Status').removeClass('hide'):$('.ListOperation .Status').addClass('hide');
+    data.open==1?$('.ListOperation .Status').html('禁用'):$('.ListOperation .Status').html('启用');
+    if (obj.event === 'operation') {
+      if (operationFlag == obj.data.uuid) {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
         return;
       }
-      if (data.userName == 'sysadmin') {
-        $('.switchListStatus').hide();
-      } else {
-        $('.switchListStatus').show();
-      }
-      $('.inputWidth input[name="userName"]').prop('disabled', true);
-      $('.treeTest').show();
-      // layer.msg('ID：' + data.uuid + ' 的查看操作');
-      // 点击编辑事件
-      $('.OperationHeader span').html('编辑用户')
-      informationType = $(this).attr('typeID');
-      // $('.MemberOperation').fadeIn();
-      popupShow('MemberOperation', 'MemberContent');
-      form.val("information", {
-        "userName": data.userName,
-        "name": data.name,
-        "userPwd": '      ',
-        "DuserPwd": '      ',
-        "alonePwd": '      ',
-        'DalonePwd': '      ',
-        "phone": data.phone,
-        "cardId": data.cardId,
-        "startThe": data.open ? 'on' : '',
-        "administrator": data.roleSign ? 'on' : '',
-        "marchantsListname": data.merchantName
-      });
-      tree.reload('treelistEdit', {
-      });
-      $('.terminal input[name="topmachantsVal"]').val(data.merchantId);
-      form.render('select');
-      userRoles(roleList, 'checkCont', data, data.merchantId);
-    } else if (obj.event === 'delete') {
-      layer.confirm('确定删除？', function (index) {
-        $.ajax({
-          type: 'get',
-          url: `${vApi}/user/deleteById`,
-          headers: {
-            token,
-          },
-          data: {
-            id: Number(data.uuid),
-          },
-          success: function (res) {
-            if (res.code == 200) {
-              layer.msg(res.message, { icon: 1 });
-              obj.del();
-              layer.close(index);
-              socketFun(data.uuid)
-            } else if (res.code == 403) {
-              window.parent.location.href = "login.html";
-            } else {
-              layer.msg(res.message, { icon: 2 });
-            }
-          }
-        });
-      });
-    } else if (obj.event === 'role') {
-      if (data.roles.length == 0) {
-        layer.msg('该用户没有配置角色', { icon: 7 });
-        return;
-      }
-      var RoleListText = '';
-      data.roles.forEach((item, index) => {
-        RoleListText += `<p>${item.name}</p>`
-      });
-      $('.RoleListBody>div').empty();
-      $('.RoleListBody>div').html(RoleListText)
-      popupShow('roleContList', 'RoleListBox')
-    } else if (obj.event == 'Status') {
-      layer.confirm(data.open == 1 ? '确定禁用？' : '确定启用？', function (index) {
-        var status = data.open == 1 ? 0 : 1;
-        layer.close(index);
-        var statusData = JSON.stringify({
-          id: data.uuid,
-          status,
-        })
-        loadingAjax('/user/switchById', 'post', statusData, sessionStorage.token, '', '', '', layer).then((res) => {
-          layer.msg(res.message, { icon: 1 });
-          tableIns.reload({
-            where: {}
-          })
-          if (status == 0) {
-            socketFun(data.uuid)
-          }
-        }).catch((err) => {
-          layer.msg(err.message, { icon: 7 })
-        })
-      });
-
-    }else if(obj.event=='stores'){
-      if(data.roleSign==0){
-        layer.msg('该用户不是售货机管理员',{icon:7});
-        return ;
-      }
-      storesFun(obj.data.uuid)
-      // storesFun();
+      operationFlag = obj.data.uuid;
+      $('.ListOperation').fadeIn();
+      $('.ListOperation').css({
+        left: $(this).offset().left - 35 + 'px',
+        top: $(this).offset().top + 35 + 'px'
+      })
     }
+    // if (obj.event === 'edit') {
+    //   if (addEditData.length == 0) {
+    //     layer.msg('服务器请求超时', { icon: 7 });
+    //     return;
+    //   }
+    //   if (data.userName == 'sysadmin') {
+    //     $('.switchListStatus').hide();
+    //   } else {
+    //     $('.switchListStatus').show();
+    //   }
+    //   $('.inputWidth input[name="userName"]').prop('disabled', true);
+    //   $('.treeTest').show();
+    //   // layer.msg('ID：' + data.uuid + ' 的查看操作');
+    //   // 点击编辑事件
+    //   $('.OperationHeader span').html('编辑用户')
+    //   informationType = $(this).attr('typeID');
+    //   // $('.MemberOperation').fadeIn();
+    //   popupShow('MemberOperation', 'MemberContent');
+    //   form.val("information", {
+    //     "userName": data.userName,
+    //     "name": data.name,
+    //     "userPwd": '      ',
+    //     "DuserPwd": '      ',
+    //     "alonePwd": '      ',
+    //     'DalonePwd': '      ',
+    //     "phone": data.phone,
+    //     "cardId": data.cardId,
+    //     "startThe": data.open ? 'on' : '',
+    //     "administrator": data.roleSign ? 'on' : '',
+    //     "marchantsListname": data.merchantName
+    //   });
+    //   tree.reload('treelistEdit', {
+    //   });
+    //   $('.terminal input[name="topmachantsVal"]').val(data.merchantId);
+    //   form.render('select');
+    //   userRoles(roleList, 'checkCont', data, data.merchantId);
+    // } else if (obj.event === 'delete') {
+    //   layer.confirm('确定删除？', function (index) {
+    //     $.ajax({
+    //       type: 'get',
+    //       url: `${vApi}/user/deleteById`,
+    //       headers: {
+    //         token,
+    //       },
+    //       data: {
+    //         id: Number(data.uuid),
+    //       },
+    //       success: function (res) {
+    //         if (res.code == 200) {
+    //           layer.msg(res.message, { icon: 1 });
+    //           obj.del();
+    //           layer.close(index);
+    //           socketFun(data.uuid)
+    //         } else if (res.code == 403) {
+    //           window.parent.location.href = "login.html";
+    //         } else {
+    //           layer.msg(res.message, { icon: 2 });
+    //         }
+    //       }
+    //     });
+    //   });
+    // } else if (obj.event === 'role') {
+    //   if (data.roles.length == 0) {
+    //     layer.msg('该用户没有配置角色', { icon: 7 });
+    //     return;
+    //   }
+    //   var RoleListText = '';
+    //   data.roles.forEach((item, index) => {
+    //     RoleListText += `<p>${item.name}</p>`
+    //   });
+    //   $('.RoleListBody>div').empty();
+    //   $('.RoleListBody>div').html(RoleListText)
+    //   popupShow('roleContList', 'RoleListBox')
+    // } else if (obj.event == 'Status') {
+    //   layer.confirm(data.open == 1 ? '确定禁用？' : '确定启用？', function (index) {
+    //     var status = data.open == 1 ? 0 : 1;
+    //     layer.close(index);
+    //     var statusData = JSON.stringify({
+    //       id: data.uuid,
+    //       status,
+    //     })
+    //     loadingAjax('/user/switchById', 'post', statusData, sessionStorage.token, '', '', '', layer).then((res) => {
+    //       layer.msg(res.message, { icon: 1 });
+    //       tableIns.reload({
+    //         where: {}
+    //       })
+    //       if (status == 0) {
+    //         socketFun(data.uuid)
+    //       }
+    //     }).catch((err) => {
+    //       layer.msg(err.message, { icon: 7 })
+    //     })
+    //   });
+
+    // }else if(obj.event=='stores'){
+    //   if(data.roleSign==0){
+    //     layer.msg('该用户不是售货机管理员',{icon:7});
+    //     return ;
+    //   }
+    //   storesFun(obj.data.uuid)
+    //   // storesFun();
+    // }
   });
 
+  // Status启用
+  $('.ListOperation .Status').click(function () {
+    layer.confirm(data.open == 1 ? '确定禁用？' : '确定启用？', function (index) {
+      var status = data.open == 1 ? 0 : 1;
+      layer.close(index);
+      var statusData = JSON.stringify({
+        id: data.uuid,
+        status,
+      })
+      loadingAjax('/user/switchById', 'post', statusData, sessionStorage.token, '', '', '', layer).then((res) => {
+        layer.msg(res.message, { icon: 1 });
+        tableIns.reload({
+          where: {}
+        })
+        if (status == 0) {
+          socketFun(data.uuid)
+        }
+      }).catch((err) => {
+        layer.msg(err.message, { icon: 7 })
+      })
+    });
+  });
+  // 编辑
+  $('.ListOperation .edit').click(function () {
+    if (addEditData.length == 0) {
+      layer.msg('服务器请求超时', { icon: 7 });
+      return;
+    }
+    if (data.userName == 'sysadmin') {
+      $('.switchListStatus').hide();
+    } else {
+      $('.switchListStatus').show();
+    }
+    $('.inputWidth input[name="userName"]').prop('disabled', true);
+    $('.treeTest').show();
+    // layer.msg('ID：' + data.uuid + ' 的查看操作');
+    // 点击编辑事件
+    $('.OperationHeader span').html('编辑用户')
+    informationType = 2;
+    // $('.MemberOperation').fadeIn();
+    popupShow('MemberOperation', 'MemberContent');
+    form.val("information", {
+      "userName": data.userName,
+      "name": data.name,
+      "userPwd": '      ',
+      "DuserPwd": '      ',
+      "alonePwd": '      ',
+      'DalonePwd': '      ',
+      "phone": data.phone,
+      "cardId": data.cardId,
+      "startThe": data.open ? 'on' : '',
+      "administrator": data.roleSign ? 'on' : '',
+      "marchantsListname": data.merchantName
+    });
+    tree.reload('treelistEdit', {
+    });
+    $('.terminal input[name="topmachantsVal"]').val(data.merchantId);
+    form.render('select');
+    userRoles(roleList, 'checkCont', data, data.merchantId);
+  });
+  // 售货机数据
+  $('.ListOperation .stores').click(function () {
+    if (data.roleSign == 0) {
+      layer.msg('该用户不是售货机管理员', { icon: 7 });
+      return;
+    }
+    storesFun(data.uuid)
+    // storesFun();
+  });
+  // role角色
+  $('.ListOperation .role').click(function () {
+    if (data.roles.length == 0) {
+      layer.msg('该用户没有配置角色', { icon: 7 });
+      return;
+    }
+    var RoleListText = '';
+    data.roles.forEach((item, index) => {
+      RoleListText += `<p>${item.name}</p>`
+    });
+    $('.RoleListBody>div').empty();
+    $('.RoleListBody>div').html(RoleListText)
+    popupShow('roleContList', 'RoleListBox')
+  });
+  // 删除
+  $('.delete').click(function () {
+    layer.confirm('确定删除？', function (index) {
+      $.ajax({
+        type: 'get',
+        url: `${vApi}/user/deleteById`,
+        headers: {
+          token,
+        },
+        data: {
+          id: Number(data.uuid),
+        },
+        success: function (res) {
+          if (res.code == 200) {
+            layer.msg(res.message, { icon: 1 });
+            obj.del();
+            layer.close(index);
+            socketFun(data.uuid)
+          } else if (res.code == 403) {
+            window.parent.location.href = "login.html";
+          } else {
+            layer.msg(res.message, { icon: 2 });
+          }
+        }
+      });
+    });
+  })
   var form = layui.form;
 
   var informationType = null;
@@ -644,27 +772,27 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     loadingAjax('/user/getUserMachine', 'post', JSON.stringify({ UUId: uid }), sessionStorage.token).then(res => {
       // console.log(res)
       transferListArr = [];
-      transferVal=[]
+      transferVal = []
       // transferVal = res.data.select;
-      res.data.select.forEach((item,index)=>{
+      res.data.select.forEach((item, index) => {
         transferVal.push(item.machineId)
       })
       transferArr = res.data.unSelect.concat(res.data.select);
       transferArr.forEach((item, index) => {
         var transferObj = ({
           value: item.machineId,
-          title: item.info ? item.info+'('+item.number+')' : '(此为未命名的新售货机)'
+          title: item.info ? item.info + '(' + item.number + ')' : '(此为未命名的新售货机)'
         });
         transferListArr.push(transferObj)
         // console.log(transferListArr);
         // console.log(transferVal)
         transferFun(transferListArr, transferVal)
       });
-      if((transferListArr.length==0)&&(transferVal.length==0)){
-        layer.msg('该用户所属商户没有售货机',{icon:7});
-        return ;
+      if ((transferListArr.length == 0) && (transferVal.length == 0)) {
+        layer.msg('该用户所属商户没有售货机', { icon: 7 });
+        return;
       }
-      popupShow('storesCont','storesBox');
+      popupShow('storesCont', 'storesBox');
     }).catch(err => {
       console.log(err)
       layer.msg(err.message, { icon: 2 })
@@ -684,7 +812,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       value,
       onchange: function (obj, indexs) {
         // console.log(indexs)
-        var machineId=[];  
+        var machineId = [];
         layer.confirm('确定修改配置？', function (index) {
           obj.forEach((item, index) => {
             transferVal.push(item.value);
@@ -692,21 +820,21 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
           });
           layer.close(index);
           // console.log(indexs)
-          var editStores=JSON.stringify({
-            UUID:memData.uuid,
+          var editStores = JSON.stringify({
+            UUID: memData.uuid,
             machineId,
-            select:(indexs==0?1:0)
+            select: (indexs == 0 ? 1 : 0)
           });
-          loadingAjax('/user/configUserMachine','post',editStores,sessionStorage.token,'mask','','',layer).then(res=>{
-            layer.msg(res.message,{icon:1});
+          loadingAjax('/user/configUserMachine', 'post', editStores, sessionStorage.token, 'mask', '', '', layer).then(res => {
+            layer.msg(res.message, { icon: 1 });
             storesFun(memData.uuid);
-          }).catch(err=>{
-            layer.msg(err.message,{icon:2});
-            transferFun(transferListArr,transferVal)
+          }).catch(err => {
+            layer.msg(err.message, { icon: 2 });
+            transferFun(transferListArr, transferVal)
           })
           // console.log(editStores)
         }, function (index) {
-          transferFun(transferListArr,transferVal)
+          transferFun(transferListArr, transferVal)
         });
         // var arr = ['左边', '右边'];
         // // layer.alert('来自 <strong>'+ arr[index] + '</strong> 的数据：'+ JSON.stringify(obj)); //获得被穿梭时的数据
@@ -720,22 +848,26 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
   }
 
   // 刷新商户
-  $('.refreshBtnList').click(function(){
-    var dataList1=treeList();
-    if (JSON.stringify(dataList1)  != JSON.stringify(dataList)) {
-      addEditData=dataList1;
-      tree.reload('treelistAdd',{
-        data:addEditData
+  $('.refreshBtnList').click(function () {
+    var dataList1 = treeList();
+    if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
+      addEditData = dataList1;
+      tree.reload('treelistAdd', {
+        data: addEditData
       });
       tableIns.reload({
         where: {
           condition: sessionStorage.machineID
         }
       });
-      layer.msg('已刷新',{icon:1})
-    }else{
-      layer.msg('已刷新',{icon:1})
+      layer.msg('已刷新', { icon: 1 })
+    } else {
+      layer.msg('已刷新', { icon: 1 })
     }
-  })
+  });
+  $('body').click(function () {
+    $('.ListOperation').fadeOut();
+    operationFlag = null;
+  });
 });
 

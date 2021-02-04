@@ -1,17 +1,17 @@
 import '../../MyCss/goods/goodsMaterial.css'
 layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   // tab切换
-  var permissionsData0=window.parent.permissionsData1(),
-   permissionsObj={
-    380:false,
-    381:false,
-    379:false,
-    382:false,
-  },
-  permissionsObjFlag= permissionsVal1(permissionsObj,permissionsData0);
+  var permissionsData0 = window.parent.permissionsData1(),
+    permissionsObj = {
+      380: false,
+      381: false,
+      379: false,
+      382: false,
+    },
+    permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
   function permissions() {
     permissionsObjFlag[380] ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-    permissionsObjFlag[381] ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
+    permissionsObjFlag[381] ? $('.ListOperation .edit').removeClass('hide') : $('.ListOperation .edit').addClass('hide');
     permissionsObjFlag[379] ? $('.dleBtn').removeClass('hide') : $('.dleBtn').addClass('hide');
     permissionsObjFlag[382] ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
   };
@@ -194,22 +194,64 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       }
     });
   // 监听图片操作部分
-  var ImgDAtaVal = null;
-  var tableData = null;
+  var ImgDAtaVal = null,
+    tableData = null,
+    operationFlag = null,
+    operationType = null;
   table.on('tool(ImgData)', function (obj) {
-    console.log(obj)
+    event.stopPropagation();
     ImgDAtaVal = obj.data;
-    if (obj.event == 'edit') {
+    operationType = 1;
+    if (obj.event === 'operation') {
+      if (operationFlag == obj.data.number) {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
+        return;
+      }
+      operationFlag = obj.data.number;
+      $('.ListOperation').fadeIn();
+      $('.ListOperation').css({
+        left: $(this).offset().left - 35 + 'px',
+        top: $(this).offset().top + 35 + 'px'
+      })
+    }
+  });
+  // 编辑
+  $('.ListOperation .edit').click(function () {
+    if (operationType == 1) {
       popupShow('editImgCont', 'editBox');
       $('.editImgCont .playHeader span').html('编辑商品图片')
       $('.editBody label').html('图片名：')
       $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
       tableData = advertisingLis;
-    } else {
+    } else if (operationType == 2) {
+      popupShow('editImgCont', 'editBox');
+      $('.editImgCont .playHeader span').html('编辑商品视频');
+      $('.editBody label').html('视频名：');
+      $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
+      tableData = videoTable;
+    } else if (operationType == 3) {
+      popupShow('editImgCont', 'editBox');
+      $('.editImgCont .playHeader span').html('编辑详情图片')
+      $('.editBody label').html('图片名：')
+      $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
+      tableData = detailsTable;
+    }
+  });
+  // 预览
+  $('.ListOperation .Tpreview').click(function () {
+    if (operationType == 1) {
+      popupShow('videoPlay', 'playBox');
+      $('.playBody div').html(`<img src="${ImgDAtaVal.img}" alt="">`)
+    } else if (operationType == 2) {
+      popupShow('videoPlay', 'playBox');
+      $('.playBody div').html(`<video src="${ImgDAtaVal.img}" controls="controls"></video>`)
+    } else if (operationType == 3) {
       popupShow('videoPlay', 'playBox');
       $('.playBody div').html(`<img src="${ImgDAtaVal.img}" alt="">`)
     }
-  });
+
+  })
   // 修改图片、视频
   $('.editImgBtn').click(function () {
     var dataArray = [];
@@ -359,18 +401,32 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
 
   // 监听视频操作
   table.on('tool(VideoData)', function (obj) {
-    console.log(obj);
+    event.stopPropagation();
     ImgDAtaVal = obj.data;
-    if (obj.event == 'edit') {
-      popupShow('editImgCont', 'editBox');
-      $('.editImgCont .playHeader span').html('编辑商品视频');
-      $('.editBody label').html('视频名：');
-      $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
-      tableData = videoTable;
-    } else {
-      popupShow('videoPlay', 'playBox');
-      $('.playBody div').html(`<video src="${ImgDAtaVal.img}" controls="controls"></video>`)
+    operationType = 2;
+    if (obj.event === 'operation') {
+      if (operationFlag == obj.data.number) {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
+        return;
+      }
+      operationFlag = obj.data.number;
+      $('.ListOperation').fadeIn();
+      $('.ListOperation').css({
+        left: $(this).offset().left - 35 + 'px',
+        top: $(this).offset().top + 35 + 'px'
+      })
     }
+    // if (obj.event == 'edit') {
+    //   popupShow('editImgCont', 'editBox');
+    //   $('.editImgCont .playHeader span').html('编辑商品视频');
+    //   $('.editBody label').html('视频名：');
+    //   $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
+    //   tableData = videoTable;
+    // } else {
+    //   popupShow('videoPlay', 'playBox');
+    //   $('.playBody div').html(`<video src="${ImgDAtaVal.img}" controls="controls"></video>`)
+    // }
   })
 
   // 取消
@@ -924,18 +980,32 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   });
 
   table.on('tool(detailsImgData)', function (obj) {
-    console.log(obj)
+    event.stopPropagation();
     ImgDAtaVal = obj.data;
-    if (obj.event == 'edit') {
-      popupShow('editImgCont', 'editBox');
-      $('.editImgCont .playHeader span').html('编辑详情图片')
-      $('.editBody label').html('图片名：')
-      $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
-      tableData = detailsTable;
-    } else {
-      popupShow('videoPlay', 'playBox');
-      $('.playBody div').html(`<img src="${ImgDAtaVal.img}" alt="">`)
+    operationType = 3;
+    if (obj.event === 'operation') {
+      if (operationFlag == obj.data.number) {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
+        return;
+      }
+      operationFlag = obj.data.number;
+      $('.ListOperation').fadeIn();
+      $('.ListOperation').css({
+        left: $(this).offset().left - 35 + 'px',
+        top: $(this).offset().top + 35 + 'px'
+      })
     }
+    // if (obj.event == 'edit') {
+    //   popupShow('editImgCont', 'editBox');
+    //   $('.editImgCont .playHeader span').html('编辑详情图片')
+    //   $('.editBody label').html('图片名：')
+    //   $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
+    //   tableData = detailsTable;
+    // } else {
+    //   popupShow('videoPlay', 'playBox');
+    //   $('.playBody div').html(`<img src="${ImgDAtaVal.img}" alt="">`)
+    // }
   });
   // 监听f5刷新
   $("body").bind("keydown", function (event) {
@@ -950,9 +1020,9 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   dataListGoodsImg = detailsIMGList = dataGoodsVideoList = treeList();
   treeFunMaterial(tree, 'LogoIMG', advertisingLis, dataListGoodsImg, 'conditionSix', 'treelistOne',);
   // var  = treeList();
-  
+
   // var dataGoodsVideoList = treeList();
- 
+
   //左边商户列表部分显示隐藏
   $('.sidebar i').click(function () {
     console.log($(this).parent())
@@ -971,7 +1041,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     location.reload();
   });
 
- 
+
   // var addFlag = false,
   //   editFlag = false,
   //   delFlag = false,
@@ -992,8 +1062,8 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   //   delFlag ? $('.dleBtn').removeClass('hide') : $('.dleBtn').addClass('hide');
   //   fourFlag ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
   // };
-     
-// 图片放大事件
+
+  // 图片放大事件
   var PImgSHow = true;
   $('.materia-wrap').on('mouseenter', '.pic102', function (e) {
     var that = this;
@@ -1024,11 +1094,13 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   $('body').click(function () {
     PImgSHow = true;
     $('#pic101').hide();
+    $('.ListOperation').fadeOut();
+    operationFlag = null;
   });
-  $('#pic101').mouseenter(function(){
+  $('#pic101').mouseenter(function () {
     $('#pic101').show();
   })
-  $('#pic101').mouseleave(function(){
+  $('#pic101').mouseleave(function () {
     if (PImgSHow) {
       $('#pic101').hide();
     }

@@ -11,7 +11,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
     function permissions() {
         permissionsObjFlag[362] ? $('.uploadBtn').removeClass('hide') : $('.uploadBtn').addClass('hide');
-        permissionsObjFlag[371] ? $('.editBtn').removeClass('hide') : $('.editBtn').addClass('hide');
+        permissionsObjFlag[371] ? $('.ListOperation .edit').removeClass('hide') : $('.ListOperation .edit').addClass('hide');
         permissionsObjFlag[369] ? $('.del-btn').removeClass('hide') : $('.del-btn').addClass('hide');
         permissionsObjFlag[387] ? $('.auditBtnTwo').removeClass('hide') : $('.auditBtnTwo').addClass('hide');
     };
@@ -74,11 +74,11 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     return d.advertisingStatus == '1' ? '启用' : '不启用'
                 }
             },
-            { field: 'addUser', width: 150, title: '创建人 ', align: 'center', },
-            { field: 'creationTime', width: 160, title: '创建时间', align: 'center', },
+            { field: 'addUser', width: 160, title: '创建人 ', align: 'center', },
+            { field: 'creationTime', width: 180, title: '创建时间', align: 'center', },
 
             // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo',fixed: 'right',right: 0 },
-            { field: 'operation', right: 0, width: 200, title: '操作', align: 'center', toolbar: '#barDemo', align: 'center', fixed: 'right' },
+            { field: 'operation', right: 0, width: 150, title: '操作', align: 'center', toolbar: '#barDemo', align: 'center', fixed: 'right' },
         ]],
         page: true,
         id: 'tableId',
@@ -213,26 +213,71 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         $('.left-mian').show();
         $('.on-left').hide()
     })
-    var indexFlag = null;
-    var valData = null;
+    var indexFlag = null,
+     valData = null,
     // 素材内容
-    var editImgVideo = null;
+     editImgVideo = null,
     // 素材大小
-    var editSize = null;
+     editSize = null,
     // 素材时长
-    var editDuration = null;
-    var numberOf = 1;
+     editDuration = null,
+     operationFlag=null;
     table.on('tool(moneyData)', function (obj) {
         valData = obj.data;
-        if (obj.event == 'preview') {
-            if (valData.img.indexOf('mp4') > -1) {
-                $('.imgCont video').attr('src', valData.img).show().siblings().hide();
-            } else {
-                $('.imgCont img').attr('src', valData.img).show().siblings().hide();
+        event.stopPropagation();
+        if (obj.event === 'operation') {
+            if (operationFlag == obj.data.vid) {
+              $('.ListOperation').fadeOut();
+              operationFlag = null;
+              return;
             }
-            popupShow('materialPreview', 'previewBox');
-        } else if (obj.event == 'edit') {
-            popupShow('editMaterialCont', 'uploadMateriaBox');
+            operationFlag = obj.data.vid;
+            $('.ListOperation').fadeIn();
+            $('.ListOperation').css({
+              left: $(this).offset().left - 35 + 'px',
+              top: $(this).offset().top + 35 + 'px'
+            })
+          }
+        // if (obj.event == 'preview') {
+        //     if (valData.img.indexOf('mp4') > -1) {
+        //         $('.imgCont video').attr('src', valData.img).show().siblings().hide();
+        //     } else {
+        //         $('.imgCont img').attr('src', valData.img).show().siblings().hide();
+        //     }
+        //     popupShow('materialPreview', 'previewBox');
+        // } else if (obj.event == 'edit') {
+        //     popupShow('editMaterialCont', 'uploadMateriaBox');
+        //     form.val("editValData", {
+        //         "materialName": valData.name,
+        //         "materiaAttribute": valData.advertisingAttribute,
+        //         "materiaType": valData.advertisingType,
+        //         "materiaStatus": valData.advertisingStatus
+        //     })
+        //     if (valData.checkStatus == '0') {
+        //         $('.editCont select[name="materiaAttribute"]').prop("disabled", '');
+        //         $('.editCont select[name="materiaType"]').prop("disabled", '');
+        //         form.render();
+        //         $('.materiaDowEdit').show().children().show();
+        //         if (valData.advertisingAttribute == '0') {
+        //             $('.editImgBtn').show().siblings('.editVideoBtn').hide();
+        //             $('.materiaImgEdit img').attr('src', valData.img).show().siblings().hide();
+        //         } else {
+        //             $('.editVideoBtn').show().siblings('.editImgBtn').hide();
+        //             $('.materiaImgEdit video').attr('src', valData.img).show().siblings().hide();
+        //         }
+        //     } else {
+        //         $('.editCont select[name="materiaAttribute"]').prop("disabled", true);
+        //         $('.editCont select[name="materiaType"]').prop("disabled", true);
+        //         form.render();
+        //         $('.editImgBtn').hide();
+        //         $('.editVideoBtn').hide();
+        //         $('.materiaDowEdit').hide().children().hide();
+        //         $('.materiaImgEdit img').hide().siblings().hide();
+        //     }
+        // }
+    });
+    $('.ListOperation .edit').click(function(){
+        popupShow('editMaterialCont', 'uploadMateriaBox');
             form.val("editValData", {
                 "materialName": valData.name,
                 "materiaAttribute": valData.advertisingAttribute,
@@ -260,67 +305,15 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 $('.materiaDowEdit').hide().children().hide();
                 $('.materiaImgEdit img').hide().siblings().hide();
             }
-        }
-        // if (obj.event == numberOf) {
-        //     valData = obj.data;
-        //     editImgVideo = valData.img;
-        //     editSize = valData.size;
-        //     editDuration = valData.duration;
-        //     console.log(valData)
-        //     $('.anUp').slideUp();
-        //     if (indexFlag != valData.vid) {
-        //         indexFlag = valData.vid;
-        //         $(this).siblings('.anUp').slideDown();
-        //     } else {
-        //         indexFlag = null;
-        //     }
-        // }
     });
-
-    // 预览素材
-    // $('body').on('click', '.previewDetails', function () {
-    //     $('.anUp').slideUp();
-    //     if (valData.img.indexOf('mp4') > -1) {
-    //         $('.imgCont video').attr('src', valData.img).show().siblings().hide();
-    //     } else {
-    //         $('.imgCont img').attr('src', valData.img).show().siblings().hide();
-    //     }
-    //     indexFlag = null;
-    //     popupShow('materialPreview', 'previewBox');
-    // });
-    // 编辑素材
-    // $('body').on('click', '.GoodsInformation', function () {
-    //     $('.anUp').slideUp();
-    //     indexFlag = null;
-    //     popupShow('editMaterialCont', 'uploadMateriaBox');
-    //     form.val("editValData", {
-    //         "materialName": valData.name,
-    //         "materiaAttribute": valData.advertisingAttribute,
-    //         "materiaType": valData.advertisingType,
-    //         "materiaStatus": valData.advertisingStatus
-    //     })
-    //     if (valData.checkStatus == '0') {
-    //         $('.editCont select[name="materiaAttribute"]').prop("disabled", '');
-    //         $('.editCont select[name="materiaType"]').prop("disabled", '');
-    //         form.render();
-    //         $('.materiaDowEdit').show().children().show();
-    //         if (valData.advertisingAttribute == '0') {
-    //             $('.editImgBtn').show().siblings('.editVideoBtn').hide();
-    //             $('.materiaImgEdit img').attr('src', valData.img).show().siblings().hide();
-    //         } else {
-    //             $('.editVideoBtn').show().siblings('.editImgBtn').hide();
-    //             $('.materiaImgEdit video').attr('src', valData.img).show().siblings().hide();
-    //         }
-    //     } else {
-    //         $('.editCont select[name="materiaAttribute"]').prop("disabled", true);
-    //         $('.editCont select[name="materiaType"]').prop("disabled", true);
-    //         form.render();
-    //         $('.editImgBtn').hide();
-    //         $('.editVideoBtn').hide();
-    //         $('.materiaDowEdit').hide().children().hide();
-    //         $('.materiaImgEdit img').hide().siblings().hide();
-    //     }
-    // })
+    $('.ListOperation .Tpreview').click(function(){
+        if (valData.img.indexOf('mp4') > -1) {
+            $('.imgCont video').attr('src', valData.img).show().siblings().hide();
+        } else {
+            $('.imgCont img').attr('src', valData.img).show().siblings().hide();
+        }
+        popupShow('materialPreview', 'previewBox');
+    })
 
     // 提交审核
     $('.submitAuditBtn').click(function () {
@@ -894,6 +887,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     $('body').click(function () {
         PImgSHow = true;
         $('#pic101').hide();
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
     });
     $('#pic101').mouseenter(function () {
         $('#pic101').show();

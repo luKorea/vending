@@ -28,7 +28,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                         }
                     }
                 },
-                { field: 'operation', fixed: 'right', right: 0, width: 180, title: '操作', toolbar: '#barDemo', align: 'center' },
+                { field: 'operation', fixed: 'right', right: 0, width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },
             ]],
             id: 'tableId',
             page: true,
@@ -215,32 +215,72 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         })
     });
     // 监听列表操作事件
-    var appObj = null
+    var appObj = null,
+        operationFlag = null;
     table.on('tool(appList)', function (obj) {
+        event.stopPropagation();
         console.log(obj)
         appObj = obj.data;
-        if (obj.event == 'edit') {
-            form.val("editAppVal", {
-                "version_code": appObj.version_code,
-                "version_name": appObj.version_name,
-                "apk_url": appObj.apk_url,
-                "AppMD": appObj.verify,
-                "content": appObj.content,
-            });
-            popupShow('editAppCont', 'editAppBox')
-        } else if (obj.event == 'upload') {
-            if (!dataList) {
-                dataList = treeList();
-                tree.reload('treelist', {
-                    data: dataList
-                });
+        if (obj.event === 'operation') {
+            if (operationFlag == obj.data.id) {
+                $('.ListOperation').fadeOut();
+                operationFlag = null;
+                return;
             }
-            if (!machineIn) {
-                machineListFun();
-            }
-            popupShow('machineListCOnt', 'machineBox')
+            operationFlag = obj.data.id;
+            $('.ListOperation').fadeIn();
+            $('.ListOperation').css({
+                left: $(this).offset().left - 35 + 'px',
+                top: $(this).offset().top + 35 + 'px'
+            })
         }
+        // if (obj.event == 'edit') {
+        //     form.val("editAppVal", {
+        //         "version_code": appObj.version_code,
+        //         "version_name": appObj.version_name,
+        //         "apk_url": appObj.apk_url,
+        //         "AppMD": appObj.verify,
+        //         "content": appObj.content,
+        //     });
+        //     popupShow('editAppCont', 'editAppBox')
+        // } else if (obj.event == 'upload') {
+        //     if (!dataList) {
+        //         dataList = treeList();
+        //         tree.reload('treelist', {
+        //             data: dataList
+        //         });
+        //     }
+        //     if (!machineIn) {
+        //         machineListFun();
+        //     }
+        //     popupShow('machineListCOnt', 'machineBox')
+        // }
     });
+
+    // 编辑
+    $('.ListOperation .edit').click(function () {
+        form.val("editAppVal", {
+            "version_code": appObj.version_code,
+            "version_name": appObj.version_name,
+            "apk_url": appObj.apk_url,
+            "AppMD": appObj.verify,
+            "content": appObj.content,
+        });
+        popupShow('editAppCont', 'editAppBox')
+    });
+    // 更新售货机
+    $('.ListOperation .updataMachine').click(function () {
+        if (!dataList) {
+            dataList = treeList();
+            tree.reload('treelist', {
+                data: dataList
+            });
+        }
+        if (!machineIn) {
+            machineListFun();
+        }
+        popupShow('machineListCOnt', 'machineBox')
+    })
     $('.editAppCont .editCancelBtn').click(function () {
         popupHide('editAppCont', 'editAppBox')
     });
@@ -334,9 +374,11 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                         return d.location ? d.location : ' - '
                     }
                 },
-                { field: 'versions', width: 200, align: 'center', title: '当前版本(待升级版本)',templet:function(d){
-                    return `${d.versions?d.versions:'-'}(${d.appVersion?d.appVersion:'-'})`
-                } },
+                {
+                    field: 'versions', width: 200, align: 'center', title: '当前版本(待升级版本)', templet: function (d) {
+                        return `${d.versions ? d.versions : '-'}(${d.appVersion ? d.appVersion : '-'})`
+                    }
+                },
                 { field: 'merchantName', width: 150, align: 'center', title: '所属商户' }
             ]],
             id: 'mId',
@@ -424,5 +466,9 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 layer.msg(err.message, { icon: 2 })
             })
         })
-    })
+    });
+    $('body').click(function () {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
+    });
 })

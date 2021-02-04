@@ -1399,6 +1399,13 @@
                 </div>
             </div>
         </div>
+         <!-- 操作部分 -->
+         <ul class="ListOperation" >
+            <li class="set">设置</li>
+            <li class="edit">编辑</li>
+            <li class="Mactivation activeMachineType">激活</li>
+            <li class="Mbusiness activeMachineType"></li>
+        </ul>
         <div class="mask maskContnet">
             <div class="TitleContentWith">
                 <span class="maskSpan" style="display: inline-block;">
@@ -1412,7 +1419,7 @@
 </body>
 <script type="text/html" id="barDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm btn operation " lay-event="set">
+        <!-- <button class="layui-btn layui-btn-sm btn operation " lay-event="set">
             <span style="color:#fff;">设置</span>
         </button>
         <button class="layui-btn layui-btn-sm btn "  lay-event="edit">
@@ -1423,6 +1430,10 @@
         </button>
         <button class="layui-btn layui-btn-sm btn hides activeMachineType {{d.actionStatus==1?'':'hide'}}" lay-event="startThe">
             <span style="color:#fff;">{{d.openStatus != 0 ? '暂停营业' : '营业'}}</span>
+        </button> -->
+        <button class="layui-btn layui-btn-sm btn Toperation" lay-event="operation">
+            <span style="color:#fff;">操作</span>
+            <i class="layui-icon layui-icon-down"></i>
         </button>
     </div>
 </script>

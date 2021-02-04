@@ -100,96 +100,201 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // var marchantsList = merchantsListMian('');
     //监听工具条
     var data = null,
-        editServiceFlag = false;
+        editServiceFlag = false,
+        operationFlag = null;
     table.on('tool(test)', function (obj) {
+        event.stopPropagation();
         data = obj.data;
-        if (obj.event === 'edit') {
-            if (addEditData.length == 0) {
-                layer.msg('服务器请求超时', { icon: 7 });
+        if (obj.event === 'operation') {
+            if (operationFlag == obj.data.id) {
+                $('.ListOperation').fadeOut();
+                operationFlag = null;
                 return;
             }
-            $('.editMerchants input[name="merchantsName"]').val(data.title);
-            $('.editMerchants input[name="max_ship"]').val(data.max_ship);
-            popupShow('MemberOperation', 'MemberContent');
-            if (data.id == 1) {
-                $('.listInput input[name="marchantsText"]').val('');
-            } else {
-                $('.listInput input[name="marchantsText"]').val(data.merchantName);
-            }
-            $('.marchantsList').val(data.topMerchant);
-            $('.MemberOperation input[name="service_phone"]').val(data.service_phone);
-            $('.editMerchants input[name="customPhone"]').val(data.custom_phone)
-            if (data.service_code) {
-                $('.editImg').show()
-                $('.editImg img').prop('src', data.service_code);
-            } else {
-                $('.editImg').hide()
-                $('.editImg img').prop('src', '');
-            }
-            if (data.custom_code) {
-                $('.customImg').show();
-                $('.customImg img').prop('src', data.custom_code);
-            } else {
-                $('.customImg').hide();
-                $('.customImg img').prop('src', '');
-            }
-            // 判断客服
-            if (data.is_service == 1) {
-                $('.editMerchants input[name="editServiceOpen"]').prop('checked', true);
-                $('.editServiceContent').show();
-                editServiceFlag = true;
-            } else {
-                $('.editMerchants input[name="editServiceOpen"]').prop('checked', false);
-                $('.editServiceContent').hide();
-                editServiceFlag = false;
-            }
-            // 判断定制
-            if (data.is_custom == 1) {
-                $('.editMerchants input[name="editCustomOpen"]').prop('checked', true);
-                $('.editCustomCont').show();
-                customFlag = true;
-            } else {
-                $('.editMerchants input[name="editCustomOpen"]').prop('checked', false);
-                $('.editCustomCont').hide();
-                customFlag = false;
-            }
-            // 判断销售经理类别
-            salseList = []
-            salesClassList(data.id, 1);
-            // if(data.is_sales==1){
-            //     salseFlag=true;
-            //     $('.listFlex input[name="salse"]').prop('checked',true);
-            //     $('.salseList').show();
-            // }else{
-            //     salseFlag=false;
-            //     $('.listFlex input[name="salse"]').prop('checked',false);
-            //     $('.salseList').hide();
-            // }
-            $('.MemberOperation input[name="order"]').prop('checked', data.follow_mail == 1 ? true : false);
-            form.render();
-        } else if (obj.event === 'delete') {
-            if (data.id == 1) {
-                layer.msg(data.title + '不能进行删除操作', { icon: 7 });
-                return;
-            }
-            layer.confirm('确定删除？', function (index) {
-                layer.close(index);
-                loadingAjax('/merchant/deleteMerchant', 'post', JSON.stringify({ id: data.id, topMerchant: data.topMerchant }), sessionStorage.token, 'mask', '', '', layer).then(res => {
-                    layer.msg('删除成功', { icon: 1 })
-                    dataList = treeList();
-                    var addEditData = treeList();
-                    tree.reload('treelistEdit', {
-                        data: addEditData
-                    });
-                    tableIns.reload({
-                        where: {}
-                    })
-                }).catch(err => {
-                    layer.msg(err.msg, { icon: 7 })
-                })
-            });
+            operationFlag = obj.data.id;
+            $('.ListOperation').fadeIn();
+            $('.ListOperation').css({
+                left: $(this).offset().left - 35 + 'px',
+                top: $(this).offset().top + 35 + 'px'
+            })
         }
+        // if (obj.event === 'edit') {
+        //     if (addEditData.length == 0) {
+        //         layer.msg('服务器请求超时', { icon: 7 });
+        //         return;
+        //     }
+        //     $('.editMerchants input[name="merchantsName"]').val(data.title);
+        //     $('.editMerchants input[name="max_ship"]').val(data.max_ship);
+        //     popupShow('MemberOperation', 'MemberContent');
+        //     if (data.id == 1) {
+        //         $('.listInput input[name="marchantsText"]').val('');
+        //     } else {
+        //         $('.listInput input[name="marchantsText"]').val(data.merchantName);
+        //     }
+        //     $('.marchantsList').val(data.topMerchant);
+        //     $('.MemberOperation input[name="service_phone"]').val(data.service_phone);
+        //     $('.editMerchants input[name="customPhone"]').val(data.custom_phone)
+        //     if (data.service_code) {
+        //         $('.editImg').show()
+        //         $('.editImg img').prop('src', data.service_code);
+        //     } else {
+        //         $('.editImg').hide()
+        //         $('.editImg img').prop('src', '');
+        //     }
+        //     if (data.custom_code) {
+        //         $('.customImg').show();
+        //         $('.customImg img').prop('src', data.custom_code);
+        //     } else {
+        //         $('.customImg').hide();
+        //         $('.customImg img').prop('src', '');
+        //     }
+        //     // 判断客服
+        //     if (data.is_service == 1) {
+        //         $('.editMerchants input[name="editServiceOpen"]').prop('checked', true);
+        //         $('.editServiceContent').show();
+        //         editServiceFlag = true;
+        //     } else {
+        //         $('.editMerchants input[name="editServiceOpen"]').prop('checked', false);
+        //         $('.editServiceContent').hide();
+        //         editServiceFlag = false;
+        //     }
+        //     // 判断定制
+        //     if (data.is_custom == 1) {
+        //         $('.editMerchants input[name="editCustomOpen"]').prop('checked', true);
+        //         $('.editCustomCont').show();
+        //         customFlag = true;
+        //     } else {
+        //         $('.editMerchants input[name="editCustomOpen"]').prop('checked', false);
+        //         $('.editCustomCont').hide();
+        //         customFlag = false;
+        //     }
+        //     // 判断销售经理类别
+        //     salseList = []
+        //     salesClassList(data.id, 1);
+        //     // if(data.is_sales==1){
+        //     //     salseFlag=true;
+        //     //     $('.listFlex input[name="salse"]').prop('checked',true);
+        //     //     $('.salseList').show();
+        //     // }else{
+        //     //     salseFlag=false;
+        //     //     $('.listFlex input[name="salse"]').prop('checked',false);
+        //     //     $('.salseList').hide();
+        //     // }
+        //     $('.MemberOperation input[name="order"]').prop('checked', data.follow_mail == 1 ? true : false);
+        //     form.render();
+        // } else if (obj.event === 'delete') {
+        //     if (data.id == 1) {
+        //         layer.msg(data.title + '不能进行删除操作', { icon: 7 });
+        //         return;
+        //     }
+        //     layer.confirm('确定删除？', function (index) {
+        //         layer.close(index);
+        //         loadingAjax('/merchant/deleteMerchant', 'post', JSON.stringify({ id: data.id, topMerchant: data.topMerchant }), sessionStorage.token, 'mask', '', '', layer).then(res => {
+        //             layer.msg('删除成功', { icon: 1 })
+        //             dataList = treeList();
+        //             var addEditData = treeList();
+        //             tree.reload('treelistEdit', {
+        //                 data: addEditData
+        //             });
+        //             tableIns.reload({
+        //                 where: {}
+        //             })
+        //         }).catch(err => {
+        //             layer.msg(err.msg, { icon: 7 })
+        //         })
+        //     });
+        // }
     });
+    // 编辑
+    $('.ListOperation .edit').click(function () {
+        if (addEditData.length == 0) {
+            layer.msg('服务器请求超时', { icon: 7 });
+            return;
+        }
+        $('.editMerchants input[name="merchantsName"]').val(data.title);
+        $('.editMerchants input[name="max_ship"]').val(data.max_ship);
+        popupShow('MemberOperation', 'MemberContent');
+        if (data.id == 1) {
+            $('.listInput input[name="marchantsText"]').val('');
+        } else {
+            $('.listInput input[name="marchantsText"]').val(data.merchantName);
+        }
+        $('.marchantsList').val(data.topMerchant);
+        $('.MemberOperation input[name="service_phone"]').val(data.service_phone);
+        $('.editMerchants input[name="customPhone"]').val(data.custom_phone)
+        if (data.service_code) {
+            $('.editImg').show()
+            $('.editImg img').prop('src', data.service_code);
+        } else {
+            $('.editImg').hide()
+            $('.editImg img').prop('src', '');
+        }
+        if (data.custom_code) {
+            $('.customImg').show();
+            $('.customImg img').prop('src', data.custom_code);
+        } else {
+            $('.customImg').hide();
+            $('.customImg img').prop('src', '');
+        }
+        // 判断客服
+        if (data.is_service == 1) {
+            $('.editMerchants input[name="editServiceOpen"]').prop('checked', true);
+            $('.editServiceContent').show();
+            editServiceFlag = true;
+        } else {
+            $('.editMerchants input[name="editServiceOpen"]').prop('checked', false);
+            $('.editServiceContent').hide();
+            editServiceFlag = false;
+        }
+        // 判断定制
+        if (data.is_custom == 1) {
+            $('.editMerchants input[name="editCustomOpen"]').prop('checked', true);
+            $('.editCustomCont').show();
+            customFlag = true;
+        } else {
+            $('.editMerchants input[name="editCustomOpen"]').prop('checked', false);
+            $('.editCustomCont').hide();
+            customFlag = false;
+        }
+        // 判断销售经理类别
+        salseList = []
+        salesClassList(data.id, 1);
+        // if(data.is_sales==1){
+        //     salseFlag=true;
+        //     $('.listFlex input[name="salse"]').prop('checked',true);
+        //     $('.salseList').show();
+        // }else{
+        //     salseFlag=false;
+        //     $('.listFlex input[name="salse"]').prop('checked',false);
+        //     $('.salseList').hide();
+        // }
+        $('.MemberOperation input[name="order"]').prop('checked', data.follow_mail == 1 ? true : false);
+        form.render();
+    });
+    // 删除
+    $('.ListOperation .del').click(function () {
+        if (data.id == 1) {
+            layer.msg(data.title + '不能进行删除操作', { icon: 7 });
+            return;
+        }
+        layer.confirm('确定删除？', function (index) {
+            layer.close(index);
+            loadingAjax('/merchant/deleteMerchant', 'post', JSON.stringify({ id: data.id, topMerchant: data.topMerchant }), sessionStorage.token, 'mask', '', '', layer).then(res => {
+                layer.msg('删除成功', { icon: 1 })
+                dataList = treeList();
+                var addEditData = treeList();
+                tree.reload('treelistEdit', {
+                    data: addEditData
+                });
+                tableIns.reload({
+                    where: {}
+                })
+            }).catch(err => {
+                layer.msg(err.msg, { icon: 7 })
+            })
+        });
+    })
+
     // 查询
     $('.queryBtnClick').click(function () {
         tableIns.reload({
@@ -464,11 +569,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
 
     var permissionsData0 = window.parent.permissionsData1(),
-    permissionsObj = {
-        393: false,
-        394: false,
-        395: false,
-    },
+        permissionsObj = {
+            393: false,
+            394: false,
+            395: false,
+        },
         permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
     function permissions() {
         permissionsObjFlag[393] ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
@@ -626,4 +731,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         }
     });
     //   console.log($('.MemberOperation input[name="order"]').prop('checked'))
+    $('body').click(function () {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
+    });
 });
