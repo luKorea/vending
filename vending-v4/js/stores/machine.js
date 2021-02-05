@@ -141,19 +141,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'trafficInfo', width: 160, title: '离线时长', align: 'center', templet: function (d) {
-                        if (d.onlineStatus != 0) {
-                            return '0天0小时0分'
-                        } else {
-
-                            var nData = new Date().getTime(),
-                                cDate = nData - d.offline_time,
-                                day = Math.floor(cDate / 86400000),
-                                hour = Math.floor((cDate - 86400000 * day) / 3600000),
-                                miute = Math.floor((cDate - 86400000 * day - 3600000 * hour) / 60000);
-                            return d.offline_time ? day + '天' + hour + '小时' + miute + '分钟' : '-'
-                        }
-                    }
+                    field: 'offline_time', width: 200, title: '离线时长', align: 'center',
                 },
                 {
                     field: 'actionStatus', width: 130, title: '是否激活', align: 'center', templet: function (d) {
@@ -326,7 +314,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     table.on('tool(machineTable)', function (obj) {
         event.stopPropagation();
         machineSetData = obj.data;
-        console.log(machineSetData);
+        // console.log(machineSetData);
         $('.maskHeader span').html(machineSetData.info ? machineSetData.info + '详细信息' : '-详细信息')
         if(obj.event === 'operation'){
             if (operationFlag == obj.data.machineId) {
@@ -546,6 +534,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
         // 编辑
     $('.ListOperation .edit').click(function(){
+        console.log(machineSetData);
         $('body').addClass('bodys');
         if (machineSetData.openStatus == 1) {
             layer.msg('温馨提示！该售货机正在营业，不可进行编辑！', { icon: 7 })
@@ -558,7 +547,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         if (machineSetData.location) {
             region = machineSetData.location.split(' ')
         }
-        $('.editMachineBox .layui-tree-txt').css({ color: '#555' })
+        $('.editMachineBox .layui-tree-txt').css({ color: '#555' });
+        if(machineSetData.machinesource==1){
+            $('.maxShipClass').show()
+        }else{
+            $('.maxShipClass').hide()
+        }
         form.val("editmachine", {
             'sNumber': machineSetData.number,
             'tName': machineSetData.info,
@@ -862,7 +856,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 sales_type: $('.salseCont input[name="salseClassName"]:checked').val() == -99 ? '' : $('.salseCont input[name="salseClassName"]:checked').val(),
                 is_volume: $('.listFlex input[name="sound"]').prop('checked') ? 1 : 0,
                 is_light: $('.listFlex input[name="lamp"]').prop('checked') ? 1 : 0,
-                max_ship: $('.listFlex input[name="max_ship"]').val() ? Number($('.listFlex input[name="max_ship"]').val()) : null
+                max_ship:machineSetData.machinesource==1? $('.listFlex input[name="max_ship"]').val() ? Number($('.listFlex input[name="max_ship"]').val()) : null:1
             })
             loadingAjax('/machine/updateMachine', 'post', editObj, sessionStorage.token, 'mask').then(res => {
                 $('.editMachineCont').hide();

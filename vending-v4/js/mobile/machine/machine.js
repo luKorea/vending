@@ -392,6 +392,12 @@ $('.operationNav .info').click(function () {
     $('.terminalContent input[name="describe"]').val(machineDetails.description);
     $('.terminalContent input[name="merchantsNametext"]').val(machineDetails.merchantName);
     $('.terminalContent input[name="merchantsName"]').val(machineDetails.userNum);
+    if(machineDetails.machinesource==1){
+        $('.maxShipClass').show();
+    }else{
+        $('.maxShipClass').hide();
+    }
+    $('.terminalContent input[name="max_ship"]').val(machineDetails.max_ship==0?'':machineDetails.max_ship);
 });
 // 初始化开关
 // hui('#switchBox').switchBox(['否','是'],function(res){
@@ -441,7 +447,8 @@ $('.terminalContent .confirmBtn').click(function () {
             latitude: machineInformation.latitude,
             userNum: machineInformation.merchantsName,
             chargerPhone: machineInformation.headPhone,
-            description: machineInformation.describe
+            description: machineInformation.describe,
+            max_ship:machineDetails.machinesource==1?$('.terminalContent input[name="max_ship"]').val()?Number($('.terminalContent input[name="max_ship"]').val()):null:1
         });
         loadingWith('正在编辑，请稍后')
         loadAjax('/machine/updateMachine', 'post', sessionStorage.token, editMachine, 'mask').then(res => {
