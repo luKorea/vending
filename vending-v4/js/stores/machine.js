@@ -620,7 +620,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             $('.listFlex input[name="customOpen"]').prop('checked', false);
             customFlag = false;
         };
-
         //  是否开启声音
         if (machineSetData.is_volume == 1) {
             $('.listFlex input[name="sound"]').prop('checked', true)
@@ -1523,6 +1522,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     };
     //选择商品
     $('.relative').click(function () {
+        if(editPermissionsFlag!=1){
+            layer.msg('您不是该设备管理员!',{icon:7});
+            return ;
+        }
         popupShow('goodsCont', 'goodsBox')
         if (goodsTableIns) {
             goodsTableIns.reload({
@@ -1704,6 +1707,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
        if(editPermissionsFlag==1){
         enableFun();
        }else{
+        disabledFun();
         layer.msg('您不是该设备管理员!',{icon:7})
        }
     });
@@ -1713,6 +1717,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             editPermissionsFlag=res.data
         }).catch(err=>{
             editPermissionsFlag=0;
+            disabledFun();
         })
     };
     function disabledFun(){
@@ -1720,13 +1725,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.editAisle .aisleList input').prop('disabled',true);
         $('.editAisle .aisleList select').prop('disabled',true);
         form.render('select');
+        $('.editAisle .ediaisleBtn').hide();
+        $('.editAisle .maintenanceBtn').show();
     };
     function enableFun(){
         determineFlag=true;
         $('.editAisle .aisleList input').prop('disabled',false);
         $('.editAisle .aisleList select').prop('disabled',false);
         form.render('select');
-        $('.goodsName').prop('disabled',true)
+        $('.goodsName').prop('disabled',true);
+        $('.editAisle .ediaisleBtn').show();
+        $('.editAisle .maintenanceBtn').hide();
     };
     // 修改详情
     $('.editAisle .ediaisleBtn').click(function () {
@@ -1796,8 +1805,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         } else {
             popupShow('iPasswprd', 'passwordCont')
         }
-
-
     });
     // 取消
     $('.addCancelBtn').click(function () {
@@ -2606,6 +2613,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 导出补货单
     var repairInvoiceData = null;
     $('.invoicePushBtn').click(function () {
+        if(editPermissionsFlag!=1){
+            layer.msg('您不是该设备管理员!',{icon:7});
+            return ;
+        }
         loadingAjax('/machine/getGoodReplenish', 'post', JSON.stringify({ machineId: machineSetData.machineId }), sessionStorage.token, '', '', layer).then(res => {
             repairInvoiceData = res.data;
             if (repairInvoiceData.good_info.length == 0) {
@@ -2758,6 +2769,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 清除货道故障
     $('.clearingBtn').click(function () {
+        if(editPermissionsFlag!=1){
+            layer.msg('您不是该设备管理员!',{icon:7});
+            return ;
+        }
         layer.confirm('确定清除货道故障？', function (index) {
             layer.close(index);
             $('.mask').fadeIn();
@@ -2962,8 +2977,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     // 撤销货道
     $('.undoAisleBtn').click(function () {
+        if(editPermissionsFlag!=1){
+            layer.msg('您不是该设备管理员!',{icon:7});
+            return ;
+        }
         layer.confirm('确定撤销货道?', function (index) {
-
             layer.close(index);
             aisleType = 2;
             if (sessionStorage.independentPass) {

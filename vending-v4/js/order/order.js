@@ -468,7 +468,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
 
     $('.detailsOrderCode').html(obj.data.number);//订单编号
     $('.payTime').html(timeStamp(obj.data.time));//支付时间
-    $('.orderInformation button span').html((obj.data.shipStatus == 0 ? '未出货' : obj.data.shipStatus == 1 ? '部分出货失败' : '出货成功'));
+    $('.orderInformation button span').html((obj.data.shipStatus == 0 ? '未出货' : obj.data.shipStatus == 1 ? '部分出货失败' : obj.data.shipStatus == 2?'全部出货成功':'出货中'));
     // $('.orderInformation button span').html(obj.data.notes)
     var payNum = 0;
     obj.data.goodsList.forEach((item, index) => {
@@ -478,11 +478,11 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     $('.payNUmber').html(payNum);
     // $('.paidInSum').html(orderData.amount);
     $('.orderSum').html('￥' + orderData.amount);
-    $('.collection button span').html((obj.data.payStatus == 1 ? '等待支付' : obj.data.payStatus == 2 ? '支付成功' : '未支付'));
+    $('.collection button span').html((obj.data.payStatus == 1 ? '等待支付' : obj.data.payStatus == 2 ? '已支付' : '未支付'));
     $('.machineCode').html(obj.data.machineId);
     $('.merchantName').html(obj.data.merchantName);
     $('.merchantCode ').html(obj.data.alias);
-    popupShow('orderDetails', 'orderDetailsBox')
+    popupShow('orderDetails', 'orderDetailsBox');
     orderGoods.reload({
       data: obj.data.goodsList
     })
