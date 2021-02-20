@@ -1,0 +1,67 @@
+@import '../../../common/common.scss';
+.Wrap{
+    width: 100%;
+    overflow: hidden;
+    .loginSwiper{
+        width: 100%;
+        margin-bottom: 10vw;
+    };
+    .headerTitle{
+        margin-bottom: 0.2rem;
+        img{
+            width: 0.8rem;
+        }
+        p{
+            font-weight: 700;
+            font-size: 0.36rem;
+            margin-left: 15px;
+            color: $color;
+        }
+    }
+     .information{
+         width: 90%;
+         margin: 0.7rem auto  0.2rem;
+         .flex{
+            padding-bottom: 0.2rem;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 0.3rem;
+         }
+         span{
+             width: 0.5rem;
+             font-size: 0.5rem;
+             color: $color;
+         }
+         input{
+            // height: ;
+            line-height: 0.65rem;
+            width: 85%;
+            padding-left: 5%;
+            font-size: 0.28rem;
+           
+         }
+     }
+     .loginBtn{
+        width: 92%;
+        margin: 0.5rem auto;
+        background: #b18e5d;
+        padding: 0.2rem 0;
+        text-align: center;
+        font-size: 0.28rem;
+        color: #fff;
+        letter-spacing: 0.05rem;
+        border-radius: 0.1rem;
+     }
+}
+.hui-form-items{
+    padding-left: 0;
+    label{
+        color: $color;
+    }
+}
+#hui-loading-text{
+    color: #fff;
+    font-size: 14px;
+}
+input:focus{
+    border: none !important;
+}
