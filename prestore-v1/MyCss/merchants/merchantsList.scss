@@ -1,0 +1,27 @@
+@import '../../common/common.scss';
+.addMBox{
+    width: 500px;
+    .addMBody{
+        padding: 20px;
+        box-sizing: border-box;
+    }
+}
+.data-list{
+    .layui-none{
+        width: 60%;
+    }
+}
+.topUPBox{
+    width: 500px;
+    .topUpBody{
+        padding: 20px;
+        box-sizing: border-box;
+    }
+}
+.reductionsBox{
+    width: 500px;
+    .reductionsBody{
+        padding: 20px;
+        box-sizing: border-box;
+    }
+}

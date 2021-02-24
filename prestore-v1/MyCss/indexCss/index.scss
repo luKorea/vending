@@ -1,0 +1,83 @@
+@import '../../common/common.scss';
+/* 标题 */
+.layui-layout-admin .layui-logo{
+	color: #ffffff;
+	font-size: 24px;
+	padding: 15px 0;
+	background: #1f2640;
+}
+.layui-nav-tree{
+	margin-top: 30px;
+}
+.layui-nav .layui-nav-item a{
+	height: 56px;
+}
+.layui-nav{
+	background-color: rgb(32, 34, 57);
+}
+.layui-layout-admin .layui-header{
+	background-color: black;
+}
+.layui-header{
+	height: 65px;
+}
+.layui-carousel>[carousel-item]>*{
+    background-color: #1f2640;
+}
+.layui-this{
+	line-height: 25px;
+}
+.layui-nav .layui-nav-item a{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.uers-message span{
+	margin-right: 10px;
+	font-size: 14px;
+	color: #fff;
+}
+.uers-message i{
+	font-size: 20px;
+	color: #fff;
+}
+.my-nav-tab .layui-nav-item a i{
+	margin-right:  4px;
+	color: #E2E2E2;
+	font-size: 14px;
+}
+.nav-header-information{
+	margin-top: 5px;
+}
+.nav-header-information .layui-nav-child  a{
+	/* width: 100%; */
+	text-align: center;
+	
+}
+/* 头部选项卡*/
+.header-nav-tabs-switch{
+	margin-left:200px ;
+	z-index: 99;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+#userLogin .layui-nav-more{
+	display: none;
+}
+/* 外部引入文件 */
+.content-tbas-iframe-html{
+	width: 100%;
+	min-height: 100%;
+}
+.content-tbas-iframe-html .iframe_show,.iframe-show{
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+/* 中间内容部分 */
+.wrapContent{
+	box-sizing: border-box;
+	border: solid 15px rgb(238,238,238);
+	height: 93%;
+	overflow: hidden;
+}

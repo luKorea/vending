@@ -82,7 +82,6 @@ input {
     outline: none;
 }
 
-div,
 input,
 textarea,
 button {
@@ -93,325 +92,345 @@ button {
 a {
     text-decoration: none;
 }
-.flex{
-    display: flex;
-    justify-content: start;
-    align-items: center;
-}
-.flexCenter{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.flexThree{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.inputList{
-    width: 92%;
-    margin: 0 auto;
-    padding-bottom: 0.2rem;
-    margin-bottom: 0.2rem;
-    line-height: 0.8rem;
-    input{
-        width: 78%;
-        background-color: #fff;
-        background-image: none;
-        border-radius: 4px;
-        border: 1px solid #dcdfe6;
-        box-sizing: border-box;
-        color: #606266;
-        display: inline-block;
-        font-size: inherit;
-        height: 0.8rem;
-        line-height: 0.8rem;
-        outline: 0;
-        padding: 0 15px;
-        transition: border-color 0.2s;
-        font-family:PingFang SC;
-    }
-    label{
-        display: inline-block;
-        width: 1.5rem;
-        color: #606266;
-        font-size: 0.22rem;
-        font-family:PingFang SC;
-        span{
-            color: red;
-        }
-    }
-}
-.backgroundBlack{
-    background:rgba(0,0,0,0.4) ;
 
+.playHeader{
+    padding: 20px 20px 10px;
+    text-align: center;
 }
-.Wrap{
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    font-size: 0.28rem;
+.playHeader span{
+    line-height: 24px;
+    font-size: 18px;
+    color: #303133;
+} 
+.playHeader .close{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 0;
+    background: 0 0;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    font-size: 16px;
 }
-
-.header{
-    position: relative;
-    box-sizing: border-box;
-    padding: 0.25rem;
-     .close{
-        position: absolute;
-        right: 0.1rem;
-        top: 0.25rem;
-        font-size: 0.24rem;
-        border: none;
-        outline: none;
-        background: none;
-        // padding: 0;  
-        padding: 0.1rem;
-        span{
-            font-size: 0.3rem;
-        }
-    }
-    h1{
-        font-size: 0.32rem;
-        // color: #606266;
-        color: $color;
-        text-align: center;
-        margin-bottom: 0.2rem;
-    }
+.playHeader .close i{
+    color: #909399;
 }
-
-input:focus{
-    border: 1px solid $color !important;
+.playHeader .close i:hover{
+    color: #be954a;
 }
-.topHeader{
-    border-bottom: 1px solid rgba(240,240,240,1);
-    position: fixed;
+.layui-laypage-limits select{
+    outline: none !important;
+}
+.TitleContentWith{
+    width: 200px;
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.6);
+    text-align: center;
+    line-height: 200px;
+    position: absolute;
     left: 0;
     top: 0;
-    width: 100%;
-    background: #fff;
-    z-index: 24;
-    span{
-        padding: 4%;
-    }
-    h2{
-        font-size:0.36rem;
-        font-family:PingFang SC;
-        font-weight:500;
-        color:rgba(51,51,51,1);
-        line-height:21px;
-    }
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    color: #fff;
+    border-radius: 5px;
 }
-.marginTop90{
-    margin-top:0.95rem
+/* loading旋转 */
+@-webkit-keyframes rotation{
+
+    from {-webkit-transform: rotate(0deg);}
+
+    to {-webkit-transform: rotate(360deg);}
+
 }
-.KeyInput{
-    width: 92%;
-    margin: 0.2rem auto 0;
-    input{
-        // height: .72rem;
-        line-height: 0.6rem;
-        padding: 0 0 0 .3rem;
-        box-sizing: border-box;
-        width: 75%;
-        color: #323233;
-        border-radius: 0.05rem;
-        border: 1px solid #fff;
-    }
-    button{
-        border: none;
-        outline: none;
-        margin-left: 0.2rem;
-        background: $color;
-        padding: 0.12rem;
-        border-radius: 0.08rem;
-        color: #fff;
-        height: inherit !important;
-        line-height: inherit !important;
-    }
+.maskIcon{
+    -webkit-transform: rotate(360deg);
+    animation: rotation 3s linear infinite;
+    -moz-animation: rotation 3s linear infinite;
+    -webkit-animation: rotation 3s linear infinite;
+    -o-animation: rotation 3s linear infinite;
 }
+/* mymove */
 @-webkit-keyframes mymove{
     from{opacity: 0;transform: scale3d(0.3, 0.3, 0.3);}
     to{opacity: 1;transform: scale3d(1, 1, 1);}
 }
-.myScale3d{
+.myImg{
     animation: mymove 1s 1;
 }
-.maskContent{
-    position: fixed;
-    z-index: 25;
-    width: 100%;
-    left: 0px;
-    top: 0px;
-    right: 0;
-    bottom: 0;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;
-    transition: all 0.3s;
-}
-.cancelBtn{
-    border: 1px solid #dcdfe6 !important;
-    border-radius: 0.08rem;
-}
-.confirmBtn{
-    border-radius: 0.08rem;
-}
-.empty{
-    text-align: center;
-    color: #999999;
-    font-size: 0.3rem;
-}
-iframe{
-    border: none;
-    width: 100%;
-    height: 100%;
-}
-.header100vh{
-    height: 100vh;
-    overflow: hidden;
-}
-.displaynonde{
-    display: none;
-}
-.centerMaskWindow{
-    position: absolute;
-    left: 50%;
-    top: -50%;
-    transform: translate(-50%, -30%);
-    // font-weight: bold;
-    width: 90%;
-    background: #ffffff;
-    transition: all 0.3s;
-    z-index: 25;
-    overflow: hidden;
-    color: #606266;
-    border-radius: 0.08rem;
-    transition: all 0.3s;
-}
-.top30{
-    top: 30% !important;
-    transform: translate(-50%, -30%);
-    transition: all 0.3s;
-}
-.top0{
-    top: 0 !important;
-    transition: all 0.3s;
-}
-.top50{
-    top: 50% !important;
-    transform: translate(-50%, -50%) !important;
-}
-.maskHeight100vh{
-    width: 100%;
-    height: 100vh;
-    overflow-y: auto;
-    background: #ffffff;
-    position: absolute;
-    top: -100vh;
-    transition: all 0.5s;
-}
-.hui-form-radios {
-    display: flex !important;
-    flex-wrap: wrap;
-}
-.hui-form-radios label{
-    margin-right: 0.15rem !important;
-    color: #606266;
-    line-height: inherit !important;
-}
-.hui-form-items{
-    align-items: center;
-}
-input:disabled{
-    border-color: rgb(228, 231, 237);
-    color: rgb(192, 196, 204);
-    background-color: rgb(245, 247, 250);
-}
-.relative{
+.newHeader{
+    margin-top: 10px;
+    padding:  15px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    border: 1px solid #e6e6e6;
+    line-height: 24px;
     position: relative;
 }
-.hides{
-    display: none !important;
-    transition: all 0.3s;
-}
-// 查询条件部分
-.keyContent{
-    width: 98%;
-    margin: 0.25rem auto;
+.newHeaderText{
+    position: absolute;
+    top: -11px;
+    left: 20px;
+    color: #666;
+    padding: 0 15px;
+    font-size: 14px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
     background: #fff;
-    border-radius: 0.1rem;
-    .flex-center{
-        display: flex;
-        justify-content: center;
-        flex-flow: column;
-        align-items: center;
-        .dowContent{
-            display: none;
+    font-family: '\5FAE\8F6F\96C5\9ED1', 'Microsoft YaHei', 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', 'Hiragino Sans GB', serif;
+}
+.newKeyContent{
+    display: inline-block;
+    vertical-align: middle;
+    margin: 5px 0;
+    .layui-btn{
+        height: 32px;
+        line-height: 28px;
+        font-size: 12px;
+        padding: 0 10px;
+        .layui-icon {
+            margin-right: 3px;
+            font-size: 18px;
         }
-        .dowImg{
-            width: 0.4rem;
-            margin: 0.05rem auto 0;
-            img{
-                width: 100%;
-                transition: all 0.3s;
-            }
-            .active{
-                transform:rotate(-180deg);
-                transition: all 0.3s;
-            }
+    }
+}
+.newKeyItem{
+    /* margin-bottom: 15px; */
+    clear: both;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.newKeyItem label{
+    width: auto ;
+    padding: 0 8px;
+    height: 32px;
+    line-height: 30px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    text-align: left;
+    font-weight: 400;
+    border: 1px solid #e6e6e6;
+    font-size: 12px;
+    color: #666;
+}
+.newKeyItem>div{
+    width: 170px;
+    display: block;
+    margin: 0;
+    clear: none;
+}
+.newKeyItem>div input{
+    width: 100%;
+    height: 32px;
+    padding: 2px 8px;
+    line-height: 1em;
+    border-radius: 0 2px 2px 0;
+    display: block;
+    border: 1px solid #e6e6e6;
+    font-size: 12px;
+    color: -internal-light-dark(black, white);
+    font-style: inherit;
+    font-weight: inherit;
+    outline: 0;
+    font-family: inherit;
+    margin: 0;
+    color: #606266;
+    box-sizing: border-box;
+} 
+.layui-table-header{
+    border: none !important;
+}
+.newKeyContent button{
+    display: flex;
+    align-items: center;
+    margin: 0 3px;
+}
+.newKeyContent input:focus{
+    border: 1px solid #be954a;
+}
+.margin0{
+    margin-top:0 !important;
+}
+.maskContnet{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1888;
+    background: rgba(0, 0, 0, 0.3);
+    display: none;
+    overflow-y: auto;
+}
+.ListOperation{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    background-color: #fff;
+    z-index: 23;
+    box-shadow: 0 6px 12px rgba(0,0,0,.15);
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    display: none;
+    li{
+        min-width: 120px;
+        text-align: center;
+        white-space: normal;
+        padding: 3px 10px;
+        clear: both;
+        font-weight: 400;
+        line-height: 1.42857143;
+        color: #333;
+        cursor: pointer;
+        i{
+            margin: 0 !important;
         }
-        .keyConfirmBtn{
-            width: 3.2rem;
-            margin: 0.1 auto 0;
-            border-radius: 0.44rem;
-            text-align: center;
-            background: #be954a;
-            font-family: PingFang SC;
-            font-weight: 500;
-            color: white;
-            padding: 0.12rem 0;
-            margin-bottom: 0.6rem;
-        }
-        .time{
-            padding: 10px;
-            span{
-                font-size: 12px !important;
-                display: inline-block;
-                width: 80px;
+    }
+}
+.ListOperation li:hover{
+    color: #be954a;
+    background-color: rgba(102, 102, 102,0.1);
+}
+.layui-logo{
+    color: #fff !important;
+}
+.layui-table-box{
+    >.layui-table-body{
+        height: 600px !important;
+        width: auto;
+    }
+}
+.layui-table-header{
+    background: none;
+}
+.layui-table-box .layui-table th {
+    border-left: none;
+    border-right: none;
+}
+.layui-table-view{
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+}
+.layui-table-box .layui-table-body .layui-table td{
+    border-left: none;
+    border-right: none;
+}
+.maskContnet{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1888;
+    background: rgba(0, 0, 0, 0.3);
+    display: none;
+    overflow-y: auto;
+    .maskBoxCom{
+        // width: 950px;
+        position: relative;
+        margin: 10vh auto 50px;
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        box-sizing: border-box;
+        transition: all 0.3s;
+        padding-bottom: 15px;
+        padding:0 15px;
+        .listFlex{
+            margin-bottom: 11px;
+            color: #606266;
+            line-height: 24px;
+            font-size: 14px;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            label{
+                width: 100px;
+                font-size: 12px;
+                color: #606266;
+                line-height: 40px;
+                padding: 0 12px 0 0;
+                box-sizing: border-box;
                 text-align: right;
-            }
-            input{
-                font-size: 0.24rem !important;
-                height: 0.4rem;
-                color: #555;
-                background-color: #fff;
-                background-image: none;
-                margin-left: 10px;
-                width: 180px;
-                display: inline-block;
-                border: 1px solid #ccc!important;
-                border-radius: 4px;
-                padding: 6px;
-            }
-            >div{
-                font-size: 0.24rem !important;
-                height: 0.4rem;
-                color: #555;
-                background-color: #fff;
-                background-image: none;
-                margin-left: 15px;
-                width: 180px;
-                display: inline-block;
-                border: 1px solid #ccc!important;
-                border-radius: 4px;
-                padding: 6px;
                 span{
-                    font-size: 18px !important;
-                    float: right;
+                    color: red;
                 }
             }
-    
+            input{
+                width: 90%;
+                background-color: #fff;
+                background-image: none;
+                border-radius: 4px;
+                border: 1px solid #dcdfe6;
+                box-sizing: border-box;
+                color: #606266;
+                display: inline-block;
+                font-size: inherit;
+                height: 34px;
+                line-height: 34px;
+                outline: 0;
+                padding: 0 15px;
+                transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+            }
+            input:focus{
+                border: 1px solid $color;
+            }
+            input:disabled{
+                cursor: not-allowed;
+                border-color: rgb(228, 231, 237);
+                color: rgb(192, 196, 204);
+                background-color: rgb(245, 247, 250);
+            }
         }
-    }  
+    }
+    .footers{
+        padding: 15px;
+        text-align: right;
+        // border-top: 1px solid #e5e5e5;
+        .determine1{
+            display: inline-block;
+            // height: 38px;
+            // line-height: 38px;
+            padding: 6 12px;
+            background-color: $color;
+            color: #fff;
+            white-space: nowrap;
+            text-align: center;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .cancel1{
+            padding: 6 12px;
+            color: rgb(96, 98, 102);
+            background: rgb(255, 255, 255) !important;
+            border: 1px solid rgb(220, 223, 230) !important;
+            border-radius: 4px;
+        }
+    }
+}
+.operationClass{
+    margin: 5px !important;
+    border-radius: 4px;
+    i{
+        font-size: 12px !important;
+        margin-right: 0 !important;
+        vertical-align: bottom;
+    }
+}
+
+.layui-table-body{
+    .layui-table-cell{
+        height: auto;
+        line-height: 22px;
+    }
 }

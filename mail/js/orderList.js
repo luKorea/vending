@@ -107,23 +107,22 @@ $('.codeImg').click(function () {
 });
 
 // 订单列表渲染
-var refIndex=1;
+var refIndex = 1;
 var orderListVal = null;
 function orderListFun(listStr) {
 
     orderListVal = listStr
     var str = '';
     listStr.forEach((item, index) => {
-        var orderNum = 0;
-        item.goodsList.forEach(ele => {
-            orderNum += Number(ele.count) * Number(ele.goods_Price)
-        });
         str += `<li class="orderNameList" indexs="${index}">
                     <div class="listHeader flexC">
                         <h3>${item.sign_name}/${item.sign_phone}</h3>
                         <p>${item.dispatch_status == 0 ? '未发货' : '已发货'}</p>
                     </div>
                     <div class="orderListS">
+                        <div class="orderList flex">
+                                <h5>下单时间:<span>${item.time ? timeStamp(item.time) : ''}</span></h5>
+                        </div>
                         <div class="${item.express_type ? 'show' : 'hide'}">
                             <div class="orderList flex">
                                 <h5>物流/快递公司:<span>${item.express_type}</span></h5>
@@ -135,7 +134,6 @@ function orderListFun(listStr) {
                                 <h5>发货时间:<span>${item.express_time ? timeStamp(item.express_time) : ''}</span></h5>
                             </div>
                         </div>
-                       
                         <div class="orderList flex">
                             <h5>收货地址：<span>${item.sign_address}</span></h5>
                         </div>
@@ -143,14 +141,14 @@ function orderListFun(listStr) {
                             <h5>备注：<span>${item.notes}</span></h5>
                         </div>
                         <div class="orderList flex">
-                            <h5>订单金额：<span>￥${orderNum}</span></h5>
+                            <h5>订单金额：<span>￥${item.amount}</span></h5>
                         </div>
                     </div>
                 </li>`
     });
     $('.ordertListBox ul').html(str);
     setTimeout(function () {// <-- Simulate network congestion, remove setTimeout from production!
-        if(refIndex==1){
+        if (refIndex == 1) {
             refIndex++
             refresher.init({
                 id: "ordertListBox",
@@ -171,7 +169,7 @@ function goodsListFun(goodsList) {
                     <img src="${item.goods_images}" />
                 </div>
                 <div class="goodsInform">
-                    <h5>${item.goods_Name}</h5>
+                    <h5>${item.good_name_core}</h5>
                     <div class="flexC of">
                         <p>￥${item.price}</p>
                         <p>X ${item.count}</p>
@@ -211,7 +209,7 @@ function Refresh() {
         var el, li, i;
         // el =document.querySelector("#ordertListBox ul");					
         //这里写你的刷新代码	
-        
+
         var nameInformation = JSON.stringify({
             phone: $('.list input[name="phone"]').val(),
             name: $('.list input[name="name"]').val(),
@@ -236,7 +234,7 @@ function Refresh() {
         });
         document.getElementById("ordertListBox").querySelector(".pullDownIcon").style.display = "none";
         document.getElementById("ordertListBox").querySelector(".pullDownLabel").innerHTML = "刷新成功";
-        setTimeout(function () {	
+        setTimeout(function () {
             ordertListBox.refresh();
             document.getElementById("ordertListBox").querySelector(".pullDownLabel").innerHTML = "";
         }, 1000);//模拟qq下拉刷新显示成功效果
@@ -246,6 +244,6 @@ function Refresh() {
 
 function Load() {
     // setTimeout(function () {// <-- Simulate network congestion, remove setTimeout from production!
-        ordertListBox.refresh();/****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
+    ordertListBox.refresh();/****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
     // }, 500);
 }
