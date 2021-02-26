@@ -273,7 +273,7 @@ a {
     font-size: 14px;
     text-align: left;
     background-color: #fff;
-    z-index: 23;
+    z-index: 102;
     box-shadow: 0 6px 12px rgba(0,0,0,.15);
     border: 1px solid rgba(0,0,0,.15);
     border-radius: 4px;
@@ -433,4 +433,28 @@ a {
         height: auto;
         line-height: 22px;
     }
+}
+.pic102{
+    cursor: pointer;
+}
+.hide1{
+    display: none;
+}
+.warning{
+    background: #f2dede !important;
+}
+
+.layui-table[lay-even] tr:nth-child(even){
+    background-color: rgba(242, 242, 242,0.35);
+}
+.data-list .layui-form .layui-table-body .layui-table-hover{
+    background-color: rgba(242, 242, 242,1) ;
+}
+.layui-table-cell{
+        height:auto;
+        overflow:visible !important;
+        text-overflow:inherit !important;
+        white-space:normal !important;
+        word-break: break-all !important;
+  
 }

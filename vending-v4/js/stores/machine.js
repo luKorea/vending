@@ -94,11 +94,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {
                     field: 'info', width: 150, title: '售货机类别', align: 'center', templet: function (d) {
-                      if(d.machinesource){
-                        return d.machinesource==1?'ZJ':'YY'
-                      }else{
-                          return '-'
-                      }
+                        if (d.machinesource) {
+                            return d.machinesource == 1 ? 'ZJ' : 'YY'
+                        } else {
+                            return '-'
+                        }
                     }
                 },
                 {
@@ -144,8 +144,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     field: 'offline_time', width: 180, title: '离线时长', align: 'center',
                 },
                 {
-                    field: 'offline_time', width: 180, title: '上次离线时间', align: 'center',templet:function(d){
-                        return d.time?d.time:'-'
+                    field: 'offline_time', width: 180, title: '上次离线时间', align: 'center', templet: function (d) {
+                        return d.time ? d.time : '-'
                     }
                 },
                 {
@@ -173,9 +173,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 //     }
                 // },
                 { field: 'merchantName', width: 150, title: '所属商户', align: 'center', },
-                { field: 'versions', width: 200, title: '当前版本(待升级版本)', align: 'center', templet:function(d){
-                    return `${d.versions?d.versions:'-'}(${d.appVersion?d.appVersion:'-'})`
-                }},
+                {
+                    field: 'versions', width: 200, title: '当前版本(待升级版本)', align: 'center', templet: function (d) {
+                        return `${d.versions ? d.versions : '-'}(${d.appVersion ? d.appVersion : '-'})`
+                    }
+                },
                 // { field: 'controllerVersion', width: 135, title: '控制器版本', },
                 {
                     field: 'connectTime', width: 170, title: '联机时间', align: 'center', templet: function (d) {
@@ -316,26 +318,26 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     // 监听售货机列表操作
     var machineSetData = null,
-     operationFlag = null;
+        operationFlag = null;
     table.on('tool(machineTable)', function (obj) {
         event.stopPropagation();
         machineSetData = obj.data;
         // console.log(machineSetData);
         $('.maskHeader span').html(machineSetData.info ? machineSetData.info + '详细信息' : '-详细信息')
-        if(obj.event === 'operation'){
+        if (obj.event === 'operation') {
             if (operationFlag == obj.data.machineId) {
                 $('.ListOperation').fadeOut();
                 operationFlag = null;
                 return;
-              }
-              operationFlag = obj.data.machineId;
-              obj.data.actionStatus!=0?$('.Mactivation').addClass('hide'):$('.Mactivation').removeClass('hide');
-              obj.data.openStatus!=0?$('.ListOperation .Mbusiness').html('暂停营业'):$('.ListOperation .Mbusiness').html('营业');
-              $('.ListOperation').fadeIn();
-              $('.ListOperation').css({
+            }
+            operationFlag = obj.data.machineId;
+            obj.data.actionStatus != 0 ? $('.Mactivation').addClass('hide') : $('.Mactivation').removeClass('hide');
+            obj.data.openStatus != 0 ? $('.ListOperation .Mbusiness').html('暂停营业') : $('.ListOperation .Mbusiness').html('营业');
+            $('.ListOperation').fadeIn();
+            $('.ListOperation').css({
                 left: $(this).offset().left - 35 + 'px',
                 top: $(this).offset().top + 35 + 'px'
-              })
+            })
         }
         // else if (obj.event == 'set') {
         //     aisleNum();
@@ -512,7 +514,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         // }
     });
     // 设置
-    $('.ListOperation .set').click(function(){
+    $('.ListOperation .set').click(function () {
         aisleNum();
         $('.setUpCont').show();
         $('body').addClass('bodys');
@@ -538,8 +540,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             width: $('.setNav li').eq(0).width() + 'px'
         }, 1)
     });
-        // 编辑
-    $('.ListOperation .edit').click(function(){
+    // 编辑
+    $('.ListOperation .edit').click(function () {
         console.log(machineSetData);
         $('body').addClass('bodys');
         if (machineSetData.openStatus == 1) {
@@ -554,9 +556,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             region = machineSetData.location.split(' ')
         }
         $('.editMachineBox .layui-tree-txt').css({ color: '#555' });
-        if(machineSetData.machinesource==1){
+        if (machineSetData.machinesource == 1) {
             $('.maxShipClass').show()
-        }else{
+        } else {
             $('.maxShipClass').hide()
         }
         form.val("editmachine", {
@@ -641,7 +643,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         geoCode();
     });
     //激活
-    $('.ListOperation .Mactivation').click(function(){
+    $('.ListOperation .Mactivation').click(function () {
         layer.confirm('确定激活该设备？', function (index) {
             layer.close(index);
             $('.mask').fadeIn();
@@ -661,7 +663,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
     });
     // 营业
-    $('.ListOperation .Mbusiness').click(function(){
+    $('.ListOperation .Mbusiness').click(function () {
         layer.confirm(machineSetData.openStatus != 1 ? '确定营业？' : '确定暂停营业？', function (index) {
             var openStatusIndex = machineSetData.openStatus != 1 ? '1' : '0'
             layer.close(index);
@@ -861,7 +863,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 sales_type: $('.salseCont input[name="salseClassName"]:checked').val() == -99 ? '' : $('.salseCont input[name="salseClassName"]:checked').val(),
                 is_volume: $('.listFlex input[name="sound"]').prop('checked') ? 1 : 0,
                 is_light: $('.listFlex input[name="lamp"]').prop('checked') ? 1 : 0,
-                max_ship:machineSetData.machinesource==1? $('.listFlex input[name="max_ship"]').val() ? Number($('.listFlex input[name="max_ship"]').val()) : null:1
+                max_ship: machineSetData.machinesource == 1 ? $('.listFlex input[name="max_ship"]').val() ? Number($('.listFlex input[name="max_ship"]').val()) : null : 1
             })
             loadingAjax('/machine/updateMachine', 'post', editObj, sessionStorage.token, 'mask').then(res => {
                 $('.editMachineCont').hide();
@@ -1020,7 +1022,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if (xhr.response.size < 50) {
                     layer.msg('导出失败', { icon: 2 })
                     return
-                  } 
+                }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                 var fileName = `${machineSetData.info}(${machineSetData.number})销售详情(${selesStartTime}-${selesEndTime}).xls`
@@ -1174,7 +1176,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if (xhr.response.size < 50) {
                     layer.msg('导出失败', { icon: 2 })
                     return
-                  }
+                }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                 var fileName = `${machineSetData.info}(${machineSetData.number})出货记录(${startTime}-${endTime}).xls`
@@ -1522,9 +1524,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     };
     //选择商品
     $('.relative').click(function () {
-        if(editPermissionsFlag!=1){
-            layer.msg('您不是该设备管理员!',{icon:7});
-            return ;
+        if (editPermissionsFlag != 1) {
+            layer.msg('您不是该设备管理员!', { icon: 7 });
+            return;
         }
         popupShow('goodsCont', 'goodsBox')
         if (goodsTableIns) {
@@ -1604,20 +1606,23 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     sessionStorage.independentPass = '';
     var ArrIndex = null;
     $('body').on('click', '.aisleNumderClick', function () {
-        console.log($(this).attr("fireIndex"))
+        // console.log($(this).attr("fireIndex"))
         ArrIndex = $(this).attr("fireIndex").split(',');
         console.log(ArrIndex)
         if (!permissionsObjFlag[424]) {
             layer.msg('您没有编辑货道的权限!', { icon: 7 })
             return;
         }
-        aisleType = 1
-        if (sessionStorage.independentPass) {
-            aisleEdit();
-            popupShow('editAisle', 'editAisleBox');
-        } else {
-            popupShow('iPasswprd', 'passwordCont');
-        }
+        aisleType = 1;
+        aisleEdit();
+        disabledFun();
+        popupShow('editAisle', 'editAisleBox');
+        // if (sessionStorage.independentPass) {
+        //     aisleEdit();
+        //     popupShow('editAisle', 'editAisleBox');
+        // } else {
+        //     popupShow('iPasswprd', 'passwordCont');
+        // }
 
     })
     // 独立密码
@@ -1628,10 +1633,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         loadingAjax('/user/verifyAlonePwd', 'post', IPassWord, sessionStorage.token, 'mask', 'iPasswprd', 'passwordCont', layer).then(res => {
             sessionStorage.independentPass = 'true';
             if (aisleType == 1) {
-                aisleEdit();
-                disabledFun();
-                popupHide('iPasswprd', 'passwordCont')
-                popupShow('editAisle', 'editAisleBox');
+                // aisleEdit();
+                // popupHide('iPasswprd', 'passwordCont')
+                // popupShow('editAisle', 'editAisleBox');
+                enableFun();
             } else if (aisleType == 2) {
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
@@ -1694,46 +1699,51 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             $('.editAisle input[name="price"]').val(obj.data.goods_Price);
             popupHide('goodsCont', 'goodsBox')
         } else {
-            $('.addPanelBody input[name="panelGoodsName"]').val(obj.data.mail == 1 ? '(邮寄)' + obj.data.goods_Name+'('+obj.data.goods_Core+')' : obj.data.goods_Name+'('+obj.data.goods_Core+')');
+            $('.addPanelBody input[name="panelGoodsName"]').val(obj.data.mail == 1 ? '(邮寄)' + obj.data.goods_Name + '(' + obj.data.goods_Core + ')' : obj.data.goods_Name + '(' + obj.data.goods_Core + ')');
             $('.addPanelBody input[name="panelGoodsName"]').attr('IVal', obj.data.goods_Id);
             popupHide('goodsCont', 'goodsBox');
         }
 
     });
-    var determineFlag=false,
-        editPermissionsFlag=false;
-// 点击维护
-    $('.editAisle .maintenanceBtn').click(function(){
-       if(editPermissionsFlag==1){
-        enableFun();
-       }else{
-        disabledFun();
-        layer.msg('您不是该设备管理员!',{icon:7})
-       }
+    var determineFlag = false,
+        editPermissionsFlag = false;
+    // 点击维护
+    $('.editAisle .maintenanceBtn').click(function () {
+        if (editPermissionsFlag == 1) {
+            if (sessionStorage.independentPass) {
+                enableFun();
+            } else {
+                popupShow('iPasswprd', 'passwordCont');
+            }
+
+        } else {
+            disabledFun();
+            layer.msg('您不是该设备管理员!', { icon: 7 })
+        }
     });
     // 获取是否机器管理员
-    function Amachinedmin(){
-        loadingAjax('/machine/findMachineIdUser','get',{machineId:machineSetData.machineId},sessionStorage.token).then(res=>{
-            editPermissionsFlag=res.data
-        }).catch(err=>{
-            editPermissionsFlag=0;
+    function Amachinedmin() {
+        loadingAjax('/machine/findMachineIdUser', 'get', { machineId: machineSetData.machineId }, sessionStorage.token).then(res => {
+            editPermissionsFlag = res.data
+        }).catch(err => {
+            editPermissionsFlag = 0;
             disabledFun();
         })
     };
-    function disabledFun(){
-        determineFlag=false;
-        $('.editAisle .aisleList input').prop('disabled',true);
-        $('.editAisle .aisleList select').prop('disabled',true);
+    function disabledFun() {
+        determineFlag = false;
+        $('.editAisle .aisleList input').prop('disabled', true);
+        $('.editAisle .aisleList select').prop('disabled', true);
         form.render('select');
         $('.editAisle .ediaisleBtn').hide();
         $('.editAisle .maintenanceBtn').show();
     };
-    function enableFun(){
-        determineFlag=true;
-        $('.editAisle .aisleList input').prop('disabled',false);
-        $('.editAisle .aisleList select').prop('disabled',false);
+    function enableFun() {
+        determineFlag = true;
+        $('.editAisle .aisleList input').prop('disabled', false);
+        $('.editAisle .aisleList select').prop('disabled', false);
         form.render('select');
-        $('.goodsName').prop('disabled',true);
+        $('.goodsName').prop('disabled', true);
         $('.editAisle .ediaisleBtn').show();
         $('.editAisle .maintenanceBtn').hide();
     };
@@ -2318,7 +2328,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if (xhr.response.size < 50) {
                     layer.msg('导出失败', { icon: 2 })
                     return
-                  } 
+                }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                 var fileName = `${machineSetData.info}(${machineSetData.number})补货记录(${replenishmentStartTime}-${sreplenishmentEndTime}).xls`
@@ -2455,7 +2465,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if (xhr.response.size < 50) {
                     layer.msg('导出失败', { icon: 2 })
                     return
-                  }
+                }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                 var fileName = `${machineSetData.info}(${machineSetData.number})修改价格记录(${editStartTime}-${editEndTime}).xls`
@@ -2586,7 +2596,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if (xhr.response.size < 50) {
                     layer.msg('导出失败', { icon: 2 })
                     return
-                  }
+                }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                 var fileName = `${machineSetData.info}(${machineSetData.number})开门记录(${openSTime}-${openETime}).xls`
@@ -2613,9 +2623,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 导出补货单
     var repairInvoiceData = null;
     $('.invoicePushBtn').click(function () {
-        if(editPermissionsFlag!=1){
-            layer.msg('您不是该设备管理员!',{icon:7});
-            return ;
+        if (editPermissionsFlag != 1) {
+            layer.msg('您不是该设备管理员!', { icon: 7 });
+            return;
         }
         loadingAjax('/machine/getGoodReplenish', 'post', JSON.stringify({ machineId: machineSetData.machineId }), sessionStorage.token, '', '', layer).then(res => {
             repairInvoiceData = res.data;
@@ -2769,9 +2779,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 清除货道故障
     $('.clearingBtn').click(function () {
-        if(editPermissionsFlag!=1){
-            layer.msg('您不是该设备管理员!',{icon:7});
-            return ;
+        if (editPermissionsFlag != 1) {
+            layer.msg('您不是该设备管理员!', { icon: 7 });
+            return;
         }
         layer.confirm('确定清除货道故障？', function (index) {
             layer.close(index);
@@ -2802,7 +2812,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if (xhr.response.size < 50) {
                     layer.msg('导出失败', { icon: 2 })
                     return
-                  } 
+                }
                 var content = xhr.response;
                 var fileName = `${sessionStorage.machineName}售货机列表.xls`
                 var elink = document.createElement('a');
@@ -2901,8 +2911,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     // 展板选择商品
     $('.relative1').click(function () {
-        if(panelIndex==2){
-            return ;
+        if (panelIndex == 2) {
+            return;
         }
         popupShow('goodsCont', 'goodsBox')
         if (goodsTableIns) {
@@ -2977,9 +2987,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     // 撤销货道
     $('.undoAisleBtn').click(function () {
-        if(editPermissionsFlag!=1){
-            layer.msg('您不是该设备管理员!',{icon:7});
-            return ;
+        if (editPermissionsFlag != 1) {
+            layer.msg('您不是该设备管理员!', { icon: 7 });
+            return;
         }
         layer.confirm('确定撤销货道?', function (index) {
             layer.close(index);
@@ -3078,7 +3088,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 if (xhr.response.size < 50) {
                     layer.msg('导出失败', { icon: 2 })
                     return
-                  }
+                }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
                 var fileName = `${machineSetData.info}撤货记录.xls`
@@ -3126,5 +3136,5 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('body').click(function () {
         $('.ListOperation').fadeOut();
         operationFlag = null;
-      });
+    });
 });

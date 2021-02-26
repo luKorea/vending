@@ -1,0 +1,29 @@
+@import '../../common/common.scss';
+.pushOrderBox{
+    width: 500px;
+    .pushOrderBody{
+        padding: 20px;
+        box-sizing: border-box;
+        .pushuBtnCon{
+            padding: 20px 0;
+            text-align: center;
+            label{
+                display: inline-block;
+                height: 32px;
+                line-height: 30px;
+                font-size: 12px;
+                padding: 0 10px;
+                background-color: #be954a;
+                color: #fff;
+                white-space: nowrap;
+                text-align: center;
+                border: none;
+                border-radius: 2px;
+                cursor: pointer;
+            }
+            input{
+                display: none;
+            }
+        }
+    }
+}

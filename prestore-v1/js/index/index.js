@@ -1,6 +1,7 @@
 //JavaScript代码区域
 import '../../MyCss/indexCss/index.scss';
 import { navList } from '../../assets/public/navData.js'
+import { loadAjax, popupShow, popupHide, dataLoading, closeData, wholeNum, numFormat2, getQueryString } from '../../common/common.js';
 // if (!sessionStorage.token) {
 //     window.location.href = "login.html"
 // }
@@ -20,34 +21,21 @@ window.onload = function () {
 
         // 导航切换事件
         $('.navClick').click(function () {
-            if (navStr.indexOf($(this).attr('navId')) == -1) {
-                tabAdd($(this).attr('navId'), $(this).html());
-                tabChange($(this).attr('navId'));
-                navStr.push($(this).attr('navId'));
-            } else {
-                tabChange($(this).attr('navId'))
-            }
+          console.log($(this).attr('navId'));
+          history.replaceState(null, "", '?theModule=' + $(this).attr('navId'));
+          $('.wrapContent').html(navList[$(this).attr('navId')]);
         })
-        function getQueryString(key) {
-            // 获取参数
-            var url = window.location.search;
-            // 正则筛选地址栏
-            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-            // 匹配目标参数
-            var result = url.substr(1).match(reg);
-            //返回参数值
-            return result ? decodeURIComponent(result[2]) : null;
-        }
  
         var theModule1 = getQueryString('theModule');
-        if (theModule1) {
-            // console.log(theModule1)
-          var  theModule = theModule1.split('-');
-            if (theModule[0] != 22 && theModule) {
-                tabAdd(theModule[0], theModule[1]);
-                tabChange(theModule[0]);
-                navStr.push(theModule[0]);
-            }
+        if (theModule1||theModule1==0) {
+            $('.navClick').eq(theModule1).addClass('layui-this').siblings().removeClass('layui-this');
+            // $('.wrapContent iframe').attr('src',navList[theModule1])
+            $('.wrapContent').html(navList[theModule1])
+        
+        }else{
+            $('.navClick').eq(theModule1).addClass('layui-this').siblings().removeClass('layui-this');
+            $('.wrapContent').html(navList[0])
+            // $('.wrapContent iframe').attr('src',navList[0])
         }
 
         // 点击导航分类，其他分类收起

@@ -25,3 +25,30 @@
         box-sizing: border-box;
     }
 }
+.editBox{
+    width: 500px;  
+    .editBody{
+        padding: 20px;
+        box-sizing: border-box;
+    }
+}
+.TopUpRecordContent{
+    .topUpRecordBox{
+        width: 700px;
+        margin: 3vh auto 0 ;
+        .topUpRecordBody{
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    }
+}
+.useRecordContent{
+    .useRecordBox{
+        width: 550px;
+        margin: 3vh auto 0 ;
+        .useRecordBody{
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    }
+}

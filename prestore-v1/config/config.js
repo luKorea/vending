@@ -3,7 +3,8 @@ const webpack = require('webpack');
 var entry = {
         index: './js/index/index.js',
         login:'./js/login/login.js',
-        merchantsList:'./js/merchants/merchantsList.js'
+        merchantsList:'./js/merchants/merchantsList.js',
+        orderList:'./js/order/orderList.js'
     }
     //页面配置
 var htmlConfig = [
@@ -15,6 +16,9 @@ var htmlConfig = [
     },
     {
         name: "merchantsList",
+    },
+    {
+        name: "orderList",
     },
 ];
 module.exports = {

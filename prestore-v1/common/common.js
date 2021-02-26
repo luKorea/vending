@@ -75,6 +75,23 @@ function mulCaluter(arg1, arg2) {
     } catch (e) {}
     return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
 };
+// 获取地址栏参数
+function getQueryString(key) {
+    // 获取参数
+    var url = window.location.search;
+    // 正则筛选地址栏
+    var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+    // 匹配目标参数
+    var result = url.substr(1).match(reg);
+    //返回参数值
+    return result ? decodeURIComponent(result[2]) : null;
+}
+// table固定列对齐方法
+function fixedFun(){
+    $(".layui-table-main tr").each(function (index ,val) {
+      $($(".layui-table-fixed .layui-table-body tbody tr")[index]).height($(val).height());
+  });
+  }
 // 正则判断密码是否符合规定
 function passRegular(that) {
     var reg = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,.\/]).{6,64}$/;
@@ -101,7 +118,7 @@ function ChineseREgular(that) {
 //   正则判断只能输入正整数
 function wholeNum(num) {
      var re = /^\d*$/;
-        console.log(re.test(num))
+        // console.log(re.test(num))
    var flag=re.test(num);
    return flag
 };
@@ -157,5 +174,7 @@ export {
     closeData,
     wholeNum,
     numFormat2,
-    mulCaluter
+    mulCaluter,
+    getQueryString,
+    fixedFun
 }

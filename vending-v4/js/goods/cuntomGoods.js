@@ -168,6 +168,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
       } else if (res.code == 405) {
         $('.hangContent').show();
       }
+      fixedFun();
     }
 
   });
