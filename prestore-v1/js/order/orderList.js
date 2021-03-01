@@ -121,7 +121,50 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 //    点击导入订单
     $('.pushBtnShow').click(function(){
         popupShow('.pushOrderContent','.pushOrderBox');
+    });
+    // 导入订单
+     // 导入销售经理
+     $('#pushImg').change(function (e) {
+        if (!$(this).val()) {
+            return;
+        }
+        var that = this;
+        var upDetails = new FormData();
+        upDetails.append('file', e.target.files[0]);
+        dataLoading();
+        $.ajax({
+            type: 'post',
+            url: `${Vapi}/order/excelOrder`,
+            processData: false,
+            contentType: false,
+            timeout: 60000,
+            headers: {
+                token:sessionStorage.token,
+            },
+            data: upDetails,
+            success: function (res) {
+                closeData();
+                $(that).val('')
+                if (res.code == 200) {
+                    layer.msg(res.message, { icon: 1 });
+                    tableIns.reload({
+                        where: {}
+                    })
+                    popupHide('.pushOrderContent ', '.pushOrderBox')
+                } else {
+                    layer.msg(res.message, { icon: 7 });
+                }
+            },
+            error: function (err) {
+                $(that).val('');
+                closeData();
+                $('.maskSpan').removeClass('maskIcon')
+                layer.msg('服务器请求超时', { icon: 2 })
+            }
+        })
     })
+
+    
     $('body').click(function () {
         $('.ListOperation').fadeOut();
         operationFlag = null;

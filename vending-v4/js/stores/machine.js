@@ -1510,13 +1510,19 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     function againFun(res) {
         // console.log(res)
         wayList = [
-            [], [], [], [], [], []
+            // [], [], [], [], [], [],[]
         ];
         wayFlagArr = res.data
         res.data.forEach(item => {
             // console.log(item.row)
             if (item.row) {
-                wayList[item.row - 1].push(item)
+                if(!(wayList[item.row - 1])){
+                    wayList[item.row - 1]=[];
+                    wayList[item.row - 1].push(item)
+                }else{
+                    wayList[item.row - 1].push(item)
+                }
+                
             }
 
         })
