@@ -16,9 +16,18 @@
                 </div>
                 <div class="newKeyContent">
                     <div class="newKeyItem">
+                        <label for="">下单时间</label>
+                        <div>
+                            <input style="text-align: center;" type="text" class="layui-input" id="test6"
+                                autocomplete="off" placeholder=" - ">
+                        </div>
+                    </div>
+                </div>
+                <div class="newKeyContent">
+                    <div class="newKeyItem">
                         <label for="">订单编号</label>
                         <div class="addMember">
-                            <input type="text"  name="keyMerchants">
+                            <input type="text"  name="orderId">
                         </div>
                     </div>
                 </div>
@@ -26,7 +35,7 @@
                     <div class="newKeyItem">
                         <label for="">订单码</label>
                         <div class="addMember">
-                            <input type="text"  name="keyBIC">
+                            <input type="text"  name="orderYard">
                         </div>
                     </div>
                 </div>
@@ -34,7 +43,7 @@
                     <div class="newKeyItem">
                         <label for="">商家ID</label>
                         <div class="addMember">
-                            <input type="text"  name="keyBIC">
+                            <input type="text"  name="bicId">
                         </div>
                     </div>
                 </div>
@@ -42,7 +51,7 @@
                     <div class="newKeyItem">
                         <label for="">商家名称</label>
                         <div class="addMember">
-                            <input type="text"  name="keyBIC">
+                            <input type="text"  name="companyName">
                         </div>
                     </div>
                 </div>
@@ -82,6 +91,12 @@
                         <label for="pushImg">导入订单</label>
                         <input type="file" id="pushImg">
                     </div>
+                </div>
+                <div class="message">
+                  <div class="messageTitle">导入结果说明:</div>
+                  <div class="import_fail">
+                    <!-- <p>第10条数据,未按要求输入数据。</p> -->
+                  </div>
                 </div>
             </div>
         </div>

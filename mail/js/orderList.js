@@ -237,13 +237,10 @@ function Refresh() {
         setTimeout(function () {
             ordertListBox.refresh();
             document.getElementById("ordertListBox").querySelector(".pullDownLabel").innerHTML = "";
-        }, 1000);//模拟qq下拉刷新显示成功效果
-        /****remember to refresh after  action completed！ ---yourId.refresh(); ----| ****/
+        }, 1000);
     }, 1000);
 }
 
 function Load() {
-    // setTimeout(function () {// <-- Simulate network congestion, remove setTimeout from production!
-    ordertListBox.refresh();/****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
-    // }, 500);
+    ordertListBox.refresh();
 }

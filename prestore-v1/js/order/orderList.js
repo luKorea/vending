@@ -1,6 +1,6 @@
 import '../../MyCss/order/orderList.scss';
-import { loadAjax, popupShow, popupHide, dataLoading, closeData, wholeNum, numFormat2, mulCaluter,fixedFun } from '../../common/common.js';
-layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
+import { loadAjax, popupShow, popupHide, dataLoading, closeData, wholeNum, numFormat2, mulCaluter, fixedFun, getKeyTime, timeFlag } from '../../common/common.js';
+layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
     var $ = layui.jquery,
         table = layui.table,
         layer = layui.layer,
@@ -8,54 +8,66 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         util = layui.util,
         tree = layui.tree,
         form = layui.form,
-        token = sessionStorage.token;
+        laydate = layui.laydate,
+        token = sessionStorage.token,
+        startTime = getKeyTime().startTime,
+        endTime = getKeyTime().endTime;
+    laydate.render({
+        elem: '#test6',
+        range: true,
+        value: getKeyTime().keyTimeData,
+        done: function (value) {
+            var timerKey = value.split(' - ');
+            startTime = timerKey[0];
+            endTime = timerKey[1];
+        }
+    });
     var tableIns = table.render({
         elem: '#tableTest',
-        url: `${Vapi}/company/getCompany`,
+        url: `${Vapi}/order/getOrder`,
         method: 'post',
         contentType: "application/json",
         headers: {
             token,
         },
         cols: [[
-            { field: 'bicId', width: 180, title: '订单编号',  align: 'center',templet:function(d){
-                return d.bicId+d.bicId
-            } },
-            { field: 'companyName', width: 180, title: '订单码', align: 'center' },
+            { field: 'orderId', width: 180, title: '订单编号', align: 'center', },
+            { field: 'orderYard', width: 180, title: '订单码', align: 'center' },
             { field: 'bicId', width: 160, title: '商家ID', align: 'center' },
             { field: 'companyName', width: 160, title: '商家名称', align: 'center' },
-            { field: 'bicId', width: 160, title: '订单履约状态', align: 'center' },
-            { field: 'bicId', width: 160, title: '是否取消', align: 'center' },
-            { field: 'bicId', width: 160, title: '是否拦截', align: 'center' },
-            { field: 'bicId', width: 160, title: '拦截原因', align: 'center' },
-            { field: 'bicId', width: 160, title: '合并批次号', align: 'center' },
-            { field: 'bicId', width: 160, title: '入库件数', align: 'center' },
-            { field: 'bicId', width: 160, title: '质检机构', align: 'center' },
-            { field: 'bicId', width: 160, title: '质检结果', align: 'center' },
-            { field: 'bicId', width: 160, title: '复检结果', align: 'center' },
-            { field: 'bicId', width: 160, title: '计划发货快递', align: 'center' },
-            { field: 'bicId', width: 160, title: '实际发货快递', align: 'center' },
-            { field: 'bicId', width: 160, title: '快递单号', align: 'center' },
-            { field: 'bicId', width: 160, title: '收货省份', align: 'center' },
-            { field: 'bicId', width: 180, title: '下单时间', align: 'center' },
-            { field: 'bicId', width: 180, title: '入库时间', align: 'center' },
-            { field: 'bicId', width: 180, title: '送检时间', align: 'center' },
-            { field: 'bicId', width: 180, title: '质检完成时间', align: 'center' },
-            { field: 'bicId', width: 180, title: '出库时间', align: 'center' },
-            { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo',fixed: 'right', align: 'center' },
+            { field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center' },
+            { field: 'cancelStr', width: 160, title: '是否取消', align: 'center' },
+            { field: 'interceptStr', width: 160, title: '是否拦截', align: 'center' },
+            { field: 'interceptCause', width: 160, title: '拦截原因', align: 'center' },
+            { field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center' },
+            { field: 'storageNumber', width: 160, title: '入库件数', align: 'center' },
+            { field: 'testingInstitutes', width: 160, title: '质检机构', align: 'center' },
+            { field: 'qualityResult', width: 160, title: '质检结果', align: 'center' },
+            { field: 'recheckResult', width: 160, title: '复检结果', align: 'center' },
+            { field: 'planExpress', width: 160, title: '计划发货快递', align: 'center' },
+            { field: 'realityExpress', width: 160, title: '实际发货快递', align: 'center' },
+            { field: 'expressNumber', width: 160, title: '快递单号', align: 'center' },
+            { field: 'placeReceipt', width: 160, title: '收货省份', align: 'center' },
+            { field: 'orderTimeStr', width: 180, title: '下单时间', align: 'center' },
+            { field: 'storageTimeStr', width: 180, title: '入库时间', align: 'center' },
+            { field: 'inspectTimeStr', width: 180, title: '送检时间', align: 'center' },
+            { field: 'accomplishTimeStr', width: 180, title: '质检完成时间', align: 'center' },
+            { field: ' deliveryTime', width: 180, title: '出库时间', align: 'center' },
+            // { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo',fixed: 'right', align: 'center' },
         ]]
         , id: 'tableId'
         , page: true,
         loading: true,
-        even:true,
+        even: true,
         request: {
             'pageName': 'pageNum',
             'limitName': 'pageSize'
         },
         where: {
+            startTime,
+            endTime,
         },
         parseData: function (res) {
-            // console.log(res)
             //res 即为原始返回的数据
             if (res.code == 200) {
                 return {
@@ -84,17 +96,25 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             fixedFun();
         }
     });
-     // 关闭弹窗
-     $('.playHeader .close').click(function () {
+    // 关闭弹窗
+    $('.playHeader .close').click(function () {
         $(this).parent().parent().addClass('margin0')
         $(this).parents('.maskContnet').fadeOut();
     });
     // 查询
     $('.queryBtnClick').click(function () {
+        if (timeFlag(startTime, endTime)) {
+            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            return;
+        }
         tableIns.reload({
             where: {
-                // companyName: $('.addMember input[name="keyMerchants"]').val(),
-                // bicId: $('.addMember input[name="keyBIC"]').val()
+                orderId: $('.newKeyContent input[name="orderId"]').val(),
+                orderYard: $('.newKeyContent input[name="orderYard"]').val(),
+                bicId: $('.newKeyContent input[name="bicId"]').val(),
+                companyName: $('.newKeyContent input[name="companyName"]').val(),
+                startTime,
+                endTime,
             }
         })
     });
@@ -118,13 +138,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             })
         }
     });
-//    点击导入订单
-    $('.pushBtnShow').click(function(){
-        popupShow('.pushOrderContent','.pushOrderBox');
+    //    点击导入订单
+    $('.pushBtnShow').click(function () {
+        popupShow('.pushOrderContent', '.pushOrderBox');
     });
     // 导入订单
-     // 导入销售经理
-     $('#pushImg').change(function (e) {
+    // 导入销售经理
+    $('#pushImg').change(function (e) {
         if (!$(this).val()) {
             return;
         }
@@ -139,7 +159,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             contentType: false,
             timeout: 60000,
             headers: {
-                token:sessionStorage.token,
+                token: sessionStorage.token,
             },
             data: upDetails,
             success: function (res) {
@@ -149,10 +169,22 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     layer.msg(res.message, { icon: 1 });
                     tableIns.reload({
                         where: {}
-                    })
-                    popupHide('.pushOrderContent ', '.pushOrderBox')
-                } else {
+                    });
+                    $('.pushOrderBox .message .import_fail').html('全部导入成功')
+                    // popupHide('.pushOrderContent ', '.pushOrderBox')
+                }else if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    setTimeout(__ => {
+                        window.parent.location.href = "login.html";
+                    }, 1500)
+                }
+                else {
                     layer.msg(res.message, { icon: 7 });
+                    if(res.data.length>0){
+                        pushLoseFin(res.data);
+                    }else{
+                        $('.pushOrderBox .message .import_fail').html('导入失败')
+                    }
                 }
             },
             error: function (err) {
@@ -163,8 +195,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             }
         })
     })
+    // 导入失败提示方法
+    function pushLoseFin(list) {
+        var str = ''
+        list.forEach(item => {
+            var reg= 
+            str += `<p>${item.replace('null','')}</p>`
+        });
 
-    
+        $('.pushOrderBox .message .import_fail').html(str)
+    }
+
     $('body').click(function () {
         $('.ListOperation').fadeOut();
         operationFlag = null;

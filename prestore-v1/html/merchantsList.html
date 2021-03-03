@@ -77,6 +77,22 @@
                             <label>余额预警值<span>*</span></label>
                             <input type="number" name="moneyRemind">
                         </li>
+                        <li class="listFlex">
+                            <label>是否启用<span>*</span></label>
+                            <div>
+                                <form class="layui-form" lay-filter="">
+                                    <div class="switchContent">
+                                        <input type="checkbox" name="open" lay-skin="switch" lay-text="是|否"
+                                            checked style="display: none;">
+                                    </div>
+                                </form>
+                                
+                            </div>
+                        </li>
+                        <li class="listFlex">
+                            <label>备注</label>
+                            <input type="text" name="remark">
+                        </li>
                     </ul>
                 </div>
                 <div class="footers">
@@ -111,6 +127,10 @@
                         <li class="listFlex">
                             <label>充值金额<span>*</span></label>
                             <input type="number" name="topUpNum">
+                        </li>
+                        <li class="listFlex">
+                            <label>备注</label>
+                            <input type="text" name="remark">
                         </li>
                     </ul>
                 </div>
@@ -147,6 +167,10 @@
                             <label>调减余额<span>*</span></label>
                             <input type="number" name="reductionsNum">
                         </li>
+                        <li class="listFlex">
+                            <label>备注</label>
+                            <input type="text" name="remark">
+                        </li>
                     </ul>
                 </div>
                 <div class="footers">
@@ -182,6 +206,22 @@
                             <label>余额预警值<span>*</span></label>
                             <input type="number" name="moneyRemind">
                         </li>
+                        <li class="listFlex">
+                            <label>是否启用<span>*</span></label>
+                            <div>
+                                <form class="layui-form" lay-filter="">
+                                    <div class="switchContent">
+                                        <input type="checkbox" name="open" lay-skin="switch" lay-text="是|否"
+                                            checked style="display: none;">
+                                    </div>
+                                </form>
+                                
+                            </div>
+                        </li>
+                        <li class="listFlex">
+                            <label>备注</label>
+                            <input type="text" name="remark">
+                        </li>
                     </ul>
                 </div>
                 <div class="footers">
@@ -212,7 +252,7 @@
                 </div>
             </div>
         </div>
-        <!-- 使用记录 -->
+        <!-- 月份使用记录 -->
         <div class="useRecordContent maskContnet" >
             <div class="useRecordBox margin0 maskBoxCom">
                 <div class="playHeader">
@@ -230,11 +270,48 @@
                 </div>
             </div>
         </div>
+        <!-- 每天使用记录 -->
+        <div class="dayRecordContent maskContnet">
+            <div class="dayRecordBox maskBoxCom margin0">
+                <div class="playHeader">
+                    <span>(2020-03)使用记录</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="dayRecordBody">
+                    <div class="data-list data_list">
+                        <div class="list-table">
+                            <table class="layui-hide" id="dayTable" lay-filter="dayTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 当天订单 -->
+        <div class="dayOrderContent maskContnet">
+            <div class="dayOrderBox maskBoxCom margin0">
+                <div class="playHeader">
+                    <span>(2020-03)使用记录</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="dayOrderBody">
+                    <div class="data-list data_list">
+                        <div class="list-table">
+                            <table class="layui-hide" id="orderTable" lay-filter="orderTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- 操作部分 -->
         <ul class="ListOperation">
             <li class="topUpBtn">充值</li>
             <li class="reductionsBtn">调减</li>
             <li class="edit">编辑</li>
+            <li class="del">删除</li>
             <li class="top">充值/调减记录</li>
             <li class="use">使用记录</li>
         </ul>

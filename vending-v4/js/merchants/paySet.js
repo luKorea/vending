@@ -680,7 +680,6 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                         $('.uploadFlag').html('已上传');
                     } else if (index == 2) {
                         editUploadVal = res.data.src;
-                        console.log(editUploadVal)
                     }
                 } else {
                     layer.msg(res.message, { icon: 7 });

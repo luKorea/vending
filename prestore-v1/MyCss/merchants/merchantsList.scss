@@ -6,9 +6,9 @@
         box-sizing: border-box;
     }
 }
-.data-list{
+.data_list1{
     .layui-none{
-        width: 60%;
+        width: 80%;
     }
 }
 .topUPBox{
@@ -34,7 +34,7 @@
 }
 .TopUpRecordContent{
     .topUpRecordBox{
-        width: 700px;
+        width: 870px;
         margin: 3vh auto 0 ;
         .topUpRecordBody{
             padding: 10px;
@@ -44,9 +44,42 @@
 }
 .useRecordContent{
     .useRecordBox{
-        width: 550px;
+        width: 450px;
         margin: 3vh auto 0 ;
         .useRecordBody{
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .layui-table-body{
+            td{
+                cursor: pointer;
+            }
+        }
+    }
+}
+.layui-form-switch{
+    margin-top: 0;
+}
+.dayRecordContent{
+    .dayRecordBox{
+        width: 450px;
+        margin: 2vh auto 0 ;
+        .dayRecordBody{
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    }
+    .layui-table-body{
+        td{
+            cursor: pointer;
+        }
+    }
+}
+.dayOrderContent{
+    .dayOrderBox{
+        width: 1000px;
+        margin: 2vh auto 0 ;
+        .dayOrderBody{
             padding: 10px;
             box-sizing: border-box;
         }

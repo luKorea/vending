@@ -145,7 +145,7 @@ function numFormat2(num) {
       m = initialTime.getMonth(),
       d = initialTime.getDate(),
       //开始时间
-      startTime = (m==0?y-1:y) + '-' + ((m==0)?12: m < 10 ? '0' + (m) : (m)) + '-' + (d==31?30:d<10?'0'+d:d),
+      startTime = (m==0?y-1:y) + '-' + ((m==0)?12: m < 10 ? '0' + (m) : (m)) + '-' + (d==31?30:d>28?28:d<10?'0'+d:d),
       //结束时间
       endTime = y + '-' + ((m + 1) < 10 ? '0' + (m + 1) : (m + 1)) + '-' + (d<10?'0'+d:d);
     initialTime1 = startTime + ' - ' + endTime;
@@ -166,6 +166,13 @@ function numFormat2(num) {
     flagNum>=end1-start1?timeFlag3=false:timeFlag3=true;
     return timeFlag3
   }
+  // 时间戳转月份问题
+  function timeStampM(time) {
+    var myDate = new Date(time);
+    var y = myDate.getFullYear();
+    var m = (myDate.getMonth() + 1) < 10 ? '0' + (myDate.getMonth() + 1) : (myDate.getMonth() + 1);
+    return y + '-' + m 
+  }
 export {
     loadAjax,
     popupShow,
@@ -176,5 +183,8 @@ export {
     numFormat2,
     mulCaluter,
     getQueryString,
-    fixedFun
+    fixedFun,
+    getKeyTime,
+    timeFlag,
+    timeStampM
 }

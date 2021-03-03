@@ -21,7 +21,6 @@ window.onload = function () {
 
         // 导航切换事件
         $('.navClick').click(function () {
-          console.log($(this).attr('navId'));
           history.replaceState(null, "", '?theModule=' + $(this).attr('navId'));
           $('.wrapContent').html(navList[$(this).attr('navId')]);
         })

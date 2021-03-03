@@ -1,11 +1,17 @@
 @import '../../common/common.scss';
+.data_list1{
+    .layui-table-body{
+        td{
+            padding: 3px 0;
+        }
+    }
+}
 .pushOrderBox{
     width: 500px;
     .pushOrderBody{
-        padding: 20px;
+        padding: 10px;
         box-sizing: border-box;
         .pushuBtnCon{
-            padding: 20px 0;
             text-align: center;
             label{
                 display: inline-block;
@@ -24,6 +30,31 @@
             input{
                 display: none;
             }
+        }
+    }
+    .message{
+        padding: 10px 10px 20px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: start;
+        .messageTitle{
+            font-size: 12px;
+            color: #606266;
+            line-height: 40px;
+            box-sizing: border-box;
+            text-align: right;
+        }
+        .import_fail{
+            width: 70%;
+            // border: 1px solid #c0ccda;
+            border-radius: 5px;
+            padding: 10px;
+            margin-left: 10px;
+            max-height: 500px;
+            overflow-y: auto;
+            color: #333;
+            font-size: 12px;
+            line-height: 22px;
         }
     }
 }
