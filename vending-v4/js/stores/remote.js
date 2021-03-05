@@ -172,7 +172,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 end = ((start + chunkSize) >= file.size) ? file.size : start + chunkSize;
             fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
         };
-        loadNext();
+        // loadNext();
     })
     // 确认添加
     $('.footerBtn .RdetermineBtn').click(function () {

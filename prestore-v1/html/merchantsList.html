@@ -19,7 +19,7 @@
                     <div class="newKeyItem">
                         <label for="">商家ID</label>
                         <div class="addMember">
-                            <input type="text"  name="keyBIC">
+                            <input type="text" name="keyBIC">
                         </div>
                     </div>
                 </div>
@@ -27,11 +27,11 @@
                     <div class="newKeyItem">
                         <label for="">商家名称</label>
                         <div class="addMember">
-                            <input type="text"  name="keyMerchants">
+                            <input type="text" name="keyMerchants">
                         </div>
                     </div>
                 </div>
-              
+
                 <div class="newKeyContent">
                     <button type="button" class="layui-btn layui-btn-primary queryBtnClick">
                         <i class="layui-icon layui-icon-search"></i>
@@ -42,7 +42,18 @@
                     <button type="button" class="layui-btn layui-btn-primary addBtn">
                         <i class="layui-icon layui-icon-add-circle"></i>
                         <span>添加商家</span>
-
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary importBtn">
+                        <i class="layui-icon layui-icon-upload-drag"></i>
+                        <span>导入商家</span>
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary pushBtn">
+                        <i class="layui-icon layui-icon-download-circle"></i>
+                        <span>导出商家</span>
                     </button>
                 </div>
             </div>
@@ -82,12 +93,16 @@
                             <div>
                                 <form class="layui-form" lay-filter="">
                                     <div class="switchContent">
-                                        <input type="checkbox" name="open" lay-skin="switch" lay-text="是|否"
-                                            checked style="display: none;">
+                                        <input type="checkbox" name="open" lay-skin="switch" lay-text="是|否" checked
+                                            style="display: none;">
                                     </div>
                                 </form>
-                                
+
                             </div>
+                        </li>
+                        <li class="listFlex">
+                            <label>余额</label>
+                            <input type="number" name="balance">
                         </li>
                         <li class="listFlex">
                             <label>备注</label>
@@ -106,7 +121,7 @@
             </div>
         </div>
         <!-- 充值 -->
-        <div class="maskContnet topUPContent" >
+        <div class="maskContnet topUPContent">
             <div class="topUPBox maskBoxCom margin0">
                 <div class="playHeader">
                     <span>充值</span>
@@ -196,11 +211,11 @@
                     <ul class="inputCont">
                         <li class="listFlex">
                             <label>商家名称<span>*</span></label>
-                            <input type="text" name="companyName" >
+                            <input type="text" name="companyName">
                         </li>
                         <li class="listFlex">
                             <label>商家ID<span>*</span></label>
-                            <input type="text" name="bicId" >
+                            <input type="text" name="bicId">
                         </li>
                         <li class="listFlex">
                             <label>余额预警值<span>*</span></label>
@@ -211,11 +226,11 @@
                             <div>
                                 <form class="layui-form" lay-filter="">
                                     <div class="switchContent">
-                                        <input type="checkbox" name="open" lay-skin="switch" lay-text="是|否"
-                                            checked style="display: none;">
+                                        <input type="checkbox" name="open" lay-skin="switch" lay-text="是|否" checked
+                                            style="display: none;">
                                     </div>
                                 </form>
-                                
+
                             </div>
                         </li>
                         <li class="listFlex">
@@ -253,7 +268,7 @@
             </div>
         </div>
         <!-- 月份使用记录 -->
-        <div class="useRecordContent maskContnet" >
+        <div class="useRecordContent maskContnet">
             <div class="useRecordBox margin0 maskBoxCom">
                 <div class="playHeader">
                     <span>使用记录</span>
@@ -301,6 +316,52 @@
                     <div class="data-list data_list">
                         <div class="list-table">
                             <table class="layui-hide" id="orderTable" lay-filter="orderTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 导入商家 -->
+        <div class="pushOrderContent maskContnet" >
+            <div class="pushOrderBox maskBoxCom margin0">
+                <div class="playHeader">
+                    <span>导入商家</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <p>若商家在系统中已存在，余额将会以系统中余额为准，不做修改!</p>
+                <div class="pushOrderBody ">
+                    <div class="newKeyContent">
+                        <div class="pushuBtnCon">
+                            <label for="pushMerchants">导入商家</label>
+                            <input type="file" id="pushMerchants">
+                        </div>
+                    </div>
+                    <div class="newKeyContent" style="margin:15px 0 5px 15px ;">
+                        <a href="../assets/public/merchantsList.xls" class="dowloadX" download="商家导入模板.xls"
+                            style="color: #be954a;margin-top: 8px;">
+                            <img src="../img/sigh.png" alt="">
+                            <span>商家导入模板</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 失败提示 -->
+        <div class="catchContent maskContnet">
+            <div class="messageBox maskBoxCom margin0">
+                <div class="playHeader">
+                    <span>导入失败说明</span>
+                    <button class="close" type="button">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="messageBody">
+                    <div class="message">
+                        <div class="messageTitle">导入失败说明:</div>
+                        <div class="import_fail">
+                            <!-- <p>第10条数据,未按要求输入数据。</p> -->
                         </div>
                     </div>
                 </div>

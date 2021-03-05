@@ -4,7 +4,7 @@ var vApi='/api';
 function ajaxFun(url, type, userToken, data) {
     return $.ajax({
         type,
-        url:`/api${url}`,
+        url:`/fk/api${url}`,
         timeout: 30000,
         data,
         headers: {
@@ -158,7 +158,7 @@ function numFormat2(num) {
   }
   // 判断查询时间是否大于三个月
   function timeFlag(start,end){
-    console.log(start,end)
+    // console.log(start,end)
     var start1=new Date(start);
     var end1=new Date(end);
     var flagNum=24*60*60*1000*92;
