@@ -43,26 +43,27 @@ window.onload = function () {
         });
 
         //退出登录
-        function loginOut() {
-            loadingAjax('/user/logout', 'post', '', sessionStorage.token, '', '', '', layer).then((res) => {
-                // window.history.go(-1);
-                sessionStorage.token = '';
-                window.location.replace('login.html')
-            }).catch((err) => {
-                layer.msg(err.message)
-            })
-        }
+        // function loginOut() {
+        //     loadingAjax('/user/logout', 'post', '', sessionStorage.token, '', '', '', layer).then((res) => {
+        //         // window.history.go(-1);
+        //         sessionStorage.token = '';
+        //         window.location.replace('login.html')
+        //     }).catch((err) => {
+        //         layer.msg(err.message)
+        //     })
+        // }
 
-        $('.exitLogin').click(function () {
-            loginOut();
-        });
+        // $('.exitLogin').click(function () {
+        //     loginOut();
+        // });
         $('.determineBtn button').click(function () {
             popupHide('socketCont', 'sockotBox')
             loginOut();
         });
         // 退出登录
         $('.exitLogin').click(function(){
-            
+            sessionStorage.token='';
+            window.location.replace('login.html')
         })
     });
     javascript: window.history.forward(1);
