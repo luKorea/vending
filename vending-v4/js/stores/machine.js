@@ -289,11 +289,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 break;
             case 2:
                 getGoodsWay(machineSetData.machineId); //货道详情
-                Amachinedmin();
+                Amachinedmin();//获取是否设备管理员
                 goodKeyFlag = 1;
                 break;
             case 3:
                 panelFun(); //展板详情   
+                Amachinedmin();//获取是否设备管理员
                 goodKeyFlag = 2;
                 break;
             case 4:
@@ -1288,7 +1289,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                     <div title="${child.count}">数量:${child.count}</div>
                                     </div>
                                     </div>  
-                                    <div class="chooseCheck" data-tip="${child.goods_Name ? child.goods_Name : ''}" data-direction="bottom">
+                                    <div class="chooseCheck" >
                                         <span >${child.mail ? '(邮寄)' : ''} ${child.goods_Name ? child.goods_Name : '-'}</span>
                                     </div>
                                 </div>`
@@ -1305,7 +1306,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                         <div title="${child.count}">数量:${child.count}</div>
                                     </div>
                                     </div>  
-                                    <div class="chooseCheck" data-tip="${child.goods_Name ? child.goods_Name : ''}" data-direction="bottom">
+                                    <div class="chooseCheck" >
                                         <span >${child.mail == 1 ? '(邮寄)' : ''}${child.goods_Name ? child.goods_Name : ''}</span>
                                     </div>
                                 </div>`
@@ -1316,8 +1317,20 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
         $('.aisleGoodsCont').html(aisleStr);
         form.render('checkbox');
-        tooltip('.chooseCheck', { transition: true, time: 200 });
+        // tooltip('.chooseCheck', { transition: true, time: 200 });
     };
+    $('.aisleGoodsCont').on('mouseenter','.chooseCheck',function(){
+        // console.log($(this).children('span').html())
+        $('.tipContent').css({
+            left: $(this).offset().left - 35 + 'px',
+            top: $(this).offset().top + 35 + 'px'
+          }).fadeIn();
+        $('.tipContent .tipHtml').html($(this).children('span').html());
+
+    })
+    $('.aisleGoodsCont').on('mouseleave','.chooseCheck',function(){
+        $('.tipContent').fadeOut();
+    })
     // 判断页面打开后有没有输入独立密码
     var aisleType = null;
     sessionStorage.independentPass = '';
@@ -2618,6 +2631,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 添加展板
     var panelIndex = null;
     $('.addpanelBtn').click(function () {
+        if(editPermissionsFlag!=1){
+            layer.msg('您不是该设备管理员!', { icon: 7 });
+            return ; 
+        }
         $('.relative1 input').removeClass('cursorDefault');
         panelIndex = 1;
         $('.addPanelCont input[name="panelGoodsName"]').attr('IVal', '');
@@ -2673,7 +2690,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     })
     // 展板监听
     table.on('tool(panelTable)', function (obj) {
-        console.log(obj)
+        if(editPermissionsFlag!=1){
+            layer.msg('您不是该设备管理员!', { icon: 7 });
+            return ;
+        }
         if (obj.event == 'del') {
             layer.confirm('确定移除？', function (index) {
                 layer.close(index);

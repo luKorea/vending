@@ -1,0 +1,11 @@
+// document.write(`<link rel="icon" type="image/png" sizes="144x144" href="../../img/icon.png"/>`)
+// document.write(`<meta http-equiv="X-UA-Compatible" content="edge">`)
+// document.write(`<meta http-equiv="Expirse" content="0">`)
+// document.write(`<meta http-equiv="Pragma" content="no-cache">`)
+// document.write(`<meta http-equiv="Cache-control" content="no-cache">`)
+// document.write(`<meta http-equiv="Cache" content="no-cache">`)
+// document.write(`<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />`)
+document.write(`<script src="../../assets/public/jquery-3.1.1.min.js"></script>`);
+document.write(` <link rel="stylesheet" href="../../assets/public/hui.css">`)
+document.write(` <script src="../../assets/public/hui.js"></script>`)
+document.write(` <script src="../../assets/public/rem.js"></script>`)

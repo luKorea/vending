@@ -60,6 +60,10 @@ window.onload = function () {
             popupHide('socketCont', 'sockotBox')
             loginOut();
         });
+        // 退出登录
+        $('.exitLogin').click(function(){
+            
+        })
     });
     javascript: window.history.forward(1);
 }

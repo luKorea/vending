@@ -861,3 +861,27 @@ input:hover{
 .salesTwo .data-list-table .layui-form{
     /* width: 80%; */
 }
+.tipContent{
+    position: absolute;
+    width: 150px;
+    z-index: 10000;
+    display: none;
+}
+.tipContent .triangle{
+    margin-left: 72px;
+    width:0; 
+    height:0; 
+    border-left:6px solid transparent;
+    border-right:6px solid transparent;
+    border-bottom:6px solid rgba(0, 0, 0, 0.9);
+}
+.tipHtml{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 3px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 5px;
+    color: #fff;
+    word-wrap: break-word;
+    text-align: center;
+}
