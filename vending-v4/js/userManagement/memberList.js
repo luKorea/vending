@@ -116,7 +116,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     operationFlag = null;
   table.on('tool(test)', function (obj) {
     event.stopPropagation();
-    data = obj.data;
+      data = obj.data;
     memData = obj.data;
     // console.log(obj)
     uuID = data.uuid;
