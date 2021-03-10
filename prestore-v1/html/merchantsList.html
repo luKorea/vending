@@ -132,6 +132,10 @@
             <div class="topUpBody">
                 <ul class="inputCont">
                     <li class="listFlex">
+                        <label>商家ID</label>
+                        <input type="text" name="bicId" disabled>
+                    </li>
+                    <li class="listFlex">
                         <label>商家名称</label>
                         <input type="text" name="companyName" disabled>
                     </li>
@@ -163,13 +167,17 @@
     <div class="reductionsCOntent maskContnet">
         <div class="reductionsBox margin0 maskBoxCom">
             <div class="playHeader">
-                <span>调减</span>
+                <span>调减余额</span>
                 <button class="close" type="button">
                     <i class="layui-icon layui-icon-close"></i>
                 </button>
             </div>
             <div class="reductionsBody">
                 <ul class="inputCont">
+                    <li class="listFlex">
+                        <label>商家ID</label>
+                        <input type="text" name="bicId" disabled>
+                    </li>
                     <li class="listFlex">
                         <label>商家名称</label>
                         <input type="text" name="companyName" disabled>
@@ -179,7 +187,7 @@
                         <input type="number" name="balance" disabled>
                     </li>
                     <li class="listFlex">
-                        <label>调减余额<span>*</span></label>
+                        <label>调减金额<span>*</span></label>
                         <input type="number" name="reductionsNum">
                     </li>
                     <li class="listFlex">

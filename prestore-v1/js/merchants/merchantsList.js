@@ -1,7 +1,19 @@
 import '../../MyCss/merchants/merchantsList.scss';
-import { loadAjax, popupShow, popupHide, dataLoading, closeData, wholeNum, numFormat2, mulCaluter, fixedFun, timeStampM } from '../../common/common.js';
+import {
+    loadAjax,
+    popupShow,
+    popupHide,
+    dataLoading,
+    closeData,
+    wholeNum,
+    numFormat2,
+    mulCaluter,
+    fixedFun,
+    timeStampM
+} from '../../common/common.js';
+
 layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
-    if(!sessionStorage.token){
+    if (!sessionStorage.token) {
         window.parent.location.href = "login.html";
     }
     var $ = layui.jquery,
@@ -21,10 +33,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
         },
         cols: [[
-            { field: 'goods_images', width: 35, title: '', templet: "#imgtmp", align: 'center' },
-            { field: 'bicId', width: 160, title: '商家ID', align: 'center' },
-            { field: 'companyName', width: 180, title: '商家名称', align: 'center' },
-            { field: 'startUsingStr', width: 110, title: '是否启用', align: 'center' },
+            {field: 'goods_images', width: 35, title: '', templet: "#imgtmp", align: 'center'},
+            {field: 'bicId', width: 160, title: '商家ID', align: 'center'},
+            {field: 'companyName', width: 180, title: '商家名称', align: 'center'},
+            {field: 'startUsingStr', width: 110, title: '是否启用', align: 'center'},
             {
                 field: 'balance', width: 160, title: '余额', align: 'center', templet: function (d) {
                     return numFormat2(d.balance)
@@ -45,8 +57,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     return numFormat2(d.moneyRemind)
                 }
             },
-            { field: 'remark', width: 180, title: '备注', align: 'center' },
-            { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },
+            {field: 'remark', width: 180, title: '备注', align: 'center'},
+            {field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', align: 'center'},
         ]]
         , id: 'tableId'
         , page: true,
@@ -56,8 +68,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             'pageName': 'pageNum',
             'limitName': 'pageSize'
         },
-        where: {
-        },
+        where: {},
         parseData: function (res) {
             //res 即为原始返回的数据
             if (res.code == 200) {
@@ -79,7 +90,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         },
         done: function (res) {
             if (res.code == 403) {
-                layer.msg('登录过期,请重新登录', { icon: 2 })
+                layer.msg('登录过期,请重新登录', {icon: 2})
                 setTimeout(__ => {
                     window.parent.location.href = "login.html";
                 }, 1500)
@@ -141,7 +152,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 確定添加
     $('.addMBox .determine1').click(function () {
         if (!($('.addMBody input[name="companyName"]').val() && $('.addMBody input[name="bicId"]').val() && $('.addMBody input[name="moneyRemind"]').val())) {
-            layer.msg('带*为必填', { icon: '7' });
+            layer.msg('带*为必填', {icon: '7'});
             return;
         }
         // if (!(wholeNum($('.addMBody input[name="moneyRemind"]').val()))) {
@@ -155,11 +166,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             moneyRemind: mulCaluter(Number($('.addMBody input[name="moneyRemind"]').val()), 100),
             startUsing: $('.addMBox input[name="open"]').prop('checked') ? 2 : 1,
             remark: $('.addMBody input[name="remark"]').val(),
-            balance:mulCaluter(Number($('.addMBody input[name="balance"]').val()), 100),
+            balance: mulCaluter(Number($('.addMBody input[name="balance"]').val()), 100),
             // mulCaluter(Number($('.topUPBox input[name="topUpNum"]').val()), 100),
         });
         loadAjax('/company/addCompany', 'post', sessionStorage.token, addCompanyObj, layer, 'mask', '.addMerchantsCont', '.addMBox').then(res => {
-            layer.msg(res.message, { icon: 1 });
+            layer.msg(res.message, {icon: 1});
             tableIns.reload({
                 where: {}
             });
@@ -169,11 +180,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             $('.addMBody input[name="balance"]').val('');
             $('.addMBody input[name="remark"]').val('');
         }).catch(err => {
-            layer.msg(err.message, { icon: 2 });
+            layer.msg(err.message, {icon: 2});
         })
     })
     // 点击充值
     $('.ListOperation .topUpBtn').click(function () {
+        $('.topUPBox input[name="bicId"]').val(companyData.bicId)
         $('.topUPBox input[name="companyName"]').val(companyData.companyName)
         $('.topUPBox input[name="balance"]').val(companyData.balance)
         popupShow('.topUPContent', '.topUPBox')
@@ -181,11 +193,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 确定充值
     $('.topUPBox .determine1').click(function () {
         if (!($('.topUPBox input[name="topUpNum"]').val())) {
-            layer.msg('带*为必填', { icon: 7 })
+            layer.msg('带*为必填', {icon: 7})
             return;
         }
         if (!($('.topUPBox input[name="topUpNum"]').val() > 0)) {
-            layer.msg('充值金额必须大于0', { icon: 7 });
+            layer.msg('充值金额必须大于0', {icon: 7});
             return;
         }
         layer.confirm('确定充值?', function (index) {
@@ -198,14 +210,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 remark: $('.topUPBox input[name="remark"]').val()
             });
             loadAjax('/company/addBalance', 'post', sessionStorage.token, topUpObj, layer, 'mask', '.topUPContent', '.topUPBox').then(res => {
-                layer.msg(res.message, { icon: 1 });
+                layer.msg(res.message, {icon: 1});
                 tableIns.reload({
                     where: {}
                 });
                 $('.topUPBox input[name="topUpNum"]').val('');
                 $('.topUPBox input[name="remark"]').val('')
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 });
+                layer.msg(err.message, {icon: 2});
             })
         })
 
@@ -216,6 +228,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
     // 点击核销余额
     $('.ListOperation .reductionsBtn').click(function () {
+        $('.reductionsBox input[name="bicId"]').val(companyData.bicId)
         $('.reductionsBox input[name="companyName"]').val(companyData.companyName)
         $('.reductionsBox input[name="balance"]').val(companyData.balance)
         popupShow('.reductionsCOntent', '.reductionsBox');
@@ -223,11 +236,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 确定核销
     $('.reductionsBox .determine1').click(function () {
         if (!($('.reductionsBox input[name="reductionsNum"]').val())) {
-            layer.msg('带*为必填', { icon: 7 })
+            layer.msg('带*为必填', {icon: 7})
             return;
         }
         if (!($('.reductionsBox input[name="reductionsNum"]').val() > 0)) {
-            layer.msg('充值金额必须大于0', { icon: 7 });
+            layer.msg('调减金额必须大于0', {icon: 7});
             return;
         }
         layer.confirm('确定调减?', function (index) {
@@ -239,14 +252,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 remark: $('.reductionsBox input[name="remark"]').val()
             });
             loadAjax('/company/subBalance', 'post', sessionStorage.token, reductionObj, layer, 'mask', '.reductionsCOntent', '.reductionsBox').then(res => {
-                layer.msg(res.message, { icon: 1 });
+                layer.msg(res.message, {icon: 1});
                 tableIns.reload({
                     where: {}
                 });
                 $('.reductionsBox input[name="reductionsNum"]').val('');
                 $('.reductionsBox input[name="remark"]').val('')
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 });
+                layer.msg(err.message, {icon: 2});
             })
         })
     });
@@ -267,7 +280,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 确定编辑
     $('.editBox .determine1').click(function () {
         if (!($('.editBox input[name="companyName"]').val() && $('.editBox input[name="bicId"]').val() && $('.editBox input[name="moneyRemind"]').val())) {
-            layer.msg('带*为必填', { icon: '7' });
+            layer.msg('带*为必填', {icon: '7'});
             return;
         }
         // if (!(wholeNum($('.editBox input[name="moneyRemind"]').val()))) {
@@ -284,12 +297,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             remark: $('.editBox input[name="remark"]').val(),
         });
         loadAjax('/company/updateCompany', 'post', sessionStorage.token, editCompanyObj, layer, 'mask', '.editContent', '.editBox').then(res => {
-            layer.msg(res.message, { icon: 1 });
+            layer.msg(res.message, {icon: 1});
             tableIns.reload({
                 where: {}
             });
         }).catch(err => {
-            layer.msg(err.message, { icon: 2 });
+            layer.msg(err.message, {icon: 2});
         })
     })
     // 取消编辑
@@ -310,18 +323,19 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 companyId: companyData.companyId,
             };
             loadAjax('/company/deleteCompanyId', 'get', sessionStorage.token, delObj, layer, 'mask').then(res => {
-                layer.msg(res.message, { icon: 1 });
+                layer.msg(res.message, {icon: 1});
                 tableIns.reload({
                     where: {}
                 });
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 });
+                layer.msg(err.message, {icon: 2});
             })
         })
     })
 
     // 充值调减记录部分
     var TopUpIns = null;
+
     function topUpFun() {
         TopUpIns = table.render({
             elem: '#TopUpTable',
@@ -339,7 +353,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }
                 },
                 {
-                    field: 'money', width: 160, title: '充值/调减余额', align: 'center', templet: function (d) {
+                    field: 'money', width: 160, title: '充值/调减金额', align: 'center', templet: function (d) {
                         if (d.flag == 1) {
                             return '-' + numFormat2(d.money)
                         } else {
@@ -353,7 +367,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         return numFormat2(d.laterBalance)
                     }
                 },
-                { field: 'remark', width: 160, title: '备注', align: 'center' },
+                {field: 'remark', width: 160, title: '备注', align: 'center'},
                 {
                     field: 'logTime', width: 180, title: '充值/调减时间', align: 'center'
                 },
@@ -390,7 +404,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             done: function (res) {
                 if (res.code == 403) {
-                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    layer.msg('登录过期,请重新登录', {icon: 2})
                     setTimeout(__ => {
                         window.parent.location.href = "login.html";
                     }, 1500)
@@ -417,6 +431,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     // 使用记录
     var useIns = null;
+
     function useFun() {
         useIns = table.render({
             elem: '#useTable',
@@ -437,7 +452,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 },
                 {
                     field: 'monthMoney', width: 200, title: '使用金额', align: 'center', templet: function (d) {
-                        if (d.monthMoney||d.monthMoney==0) {
+                        if (d.monthMoney || d.monthMoney == 0) {
                             return numFormat2(d.monthMoney)
                         } else {
                             return '-'
@@ -477,7 +492,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             done: function (res) {
                 if (res.code == 403) {
-                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    layer.msg('登录过期,请重新登录', {icon: 2})
                     setTimeout(__ => {
                         window.parent.location.href = "login.html";
                     }, 1500)
@@ -486,6 +501,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             }
         });
     }
+
     // 使用记录
     $('.ListOperation .use').click(function () {
         if (useIns) {
@@ -519,6 +535,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     //   每日使用情况
     var dayIns = null;
+
     function dayUseFun() {
         dayIns = table.render({
             elem: '#dayTable',
@@ -528,7 +545,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 token,
             },
             cols: [[
-                { field: 'day', width: 180, title: '使用时间', align: 'center' },
+                {field: 'day', width: 180, title: '使用时间', align: 'center'},
                 {
                     field: 'money', width: 200, title: '使用金额', align: 'center', templet: function (d) {
                         return numFormat2(d.money)
@@ -571,7 +588,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             done: function (res) {
                 if (res.code == 403) {
-                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    layer.msg('登录过期,请重新登录', {icon: 2})
                     setTimeout(__ => {
                         window.parent.location.href = "login.html";
                     }, 1500)
@@ -595,39 +612,44 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
     // 每日订单
     var orderIns = null;
+
     function dayOrderFun(data) {
         orderIns = table.render({
             elem: '#orderTable',
             cols: [[
-                { field: 'orderId', width: 180, title: '订单编号', align: 'center', },
-                { field: 'orderYard', width: 180, title: '订单码', align: 'center' },
-                { field: 'flagStr', width: 130, title: '扣费状态', align: 'center' },
-                { field: 'expressMoney', width: 130, title: '物流费用', align: 'center',templet:function(d){
+                {field: 'orderId', width: 180, title: '订单编号', align: 'center',},
+                {field: 'orderYard', width: 180, title: '订单码', align: 'center'},
+                {field: 'flagStr', width: 130, title: '扣费状态', align: 'center'},
+                {
+                    field: 'expressMoney', width: 130, title: '物流费用', align: 'center', templet: function (d) {
                         return numFormat2(d.expressMoney)
-                    } },
-                { field: 'qualityMoney', width: 130, title: '质检费用', align: 'center',templet:function(d){
+                    }
+                },
+                {
+                    field: 'qualityMoney', width: 130, title: '质检费用', align: 'center', templet: function (d) {
                         return numFormat2(d.qualityMoney)
-                    } },
-                { field: 'bicId', width: 160, title: '商家ID', align: 'center' },
-                { field: 'companyName', width: 160, title: '商家名称', align: 'center' },
-                { field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center' },
-                { field: 'cancelStr', width: 160, title: '是否取消', align: 'center' },
-                { field: 'interceptStr', width: 160, title: '是否拦截', align: 'center' },
-                { field: 'interceptCause', width: 160, title: '拦截原因', align: 'center' },
-                { field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center' },
-                { field: 'storageNumber', width: 160, title: '入库件数', align: 'center' },
-                { field: 'testingInstitutes', width: 160, title: '质检机构', align: 'center' },
-                { field: 'qualityResult', width: 160, title: '质检结果', align: 'center' },
-                { field: 'recheckResult', width: 160, title: '复检结果', align: 'center' },
-                { field: 'planExpress', width: 160, title: '计划发货快递', align: 'center' },
-                { field: 'realityExpress', width: 160, title: '实际发货快递', align: 'center' },
-                { field: 'expressNumber', width: 160, title: '快递单号', align: 'center' },
-                { field: 'placeReceipt', width: 160, title: '收货省份', align: 'center' },
-                { field: 'orderTimeStr', width: 180, title: '下单时间', align: 'center' },
-                { field: 'storageTimeStr', width: 180, title: '入库时间', align: 'center' },
-                { field: 'inspectTimeStr', width: 180, title: '送检时间', align: 'center' },
-                { field: 'accomplishTimeStr', width: 180, title: '质检完成时间', align: 'center' },
-                { field: ' deliveryTime', width: 180, title: '出库时间', align: 'center' },
+                    }
+                },
+                {field: 'bicId', width: 160, title: '商家ID', align: 'center'},
+                {field: 'companyName', width: 160, title: '商家名称', align: 'center'},
+                {field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center'},
+                {field: 'cancelStr', width: 160, title: '是否取消', align: 'center'},
+                {field: 'interceptStr', width: 160, title: '是否拦截', align: 'center'},
+                {field: 'interceptCause', width: 160, title: '拦截原因', align: 'center'},
+                {field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center'},
+                {field: 'storageNumber', width: 160, title: '入库件数', align: 'center'},
+                {field: 'testingInstitutes', width: 160, title: '质检机构', align: 'center'},
+                {field: 'qualityResult', width: 160, title: '质检结果', align: 'center'},
+                {field: 'recheckResult', width: 160, title: '复检结果', align: 'center'},
+                {field: 'planExpress', width: 160, title: '计划发货快递', align: 'center'},
+                {field: 'realityExpress', width: 160, title: '实际发货快递', align: 'center'},
+                {field: 'expressNumber', width: 160, title: '快递单号', align: 'center'},
+                {field: 'placeReceipt', width: 160, title: '收货省份', align: 'center'},
+                {field: 'orderTimeStr', width: 180, title: '下单时间', align: 'center'},
+                {field: 'storageTimeStr', width: 180, title: '入库时间', align: 'center'},
+                {field: 'inspectTimeStr', width: 180, title: '送检时间', align: 'center'},
+                {field: 'accomplishTimeStr', width: 180, title: '质检完成时间', align: 'center'},
+                {field: ' deliveryTime', width: 180, title: '出库时间', align: 'center'},
             ]]
             , id: 'orderId',
             loading: true,
@@ -644,7 +666,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 确认导出
     $('.pushBtn').click(function () {
         dataLoading();
-        var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
         xhr.open("GET", `${Vapi}/company/deriveExcel`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
@@ -652,7 +674,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             if (xhr.status == 200) {
                 closeData();
                 if (xhr.response.size < 50) {
-                    layer.msg('导出失败', { icon: 7 })
+                    layer.msg('导出失败', {icon: 7})
                     return
                 }
                 var content = xhr.response;
@@ -667,16 +689,16 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 document.body.removeChild(elink);
             } else {
                 closeData();
-                layer.msg('服务器请求超时', { icon: 2 });
+                layer.msg('服务器请求超时', {icon: 2});
                 return;
             }
         }
         xhr.send();
     });
-    $('.importBtn').click(function(){
-        popupShow('.pushOrderContent','.pushOrderBox')
+    $('.importBtn').click(function () {
+        popupShow('.pushOrderContent', '.pushOrderBox')
     })
-    $('#pushMerchants').change(function(e){
+    $('#pushMerchants').change(function (e) {
         if (!$(this).val()) {
             return;
         }
@@ -698,24 +720,23 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 closeData();
                 $(that).val('')
                 if (res.code == 200) {
-                    layer.msg(res.message, { icon: 1 });
-                    popupHide('.pushOrderContent','.pushOrderBox');
+                    layer.msg(res.message, {icon: 1});
+                    popupHide('.pushOrderContent', '.pushOrderBox');
                     tableIns.reload({
                         where: {}
                     });
-                }else if (res.code == 403) {
-                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                } else if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', {icon: 2})
                     setTimeout(__ => {
                         window.parent.location.href = "login.html";
                     }, 1500)
-                }
-                else {
+                } else {
                     // layer.msg(res.message, { icon: 7 });
-                    if(res.data.length>0){
-                        popupHide('.pushOrderContent','.pushOrderBox');
-                        popupShow('.catchContent','.messageBox')
+                    if (res.data.length > 0) {
+                        popupHide('.pushOrderContent', '.pushOrderBox');
+                        popupShow('.catchContent', '.messageBox')
                         pushLoseFin(res.data);
-                    }else{
+                    } else {
                         $('.messageBox .message .import_fail').html('导入失败')
                     }
                 }
@@ -724,11 +745,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 $(that).val('');
                 closeData();
                 $('.maskSpan').removeClass('maskIcon')
-                layer.msg('服务器请求超时', { icon: 2 })
+                layer.msg('服务器请求超时', {icon: 2})
             }
         })
 
     })
+
     // 导入失败提示方法
     function pushLoseFin(list) {
         var str = ''
