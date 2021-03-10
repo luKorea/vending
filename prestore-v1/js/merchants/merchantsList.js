@@ -31,6 +31,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 }
             },
             {
+                field: 'moneyRemind', width: 150, title: '余额预警值', align: 'center', templet: function (d) {
+                    return numFormat2(d.moneyRemind)
+                }
+            },
+            { field: 'remark', width: 180, title: '备注', align: 'center' },
+            {
                 field: 'freezeMoney', width: 150, title: '冻结金额', align: 'center', templet: function (d) {
                     return numFormat2(d.freezeMoney)
                 }
@@ -40,12 +46,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     return numFormat2(d.usableBalance)
                 }
             },
-            {
-                field: 'moneyRemind', width: 150, title: '余额预警值', align: 'center', templet: function (d) {
-                    return numFormat2(d.moneyRemind)
-                }
-            },
-            { field: 'remark', width: 180, title: '备注', align: 'center' },
             { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },
         ]]
         , id: 'tableId'
@@ -603,11 +603,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 { field: 'orderYard', width: 180, title: '订单码', align: 'center' },
                 { field: 'flagStr', width: 130, title: '扣费状态', align: 'center' },
                 { field: 'expressMoney', width: 130, title: '物流费用', align: 'center',templet:function(d){
-                    return numFormat2(d.expressMoney)
-                } },
+                        return numFormat2(d.expressMoney)
+                    } },
                 { field: 'qualityMoney', width: 130, title: '质检费用', align: 'center',templet:function(d){
-                    return numFormat2(d.qualityMoney)
-                } },
+                        return numFormat2(d.qualityMoney)
+                    } },
                 { field: 'bicId', width: 160, title: '商家ID', align: 'center' },
                 { field: 'companyName', width: 160, title: '商家名称', align: 'center' },
                 { field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center' },
@@ -641,94 +641,94 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         });
     };
     // 导出商家
-     // 确认导出
-  $('.pushBtn').click(function () {
-    dataLoading();
-    var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-    xhr.open("GET", `${Vapi}/company/deriveExcel`, true);
-    xhr.setRequestHeader("token", sessionStorage.token);
-    xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-    xhr.onload = function (res) {
-      if (xhr.status == 200) {
-        closeData();
-        if (xhr.response.size < 50) {
-          layer.msg('导出失败', { icon: 7 })
-          return
-        } 
-        var content = xhr.response;
-        var fileName = `商家信息汇总.xls`
-        var elink = document.createElement('a');
-        elink.download = fileName;
-        elink.style.display = 'none';
-        var blob = new Blob([content]);
-        elink.href = URL.createObjectURL(blob);
-        document.body.appendChild(elink);
-        elink.click();
-        document.body.removeChild(elink);
-      } else {
-        closeData();
-        layer.msg('服务器请求超时', { icon: 2 });
-        return;
-      }
-    }
-    xhr.send();
-  });
-  $('.importBtn').click(function(){
-      popupShow('.pushOrderContent','.pushOrderBox')
-  })
-  $('#pushMerchants').change(function(e){
-    if (!$(this).val()) {
-        return;
-    }
-    var that = this;
-    var upDetails = new FormData();
-    upDetails.append('file', e.target.files[0]);
-    dataLoading();
-    $.ajax({
-        type: 'post',
-        url: `${Vapi}/company/excelCompany`,
-        processData: false,
-        contentType: false,
-        timeout: 60000,
-        headers: {
-            token: sessionStorage.token,
-        },
-        data: upDetails,
-        success: function (res) {
-            closeData();
-            $(that).val('')
-            if (res.code == 200) {
-                layer.msg(res.message, { icon: 1 });
-                popupHide('.pushOrderContent','.pushOrderBox');
-                tableIns.reload({
-                    where: {}
-                });
-            }else if (res.code == 403) {
-                layer.msg('登录过期,请重新登录', { icon: 2 })
-                setTimeout(__ => {
-                    window.parent.location.href = "login.html";
-                }, 1500)
-            }
-            else {
-                // layer.msg(res.message, { icon: 7 });
-                if(res.data.length>0){
-                    popupHide('.pushOrderContent','.pushOrderBox');
-                    popupShow('.catchContent','.messageBox')
-                    pushLoseFin(res.data);
-                }else{
-                    $('.messageBox .message .import_fail').html('导入失败')
+    // 确认导出
+    $('.pushBtn').click(function () {
+        dataLoading();
+        var  xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
+        xhr.open("GET", `${Vapi}/company/deriveExcel`, true);
+        xhr.setRequestHeader("token", sessionStorage.token);
+        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+        xhr.onload = function (res) {
+            if (xhr.status == 200) {
+                closeData();
+                if (xhr.response.size < 50) {
+                    layer.msg('导出失败', { icon: 7 })
+                    return
                 }
+                var content = xhr.response;
+                var fileName = `商家信息汇总.xls`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
+            } else {
+                closeData();
+                layer.msg('服务器请求超时', { icon: 2 });
+                return;
             }
-        },
-        error: function (err) {
-            $(that).val('');
-            closeData();
-            $('.maskSpan').removeClass('maskIcon')
-            layer.msg('服务器请求超时', { icon: 2 })
         }
+        xhr.send();
+    });
+    $('.importBtn').click(function(){
+        popupShow('.pushOrderContent','.pushOrderBox')
     })
-    
-  })
+    $('#pushMerchants').change(function(e){
+        if (!$(this).val()) {
+            return;
+        }
+        var that = this;
+        var upDetails = new FormData();
+        upDetails.append('file', e.target.files[0]);
+        dataLoading();
+        $.ajax({
+            type: 'post',
+            url: `${Vapi}/company/excelCompany`,
+            processData: false,
+            contentType: false,
+            timeout: 60000,
+            headers: {
+                token: sessionStorage.token,
+            },
+            data: upDetails,
+            success: function (res) {
+                closeData();
+                $(that).val('')
+                if (res.code == 200) {
+                    layer.msg(res.message, { icon: 1 });
+                    popupHide('.pushOrderContent','.pushOrderBox');
+                    tableIns.reload({
+                        where: {}
+                    });
+                }else if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    setTimeout(__ => {
+                        window.parent.location.href = "login.html";
+                    }, 1500)
+                }
+                else {
+                    // layer.msg(res.message, { icon: 7 });
+                    if(res.data.length>0){
+                        popupHide('.pushOrderContent','.pushOrderBox');
+                        popupShow('.catchContent','.messageBox')
+                        pushLoseFin(res.data);
+                    }else{
+                        $('.messageBox .message .import_fail').html('导入失败')
+                    }
+                }
+            },
+            error: function (err) {
+                $(that).val('');
+                closeData();
+                $('.maskSpan').removeClass('maskIcon')
+                layer.msg('服务器请求超时', { icon: 2 })
+            }
+        })
+
+    })
     // 导入失败提示方法
     function pushLoseFin(list) {
         var str = ''
