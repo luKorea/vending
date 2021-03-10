@@ -363,7 +363,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }
                 },
                 {
-                    field: 'laterBalance', width: 160, title: '余额', align: 'center', templet: function (d) {
+                    field: 'laterBalance', width: 160, title: '充值/调减后余额', align: 'center', templet: function (d) {
                         return numFormat2(d.laterBalance)
                     }
                 },
