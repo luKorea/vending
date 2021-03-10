@@ -31,12 +31,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 }
             },
             {
-                field: 'moneyRemind', width: 150, title: '余额预警值', align: 'center', templet: function (d) {
-                    return numFormat2(d.moneyRemind)
-                }
-            },
-            { field: 'remark', width: 180, title: '备注', align: 'center' },
-            {
                 field: 'freezeMoney', width: 150, title: '冻结金额', align: 'center', templet: function (d) {
                     return numFormat2(d.freezeMoney)
                 }
@@ -46,6 +40,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     return numFormat2(d.usableBalance)
                 }
             },
+            {
+                field: 'moneyRemind', width: 150, title: '余额预警值', align: 'center', templet: function (d) {
+                    return numFormat2(d.moneyRemind)
+                }
+            },
+            { field: 'remark', width: 180, title: '备注', align: 'center' },
             { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },
         ]]
         , id: 'tableId'
