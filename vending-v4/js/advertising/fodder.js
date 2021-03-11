@@ -78,7 +78,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             { field: 'creationTime', width: 180, title: '创建时间', align: 'center', },
 
             // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo',fixed: 'right',right: 0 },
-            { field: 'operation', right: 0, width: 150, title: '操作', align: 'center', toolbar: '#barDemo', align: 'center', fixed: 'right' },
+            { field: 'operation', right: 0, width: 150, title: '操作', toolbar: '#barDemo', align: 'center', fixed: 'right' },
         ]],
         page: true,
         id: 'tableId',
@@ -400,7 +400,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 sessionStorage.token, '', '', '', layer).then(res => {
                 if (res.data == '0') {
                     editImgVideo = valData.img;
-                    console.log(editImgVideo, 'test');
+                    editSize = editSize ? editSize.slice(0, 4) : valData.size;
                     if ((editImgVideo.indexOf('jpg') > 1 ||
                         editImgVideo.indexOf('png') > 1 || editImgVideo.indexOf('gif') > 1 &&
                         editValDataConfirm.materiaAttribute == '0') || (editImgVideo.indexOf('mp4') > 1
@@ -413,7 +413,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                             editValDataConfirm.materiaType,
                             editDuration,
                             editImgVideo,
-                            editSize.slice(0, 4),
+                            editSize,
                             valData.url);
                     } else {
                         layer.msg('素材属性不正确', { icon: 7 });
