@@ -4,6 +4,29 @@ const merge = require('webpack-merge');
 const base = require('./webpack.base.conf');
 //引入webpack
 const webpack = require('webpack');
+// 引入 os
+const os = require('os');
+// 获取地址
+function getNetworkIp() {
+    let needHost = ''; // 打开的host
+    try {
+        // 获得网络接口列表
+        let network = os.networkInterfaces();
+        for (let dev in network) {
+            let iface = network[dev];
+            for (let i = 0; i < iface.length; i++) {
+                let alias = iface[i];
+                if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+                    needHost = alias.address;
+                }
+            }
+        }
+    } catch (e) {
+        needHost = 'localhost';
+    }
+    console.log(needHost);
+    return needHost;
+}
 //进行合并，将webpack.base.conf.js中的配置合并到这
 module.exports = merge(base, {
     //模块参数
@@ -13,7 +36,7 @@ module.exports = merge(base, {
         port: "8889", //设置默认监听端口，如果省略，默认为"8080"
         inline: false, //实时刷新
         historyApiFallback: true, //不跳转
-        host: '172.16.90.230',
+        host: getNetworkIp(),
         //代理转发接口
         proxy: {
             //把/api/t转发到target，但是转发的是http://xxx/api/t

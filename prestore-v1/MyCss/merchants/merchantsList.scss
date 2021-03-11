@@ -93,15 +93,32 @@
         padding: 3px 0;
     }
     .pushOrderBody{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         padding: 15px;
         box-sizing: border-box;
         text-align: center;
         font-size: 14px;
+
+        .tip {
+            margin-left: 20px;
+            a{
+                text-decoration: underline;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img {
+                    margin-right: 4px;
+                }
+            }
+        }
+
         .pushuBtnCon{
             label{
                 display: inline-block;
                 height: 32px;
-                line-height: 30px;
+                line-height: 32px;
                 font-size: 12px;
                 padding: 0 10px;
                 background-color: #be954a;

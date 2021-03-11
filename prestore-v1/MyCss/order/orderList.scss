@@ -8,15 +8,38 @@
 }
 .pushOrderBox{
     width: 500px;
+    p{
+        color: red;
+        text-align: center;
+        padding: 3px 0;
+    }
     .pushOrderBody{
-        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
         box-sizing: border-box;
+        text-align: center;
+        font-size: 14px;
+
+        .tip {
+            margin-left: 20px;
+            a{
+                text-decoration: underline;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img {
+                    margin-right: 4px;
+                }
+            }
+        }
+
         .pushuBtnCon{
-            text-align: center;
             label{
                 display: inline-block;
                 height: 32px;
-                line-height: 30px;
+                line-height: 32px;
                 font-size: 12px;
                 padding: 0 10px;
                 background-color: #be954a;
@@ -32,29 +55,8 @@
             }
         }
     }
-    .message{
-        padding: 10px 10px 20px;
-        box-sizing: border-box;
-        display: flex;
-        justify-content: start;
-        .messageTitle{
-            font-size: 12px;
-            color: #606266;
-            line-height: 40px;
-            box-sizing: border-box;
-            text-align: right;
-        }
-        .import_fail{
-            width: 70%;
-            // border: 1px solid #c0ccda;
-            border-radius: 5px;
-            padding: 10px;
-            margin-left: 10px;
-            max-height: 500px;
-            overflow-y: auto;
-            color: #333;
-            font-size: 12px;
-            line-height: 22px;
-        }
+
+    img{
+        width: 14px;
     }
 }
