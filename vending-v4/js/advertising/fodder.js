@@ -396,10 +396,15 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         if (valData.checkStatus == '0') {
-            loadingAjax('/advertising/findAdvertising', 'post', JSON.stringify({ id: valData.vid }), sessionStorage.token, '', '', '', layer).then(res => {
+            loadingAjax('/advertising/findAdvertising', 'post', JSON.stringify({ id: valData.vid }),
+                sessionStorage.token, '', '', '', layer).then(res => {
                 if (res.data == '0') {
-                    console.log(editImgVideo.indexOf('jpg'))
-                    if ((editImgVideo.indexOf('jpg') > 1 || editImgVideo.indexOf('png') > 1 || editImgVideo.indexOf('gif') > 1 && editValDataConfirm.materiaAttribute == '0') || (editImgVideo.indexOf('mp4') > 1 && editValDataConfirm.materiaAttribute == '1')) {
+                    editImgVideo = valData.img;
+                    console.log(editImgVideo, 'test');
+                    if ((editImgVideo.indexOf('jpg') > 1 ||
+                        editImgVideo.indexOf('png') > 1 || editImgVideo.indexOf('gif') > 1 &&
+                        editValDataConfirm.materiaAttribute == '0') || (editImgVideo.indexOf('mp4') > 1
+                        && editValDataConfirm.materiaAttribute == '1')) {
                         editMaterial(
                             valData.vid,
                             editValDataConfirm.materialName,
@@ -413,8 +418,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     } else {
                         layer.msg('素材属性不正确', { icon: 7 });
                     }
-
-                } else {
+                }
+                else {
                     layer.confirm('检测到当前素材只能修改素材名和状态，是否继续修改？', function (index) {
                         editMaterial(
                             valData.vid,
@@ -559,6 +564,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 where: {
                 }
             });
+            editImgVideo = null;
             layer.msg(res.message, { icon: 1 });
         }).catch(err => {
             layer.msg(err.message, { icon: 2 })
