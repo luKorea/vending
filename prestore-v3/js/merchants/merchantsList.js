@@ -19,7 +19,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var $ = layui.jquery,
         table = layui.table,
         layer = layui.layer,
-        layer = layui.layer,
         util = layui.util,
         tree = layui.tree,
         form = layui.form,

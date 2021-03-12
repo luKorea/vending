@@ -1,15 +1,9 @@
 import '../../MyCss/roleManagement/roleManagement.scss';
 import {
-    ajaxFun,
     popupShow,
     popupHide,
-    dataLoading,
-    closeData,
-    wholeNum,
-    numFormat2,
-    mulCaluter,
     fixedFun,
-    timeStampM
+    loadAjax
 } from '../../common/common.js';
 
 layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
@@ -17,23 +11,26 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         $ = layui.jquery,
         table = layui.table,
         layer = layui.layer,
-        util = layui.util,
-        tree = layui.tree,
         token = sessionStorage.token,
         tableIns = table.render({
             elem: '#tableTest',
             url: `${Vapi}/role/findAll`,
             method: 'GET',
-            // contentType: "application/json",
-            headers: {
-                token,
-            },
+            headers: {token},
             cols: [[
                 {field: 'roleName', width: 180, title: '角色名', align: 'center'},
                 {field: 'remark', width: 200, title: '备注', align: 'center'},
-                {field: 'addUser', width: 150, title: '添加人', align: 'center'},
+                {
+                    field: 'addUser', width: 150, title: '创建人', align: 'center', templet: function (e) {
+                        return e.addUser ? e.addUser.username : ''
+                    }
+                },
                 {field: 'addTime', width: 200, title: '添加时间', align: 'center'},
-                {field: 'updateUser', width: 180, title: '最后修改人', align: 'center',},
+                {
+                    field: 'updateUser', width: 150, title: '最后修改人', align: 'center', templet: function (e) {
+                        return e.updateUser ? e.updateUser.username : ''
+                    }
+                },
                 {field: 'updateTime', width: 200, title: '最后修改时间', align: 'center'},
                 {
                     field: 'operation',
@@ -56,7 +53,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             where: {},
             parseData: function (res) {
-                if (res.code == 200) {
+                if (res.code === 200) {
                     return {
                         "code": res.code,
                         "msg": res.message,
@@ -70,11 +67,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }
                 }
             },
-            response: {
-                statusCode: 200 //规定成功的状态码，默认：0
-            },
+            response: {statusCode: 200},
             done: function (res) {
-                if (res.code == 403) {
+                if (res.code === 403) {
                     layer.msg('登录过期,请重新登录', {icon: 2})
                     setTimeout(__ => {
                         window.parent.location.href = "login.html";
@@ -95,15 +90,16 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
     //权限列表
     let permissionsDataList = null,
-        permissions1 = [],//广告素材
-        permissions2 = [],//商品分类素材
-        permissions3 = [],//商品管理权限
-        permissions4 = [],//商品素材权限
-        permissions5 = [],//售货机权限
-        permissions6 = [],//广告权限
-        permissions10 = [],//通用模块
-        permissions11 = [],//订单与账目权限
-        permissions13 = [];//营销中心
+        userGetRole = null, // 用户拥有的权限
+        permissions1 = [],// 商品列表权限
+        permissions2 = [], // 订单列表权限
+        permissions3 = []; // 通用权限
+    // permissions4 = [],//商品素材权限
+    // permissions5 = [],//售货机权限
+    // permissions6 = [],//广告权限
+    // permissions10 = [],//通用模块
+    // permissions11 = [],//订单与账目权限
+    // permissions13 = [];//营销中心
     //监听工具条
     let objData = null,
         operationFlag = null;
@@ -142,7 +138,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 }),
                 success: function (res) {
                     popupHide('.MemberOperation', '.MemberContent');
-                    console.log(res)
                     if (res.code === 200) {
                         layer.msg(res.message, {icon: 1});
                         addRoleNode.val('');
@@ -165,64 +160,23 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             return;
         }
     });
-    // 编辑
-    $('.ListOperation .edit').click(function () {
-        popupShow('.editRold', '.editBox');
-        if (objData.id == '100001') {
-            $('.permissionsContList').hide();
-            return;
-        } else {
-            $('.permissionsContList').show();
-        }
+
+    // 获取所有权限列表
+    function getAllPermission() {
         if (!permissionsDataList) {
             $.ajax({
-                type: 'post',
-                url: `${Vapi}/role/findPermission`,
+                type: 'GET',
+                url: `${Vapi}/role/findControl`,
                 headers: {
                     "Content-Type": "application/json",
                     token,
                 },
                 async: false,
-                data: JSON.stringify({
-                    pageNum: '1',
-                    pageSize: '1000'
-                }),
                 success: function (res) {
-                    if (res.code == 200) {
-                        permissionsDataList = res.data.list.filter((item, index) => {
-                            return (item.classify != 6) && (item.classify != 8) && (item.classify != 9) ? item : ''
-                        });
-                        res.data.list.forEach((item, index) => {
-                            switch (item.classify) {
-                                case 1:
-                                    permissions1.push(item)
-                                    break;
-                                case 2:
-                                    permissions2.push(item)
-                                    break;
-                                case 3:
-                                    permissions3.push(item)
-                                    break;
-                                case 4:
-                                    permissions4.push(item)
-                                    break;
-                                case 5:
-                                    permissions5.push(item)
-                                    break;
-                                case 7:
-                                    permissions6.push(item)
-                                    break;
-                                case 10:
-                                    permissions10.push(item)
-                                    break;
-                                case 11:
-                                    permissions11.push(item)
-                                    break;
-                                case 13:
-                                    permissions13.push(item)
-                                // default:
-                                //     console.log(index)
-                            }
+                    if (res.code === 200) {
+                        permissionsDataList = res.data;
+                        res.data.forEach(item => {
+                            permissions3.push(item);
                         })
                     } else {
                         return;
@@ -231,34 +185,71 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             });
         }
         ;
-        permissionsList(permissions1, 'permissionsASF', objData);
-        permissionsList(permissions2, 'permissionsGClass', objData);
-        permissionsList(permissions3, 'permissionsGoods', objData);
-        permissionsList(permissions4, 'permissionsGAF', objData);
-        permissionsList(permissions5, 'permissionsMachine', objData);
-        permissionsList(permissions6, 'permissionsASR', objData);
-        permissionsList(permissions10, 'permissionsGeneral', objData);
-        permissionsList(permissions11, 'permissionsOrder', objData);
-        permissionsList(permissions13, 'permissionsMarketing', objData);
-        // permissionsList(permissionsDataList, 'permissionsAS', objData);
-    });
+    }
 
-    // 修改角色
+    getAllPermission();
+
+    // 获取用户用户的权限
+    function socketQuery(id, type) {
+        loadAjax(`/role/findByRId?id=${id}`, 'get', token).then(res => {
+            userGetRole = res.data;
+            permissionsList(permissions3, 'permissionsGeneral', userGetRole);
+            if (type) {
+                socketPush(userPushId);
+            }
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    // 角色权限函数
+    function permissionsList(list, element, userGetPermission) {
+        let ListData = `<div>
+        <input type="checkbox" lay-filter="permissionsAll" name="${element}" title="全选"
+            lay-skin="primary"  value="" >
+         </div>`;
+        list.forEach((ele, index) => {
+            ListData += `<div>
+                            <input type="checkbox" lay-filter="permissions" name="${ele.controlId}" 
+                            title="${ele.controlName}"
+                                lay-skin="primary"  value="${ele.controlId}" >
+                        </div>`
+        });
+        let ele = $(`.${element}`);
+        ele.empty();
+        ele.html(ListData);
+        userGetPermission.forEach((item, index) => {
+            for (var i = 1; i < $(`.${element} input`).length; i++) {
+                if (item.controlId == list[i - 1].controlId) {
+                    $(`.${element} input`).eq(i).prop('checked', true)
+                }
+            }
+            ;
+        })
+        form.render('checkbox');
+    }
+
+    // 用户点击编辑后获取权限列表
+    $('.ListOperation .edit').click(function () {
+        popupShow('.editRold', '.editBox');
+        $('.permissionsContList').show();
+        socketQuery(objData.roleId);
+    });
+    // 修改角色以及角色权限
     $('.edittBtn').click(function () {
         $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon')
-        var permissionsArray = [];
+        $('.maskSpan').addClass('maskIcon');
+        // 存储用户选择的权限
+        let permissionsArray = [];
         if (editRoleNode.val()) {
-            var datalll = form.val("editInformation");
-            console.log(datalll)
-            for (let i in datalll) {
+            let userSelectRole = form.val("editInformation");
+            for (let i in userSelectRole) {
                 permissionsDataList.forEach((item, index) => {
-                    if (item.id == datalll[i]) {
-                        permissionsArray.push(item)
+                    if (String(item.controlId) === userSelectRole[i]) {
+                        permissionsArray.push(item.controlId);
                     }
                 })
             }
-            ;
             $.ajax({
                 type: 'post',
                 url: `${Vapi}/role/updateRole`,
@@ -267,10 +258,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     token,
                 },
                 data: JSON.stringify({
-                    id: objData.id,
+                    roleId: objData.roleId,
                     roleName: editRoleNode.val(),
                     remark: editRemarkNode.val(),
-                    permissions: permissionsArray
+                    controlList: permissionsArray
                 }),
                 success: function (res) {
                     $('.mask').fadeOut();
@@ -278,13 +269,22 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     popupHide('.editRold', '.editBox');
                     if (res.code == 200) {
                         layer.msg(res.message, {icon: 1});
+                        layer.open({
+                            content: "用户权限已经修改，请重新登陆",
+                            btn: ['确定'],
+                            yes(index) {
+                                layer.close(index);
+                                sessionStorage.clear();
+                                window.parent.location.href = "login.html";
+                            },
+                            cancel() {
+                                return false
+                            }
+                        });
                         tableIns.reload({
                             where: {}
                         })
-                        if (objData.id != '100001') {
-                            socketQuery(objData.id, 'true');
-                        }
-                    } else if (res.code == 403) {
+                    } else if (res.code === 403) {
                         window.parent.location.href = "login.html";
                     } else {
                         layer.msg(res.message, {icon: 2});
@@ -347,33 +347,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         popupHide('.editRold', '.editBox');
     })
 
-    // 角色权限函数
-    function permissionsList(list, element, TrueData) {
-        var ListData = `<div>
-        <input type="checkbox" lay-filter="permissionsAll" name="${element}" title="全选"
-            lay-skin="primary"  value="" >
-         </div>`;
-        // var ListData ='';
-        list.forEach((ele, index) => {
-            ListData += `<div>
-                            <input type="checkbox" lay-filter="permissions" name="${ele.id}" title="${ele.name}"
-                                lay-skin="primary"  value="${ele.id}" >
-                        </div>`
-        });
-        $(`.${element}`).empty();
-        $(`.${element}`).html(ListData);
-        TrueData.permissions.forEach((item, index) => {
-            // var elearr=[];
-            for (var i = 1; i < $(`.${element} input`).length; i++) {
-                if (item.id == list[i - 1].id) {
-                    $(`.${element} input`).eq(i).prop('checked', true)
-                }
-            }
-            ;
-        })
-        form.render('checkbox');
-    }
-
     // 刷新页面
     $('.refreshBtn').click(function () {
         location.reload();
@@ -386,25 +359,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
     var userPushId = [];
 
-    function socketQuery(roleId, type) {
-        var dataVal = JSON.stringify({
-            roleId: Number(roleId)
-        })
-        loadingAjax('/role/getRoleUser', 'post', dataVal, token).then(res => {
-            // console.log(res)
-            userPushId = res.data.map(Number);
-            console.log(userPushId)
-            if (type) {
-                socketPush(userPushId);
-            }
-        }).catch(err => {
-            console.log(err)
-        })
-    };
-
     function socketPush(userData) {
         userData.forEach((item, index) => {
-            console.log(item)
             var socketQuery = JSON.stringify({
                 uid: item,
                 msg: '用户角色权限发生变更,请重新登录！',
@@ -428,8 +384,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
     // 全选
     form.on('checkbox(permissionsAll)', function (data) {
-        console.log(data.elem); //得到checkbox原始DOM对象
-        console.log(data.elem.checked); //是否被选中，true或者false;
         var ele = $(data.elem).attr('name');
         if (!data.value) {
             if (data.elem.checked) {

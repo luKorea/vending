@@ -28,7 +28,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                 {field: 'name', width: 150, title: '姓名', align: 'center'},
                 {
                     field: 'company', width: 300, title: '公司名', align: 'center', templet: function (e) {
-                        return  e.company ? e.company.companyName : ''
+                        return e.company ? e.company.companyName : ''
                     }
                 },
                 {
@@ -36,11 +36,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                         return (e.lockCount === 0 || e.lockCount === 2) ? '启用' : '禁用'
                     }
                 },
-                {field: 'addUser', width: 150, title: '创建人', align: 'center',templet: function (e) {
-                        return  e.addUser ? e.addUser.username : ''
-                    }},
+                {
+                    field: 'addUser', width: 150, title: '创建人', align: 'center', templet: function (e) {
+                        return e.addUser ? e.addUser.username : ''
+                    }
+                },
                 {field: 'addTime', width: 180, title: '创建时间', align: 'center'},
-                {field: 'updateUser', width: 150, title: '更改人', align: 'center',},
+                {
+                    field: 'updateUser', width: 150, title: '更改人', align: 'center', templet: function (e) {
+                        return e.updateUser ? e.updateUser.username : ''
+                    }
+                },
                 {field: 'updateTime', width: 180, title: '更改时间', align: 'center'},
                 {
                     field: 'operation',
@@ -149,11 +155,65 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     }
 
     selectData();
+    // 删除
+    $('.delete').click(function () {
+        console.log(data);
+        if (data.username === sessionStorage.username) {
+            layer.msg('该用户为当前登陆用户，不可删除！！', {icon: 2});
+            return;
+        } else {
+            layer.confirm('确定删除？', function (index) {
+                console.log(index);
+                $.ajax({
+                    type: 'get',
+                    url: `${Vapi}/user/deleteById`,
+                    headers: {
+                        token,
+                    },
+                    data: {
+                        id: Number(data.uuid),
+                    },
+                    success: function (res) {
+                        if (res.code === 200) {
+                            layer.msg(res.message, {icon: 1});
+                            obj.del();
+                            layer.close(index);
+                            // socketFun(data.uuid)
+                        } else if (res.code == 403) {
+                            window.parent.location.href = "login.html";
+                        } else {
+                            layer.msg(res.message, {icon: 2});
+                        }
+                    }
+                });
+            });
+        }
+    })
+
+    //点击添加成员事件
+    $('.addBtn').click(function () {
+        $('.switchOpen').hide();
+        popupShow('.MemberOperation', '.MemberContent')
+        informationType = $(this).attr('typeID');
+        uuID = null;
+        $('.OperationHeader span').html('添加用户')
+        form.val("information", {
+            id: '',
+            username: '',
+            name: '',
+            password: '',
+            companyId: ''
+        });
+        $('.checkCont').empty();
+        $('.roleCont').hide();
+
+
+    });
+    let selected = null;
     // 编辑
     $('.ListOperation .edit').click(function () {
+        selected = data.id;
         $('.switchOpen').show();
-        // $('.inputWidth input[name="username"]').prop('disabled', true);
-        console.log(data, '编辑');
         $('.switchOpen input[name="open"]').prop('checked', data.lockCount === 2 || data.lockCount === 0);
         // 点击编辑事件
         $('.OperationHeader span').html('编辑用户')
@@ -166,65 +226,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             companyId: data.company.companyId,
             lockCount: data.lockCount
         });
+        console.log(data, 'test');
         form.render('select');
-    });
-    // 删除
-    $('.delete').click(function () {
-        layer.confirm('确定删除？', function (index) {
-            console.log(index);
-            // $.ajax({
-            //     type: 'get',
-            //     url: `${Vapi}/user/deleteById`,
-            //     headers: {
-            //         token,
-            //     },
-            //     data: {
-            //         id: Number(data.uuid),
-            //     },
-            //     success: function (res) {
-            //         if (res.code == 200) {
-            //             layer.msg(res.message, {icon: 1});
-            //             obj.del();
-            //             layer.close(index);
-            //             socketFun(data.uuid)
-            //         } else if (res.code == 403) {
-            //             window.parent.location.href = "login.html";
-            //         } else {
-            //             layer.msg(res.message, {icon: 2});
-            //         }
-            //     }
-            // });
-        });
-    })
-
-    //点击添加成员事件
-    $('.addBtn').click(function () {
-        $('.switchOpen').hide();
-        // $('.inputWidth input[name="username"]').prop('disabled', false);
-        popupShow('.MemberOperation', '.MemberContent')
-        informationType = $(this).attr('typeID');
-        uuID = null;
-        $('.OperationHeader span').html('添加用户')
-        form.val("information", {
-            username: '',
-            name: '',
-            password: '',
-            companyId: ''
-        });
-        $('.checkCont').empty();
-        $('.roleCont').hide();
-
-
-    });
-    // 取消事件
-    $('.cancel_btn').click(function () {
-        popupHide('.MemberOperation', '.MemberContent')
     });
 
     // 提交事件
     $('.submit_btn').click(function () {
         let informData = form.val("information"),
             urlApi = null;
+        console.log(informData);
         if (!(informData.username && informData.name && informData.password
             && informData.companyId)) {
             layer.msg('带*为必填', {icon: 7});
@@ -233,14 +243,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         let data = JSON.stringify({
+            id: selected,
             username: informData.username,
             name: informData.name,
-            password: informData.password != '      ' ? hex_md5(informData.password) : '',
+            password: informData.password !== '      ' ? hex_md5(informData.password) : '',
             companyId: informData.companyId,
             lockCount: $('.switchOpen input[name="open"]').prop('checked') ? 2 : 1
         });
-        informationType === '1' ? urlApi = `${Vapi}/user/addUser` : urlApi = `${Vapi}/user/updateUser`;
         console.log(data);
+        informationType === '1' ? urlApi = `${Vapi}/user/addUser` : urlApi = `${Vapi}/user/updateUser`;
         if (urlApi) {
             $.ajax({
                 type: 'post',
@@ -281,7 +292,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
 
     })
 
-
+    // 取消事件
+    $('.cancel_btn').click(function () {
+        popupHide('.MemberOperation', '.MemberContent')
+    });
     $('.listInput input[name="phone"]').blur(function () {
         var phone = $(this).val();
         if (phone) {
@@ -319,7 +333,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
 
     // 监听f5刷新
     $("body").bind("keydown", function (event) {
-        if (event.keyCode == 116) {
+        if (event.keyCode === 116) {
             f5Fun()
         }
     });
