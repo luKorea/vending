@@ -152,7 +152,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
     });
     // 导入订单
     // 导入销售经理
-    $('#pushImg').change(function (e) {
+    $('#pushMerchants').change(function (e) {
         if (!$(this).val()) {
             return;
         }
