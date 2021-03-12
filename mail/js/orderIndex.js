@@ -138,7 +138,9 @@ function getCode(appid) {
 function wxPay() {
     var pushOrder = JSON.stringify({
         merchantId: goodsData.merchant,
-        sales_no: goodsData.goods[0].mail == 1?$('.informationList input[name="salse"]').val():$('.informationList input[name="salse2"]').val(),
+        sales_no: goodsData.goods[0].mail == 1?
+            $('.informationList input[name="salse"]').val():
+            $('.informationList input[name="salse2"]').val(),
         payee: payTypeData.payee,
         notes: $('.informationList input[name="notes"]').val(),
         sign_name: $('.informationList input[name="name"]').val(),

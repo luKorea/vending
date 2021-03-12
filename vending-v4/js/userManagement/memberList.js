@@ -439,7 +439,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     })
     var openStart = informData.startThe ? 1 : 0;
     var roleSignStart = informData.administrator ? 1 : 0;
-    // console.log(informData)
+    console.log(informData)
     if (urlApi) {
       $.ajax({
         type: 'post',

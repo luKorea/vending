@@ -150,7 +150,6 @@ window.onload = function () {
                 };
                 //获得消息事件
                 socket.onmessage = function (msg) {
-
                     var gainData = JSON.parse(msg.data)
                     console.log(gainData);
                     //type 1角色编辑或者删除 2用户编辑

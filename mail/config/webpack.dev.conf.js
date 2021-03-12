@@ -13,7 +13,7 @@ module.exports = merge(base, {
         port: "9001", //设置默认监听端口，如果省略，默认为"8080"
         inline: false, //实时刷新
         historyApiFallback: true, //不跳转
-        host: '172.16.90.72',
+        host: '172.16.90.73',
         //代理转发接口
         proxy: {
             //把/api/t转发到target，但是转发的是http://xxx/api/t

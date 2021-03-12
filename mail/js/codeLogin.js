@@ -1,9 +1,10 @@
 import '../MyCss/codeLogin.scss'
-import { loadAjax, prompt, getQueryString, decrypt1 ,keepPass} from '../common/common.js';
+import {loadAjax, prompt, getQueryString, decrypt1, keepPass} from '../common/common.js';
+
 var machineId = getQueryString('machineId');
 if (sessionStorage.accountPass) {
-    var passFlag=keepPass(sessionStorage.old,new Date().getTime())
-    if(passFlag){
+    var passFlag = keepPass(sessionStorage.old, new Date().getTime())
+    if (passFlag) {
         var accountPass = JSON.parse(sessionStorage.accountPass);
         $('.formCont input[name="name"]').val(accountPass.username);
         $('.formCont input[name="pass"]').val(accountPass.password);
@@ -31,11 +32,12 @@ $('.searchCont .btn').click(function () {
     if (!$('.formCont input[name="pass"]').val()) {
         prompt('请输入密码');
         return;
-    };
+    }
+    ;
     $('.mask').show();
     var loginObj = JSON.stringify({
         username: $('.formCont input[name="name"]').val(),
-        password:passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val())  ,
+        password: passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val()),
         machineId: machineId
     })
     loadAjax('/api/user/login', 'post', loginObj).then(res => {
@@ -56,7 +58,7 @@ $('.searchCont .btn').click(function () {
                 $('.mask').hide();
                 if (res == 'true') {
                     if ($('.r1').prop('checked')) {
-                        sessionStorage.old=new Date().getTime();
+                        sessionStorage.old = new Date().getTime();
                         sessionStorage.accountPass = JSON.stringify({
                             username: $('.formCont input[name="name"]').val(),
                             password: passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val()),
