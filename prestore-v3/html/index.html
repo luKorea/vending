@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>物流-质检费控系统</title>
+	<link rel="icon" type="image/png" sizes="144x144" href="../img/icon.png"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<script src="./assets/public/documentWrite.js"></script>
+	<script src="./assets/layui/layui.js"></script>
+</head>
+
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header">
+			<div class="layui-logo" style="font-size: 22px;">物流-质检费控系统</div>
+			<ul class="layui-nav layui-layout-right nav-header-information">
+				<li class="layui-nav-item uers-message" id="userLogin">
+					<a href="javascript:;">
+						<span class="userName"></span>
+						<i class="layui-icon layui-icon-user"></i>
+					</a>
+					<dl class="layui-nav-child">
+						<dd class="exitLogin">
+							<a >
+								<span style="text-align: center;display: inline-block;width: 100%;color: #333;">退出登录</span>			
+							</a>
+						</dd>
+					</dl>
+				</li>
+			</ul>
+		</div>
+		<!-- 顶部选项卡 -->
+		<div>
+		</div>
+		<div class="header-nav-tabs-switch">
+			<div class="wrapContent">
+				<!-- sad -->
+				<!-- <iframe class="iframe_show" src="orderList.html" style="width: 100%;height: 100%;border: 0;"></iframe> -->
+			</div>
+			<!-- <div>
+				sad
+				<div class="layui-tab" lay-filter="demo" lay-allowclose="true">
+					<ul class="layui-tab-title">
+						<li class="layui-this" lay-id="22">个人信息</li>
+					</ul>
+					<div class="layui-tab-content">
+						<div class="layui-tab-item layui-show">
+							<div class="content-tbas-iframe-html">
+								<iframe class="iframe_show" src="myInformation.html"></iframe>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+		</div>
+		<div class="layui-side layui-bg-black">
+			<div class="layui-side-scroll">
+				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+				<ul class="layui-nav layui-nav-tree my-nav-tab" lay-filter="testNav" id="nav">
+					<li class="layui-nav-item merchantsCont">
+						<dl class="layui-nav-child" style="display: block;">
+							<dd class="navClick" navId="0">
+								<a href="javascript:;"><i class="layui-icon layui-icon-home"></i>商家列表</a>
+							</dd>
+							<dd class="navClick" navId="1">
+								<a href="javascript:;" ><i class="layui-icon layui-icon-list"></i>订单列表</a>
+							</dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<i class="layui-icon layui-icon-user"></i>
+							<label>用户及角色管理</label>
+						</a>
+						<dl class="layui-nav-child">
+							<dd class="userListFlag hide">
+								<a href="javascript:;" class="navClick" navId="2">用户管理</a>
+							</dd>
+							<dd class="roleListFlag hide">
+								<a href="javascript:;" class="navClick" navId="3">角色管理</a>
+							</dd>
+						</dl>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
