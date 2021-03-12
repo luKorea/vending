@@ -98,8 +98,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                 }
             }
         });
-    var uuID = null;
-
     // 查询
     $('.queryBtnClick ').click(function () {
         tableIns.reload({
@@ -114,6 +112,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         operationFlag = null,
         form = layui.form,
         informationType = null;
+    let selected = null;
     table.on('tool(test)', function (obj) {
         event.stopPropagation();
         data = obj.data;
@@ -157,7 +156,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     selectData();
     // 删除
     $('.delete').click(function () {
-        console.log(data);
+        selected = data.id;
         if (data.username === sessionStorage.username) {
             layer.msg('该用户为当前登陆用户，不可删除！！', {icon: 2});
             return;
@@ -166,20 +165,21 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                 console.log(index);
                 $.ajax({
                     type: 'get',
-                    url: `${Vapi}/user/deleteById`,
+                    url: `${Vapi}/user/deleteUserById`,
                     headers: {
                         token,
                     },
                     data: {
-                        id: Number(data.uuid),
+                        uId: selected,
                     },
-                    success: function (res) {
+                    success (res) {
                         if (res.code === 200) {
+                            tableIns.reload({
+                                where: {}
+                            });
                             layer.msg(res.message, {icon: 1});
-                            obj.del();
                             layer.close(index);
-                            // socketFun(data.uuid)
-                        } else if (res.code == 403) {
+                        } else if (res.code === 403) {
                             window.parent.location.href = "login.html";
                         } else {
                             layer.msg(res.message, {icon: 2});
@@ -195,7 +195,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         $('.switchOpen').hide();
         popupShow('.MemberOperation', '.MemberContent')
         informationType = $(this).attr('typeID');
-        uuID = null;
         $('.OperationHeader span').html('添加用户')
         form.val("information", {
             id: '',
@@ -209,7 +208,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
 
 
     });
-    let selected = null;
     // 编辑
     $('.ListOperation .edit').click(function () {
         selected = data.id;

@@ -207,6 +207,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
     })
     // 导入失败提示方法
     function pushLoseFin(list) {
+        console.log(list);
         var str = ''
         list.forEach(item => {
             str += `<p>${item.replace('null','')}</p>`
