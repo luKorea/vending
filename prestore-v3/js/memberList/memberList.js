@@ -219,8 +219,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                 }
             }
         }) : '';
+
+
         form.render('checkbox');
     }
+
     // 删除
     $('.delete').click(function () {
         selected = data.id;
