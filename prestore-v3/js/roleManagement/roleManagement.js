@@ -78,6 +78,23 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 fixedFun();
             }
         });
+
+
+    let roleData = JSON.parse(sessionStorage.roleData),
+        permissionsObjFlag = permissionsVal1(permissionData, roleData);
+
+    function permissions() {
+        permissionsObjFlag[4] ? removeClass('.addBtn') : addClass('.addBtn');
+        permissionsObjFlag[19] ? removeClass('.ListOperation .edit') : addClass('.ListOperation .edit');
+        permissionsObjFlag[20] ? removeClass('.ListOperation .del') : addClass('.ListOperation .del');
+        permissionsObjFlag[21] ? removeClass('.list-table') : (
+            addClass('.list-table'), removeClass('.role-text')
+        );
+    }
+
+    permissions();
+
+
     //　TODO　添加, 编辑节点
     let addRoleNode = $('.addInput input[name="roleName"]'),
         addRemarkNode = $('.addInput input[name="remark"]'),
@@ -270,7 +287,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     if (res.code == 200) {
                         layer.msg(res.message, {icon: 1});
                         layer.open({
-                            content: "用户权限已经修改，请重新登陆",
+                            content: "用户权限已更新，请重新登陆",
                             btn: ['确定'],
                             yes(index) {
                                 layer.close(index);

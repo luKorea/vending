@@ -35,7 +35,7 @@
                         </button>
                     </div>
                     <div class="newKeyContent">
-                        <button type="button" class="layui-btn layui-btn-primary addBtn hide" typeID='1'>
+                        <button type="button" class="layui-btn layui-btn-primary addBtn hide-role" typeID='1'>
                             <i class="layui-icon layui-icon-app"></i>
                             <span>添加用户</span>
 
@@ -52,6 +52,9 @@
                     <div class="data-list">
                         <div class="list-table">
                             <table class="layui-hide" lay-skin="row" id="tableTest" lay-filter="test"></table>
+                        </div>
+                        <div class="role-text hide-role">
+                            <p>您没有查看的权限，请联系管理员</p>
                         </div>
                     </div>
                 </div>
@@ -111,16 +114,27 @@
                                     </div>
                                 </form>
                             </div>
-<!--                            <label for="">账号状态</label>-->
-<!--                            <form class="layui-form" action="">-->
-<!--                                <div class="layui-form-item" style="margin: 0;">-->
-<!--                                    <input type="radio" name="lockCount" value="2" title="不冻结" checked>-->
-<!--                                    <input type="radio" name="lockCount" value="1" title="冻结">-->
-<!--                                </div>-->
-<!--                            </form>-->
+                            <!--                            <label for="">账号状态</label>-->
+                            <!--                            <form class="layui-form" action="">-->
+                            <!--                                <div class="layui-form-item" style="margin: 0;">-->
+                            <!--                                    <input type="radio" name="lockCount" value="2" title="不冻结" checked>-->
+                            <!--                                    <input type="radio" name="lockCount" value="1" title="冻结">-->
+                            <!--                                </div>-->
+                            <!--                            </form>-->
                         </div>
                     </div>
                 </form>
+                <!--用戶角色-->
+                <div style="margin-top: 10px; border-bottom: 1px solid rgb(204, 204, 204);" class="roleCont">
+                    <form class="layui-form" lay-filter="checkboxData">
+                        <div class="terminal">
+                            <span style="display: inline-block;width: 15%;">用户角色：</span>
+                            <div class="checkCont">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
                 <div style="text-align: center; margin-top: 15px;">
                     <button class="layui-btn btn submit_btn" type="button">
                         <span>提交</span>
@@ -142,48 +156,17 @@
             数据处理中，请稍候
         </div>
     </div>
-    <!-- 用户角色列表 -->
-<!--    <div class="roleContList maskContnet">-->
-<!--        <div class="RoleListBox margin0">-->
-<!--            <div class="playHeader">-->
-<!--                <span>用户角色列表</span>-->
-<!--                <button class="close" type="button">-->
-<!--                    <i class="layui-icon layui-icon-close"></i>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--            <div class="RoleListBody">-->
-<!--                <div>-->
-<!--                    <p></p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-    <!-- 门店数据部分 -->
-    <div class="storesCont maskContnet" style="overflow-y: auto;">
-        <div class="storesBox margin0">
-            <div class="playHeader">
-                <span>售货机数据</span>
-                <button class="close" type="button">
-                    <i class="layui-icon layui-icon-close"></i>
-                </button>
-            </div>
-            <div class="storesbody">
-                <div id="test6" class="demo-transfer"></div>
-            </div>
-        </div>
-    </div>
     <!-- 操作部分 -->
     <ul class="ListOperation">
-<!--        <li class="Status hide">启用</li>-->
+        <!--        <li class="Status hide">启用</li>-->
         <li class="edit listEdit">编辑</li>
-<!--        <li class="role">角色列表</li>-->
+        <!--        <li class="role">角色列表</li>-->
         <li class="delete listEdit">删除</li>
     </ul>
     <!-- 没有权限时显示白屏 -->
-<!--    <div class="hangContent">-->
-<!--        <p>您没有访问的权限!</p>-->
-<!--    </div>-->
+    <!--    <div class="hangContent">-->
+    <!--        <p>您没有访问的权限!</p>-->
+    <!--    </div>-->
 </div>
 </body>
 <script type="text/html" id="barDemo">

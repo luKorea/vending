@@ -34,7 +34,7 @@
                             </button>
                         </div>
                         <div class="newKeyContent">
-                            <button type="button" class="layui-btn layui-btn-primary addBtn">
+                            <button type="button" class="layui-btn layui-btn-primary addBtn hide-role">
                                 <i class="layui-icon layui-icon-app"></i>
                                 <span>添加角色</span>
                                 
@@ -51,6 +51,9 @@
                         <div class="data-list">
                             <div class="list-table">
                                 <table class="layui-hide" id="tableTest" lay-filter="test"></table>
+                            </div>
+                            <div class="role-text hide-role">
+                                <p>您没有查看的权限，请联系管理员</p>
                             </div>
                         </div>
                     </div>
@@ -182,10 +185,6 @@
                 数据处理中，请稍候
             </div>
         </div>
-        <!-- 没有权限时显示白屏 -->
-<!--        <div class="hangContent">-->
-<!--            <p>您没有访问的权限!</p>-->
-<!--        </div>-->
     </div>
 </body>
 <script type="text/html" id="barDemo">

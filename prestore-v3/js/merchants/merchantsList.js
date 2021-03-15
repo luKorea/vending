@@ -16,11 +16,29 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     if (!sessionStorage.token) {
         window.parent.location.href = "login.html";
     }
+
+    let roleData = JSON.parse(sessionStorage.roleData),
+        permissionsObjFlag = permissionsVal1(permissionData, roleData);
+
+    function permissions() {
+        permissionsObjFlag[8] ? removeClass('.addBtn') : addClass('.addBtn');
+        permissionsObjFlag[9] ? removeClass('.ListOperation .edit') : addClass('.ListOperation .edit');
+        permissionsObjFlag[10] ? removeClass('.list-table') :
+            (addClass('.list-table'), removeClass('.role-text'));
+        permissionsObjFlag[11] ? removeClass('.ListOperation .topUpBtn') : addClass('.ListOperation .topUpBtn');
+        permissionsObjFlag[12] ? removeClass('.ListOperation .reductionsBtn') : addClass('.ListOperation .reductionsBtn');
+        permissionsObjFlag[13] ? removeClass('.ListOperation .del') : addClass('.ListOperation .del');
+        permissionsObjFlag[14] ? removeClass('.pushBtn') : addClass('.pushBtn');
+        permissionsObjFlag[15] ? removeClass('.importBtn') : addClass('.importBtn');
+        permissionsObjFlag[16] ? removeClass('.ListOperation .use') : addClass('.ListOperation .use');
+        permissionsObjFlag[17] ? removeClass('.ListOperation .top') : addClass('.ListOperation .top');
+    }
+
+    permissions();
+
     var $ = layui.jquery,
         table = layui.table,
         layer = layui.layer,
-        util = layui.util,
-        tree = layui.tree,
         form = layui.form,
         token = sessionStorage.token;
     var tableIns = table.render({
@@ -69,8 +87,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         },
         where: {},
         parseData: function (res) {
-            //res 即为原始返回的数据
-            if (res.code == 200) {
+            if (res.code === 200) {
                 return {
                     "code": res.code, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -79,8 +96,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 };
             } else {
                 return {
-                    "code": res.code, //解析接口状态
-                    "msg": res.message,   //解析提示文本
+                    "code": res.code,//解析接口状态
+                    "msg": res.message, //解析提示文本
                 }
             }
         },
