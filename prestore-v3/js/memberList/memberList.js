@@ -24,10 +24,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             },
             align: 'center',
             cols: [[
-                {field: 'username', width: 180, title: '用户名', align: 'center'},
+                {field: 'username', width: 150, title: '用户名', align: 'center'},
                 {field: 'name', width: 150, title: '姓名', align: 'center'},
                 {
-                    field: 'company', width: 250, title: '公司名', align: 'center', templet: function (e) {
+                    field: 'company', width: 200, title: '公司名', align: 'center', templet: function (e) {
                         return e.company ? e.company.companyName : ''
                     }
                 },
@@ -59,9 +59,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                 {field: 'updateTime', width: 180, title: '更改时间', align: 'center'},
                 {
                     field: 'operation',
-                    fixed: 'right',
                     align: 'center',
-                    right: 0,
                     width: 150,
                     title: '操作',
                     toolbar: '#barDemo'
