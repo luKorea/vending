@@ -201,6 +201,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
 
     // 渲染用户角色
     function userRoles(list, elements, roleList) {
+        console.log(list);
         var userList = '';
         list.forEach((ele, index) => {
             userList += `<div>
@@ -211,16 +212,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         $(`.${elements}`).empty();
         $(`.${elements}`).html(userList);
         $('.roleCont').show();
-        roleList.forEach((item, index) => {
+        roleList !== undefined ? roleList.forEach((item, index) => {
             for (var i = 0; i < list.length; i++) {
                 if (item.roleId == list[i].roleId) {
                     $(`.${elements} input`).eq(i).prop('checked', true)
                 }
             }
-        })
+        }) : '';
         form.render('checkbox');
     }
-
     // 删除
     $('.delete').click(function () {
         selected = data.id;
@@ -269,12 +269,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             username: '',
             name: '',
             password: '',
-            companyId: ''
+            companyId: '',
         });
-        $('.checkCont').empty();
-        $('.roleCont').hide();
-
-
+        userRoles(roleList, 'checkCont');
     });
     // 编辑
     $('.ListOperation .edit').click(function () {
@@ -293,8 +290,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             companyId: data.company.companyId,
             lockCount: data.lockCount
         });
-        console.log(data);
-        userRoles(roleList, 'checkCont', data.roleList);
+        userRoles(roleList, 'checkCont', data.roleList)
         form.render('select');
     });
 

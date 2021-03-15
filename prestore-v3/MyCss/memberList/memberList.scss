@@ -231,9 +231,9 @@
     transition: all 1s;
 }
 .checkCont{
-    width: 85%;
+    width: 100%;
     display: flex;
-    justify-content: start;
+    justify-self: start;
     flex-wrap: wrap;
 }
 .checkCont>div{

@@ -319,18 +319,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
     // 删除
     $('.ListOperation .del').click(function () {
-        socketQuery(objData.id)
         layer.confirm('确定删除？', function (index) {
             $.ajax({
-                type: 'post',
-                url: `${Vapi}/role/deleteRole`,
+                type: 'get',
+                url: `${Vapi}/role/deRoleByUId?roleId=${objData.roleId}`,
                 headers: {
                     "Content-Type": "application/json",
                     token,
                 },
-                data: JSON.stringify({
-                    id: objData.id
-                }),
                 success: function (res) {
                     layer.close(index);
                     if (res.code == 200) {
@@ -370,7 +366,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
     // 监听f5刷新
     $("body").bind("keydown", function (event) {
-        if (event.keyCode == 116) {
+        if (event.keyCode === 116) {
             f5Fun()
         }
     });
