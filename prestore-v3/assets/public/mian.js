@@ -687,6 +687,8 @@ let permissionData = {
     // 订单管理
     6: false, // 导入订单
     7: false, // 查询订单
+    25: false, // 导出订单
+
     // 商家管理
     8: false, // 新增商家
     9: false, // 修改商家

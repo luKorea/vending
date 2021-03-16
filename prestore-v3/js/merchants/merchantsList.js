@@ -584,7 +584,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 time: timeStampM(useData.statisticsTime),
             },
             parseData: function (res) {
-                //res 即为原始返回的数据
+                //res即为原始返回的数据
                 if (res.code == 200) {
                     return {
                         "code": res.code, //解析接口状态
@@ -682,8 +682,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 确认导出
     $('.pushBtn').click(function () {
         dataLoading();
-        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${Vapi}/company/deriveExcel`, true);
+        let xhr = new XMLHttpRequest(), //定义一个XMLHttpRequest对象
+            companyName = $("input[name='keyMerchants']").val(),
+            bicId = $("input[name='keyBIC']").val();
+        xhr.open("GET", `${Vapi}/company/deriveExcel?bicId=${bicId}&companyName=${companyName}`, true);
         xhr.setRequestHeader("token", sessionStorage.token);
         xhr.responseType = 'blob';//设置ajax的响应类型为blob;
         xhr.onload = function (res) {

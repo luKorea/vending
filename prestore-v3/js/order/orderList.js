@@ -27,6 +27,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
 
     function permissions() {
         permissionsObjFlag[6] ? removeClass('.pushBtnShow') : addClass('.pushBtnShow');
+        permissionsObjFlag[25] ? removeClass('.pullBtnShow') : addClass('.pullBtnShow');
         permissionsObjFlag[7] ? removeClass('.list-table') : (
             addClass('.list-table'), removeClass('.role-text')
         );
@@ -242,6 +243,56 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
 
         $('.messageBox .message .import_fail').html(str)
     }
+
+    // 导出订单
+    $('.pullBtnShow').click(function () {
+        if (!(startTime && endTime)) {
+            layer.msg('请选择时间', {icon: 7});
+            return;
+        }
+        if (timeFlag(startTime, endTime)) {
+            layer.msg('时间选择范围最多三个月', {icon: 7});
+            return;
+        }
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        let xhr = new XMLHttpRequest(), //定义一个XMLHttpRequest对象
+            orderId = $("input[name='orderId']").val(),
+            companyName = $("input[name='companyName']").val(),
+            bicId = $("input[name='bicId']").val(),
+            orderYard = $("input[name='orderYard']").val(),
+            url = `/order/exportOrder?startDate=${startTime}&endDate=${endTime}&bicId=${bicId}&orderId=${orderId}&companyName=${companyName}&orderYard=${orderYard}`;
+        xhr.open("GET",
+            `${Vapi}${url}`, true);
+        xhr.setRequestHeader("token", token);
+        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+        xhr.onload = function (res) {
+            if (xhr.status === 200) {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                if (xhr.response.size < 50) {
+                    layer.msg('导出失败', {icon: 7})
+                    return
+                }
+                var content = xhr.response;
+                var fileName = `${companyName}订单(${startTime}-${endTime}).xls`
+                var elink = document.createElement('a');
+                elink.download = fileName;
+                elink.style.display = 'none';
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+                document.body.appendChild(elink);
+                elink.click();
+                document.body.removeChild(elink);
+            } else {
+                $('.mask').fadeOut();
+                $('.maskSpan').removeClass('maskIcon');
+                layer.msg('服务器请求超时', {icon: 2});
+                return;
+            }
+        }
+        xhr.send();
+    })
 
     $('body').click(function () {
         $('.ListOperation').fadeOut();

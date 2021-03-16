@@ -17,11 +17,11 @@ function ajaxFun(url, type, data) {
 function loadAjax(url, type, data, mask, element, top) {
     return new Promise(function (resolve, reject) {
         ajaxFun(url, type, data,resolve,reject).then(res => {
-         if(res.code==200){
-            resolve(res)
-         }else{
-            reject(res);
-         }
+            if(res.code==200){
+                resolve(res)
+            }else{
+                reject(res);
+            }
         }).catch(err => {
             $('.mask').hide()
             prompt(err.message)
@@ -47,11 +47,11 @@ function ajaxFun1(url, type,token, data) {
 function loadAjax1(url, type,token, data, mask, element, top) {
     return new Promise(function (resolve, reject) {
         ajaxFun1(url, type,token, data,resolve,reject).then(res => {
-         if(res.code==200){
-            resolve(res)
-         }else{
-            reject(res);
-         }
+            if(res.code==200){
+                resolve(res)
+            }else{
+                reject(res);
+            }
         }).catch(err => {
             $('.mask').hide()
             prompt(err.message)
@@ -107,7 +107,7 @@ function timeStamp(time){
     var min =myDate.getMinutes() < 10 ? '0' + myDate.getMinutes() : myDate.getMinutes();
     var s =myDate.getSeconds() < 10 ? '0' + myDate.getSeconds() : myDate.getSeconds();
     return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
-  };
+};
 
 function keyText(){
     var keyStr='yuebaowenhua2020';

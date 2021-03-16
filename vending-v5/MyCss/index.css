@@ -1,0 +1,314 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-size: 0.24rem;
+	list-style:none
+}
+
+._citys {
+	width: 90%;
+	display: inline-block;
+	border: 2px solid #eee;
+	padding: 5px;
+	position: relative;
+	background: #FFFFFF;
+}
+
+._citys span {
+	color: #be954a;
+	height: 0.3rem;
+	width: 0.3rem;
+	line-height: 0.3rem;
+	text-align: center;
+	border-radius: 0.03rem;
+	position: absolute;
+	right: 0.1rem;
+	top: 0.1rem;
+	border: 1px solid rgb(190, 149, 74);
+	cursor: pointer;
+}
+
+._citys0 {
+	width: 100%;
+	height: 0.4rem;
+	display: inline-block;
+	border-bottom: 2px solid rgb(190, 149, 74);
+	padding: 0;
+	margin: 0;
+}
+
+._citys0 li {
+	display: inline-block;
+	line-height: 0.4rem;
+	font-size: 0.28rem;
+	color: #888;
+	width: 0.8rem;
+	text-align: center;
+	cursor: pointer;
+}
+
+.citySel {
+	background-color: #be954a;
+	color: #fff !important;
+}
+
+._citys1 {
+	width: 100%;
+	display: inline-block;
+	padding: 10px 0;
+}
+
+._citys1 a {
+	width: 0.83rem;
+	height: 0.35rem;
+	display: inline-block;
+	background-color: #f5f5f5;
+	color: #666;
+	margin-left: 0.06rem;
+	margin-top: 0.03rem;
+	line-height: 0.35rem;
+	text-align: center;
+	cursor: pointer;
+	font-size: 0.24rem;
+	overflow: hidden;
+}
+
+._citys1 a:hover {
+	color: #fff;
+	background-color: #be954a;
+}
+
+.AreaS {
+	background-color: #be954a !important;
+	color: #fff !important;
+}
+body{
+	min-height: 100vh;
+	background: rgb(245,245,245);
+	color: #333333;
+	margin: 0;
+	padding: 0;
+	word-wrap: break-word;
+	font-family: verdana, Microsoft YaHei, Tahoma, sans-serif;
+	*font-family: Microsoft YaHei, verdana, Tahoma, sans-serif;
+	list-style: none;
+}
+.flex{
+	display: flex;
+	justify-content: flex-start;
+	text-align: center;
+}
+.flex1{
+	display: flex;
+	justify-content: center;
+	text-align: center;
+}
+.header{
+	width: 100%;
+	background: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 22;
+	text-align: center;
+}
+.footer{
+	width: 100%;
+	background: #fff;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 22;
+	text-align: center;
+	padding: 0.12rem 0;
+}
+.header h1{
+	margin: 0.3rem 0 0.2rem;
+	font-size:0.32rem ;	
+	color: #be954a;
+}
+.footer h1{
+	height: 0.88rem;
+	font-size: 0.32rem;
+	line-height: 0.88rem;
+	font-family: PingFang SC;
+	font-weight: 500;
+	width: 6.2rem;
+	margin: 0 auto;
+	background: #be954a;
+	border-radius: 44px;
+	color: #FFFFFF;
+	box-shadow: 0px 2px 0.18rem 0px rgba(0, 0, 0, 0.1);
+}
+.goodsBox{
+	width: 100%;
+	padding: 1.1rem 0 1.5rem; 
+}
+.goodsList,.userInformation{
+	width: 94%;
+	margin: 0 auto;
+	box-shadow: 0px 2px 0.18rem 0px rgba(0, 0, 3px, 0.1);
+}
+.list{
+	width: 100%;
+	background: #FFFFFF;
+	box-shadow: 0px 0.02rem 0.18rem 0px rgba(0, 0, 0, 0.1);
+	border-radius: 0.2rem;
+	margin-bottom: 0.22rem;
+}
+.list .img{
+	width: 1.66rem;
+	height: 2rem;
+	margin: 0.3rem 0 0.3rem 0.25rem;
+}
+.img img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 0.1rem;
+}
+.goodsInform{
+	margin-left: 0.25rem;
+	width: 60%;
+}
+.goodsInform>h5{
+	margin-top: 0.35rem;
+	font-size: 0.3rem;
+	font-family: PingFang SC;
+	font-weight: bold;
+	color: #333333;
+	text-align: left;
+}
+.of{
+	margin-top: 0.33rem;
+}
+.of p{
+	font-size: 0.32rem;
+	font-family: PingFang SC;
+	font-weight: 500;
+}
+.of span{
+	display: inline-block;
+	width: 0.02rem;
+	height: 0.41rem;
+	background: #333;
+	margin: 0 0.3rem;
+}
+.userInformation{
+	margin-top: 0.3rem;
+	background: #FFFFFF;
+	border-radius: 0.2rem;
+	text-align: center;
+	padding-bottom: 0.3rem;
+}
+.userInformation label{
+    width: 1.7rem;
+    text-align: right;
+    float: left;
+    font-size: 0.24rem;
+    color: rgb(96, 98, 102);
+    line-height: 0.4rem;
+    padding: 0px 0.12rem 0px 0px;
+    box-sizing: border-box;
+}
+.informationList{
+	padding: 0.29rem 0.15rem; 
+	width: 100%;
+	box-sizing: border-box;
+	border-bottom: 1px solid rgba(190,149 , 74,0.5);
+}
+.userInformation input{
+	appearance: none;
+    background-color: rgb(255, 255, 255);
+    background-image: none;
+    border-radius: 0.08rem;
+    box-sizing: border-box;
+    color: rgb(96, 98, 102);
+    display: inline-block;
+    font-size: inherit;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    outline: 0px;
+    padding: 0px 0.15rem;
+    transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
+    width: 100%;
+    border: none;
+    font-size: 0.24rem;
+}
+ .border0{
+	border: none;
+}
+.prompt{
+	position: fixed;
+	left: 50%;
+	top: 60%;
+	transform: translate(-50%,-60%);
+	z-index: 999;
+	background: rgba(0, 0, 0, 0.75);
+	color: #fff;
+	padding: 0.12rem 0.2rem;
+	border-radius: 0.25rem;
+	display: none;
+} 
+.determineCont,.mask{
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 9999;
+	display: none;
+}
+.mask{
+	display: block;
+}
+.mask img{
+	width: 90%;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+.determineBox{
+	width: 60%;
+	background: #fff;
+	position: fixed;
+	left: 50%;
+	top: 40%;
+	transform: translate(-50%,-40%);
+	z-index: 999;
+	border-radius: 0.1rem;
+	padding-top: 0.2rem ;
+}
+.determineBox h1{	
+	margin: 0.2rem;
+	padding: 0.2rem 0;
+	text-align: center;
+	font-size: 0.3rem;
+	font-family: PingFang SC;
+	font-weight: 500;
+	color: #333333;
+	line-height: 0.6rem;
+}
+.cancelFlag{
+	width: 100%;
+	margin-top: 0.25rem;
+	border-top: 1px solid #EAEAEA;
+}
+.cancelFlag>p{
+	width: 49.8%;
+	padding: 0.3rem 0;
+	text-align: center;
+	color: #be954a;
+}
+.cancelFlag p:nth-child(1){
+	border-right:1px solid #EAEAEA ;
+	color: #C1C1C1;
+}
+.flexC{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
