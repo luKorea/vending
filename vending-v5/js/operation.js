@@ -1,5 +1,6 @@
 import '../MyCss/operation.scss';
-import {loadAjax, prompt, getQueryString, decrypt1, keepPass} from '../common/common-mail.js';
+import {loadAjax, prompt, getQueryString, decrypt1, keepPass, loadAjax1} from '../common/common-mail.js';
+
 var machineId = decrypt1(getQueryString('machineId')),
     machineInformtion = null;
 // $.ajax({
@@ -51,12 +52,12 @@ $('.aloneContent .confirmBtn').click(function () {
 
     var alonePassObj = JSON.stringify({
         alonePsd: hex_md5($('.aloneContent input[name="alonePass"]').val()),
-        machineId:machineId
+        machineId: machineId
     });
-    loadAjax1('/api/machine/openDoor','post',sessionStorage.token,alonePassObj).then(res=>{
+    loadAjax1('/api/machine/openDoor', 'post', sessionStorage.token, alonePassObj).then(res => {
         $('.aloneContent').fadeOut(100).children('.aloneBox').removeClass('top30');
         prompt('开门成功')
-    }).catch(err=>{
+    }).catch(err => {
         prompt(err.message)
     })
     // loadAjax1('/api/user/verifyAlonePwd','post',sessionStorage.token,alonePassObj).then(res=>{
@@ -87,13 +88,13 @@ $('.lamp1').click(function () {
     $('.inquiry h2').html('确定关灯？')
     $('.inquiry').show();
 });
-$('.sound').click(function(){
+$('.sound').click(function () {
     $('.inquiryBox .confirm').attr('indexFlag', 2);
     $('.inquiryBox .confirm').attr('openFlag', 1);
     $('.inquiry h2').html('确定开启声音？')
     $('.inquiry').show();
 })
-$('.sound1').click(function(){
+$('.sound1').click(function () {
     $('.inquiryBox .confirm').attr('indexFlag', 2);
     $('.inquiryBox .confirm').attr('openFlag', 2);
     $('.inquiry h2').html('确定静音？')
@@ -108,33 +109,33 @@ $('.cancel').click(function () {
 $('.inquiryBox .confirm').click(function () {
     $('.inquiry').hide();
     $('.mask').show();
-    if($(this).attr('indexFlag')==1){
-        var lamObj=JSON.stringify({
-            action:$(this).attr('openFlag')==1?'true':'false',
-            machine:machineId
+    if ($(this).attr('indexFlag') == 1) {
+        let lamObj = JSON.stringify({
+            action: $(this).attr('openFlag') == 1 ? 'true' : 'false',
+            machine: machineId
         })
-        loadAjax1('/api/switchLight','post',sessionStorage.token,lamObj,'mask').then(res=>{
+        loadAjax1('/api/switchLight', 'post', sessionStorage.token, lamObj, 'mask').then(res => {
             $('.mask').hide();
-        }).catch(err=>{
+        }).catch(err => {
             $('.mask').hide();
-            if(err=='true'){
+            if (err === 'true') {
                 prompt('操作成功')
-            }else{
+            } else {
                 prompt('操作失败')
             }
         })
-    }else{
-        var soundObj=JSON.stringify({
-            action:$(this).attr('openFlag')==1?'true':'false',
-            machine:machineId
+    } else {
+        var soundObj = JSON.stringify({
+            action: $(this).attr('openFlag') == 1 ? 'true' : 'false',
+            machine: machineId
         });
-        loadAjax1('/api/switchVolume','post',sessionStorage.token,soundObj,'mask').then(res=>{
+        loadAjax1('/api/switchVolume', 'post', sessionStorage.token, soundObj, 'mask').then(res => {
             $('.mask').hide();
-        }).catch(err=>{
+        }).catch(err => {
             $('.mask').hide();
-            if(err=='true'){
+            if (err === 'true') {
                 prompt('操作成功')
-            }else{
+            } else {
                 prompt('操作失败')
             }
         })
