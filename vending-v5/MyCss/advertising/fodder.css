@@ -1,8 +1,8 @@
 .fodder-wrap{
-    width: 100%;  
+    width: 100%;
 }
 .flex-contnet{
-    display: flex;   
+    display: flex;
 }
 .aside-left{
     -webkit-box-flex: 0;
@@ -27,7 +27,7 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
@@ -97,7 +97,7 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
@@ -127,7 +127,7 @@
     padding: 0;
     background: 0 0;
     border: none;
-    outline: 0;
+    outline: none;
     cursor: pointer;
     font-size: 16px;
 }
@@ -214,7 +214,7 @@
     background: #fff !important;
     border: 1px solid #dcdfe6 !important;
     color: #606266;
-}   
+}
 .cancel-btn:hover,.editCancelBtn:hover{
     color: #be954a;
     border-color: #be954a !important;
@@ -245,7 +245,7 @@
     font-size: 14px;
     color: #606266;
     cursor: pointer;
-    outline: 0;
+    outline: none;
     background-color: #fff;
 }
 .block{
@@ -264,7 +264,7 @@
     box-shadow: 0 1px 3px rgba(0,0,0,.3);
     box-sizing: border-box;
     transition: all 0.5s;
-}   
+}
 .perviewBody{
     width: 100%;
     box-sizing: border-box;
@@ -315,5 +315,5 @@
 }
 .newKeyContent .noPassBtn,.newKeyContent .del-btn{
     background: none !important;
-    border: 1px solid #C9C9C9 !important; 
+    border: 1px solid #C9C9C9 !important;
 }

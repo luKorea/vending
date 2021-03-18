@@ -17,7 +17,7 @@
 }
 
 .fixed{
-    position: fixed;    
+    position: fixed;
     left: 0;
     top: 0;
     right: 0;
@@ -41,7 +41,7 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
@@ -79,7 +79,7 @@
     font-size: 14px;
     color: #606266;
     cursor: pointer;
-    outline: 0;
+    outline: none;
     background-color: #fff;
 }
 .block{
@@ -167,13 +167,13 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
 }
 .inputWidth input:hover{
-    border: 1px solid #be954a;  
+    border: 1px solid #be954a;
 }
 .choice{
     width: 500px;
@@ -206,13 +206,13 @@
     -webkit-appearance: none;
     text-align: center;
     box-sizing: border-box;
-    outline: 0;
+    outline: none;
     margin: 0;
     transition: .1s;
     padding: 12px 20px;
     font-size: 14px;
     border-radius: 4px;
-}  
+}
 .cancel-btn:hover,.chooseCan:hover{
     border-color: #be954a !important ;
     color: #be954a !important;
@@ -232,7 +232,7 @@
     -webkit-appearance: none;
     text-align: center;
     box-sizing: border-box;
-    outline: 0;
+    outline: none;
     margin: 0;
     transition: .1s;
     padding: 12px 20px;
@@ -290,7 +290,7 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
@@ -338,7 +338,7 @@
     color: #606266;
     line-height: 1.8;
     position: relative;
-    
+
 }
 .upload-list2{
     display: none;
@@ -372,7 +372,7 @@
     display: block;
     width: 100%;
     -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg); 
+    transform: rotate(-45deg);
     float:right;
 }
 .up-iconCont1 span i:nth-child(1),.up-iconCont2 span i:nth-child(1){
@@ -434,7 +434,7 @@
     text-align: center;
     line-height: 30px;
     cursor: pointer;
-    
+
 }
 .reading-down:hover{
     color: #be954a;
@@ -458,7 +458,7 @@
     height: 400px;
 }
 .reading::-webkit-scrollbar{
- display: none;   
+ display: none;
 }
 .reading-contnet{
     position: relative;
@@ -575,7 +575,7 @@
     font-size: 60px;
     line-height: 1;
     position: relative;
-   
+
 }
 .upVideoData:hover{
     color: #333;
@@ -649,7 +649,7 @@
         margin-top: 20px;
     }
     .mandatorBody p{
-        font-size: 20px; 
+        font-size: 20px;
         color: #be954a;
     }
     .mandatroFooter{
@@ -668,7 +668,7 @@
         cursor: pointer;
     }
     .mandatroFooter div:nth-child(1){
-        border-right:1px solid rgba(151, 154, 161,0.5); 
+        border-right:1px solid rgba(151, 154, 161,0.5);
     }
     .perviewBody{
         width: 100%;
@@ -714,7 +714,7 @@
     }
     .sidebar{
         max-height: 750px;
-    }   
+    }
 
 
 
@@ -722,13 +722,13 @@
     .treeList {
         padding-left: 20px;
     }
-    
+
   .treeList  a {
         text-decoration: none;
         color: #434b5a;
         cursor: auto !important;
     }
-    
+
   .treeList  .synTree .iconxiangyou{
         cursor: pointer;
     }
@@ -745,7 +745,7 @@
         position: relative;
         line-height: 30px;
     }
-    
+
    .treeList .leg_tree li a{
         position: absolute;
         top: -4px;
@@ -787,7 +787,7 @@
         margin-top: 0px;
         position: relative;
     }
-    
+
    .treeList .label{
         width: 14px;
         height: 14px;

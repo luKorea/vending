@@ -81,7 +81,7 @@
     .tableList{
         width: 100%;
         table{
-            width: 100%; 
+            width: 100%;
         }
     }
     .layui-form{
@@ -115,7 +115,7 @@
 .SetContList{
     height: 450px;
     overflow-y: auto;
-    
+
 }
 .SetTitle>li,.setMateraialList>div{
     padding: 12px 10px;
@@ -157,7 +157,7 @@
     border-bottom: 1px solid #ebeef5;
 }
 .setMateraialList>div>div{
-    
+
     color: #909399;
     font-size: 14px;
     /* line-height: 23px; */
@@ -181,7 +181,7 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 60%;
@@ -229,7 +229,7 @@
         input{
             border: 0;
         }
-    } 
+    }
 }
 .goodsBody{
     thead{
@@ -243,7 +243,7 @@
 }
 input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{
     -webkit-appearance:textfield;
-}    
+}
 input[type="number"]{
     -moz-appearance:textfield;
 }

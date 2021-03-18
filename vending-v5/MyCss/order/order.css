@@ -6,7 +6,7 @@
     padding-right: 40px;
     width: 400px;
     flex: 0 0 400px;
- }  
+ }
 .sidebar{
     position: absolute;
     top: 0;
@@ -51,7 +51,7 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
@@ -124,7 +124,7 @@
     overflow-x: auto;
 }
 .goodsListBody .layui-table-view{
-    
+
     border-bottom: none !important;
 }
 .machineList{
@@ -232,7 +232,7 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;

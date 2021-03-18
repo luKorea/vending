@@ -3,7 +3,7 @@
     /* overflow-x: hidden; */
 }
 .flex-contnet{
-    display: flex;   
+    display: flex;
 }
 .aside-left{
     -webkit-box-flex: 0;
@@ -27,7 +27,7 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
@@ -104,7 +104,7 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
@@ -154,7 +154,7 @@
     padding: 0;
     background: 0 0;
     border: none;
-    outline: 0;
+    outline: none;
     cursor: pointer;
     font-size: 16px;
 }
@@ -223,7 +223,7 @@ video{
     padding: 20px;
 }
 .detalisHeader{
-    border-bottom: 1px solid #ebeef5; 
+    border-bottom: 1px solid #ebeef5;
 }
 .detailsListBox,.detailsHeaderBox{
     margin-top: 10px;
@@ -268,7 +268,7 @@ video{
     width: 12%;
 }
 .listSize,.listAttribute,.listType,.listTimer{
-    width: 8%;    
+    width: 8%;
 }
 .uploadName{
     width: 15%;
@@ -360,7 +360,7 @@ video{
     margin-left: 30%;
 }
 .stepsTwo{
-    border: 2px solid #909399;  
+    border: 2px solid #909399;
 }
 .stepsThree,.publishLast{
     /* display: none; */
@@ -447,7 +447,7 @@ video{
     padding: 20px 10px;
 }
 .liftImg{
-    width: 55px; 
+    width: 55px;
     cursor: pointer;
 }
 .SetSorting{
@@ -482,7 +482,7 @@ video{
     border-bottom: 1px solid #ebeef5;
 }
 .setMateraialList>div>div{
-    
+
     color: #909399;
     font-size: 14px;
     /* line-height: 23px; */
@@ -506,7 +506,7 @@ video{
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
@@ -591,7 +591,7 @@ video{
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
@@ -667,7 +667,7 @@ video{
     -webkit-appearance: none;
     text-align: center;
     box-sizing: border-box;
-    outline: 0;
+    outline: none;
     margin: 0;
     transition: .1s;
     padding: 12px 20px;
@@ -693,7 +693,7 @@ video{
     margin-top: 20px;
 }
 .mandatorBody p{
-    font-size: 20px; 
+    font-size: 20px;
     color: #be954a;
 }
 .mandatroFooter{
@@ -712,7 +712,7 @@ video{
     cursor: pointer;
 }
 .mandatroFooter div:nth-child(1){
-    border-right:1px solid rgba(151, 154, 161,0.5); 
+    border-right:1px solid rgba(151, 154, 161,0.5);
 }
 .preview  {
     z-index: 9999;
@@ -819,5 +819,5 @@ video{
 }
 .noPassBtn{
     background: none !important;
-    border: 1px solid #C9C9C9 !important; 
+    border: 1px solid #C9C9C9 !important;
 }

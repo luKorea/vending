@@ -1,4 +1,5 @@
 // import 'babel-polyfill';
+const CryptoJS = require('crypto-js');
 
 // 请求方法
 function ajaxFun(url, type, data) {
@@ -16,10 +17,10 @@ function ajaxFun(url, type, data) {
 // 请求方法
 function loadAjax(url, type, data, mask, element, top) {
     return new Promise(function (resolve, reject) {
-        ajaxFun(url, type, data,resolve,reject).then(res => {
-            if(res.code==200){
+        ajaxFun(url, type, data, resolve, reject).then(res => {
+            if (res.code == 200) {
                 resolve(res)
-            }else{
+            } else {
                 reject(res);
             }
         }).catch(err => {
@@ -30,7 +31,7 @@ function loadAjax(url, type, data, mask, element, top) {
     })
 };
 
-function ajaxFun1(url, type,token, data) {
+function ajaxFun1(url, type, token, data) {
     return $.ajax({
         type,
         url,
@@ -44,12 +45,12 @@ function ajaxFun1(url, type,token, data) {
 };
 // 请求方法
 // 请求方法
-function loadAjax1(url, type,token, data, mask, element, top) {
+function loadAjax1(url, type, token, data, mask, element, top) {
     return new Promise(function (resolve, reject) {
-        ajaxFun1(url, type,token, data,resolve,reject).then(res => {
-            if(res.code==200){
+        ajaxFun1(url, type, token, data, resolve, reject).then(res => {
+            if (res.code == 200) {
                 resolve(res)
-            }else{
+            } else {
                 reject(res);
             }
         }).catch(err => {
@@ -83,7 +84,13 @@ function numFormat1(num) {
         var c = (num.toString().indexOf('.') !== -1) ? num.toLocaleString() : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
         var str = c.split(".");
         // console.log(str)
-        if (str.length == 1) { c = c + '.00'; } else { if (str[1].length == 1) { c = c + '0'; } }
+        if (str.length == 1) {
+            c = c + '.00';
+        } else {
+            if (str[1].length == 1) {
+                c = c + '0';
+            }
+        }
         return c;
     } else {
         return oldNum;
@@ -97,25 +104,38 @@ function getQueryString(name) {
     if (r != null) return unescape(r[2]);
     return null;
 };
+
 // 时间处理
-function timeStamp(time){
+function timeStamp(time) {
     var myDate = new Date(time);
-    var y =myDate.getFullYear();
-    var m =(myDate.getMonth() + 1) < 10 ? '0' + (myDate.getMonth() + 1) : (myDate.getMonth() + 1);
-    var d =myDate.getDate() < 10 ? '0' + myDate.getDate() : myDate.getDate();
-    var h =myDate.getHours() < 10 ? '0' + myDate.getHours() : myDate.getHours();
-    var min =myDate.getMinutes() < 10 ? '0' + myDate.getMinutes() : myDate.getMinutes();
-    var s =myDate.getSeconds() < 10 ? '0' + myDate.getSeconds() : myDate.getSeconds();
+    var y = myDate.getFullYear();
+    var m = (myDate.getMonth() + 1) < 10 ? '0' + (myDate.getMonth() + 1) : (myDate.getMonth() + 1);
+    var d = myDate.getDate() < 10 ? '0' + myDate.getDate() : myDate.getDate();
+    var h = myDate.getHours() < 10 ? '0' + myDate.getHours() : myDate.getHours();
+    var min = myDate.getMinutes() < 10 ? '0' + myDate.getMinutes() : myDate.getMinutes();
+    var s = myDate.getSeconds() < 10 ? '0' + myDate.getSeconds() : myDate.getSeconds();
     return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
 };
 
-function keyText(){
-    var keyStr='yuebaowenhua2020';
+function keyText() {
+    var keyStr = 'yuebaowenhua2020';
     return keyStr
 }
 
+function encrypt(cipher) {
+    let key = CryptoJS.enc.Utf8.parse("yuebaowenhua2020"),
+        encrypted = CryptoJS.AES.encrypt(cipher, key, {
+            iv: CryptoJS.enc.Utf8.parse("A-16-Byte-String"),
+            mode: CryptoJS.mode.CBC,
+            padding: CryptoJS.pad.Pkcs7
+        });
+    encrypted = encrypted.toString();
+    console.log(encrypted);
+    return encrypted
+};
+
+
 function decrypt1(cipher) {
-    const CryptoJS = require('crypto-js');
     var content = cipher;
     var key = CryptoJS.enc.Utf8.parse("yuebaowenhua2020");
     var bytes = CryptoJS.AES.decrypt(content.toString(), key, {
@@ -128,11 +148,12 @@ function decrypt1(cipher) {
 };
 
 // 记住密码
-function keepPass(old,news){
-    var flagNum=news-old,
-        flag=flagNum<2592000000?true:false;
+function keepPass(old, news) {
+    var flagNum = news - old,
+        flag = flagNum < 2592000000 ? true : false;
     return flag
 }
+
 export {
     loadAjax,
     prompt,
@@ -142,5 +163,6 @@ export {
     keyText,
     decrypt1,
     loadAjax1,
-    keepPass
+    keepPass,
+    encrypt
 }

@@ -53,6 +53,14 @@ module.exports = merge(base, {
                     '^/fk/api': ''
                 }
             },
+            '/api': {
+                target: 'http://172.16.90.77:8093', //(跨域的地址)
+                // target: 'http://119.29.104.217:8086', //(跨域的地址)
+                changeOrigin: false,
+                pathRewrite: {
+                    '^/api': ''
+                }
+            },
         }
     },
     //启用source-map方便调试

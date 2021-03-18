@@ -1,5 +1,10 @@
 @import '../common/common.scss';
 
+input:focus{
+    border: none !important;
+    //border: 1px solid $color !important;
+}
+
 .searchCont{
     display: none;
     width: 100%;
@@ -64,7 +69,7 @@
                     width: 75%;
                     background: none;
                     border: 0;
-                    outline: 0;
+                    outline: none;
                     color: #be954a;
                     font-size: 16px;
                 }

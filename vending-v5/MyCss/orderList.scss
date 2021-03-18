@@ -16,7 +16,7 @@ label.label {
     background: rgba(190, 149, 74,0.8);
     color: #fff;
     border: 0;
-    outline: 0;
+    outline: none;
     top: 0;
     left: 0;
     text-transform: uppercase;
@@ -41,7 +41,7 @@ label.label {
     background: #fff;
     color: #666;
     border: 0;
-    outline: 0;
+    outline: none;
     font-family: open sans,sans;
     font-weight: 400;
     -webkit-transition: all linear .2s;
@@ -113,7 +113,7 @@ label.label {
                     width: 75%;
                     background: none;
                     border: 0;
-                    outline: 0;
+                    outline: none;
                     color: #be954a;
                     font-size: 16px;
                 }
@@ -141,7 +141,7 @@ label.label {
 .header{
     // border-bottom: 1px solid rgb(238,238,238);
     // background: rgb(15,11,8);
-    img{  
+    img{
      width: 0.5rem;
      margin: -5%;
      padding:5% 8%;
@@ -169,7 +169,7 @@ label.label {
             width: 100%;
             // margin: 0 auto;
             padding: 0.1rem 0;
-            h5{        
+            h5{
                 font-size: 0.24rem;
                 font-family: Source Han Sans CN;
                 font-weight: bold;
@@ -179,7 +179,7 @@ label.label {
                     // color: #be954a;
                 }
             }
-            p{              
+            p{
                 font-size: 0.18rem;
                 font-family: Source Han Sans CN;
                 font-weight: 400;
@@ -189,7 +189,7 @@ label.label {
                     // color: #be954a;
                 }
             }
-            h2{       
+            h2{
                 font-size: 0.36rem;
                 font-family: Source Han Sans CN;
                 font-weight: 400;
@@ -202,14 +202,14 @@ label.label {
             margin: 0 auto;
             border-bottom: 1px solid #be954a;
             padding-bottom: .18rem;
-            h3{      
+            h3{
                 font-size: 0.28rem;
                 font-family: Adobe Heiti Std;
                 font-weight: normal;
                 color: #be954a;
                 font-weight: 600;
             }
-           p{              
+           p{
                 font-size: 0.26rem;
                 font-family: PingFang SC;
                 font-weight: 500;
@@ -232,7 +232,7 @@ label.label {
             width:82%;
             margin:0.7rem auto 0.2rem;
             text-align: center;
-            background: #be954a;   
+            background: #be954a;
             border-radius: 0.44rem;
             font-size: 0.32rem;
             font-family: PingFang SC;
@@ -271,7 +271,7 @@ label.label {
         }
         h1{
             line-height: 0.8rem;
-            text-align: center;         
+            text-align: center;
             font-size: 0.28rem;
             font-family: Source Han Sans CN;
             font-weight: 700;
@@ -337,7 +337,7 @@ label.label {
         border:1px solid rgba(190, 149, 74,0.5);
         border-radius: 0.05rem;
         color: #666;
-        outline: 0;
+        outline: none;
         font-family: open sans,sans;
         font-weight: 400;
         padding: 0.05rem 0.15rem;
@@ -348,7 +348,7 @@ label.label {
 	border-bottom: 1px solid #eee;
 	background-color: #fff;
 	font-size: 14px;
-	
+
 }
 
 .game-info{ padding:15px 10px; background:#FFF; line-height:22px; color:#333; font-size:14px;}

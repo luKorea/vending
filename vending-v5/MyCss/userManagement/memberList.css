@@ -24,7 +24,7 @@
     -webkit-appearance: none;
     text-align: center;
     box-sizing: border-box;
-    outline: 0;
+    outline: none;
     margin: 0;
     transition: .1s;
     border: none;
@@ -127,7 +127,7 @@
     padding: 0;
     background: 0 0;
     border: none;
-    outline: 0;
+    outline: none;
     cursor: pointer;
     font-size: 16px;
 }
@@ -169,7 +169,7 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
@@ -184,10 +184,10 @@
     justify-content: start;
     align-items: center;
 }
-.switchTitle{   
+.switchTitle{
     display: inline-block;
     margin-top: 5px;
-    text-align: left; 
+    text-align: left;
     font-size: 14px;
     color: #606266;
     line-height: 40px;
@@ -267,7 +267,7 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
@@ -287,7 +287,7 @@
 .fixedAccount span{
     font-size: 14px;
     color: #606266;
-    
+
 }
 .accountContnet .active{
     color: #be954a;
@@ -353,7 +353,7 @@
     font-size: inherit;
     height: 40px;
     line-height: 40px;
-    outline: 0;
+    outline: none;
     padding: 0 15px;
     transition: bord;
     width: 100%;

@@ -62,7 +62,7 @@
     padding: 0;
     background: 0 0;
     border: none;
-    outline: 0;  
+    outline: none;
     cursor: pointer;
     font-size: 16px;
 }
@@ -103,11 +103,11 @@
     font-size: 14px;
 }
 .background{
-    text-align: center; 
-    line-height: 250px; 
-    height: 250px; 
-    width: 500px; 
-    margin-left: 50px; 
+    text-align: center;
+    line-height: 250px;
+    height: 250px;
+    width: 500px;
+    margin-left: 50px;
     background-image: url('../../img/ge.jpg');
     background-size: 20% 30%;
 }
@@ -127,7 +127,7 @@
     justify-content: space-between;
 }
 .InputFile{
-    position: relative;   
+    position: relative;
     cursor: pointer;
 }
 .InputFile label{
@@ -138,7 +138,7 @@
     -webkit-appearance: none;
     text-align: center;
     box-sizing: border-box;
-    outline: 0;
+    outline: none;
     margin: 0;
     transition: .1s;
     font-weight: 500;
@@ -156,7 +156,7 @@
     top: 0;
     left: 0;
     z-index: 999;
-    opacity: 0;  
+    opacity: 0;
 }
 .layui-btn{
     line-height: 0;

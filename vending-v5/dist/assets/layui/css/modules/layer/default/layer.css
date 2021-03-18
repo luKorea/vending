@@ -830,7 +830,7 @@ html #layuicss-layer {
 	_width: 44px;
 	height: 44px;
 	margin-top: -22px;
-	outline: 0;
+	outline: none;
 	blr: expression(this.onFocus=this.blur())
 }
 

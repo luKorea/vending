@@ -124,7 +124,7 @@ body{
 }
 .header h1{
 	margin: 0.3rem 0 0.2rem;
-	font-size:0.32rem ;	
+	font-size:0.32rem ;
 	color: #be954a;
 }
 .footer h1{
@@ -142,7 +142,7 @@ body{
 }
 .goodsBox{
 	width: 100%;
-	padding: 1.1rem 0 1.5rem; 
+	padding: 1.1rem 0 1.5rem;
 }
 .goodsList,.userInformation{
 	width: 94%;
@@ -212,7 +212,7 @@ body{
     box-sizing: border-box;
 }
 .informationList{
-	padding: 0.29rem 0.15rem; 
+	padding: 0.29rem 0.15rem;
 	width: 100%;
 	box-sizing: border-box;
 	border-bottom: 1px solid rgba(190,149 , 74,0.5);
@@ -228,7 +228,7 @@ body{
     font-size: inherit;
     height: 0.4rem;
     line-height: 0.4rem;
-    outline: 0px;
+    outline: none;
     padding: 0px 0.15rem;
     transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
     width: 100%;
@@ -249,7 +249,7 @@ body{
 	padding: 0.12rem 0.2rem;
 	border-radius: 0.25rem;
 	display: none;
-} 
+}
 .determineCont,.mask{
 	position: fixed;
 	left: 0;
@@ -282,7 +282,7 @@ body{
 	border-radius: 0.1rem;
 	padding-top: 0.2rem ;
 }
-.determineBox h1{	
+.determineBox h1{
 	margin: 0.2rem;
 	padding: 0.2rem 0;
 	text-align: center;

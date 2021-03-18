@@ -14,7 +14,7 @@ body{
         padding: 0.1rem 4% 0;
         box-sizing: border-box;
         overflow: hidden;
-        // height: 1rem;    
+        // height: 1rem;
         font-family:PingFang SC;
         img{
             display: inline-block;
@@ -131,8 +131,8 @@ body{
         padding-top: 0.3rem;
         li{
             width: 33.3%;
-            text-align: center; 
-            box-sizing: border-box;    
+            text-align: center;
+            box-sizing: border-box;
             padding: 0 4%;
             margin-bottom: 0.5rem;
             img{
@@ -177,7 +177,7 @@ body{
             font-size: inherit;
             height: 0.8rem;
             line-height: 0.8rem;
-            outline: 0;
+            outline: none;
             padding: 0 15px;
             transition: border-color 0.2s;
             font-family: PingFang SC;
@@ -228,12 +228,12 @@ body{
     .shipmentBody,.rMentBody,.salesBody{
         width: 96%;
         padding: 0 2%;
-        margin-top: 1.1rem; 
+        margin-top: 1.1rem;
     }
     // .rMentBody{
     //     width: 96%;
     //     padding: 0 2%;
-    //     margin-top: 1.1rem; 
+    //     margin-top: 1.1rem;
     // }
     // .salesBody{
 
@@ -242,7 +242,7 @@ body{
 
 // .rMentBox{
 //     background: #f0eff5;
-    
+
 // }
 
 .recordList {
@@ -255,32 +255,32 @@ body{
         border-radius: 0.1rem;
         padding: 0.25rem;
         margin-bottom: 0.2rem;
-        
+
     }
     h2{
         text-align: center;
-        color: #333333;    
+        color: #333333;
         font-family: Source Han Sans CN;
         font-weight: 400;
         font-size: 0.24rem;
     }
     .keyText{
         padding: 0.1rem 0.1rem;
-        
+
         label{
             width: 1.56rem;
-            color: #333333;    
+            color: #333333;
             font-family: Source Han Sans CN;
             font-weight: 400;
             font-size: 0.24rem;
         }
-        p{   
+        p{
             font-size: 0.26rem;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #333333;
         }
-      
+
     }
 }
 
@@ -317,7 +317,7 @@ body{
             }
             p{
                 color: $color;
-                font-weight: bold;  
+                font-weight: bold;
             }
         }
     }
@@ -348,13 +348,13 @@ body{
         ul{
             padding-left: 0.55rem;
             li{
-                margin: 0.25rem 0;  
-            } 
+                margin: 0.25rem 0;
+            }
         }
     }
     img{
         width: 0.45rem;
-        vertical-align: middle; 
+        vertical-align: middle;
     }
     .nextImg{
         transform:rotate(90deg);
@@ -364,7 +364,7 @@ body{
         transform:rotate(0deg);
         transition: all 0.3s;
     }
-   
+
 }
 .jeinpbox{
     width: 60%;
@@ -416,7 +416,7 @@ body{
             font-size: inherit;
             height: 0.8rem;
             line-height: 0.8rem;
-            outline: 0;
+            outline: none;
             padding: 0 15px;
             transition: border-color 0.2s;
             font-family: PingFang SC;
@@ -451,10 +451,10 @@ body{
             // padding: 0 0.25rem;
             .panelList{
                 width: 100%;
-                background: #ffffff;    
+                background: #ffffff;
                 box-shadow: 0 0.02rem 0.08rem 0px rgba(0, 0, 0, 0.3) !important;
                 border-radius: 0.2rem;
-                
+
                 img{
                     width: 1.6rem;
                     height: 1.6rem;
@@ -464,13 +464,13 @@ body{
                 }
                 .panelRight{
                     margin: 0 0.2rem;
-                    h4{         
+                    h4{
                         font-size: 0.32rem;
                         font-family: PingFang SC;
                         font-weight: bold;
                         color: #333333;
                     }
-                    p{           
+                    p{
                         font-size: 0.3rem;
                         font-family: PingFang SC;
                         font-weight: 500;
@@ -479,7 +479,7 @@ body{
                     }
                 }
             }
-        
+
         }
         .addPanelBtn{
             display: inline-block;
@@ -512,7 +512,7 @@ body{
             text-align: center;
             .dropload-noData{
                 color:#9E9E9E;
-            }       
+            }
         }
     }
     .goodsList{
@@ -522,19 +522,19 @@ body{
        flex-wrap: wrap;
        .chooseList{
            width: 48%;
-           margin-bottom: 0.4rem;       
+           margin-bottom: 0.4rem;
            box-shadow:2px 1px 6px 1px rgba(0, 0, 0, 0.3) !important;
-           border-radius: 0.14rem 0.14rem 0px 0px;     
+           border-radius: 0.14rem 0.14rem 0px 0px;
            .goodsImg{
                width: 100%;
                img{
                    width: 100%;
-               }       
+               }
            }
            .goodsInformation{
             width: 94%;
             margin: 0.1rem auto 0;
-            p{               
+            p{
                 font-size: 0.28rem;
                 font-family: PingFang SC;
                 font-weight: 700;
@@ -553,7 +553,7 @@ body{
         }
        }
     }
-   
+
 }
 .editAisleBox{
     .inputList label{

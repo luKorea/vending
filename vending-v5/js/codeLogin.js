@@ -35,69 +35,72 @@ $('.searchCont .btn').click(function () {
     }
     ;
     $('.mask').show();
+    console.log(machineId, decrypt1(machineId));
     var loginObj = JSON.stringify({
         username: $('.formCont input[name="name"]').val(),
         password: passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val()),
         machineId: machineId
     })
-    loadAjax('/api/user/login', 'post', loginObj).then(res => {
-        sessionStorage.token = res.data.token;
-        $.ajax({
-            type: 'post',
-            url: '/api/scanLogin',
-            timeout: 10000,
-            data: JSON.stringify({
-                action: sessionStorage.token,
-                machine: decrypt1(machineId)
-            }),
-            headers: {
-                "Content-Type": "application/json",
-                token: sessionStorage.token
-            },
-            success: function (res) {
-                $('.mask').hide();
-                if (res == 'true') {
-                    if ($('.r1').prop('checked')) {
-                        sessionStorage.old = new Date().getTime();
-                        sessionStorage.accountPass = JSON.stringify({
-                            username: $('.formCont input[name="name"]').val(),
-                            password: passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val()),
-                        })
+    loadAjax('/api/user/login', 'post', loginObj)
+        .then(res => {
+            sessionStorage.token = res.data.token;
+            $.ajax({
+                type: 'post',
+                url: '/api/scanLogin',
+                timeout: 10000,
+                data: JSON.stringify({
+                    action: sessionStorage.token,
+                    machine: decrypt1(machineId)
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                    token: sessionStorage.token
+                },
+                success: function (res) {
+                    $('.mask').hide();
+                    if (res == 'true') {
+                        if ($('.r1').prop('checked')) {
+                            sessionStorage.old = new Date().getTime();
+                            sessionStorage.accountPass = JSON.stringify({
+                                username: $('.formCont input[name="name"]').val(),
+                                password: passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val()),
+                            })
+                        } else {
+                            sessionStorage.accountPass = ''
+                        }
+                        window.location.href = `operation.html?machineId=${getQueryString('machineId')}`
                     } else {
-                        sessionStorage.accountPass = ''
+                        prompt('售货机离线,登录失败')
                     }
-                    window.location.href = `operation.html?machineId=${getQueryString('machineId')}`
-                } else {
-                    prompt('售货机离线,登录失败')
+                },
+                error: function (err) {
+                    $('.mask').hide();
+                    prompt('服务器请求超时')
                 }
-            },
-            error: function (err) {
-                $('.mask').hide();
-                prompt('服务器请求超时')
-            }
-        });
-    }).catch(err => {
-        $.ajax({
-            type: 'post',
-            url: '/api/scanLogin',
-            timeout: 10000,
-            data: JSON.stringify({
-                action: 'false',
-                machine: decrypt1(machineId)
-            }),
-            headers: {
-                "Content-Type": "application/json",
-                token: sessionStorage.token
-            },
-            success: function (res) {
-            },
-            error: function (err) {
-                $('.mask').hide();
-                prompt('服务器请求超时')
-            }
-        });
-        $('.mask').hide();
-        prompt(err.message)
-    })
+            });
+        })
+        .catch(err => {
+            $.ajax({
+                type: 'post',
+                url: '/api/scanLogin',
+                timeout: 10000,
+                data: JSON.stringify({
+                    action: 'false',
+                    machine: decrypt1(machineId)
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                    token: sessionStorage.token
+                },
+                success: function (res) {
+                },
+                error: function (err) {
+                    $('.mask').hide();
+                    prompt('服务器请求超时')
+                }
+            });
+            $('.mask').hide();
+            prompt(err.message)
+        })
     // window.location.href=`operation.html?machineId=${getQueryString('machineId')}`
 })

@@ -23,7 +23,7 @@
             color: red;
         }
     }
- 
+
 }
 label{
     flex-shrink:0;
@@ -46,7 +46,7 @@ label{
             color: red;
         }
     }
- 
+
 }
 .exportBox{
     width: 500px;
@@ -59,7 +59,7 @@ label{
     transition: all 0.3s;
     padding-bottom: 15px;
     .exportBody{
-        p{    
+        p{
             text-align: center;
             color: red;
             margin-bottom: 15px;}
@@ -122,7 +122,7 @@ label{
         font-size: inherit;
         height: 40px;
         line-height: 40px;
-        outline: 0;
+        outline: none;
         padding: 0 15px;
         transition: border-color .2s cubic-bezier(.645,.045,.355,1);
         width: 100%;
@@ -149,7 +149,7 @@ label{
 }
 input::-ms-clear, input::-ms-reveal{
     /*clear去掉叉  reveal去掉眼睛;但是只能去掉ie10及以上，ie9及以下去不掉*/
-    display: none;  
+    display: none;
 }
 
 .inputCase{
@@ -164,7 +164,7 @@ input::-ms-clear, input::-ms-reveal{
     border: 1px solid #ccc;
     display: block;
     // cursor: default;
-    outline:none; 
+    outline:none;
 }
 .inputCase .fa{
     position: absolute;
