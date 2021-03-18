@@ -123,6 +123,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
     // 关闭弹窗
     $('.playHeader .close').click(function () {
+        orderIns = null;
         $(this).parent().parent().addClass('margin0')
         $(this).parents('.maskContnet').fadeOut();
     });
