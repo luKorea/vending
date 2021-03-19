@@ -700,5 +700,6 @@ let permissionData = {
     15: false, // 导出商家
     16: false, // 查看使用记录
     17: false, // 查看充值/调减记录
+    27: false, // 导入质检费
 }
 

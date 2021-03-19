@@ -616,7 +616,17 @@ $('.shipmentContent .close').click(function () {
 
 // 获取出货记录
 function shipmenListArr(mId, mNum) {
-    var sObj = JSON.stringify({
+    // var sObj = JSON.stringify({
+    //     machineId: mId,
+    //     pageNum: mNum,
+    //     pageSize: 100,
+    //     start_time: sStart_time,
+    //     end_time: send_time,
+    //     goods_Name:$('.shipmentContent input[name="goodsName"]').val(),
+    //     order_code:$('.shipmentContent input[name="shipCode"]').val(),
+    //     way:$('.shipmentContent input[name="shipWay"]').val(),
+    // });
+    loadAjax(`/machine/getShippingList`, 'post', sessionStorage.token, JSON.stringify({
         machineId: mId,
         pageNum: mNum,
         pageSize: 100,
@@ -625,8 +635,7 @@ function shipmenListArr(mId, mNum) {
         goods_Name:$('.shipmentContent input[name="goodsName"]').val(),
         order_code:$('.shipmentContent input[name="shipCode"]').val(),
         way:$('.shipmentContent input[name="shipWay"]').val(),
-    });
-    loadAjax(`/machine/getShippingList`, 'post', sessionStorage.token, sObj).then(res => {
+    })).then(res => {
         console.log(res)
         if (mNum == 1) {
             if (res.data.list.length == 0) {
@@ -723,7 +732,7 @@ jeDate("#test09", {
         console.log(obj);
         var timerKey = obj.val.split(' - ');
         rStart_time = timerKey[0];
-        rend_time = timerKey[1] 
+        rend_time = timerKey[1]
     },
     clearfun: function (ele, val) {
         rStart_time = getKeyTime().startTime;

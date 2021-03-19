@@ -293,7 +293,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 goodKeyFlag = 1;
                 break;
             case 3:
-                panelFun(); //展板详情   
+                panelFun(); //展板详情
                 Amachinedmin();//获取是否设备管理员
                 goodKeyFlag = 2;
                 break;
@@ -571,7 +571,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (status === 'complete' && result.geocodes.length) {
                 var lnglat = result.geocodes[0].location //经纬度
                 // console.log(lnglat)
-                // console.log(lnglat) 
+                // console.log(lnglat)
                 // lat 纬度 lng经度
                 // document.getElementById('lnglat').value = lnglat;
                 $('.listFlex input[name="longitude"]').val(lnglat.lng);
@@ -586,7 +586,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         });
     };
-    // 经纬度定位事件   
+    // 经纬度定位事件
     function coordinatesFun() {
         var lnglat = [$('.listFlex input[name="longitude"]').val(), $('.listFlex input[name="latitude"]').val()]
         map.add(marker);
@@ -950,8 +950,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             where: {
                 machineId: machineSetData.machineId,
-                conditionTwo: startTime,
-                conditionThree: endTime,
+                start_time: startTime,
+                end_time: endTime,
             },
             parseData: function (res) {
                 // console.log(res)
@@ -1036,8 +1036,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 way: $('.shipmentRecord select[name="shipSelect"]').val(),
                 goods_Name: $('.shipmentRecord input[name="shipGoodName"]').val(),
                 order_code: $('.shipmentRecord input[name="order_code"]').val(),
-                conditionTwo: startTime,
-                conditionThree: endTime,
+                start_time: startTime,
+                end_time: endTime,
                 // conditionFour: $('.shipmentRecord input[name="keyName"]').val()
             }
 
@@ -1149,7 +1149,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 { field: `classifyName`, align: 'center', width: 150, title: '商品类目' },
                 {
-                    field: 'mail', align: 'center', width: 130, title: '是否邮寄商品', align: 'center', templet: function (d) {
+                    field: 'mail', width: 130, title: '是否邮寄商品', align: 'center', templet: function (d) {
                         return d.mail == 0 ? '否' : '是'
                     }
                 },
@@ -1234,7 +1234,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 }else{
                     wayList[item.row - 1].push(item)
                 }
-                
+
             }
 
         })
@@ -1419,7 +1419,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
     }
 
-    // 选择商品 
+    // 选择商品
 
     table.on('row(goodsTable)', function (obj) {
         console.log(obj)
@@ -2633,7 +2633,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.addpanelBtn').click(function () {
         if(editPermissionsFlag!=1){
             layer.msg('您不是该设备管理员!', { icon: 7 });
-            return ; 
+            return ;
         }
         $('.relative1 input').removeClass('cursorDefault');
         panelIndex = 1;
