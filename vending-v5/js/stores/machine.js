@@ -1,5 +1,5 @@
 import '../../MyCss/stores/machine.css';
-import { provinceChange, cityChange } from '../../assets/public/selectMore';
+import {provinceChange, cityChange} from '../../assets/public/selectMore';
 // console.log()
 layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     var permissionsData0 = window.parent.permissionsData1(),
@@ -26,6 +26,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             475: false,
         },
         permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
+
     function permissions1() {
         permissionsObjFlag[392] ? $('.activeMachineType').removeClass('hides') : $('.activeMachineType').addClass('hides')
         permissionsObjFlag[432] ? $('.payTypeSet').removeClass('hide') : $('.payTypeSet').addClass('hide');
@@ -46,6 +47,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         permissionsObjFlag[474] ? $('.undoPushBtn').removeClass('hide') : $('.undoPushBtn').addClass('hide');
         permissionsObjFlag[475] ? $('.pushMachineBtn').removeClass('hide') : $('.pushMachineBtn').addClass('hide');
     }
+
     permissions1()
     var funNum = 1;
     var goodKeyFlag = null;
@@ -95,7 +97,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 {
                     field: 'info', width: 150, title: '售货机类别', align: 'center', templet: function (d) {
                         if (d.machinesource) {
-                            return d.machinesource == 1 ? 'ZJ' : 'YY'
+                            return d.machinesource == 1 ? '中吉' : '云印'
                         } else {
                             return '-'
                         }
@@ -172,7 +174,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 //         }
                 //     }
                 // },
-                { field: 'merchantName', width: 150, title: '所属商户', align: 'center', },
+                {field: 'merchantName', width: 150, title: '所属商户', align: 'center',},
                 {
                     field: 'versions', width: 200, title: '当前版本(待升级版本)', align: 'center', templet: function (d) {
                         return `${d.versions ? d.versions : '-'}(${d.appVersion ? d.appVersion : '-'})`
@@ -198,8 +200,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
                     }
                 },
-                { field: 'description', width: 150, title: '描述', align: 'center' },
-                { field: 'operation', fixed: 'right', right: 0, width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },
+                {field: 'description', width: 150, title: '描述', align: 'center'},
+                {
+                    field: 'operation',
+                    fixed: 'right',
+                    right: 0,
+                    width: 150,
+                    title: '操作',
+                    toolbar: '#barDemo',
+                    align: 'center'
+                },
             ]]
             , id: 'tableId'
             , page: true
@@ -268,9 +278,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     merchantId: sessionStorage.machineID
                 }
             });
-            layer.msg('已刷新', { icon: 1 })
+            layer.msg('已刷新', {icon: 1})
         } else {
-            layer.msg('已刷新', { icon: 1 })
+            layer.msg('已刷新', {icon: 1})
         }
     })
     // 设置tab切换
@@ -373,17 +383,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         console.log(machineSetData);
         $('body').addClass('bodys');
         if (machineSetData.openStatus == 1) {
-            layer.msg('温馨提示！该售货机正在营业，不可进行编辑！', { icon: 7 })
+            layer.msg('温馨提示！该售货机正在营业，不可进行编辑！', {icon: 7})
         } else {
             if (!permissionsObjFlag[396]) {
-                layer.msg('温馨提示！您没有编辑售货机的权限！', { icon: 7 })
+                layer.msg('温馨提示！您没有编辑售货机的权限！', {icon: 7})
             }
         }
         var region = null;
         if (machineSetData.location) {
             region = machineSetData.location.split(' ')
         }
-        $('.editMachineBox .layui-tree-txt').css({ color: '#555' });
+        $('.editMachineBox .layui-tree-txt').css({color: '#555'});
         if (machineSetData.machinesource == 1) {
             $('.maxShipClass').show()
         } else {
@@ -431,7 +441,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             $('.serviceTitle').hide();
             $('.listFlex input[name="machineOpen"]').prop('checked', false);
             machineServiceFlag = false;
-        };
+        }
+        ;
         $('.serviceTitle input[name="service_phone"]').val(machineSetData.service_phone);
         // 定制部分
         if (machineSetData.custom_code) {
@@ -449,7 +460,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             $('.customTitle').hide();
             $('.listFlex input[name="customOpen"]').prop('checked', false);
             customFlag = false;
-        };
+        }
+        ;
         //  是否开启声音
         if (machineSetData.is_volume == 1) {
             $('.listFlex input[name="sound"]').prop('checked', true)
@@ -481,12 +493,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 actionStatus: '1',
             });
             loadingAjax('/machine/activeMachine', 'post', activeMachineObj, token, 'mask', '', '', layer).then(res => {
-                layer.msg('激活成功', { icon: 1 });
+                layer.msg('激活成功', {icon: 1});
                 machineList.reload({
                     where: {}
                 })
             }).catch(err => {
-                layer.msg(res.message, { icon: 2 });
+                layer.msg(res.message, {icon: 2});
             })
         })
     });
@@ -497,36 +509,43 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.close(index);
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon')
-            loadingAjax('/machine/getStatus', 'post', JSON.stringify({ machineId: machineSetData.machineId }), token).then(Dres => {
+            loadingAjax('/machine/getStatus', 'post', JSON.stringify({machineId: machineSetData.machineId}), token).then(Dres => {
                 console.log(Dres)
                 if (Dres.data.actionStatus == 1) {
-                    loadingAjax('/pushActive', 'post', JSON.stringify({ machine: machineSetData.machineId, action: machineSetData.openStatus != 1 ? 'true' : 'false' }), token).then(res => {
+                    loadingAjax('/pushActive', 'post', JSON.stringify({
+                        machine: machineSetData.machineId,
+                        action: machineSetData.openStatus != 1 ? 'true' : 'false'
+                    }), token).then(res => {
                     }).catch(err => {
-                        loadingAjax('/machine/activeMachine', 'post', JSON.stringify({ machineId: machineSetData.machineId, openStatus: openStatusIndex }), token, 'mask').then(Sres => {
-                            layer.msg('操作成功', { icon: 1 });
+                        loadingAjax('/machine/activeMachine', 'post', JSON.stringify({
+                            machineId: machineSetData.machineId,
+                            openStatus: openStatusIndex
+                        }), token, 'mask').then(Sres => {
+                            layer.msg('操作成功', {icon: 1});
                             machineList.reload({
                                 where: {}
                             })
                         }).catch(Serr => {
-                            layer.msg(Serr.message, { icon: 2 })
+                            layer.msg(Serr.message, {icon: 2})
                         })
                     })
 
                 } else {
                     $('.mask').fadeOut();
                     $('.maskSpan').removeClass('maskIcon');
-                    layer.msg('操作失败', { icon: 2 });
+                    layer.msg('操作失败', {icon: 2});
                 }
             }).catch(Derr => {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
-                layer.msg(Derr.message, { icon: 2 })
+                layer.msg(Derr.message, {icon: 2})
             })
         })
     })
+
     // 货道数
     function aisleNum() {
-        loadingAjax('/machine/findWay', 'get', { machineId: machineSetData.machineId }, sessionStorage.token).then(res => {
+        loadingAjax('/machine/findWay', 'get', {machineId: machineSetData.machineId}, sessionStorage.token).then(res => {
             var optionList = `<option value="">全部</option>`;
             res.data.forEach(item => {
                 optionList += `<option value="${item}">${item}</option>`
@@ -538,6 +557,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
         })
     }
+
     // 关闭设置
     $('.setUpCont .close').click(function () {
         $('.setUpCont').hide();
@@ -564,6 +584,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         radius: 1000
     });
     var marker = new AMap.Marker();
+
     function geoCode() {
         // var address  = document.getElementById('address').value;
         var address = $('.listFlex select[name="province"]').val() + $('.listFlex select[name="city"]').val() + $('.listFlex select[name="district"]').val() + $('.listFlex input[name="mapVal"]').val()
@@ -581,11 +602,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 map.setFitView(marker);
             } else {
                 // log.error('根据地址查询位置失败');
-                layer.msg('根据地址查询位置失败', { icon: 2 })
+                layer.msg('根据地址查询位置失败', {icon: 2})
 
             }
         });
     };
+
     // 经纬度定位事件
     function coordinatesFun() {
         var lnglat = [$('.listFlex input[name="longitude"]').val(), $('.listFlex input[name="latitude"]').val()]
@@ -609,7 +631,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 $('.listFlex select[name="district"]').val(address.addressComponent.district);
                 form.render('select');
             } else {
-                layer.msg('根据地址查询位置失败', { icon: 2 })
+                layer.msg('根据地址查询位置失败', {icon: 2})
             }
         });
     };
@@ -647,22 +669,22 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 修改售货机基本信息
     $('.editMachineCont .edittBtn').click(function () {
         if (machineSetData.openStatus == 1) {
-            layer.msg('正在营业的售货机不可进行编辑！', { icon: 7 });
+            layer.msg('正在营业的售货机不可进行编辑！', {icon: 7});
             return;
         }
         var editMachineData = form.val("editmachine");
         if (editMachineData.sNumber && editMachineData.tName && editMachineData.number && editMachineData.province && editMachineData.city && editMachineData.district && editMachineData.mapVal && editMachineData.area && editMachineData.merchantsName) {
             if (!($('.serviceTitle input[name="service_phone"]').val() || $('.ImgCont img').attr('src')) && machineServiceFlag) {
-                layer.msg('请填写客服电话或上传客服微信二维码', { icon: 7 });
+                layer.msg('请填写客服电话或上传客服微信二维码', {icon: 7});
                 return;
             }
             if (!($('.customTitle input[name="custom_phone"]').val() || $('.customImgCont img').attr('src')) && customFlag) {
-                layer.msg('请填写定制电话或上传定制二维码', { icon: 7 });
+                layer.msg('请填写定制电话或上传定制二维码', {icon: 7});
                 return;
             }
             if ($('.listFlex input[name="max_ship"]').val()) {
                 if (!(($('.listFlex input[name="max_ship"]').val() > 0) && (Number.isInteger(Number($('.listFlex input[name="max_ship"]').val()))))) {
-                    layer.msg('最大出货数必须是正整数', { icon: 7 });
+                    layer.msg('最大出货数必须是正整数', {icon: 7});
                     return;
                 }
             }
@@ -695,15 +717,15 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             })
             loadingAjax('/machine/updateMachine', 'post', editObj, sessionStorage.token, 'mask').then(res => {
                 $('.editMachineCont').hide();
-                layer.msg('编辑成功', { icon: 1 });
+                layer.msg('编辑成功', {icon: 1});
                 machineList.reload({
                     where: {}
                 })
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 });
+                layer.msg(err.message, {icon: 2});
             })
         } else {
-            layer.msg('带*为必填', { icon: 7 })
+            layer.msg('带*为必填', {icon: 7})
         }
     });
 
@@ -754,6 +776,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 销售详情列表
     var salesDatilsList = null;
+
     function salesFun(id) {
         salesDatilsList = table.render({
             elem: '#salesDateilsTable',
@@ -769,7 +792,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         return timeStamp(d.time)
                     }
                 },
-                { field: 'number', width: 250, title: '订单号', align: 'center', },
+                {field: 'number', width: 250, title: '订单号', align: 'center',},
                 // {
                 //     field: 'shipStatus', width: 150, title: '出货状态', templet: function (d) {
                 //         return `<div><span class="${d.shipStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.shipStatus == 0 ? '出货失败' : d.shipStatus == 1 ? '出货成功' : '货道故障'}</span></div>`
@@ -783,8 +806,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 {
                     field: 'payTypes', width: 150, align: 'center', title: '支付类型',
                 },
-                { field: 'payee', width: 150, align: 'center', title: '收款方', },
-                { field: 'amount', width: 150, align: 'center', title: '金额', },
+                {field: 'payee', width: 150, align: 'center', title: '收款方',},
+                {field: 'amount', width: 150, align: 'center', title: '金额', templet: d => percentileMoney(d.amount)},
             ]],
             id: 'salesId',
             page: true,
@@ -830,7 +853,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 销售详情导出
     $('.selesPushBtn').click(function () {
         if (timeFlag(selesStartTime, selesEndTime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
         $('.mask').fadeIn();
@@ -848,7 +871,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
                 if (xhr.response.size < 50) {
-                    layer.msg('导出失败', { icon: 2 })
+                    layer.msg('导出失败', {icon: 2})
                     return
                 }
                 var content = xhr.response;
@@ -865,7 +888,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             } else {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', { icon: 2 });
+                layer.msg('服务器请求超时', {icon: 2});
                 return;
             }
         }
@@ -874,7 +897,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 销售详情查询
     $('.selesQueryBtn').click(function () {
         if (timeFlag(selesStartTime, selesEndTime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
         var selesVal = form.val('salesDataVal')
@@ -891,6 +914,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     })
     // 出货记录列表
     var recordDataList = null;
+
     function recordFun(id) {
         recordDataList = table.render({
             elem: '#shipmentListTable',
@@ -920,7 +944,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         return d.ship_status == 0 ? '出货失败' : d.ship_status == 1 ? '出货成功' : '货道故障'
                     }
                 },
-                { field: 'before_count', width: 165, align: 'center', title: '出货前数量', },
+                {field: 'before_count', width: 165, align: 'center', title: '出货前数量',},
                 // { field: 'ship_count', width: 135, align: 'center', title: '出货数量',templet:function(d){
                 //     return d.ship_status==1?'1':'0'
                 // } },
@@ -938,8 +962,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         return d.ship_type == 1 ? '订单' : '取货码'
                     }
                 },
-                { field: 'way', width: 120, align: 'center', title: '出货货道' },
-                { field: 'order_code', width: 210, align: 'center', title: '订单号/取货码', },
+                {field: 'way', width: 120, align: 'center', title: '出货货道'},
+                {field: 'order_code', width: 210, align: 'center', title: '订单号/取货码',},
             ]]
             , id: 'shipmentId'
             , page: true
@@ -985,7 +1009,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 导出出货记录
     $('.shipmentPushBtn').click(function () {
         if (timeFlag(startTime, endTime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
         $('.mask').fadeIn();
@@ -1002,7 +1026,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
                 if (xhr.response.size < 50) {
-                    layer.msg('导出失败', { icon: 2 })
+                    layer.msg('导出失败', {icon: 2})
                     return
                 }
                 var content = xhr.response;
@@ -1019,7 +1043,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             } else {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', { icon: 2 });
+                layer.msg('服务器请求超时', {icon: 2});
                 return;
             }
         }
@@ -1028,7 +1052,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 出货记录列表
     $('.shipmentQueryBtn').click(function () {
         if (timeFlag(startTime, endTime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
         recordDataList.reload({
@@ -1089,13 +1113,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.editRefres').click(function () {
         var editTree = treeList()
         if (JSON.stringify(editTree) == JSON.stringify(dataListEdit)) {
-            layer.msg('已刷新', { icon: 1 })
+            layer.msg('已刷新', {icon: 1})
         } else {
             dataListEdit = editTree;
             tree.reload('demoId', {
                 data: dataListEdit
             });
-            layer.msg('已刷新', { icon: 1 })
+            layer.msg('已刷新', {icon: 1})
         }
     })
     // 刷新页面
@@ -1113,9 +1137,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $(this).parent().parent().addClass('margin0')
         $(this).parents('.maskContnet').fadeOut();
     });
+
     // 请求商品分类
     function selectData(merchantId) {
-        loadingAjax('/classify/findAll', 'post', JSON.stringify({ pageNum: 1, pageSize: 200, merchantId, }), sessionStorage.token).then(res => {
+        loadingAjax('/classify/findAll', 'post', JSON.stringify({
+            pageNum: 1,
+            pageSize: 200,
+            merchantId,
+        }), sessionStorage.token).then(res => {
             var optionList = `<option value="">全部</option>`;
             $.each(res.data.list, function (index, ele) {
                 optionList += `<option value="${ele.classifyId}">${ele.classifyName}</option>`
@@ -1125,10 +1154,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }).catch(err => {
         })
     }
+
     selectData(sessionStorage.machineID);
     sessionStorage.machineGoodsId = sessionStorage.machineID;
     sessionStorage.machineName = sessionStorage.marchantName;
     var goodsTableIns = null;
+
     // 商品列表
     function goodsreload() {
         goodsTableIns = table.render({
@@ -1140,21 +1171,26 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token: sessionStorage.token,
             },
             cols: [[
-                { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp" },
+                {field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp"},
                 {
-                    field: 'goods_Name', width: 200, align: 'center', title: '商品名', color: '#409eff', templet: function (d) {
+                    field: 'goods_Name',
+                    width: 200,
+                    align: 'center',
+                    title: '商品名',
+                    color: '#409eff',
+                    templet: function (d) {
                         return (d.mail == 1 ? '(邮寄)' + d.goods_Name : d.goods_Name)
                         // return '1'
                     }
                 },
-                { field: `classifyName`, align: 'center', width: 150, title: '商品类目' },
+                {field: `classifyName`, align: 'center', width: 150, title: '商品类目'},
                 {
                     field: 'mail', width: 130, title: '是否邮寄商品', align: 'center', templet: function (d) {
                         return d.mail == 0 ? '否' : '是'
                     }
                 },
-                { field: 'goods_Core', align: 'center', width: 180, title: '商品编号', },
-                { field: 'operation', position: 'absolute', right: 0, width: 80, title: '操作', toolbar: '#GoodsbarDemo' },
+                {field: 'goods_Core', align: 'center', width: 180, title: '商品编号',},
+                {field: 'operation', position: 'absolute', right: 0, width: 80, title: '操作', toolbar: '#GoodsbarDemo'},
 
             ]],
             id: 'goodsID',
@@ -1197,8 +1233,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         })
     }
+
     //货道详情部分
     var wayList = [];
+
     function getGoodsWay(machineId) {
         wayList = [];
         var aisleData = JSON.stringify({
@@ -1219,6 +1257,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     };
     // 渲染方法
     var wayFlagArr = [];
+
     function againFun(res) {
         // console.log(res)
         wayList = [
@@ -1228,10 +1267,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         res.data.forEach(item => {
             // console.log(item.row)
             if (item.row) {
-                if(!(wayList[item.row - 1])){
-                    wayList[item.row - 1]=[];
+                if (!(wayList[item.row - 1])) {
+                    wayList[item.row - 1] = [];
                     wayList[item.row - 1].push(item)
-                }else{
+                } else {
                     wayList[item.row - 1].push(item)
                 }
 
@@ -1243,7 +1282,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     //选择商品
     $('.relative').click(function () {
         if (editPermissionsFlag != 1) {
-            layer.msg('您不是该设备管理员!', { icon: 7 });
+            layer.msg('您不是该设备管理员!', {icon: 7});
             return;
         }
         popupShow('goodsCont', 'goodsBox')
@@ -1267,6 +1306,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         })
     })
+
     // 货道详情渲染
     function aisleHtml1(strList) {
         var aisleStr = '';
@@ -1319,16 +1359,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         form.render('checkbox');
         // tooltip('.chooseCheck', { transition: true, time: 200 });
     };
-    $('.aisleGoodsCont').on('mouseenter','.chooseCheck',function(){
+    $('.aisleGoodsCont').on('mouseenter', '.chooseCheck', function () {
         // console.log($(this).children('span').html())
         $('.tipContent').css({
             left: $(this).offset().left - 35 + 'px',
             top: $(this).offset().top + 35 + 'px'
-          }).fadeIn();
+        }).fadeIn();
         $('.tipContent .tipHtml').html($(this).children('span').html());
 
     })
-    $('.aisleGoodsCont').on('mouseleave','.chooseCheck',function(){
+    $('.aisleGoodsCont').on('mouseleave', '.chooseCheck', function () {
         $('.tipContent').fadeOut();
     })
     // 判断页面打开后有没有输入独立密码
@@ -1340,7 +1380,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         ArrIndex = $(this).attr("fireIndex").split(',');
         console.log(ArrIndex)
         if (!permissionsObjFlag[424]) {
-            layer.msg('您没有编辑货道的权限!', { icon: 7 })
+            layer.msg('您没有编辑货道的权限!', {icon: 7})
             return;
         }
         aisleType = 1;
@@ -1370,17 +1410,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             } else if (aisleType == 2) {
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
-                loadingAjax('/machine/removeGoodWay', 'post', JSON.stringify({ machineId: machineSetData.machineId, }), sessionStorage.token, 'mask', '', '').then(res => {
-                    layer.msg(res.message, { icon: 1 });
+                loadingAjax('/machine/removeGoodWay', 'post', JSON.stringify({machineId: machineSetData.machineId,}), sessionStorage.token, 'mask', '', '').then(res => {
+                    layer.msg(res.message, {icon: 1});
                     getGoodsWay(machineSetData.machineId);
                 }).catch(err => {
-                    layer.msg(err.message, { icon: 2 })
+                    layer.msg(err.message, {icon: 2})
                 });
             }
 
         }).catch(err => {
             console.log(err)
-            layer.msg(err.message, { icon: 2 });
+            layer.msg(err.message, {icon: 2});
 
         })
     });
@@ -1395,6 +1435,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     var goodsDetails = null;
     var flagObj = {};
+
     function aisleEdit() {
         goodsDetails = wayList[ArrIndex[0]][ArrIndex[1]];
         console.log(goodsDetails)
@@ -1448,18 +1489,20 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
         } else {
             disabledFun();
-            layer.msg('您不是该设备管理员!', { icon: 7 })
+            layer.msg('您不是该设备管理员!', {icon: 7})
         }
     });
+
     // 获取是否机器管理员
     function Amachinedmin() {
-        loadingAjax('/machine/findMachineIdUser', 'get', { machineId: machineSetData.machineId }, sessionStorage.token).then(res => {
+        loadingAjax('/machine/findMachineIdUser', 'get', {machineId: machineSetData.machineId}, sessionStorage.token).then(res => {
             editPermissionsFlag = res.data
         }).catch(err => {
             editPermissionsFlag = 0;
             disabledFun();
         })
     };
+
     function disabledFun() {
         determineFlag = false;
         $('.editAisle .aisleList input').prop('disabled', true);
@@ -1468,6 +1511,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.editAisle .ediaisleBtn').hide();
         $('.editAisle .maintenanceBtn').show();
     };
+
     function enableFun() {
         determineFlag = true;
         $('.editAisle .aisleList input').prop('disabled', false);
@@ -1480,19 +1524,19 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 修改详情
     $('.editAisle .ediaisleBtn').click(function () {
         if (!($('.editAisle input[name="goodsName"]').attr('IVal'))) {
-            layer.msg('请选择商品', { icon: 7 });
+            layer.msg('请选择商品', {icon: 7});
             return;
         }
         if (!($('.editAisle input[name="price"]').val())) {
-            layer.msg('请输入在售价格', { icon: 2 });
+            layer.msg('请输入在售价格', {icon: 2});
             return;
         }
         if (!($('.editAisle input[name="count"]').val() && $('.editAisle input[name="total"]').val())) {
-            layer.msg('数量和容量为为必填', { icon: 7 });
+            layer.msg('数量和容量为为必填', {icon: 7});
             return;
         }
         if (!(Number($('.aisleList input[name="total"]').val()) >= Number($('.aisleList input[name="count"]').val()))) {
-            layer.msg('货道容量不能小于当前数量', { icon: 7 });
+            layer.msg('货道容量不能小于当前数量', {icon: 7});
             return;
         }
         // if($('.editAisle input[name="goodsName"]').attr('IVal')!=goodsDetails.goods_Id){
@@ -1524,16 +1568,19 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         if (editData == JSON.stringify(flagObj)) {
             popupHide('editAisle', 'editAisleBox');
             return;
-        };
+        }
+        ;
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         loadingAjax('/machine/updateGoodWay', 'post', editData, sessionStorage.token, 'mask', 'editAisle', 'editAisleBox', layer).then(res => {
-            layer.msg(res.message, { icon: 1 });
+            layer.msg(res.message, {icon: 1});
             getGoodsWay(machineSetData.machineId);
-            loadingAjax('/refreshGoods', 'post', '', sessionStorage.token).then(res => { }).catch(err => { })
+            loadingAjax('/refreshGoods', 'post', '', sessionStorage.token).then(res => {
+            }).catch(err => {
+            })
         }).catch(err => {
             console.log(err);
-            layer.msg(err.message, { icon: 2 })
+            layer.msg(err.message, {icon: 2})
         })
     });
     // 增加详情;
@@ -1562,14 +1609,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             });
             loadingAjax('/machine/insertGoodWay', 'post', addAisleData, sessionStorage.token, 'mask', 'addDetalis', 'addCont', layer).then(res => {
                 console.log(res)
-                layer.msg(res.message, { icon: 1 });
+                layer.msg(res.message, {icon: 1});
                 againFun(res);
                 $('.addDetalis input[name="addNum"]').val(' ')
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
             })
         } else {
-            layer.msg('数量必须大于0', { icon: 7 })
+            layer.msg('数量必须大于0', {icon: 7})
         }
     });
 
@@ -1579,7 +1626,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         var num = $(this).val(),
             re = /^\d*$/;
         if (!re.test(num)) {
-            layer.msg('只能输入正整数', { icon: 7 });
+            layer.msg('只能输入正整数', {icon: 7});
             $(this).val(reduction);
         } else {
             reduction = $(this).val();
@@ -1590,7 +1637,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         var num = $(this).val(),
             re = /^\d*$/;
         if (!re.test(num)) {
-            layer.msg('只能输入正整数', { icon: 7 });
+            layer.msg('只能输入正整数', {icon: 7});
             $(this).val('')
         } else {
             // reduction = $(this).val();
@@ -1605,14 +1652,15 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         var delAll = form.val("delDetalis");
         console.log(delAll);
         if (JSON.stringify(delAll) == '{}') {
-            layer.msg('请选择需要删除的货道', { icon: 7 });
+            layer.msg('请选择需要删除的货道', {icon: 7});
             return;
         }
         layer.confirm('确定删除？', function (index) {
             layer.close(index);
             for (let i in delAll) {
                 delArr.push(Number(delAll[i]))
-            };
+            }
+            ;
             if (!(sessionStorage.independentPass)) {
                 popupShow('iPasswprd', 'passwordCont');
                 return;
@@ -1631,10 +1679,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.maskSpan').addClass('maskIcon');
         loadingAjax('api/machine/deleteGoodWay', 'post', delDataVal, sessionStorage.token, 'mask', '', '', layer).then(res => {
             console.log(res);
-            layer.msg(res.message, { icon: 1 });
+            layer.msg(res.message, {icon: 1});
             againFun(res)
         }).catch(err => {
-            layer.msg(err.message, { icon: 2 })
+            layer.msg(err.message, {icon: 2})
         })
     };
     //支付类型设置
@@ -1642,12 +1690,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     var weId = null,
         aliId = null,
         AcbcId = null;
+
     function supportpay(machindID, merchantsID) {
         var payList = JSON.stringify({
             machineId: machindID,
         })
         loadingAjax('/pay/getMachinePayParam', 'post', payList, sessionStorage.token).then(res => {
-            loadingAjax('/pay/getPayParam', 'post', JSON.stringify({ merchantId: Number(merchantsID) }), sessionStorage.token).then(pres => {
+            loadingAjax('/pay/getPayParam', 'post', JSON.stringify({merchantId: Number(merchantsID)}), sessionStorage.token).then(pres => {
                 var setPayStr = ''
                 res.data.forEach((item, index) => {
                     if (item.id == 1) {
@@ -1679,12 +1728,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 form.render('radio');
             }).catch(err => {
                 console.log(err)
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
             })
         }).catch(err => {
-            layer.msg(err.message, { icon: 2 })
+            layer.msg(err.message, {icon: 2})
         })
     }
+
     $('.paySet .paySetBtn').click(function () {
         var payFormData = form.val("paySetData");
         console.log(payFormData)
@@ -1703,7 +1753,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 mpId: Number(dataID[0])
             });
             loadingAjax('/pay/updateMachinePayParam', 'post', setMachinePay, sessionStorage.token).then(res => {
-                layer.msg(res.message, { icon: 1 })
+                layer.msg(res.message, {icon: 1})
                 if (Number(dataID[1]) != '0' && AcbcId != '0') {
                     var acbcObj = JSON.stringify({
                         machineId: machineSetData.machineId,
@@ -1712,14 +1762,15 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     })
                     loadingAjax('/pay/updateMachinePayParam', 'post', acbcObj, sessionStorage.token).then(res => {
                         supportpay(machineSetData.machineId, machineSetData.userNum);
-                    }).catch(err => { })
+                    }).catch(err => {
+                    })
                 } else {
                     supportpay(machineSetData.machineId, machineSetData.userNum);
                 }
 
 
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
             })
         }, function () {
             supportpay(machineSetData.machineId, machineSetData.userNum)
@@ -1736,7 +1787,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             });
 
             loadingAjax('/pay/updateMachinePayParam', 'post', setMachinePay, sessionStorage.token).then(res => {
-                layer.msg(res.message, { icon: 1 })
+                layer.msg(res.message, {icon: 1})
 
                 if (Number(dataID[1]) != '0' && weId != '0') {
                     var weObj = JSON.stringify({
@@ -1744,7 +1795,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         paramId: 0,
                         mpId: Number(weId)
                     })
-                    loadingAjax('/pay/updateMachinePayParam', 'post', weObj, sessionStorage.token).then(res => { }).catch(err => { })
+                    loadingAjax('/pay/updateMachinePayParam', 'post', weObj, sessionStorage.token).then(res => {
+                    }).catch(err => {
+                    })
                 }
                 if (Number(dataID[1]) != '0' && aliId != '0') {
                     var aliObj = JSON.stringify({
@@ -1754,7 +1807,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     })
                     loadingAjax('/pay/updateMachinePayParam', 'post', aliObj, sessionStorage.token).then(res => {
                         supportpay(machineSetData.machineId, machineSetData.userNum);
-                    }).catch(err => { })
+                    }).catch(err => {
+                    })
                 } else {
                     supportpay(machineSetData.machineId, machineSetData.userNum);
                 }
@@ -1764,7 +1818,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // },0)
 
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
             })
         }, function () {
             supportpay(machineSetData.machineId, machineSetData.userNum)
@@ -1799,14 +1853,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     $('.ImgCont img').prop('src', res.data.src);
                     $('.ImgCont').show();
                 } else {
-                    layer.msg(res.message, { icon: 7 });
+                    layer.msg(res.message, {icon: 7});
                 }
             },
             error: function (err) {
                 $(that).val('')
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon')
-                layer.msg('上传失败', { icon: 2 })
+                layer.msg('上传失败', {icon: 2})
             }
         })
     });
@@ -1860,14 +1914,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     $('.customImgCont img').prop('src', res.data.src);
                     $('.customImgCont').show();
                 } else {
-                    layer.msg(res.message, { icon: 7 });
+                    layer.msg(res.message, {icon: 7});
                 }
             },
             error: function (err) {
                 $(that).val('')
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon')
-                layer.msg('上传失败', { icon: 2 })
+                layer.msg('上传失败', {icon: 2})
             }
         })
     });
@@ -1877,6 +1931,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     // 销售经理类别
     var salseList = [];
+
     // 获取商户销售经理类别
     function salesClassList(mobj, mNum) {
         var salesObj = JSON.stringify({
@@ -1897,9 +1952,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             // }
         }).catch(err => {
             console.log(err)
-            layer.msg(err.message, { icon: 2 })
+            layer.msg(err.message, {icon: 2})
         })
     };
+
     // 渲染销售经理列表
 
     function ToSalseListFun(ToList, mobj) {
@@ -1922,6 +1978,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 补货记录
     var replenishmentList = null;
+
     function replenishmenFun() {
         replenishmentList = table.render({
             elem: '#replenishmentTable',
@@ -1946,7 +2003,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         }
                     }
                 },
-                { field: 'way', width: 100, title: '补货货道', align: 'center' },
+                {field: 'way', width: 100, title: '补货货道', align: 'center'},
                 {
                     field: 'good_name_core', width: 220, title: '商品名(编号)', align: 'center',
                 },
@@ -2024,7 +2081,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     $('.replenishment .RQueryBtn').click(function () {
         if (timeFlag(replenishmentStartTime, sreplenishmentEndTime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
         replenishmentList.reload({
@@ -2039,7 +2096,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 导出补货记录
     $('.replenishmentPushBtn').click(function () {
         if (timeFlag(replenishmentStartTime, sreplenishmentEndTime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
         $('.mask').fadeIn();
@@ -2056,7 +2113,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
                 if (xhr.response.size < 50) {
-                    layer.msg('导出失败', { icon: 2 })
+                    layer.msg('导出失败', {icon: 2})
                     return
                 }
                 var content = xhr.response;
@@ -2073,7 +2130,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             } else {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', { icon: 2 });
+                layer.msg('服务器请求超时', {icon: 2});
                 return;
             }
         }
@@ -2096,6 +2153,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     // 修改价格记录部分
     var priceTable = null;
+
     function priceFun() {
         priceTable = table.render({
             elem: '#priceEdit',
@@ -2107,10 +2165,22 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 // { field: 'way', width: 150, title: '货道', align: 'center', },
-                { field: 'old_price', width: 150, title: '修改前价格', align: 'center', },
-                { field: 'new_price', width: 150, title: '修改后价格', align: 'center', },
-                { field: 'goods_Name', width: 275, title: '商品名(编号)', align: 'center', },
-                { field: 'user_name', width: 250, title: '修改人', align: 'center', },
+                {
+                    field: 'old_price',
+                    width: 150,
+                    title: '修改前价格',
+                    align: 'center',
+                    templet: d => percentileMoney(d.old_price)
+                },
+                {
+                    field: 'new_price',
+                    width: 150,
+                    title: '修改后价格',
+                    align: 'center',
+                    templet: d => percentileMoney(d.new_price)
+                },
+                {field: 'goods_Name', width: 275, title: '商品名(编号)', align: 'center',},
+                {field: 'user_name', width: 250, title: '修改人', align: 'center',},
                 {
                     field: 'way', width: 250, title: '修改时间', align: 'center', templet: function (d) {
                         return d.change_time ? timeStamp(d.change_time) : '-'
@@ -2159,10 +2229,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         });
     }
+
     // 修改价格查询
     $('.editQueryBtn').click(function () {
         if (timeFlag(editStartTime, editEndTime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
         priceTable.reload({
@@ -2176,9 +2247,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 修改价格导出
     $('.editPircePushBtn').click(function () {
         if (timeFlag(editStartTime, editEndTime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
-        };
+        }
+        ;
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
@@ -2193,7 +2265,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
                 if (xhr.response.size < 50) {
-                    layer.msg('导出失败', { icon: 2 })
+                    layer.msg('导出失败', {icon: 2})
                     return
                 }
                 var content = xhr.response;
@@ -2210,7 +2282,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             } else {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', { icon: 2 });
+                layer.msg('服务器请求超时', {icon: 2});
                 return;
             }
         }
@@ -2218,6 +2290,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     })
     // 开门记录部分
     var openDoorTable = null;
+
     function openDoorFun() {
         openDoorTable = table.render({
             elem: '#openTheDoor',
@@ -2228,9 +2301,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                { field: 'info', width: 250, title: '售货机名', align: 'center', },
-                { field: 'openType', width: 150, title: '类型', align: 'center', },
-                { field: 'username', width: 150, title: '操作人', align: 'center', },
+                {field: 'info', width: 250, title: '售货机名', align: 'center',},
+                {field: 'openType', width: 150, title: '类型', align: 'center',},
+                {field: 'username', width: 150, title: '操作人', align: 'center',},
                 {
                     field: 'goods_Name', width: 250, title: '开门时间', align: 'center', templet: function (d) {
                         return d.open_time ? timeStamp(d.open_time) : '-'
@@ -2294,7 +2367,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     $('.openDoorRecord .opeQuery').click(function () {
         if (timeFlag(openSTime, openETime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
         openDoorTable.reload({
@@ -2307,9 +2380,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 开门记录导出
     $('.openDoorPushBtn').click(function () {
         if (timeFlag(openSTime, openETime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
-        };
+        }
+        ;
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
@@ -2324,7 +2398,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
                 if (xhr.response.size < 50) {
-                    layer.msg('导出失败', { icon: 2 })
+                    layer.msg('导出失败', {icon: 2})
                     return
                 }
                 var content = xhr.response;
@@ -2341,7 +2415,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             } else {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', { icon: 2 });
+                layer.msg('服务器请求超时', {icon: 2});
                 return;
             }
         }
@@ -2354,13 +2428,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     var repairInvoiceData = null;
     $('.invoicePushBtn').click(function () {
         if (editPermissionsFlag != 1) {
-            layer.msg('您不是该设备管理员!', { icon: 7 });
+            layer.msg('您不是该设备管理员!', {icon: 7});
             return;
         }
-        loadingAjax('/machine/getGoodReplenish', 'post', JSON.stringify({ machineId: machineSetData.machineId }), sessionStorage.token, '', '', layer).then(res => {
+        loadingAjax('/machine/getGoodReplenish', 'post', JSON.stringify({machineId: machineSetData.machineId}), sessionStorage.token, '', '', layer).then(res => {
             repairInvoiceData = res.data;
             if (repairInvoiceData.good_info.length == 0) {
-                layer.msg('未查询到缺货商品', { icon: 7 });
+                layer.msg('未查询到缺货商品', {icon: 7});
                 return;
             }
             RgoodsFun(repairInvoiceData.good_info);
@@ -2377,9 +2451,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             $('.repairInvoiceBody input[name="consignee"]').val(repairInvoiceData.consignee);
             popupShow('repairInvoice', 'repairInvoiceBox');
         }).catch(err => {
-            layer.msg(err.message, { icon: 7 })
+            layer.msg(err.message, {icon: 7})
         })
     });
+
     function RgoodsFun(list) {
         var Rstr = '';
         list.forEach((item, index) => {
@@ -2419,7 +2494,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.detaillBody').on('input', 'input[name="shouldName"]', function () {
         var re = /^\d*$/;
         if (!re.test($(this).val())) {
-            layer.msg('只能输入正整数', { icon: 7 });
+            layer.msg('只能输入正整数', {icon: 7});
             $(this).val(CNumber);
             return;
         }
@@ -2432,10 +2507,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.detaillBody').on('input', 'input[name="panelNam"]', function () {
         var re = /^\d*$/;
         if (!re.test($(this).val())) {
-            layer.msg('只能输入正整数', { icon: 7 });
+            layer.msg('只能输入正整数', {icon: 7});
             $(this).val(DNum);
             return;
-        };
+        }
+        ;
         DNum = $(this).val();
         $(this).parent().siblings('.totalNums').children().val(Number(DNum) + Number($(this).parent().siblings('.reNums').children().val()));
     });
@@ -2495,7 +2571,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             } else {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', { icon: 2 });
+                layer.msg('服务器请求超时', {icon: 2});
                 return;
             }
         }
@@ -2510,18 +2586,18 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 清除货道故障
     $('.clearingBtn').click(function () {
         if (editPermissionsFlag != 1) {
-            layer.msg('您不是该设备管理员!', { icon: 7 });
+            layer.msg('您不是该设备管理员!', {icon: 7});
             return;
         }
         layer.confirm('确定清除货道故障？', function (index) {
             layer.close(index);
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon');
-            loadingAjax('/machine/clearLockMachineWay', 'post', JSON.stringify({ machineId: machineSetData.machineId }), sessionStorage.token, 'mask', '', '', layer).then(res => {
-                layer.msg(res.message, { icon: 1 });
+            loadingAjax('/machine/clearLockMachineWay', 'post', JSON.stringify({machineId: machineSetData.machineId}), sessionStorage.token, 'mask', '', '', layer).then(res => {
+                layer.msg(res.message, {icon: 1});
                 getGoodsWay(machineSetData.machineId);
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
             })
         })
     });
@@ -2540,7 +2616,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
                 if (xhr.response.size < 50) {
-                    layer.msg('导出失败', { icon: 2 })
+                    layer.msg('导出失败', {icon: 2})
                     return
                 }
                 var content = xhr.response;
@@ -2556,7 +2632,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             } else {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', { icon: 2 });
+                layer.msg('服务器请求超时', {icon: 2});
                 return;
             }
         }
@@ -2565,6 +2641,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 展板部分
     var panelTableIn = null;
+
     function panelFun() {
         panelTableIn = table.render({
             elem: '#panelTable',
@@ -2575,17 +2652,25 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                { field: 'goods_images', width: 150, title: '图片', align: 'center', templet: "#panelImg" },
-                { field: 'good_name_core', width: 150, title: '商品名(编号)', align: 'center', },
-                { field: 'goodCount', width: 150, title: '数量', align: 'center', },
-                { field: 'oldGoodCount', width: 150, title: '原数量', align: 'center', },
-                { field: 'last_user', width: 150, title: '修改人', align: 'center', },
+                {field: 'goods_images', width: 150, title: '图片', align: 'center', templet: "#panelImg"},
+                {field: 'good_name_core', width: 150, title: '商品名(编号)', align: 'center',},
+                {field: 'goodCount', width: 150, title: '数量', align: 'center',},
+                {field: 'oldGoodCount', width: 150, title: '原数量', align: 'center',},
+                {field: 'last_user', width: 150, title: '修改人', align: 'center',},
                 {
                     field: 'last_time', width: 180, title: '修改时间', align: 'center', templet: function (d) {
                         return d.last_time ? timeStamp(d.last_time) : '-'
                     }
                 },
-                { field: 'operation', fixed: 'right', right: 0, width: 150, title: '操作', toolbar: '#panelId', align: 'center' },
+                {
+                    field: 'operation',
+                    fixed: 'right',
+                    right: 0,
+                    width: 150,
+                    title: '操作',
+                    toolbar: '#panelId',
+                    align: 'center'
+                },
             ]]
             , id: 'panelID'
             // , page: true
@@ -2631,9 +2716,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 添加展板
     var panelIndex = null;
     $('.addpanelBtn').click(function () {
-        if(editPermissionsFlag!=1){
-            layer.msg('您不是该设备管理员!', { icon: 7 });
-            return ;
+        if (editPermissionsFlag != 1) {
+            layer.msg('您不是该设备管理员!', {icon: 7});
+            return;
         }
         $('.relative1 input').removeClass('cursorDefault');
         panelIndex = 1;
@@ -2662,9 +2747,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 添加
     $('.addPanelCont .panelAddBtn').click(function () {
         if (!($('.addPanelCont input[name="panelGoodsName"]').val() && $('.addPanelCont input[name="panelGoodsNum"]').val())) {
-            layer.msg('带*为必填', { icon: 7 });
+            layer.msg('带*为必填', {icon: 7});
             return;
-        };
+        }
+        ;
         var panelApi = panelIndex == 1 ? '/machine/newDisplayGood' : '/machine/updateDisplayGoodCount';
         var panelAddObj = JSON.stringify({
             machineId: machineSetData.machineId,
@@ -2672,7 +2758,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             goodCount: Number($('.addPanelCont input[name="panelGoodsNum"]').val()),
         });
         loadingAjax(panelApi, 'post', panelAddObj, sessionStorage.token, 'mask', 'addPanelCont', 'addPanelBox', layer).then(res => {
-            layer.msg(res.message, { icon: 1 });
+            layer.msg(res.message, {icon: 1});
             panelTableIn.reload({
                 where: {}
             });
@@ -2680,7 +2766,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             $('.addPanelCont input[name="panelGoodsName"]').val('');
             $('.addPanelCont input[name="panelGoodsNum"]').val('');
         }).catch(err => {
-            layer.msg(err.message, { icon: 2 });
+            layer.msg(err.message, {icon: 2});
         })
     });
     // 取消添加
@@ -2690,9 +2776,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     })
     // 展板监听
     table.on('tool(panelTable)', function (obj) {
-        if(editPermissionsFlag!=1){
-            layer.msg('您不是该设备管理员!', { icon: 7 });
-            return ;
+        if (editPermissionsFlag != 1) {
+            layer.msg('您不是该设备管理员!', {icon: 7});
+            return;
         }
         if (obj.event == 'del') {
             layer.confirm('确定移除？', function (index) {
@@ -2704,12 +2790,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     goodId: obj.data.goodId
                 });
                 loadingAjax('/machine/removeDisplayGoodCount', 'post', delObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
-                    layer.msg(res.message, { icon: 1 });
+                    layer.msg(res.message, {icon: 1});
                     panelTableIn.reload({
                         where: {}
                     });
                 }).catch(err => {
-                    layer.msg(err.message, { icon: 2 })
+                    layer.msg(err.message, {icon: 2})
                 })
             })
         } else if (obj.event == 'edit') {
@@ -2725,7 +2811,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 撤销货道
     $('.undoAisleBtn').click(function () {
         if (editPermissionsFlag != 1) {
-            layer.msg('您不是该设备管理员!', { icon: 7 });
+            layer.msg('您不是该设备管理员!', {icon: 7});
             return;
         }
         layer.confirm('确定撤销货道?', function (index) {
@@ -2734,11 +2820,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (sessionStorage.independentPass) {
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
-                loadingAjax('/machine/removeGoodWay', 'post', JSON.stringify({ machineId: machineSetData.machineId, }), sessionStorage.token, 'mask', '', '').then(res => {
-                    layer.msg(res.message, { icon: 1 });
+                loadingAjax('/machine/removeGoodWay', 'post', JSON.stringify({machineId: machineSetData.machineId,}), sessionStorage.token, 'mask', '', '').then(res => {
+                    layer.msg(res.message, {icon: 1});
                     getGoodsWay(machineSetData.machineId);
                 }).catch(err => {
-                    layer.msg(err.message, { icon: 2 })
+                    layer.msg(err.message, {icon: 2})
                 });
             } else {
                 popupShow('iPasswprd', 'passwordCont')
@@ -2750,6 +2836,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 撤货记录
     var undoTableIn = null;
+
     function undoFun() {
         undoTableIn = table.render({
             elem: '#undoTable',
@@ -2760,12 +2847,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                { field: 'goodName', width: 150, title: '商品名', align: 'center', },
-                { field: 'way', width: 130, title: '货道', align: 'center', },
-                { field: 'count', width: 150, title: '数量', align: 'center', },
-                { field: 'price', width: 150, title: '价格', align: 'center', },
-                { field: 'userName', width: 215, title: '撤货人', align: 'center', },
-                { field: 'removeDate', width: 200, title: '撤货时间', align: 'center', },
+                {field: 'goodName', width: 150, title: '商品名', align: 'center',},
+                {field: 'way', width: 130, title: '货道', align: 'center',},
+                {field: 'count', width: 150, title: '数量', align: 'center',},
+                {field: 'price', width: 150, title: '价格', align: 'center', templet: d => percentileMoney(d.price)},
+                {field: 'userName', width: 215, title: '撤货人', align: 'center',},
+                {field: 'removeDate', width: 200, title: '撤货时间', align: 'center',},
             ]]
             , id: 'undoId'
             , page: true
@@ -2823,7 +2910,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
                 if (xhr.response.size < 50) {
-                    layer.msg('导出失败', { icon: 2 })
+                    layer.msg('导出失败', {icon: 2})
                     return
                 }
                 var content = xhr.response;
@@ -2840,7 +2927,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             } else {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', { icon: 2 });
+                layer.msg('服务器请求超时', {icon: 2});
                 return;
             }
         }

@@ -63,13 +63,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 }
             },
             {
-                field: 'create_name', width: 230, title: '总金额(￥)', align: 'center', templet: function (d) {
-                    if (d.achievement.length != 0) {
-                        return d.achievement
-                    } else {
-                        return '-'
-                    }
-                },
+                field: 'create_name', width: 230, title: '总金额(￥)', align: 'center', templet: d => percentileMoney(d.achievement)
             },
             // {
             //     field: 'create_time', width: 200, title: '创建时间', templet: function (d) {
@@ -165,15 +159,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             cols: [[
                 // { checkbox: true },
                 { field: 'number', width: 200, title: '订单号', align: 'center' },
-                { field: 'amount', width: 180, title: '订单金额(￥)', align: 'center' },
+                { field: 'amount', width: 180, title: '订单金额(￥)', align: 'center', templet: d => percentileMoney(d.amount) },
                 {
-                    field: 'refundAmount', width: 145, title: '退款金额', align: 'center', templet: function (d) {
-                        if (d.refundAmount.length == 0) {
-                            return '-'
-                        } else {
-                            return d.refundAmount[0]
-                        }
-                    }
+                    field: 'refundAmount', width: 145, title: '退款金额', align: 'center', templet: d => percentileMoney(d.refundAmount[0])
                 },
                 {
                     field: 'sm_phone', width: 130, title: '是否邮寄订单', align: 'center', templet: function (d) {
@@ -418,7 +406,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             id: 'treelist',
             showLine: !0 //连接线
             ,
-            onlyIconControl: true, //左侧图标控制展开收缩 
+            onlyIconControl: true, //左侧图标控制展开收缩
             data,
             spread: true,
             text: {

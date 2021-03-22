@@ -7,7 +7,7 @@ const vApi = `/api`;
 var token = sessionStorage.token;
 var machineId = sessionStorage.machineID;
 function Goodsdel(id, indexs, obj, index, tableID, classTag) {
-  // index 1为自定义商品 2为自定义类目 3为通用商品 
+  // index 1为自定义商品 2为自定义类目 3为通用商品
   if (indexs == 1) {
     $.ajax({
       url: `${vApi}/goods/deleteById`,
@@ -116,7 +116,7 @@ function phoneRegular(that, layer) {
   var phone = $(that).val()
   if (phone) {
     if (!(/^1[3456789]\d{9}$/.test(phone))) {
-      // alert("手机号码有误，请重填");  
+      // alert("手机号码有误，请重填");
       layer.msg('请填写正确的手机号码', { icon: 7 });
       $(that).val('')
       return false;
@@ -225,7 +225,7 @@ function treeFun(tree, element, tableID, data, key, goodsCLass, selectData, cond
     id: 'treelist',
     showLine: !0 //连接线
     ,
-    onlyIconControl: true, //左侧图标控制展开收缩 
+    onlyIconControl: true, //左侧图标控制展开收缩
     data,
     spread: true,
     text: {
@@ -271,7 +271,7 @@ function treeFunCheck(tree, element, tableID, data, key, layer) {
     showCheckbox: true,
     single: true,
     ckall: true,
-    onlyIconControl: true, //左侧图标控制展开收缩 
+    onlyIconControl: true, //左侧图标控制展开收缩
     data,
     text: {
       defaultNodeName: '无数据',
@@ -448,7 +448,7 @@ function treeFunMaterial(tree, element, tableID, data, key, id, index) {
     id,
     showLine: !0 //连接线
     ,
-    onlyIconControl: true, //左侧图标控制展开收缩 
+    onlyIconControl: true, //左侧图标控制展开收缩
     data,
     text: {
       defaultNodeName: '无数据',
@@ -628,4 +628,21 @@ function fixedFun(){
   $(".layui-table-main tr").each(function (index ,val) {
     $($(".layui-table-fixed .layui-table-body tbody tr")[index]).height($(val).height());
 });
+}
+
+
+// 千分位金额
+function percentileMoney(num) {
+  if (num === '') num = 0;
+  num = num.toString().replace(/[^\d\.-]/g, ''); //转成字符串并去掉其中除数字, . 和 - 之外的其它字符。
+  if (isNaN(num)) num = "0"; //是否非数字值
+  var sign = (num == (num = Math.abs(num)));
+  num = Math.floor(num * 100 + 0.50000000001); //下舍入
+  var cents = num % 100; //求余 余数 = 被除数 - 除数 * 商
+  cents = (cents < 10) ? "0" + cents : cents; //小于2位数就补齐
+  num = Math.floor(num / 100).toString();
+  for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++) { //每隔三位小数分始开隔
+    num = num.substring(0, num.length - (4 * i + 3)) + ',' + num.substring(num.length - (4 * i + 3));
+  }
+  return '￥' + (((sign) ? '' : '-') + num + '.' + cents);
 }

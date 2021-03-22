@@ -1,5 +1,23 @@
 import { loadAjax, loadingWith, toastTitle, showPopup, closeParents, closeWindow, timeStamp, treeList, numFormat2, getKeyTime, timeFlag } from '../../../common/common';
 import '../../../MyCss/mobile/order/machineOrder.scss';
+
+// 千分位金额
+function percentileMoney(num) {
+    if (num === '') num = 0;
+    num = num.toString().replace(/[^\d\.-]/g, ''); //转成字符串并去掉其中除数字, . 和 - 之外的其它字符。
+    if (isNaN(num)) num = "0"; //是否非数字值
+    var sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num * 100 + 0.50000000001); //下舍入
+    var cents = num % 100; //求余 余数 = 被除数 - 除数 * 商
+    cents = (cents < 10) ? "0" + cents : cents; //小于2位数就补齐
+    num = Math.floor(num / 100).toString();
+    for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++) { //每隔三位小数分始开隔
+        num = num.substring(0, num.length - (4 * i + 3)) + ',' + num.substring(num.length - (4 * i + 3));
+    }
+    return '￥' + (((sign) ? '' : '-') + num + '.' + cents);
+}
+
+
 hui('#select1').selectBeautify();
 hui('#select2').selectBeautify();
 hui('#select3').selectBeautify();
@@ -63,7 +81,7 @@ function orderArrList(mId, mNum) {
                         </div>
                         <div class="flex">
                             <label for="">订单金额:</label>
-                            <p>${numFormat2(item.amount)}</p>
+                            <p>${percentileMoney(item.amount)}</p>
                         </div>
                         <div class="flex">
                             <label for="">支付状态:</label>
@@ -201,9 +219,9 @@ function goodDrawing(list) {
                                 src="${item.goods_images}" />
                         </div>
                         <div class="goodsInform">
-                            <h5>${item.goods_Name}</h5>
+                            <h5>${item.good_name_core}</h5>
                             <div class="flexThree of">
-                                <p>￥${numFormat2(item.price)}</p>
+                                <p>${percentileMoney(item.price)}</p>
                                 <p>x${item.count}</p>
                             </div>
                             <p style="margin:5px 0;">已退款数量：${item.refund_count}</p>

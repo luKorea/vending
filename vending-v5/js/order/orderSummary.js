@@ -49,7 +49,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
                 }
             },
             {
-                field: 'amount', width: 130, title: '订单金额(￥)', align: 'center'
+                field: 'amount', width: 130, title: '订单金额(￥)', align: 'center',
+                templet: (e) => percentileMoney(e.amount)
             },
             {
                 field: 'payStatus', width: 130, align: 'center', title: '支付状态', templet: function (d) {
@@ -290,7 +291,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             id: 'treelist',
             showLine: !0 //连接线
             ,
-            onlyIconControl: true, //左侧图标控制展开收缩 
+            onlyIconControl: true, //左侧图标控制展开收缩
             data,
             spread: true,
             text: {
@@ -336,4 +337,4 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             }
         })
     })
-})                                                      
+})

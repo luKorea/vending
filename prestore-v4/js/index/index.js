@@ -25,7 +25,7 @@ window.onload = function () {
 
         // 用户权限获取
         function getRole() {
-            loadAjax('control/getControl', 'get', token)
+            loadAjax('/control/getControl', 'get', token)
                 .then(res => {
                     if (res.code === 200) {
                         sessionStorage.roleData = JSON.stringify(res.data);

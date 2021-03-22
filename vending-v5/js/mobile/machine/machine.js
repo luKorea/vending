@@ -1,6 +1,22 @@
 import '../../../MyCss/mobile/machine/machine.scss';
 import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow, permissionsFun, timeStamp, treeList, getKeyTime, timeFlag } from '../../../common/common.js';
 // loadingWith('正在加载');
+
+// 千分位金额
+function percentileMoney(num) {
+    if (num === '') num = 0;
+    num = num.toString().replace(/[^\d\.-]/g, ''); //转成字符串并去掉其中除数字, . 和 - 之外的其它字符。
+    if (isNaN(num)) num = "0"; //是否非数字值
+    var sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num * 100 + 0.50000000001); //下舍入
+    var cents = num % 100; //求余 余数 = 被除数 - 除数 * 商
+    cents = (cents < 10) ? "0" + cents : cents; //小于2位数就补齐
+    num = Math.floor(num / 100).toString();
+    for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++) { //每隔三位小数分始开隔
+        num = num.substring(0, num.length - (4 * i + 3)) + ',' + num.substring(num.length - (4 * i + 3));
+    }
+    return '￥' + (((sign) ? '' : '-') + num + '.' + cents);
+}
 hui('#select1').selectBeautify();
 hui('#select2').selectBeautify();
 hui('#select3').selectBeautify();
@@ -884,7 +900,7 @@ function salesListArr(mId, mNum) {
                     </div>
                     <div class="keyText flex">
                         <label for="">金额:</label>
-                        <p>${item.amount}</p>
+                        <p>${percentileMoney(item.amount)}</p>
                     </div>
                 </li>`
         });
@@ -1169,7 +1185,7 @@ function goodsListArr(mId, mNum) {
                                     </div>
                                     <div class="flexThree">
                                         <p>销售价</p>
-                                        <span>￥${item.goods_Price}</span>
+                                        <span>${percentileMoney(item.goods_Price)}</span>
                                     </div>
                                 </div>
                             </div>`

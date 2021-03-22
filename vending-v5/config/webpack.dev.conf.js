@@ -44,7 +44,7 @@ module.exports = merge(base, {
             //不要/api,用pathRewrite
             '/api': {
                 // target: 'https://vd.ybtech.gold',
-                target: 'http://172.16.90.77:8086', //(跨域的地址)
+                target: 'http://172.16.90.87:8086', //(跨域的地址)
                 // target: 'http://119.29.104.217:8086', //(跨域的地址)
                 changeOrigin: false,
                 pathRewrite: {
