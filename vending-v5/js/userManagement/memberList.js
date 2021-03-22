@@ -337,9 +337,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         success: function (res) {
           if (res.code == 200) {
             layer.msg(res.message, { icon: 1 });
-            obj.del();
+            // obj.del();
             layer.close(index);
-            socketFun(data.uuid)
+            tableIns.reload({
+              where: {
+              }
+            })
+            socketFun(data.uuid);
           } else if (res.code == 403) {
             window.parent.location.href = "login.html";
           } else {
@@ -352,7 +356,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
   var form = layui.form;
 
   var informationType = null;
-  // type 'add' edit 
+  // type 'add' edit
   //点击添加成员事件
   $('.addBtn').click(function () {
     if (addEditData.length == 0) {
@@ -508,7 +512,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     var phone = $(this).val();
     if (phone) {
       if (!(/^1[3456789]\d{9}$/.test(phone))) {
-        // alert("手机号码有误，请重填");  
+        // alert("手机号码有误，请重填");
         layer.msg('请填写正确的手机号码', { icon: 7 });
         $(this).val('')
         return false;
@@ -561,7 +565,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
   //       $('.checkCont .checkboxList').prop("disabled",'');
   //       form.render();
   //     }
-  //   }); 
+  //   });
   // 角色列表
   var roleList = null;
   $.ajax({
