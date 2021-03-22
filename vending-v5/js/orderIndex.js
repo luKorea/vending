@@ -1,5 +1,6 @@
 import '../MyCss/index.css';
-import {loadAjax, prompt, getQueryString, decrypt1, keepPass} from '../common/common-mail.js';
+import { loadAjax, prompt, numFormat1, getQueryString, timeStamp, decrypt1 } from '../common/common-mail.js';
+
 // 进入页面获取数据
 // 加密
 $('#city').val('');
@@ -15,7 +16,6 @@ function encrypts(content) {
     var result = String(encryptResult);//把object转化为string
     return result
 };
-console.log(encrypts('8fff1fcf1d20f09e'));
 // return ;
 var str = getQueryString('goods');
 var goodsData = null;
@@ -49,7 +49,7 @@ var payFlag = [],
     // 判断是微信或支付宝浏览器
     payTypeIndex = '',
     open = '';
-    // // // 解密
+// // // 解密
 function decrypt(cipher) {
     var content = cipher;
     var key = CryptoJS.enc.Utf8.parse("yuebaowenhua2020");
@@ -60,7 +60,6 @@ function decrypt(cipher) {
     });
     var decryptResult = bytes.toString(CryptoJS.enc.Utf8);
     goodsData = JSON.parse(decryptResult);
-    console.log(goodsData);
     goodsData.payee.forEach(item => {
         payFlag.push(item.payType);
     });
@@ -95,6 +94,8 @@ function decrypt(cipher) {
     var socketObj = JSON.stringify({
         machine: goodsData.machineId,
     });
+    console.log(goodsData, '商品数据');
+    console.log(goodsData.goods[0].mail, '类型');
     if (goodsData.goods[0].mail == 1) {
         $('.userInformation1').show();
         $('.userInformation2').hide();
@@ -102,7 +103,7 @@ function decrypt(cipher) {
         $('.footer1').show();
         document.title = '邮寄商品购买';
         $('.header h1').html('邮寄商品购买')
-    } else {
+    } else if (goodsData.goods[0].mail == 0) {
         $('.userInformation1').hide();
         $('.userInformation2').show();
         $('.footer2').show();
@@ -179,13 +180,13 @@ function wxPay() {
 function onBridgeReady(wxData) {
     WeixinJSBridge.invoke(
         'getBrandWCPayRequest', {
-        appId: wxData.appId,
-        timeStamp: wxData.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-        nonceStr: wxData.nonceStr, // 支付签名随机串，不长于 32 位
-        package: wxData.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
-        signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-        paySign: wxData.paySign, // 支付签名
-    },
+            appId: wxData.appId,
+            timeStamp: wxData.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+            nonceStr: wxData.nonceStr, // 支付签名随机串，不长于 32 位
+            package: wxData.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+            signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+            paySign: wxData.paySign, // 支付签名
+        },
         function (res) {
             if (res.err_msg == "get_brand_wcpay_request:ok") {
                 // 使用以上方式判断前端返回,微信团队郑重提示：
@@ -365,9 +366,9 @@ setTimeout(_ => {
 }, 1200000);
 // 轮询查询订单支付结果
 var numberStr='',
-setTime=null;
+    setTime=null;
 function keyNumber(NumberOne){
-         setTime=setInterval(_=>{
+    setTime=setInterval(_=>{
         var dataObj=JSON.stringify({
             data:encrypts(NumberOne)
         });

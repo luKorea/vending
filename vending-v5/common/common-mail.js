@@ -136,6 +136,7 @@ function encrypt(cipher) {
 
 
 function decrypt1(cipher) {
+    const CryptoJS = require('crypto-js');
     var content = cipher;
     var key = CryptoJS.enc.Utf8.parse("yuebaowenhua2020");
     var bytes = CryptoJS.AES.decrypt(content.toString(), key, {
