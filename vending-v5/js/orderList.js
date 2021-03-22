@@ -1,5 +1,20 @@
 import '../MyCss/orderList.scss';
 import {loadAjax, prompt, getQueryString, decrypt1, keepPass} from '../common/common-mail.js';
+
+
+// 时间戳转时间问题
+function timeStamps(time) {
+    var myDate = new Date(time);
+    var y = myDate.getFullYear();
+    var m = (myDate.getMonth() + 1) < 10 ? '0' + (myDate.getMonth() + 1) : (myDate.getMonth() + 1);
+    var d = myDate.getDate() < 10 ? '0' + myDate.getDate() : myDate.getDate();
+    var h = myDate.getHours() < 10 ? '0' + myDate.getHours() : myDate.getHours();
+    var min = myDate.getMinutes() < 10 ? '0' + myDate.getMinutes() : myDate.getMinutes();
+    var s = myDate.getSeconds() < 10 ? '0' + myDate.getSeconds() : myDate.getSeconds();
+    return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
+}
+
+
 // 加密
 const CryptoJS = require('crypto-js');
 function encrypts(content) {
@@ -120,7 +135,7 @@ function orderListFun(listStr) {
                     </div>
                     <div class="orderListS">
                         <div class="orderList flex">
-                                <h5>下单时间:<span>${item.time ? timeStamp(item.time) : ''}</span></h5>
+                                <h5>下单时间:<span>${item.time ? timeStamps(item.time) : ''}</span></h5>
                         </div>
                         <div class="${item.express_type ? 'show' : 'hide'}">
                             <div class="orderList flex">
@@ -130,7 +145,7 @@ function orderListFun(listStr) {
                                 <h5>物流/快递单号:<span>${item.express_number}</span></h5>
                             </div>
                             <div class="orderList flex">
-                                <h5>发货时间:<span>${item.express_time ? timeStamp(item.express_time) : ''}</span></h5>
+                                <h5>发货时间:<span>${item.express_time ? timeStamps(item.express_time) : ''}</span></h5>
                             </div>
                         </div>
                         <div class="orderList flex">
