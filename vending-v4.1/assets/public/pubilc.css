@@ -109,11 +109,16 @@ input{
 .layui-table-box>.layui-table-body{
     /* max-height: 620px;
     min-height: 300px; */
-    height: 500px !important;
+    /*height: 500px !important;*/
 }
 .layui-table-box .layui-table-body .layui-table td{
-    border-left: none ;
+    border-left: none;
     border-right: none ;
+}
+.layui-table-box .layui-table-body .layui-table td{
+    white-space: nowrap;/*控制单行显示*/
+    overflow: hidden;/*超出隐藏*/
+    text-overflow: ellipsis;/*隐藏的字符用省略号表示*/
 }
 .margin{
     margin:20px;

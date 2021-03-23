@@ -289,7 +289,7 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
                 }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-                var fileName = `${pushMName}邮寄订单(${startTime}-${endTime}).xls`
+                var fileName = `邮寄订单-${pushMName}(${startTime}至${endTime}).xls`
                 var elink = document.createElement('a');
                 elink.download = fileName;
                 elink.style.display = 'none';

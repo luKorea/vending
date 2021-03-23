@@ -258,7 +258,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
                 }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-                var fileName = `${marchantName}订单汇总(${startTime}-${endTime}).xls`
+                var fileName = `订单汇总-${marchantName}(${startTime}至${endTime}).xls`
                 var elink = document.createElement('a');
                 elink.download = fileName;
                 elink.style.display = 'none';

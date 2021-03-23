@@ -360,7 +360,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 }
                 var content = xhr.response;
                 // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-                var fileName = `${marchantName}订单(${startTime}-${endTime}).xls`
+                var fileName = `售货机订单-${marchantName}(${startTime}至${endTime}).xls`
                 var elink = document.createElement('a');
                 elink.download = fileName;
                 elink.style.display = 'none';
