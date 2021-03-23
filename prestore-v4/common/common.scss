@@ -573,12 +573,12 @@ a {
   }
 }
 
-.layui-table-body {
-  .layui-table-cell {
-    height: auto;
-    line-height: 22px;
-  }
-}
+//.layui-table-body {
+//  .layui-table-cell {
+//    height: auto;
+//    line-height: 22px;
+//  }
+//}
 
 .pic102 {
   cursor: pointer;
@@ -591,8 +591,9 @@ a {
 .warning {
   background: #f2dede !important;
 }
-.warning:hover {
 
+body .layui-table .layui-table-header{
+  font-weight: 400;
 }
 
 .layui-table[lay-even] tr:nth-child(even) {
@@ -609,7 +610,6 @@ a {
   text-overflow: inherit !important;
   white-space: normal !important;
   word-break: break-all !important;
-
 }
 
 .messageBox {

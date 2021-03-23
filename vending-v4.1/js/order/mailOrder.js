@@ -382,13 +382,6 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
 
                 {field: 'price', width: 130, title: '销售价 ', align: 'center', templet: (e) => percentileMoney(e.price)},
                 {
-                    field: 'goods_Cost',
-                    width: 130,
-                    title: '成本价 ',
-                    align: 'center',
-                    templet: (e) => percentileMoney(e.goods_Cost)
-                },
-                {
                     field: 'operation',
                     right: 0,
                     width: 80,
