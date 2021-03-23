@@ -80,12 +80,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'number', title: '售货机编号', align: 'center', templet: function (d) {
+                    field: 'number', width: 150, title: '售货机编号', align: 'center', templet: function (d) {
                         return d.number ? d.number : '-'
                     }
                 },
                 {
-                    field: 'info', title: '售货机名', align: 'center', templet: function (d) {
+                    field: 'info', width: 330, title: '售货机名', align: 'center', templet: function (d) {
                         if (d.info) {
                             return d.info
                         } else {
@@ -95,27 +95,27 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'info', title: '售货机类别', align: 'center', templet: function (d) {
+                    field: 'info', width: 150, title: '售货机类别', align: 'center', templet: function (d) {
                         if (d.machinesource) {
-                            return d.machinesource == 1 ? '中吉' : '云印'
+                            return d.machinesource == 1 ? 'ZJ' : 'YY'
                         } else {
                             return '-'
                         }
                     }
                 },
                 {
-                    field: 'location', title: '地址', align: 'center', templet: function (d) {
+                    field: 'location', width: 350, title: '地址', align: 'center', templet: function (d) {
                         return d.location ? d.location : ' - '
                     }
                 },
                 {
-                    field: 'trafficInfo', title: '流量使用情况(MB)', align: 'center'
+                    field: 'trafficInfo', width: 160, title: '流量使用情况(MB)', align: 'center'
                 },
                 {
-                    field: 'iot_card', title: '物联网卡号', align: 'center'
+                    field: 'iot_card', width: 160, title: '物联网卡号', align: 'center'
                 },
                 {
-                    field: 'warning', title: '缺货情况', align: 'center', templet: function (d) {
+                    field: 'warning', width: 130, title: '缺货情况', align: 'center', templet: function (d) {
                         if (d.storage_warning[0].warning) {
                             return ` <div>
                             <span class="${d.storage_warning[0].way_count < 10 ? 'tableStateCellTrue' : d.storage_warning[0].way_count < 30 ? 'tableStateCellFalse' : 'red'}">${d.storage_warning[0].warning}</span>
@@ -128,7 +128,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'way_count', title: '缺货货道数量', align: 'center', templet: function (d) {
+                    field: 'way_count', width: 130, title: '缺货货道数量', align: 'center', templet: function (d) {
                         return d.storage_warning[0].way_count
                     }
                 },
@@ -138,25 +138,25 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 //     }
                 // },
                 {
-                    field: 'onlineStatus', title: '在线状态', align: 'center', templet: function (d) {
+                    field: 'onlineStatus', width: 130, title: '在线状态', align: 'center', templet: function (d) {
                         return `<div><span class="${d.onlineStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.onlineStatus == 0 ? '离线' : '在线'}</span></div>`
                     }
                 },
                 {
-                    field: 'offline_time', title: '离线时长', align: 'center',
+                    field: 'offline_time', width: 180, title: '离线时长', align: 'center',
                 },
                 {
-                    field: 'offline_time', title: '上次离线时间', align: 'center', templet: function (d) {
+                    field: 'offline_time', width: 180, title: '上次离线时间', align: 'center', templet: function (d) {
                         return d.time ? d.time : '-'
                     }
                 },
                 {
-                    field: 'actionStatus', title: '是否激活', align: 'center', templet: function (d) {
+                    field: 'actionStatus', width: 130, title: '是否激活', align: 'center', templet: function (d) {
                         return `<div><span class="${d.actionStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.actionStatus == 0 ? '未激活' : '已激活'}</span></div>`
                     }
                 },
                 {
-                    field: 'openStatus', title: '营业状态', align: 'center', templet: function (d) {
+                    field: 'openStatus', width: 130, title: '营业状态', align: 'center', templet: function (d) {
                         return `<div><span class="${d.openStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.openStatus == 0 ? '无营业' : '营业'}</span></div>`
                     }
                 },
@@ -174,15 +174,15 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 //         }
                 //     }
                 // },
-                {field: 'merchantName', title: '所属商户', align: 'center',},
+                { field: 'merchantName', width: 150, title: '所属商户', align: 'center', },
                 {
-                    field: 'versions', title: '当前版本(待升级版本)', align: 'center', templet: function (d) {
+                    field: 'versions', width: 200, title: '当前版本(待升级版本)', align: 'center', templet: function (d) {
                         return `${d.versions ? d.versions : '-'}(${d.appVersion ? d.appVersion : '-'})`
                     }
                 },
                 // { field: 'controllerVersion', width: 135, title: '控制器版本', },
                 {
-                    field: 'connectTime', title: '联机时间', align: 'center', templet: function (d) {
+                    field: 'connectTime', width: 170, title: '联机时间', align: 'center', templet: function (d) {
                         if (d.actionTime) {
                             return timeStamp(d.connectTime)
                         } else {
@@ -191,7 +191,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'actionTime', title: '激活时间', align: 'center', templet: function (d) {
+                    field: 'actionTime', width: 170, title: '激活时间', align: 'center', templet: function (d) {
                         if (d.actionTime) {
                             return timeStamp(d.actionTime)
                         } else {
@@ -200,13 +200,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
                     }
                 },
-                {field: 'description', title: '描述', align: 'center'},
-                {
-                    field: 'operation',
-                    title: '操作',
-                    toolbar: '#barDemo',
-                    align: 'center'
-                },
+                { field: 'description', width: 150, title: '描述', align: 'center' },
+                { field: 'operation', fixed: 'right', right: 0, width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },
             ]]
             , id: 'tableId'
             , page: true
