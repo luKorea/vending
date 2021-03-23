@@ -280,6 +280,12 @@ a {
   border: none !important;
 }
 
+.layui-table-header .layui-table {
+  margin-bottom: 0 !important;
+  color: #be954a !important;
+}
+
+
 .newKeyContent button {
   display: flex;
   align-items: center;
@@ -585,13 +591,16 @@ a {
 .warning {
   background: #f2dede !important;
 }
+.warning:hover {
+
+}
 
 .layui-table[lay-even] tr:nth-child(even) {
   background-color: rgba(242, 242, 242, 0.35);
 }
 
 .data-list .layui-form .layui-table-body .layui-table-hover {
-  background-color: rgba(242, 242, 242, 1);
+  background-color: rgba(242, 242, 242, 0.7);
 }
 
 .layui-table-cell {

@@ -679,26 +679,28 @@ function percentileMoney(num) {
 }
 
 // 校验订单状态
+// 0 未出货
+// 1 部分出货失败
+// 2 全部出货成功
+// 3 出货中
+// 4 全部出货失败
 function setOrderStatus(num) {
     let str = '';
     switch (num) {
         case 0:
-            str = '';
+            str = '未出货';
             break;
         case 1:
-            str = '';
+            str = '部分出货失败';
             break;
         case 2:
-            str = '';
+            str = '全部出货成功';
             break;
         case 3:
-            str = '';
+            str = '出货中';
             break;
         case 4:
-            str = '';
-            break;
-        case 5:
-            str = '';
+            str = '全部出货失败';
             break;
     }
     return str;

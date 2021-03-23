@@ -1,0 +1,116 @@
+.boxHeader{
+    width: 100%;
+    /* padding: 20px 0; */
+}
+.key-contnet{
+    margin-left: 15px;
+}
+.queryBtn,.refreshBtn{
+    margin-left: 15px;
+}
+.BoxTableList{
+    width: 100%;
+    padding: 10px 0;
+    overflow: hidden;
+}
+.BoxTableList .layui-form{
+    width: 100%;
+    /* overflow-x: auto; */
+}
+.modificationBox,.previewBox,.editBox{
+    width: 950px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    padding-bottom: 15px;
+    padding: 20px;
+}
+.previewContent .playHeader{
+    border-bottom: 1px solid #ebeef5;
+}
+.previewBody{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+}
+.marginAuto,.edit{
+    margin:0 10%;
+}
+.marginAuto form,.edit form{
+    width: 100%;
+}
+.listFlex input{
+    width: 80%;
+}
+.listFlex label{
+    width: 120px;
+    text-align: right;
+    float: left;
+    font-size: 14px;
+    color: #606266;
+    line-height: 40px;
+    padding: 0 12px 0 0;
+    box-sizing: border-box;
+}
+.marginAuto label span,.edit label span{
+    color: red;
+}
+.editorCont{
+    margin-top: 10px;
+}
+.editorCont label{
+    color: #606266;
+    line-height: 24px;
+    display: inline-block;
+    margin-left: 42px;
+}
+#addWangEditor{
+    /* width: 90%;
+    margin:  0 auto ; */
+}
+.cancelBtn{
+    background: #fff !important;
+    border: 1px solid #dcdfe6 !important;
+    color: rgb(96, 98, 102);
+}
+.cancelBtn:hover{
+    color:#be954a;
+    border: 1px solid #be954a !important;
+}
+.addUploadBtn,.editUploadBtn{
+    position: relative;
+}
+.addUploadBtn input,.editUploadBtn input{
+    position: absolute;
+    width: 100%;
+    /* height: 100%; */
+    opacity: 0;
+    top: 0;
+    left: 0;
+}
+.w-e-up-img-container i{
+    font-size: 45px;
+}
+
+
+
+.tableList .layui-table-cell{
+    height:auto;
+    overflow:visible;
+    text-overflow:inherit;
+    white-space:normal;
+}
+.playHeader{
+    border-bottom: 1px solid #e6e6e6;
+}
+.previewBody{
+    min-height: 65vh;
+    margin-top: 25px;
+    border: 1px solid #c0ccda;
+    box-sizing: border-box;
+    padding: 15px 15px 25px;
+}

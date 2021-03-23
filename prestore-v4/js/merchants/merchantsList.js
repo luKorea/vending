@@ -9,7 +9,8 @@ import {
     numFormat2,
     mulCaluter,
     fixedFun,
-    timeStampM
+    timeStampM,
+    setTableColor
 } from '../../common/common.js';
 
 layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
@@ -51,7 +52,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
         },
         cols: [[
-            {field: 'goods_images', width: 20, title: '', templet: "#imgtmp", align: 'center'},
+            // {
+            //     field: 'goods_images',
+            //     width: 80,
+            //     title: '',
+            //     templet: "#imgtmp",
+            //     align: 'center'
+            // },
             {field: 'bicId', width: 160, title: '商家ID', align: 'center'},
             {field: 'companyName', width: 250, title: '商家名称', align: 'center'},
             {field: 'startUsingStr', width: 110, title: '是否启用', align: 'center'},
@@ -66,7 +73,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 }
             },
             {
-                field: 'usableBalance', width: 150, title: '可用金额', align: 'center', templet: function (d) {
+                field: 'usableBalance', width: 150, title: '可用余额', align: 'center', templet: function (d) {
                     return numFormat2(d.usableBalance)
                 }
             },
@@ -468,6 +475,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     // 使用记录
     var useIns = null;
+
     // TODO 每月
     function useFun() {
         useIns = table.render({
@@ -549,6 +557,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             }
         });
     }
+
     var useData = null;
     table.on('tool(useTable)', function (obj) {
         console.log(obj);
@@ -580,34 +589,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         popupShow('.dayRecordContent', '.dayRecordBox')
     });
     $('.ListUseOperation .quality').click(function () {
-        console.log(1);
-        if (dayIns) {
-            dayIns.reload({
-                where: {
-                    bicId: companyData.bicId,
-                    time: timeStampM(useData.statisticsTime),
-                }
-            })
-        } else {
-            dayUseFun();
-        }
-        $('.dayRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)})使用记录`)
-        popupShow('.dayRecordContent', '.dayRecordBox')
+        $('.qualityRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)}) 质检费用`)
+        popupShow('.qualityRecordContent', '.qualityRecordBox')
     });
     $('.ListUseOperation .express').click(function () {
-        console.log(1);
-        if (dayIns) {
-            dayIns.reload({
-                where: {
-                    bicId: companyData.bicId,
-                    time: timeStampM(useData.statisticsTime),
-                }
-            })
-        } else {
-            dayUseFun();
-        }
-        $('.dayRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)})使用记录`)
-        popupShow('.dayRecordContent', '.dayRecordBox')
+        $('.expressRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)}) 快递费用`)
+        popupShow('.expressRecordContent', '.expressRecordBox')
     });
 
     //   每日使用情况
@@ -713,35 +700,16 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         popupShow('.dayOrderContent', '.dayOrderBox')
     });
     $('.ListDateOperation .quality').click(function () {
-        console.log(dateData);
-        if (orderIns) {
-            orderIns.reload({
-                where: {
-                    data: dateData.orders
-                }
-            })
-        } else {
-            dayOrderFun(dateData.orders)
-        }
-        $('.dayOrderBox .playHeader span').html(`${companyData.companyName}(${dateData.day})使用记录`)
-        popupShow('.dayOrderContent', '.dayOrderBox')
+        $('.qualityRecordBox .playHeader span').html(`${companyData.companyName}(${dateData.day}) 的质检费用`)
+        popupShow('.qualityRecordContent', '.qualityRecordBox')
     });
     $('.ListDateOperation .express').click(function () {
-        console.log(dateData);
-        if (orderIns) {
-            orderIns.reload({
-                where: {
-                    data: dateData.orders
-                }
-            })
-        } else {
-            dayOrderFun(dateData.orders)
-        }
-        $('.dayOrderBox .playHeader span').html(`${companyData.companyName}(${dateData.day})使用记录`)
-        popupShow('.dayOrderContent', '.dayOrderBox')
+        $('.expressRecordBox .playHeader span').html(`${companyData.companyName}(${dateData.day}) 的快递费用`)
+        popupShow('.expressRecordContent', '.expressRecordBox')
     });
     // 每日订单
     var orderIns = null;
+
     function dayOrderFun(data) {
         orderIns = table.render({
             elem: '#orderTable',
@@ -791,7 +759,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
         });
     };
-
 
 
     // 导出商家

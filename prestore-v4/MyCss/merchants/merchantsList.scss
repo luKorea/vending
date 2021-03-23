@@ -1,209 +1,252 @@
 @import '../../common/common.scss';
-.layui-table-box .layui-table th {
-    border-left: none;
-    border-right: none;
+
+.addMBox {
+  width: 500px;
+
+  .addMBody {
+    padding: 20px;
+    box-sizing: border-box;
+  }
 }
-.layui-table-view{
-    border-left: none !important;
-    border-right: none !important;
-    border-top: none !important;
+
+.data_list1 {
+  .layui-none {
+    width: 80%;
+  }
 }
-.layui-table-box .layui-table-body .layui-table td{
-    border-left: none;
-    border-right: none;
+
+.topUPBox {
+  width: 500px;
+
+  .topUpBody {
+    padding: 20px;
+    box-sizing: border-box;
+  }
 }
-.addMBox{
-    width: 500px;
-    .addMBody{
-        padding: 20px;
-        box-sizing: border-box;
+
+.reductionsBox {
+  width: 500px;
+
+  .reductionsBody {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+}
+
+.editBox {
+  width: 500px;
+
+  .editBody {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+}
+
+.TopUpRecordContent {
+  .topUpRecordBox {
+    width: 870px;
+    margin: 3vh auto 0;
+
+    .topUpRecordBody {
+      padding: 10px;
+      box-sizing: border-box;
     }
+  }
 }
-.data_list1{
-    .layui-none{
-        width: 80%;
+
+.useRecordContent {
+  .useRecordBox {
+    width: 850px;
+    margin: 3vh auto 0;
+    position: relative;
+
+    .useRecordBody {
+      padding: 10px;
+      box-sizing: border-box;
     }
+
+    .layui-table-body {
+      td {
+        cursor: pointer;
+      }
+    }
+  }
 }
-.topUPBox{
-    width: 500px;
-    .topUpBody{
-        padding: 20px;
-        box-sizing: border-box;
-    }
+
+.layui-form-switch {
+  margin-top: 0;
 }
-.reductionsBox{
-    width: 500px;
-    .reductionsBody{
-        padding: 20px;
-        box-sizing: border-box;
+
+.dayRecordContent {
+  .dayRecordBox {
+    width: 850px;
+    margin: 2vh auto 0;
+
+    .dayRecordBody {
+      padding: 10px;
+      box-sizing: border-box;
     }
+  }
+
+  .layui-table-body {
+    td {
+      cursor: pointer;
+    }
+  }
 }
-.editBox{
-    width: 500px;
-    .editBody{
-        padding: 20px;
-        box-sizing: border-box;
+
+.dayOrderContent {
+  .dayOrderBox {
+    width: 1000px;
+    margin: 2vh auto 0;
+
+    .dayOrderBody {
+      padding: 10px;
+      box-sizing: border-box;
     }
+  }
 }
-.TopUpRecordContent{
-    .topUpRecordBox{
-        width: 870px;
-        margin: 3vh auto 0 ;
-        .topUpRecordBody{
-            padding: 10px;
-            box-sizing: border-box;
-        }
+
+.qualityRecordContent {
+  .qualityRecordBox {
+    width: 870px;
+    margin: 3vh auto 0;
+
+    .qualityRecordBody {
+      padding: 10px;
+      box-sizing: border-box;
     }
+  }
 }
-.useRecordContent{
-    .useRecordBox{
-        width: 850px;
-        margin: 3vh auto 0;
-        position: relative;
-        .useRecordBody{
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .layui-table-body{
-            td{
-                cursor: pointer;
-            }
-        }
+
+.expressRecordContent {
+  .expressRecordBox {
+    width: 870px;
+    margin: 3vh auto 0;
+
+    .expressRecordBody {
+      padding: 10px;
+      box-sizing: border-box;
     }
+  }
 }
-.layui-form-switch{
-    margin-top: 0;
-}
-.dayRecordContent{
-    .dayRecordBox{
-        width: 850px;
-        margin: 2vh auto 0 ;
-        .dayRecordBody{
-            padding: 10px;
-            box-sizing: border-box;
-        }
-    }
-    .layui-table-body{
-        td{
-            cursor: pointer;
-        }
-    }
-}
-.dayOrderContent{
-    .dayOrderBox{
-        width: 1000px;
-        margin: 2vh auto 0 ;
-        .dayOrderBody{
-            padding: 10px;
-            box-sizing: border-box;
-        }
-    }
-}
-.pushOrderBox{
-    width: 500px;
-    p{
-        color: red;
-        text-align: center;
-        padding: 3px 0;
-    }
-    .pushOrderBody{
+
+.pushOrderBox {
+  width: 500px;
+
+  p {
+    color: red;
+    text-align: center;
+    padding: 3px 0;
+  }
+
+  .pushOrderBody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 14px;
+
+    .tip {
+      margin-left: 20px;
+
+      a {
+        border-bottom: 1px solid #be954a;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 15px;
-        box-sizing: border-box;
+
+        img {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    .pushuBtnCon {
+      label {
+        display: inline-block;
+        height: 32px;
+        line-height: 32px;
+        font-size: 12px;
+        padding: 0 10px;
+        background-color: #be954a;
+        color: #fff;
+        white-space: nowrap;
         text-align: center;
-        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+      }
 
-        .tip {
-            margin-left: 20px;
-            a{
-                border-bottom: 1px solid #be954a;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                img {
-                    margin-right: 4px;
-                }
-            }
-        }
-
-        .pushuBtnCon{
-            label{
-                display: inline-block;
-                height: 32px;
-                line-height: 32px;
-                font-size: 12px;
-                padding: 0 10px;
-                background-color: #be954a;
-                color: #fff;
-                white-space: nowrap;
-                text-align: center;
-                border: none;
-                border-radius: 2px;
-                cursor: pointer;
-            }
-            input{
-                display: none;
-            }
-        }
+      input {
+        display: none;
+      }
     }
+  }
 
-    img{
-        width: 15px;
-    }
+  img {
+    width: 15px;
+  }
 }
-.pushQualityBox{
-    width: 500px;
-    p{
-        color: red;
-        text-align: center;
-        padding: 3px 0;
-    }
-    .pushOrderBody{
+
+.pushQualityBox {
+  width: 500px;
+
+  p {
+    color: red;
+    text-align: center;
+    padding: 3px 0;
+  }
+
+  .pushOrderBody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 14px;
+
+    .tip {
+      margin-left: 20px;
+
+      a {
+        border-bottom: 1px solid #be954a;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 15px;
-        box-sizing: border-box;
+
+        img {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    .pushuBtnCon {
+      label {
+        display: inline-block;
+        height: 32px;
+        line-height: 32px;
+        font-size: 12px;
+        padding: 0 10px;
+        background-color: #be954a;
+        color: #fff;
+        white-space: nowrap;
         text-align: center;
-        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+      }
 
-        .tip {
-            margin-left: 20px;
-            a{
-                border-bottom: 1px solid #be954a;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                img {
-                    margin-right: 4px;
-                }
-            }
-        }
-
-        .pushuBtnCon{
-            label{
-                display: inline-block;
-                height: 32px;
-                line-height: 32px;
-                font-size: 12px;
-                padding: 0 10px;
-                background-color: #be954a;
-                color: #fff;
-                white-space: nowrap;
-                text-align: center;
-                border: none;
-                border-radius: 2px;
-                cursor: pointer;
-            }
-            input{
-                display: none;
-            }
-        }
+      input {
+        display: none;
+      }
     }
+  }
 
-    img{
-        width: 15px;
-    }
+  img {
+    width: 15px;
+  }
 }

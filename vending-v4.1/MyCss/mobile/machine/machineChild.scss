@@ -1,0 +1,311 @@
+@import '../../../common/common.scss';
+.aisleCont{
+    width: 92%;
+    margin: 0.2rem auto 1rem;
+}
+.aisleList{
+    flex-wrap: wrap;
+    background-color: rgba(236, 214, 173, 0.5);
+    margin-bottom: 0.3rem;
+    li{
+        width: 30%;
+        // padding:0 4%;
+        margin: 0.15rem 1.2% 0;
+        margin-bottom: 0.2rem;
+        height: 2.68rem;
+    }
+    .listIndex{
+        text-align: center;
+        flex-shrink: 0;
+        span{
+            font-size: 1.2rem;
+            color: #be954a;
+            line-height: 2.78rem;
+        }
+    }
+    .aisleNumderGoods{
+        // height: 150px;
+        background: #fff;
+        border: 1px solid #787c80;
+        border-radius: 2px;
+        position: relative;
+        flex-shrink: 0;
+        position: relative  ;
+        .numberTop{
+            // width: 100%;
+            border-bottom: 1px solid #787c80;
+            height: 1.5rem;
+            img{
+                width: 100%;
+                // height: 1.6rem;
+                height: 1.5rem;
+                object-fit: cover;
+            }
+            span{
+                display: inline-block;
+                width: 0.4rem;
+                height: 0.4rem;
+                color: #fff;
+                right: 5px;
+                text-align: left;
+                z-index: 2;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                border-radius: 0px 0px 200px;
+                background-color: #6c6d71;
+                font-size: 12px;
+            }
+        }
+        .numderBottom{
+            border-bottom: 1px solid rgba(120, 124, 128, 0.3);
+            .status1{
+                background-color: #67c23a;
+                color: #fff;
+            };
+            .status2{
+                background-color: gray;
+                color: #fff;
+            };
+            div:nth-child(1) {
+                width: 35%;
+                text-align: center;
+                line-height: 0.7rem;
+            };
+            div:nth-child(2) {
+                width: 65%;
+                text-align: center;
+                line-height: 0.7rem;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-align: center;
+            };     
+        }
+        p{
+            width: 90%;
+            margin: 0 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+        }
+        .delList{
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0;
+            border: 0;
+            display: none;
+            label{
+                // margin: 0 !important;
+            }
+        };
+        .delCheckbox{
+            position: absolute;
+            top: 0;
+            left:-0.03rem ; 
+            display: none;
+            z-index: 6;
+            >div{
+                position: relative;
+                line-height: 0.4rem;
+                input{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    // z-index: 19;
+                    opacity: 0;
+                    padding: 0.1rem;
+                    display: none;
+                }
+                span{
+                    padding: 0;
+                    line-height: 0.21rem;
+                    font-size: 0.4rem;
+                    z-index: 5;
+                }
+            }
+            .delCheckboxTrue{
+                color: $color;
+            }
+        }
+    }
+    .addAisle{
+        // line-height: 150px;
+        background: #fff;
+        border: 1px solid #787c80;
+        border-radius: 2px;
+        flex-shrink: 0;
+        text-align: center;
+        line-height: 2.78rem;
+        span{
+            font-size: 1.4rem;
+            color: #8f8a8a;
+            font-weight: 700;
+            opacity: 0.5;
+           
+        }
+    }
+}
+.topHeader {
+    z-index: 10;
+}
+.delFooter{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    // overflow: hidden;
+    width: 100%;
+    border-top: 1px solid #f0f0f0;
+    z-index: 15;
+    background: #fff;
+    height: 0;
+    transition: all 0.3s;
+    .delBtnList{
+        display: flex;
+        justify-content:flex-end;
+        align-content: center;
+        padding: 0.15rem 0;
+        button{
+            margin-right: 0.15rem;
+        }
+    }
+}
+.height{
+    height: initial;
+    transition: all 0.3s;
+}
+#hui-dialog-input-in input:focus{
+    border: 0 !important;
+}
+.addNumBox{
+    // top: 50%;
+    .inputList label{
+        width: 1.2rem;
+        text-align: center;
+    }
+}
+.addNumFooter{
+    text-align: center;
+    .confirmBtn{
+        margin: 0.15rem auto 0.3rem;
+    }
+}
+.validationBox{
+    // top: 50%;
+    .inputList label{
+        text-align: center;
+    }
+}
+.validationFooter{
+    text-align: center;
+    .confirmBtn{
+        margin: 0.15rem auto 0.3rem;
+    }
+}
+.editAisleBox{
+    .inputList label{
+        width: 1.6rem;
+        text-align: center;
+    }
+    .relative button {
+        border: 1px solid transparent;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        transition: all 0.1s ease 0s;
+        padding: 0 0.3rem;
+        height: 80%;
+        text-align: center;
+        box-sizing: border-box;
+        border-radius: 4px;
+        span{
+            color: #b7b8bb;
+        }
+    }
+}
+.goodsBox{
+    .inputList input{
+        width: 70%;
+    }
+    .goodsWrap{
+        max-height: 7rem;
+        overflow-y: auto;
+        .dropload-down{
+            text-align: center;
+            .dropload-noData{
+                color:#9E9E9E;
+            }       
+        }
+    }
+    .goodsList{
+        width: 96%;
+        padding: 0 2%;
+        margin: 0.15rem auto 0;
+       flex-wrap: wrap;
+       .chooseList{
+           width: 48%;
+           margin-bottom: 0.4rem;       
+           box-shadow:2px 1px 6px 1px rgba(0, 0, 0, 0.3) !important;
+           border-radius: 0.14rem 0.14rem 0px 0px;     
+           .goodsImg{
+               width: 100%;
+               img{
+                   width: 100%;
+               }       
+           }
+           .goodsInformation{
+            width: 94%;
+            margin: 0.1rem auto 0;
+            p{               
+                font-size: 0.28rem;
+                font-family: PingFang SC;
+                font-weight: 700;
+                color: #333333;
+                line-height: 0.6rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            span{
+                font-size: 0.24rem;
+                font-family: PingFang SC;
+                color: #666666;
+                line-height: 0.6rem;
+            }
+        }
+       }
+    }
+   
+}
+.editFooter{
+    button{
+        // margin: 0.2rem;
+        margin-bottom: 0.4rem;
+    }
+}
+.empty{
+    text-align: center;
+}
+#footer{
+    .childBox{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        // height: 1rem;
+        z-index: 2;
+        background:rgba(255,255,255,1);
+        border-top: 1px solid #EBEBEB;
+        padding: 0.1rem 0;
+        .nav .center{
+            span{
+                color: $color;
+            }
+            p{
+                color: $color;
+                font-weight: bold;  
+            }
+        }
+    }
+}

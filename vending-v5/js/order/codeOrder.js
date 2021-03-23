@@ -34,9 +34,9 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 { field: 'activity_name', width: 130, title: '活动名', align: 'center' },
                 { field: 'good_code', width: 180, title: '取货码', align: 'center' },
                 { field: 'machineName', width: 200, title: '售货机名(编号)', align: 'center',templet:function(d){
-                    return `<div>${d.machineName}</div>
+                        return `<div>${d.machineName}</div>
                     <div>(${d.machineNumber})</div>`
-                } },
+                    } },
                 { field: 'machineAddress', width: 210, title: '终端地址', align: 'center' },
                 {
                     field: 'ship_info', width: 250, title: '出货情况', align: 'center', templet: function (d) {
@@ -206,52 +206,52 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     });
     var  dataList = treeList();
     orderTreeFun(tree, 'test1', dataList);
-     // 树方法
-     var marchantName=sessionStorage.marchantName,
-     machineCode=null;
-  function orderTreeFun(tree, element, data,) {
-    tree.render({
-      elem: `#${element}`,
-      id: 'treelist',
-      showLine: !0 //连接线
-      ,
-      onlyIconControl: true, //左侧图标控制展开收缩 
-      data,
-      spread: true,
-      text: {
-        defaultNodeName: '无数据',
-        none: '您没有权限，请联系管理员授权!'
-      },
-      click: function (obj) {
-        marchantName = obj.data.title
-        var nodes = $(`#${element} .layui-tree-txt`)
-        for (var i = 0; i < nodes.length; i++) {
-          if (nodes[i].innerHTML === obj.data.title)
-            nodes[i].style.color = "#be954a";
-          else
-            nodes[i].style.color = "#555";
-        }
-        if (merchantId == obj.data.id) {
-          return;
-        }
-        merchantId = obj.data.id;
-        $("#demo").remove();
-        $(document).unbind();
-        $('.activityList1').append(`<div class="activityArr" id="demo"></div>`);
-        getFlow();
-        
-        $('.activityList1 span').removeClass('active');
-        $('.allmachine').addClass('active');
-        machineCode = '';
-        orderTable.reload({
-          where: {
-            activity_id: null,
-            merchant_id: merchantId
-          }
-        })
-      },
-    });
-  };
+    // 树方法
+    var marchantName=sessionStorage.marchantName,
+        machineCode=null;
+    function orderTreeFun(tree, element, data,) {
+        tree.render({
+            elem: `#${element}`,
+            id: 'treelist',
+            showLine: !0 //连接线
+            ,
+            onlyIconControl: true, //左侧图标控制展开收缩
+            data,
+            spread: true,
+            text: {
+                defaultNodeName: '无数据',
+                none: '您没有权限，请联系管理员授权!'
+            },
+            click: function (obj) {
+                marchantName = obj.data.title
+                var nodes = $(`#${element} .layui-tree-txt`)
+                for (var i = 0; i < nodes.length; i++) {
+                    if (nodes[i].innerHTML === obj.data.title)
+                        nodes[i].style.color = "#be954a";
+                    else
+                        nodes[i].style.color = "#555";
+                }
+                if (merchantId == obj.data.id) {
+                    return;
+                }
+                merchantId = obj.data.id;
+                $("#demo").remove();
+                $(document).unbind();
+                $('.activityList1').append(`<div class="activityArr" id="demo"></div>`);
+                getFlow();
+
+                $('.activityList1 span').removeClass('active');
+                $('.allmachine').addClass('active');
+                machineCode = '';
+                orderTable.reload({
+                    where: {
+                        activity_id: null,
+                        merchant_id: merchantId
+                    }
+                })
+            },
+        });
+    };
 
 //   $('body').on('click', '.activityList1 span', function () {
 //     $('.allmachine').removeClass('active')

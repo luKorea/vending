@@ -5,12 +5,10 @@ import {
     popupHide,
     dataLoading,
     closeData,
-    wholeNum,
-    numFormat2,
-    mulCaluter,
     fixedFun,
     getKeyTime,
-    timeFlag
+    timeFlag,
+    percentileMoney
 } from '../../common/common.js';
 
 layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
@@ -55,39 +53,32 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
             token,
         },
         cols: [[
-            {field: 'orderId', width: 180, title: '订单编号', align: 'center',},
-            {field: 'orderYard', width: 180, title: '订单码', align: 'center'},
-            {field: 'flagStr', width: 130, title: '扣费状态', align: 'center'},
-            {
-                field: 'expressMoney', width: 130, title: '物流费用', align: 'center', templet: function (d) {
-                    return numFormat2(d.expressMoney)
-                }
-            },
-            {
-                field: 'qualityMoney', width: 130, title: '质检费用', align: 'center', templet: function (d) {
-                    return numFormat2(d.qualityMoney)
-                }
-            },
-            // { field: 'flagStr', width: 180, title: '扣费状态', align: 'center' },
             {field: 'bicId', width: 160, title: '商家ID', align: 'center'},
             {field: 'companyName', width: 160, title: '商家名称', align: 'center'},
+            {field: 'orderId', width: 180, title: '订单编号', align: 'center',},
+            {field: 'orderYard', width: 180, title: '订单码', align: 'center'},
             {field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center'},
-            {field: 'cancelStr', width: 160, title: '是否取消', align: 'center'},
-            {field: 'interceptStr', width: 160, title: '是否拦截', align: 'center'},
-            {field: 'interceptCause', width: 160, title: '拦截原因', align: 'center'},
-            {field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center'},
-            {field: 'storageNumber', width: 160, title: '入库件数', align: 'center'},
+            {
+                field: 'expressMoney',
+                width: 130,
+                title: '物流费用',
+                align: 'center',
+                templet: d => percentileMoney(d.money)
+            },
             {field: 'testingInstitutes', width: 160, title: '质检机构', align: 'center'},
             {field: 'qualityResult', width: 160, title: '质检结果', align: 'center'},
             {field: 'recheckResult', width: 160, title: '复检结果', align: 'center'},
+            {field: 'flagStr', width: 130, title: '扣费状态', align: 'center'},
+            {field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center'},
+            {field: 'storageNumber', width: 100, title: '入库件数', align: 'center'},
             {field: 'planExpress', width: 160, title: '计划发货快递', align: 'center'},
             {field: 'realityExpress', width: 160, title: '实际发货快递', align: 'center'},
             {field: 'expressNumber', width: 160, title: '快递单号', align: 'center'},
             {field: 'placeReceipt', width: 160, title: '收货省份', align: 'center'},
             {field: 'orderTime', width: 180, title: '下单时间', align: 'center'},
-            {field: 'storageTime', width: 180, title: '入库时间', align: 'center'},
             {field: 'inspectTime', width: 180, title: '送检时间', align: 'center'},
             {field: 'accomplishTime', width: 180, title: '质检完成时间', align: 'center'},
+            {field: 'storageTime', width: 180, title: '入库时间', align: 'center'},
             {field: 'deliveryTime', width: 180, title: '出库时间', align: 'center'},
             // { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo',fixed: 'right', align: 'center' },
         ]]

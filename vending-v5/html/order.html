@@ -71,8 +71,10 @@
                                         <select name="keyShipStatus" id="" lay-filter="mySelect">
                                             <option value="">全部</option>
                                             <option value="0">未出货</option>
-                                            <option value="1">部分出货失败</option>
+                                            <option value="3">出货中</option>
                                             <option value="2">全部出货成功</option>
+                                            <option value="1">部分出货失败</option>
+                                            <option value="4">全部出货失败</option>
                                         </select>
                                     </div>
                                 </div>
@@ -445,14 +447,14 @@
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm btn operation" lay-event="details">
             <span style="color:#fff;">订单详情</span>
-        </button> 
+        </button>
     </div>
 </script>
 <script type="text/html" id="refundDemo">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm btn operation hide refundBtnTwo" lay-event="refund">
             <span style="color:#fff;">退款</span>
-        </button> 
+        </button>
     </div>
 </script>
 <script type="text/html" id="imgtmp">

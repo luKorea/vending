@@ -1,0 +1,137 @@
+@import '../../../common/common.scss';
+.Wrap{
+    min-height: 100vh;
+    background-color: rgb(240,239,245);
+}
+.changePass{
+    position: fixed;
+    z-index: 23;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    transition: all 0.3s;
+    display: none;
+    .changeBox{
+        position: absolute;
+        left: 50%;
+        top: -50%;
+        transform: translate(-50%, -30%);
+        font-weight: bold;
+        width: 90%;
+        background: #ffffff;
+        transition: all 0.3s;
+        z-index: 25;
+        overflow: hidden;
+        color: #606266;
+        border-radius: 0.08rem;
+        .footerCont{
+            margin-top: 0.3rem;
+            .confirmBtn{
+                width:3.2rem;
+                margin: 0 auto;
+                border-radius:0.44rem;
+                text-align: center;
+                background: $color;
+                font-family:PingFang SC;
+                font-weight:500;
+                color:rgba(255,255,255,1);
+                padding: 0.12rem 0;
+                margin-bottom: 0.6rem;
+            }
+        }
+    }
+}
+.childBox{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    // height: 1rem;
+    z-index: 2;
+    background:rgba(255,255,255,1);
+    border-top: 1px solid #EBEBEB;
+    padding: 0.1rem 0;
+    .nav .my{
+        span{
+            color: $color;
+        }
+        p{
+            color: $color;
+            font-weight: bold;  
+        }
+    }
+}
+h5{             
+    font-size: 0.3rem;
+    font-family: Source Han Sans CN;
+    font-weight: 600;
+    color: #333333;
+    line-height: 0.39rem;
+}
+p{          
+    font-size: 0.22rem;
+    font-family: Source Han Sans CN;
+    font-weight: 400;
+    color: #999999;
+    line-height: 0.39rem;
+}
+.myBody{
+    width: 100%;
+    margin: 0.96rem auto 0;
+    overflow: hidden;
+    background: #ffffff;
+    .nameTitle{
+        width: 92%; 
+        margin: 0.34rem auto 0.43rem;
+        .logo{
+            width: 0.98rem;
+            img{
+                width: 100%;
+            }
+        }
+        .informtion{
+            margin-left: 0.19rem;
+            h5{             
+                font-size: 0.3rem;
+                font-family: Source Han Sans CN;
+                font-weight: 600;
+                color: #333333;
+                line-height: 0.39rem;
+            }
+            p{          
+                font-size: 0.22rem;
+                font-family: Source Han Sans CN;
+                font-weight: 400;
+                color: #999999;
+                line-height: 0.39rem;
+            }
+        }
+    }
+    .informList{
+        border-top: 0.15rem solid #f0eff5;
+        overflow: hidden;
+        .list{
+            width: 92%;
+            margin: 0.28rem auto 0;
+            padding-bottom: 0.28rem;
+            border-bottom: 1px solid #f0eff5;
+            h5{
+                font-size: 0.24rem;
+            }
+            p{
+                font-size: 0.24rem;
+            }
+            img{
+                width: 0.4rem;
+                
+            }
+            span{
+                vertical-align: middle;
+                line-height: 0.38rem;
+            }
+        }
+    }
+}

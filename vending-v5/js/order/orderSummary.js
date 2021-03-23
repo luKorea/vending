@@ -78,7 +78,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             },
             {
                 field: 'shipStatus', width: 150, title: '出货状态', align: 'center', templet: function (d) {
-                    return d.mail == 0 ? d.shipStatus == 0 ? '未出货' : d.shipStatus == 1 ? '部分出货失败' : '全部出货成功' : '-'
+                    return d.mail == 0 ? setOrderStatus(d.shipStatus) : '-'
                 }
             },
             {
