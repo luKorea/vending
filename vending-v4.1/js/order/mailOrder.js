@@ -158,19 +158,6 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
         mailOrderData = obj.data;
         mailOrderData.dispatch_status == 0 ? $('.ListOperation .delivery').removeClass('hide') : $('.ListOperation .delivery').addClass('hide');
         mailOrderData.dispatch_status == 1 ? $('.ListOperation .edit0').removeClass('hide') : $('.ListOperation .edit0').addClass('hide');
-        // if (obj.event == 'delivery') {
-        //   popupShow('deliveryCont', 'deliveryBox');
-        // } else if (obj.event == 'edit') {
-        //   $('.editCont select[name="company"]').val(mailOrderData.express_type);
-        //   $('.editCont input[name="logisticsNumber"]').val(mailOrderData.express_number);
-        //   $('#test7').val(mailOrderData.express_time);
-        //   popupShow('editCont', 'editBox')
-        // } else if (obj.event == 'goods') {
-
-        //   goodsDetails(obj.data.goodsList);
-        //   popupShow('goodsCont', 'goodsBox')
-        // }
-        // form.render('select');
     });
     // 发货
     $('.ListOperation .delivery').click(function () {
@@ -181,6 +168,7 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
         $('.editCont select[name="company"]').val(mailOrderData.express_type);
         $('.editCont input[name="logisticsNumber"]').val(mailOrderData.express_number);
         $('#test7').val(mailOrderData.express_time);
+        popupShow('editCont', 'editBox')
         form.render('select');
     });
     // 商品
@@ -373,13 +361,6 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
                 },
                 {field: 'count', width: 120, title: '购买数量', align: 'center'},
                 {field: 'refund_count', width: 120, title: '已退款数量', align: 'center'},
-                // {
-                //   field: 'goods_Cost', align: 'center', width: 140, title: '退款状态 ', templet: function (d) {
-                //     return d.refund == 0 ? '-' : '已退款'
-                //   }
-                // },
-
-
                 {field: 'price', width: 130, title: '销售价 ', align: 'center', templet: (e) => percentileMoney(e.price)},
                 {
                     field: 'operation',
