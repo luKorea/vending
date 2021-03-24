@@ -184,6 +184,8 @@
     color: #fff;
 }
 .layui-form-checked span{
+    left: 20px;
+    text-align: center;
     color:#be954a !important;
 }
 .btn{

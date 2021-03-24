@@ -97,7 +97,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 {
                     field: 'info', width: 150, title: '售货机类别', align: 'center', templet: function (d) {
                         if (d.machinesource) {
-                            return d.machinesource == 1 ? 'ZJ' : 'YY'
+                            return d.machinesource == 1 ? '中吉' : '云印'
                         } else {
                             return '-'
                         }

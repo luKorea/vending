@@ -3138,7 +3138,9 @@ hr {
 .layui-table[lay-even] tr:nth-child(even) {
 	background-color: #f2f2f2
 }
-
+.layui-table-hover {
+	background-color: rgba(242, 242, 242, 0.6) !important;
+}
 .layui-table td,
 .layui-table th,
 .layui-table-col-set,
@@ -3163,7 +3165,18 @@ hr {
 	padding: 9px 15px;
 	min-height: 20px;
 	line-height: 20px;
-	font-size: 14px
+	font-size: 14px;
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.layui-table td span,
+.layui-table th span {
+	font-weight:  bold !important;
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
 }
 
 .layui-table[lay-skin=line] td,
@@ -3445,13 +3458,11 @@ hr {
 .layui-table-cell .layui-table-link {
 	color: #01AAED
 }
-
-.laytable-cell-checkbox,
 .laytable-cell-numbers,
 .laytable-cell-radio,
 .laytable-cell-space {
 	padding: 0;
-	text-align: center
+	text-align: center !important;
 }
 
 .layui-table-body {

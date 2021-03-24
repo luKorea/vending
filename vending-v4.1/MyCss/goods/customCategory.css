@@ -18,18 +18,18 @@
     margin-top: 10px;
     overflow: hidden;
 }
-.layui-table thead tr{
-    background-color: #ffffff;
-}
-.layui-table thead tr th{
-    border: none;
-}
-.layui-form{
-    border-left: none;
-    border-right: none;
-    width: 100%;
-    /* overflow-x:auto ; */
-}
+/*.layui-table thead tr{*/
+/*    background-color: #ffffff;*/
+/*}*/
+/*.layui-table thead tr th{*/
+/*    border: none;*/
+/*}*/
+/*.layui-form{*/
+/*    border-left: none;*/
+/*    border-right: none;*/
+/*    width: 100%;*/
+/*    !* overflow-x:auto ; *!*/
+/*}*/
 .layui-table-body{
     overflow-x: auto;
 }

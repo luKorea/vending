@@ -604,6 +604,31 @@ body .layui-table .layui-table-header{
   background-color: rgba(242, 242, 242, 0.7);
 }
 
+
+.layui-table-box .layui-table-body .layui-table td{
+  /*background-color: #1a2036 !important;*/
+  white-space: nowrap !important;/*控制单行显示*/
+  overflow: hidden !important;/*超出隐藏*/
+  text-overflow: ellipsis !important;/*隐藏的字符用省略号表示*/
+}
+
+.layui-table-body .layui-table-cell, .layui-table-body .layui-table-cell span {
+  white-space: nowrap !important;/*控制单行显示*/
+  overflow: hidden !important;/*超出隐藏*/
+  text-overflow: ellipsis !important;/*隐藏的字符用省略号表示*/
+}
+.layui-border-box {
+  white-space: nowrap !important;/*控制单行显示*/
+  overflow: hidden !important;/*超出隐藏*/
+  text-overflow: ellipsis !important;/*隐藏的字符用省略号表示*/
+}
+
+.layui-table-box .layui-table thead tr{
+  white-space: nowrap !important;/*控制单行显示*/
+  overflow: hidden !important;/*超出隐藏*/
+  text-overflow: ellipsis !important;/*隐藏的字符用省略号表示*/
+}
+
 .layui-table-cell {
   height: auto;
   overflow: visible !important;

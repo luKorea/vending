@@ -40,8 +40,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     // 商品图片
     var goodsImage = null;
     var token = sessionStorage.token + '';
-    // console.log(token)
-    // table.set({headers:{token: sessionStorage.token}})
     var tableIns = table.render({
         elem: '#tableTest'
         , url: `${vApi}/goods/findAll`
@@ -51,7 +49,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             token,
         },
         cols: [[
-            {checkbox: true},
+            {align: 'center',type: 'checkbox', fixed: 'left'},
             {field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center'},
             {field: 'goods_Core', width: 180, title: '商品编号', align: 'center'},
             {
