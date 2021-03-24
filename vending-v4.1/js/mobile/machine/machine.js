@@ -134,7 +134,7 @@ function machineDrawing(mData) {
                     <ul class="status flex">
                         <li class="${item.actionStatus == 0 ? 'colorG' : 'colorYes'}">${item.actionStatus == 0 ? '未激活' : '已激活'}</li>
                         <li class="${item.onlineStatus == 0 ? 'colorNo' : 'colorYes'}" >${item.onlineStatus == 0 ? '离线' : '在线'}</li>
-                        <li class="${item.openStatus == 0 ? 'colorG' : 'colorYes'}">${item.openStatus == 0 ? '无营业' : '正在营业'}</li>
+                        <li class="${item.openStatus == 0 ? 'colorG' : 'colorYes'}">${item.openStatus == 0 ? '暂停营业' : '正在营业'}</li>
 
                     </ul>
                 </div> `
@@ -941,14 +941,16 @@ let dom = '<ul class="sire">';
 function getTree(data) {
     $.each(data, (index, item) => {
         if (item.children && item.children.length) {
-            dom += `<li class="parent "> <img indexFlag="1" class="nextImg" src="${require('../../../img/next.png')}" alt=""> <span class="${index == 0 ? 'navFocus' : ''}" mId="${item.id}">${item.title}</span> <ul class="parentOne">`
+            dom += `<li class="parent ">
+<img indexFlag="1" class="nextImg" src="${require('../../../img/next.png')}" alt=""> 
+<span class="${index == 0 ? 'navFocus' : ''}" mId="${item.id}">${item.title}</span>
+<ul class="parentOne">`
             getTree(item.children)
             dom += `</ul>`
         } else {
             dom += `<li> <img src="${require('../../../img/user-group .png')}" alt=""> <span mId="${item.id}">${item.title}</span>`
         }
         dom += '</li>'
-
     })
 }
 getTree(merchantsArr);

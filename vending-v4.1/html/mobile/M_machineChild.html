@@ -6,103 +6,21 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <script src="../../assets/public/documentMobile.js"></script>
     <link rel="icon" type="image/png" sizes="144x144" href="../../img/logo.png"/>
+    <link rel="stylesheet" href="">
+    <script src="../../assets/public/documentMobile.js"></script>
     <title>货道详情</title>
 </head>
 
 <body>
     <div class="wrap" style="height: 100vh;overflow-y: auto;">
-        <div class="topHeader flexThree ">
+        <div class="topHeader flexThree">
             <span class="hui-icons hui-icons-left back"></span>
             <h2>货道详情</h2>
             <span></span>
         </div>
 
         <div style="margin:0.94rem 0 0.3rem">
-            <div class="aisleCont">
-                <!-- <ul class="aisleList flex">
-                    <li class="listIndex">
-                        <span>1</span>
-                    </li>
-                    <li class="aisleNumderGoods">
-                        <div class="hui-form-items delList">
-                            <div class="hui-form-radios">
-                                <input type="checkbox" value="1" name="aihao[]" /><label for="c1"></label>
-                            </div>
-                        </div>
-                        <div class="numberTop">
-                            <img src="http://pic.hnzczy.cn/1585304624004_32007447.png" alt="">
-                            <span>1</span>
-                        </div>
-                        <div class="numderBottom flex">
-                            <div class="status1">
-                                正常
-                            </div>
-                            <div>
-                                数量
-                            </div>
-                        </div>
-                        <p>红包牛红包牛红包牛
-                        </p>
-                    </li>
-                    <li class="aisleNumderGoods">
-                        <div class="numberTop">
-                            <img src="http://pic.hnzczy.cn/1585304624004_32007447.png" alt="">
-                        </div>
-                        <div class="numderBottom flex">
-                            <div class="status1">
-                                正常
-                            </div>
-                            <div>
-                                数量
-                            </div>
-                        </div>
-                        <p>红包牛红包牛红包牛
-                        </p>
-                    </li>
-                    <li class="aisleNumderGoods">
-                        <div class="numberTop">
-                            <img src="http://pic.hnzczy.cn/1585304624004_32007447.png" alt="">
-                        </div>
-                        <div class="numderBottom flex">
-                            <div class="status1">
-                                正常
-                            </div>
-                            <div>
-                                数量
-                            </div>
-                        </div>
-                        <p>红包牛红包牛红包牛
-                        </p>
-                    </li>
-                    <li class="aisleNumderGoods">
-                        <div class="numberTop">
-                            <img src="http://pic.hnzczy.cn/1585304624004_32007447.png" alt="">
-                        </div>
-                        <div class="numderBottom flex">
-                            <div class="status1">
-                                正常
-                            </div>
-                            <div>
-                                数量
-                            </div>
-                        </div>
-                        <p>红包牛红包牛红包牛
-                        </p>
-                    </li>
-                    <li class="addAisle">
-                        <span>+</span>
-                    </li>
-                </ul>
-                <ul class="aisleList flex">
-                    <li class="listIndex">
-                        <span>2</span>
-                    </li>
-                    <li class="addAisle">
-                        <span>+</span>
-                    </li>
-                </ul> -->
-            </div>
-            <!-- <button type="button" class="hui-button hui-danger hui-fl" style="margin-left:10px;">警告按钮</button> -->
+            <div class="aisleCont" id="aisleCont"></div>
         </div>
         <!-- 底部删除按钮 -->
         <div class="delFooter">
@@ -121,7 +39,7 @@
                     </button>
                 </div>
                 <div class="validationBody">
-                    <div class="flex inputList">
+                    <div class="flex inputList" style="padding-top: 1.5rem">
                         <label>独立密码:</label>
                         <input type="password" name="oldPass">
                     </div>
@@ -140,7 +58,7 @@
                         <span class="hui-icons hui-icons-close"></span>
                     </button>
                 </div>
-                <div class="addNumBody">
+                <div class="addNumBody" style="padding-top: 0.3rem">
                     <div class="flex inputList">
                         <label>数量:</label>
                         <input type="number" name="addNumber">
@@ -160,7 +78,7 @@
                         <span class="hui-icons hui-icons-close"></span>
                     </button>
                 </div>
-                <div class="editiAsleBody">
+                <div class="editiAsleBody"  style="padding-top: 0.3rem">
                     <div class="flex inputList relative goodsChoose">
                         <label>在售商品：</label>
                         <input type="text" disabled name="goodsName"  disabled>
@@ -206,29 +124,10 @@
                     </div>
                     <div class="goodsWrap">
                         <div class="goodsList flexThree" id="goodsList">
-                            <!-- <div class="chooseList myScale3d">
-                                <div class="goodsImg">
-                                    <img src="http://172.16.71.142:8087/image/87bf86f5-066c-4dbe-97ed-daf311c116ec.jpg"
-                                        alt="">
-                                </div>
-                                <div class="goodsInformation">
-                                    <p>红包牛</p>
-                                    <p>红包</p>
-                                    <div class="flexThree">
-                                        <p>编号</p>
-                                        <span>100581</span>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
-                    
+
                 </div>
-                <!-- <div style="height: 5rem;background: red;overflow-y: auto;">
-                    <div style="height:8rem; background:skyblue;">
-1
-                    </div>
-                </div>   -->
             </div>
 
         </div>

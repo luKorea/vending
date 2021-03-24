@@ -22,7 +22,6 @@ $('.topHeader .back').click(function () {
 })
 var requestId = parentWin.machindID();
 var merchantsID = parentWin.merchantsID();
-// console.log(merchantsID)
 function loadChild(machine) {
     loadingWith('加载中...')
     var requestIdData = JSON.stringify({
@@ -37,20 +36,11 @@ function loadChild(machine) {
 }
 loadChild(requestId);
 // 渲染数据处理
-var wayList = null;
+let wayList = [[], [], [], [], [], []];
 function againFun(res) {
-    console.log(res)
-    wayList = [
-        [], [], [], [], [], []
-    ];
     res.data.forEach(item => {
-        // console.log(item.row)
-        if (item.row) {
-            wayList[item.row - 1].push(item)
-        }
-
+        wayList[item.row - 1].push(item)
     })
-    console.log(wayList)
     aisleHtml(wayList);
 };
 function aisleHtml(machieList) {
@@ -67,7 +57,6 @@ function aisleHtml(machieList) {
                                 <input type="checkbox" class="delChoose" value="${child.id}" style="width: 20px;height: 20px;">
                                 <span class="hui-icons hui-icons-toast "></span>
                             </div>
-                            
                         </div>
                             <div class="numberTop">
                                 <img src="${child.goods_images ? child.goods_images : require('../../../img/failure.png')}" alt="">
@@ -88,10 +77,12 @@ function aisleHtml(machieList) {
                         </li>`
         });
         aisleStar += `</ul>`
-
     });
-    $('.aisleCont').html(aisleStar);
-    $('.aisleCont input').attr('checked', false)
+    console.log(aisleStar);
+    console.log(aisleStar);
+    document.getElementById('aisleCont').innerHTML = aisleStar;
+    // $('#aisleCont').html(aisleStar);
+    $('#aisleCont input').attr('checked', false)
 }
 permissions();
 // OPass();
@@ -156,7 +147,7 @@ var timeOutEvent = null,
     editFlag = null;
 // $(".aisleCont").on({
 //     touchstart: function (e) {
-//         // 长按事件触发  
+//         // 长按事件触发
 //         timeOutEvent = setTimeout(function () {
 //             if(!delAisleFlag){
 //                 return ;
@@ -169,8 +160,8 @@ var timeOutEvent = null,
 //             LongPress = 2;
 //             $('.delBtn').text('删除(' + delNum + ')')
 //         }, 600);
-//         //长按400毫秒   
-//         // e.preventDefault();    
+//         //长按400毫秒
+//         // e.preventDefault();
 //     },
 //     touchmove: function () {
 //         clearTimeout(timeOutEvent);
@@ -184,7 +175,7 @@ var timeOutEvent = null,
 //         }
 //         console.log(LongPress)
 //         clearTimeout(timeOutEvent);
-//         if (timeOutEvent != 0) { 
+//         if (timeOutEvent != 0) {
 //             if (LongPress == 2) {
 //                 if ($(this).find('.delChoose').prop('checked')) {
 //                     $(this).children('.delCheckbox').find('span').removeClass('delCheckboxTrue');
@@ -214,7 +205,7 @@ var timeOutEvent = null,
 //                     aisleEdit()
 //                     showPopup('.editAisleContent','.editAisleBox','top50');
 //                 }else{
-//                     showPopup('.validationContent','.validationBox','top50') 
+//                     showPopup('.validationContent','.validationBox','top50')
 //                 }
 //             }
 //         }
@@ -326,26 +317,6 @@ $('.aisleCont').on('click', '.addAisle', function () {
 $('.addNumContent .close').click(function () {
     closeParents(this, 'top50')
 });
-// 确定添加
-// $('.addNumContent .confirmBtn').click(function(){
-//     if(!($('.addNumBody input[name="addNumber"]').val()!=0)){
-//         toastTitle('数量必须大于0','warn');
-//         return ;
-//     };
-//     var addAisleDetalis=JSON.stringify({
-//         machineId:requestId,
-//         way:Number(addIndex),
-//         count:Number($('.addNumBody input[name="addNumber"]').val())
-//     });
-//     loadAjax('/machine/insertGoodWay','post',sessionStorage.token,addAisleDetalis,'mask','.addNumContent','top50').then(res=>{
-//         console.log(res);
-//         toastTitle(res.message,'success')
-//         againFun(res);
-//         $('.addNumBody input[name="addNumber"]').val('')
-//     }).catch(err=>{
-//         console.log(err)
-//     })
-// });
 // 输入验证是否是正整数
 $('.addNumBody input[name="addNumber"]').keyup(function () {
     wholeNum(this);

@@ -343,12 +343,12 @@ input:disabled{
         justify-content: center;
         flex-flow: column;
         align-items: center;
+        padding: .4rem 0;
         .dowContent{
             display: none;
         }
         .dowImg{
-            width: 0.4rem;
-            margin: 0.05rem auto 0;
+            margin-bottom: 0.2rem;
             img{
                 width: 100%;
                 transition: all 0.3s;
@@ -371,11 +371,14 @@ input:disabled{
             margin-bottom: 0.6rem;
         }
         .time{
-            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
             span{
                 font-size: 12px !important;
                 display: inline-block;
-                width: 80px;
+                //width: 80px;
                 text-align: right;
             }
             input{

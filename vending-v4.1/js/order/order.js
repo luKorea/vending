@@ -559,7 +559,6 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     });
     // 确定退款
     $('.refundNUmCont .determineBtn').click(function () {
-        // console.log($('.refundNumber input').val())
         if ($('.refundNumber input').val() > 0 && $('.refundNumber input').val() <= goodsData.count - goodsData.refund_count) {
             layer.confirm('确定退款？', function (index) {
                 layer.close(index);

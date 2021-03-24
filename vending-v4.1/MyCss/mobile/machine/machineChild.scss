@@ -4,6 +4,7 @@
     margin: 0.2rem auto 1rem;
 }
 .aisleList{
+    z-index: 999;
     flex-wrap: wrap;
     background-color: rgba(236, 214, 173, 0.5);
     margin-bottom: 0.3rem;
@@ -79,7 +80,7 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 text-align: center;
-            };     
+            };
         }
         p{
             width: 90%;
@@ -103,7 +104,7 @@
         .delCheckbox{
             position: absolute;
             top: 0;
-            left:-0.03rem ; 
+            left:-0.03rem ;
             display: none;
             z-index: 6;
             >div{
@@ -143,7 +144,7 @@
             color: #8f8a8a;
             font-weight: 700;
             opacity: 0.5;
-           
+
         }
     }
 }
@@ -235,7 +236,7 @@
             text-align: center;
             .dropload-noData{
                 color:#9E9E9E;
-            }       
+            }
         }
     }
     .goodsList{
@@ -245,19 +246,19 @@
        flex-wrap: wrap;
        .chooseList{
            width: 48%;
-           margin-bottom: 0.4rem;       
+           margin-bottom: 0.4rem;
            box-shadow:2px 1px 6px 1px rgba(0, 0, 0, 0.3) !important;
-           border-radius: 0.14rem 0.14rem 0px 0px;     
+           border-radius: 0.14rem 0.14rem 0px 0px;
            .goodsImg{
                width: 100%;
                img{
                    width: 100%;
-               }       
+               }
            }
            .goodsInformation{
             width: 94%;
             margin: 0.1rem auto 0;
-            p{               
+            p{
                 font-size: 0.28rem;
                 font-family: PingFang SC;
                 font-weight: 700;
@@ -276,7 +277,7 @@
         }
        }
     }
-   
+
 }
 .editFooter{
     button{
@@ -304,7 +305,7 @@
             }
             p{
                 color: $color;
-                font-weight: bold;  
+                font-weight: bold;
             }
         }
     }

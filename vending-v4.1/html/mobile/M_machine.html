@@ -40,19 +40,7 @@
 
             <div id="machineList">
                 <div class="hui-refresh-icon"></div>
-                <div class="machineList">
-
-                </div>
-                <!-- <div class="list myScale3d">
-                    <p class="info">test</p>
-                    <p class="address">广东省 广州市 越秀区 丽丰中心</p>
-                    <ul class="status flex">
-                        <li>已激活</li>
-                        <li>在线</li>
-                        <li>正在营业</li>
-                        <li>货道正常</li>
-                    </ul>
-                </div> -->
+                <div class="machineList"></div>
             </div>
         </div>
         <div id="footer">
@@ -83,7 +71,7 @@
                 <ul class="flex permissions">
                     <li class="blue" permissionsIndex="">全部</li>
                     <li permissionsIndex="1">营业</li>
-                    <li permissionsIndex="0">无营业</li>
+                    <li permissionsIndex="0">暂停营业</li>
                 </ul>
             </div>
             <div class="conditionList" style="display: none;">
@@ -175,8 +163,8 @@
     </div> -->
     <!-- 货道详情 -->
     <div class="childConten maskContent">
-        <div class="childBox maskHeight100vh mask">
-            <!-- <iframe src="M_machineChild.html"></iframe> -->
+        <div class="childBox maskHeight100vh">
+<!--             <iframe src="M_machineChild.html"></iframe>-->
             <iframe class="childData" id="childData" src=""></iframe>
         </div>
 
@@ -245,7 +233,7 @@
                     </div>
                     <div class="flex inputList" >
                         <label>是否开声音:</label>
-                        
+
                     </div> -->
                     <div class="flex inputList maxShipClass">
                         <label>最大出货数:</label>
@@ -255,7 +243,7 @@
                         <label>负责人手机:</label>
                         <input type="number" name="headPhone">
                     </div>
-                   
+
                     <div class="flex inputList">
                         <label>描述:</label>
                         <input type="text" name="describe">
@@ -533,28 +521,7 @@
     </div>
     <!-- 商户树部分 -->
     <div class="merchantsContent maskContent">
-        <div class="merchantsBox maskBox ">
-            <!-- <ul class="sire">
-                <li class="parent">
-                    <img class="nextImg" src="../../img/next.png" alt="">
-                    <span class="navFocus">海南中钞</span>
-                    <ul>
-                        <li>
-                            <img src="../../img/account.png" alt="">
-                            <span>海南中钞</span>
-                        </li>
-                        <li>
-                            <img src="../../img/account.png" alt="">
-                            <span>海南中钞</span>
-                        </li>
-                        <li>
-                            <img src="../../img/account.png" alt="">
-                            <span>海南中钞</span>
-                        </li>
-                    </ul>
-                </li>
-            </ul> -->
-        </div>
+        <div class="merchantsBox maskBox "></div>
     </div>
     <!-- 激活 营业-->
     <div class="maskContent remoteCont">
@@ -580,7 +547,7 @@
                     <img src="../../img/openDoor.png" alt="">
                     <p>售货机开门</p>
                 </div> -->
-                <!-- <div class="remote flex">  
+                <!-- <div class="remote flex">
                     <img src="../../img/op.png" alt="">
                     <p>其他远程操作</p>
                 </div> -->
@@ -600,7 +567,7 @@
                 <div style="text-align: center;">
                     <button type="button" class="hui-button hui-primary addPanelBtn"  >添加展板</button>
                 </div>
-                
+
                 <div class="panelGoods">
                     <div class="panelDrawing">
                         <!-- <div class="hui-swipe-do ">
@@ -700,7 +667,7 @@
     <div class="aloneContent maskContent">
         <div class="aloneBox maskBox">
             <header>验证独立密码</header>
-            <div class="aloneBody">
+            <div class="aloneBody" style="padding-top: 1.5rem">
                 <input type="password" name="alonePass" placeholder="请输入独立密码">
             </div>
             <footer class="confirmBtn">确定</footer>
