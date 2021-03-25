@@ -3170,7 +3170,11 @@ hr {
 .layui-table td span,
 .layui-table th span {
 	font-weight:  bold !important;
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
 }
+
 
 .layui-table[lay-skin=line] td,
 .layui-table[lay-skin=line] th {

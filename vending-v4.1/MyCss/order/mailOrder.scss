@@ -87,12 +87,12 @@ label{
     box-sizing: border-box;
     transition: all 0.3s;
     padding-bottom: 15px;
-    .layui-table-cell {
-        overflow: visible;
-        text-overflow: inherit;
-        white-space: normal;
-        word-break: break-all;
-    }
+    //.layui-table-cell {
+    //    overflow: visible;
+    //    text-overflow: inherit;
+    //    white-space: normal;
+    //    word-break: break-all;
+    //}
 }
 
 .refundBox{

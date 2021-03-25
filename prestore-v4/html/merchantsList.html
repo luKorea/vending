@@ -504,7 +504,9 @@
     <div>
         <img src="../img/fault1.png" class="pic102 {{d.flag==1?'hide1':''}}"
              style="width: 20px; height: 20px;" title="您的可用余额低于预警值，请及时充值"/>
-        <span>{{d.bicId}}</span>
+        <span style="font-weight: normal;white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;">{{d.bicId}}</span>
     </div>
 </script>
 <script type="text/html" id="barDemo">

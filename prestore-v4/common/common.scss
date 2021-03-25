@@ -282,7 +282,6 @@ a {
 
 .layui-table-header .layui-table {
   margin-bottom: 0 !important;
-  color: #be954a !important;
 }
 
 
@@ -442,20 +441,6 @@ a {
 .layui-table-header {
   background: none;
 }
-
-//.layui-table-box .layui-table th {
-//    border-left: none;
-//    border-right: none;
-//}
-//.layui-table-view{
-//    border-left: none !important;
-//    border-right: none !important;
-//    border-top: none !important;
-//}
-//.layui-table-box .layui-table-body .layui-table td{
-//    border-left: none;
-//    border-right: none;
-//}
 .maskContnet {
   position: fixed;
   left: 0;
@@ -596,12 +581,12 @@ body .layui-table .layui-table-header{
   font-weight: 400;
 }
 
-.layui-table[lay-even] tr:nth-child(even) {
-  background-color: rgba(242, 242, 242, 0.35);
-}
+//.layui-table[lay-even] tr:nth-child(even) {
+//  background-color: rgba(242, 242, 242, 0.35);
+//}
 
 .data-list .layui-form .layui-table-body .layui-table-hover {
-  background-color: rgba(242, 242, 242, 0.7);
+  background-color: rgba(242, 242, 242, 0.4);
 }
 
 
@@ -631,10 +616,6 @@ body .layui-table .layui-table-header{
 
 .layui-table-cell {
   height: auto;
-  overflow: visible !important;
-  text-overflow: inherit !important;
-  white-space: normal !important;
-  word-break: break-all !important;
 }
 
 .messageBox {

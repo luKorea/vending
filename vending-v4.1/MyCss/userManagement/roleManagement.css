@@ -43,14 +43,14 @@
     border-bottom: solid 1px #e6e6e6;
     background: #fff;
 }
-.layui-table-cell span{
-    font-size: 14px;
-    color: #909399;
-}
-.layui-table-cell{
-    white-space: normal;
-    word-break: break-all;
-}
+/*.layui-table-cell span{*/
+/*    font-size: 14px;*/
+/*    color: #909399;*/
+/*}*/
+/*.layui-table-cell{*/
+/*    white-space: normal;*/
+/*    word-break: break-all;*/
+/*}*/
 /* 添加编辑成员部分 */
 .MemberOperation{
     position: fixed;
