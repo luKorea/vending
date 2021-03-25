@@ -706,3 +706,45 @@ function setOrderStatus(num) {
     return str;
 }
 
+/**
+ * @method exportExcel
+ * @description 导出模版
+ * @param url {String}
+ * @param fileName {String}
+ */
+function exportExcel(url, fileName) {
+    $('.mask').fadeIn();
+    $('.maskSpan').addClass('maskIcon');
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.responseType = 'blob';//设置ajax的响应类型为blob;
+    xhr.setRequestHeader("token", token);
+    xhr.onload = function (res) {
+        if (xhr.status === 200) {
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            if (xhr.response.size < 50) {
+                layer.msg('导出失败', {icon: 7})
+                return
+            }
+            var content = xhr.response;
+            let elink = document.createElement('a'),
+                blob = new Blob([content]);
+            elink.download = fileName;
+            elink.style.display = 'none';
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            document.body.removeChild(elink);
+        } else if (xhr.status === 400) {
+            layer.msg('当前其他用户正在导出,请稍等!', {icon: 7})
+            $('.mask').fadeOut();
+            $('.maskSpan').removeClass('maskIcon');
+            return
+        } else {
+            layer.msg('服务器请求超时', {icon: 2});
+            return;
+        }
+    }
+    xhr.send();
+}

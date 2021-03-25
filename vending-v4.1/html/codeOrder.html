@@ -26,7 +26,7 @@
                     <div class="newKeyItem">
                         <label for="关键字">取货码</label>
                         <div class="key-contnet">
-                            <input type="text" name="codeNumber" placeholder="请输入取货码">
+                            <input type="text" name="codeNumber" class="codeNumber" placeholder="请输入取货码">
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="newKeyContent">
                     <button type="button" class="layui-btn layui-btn-primary pushBtn hide">
-                        <i class="layui-icon layui-icon-print"></i>
+                        <i class="layui-icon layui-icon-download-circle"></i>
                         <span>导出</span>
                     </button>
                 </div>
@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
                     <div class="orderTable">
                         <div style="overflow: hidden;">
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -88,7 +88,7 @@
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm btn operation  refundBtnTwo {{d.refund==1?'hide':''}}" lay-event="refund">
                 <span style="color:#fff;">退货</span>
-            </button> 
+            </button>
         </div>
     </script>
 </body>

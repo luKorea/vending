@@ -1,6 +1,7 @@
 import '../../MyCss/order/orderSummary.scss';
+
 layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
-    tooltip('.refreshBtnList', { transition: true, time: 200 });
+    tooltip('.refreshBtnList', {transition: true, time: 200});
     sessionStorage.classTag = sessionStorage.machineID;
     var table = layui.table,
         layer = layui.layer,
@@ -42,7 +43,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
                       <div>(${d.machineNumber})</div>`
                 }
             },
-            { field: 'number', width: 190, title: '订单编号', align: 'center' },
+            {field: 'number', width: 190, title: '订单编号', align: 'center'},
             {
                 field: 'number', width: 130, title: '订单类型', align: 'center', templet: function (d) {
                     return d.mail == 0 ? '售货机订单' : '邮寄订单'
@@ -117,7 +118,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
                 }
             },
 
-            { field: 'payee', width: 160, title: '收款方', align: 'center', },
+            {field: 'payee', width: 160, title: '收款方', align: 'center',},
         ]]
         , id: 'tableId'
         , page: true
@@ -185,9 +186,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
                     merchant_id: sessionStorage.machineID,
                 }
             })
-            layer.msg('已刷新', { icon: 1 })
+            layer.msg('已刷新', {icon: 1})
         } else {
-            layer.msg('已刷新', { icon: 1 })
+            layer.msg('已刷新', {icon: 1})
         }
 
     })
@@ -212,75 +213,29 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             464: false,
         },
         permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
+
     function permissions() {
         permissionsObjFlag[464] ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
     };
     permissions();
-    // var addFlag = false;
-    // permissionsVal(464).then(res => {
-    //     addFlag = res.addFlag;
-    //     permissions();
-    // }).catch(err => {
-    //     layer.msg('服务器请求超时', { icon: 7 })
-    // })
-    // function permissions() {
-    //     addFlag?$('.pushBtn').removeClass('hide'):$('.pushBtn').addClass('hide');
-    // };
-
 
     $('.pushBtn').click(function () {
         if (!(startTime && endTime)) {
-            layer.msg('请选择时间', { icon: 7 });
+            layer.msg('请选择时间', {icon: 7});
             return;
         }
         if (timeFlag(startTime, endTime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
-        $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon');
-        var myDate = new Date(),
-            // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-            xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/complete?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}&conditionThree=${$('.key-contnet input[name="orderCode"]').val()}&conditionSix=${$('.newKeyContent select[name="keyPayStatus"]').val()}&refund=${$('.newKeyContent select[name="keyrefundStatus"]').val()}`, true);
-        xhr.setRequestHeader("token", sessionStorage.token);
-        // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
-        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-
-        xhr.onload = function (res) {
-            console.log(res)
-            if (xhr.status == 200) {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                if (xhr.response.size < 50) {
-                    layer.msg('导出失败', { icon: 7 })
-                    return
-                }
-                var content = xhr.response;
-                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-                var fileName = `订单汇总-${marchantName}(${startTime}至${endTime}).xls`
-                var elink = document.createElement('a');
-                elink.download = fileName;
-                elink.style.display = 'none';
-                var blob = new Blob([content]);
-                elink.href = URL.createObjectURL(blob);
-                document.body.appendChild(elink);
-                elink.click();
-                document.body.removeChild(elink);
-            } else {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', { icon: 2 });
-                return;
-            }
-        }
-        var orderObj = {
-            start_time: startTime,
-            end_time: endTime,
-            merchant_id: sessionStorage.machineID
-        }
-        xhr.send();
+        let fileName = `订单汇总-${marchantName}(${startTime}至${endTime}).xls`,
+            conditionThree = $('.key-contnet input[name="orderCode"]').val(),
+            conditionSix = $('.newKeyContent select[name="keyPayStatus"]').val(),
+            refund = $('.newKeyContent select[name="keyrefundStatus"]').val(),
+            url = `${vApi}/complete?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}&conditionThree=${conditionThree}&conditionSix=${conditionSix}&refund=${refund}`;
+        exportExcel(url, fileName);
     });
+
 
 
     // 树方法
@@ -323,7 +278,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
     //   查询
     $('.queryBtn').click(function () {
         if (timeFlag(startTime, endTime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
         tableIns.reload({

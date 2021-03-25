@@ -270,47 +270,9 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
-        $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon');
-        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/exportMailExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${pushMId}&dispatch_status=${$('.newKeyContent select[name="takeStatus"]').val()}&sign_name=${$('.newKeyContent input[name="takeName"]').val()}&sign_phone=${$('.newKeyContent input[name="takePhone"]').val()}&refund=${$('.newKeyContent select[name="keyrefundStatus"]').val()}&conditionThree=${$('.key-contnet input[name="orderCode"]').val()}`, true);
-        xhr.setRequestHeader("token", sessionStorage.token);
-        // xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
-        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-
-        xhr.onload = function (res) {
-            console.log(xhr)
-            if (xhr.status == 200) {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                if (xhr.response.size < 50) {
-                    layer.msg('导出失败', {icon: 7})
-                    return
-                }
-                var content = xhr.response;
-                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-                var fileName = `邮寄订单-${pushMName}(${startTime}至${endTime}).xls`
-                var elink = document.createElement('a');
-                elink.download = fileName;
-                elink.style.display = 'none';
-                var blob = new Blob([content]);
-                elink.href = URL.createObjectURL(blob);
-                document.body.appendChild(elink);
-                elink.click();
-                document.body.removeChild(elink);
-            } else {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', {icon: 2});
-                return;
-            }
-        }
-        // var orderObj = JSON.stringify({
-        //   start_time: startTime,
-        //   end_time: endTime,
-        //   merchantId: Number(sessionStorage.machineID)
-        // })
-        xhr.send();
+        let  fileName = `邮寄订单-${pushMName}(${startTime}至${endTime}).xls`,
+            url = `${vApi}/exportMailExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${pushMId}&dispatch_status=${$('.newKeyContent select[name="takeStatus"]').val()}&sign_name=${$('.newKeyContent input[name="takeName"]').val()}&sign_phone=${$('.newKeyContent input[name="takePhone"]').val()}&refund=${$('.newKeyContent select[name="keyrefundStatus"]').val()}&conditionThree=${$('.key-contnet input[name="orderCode"]').val()}`;
+        exportExcel(url, fileName);
     });
     // 日期选择
     var laydate = layui.laydate;

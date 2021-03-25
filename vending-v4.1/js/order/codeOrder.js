@@ -215,7 +215,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
       id: 'treelist',
       showLine: !0 //连接线
       ,
-      onlyIconControl: true, //左侧图标控制展开收缩 
+      onlyIconControl: true, //左侧图标控制展开收缩
       data,
       spread: true,
       text: {
@@ -239,7 +239,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         $(document).unbind();
         $('.activityList1').append(`<div class="activityArr" id="demo"></div>`);
         getFlow();
-        
+
         $('.activityList1 span').removeClass('active');
         $('.allmachine').addClass('active');
         machineCode = '';
@@ -253,24 +253,31 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     });
   };
 
-//   $('body').on('click', '.activityList1 span', function () {
-//     $('.allmachine').removeClass('active')
-//     $(this).addClass('active').siblings().removeClass('active');
-//     // machineCode = $(this).attr('machineID');
-//     orderTable.reload({
-//       where: {
-//         activity_id: $(this).attr('activityid')
-//       }
-//     })
-//   });
-//   $('.allmachine').click(function () {
-//     $(this).addClass('active');
-//     $('.machineList span').removeClass('active');
-//     machineCode = '';
-//     orderTable.reload({
-//       where: {
-//         activity_id: null
-//       }
-//     })
-//   })
+
+    var permissionsData0 = window.parent.permissionsData1(),
+        permissionsObj = {
+            476: false,
+        },
+        permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
+
+    function permissions() {
+        permissionsObjFlag[476] ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
+    };
+    permissions();
+
+    $('.pushBtn').click(function () {
+        if (!(startTime && endTime)) {
+            layer.msg('请选择时间', {icon: 7});
+            return;
+        }
+        if (timeFlag(startTime, endTime)) {
+            layer.msg('时间选择范围最多三个月', {icon: 7});
+            return;
+        }
+        let fileName = `取货码-${marchantName}(${startTime}至${endTime}).xls`,
+            code = $('.codeNumber').val(),
+            url = `${vApi}/exportCodesExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}&code=${code}`;
+        exportExcel(url, fileName);
+    });
+
 })
