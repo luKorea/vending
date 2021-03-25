@@ -135,108 +135,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         top: $(this).offset().top + 35 + 'px'
       })
     }
-    // if (obj.event === 'edit') {
-    //   if (addEditData.length == 0) {
-    //     layer.msg('服务器请求超时', { icon: 7 });
-    //     return;
-    //   }
-    //   if (data.userName == 'sysadmin') {
-    //     $('.switchListStatus').hide();
-    //   } else {
-    //     $('.switchListStatus').show();
-    //   }
-    //   $('.inputWidth input[name="userName"]').prop('disabled', true);
-    //   $('.treeTest').show();
-    //   // layer.msg('ID：' + data.uuid + ' 的查看操作');
-    //   // 点击编辑事件
-    //   $('.OperationHeader span').html('编辑用户')
-    //   informationType = $(this).attr('typeID');
-    //   // $('.MemberOperation').fadeIn();
-    //   popupShow('MemberOperation', 'MemberContent');
-    //   form.val("information", {
-    //     "userName": data.userName,
-    //     "name": data.name,
-    //     "userPwd": '      ',
-    //     "DuserPwd": '      ',
-    //     "alonePwd": '      ',
-    //     'DalonePwd': '      ',
-    //     "phone": data.phone,
-    //     "cardId": data.cardId,
-    //     "startThe": data.open ? 'on' : '',
-    //     "administrator": data.roleSign ? 'on' : '',
-    //     "marchantsListname": data.merchantName
-    //   });
-    //   tree.reload('treelistEdit', {
-    //   });
-    //   $('.terminal input[name="topmachantsVal"]').val(data.merchantId);
-    //   form.render('select');
-    //   userRoles(roleList, 'checkCont', data, data.merchantId);
-    // } else if (obj.event === 'delete') {
-    //   layer.confirm('确定删除？', function (index) {
-    //     $.ajax({
-    //       type: 'get',
-    //       url: `${vApi}/user/deleteById`,
-    //       headers: {
-    //         token,
-    //       },
-    //       data: {
-    //         id: Number(data.uuid),
-    //       },
-    //       success: function (res) {
-    //         if (res.code == 200) {
-    //           layer.msg(res.message, { icon: 1 });
-    //           obj.del();
-    //           layer.close(index);
-    //           socketFun(data.uuid)
-    //         } else if (res.code == 403) {
-    //           window.parent.location.href = "login.html";
-    //         } else {
-    //           layer.msg(res.message, { icon: 2 });
-    //         }
-    //       }
-    //     });
-    //   });
-    // } else if (obj.event === 'role') {
-    //   if (data.roles.length == 0) {
-    //     layer.msg('该用户没有配置角色', { icon: 7 });
-    //     return;
-    //   }
-    //   var RoleListText = '';
-    //   data.roles.forEach((item, index) => {
-    //     RoleListText += `<p>${item.name}</p>`
-    //   });
-    //   $('.RoleListBody>div').empty();
-    //   $('.RoleListBody>div').html(RoleListText)
-    //   popupShow('roleContList', 'RoleListBox')
-    // } else if (obj.event == 'Status') {
-    //   layer.confirm(data.open == 1 ? '确定禁用？' : '确定启用？', function (index) {
-    //     var status = data.open == 1 ? 0 : 1;
-    //     layer.close(index);
-    //     var statusData = JSON.stringify({
-    //       id: data.uuid,
-    //       status,
-    //     })
-    //     loadingAjax('/user/switchById', 'post', statusData, sessionStorage.token, '', '', '', layer).then((res) => {
-    //       layer.msg(res.message, { icon: 1 });
-    //       tableIns.reload({
-    //         where: {}
-    //       })
-    //       if (status == 0) {
-    //         socketFun(data.uuid)
-    //       }
-    //     }).catch((err) => {
-    //       layer.msg(err.message, { icon: 7 })
-    //     })
-    //   });
-
-    // }else if(obj.event=='stores'){
-    //   if(data.roleSign==0){
-    //     layer.msg('该用户不是售货机管理员',{icon:7});
-    //     return ;
-    //   }
-    //   storesFun(obj.data.uuid)
-    //   // storesFun();
-    // }
   });
 
   // Status启用
@@ -402,9 +300,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
   $('.submit_btn').click(function () {
     var informData = form.val("information");
     var urlApi = null;
-    // 添加
-    // console.log(form.val("checkboxData"));
-
+    // if (informData.name.length > 10) {
+    //   layer.msg('姓名过长', { icon: 7 });
+    //   return;
+    // }
     if (!(informData.userName && informData.name && informData.userPwd && informData.alonePwd && informData.phone && informData.marchantsListname)) {
       layer.msg('带*为必填', { icon: 7 });
       return;
