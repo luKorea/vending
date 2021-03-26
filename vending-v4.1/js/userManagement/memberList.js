@@ -204,7 +204,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       return;
     }
     storesFun(data.uuid)
-    // storesFun();
   });
   // role角色
   $('.ListOperation .role').click(function () {
@@ -435,36 +434,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       }
     }
   };
-  // 监听终端权限
-  //   form.on('checkbox(permissions)', function(data){
-  //     console.log(data.elem.checked); //是否被选中，true或者false
-  //     console.log(data.value); //复选框value值，也可以通过data.elem.value得到
-  // //     form.val("information", {
-  // //       "aaacc":true
-  // // });
-  // // var data1 = form.val("information");
-  // // console.log(data1)
-  //     if(data.elem.checked){
-  //       form.val("information",{
-  //         "Goods":true,
-  //         "Aisle":true,
-  //         "Advertising":true,
-  //         "Wifi":true
-  //       });
-  //       $('.checkCont .checkboxList').prop('disabled',true);
-  //       form.render();
-  //     }else{
-  //       form.val("information",{
-  //         "Goods":false,
-  //         "Aisle":false,
-  //         "Advertising":false,
-  //         "Wifi":false
-  //       });
-  //       // $('.checkCont .checkboxList').attr('disabled')=false;
-  //       $('.checkCont .checkboxList').prop("disabled",'');
-  //       form.render();
-  //     }
-  //   });
   // 角色列表
   var roleList = null;
   $.ajax({
@@ -534,8 +503,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     $(this).hide();
     $('.left-mian').show()
   })
-
-
 
 
 
@@ -648,35 +615,54 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
       }
     },
   });
-  // var addFlag = true,
-  //   editFlag = true,
-  //   delFlag = true,
-  //   fourFlag=true;
-  // permissionsVal(389, 390, 397,451).then(res => {
-  //   addFlag = res.addFlag;
-  //   editFlag = res.editFlag;
-  //   delFlag = res.delFlag;
-  //   fourFlag=res.fourFlag;
-  //   permissions();
-  // }).catch(err => {
-  //   layer.msg('服务器请求超时', { icon: 7 })
-  // });
-  // function permissions() {
-  //   addFlag ? $('.addBtn').removeClass('hide') : $('.addBtn').addClass('hide');
-  //   editFlag ? $('.listEdit').removeClass('hide') : $('.listEdit').addClass('hide');
-  //   delFlag ? $('.del-btn').removeClass('hides') : $('.del-btn').addClass('hides');
-  //   fourFlag? $('.userMachine').removeClass('hides') : $('.userMachine').addClass('hides');
-  // };
+
+
+  //穿梭时的回调
+  function transferFun(data, value) {
+    transfer.render({
+      elem: '#test6',
+      data,
+      title: ['未配置的售货机', '已配置的售货机'],
+      width: 380,
+      height: 500, //定义高度
+      value,
+      onchange: function (obj, indexs) {
+        var machineId = [];
+        layer.confirm('确定修改配置？', function (index) {
+          obj.forEach((item, index) => {
+            transferVal.push(item.value);
+            machineId.push(item.value)
+          });
+          layer.close(index);
+          var editStores = JSON.stringify({
+            UUID: memData.uuid,
+            machineId,
+            select: (indexs == 0 ? 1 : 0)
+          });
+          loadingAjax('/user/configUserMachine', 'post', editStores, sessionStorage.token, 'mask', '', '', layer).then(res => {
+            layer.msg(res.message, { icon: 1 });
+            storesFun(memData.uuid);
+          }).catch(err => {
+            layer.msg(err.message, { icon: 2 });
+            transferFun(transferListArr, transferVal)
+          })
+        }, function (index) {
+          transferFun(transferListArr, transferVal)
+        });
+      }
+    });
+  }
+
 
   var transferArr = [],
     transferListArr = [],
     transferVal = [];
   function storesFun(uid) {
-    loadingAjax('/user/getUserMachine', 'post', JSON.stringify({ UUId: uid }), sessionStorage.token).then(res => {
-      // console.log(res)
+    loadingAjax('/user/getUserMachine', 'post',
+        JSON.stringify({ UUId: uid }), sessionStorage.token).then(res => {
+      console.log(res);
       transferListArr = [];
       transferVal = []
-      // transferVal = res.data.select;
       res.data.select.forEach((item, index) => {
         transferVal.push(item.machineId)
       })
@@ -687,8 +673,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
           title: item.info ? item.info + '(' + item.number + ')' : '(此为未命名的新售货机)'
         });
         transferListArr.push(transferObj)
-        // console.log(transferListArr);
-        // console.log(transferVal)
         transferFun(transferListArr, transferVal)
       });
       if ((transferListArr.length == 0) && (transferVal.length == 0)) {
@@ -702,54 +686,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
 
     });
   }
-  // storesFun();
-
-  //穿梭时的回调
-  function transferFun(data, value) {
-    transfer.render({
-      elem: '#test6',
-      data,
-      title: ['未配置的售货机', '已配置的售货机'],
-      width: 380,
-      height: 500, //定义高度
-      value,
-      onchange: function (obj, indexs) {
-        // console.log(indexs)
-        var machineId = [];
-        layer.confirm('确定修改配置？', function (index) {
-          obj.forEach((item, index) => {
-            transferVal.push(item.value);
-            machineId.push(item.value)
-          });
-          layer.close(index);
-          // console.log(indexs)
-          var editStores = JSON.stringify({
-            UUID: memData.uuid,
-            machineId,
-            select: (indexs == 0 ? 1 : 0)
-          });
-          loadingAjax('/user/configUserMachine', 'post', editStores, sessionStorage.token, 'mask', '', '', layer).then(res => {
-            layer.msg(res.message, { icon: 1 });
-            storesFun(memData.uuid);
-          }).catch(err => {
-            layer.msg(err.message, { icon: 2 });
-            transferFun(transferListArr, transferVal)
-          })
-          // console.log(editStores)
-        }, function (index) {
-          transferFun(transferListArr, transferVal)
-        });
-        // var arr = ['左边', '右边'];
-        // // layer.alert('来自 <strong>'+ arr[index] + '</strong> 的数据：'+ JSON.stringify(obj)); //获得被穿梭时的数据
-        // console.log(obj);
-        // // console.log(transferListArr)
-        // obj.forEach((item, index) => {
-        //   transferVal.push(item.value)
-        // })
-      }
-    });
-  }
-
   // 刷新商户
   $('.refreshBtnList').click(function () {
     var dataList1 = treeList();

@@ -5,6 +5,7 @@ if (!sessionStorage.token) {
     window.location.href = "login.html"
 }
 if (document.documentElement.clientWidth <= 600) {
+    console.log('demo');
     window.location.href = 'M_my.html'
 }
 window.onload = function () {
@@ -104,7 +105,7 @@ window.onload = function () {
             //返回参数值
             return result ? decodeURIComponent(result[2]) : null;
         }
- 
+
         var theModule1 = getQueryString('theModule');
         if (theModule1) {
             // console.log(theModule1)
@@ -487,7 +488,7 @@ window.onload = function () {
                     'limitName': 'pageSize'
                 },
                 where: {
-                    // merchantId:Number(sessionStorage.machineID) 
+                    // merchantId:Number(sessionStorage.machineID)
                     n_status: 1,
                     is_show: 1
                 },

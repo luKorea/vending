@@ -132,11 +132,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         return d.storage_warning[0].way_count
                     }
                 },
-                // {
-                //     field: 'CreationTime', width: 130, title: '缺货状态', align: 'center', templet: function (d) {
-                //         return `<div><span class="${d.stockStatus == 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.stockStatus == 0 ? '正常' : d.stockStatus == 1 ? '一般' : '严重'}</span></div>`
-                //     }
-                // },
                 {
                     field: 'onlineStatus', width: 130, title: '在线状态', align: 'center', templet: function (d) {
                         return `<div><span class="${d.onlineStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.onlineStatus == 0 ? '离线' : '在线'}</span></div>`
@@ -160,21 +155,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         return `<div><span class="${d.openStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.openStatus == 0 ? '暂停营业' : '营业'}</span></div>`
                     }
                 },
-                // {
-                //     field: 'wayStatus', width: 135, title: '货道状态', align: 'center', templet: function (d) {
-                //         return `<div><span class="${d.wayStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.wayStatus == 0 ? '不正常' : '正常'}</span></div>`
-                //     }
-                // },
-                // {
-                //     field: 'dealTime', width: 170, title: '最后交易时间', align: 'center', templet: function (d) {
-                //         if (d.dealTime) {
-                //             return timeStamp(d.connectTime)
-                //         } else {
-                //             return '-'
-                //         }
-                //     }
-                // },
-                { field: 'merchantName', width: 150, title: '所属商户', align: 'center', },
+                {field: 'merchantName', width: 150, title: '所属商户', align: 'center',},
                 {
                     field: 'versions', width: 200, title: '当前版本(待升级版本)', align: 'center', templet: function (d) {
                         return `${d.versions ? d.versions : '-'}(${d.appVersion ? d.appVersion : '-'})`
@@ -200,8 +181,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
                     }
                 },
-                { field: 'description', width: 150, title: '描述', align: 'center' },
-                { field: 'operation', fixed: 'right', right: 0, width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },
+                {field: 'description', width: 150, title: '描述', align: 'center'},
+                {
+                    field: 'operation',
+                    fixed: 'right',
+                    right: 0,
+                    width: 150,
+                    title: '操作',
+                    toolbar: '#barDemo',
+                    align: 'center'
+                },
             ]]
             , id: 'tableId'
             , page: true
@@ -1195,7 +1184,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             where: {
                 condition: sessionStorage.machineGoodsId,
-                conditionFour: '1'
+                conditionFour: '1',
+                machineId: machineSetData.machineId
             },
             parseData: function (res) {
                 // console.log(res)

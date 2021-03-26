@@ -301,10 +301,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             layer.msg('带*为必填', {icon: '7'});
             return;
         }
-        // if (!(wholeNum($('.editBox input[name="moneyRemind"]').val()))) {
-        //     layer.msg('余额预警值必须为正整数', { icon: '7' });
-        //     return;
-        // }
         dataLoading();
         var editCompanyObj = JSON.stringify({
             companyName: $('.editBox input[name="companyName"]').val(),
@@ -581,11 +577,189 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         $('.dayRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)})使用记录`)
         popupShow('.dayRecordContent', '.dayRecordBox')
     });
+
+    // TODO 获取质检费列表
+    let qualityData = null;
+
+    function getQuality() {
+        qualityData = table.render({
+            elem: '#qualityTable',
+            url: `${Vapi}/logCompany/orderStatistics`,
+            method: 'GET',
+            headers: {
+                token,
+            },
+            totalRow: true,
+            cols: [[
+                {
+                    field: 'statisticsTime',title: '使用月份', align: 'center',  totalRowText: '合计', templet: function (d) {
+                        if (d.statisticsTime) {
+                            return timeStampM(d.statisticsTime)
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    field: 'monthMoney', title: '使用金额', align: 'center', templet: function (d) {
+                        if (d.monthMoney || d.monthMoney == 0) {
+                            return numFormat2(d.monthMoney)
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    field: 'ID', title: '质检费用', align: 'center', totalRow: true, templet: function (d) {
+                        return '-'
+                    }
+                },
+            ]]
+            , id: 'useId'
+            , page: true,
+            loading: true,
+            even: true,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where: {
+                bicId: companyData.companyId
+            },
+            parseData: function (res) {
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,//解析提示文本
+                        "count": res.data.total,//解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,  //解析提示文本
+                    }
+                }
+            },
+            response: {
+                statusCode: 200//规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', {icon: 2})
+                    setTimeout(__ => {
+                        window.parent.location.href = "login.html";
+                    }, 1500)
+                }
+                fixedFun();
+            }
+        });
+    }
+
+    // TODO 获取质检费列表
+    let expressData = null;
+
+    function getExpress() {
+        expressData = table.render({
+            elem: '#expressTable',
+            url: `${Vapi}/logCompany/orderStatistics`,
+            method: 'GET',
+            headers: {
+                token,
+            },
+            totalRow: true,
+            cols: [[
+                {
+                    field: 'statisticsTime', title: '使用月份',  totalRowText: '合计', align: 'center', templet: function (d) {
+                        if (d.statisticsTime) {
+                            return timeStampM(d.statisticsTime)
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    field: 'monthMoney', title: '使用金额', align: 'center', templet: function (d) {
+                        if (d.monthMoney || d.monthMoney == 0) {
+                            return numFormat2(d.monthMoney)
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    field: 'orderstatisticsId',
+                    title: '快递费用',
+                    totalRow: true,
+                    align: 'center',
+                    templet: function (d) {
+                        return '-'
+                    }
+                },
+            ]]
+            , id: 'useId'
+            , page: true,
+            loading: true,
+            even: true,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where: {
+                bicId: companyData.companyId
+            },
+            parseData: function (res) {
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,//解析提示文本
+                        "count": res.data.total,//解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,  //解析提示文本
+                    }
+                }
+            },
+            response: {
+                statusCode: 200//规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', {icon: 2})
+                    setTimeout(__ => {
+                        window.parent.location.href = "login.html";
+                    }, 1500)
+                }
+                fixedFun();
+            }
+        });
+    }
+
+
     $('.ListUseOperation .quality').click(function () {
+        if (qualityData) {
+            qualityData.reload({
+                where: {}
+            })
+        } else {
+            getQuality();
+        }
         $('.qualityRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)}) 质检费用`)
         popupShow('.qualityRecordContent', '.qualityRecordBox')
     });
     $('.ListUseOperation .express').click(function () {
+        if (expressData) {
+            expressData.reload({
+                where: {}
+            })
+        } else {
+            getExpress();
+        }
         $('.expressRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)}) 快递费用`)
         popupShow('.expressRecordContent', '.expressRecordBox')
     });
@@ -693,13 +867,29 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         popupShow('.dayOrderContent', '.dayOrderBox')
     });
     $('.ListDateOperation .quality').click(function () {
+        if (qualityData) {
+            qualityData.reload({
+                where: {}
+            })
+        } else {
+            getQuality();
+        }
         $('.qualityRecordBox .playHeader span').html(`${companyData.companyName}(${dateData.day}) 的质检费用`)
         popupShow('.qualityRecordContent', '.qualityRecordBox')
     });
     $('.ListDateOperation .express').click(function () {
+        if (expressData) {
+            expressData.reload({
+                where: {}
+            })
+        } else {
+            getExpress();
+        }
         $('.expressRecordBox .playHeader span').html(`${companyData.companyName}(${dateData.day}) 的快递费用`)
         popupShow('.expressRecordContent', '.expressRecordBox')
     });
+
+
     // 每日订单
     var orderIns = null;
 
