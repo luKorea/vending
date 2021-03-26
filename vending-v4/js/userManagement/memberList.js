@@ -352,7 +352,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
   var form = layui.form;
 
   var informationType = null;
-  // type 'add' edit 
+  // type 'add' edit
   //点击添加成员事件
   $('.addBtn').click(function () {
     if (addEditData.length == 0) {
@@ -508,7 +508,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     var phone = $(this).val();
     if (phone) {
       if (!(/^1[3456789]\d{9}$/.test(phone))) {
-        // alert("手机号码有误，请重填");  
+        // alert("手机号码有误，请重填");
         layer.msg('请填写正确的手机号码', { icon: 7 });
         $(this).val('')
         return false;
@@ -561,7 +561,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
   //       $('.checkCont .checkboxList').prop("disabled",'');
   //       form.render();
   //     }
-  //   }); 
+  //   });
   // 角色列表
   var roleList = null;
   $.ajax({
@@ -833,7 +833,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             transferFun(transferListArr, transferVal)
           })
           // console.log(editStores)
-        }, function (index) {
+        },
+            function (index) {
           transferFun(transferListArr, transferVal)
         });
         // var arr = ['左边', '右边'];

@@ -1,4 +1,5 @@
 import '../../MyCss/order/codeOrder.scss';
+
 layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     // 日期选择
     var startTime = getKeyTime().startTime;
@@ -20,8 +21,8 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         layer = layui.layer,
         table = layui.table,
         form = layui.form,
-        tree =layui.tree ,
-        merchantId=sessionStorage.machineID,
+        tree = layui.tree,
+        merchantId = sessionStorage.machineID,
         orderTable = table.render({
             elem: '#moneyData',
             url: `${vApi}/order/getCodeOrder`,
@@ -31,13 +32,15 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 token,
             },
             cols: [[
-                { field: 'activity_name', width: 130, title: '活动名', align: 'center' },
-                { field: 'good_code', width: 180, title: '取货码', align: 'center' },
-                { field: 'machineName', width: 200, title: '售货机名(编号)', align: 'center',templet:function(d){
-                    return `<div>${d.machineName}</div>
+                {field: 'activity_name', width: 130, title: '活动名', align: 'center'},
+                {field: 'good_code', width: 180, title: '取货码', align: 'center'},
+                {
+                    field: 'machineName', width: 200, title: '售货机名(编号)', align: 'center', templet: function (d) {
+                        return `<div>${d.machineName}</div>
                     <div>(${d.machineNumber})</div>`
-                } },
-                { field: 'machineAddress', width: 210, title: '终端地址', align: 'center' },
+                    }
+                },
+                {field: 'machineAddress', width: 210, title: '终端地址', align: 'center'},
                 {
                     field: 'ship_info', width: 250, title: '出货情况', align: 'center', templet: function (d) {
                         if (d.ship_info.length == 0) {
@@ -65,7 +68,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                         return d.refund == 0 ? '未退货' : '已退货'
                     }
                 },
-                { field: 'operation', width: 100, title: '操作', toolbar: '#refundDemo', align: 'center' },
+                {
+                    field: 'operation', width: 100, title: '操作',
+                    toolbar: '#refundDemo', align: 'center'
+                },
             ]],
             page: true,
             loading: true,
@@ -91,8 +97,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                     };
                 } else if (res.code == 403) {
                     window.parent.location.href = "login.html";
-                }
-                else {
+                } else {
                     return {
                         "code": res.code, //解析接口状态
                         "msg": res.message,   //解析提示文本
@@ -125,7 +130,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                     var machineData = JSON.stringify({
                         pageNum: page,
                         pageSize: 100,
-                        merchant_id:merchantId
+                        merchant_id: merchantId
                     })
                     loadingAjax('/activity/getActivityList', 'post', machineData, sessionStorage.token).then(res => {
                         res.data.list.forEach((item, index) => {
@@ -134,7 +139,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                         next(lis.join(''), res.data.list.length >= 100);
                     }).catch(err => {
                         console.log(err)
-                        layer.msg(err.message, { icon: 7 })
+                        layer.msg(err.message, {icon: 7})
                         next(lis.join(''), err.code == 200); //假设总页数为 10
                     })
                     //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
@@ -144,13 +149,14 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             }
         });
     }
+
     getFlow();
 
     //查询
     $('.queryBtn').click(function () {
         orderTable.reload({
             where: {
-                good_code:$('.newKeyContent input[name="codeNumber"]').val(),
+                good_code: $('.newKeyContent input[name="codeNumber"]').val(),
                 start_time: startTime ? startTime : null,
                 end_time: endTime ? endTime : null,
             }
@@ -180,78 +186,74 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         })
     })
 
-    table.on('row(moneyData)', function (obj) {
-        var codeData = obj.data;
-        console.log(obj)
-        if (codeData.refund == 1) {
-            return;
-        }
+    let codeData = null;
+    table.on('tool(moneyData)', function (obj) {
+        codeData = obj.data;
         layer.confirm('确定退货？', function (index) {
             layer.close(index);
             var codeObj = JSON.stringify({
                 good_code: codeData.good_code
             });
             loadingAjax('/machine/activityRefund', 'post', codeObj, sessionStorage.token).then(res => {
-                layer.msg(res.message, { icon: 1 });
+                layer.msg(res.message, {icon: 1});
                 orderTable.reload({
-                    where: {
-
-                    }
+                    where: {}
                 })
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
             })
         })
-
     });
-    var  dataList = treeList();
+
+    var dataList = treeList();
     orderTreeFun(tree, 'test1', dataList);
-     // 树方法
-     var marchantName=sessionStorage.marchantName,
-     machineCode=null;
-  function orderTreeFun(tree, element, data,) {
-    tree.render({
-      elem: `#${element}`,
-      id: 'treelist',
-      showLine: !0 //连接线
-      ,
-      onlyIconControl: true, //左侧图标控制展开收缩
-      data,
-      spread: true,
-      text: {
-        defaultNodeName: '无数据',
-        none: '您没有权限，请联系管理员授权!'
-      },
-      click: function (obj) {
-        marchantName = obj.data.title
-        var nodes = $(`#${element} .layui-tree-txt`)
-        for (var i = 0; i < nodes.length; i++) {
-          if (nodes[i].innerHTML === obj.data.title)
-            nodes[i].style.color = "#be954a";
-          else
-            nodes[i].style.color = "#555";
-        }
-        if (merchantId == obj.data.id) {
-          return;
-        }
-        merchantId = obj.data.id;
-        $("#demo").remove();
-        $(document).unbind();
-        $('.activityList1').append(`<div class="activityArr" id="demo"></div>`);
-        getFlow();
+    // 树方法
+    var marchantName = sessionStorage.marchantName,
+        machineCode = null;
 
-        $('.activityList1 span').removeClass('active');
-        $('.allmachine').addClass('active');
-        machineCode = '';
-        orderTable.reload({
-          where: {
-            activity_id: null,
-            merchant_id: merchantId
-          }
-        })
-      },
-    });
-  };
+    function orderTreeFun(tree, element, data,) {
+        tree.render({
+            elem: `#${element}`,
+            id: 'treelist',
+            showLine: !0 //连接线
+            ,
+            onlyIconControl: true, //左侧图标控制展开收缩
+            data,
+            spread: true,
+            text: {
+                defaultNodeName: '无数据',
+                none: '您没有权限，请联系管理员授权!'
+            },
+            click: function (obj) {
+                marchantName = obj.data.title
+                var nodes = $(`#${element} .layui-tree-txt`)
+                for (var i = 0; i < nodes.length; i++) {
+                    if (nodes[i].innerHTML === obj.data.title)
+                        nodes[i].style.color = "#be954a";
+                    else
+                        nodes[i].style.color = "#555";
+                }
+                if (merchantId == obj.data.id) {
+                    return;
+                }
+                merchantId = obj.data.id;
+                $("#demo").remove();
+                $(document).unbind();
+                $('.activityList1').append(`<div class="activityArr" id="demo"></div>`);
+                getFlow();
+
+                $('.activityList1 span').removeClass('active');
+                $('.allmachine').addClass('active');
+                machineCode = '';
+                orderTable.reload({
+                    where: {
+                        activity_id: null,
+                        merchant_id: merchantId
+                    }
+                })
+            },
+        });
+    };
 
 
     var permissionsData0 = window.parent.permissionsData1(),

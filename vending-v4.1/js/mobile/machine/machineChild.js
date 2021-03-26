@@ -1,6 +1,18 @@
 import '../../../MyCss/mobile/machine/machineChild.scss';
-import { loadAjax, loadingWith, loadingOut, toastTitle, showPopup, closeParents, closeWindow, wholeNum, permissionsFun } from '../../../common/common.js';
+import {
+    loadAjax,
+    loadingWith,
+    loadingOut,
+    toastTitle,
+    showPopup,
+    closeParents,
+    closeWindow,
+    wholeNum,
+    permissionsFun
+} from '../../../common/common.js';
+
 var editAisleFlag = false;
+
 function permissions() {
     permissionsFun('/role/findUserPermission', 'post', sessionStorage.token).then(res => {
         res.data.forEach(item => {
@@ -22,6 +34,7 @@ $('.topHeader .back').click(function () {
 })
 var requestId = parentWin.machindID();
 var merchantsID = parentWin.merchantsID();
+
 function loadChild(machine) {
     loadingWith('加载中...')
     var requestIdData = JSON.stringify({
@@ -34,15 +47,23 @@ function loadChild(machine) {
         console.log(err)
     })
 }
+
 loadChild(requestId);
+
 // 渲染数据处理
-let wayList = [[], [], [], [], [], []];
 function againFun(res) {
-    res.data.forEach(item => {
-        wayList[item.row - 1].push(item)
-    })
+    let wayList = [[],[],[],[],[],[],[]];
+    if (res.data.length > 0 && res.data) {
+        console.log(res);
+        res.data.forEach(item => {
+            if (item.row) {
+                wayList[item.row - 1].push(item)
+            }
+        })
+    }
     aisleHtml(wayList);
 };
+
 function aisleHtml(machieList) {
     var aisleStar = '';
     machieList.forEach((item, index) => {
@@ -84,6 +105,7 @@ function aisleHtml(machieList) {
     // $('#aisleCont').html(aisleStar);
     $('#aisleCont input').attr('checked', false)
 }
+
 permissions();
 // OPass();
 // 关闭独立独立密码验证
@@ -234,6 +256,7 @@ var delNum = 0;
 $('.cancelBtn').click(function () {
     cancelFun();
 });
+
 function cancelFun() {
     LongPress = 1
     delNum = 0;
@@ -244,6 +267,7 @@ function cancelFun() {
     $('.delCheckbox span').removeClass('delCheckboxTrue');
     $('.delCheckbox .delChoose').prop('checked', false);
 }
+
 // 确定删除
 var delArr = [],
     delFlag = null;
@@ -285,6 +309,7 @@ $('.delFooter .delBtn').click(function () {
 
 
 });
+
 // 删除货道方法
 function delAisle(delObj) {
     loadAjax('api/machine/deleteGoodWay', 'post', sessionStorage.token, delObj, 'mask').then(res => {
@@ -341,10 +366,11 @@ $('.editAisleContent').click(function () {
 })
 // 渲染货道信息
 var goodsDetails = null;
+
 function aisleEdit() {
     goodsDetails = wayList[ArrIndex[0]][ArrIndex[1]];
     console.log(goodsDetails);
-    $('.editiAsleBody input[name="goodsName"]').val(goodsDetails.mail==1?'(邮寄)'+goodsDetails.goods_Name:goodsDetails.goods_Name);
+    $('.editiAsleBody input[name="goodsName"]').val(goodsDetails.mail == 1 ? '(邮寄)' + goodsDetails.goods_Name : goodsDetails.goods_Name);
     $('.editiAsleBody input[name="goodsName"]').attr('IVal', goodsDetails.goods_Id);
     $('.editiAsleBody input[name="price"]').val(goodsDetails.price);
     $('.editiAsleBody input[name="count"]').val(goodsDetails.count);
@@ -362,7 +388,7 @@ var picker1 = new huiPicker('.pickerChoose', function () {
     $('.pickerChoose input[name="openVal"]').val(val);
     $('.pickerChoose input[name="openText"]').val(txt);
 });
-picker1.bindData(0, [{ value: 1, text: '是' }, { value: 0, text: '否' }]);
+picker1.bindData(0, [{value: 1, text: '是'}, {value: 0, text: '否'}]);
 // 点击选择商品
 $('.editAisleContent .goodsChoose').click(function () {
     tabLoadEndArray = false;
@@ -386,6 +412,7 @@ $('.goodsContnet').click(function () {
 var pageNum = 1,
     pageSize = 10,
     conditionTwo = '';
+
 // 下拉刷新方法
 function goodsRefresh(resetload) {
     var goodsObj = JSON.stringify({
@@ -413,6 +440,7 @@ function goodsRefresh(resetload) {
 };
 
 var tabLoadEndArray = false;
+
 function goodsLoad() {
     var dropload = $('.goodsWrap').dropload({
         scrollArea: $('.goodsWrap'),
@@ -438,6 +466,7 @@ function goodsLoad() {
         }
     });
 }
+
 // 商品渲染方法
 function goodsDrawing(gData) {
     var goodsStr = '';
@@ -448,7 +477,7 @@ function goodsDrawing(gData) {
                                 alt="">
                         </div>
                         <div class="goodsInformation">
-                            <p>${item.mail==1?'(邮寄)'+ item.goods_Name:item.goods_Name}</p>
+                            <p>${item.mail == 1 ? '(邮寄)' + item.goods_Name : item.goods_Name}</p>
                             <p>${item.classifyName}</p>
                             <div class="flexThree">
                                 <p>编号</p>
@@ -467,7 +496,7 @@ function goodsDrawing(gData) {
 // 点击选择商品
 $('.goodsWrap').on('click', '.chooseList', function () {
     console.log($(this).attr('gName'))
-    $('.editiAsleBody input[name="goodsName"]').val($(this).attr('mail')==1?'(邮寄)'+ $(this).attr('gName'):$(this).attr('gName'));
+    $('.editiAsleBody input[name="goodsName"]').val($(this).attr('mail') == 1 ? '(邮寄)' + $(this).attr('gName') : $(this).attr('gName'));
     $('.editiAsleBody input[name="goodsName"]').attr('IVal', $(this).attr('gID'));
     $('.editiAsleBody input[name="price"]').val($(this).attr('gPrice'));
     closeParents(this, 'top50')
@@ -487,7 +516,8 @@ $('.editAisleContent .confirmBtn').click(function () {
         // layer.msg('货道容量不能小于当前数量', { icon: 7 });
         toastTitle('货道容量不能小于当前数量', 'warn');
         return;
-    };
+    }
+    ;
     loadingWith('正在修改，请稍后！')
     var editObj = JSON.stringify({
         machineId: requestId,
@@ -503,8 +533,8 @@ $('.editAisleContent .confirmBtn').click(function () {
         newTotal: Number($('.editiAsleBody input[name="total"]').val()),
         status: goodsDetails.open,
         newStatus: Number($('.editiAsleBody input[name="openVal"]').val()),
-        newPrice:$('.editAisleContent input[name="price"]').val(),
-        price:goodsDetails.goods_Id?goodsDetails.price+'':'0'
+        newPrice: $('.editAisleContent input[name="price"]').val(),
+        price: goodsDetails.goods_Id ? goodsDetails.price + '' : '0'
         // open: $('.editAisle input[name="openVal"]').val()
     });
     loadAjax('/machine/updateGoodWay', 'post', sessionStorage.token, editObj, 'mask', '.editAisleContent', 'top50').then(res => {

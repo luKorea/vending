@@ -365,12 +365,29 @@
     display: none;
 }
 .storesbody{
-    padding-bottom: 30px;
+    /*padding-bottom: 30px;*/
+    width: 100%;
+    /* background-color: skyblue; */
+    /* height: 100px; */
+    display: flex;
+    justify-self: start;
+    flex-wrap: wrap;
 }
+.check {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.item {
+    display: inline-block;
+    width: 29.33%;
+    margin: 10px;
+}
+
 .storesbody .layui-transfer-box{
     overflow: auto;
 }
 #test6{
-    width: 94%;
+    width: 77%;
     margin: 0 auto;
 }
