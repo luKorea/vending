@@ -52,15 +52,17 @@ loadChild(requestId);
 
 // 渲染数据处理
 function againFun(res) {
-    let wayList = [[],[],[],[],[],[],[]];
-    if (res.data.length > 0 && res.data) {
-        console.log(res);
-        res.data.forEach(item => {
-            if (item.row) {
+    let wayList = [];
+    res.data.forEach(item => {
+        if (item.row) {
+            if (!(wayList[item.row - 1])) {
+                wayList[item.row - 1] = [];
+                wayList[item.row - 1].push(item)
+            } else {
                 wayList[item.row - 1].push(item)
             }
-        })
-    }
+        }
+    })
     aisleHtml(wayList);
 };
 

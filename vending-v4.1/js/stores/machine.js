@@ -1257,7 +1257,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 }
 
             }
-
         })
         aisleHtml1(wayList);
     };
