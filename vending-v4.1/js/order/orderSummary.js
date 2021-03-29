@@ -35,8 +35,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
         , contentType: 'application/json'
         , headers: {
             token,
-        },
-        height: 600
+        }
         , cols: [[
             {
                 fixed: 'left',

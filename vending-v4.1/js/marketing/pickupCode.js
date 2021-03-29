@@ -173,9 +173,7 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
     // 选择商品
     $('.goodsChooseBtn').click(function () {
         if (goodsList.length == 0) {
-            if (!goodsTableIns) {
-                goodsreload();
-            }
+            goodsreload();
             popupShow('goodsCont', 'goodsBox');
         } else {
             chooseFun(goodsList);
@@ -345,7 +343,7 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
                 'limitName': 'pageSize'
             },
             where: {
-                condition: sessionStorage.machineID,
+                condition: merchantId,
                 conditionSeven: 0,
             },
             parseData: function (res) {
@@ -492,18 +490,6 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
         }
     });
     // 已选商品删除
-    // $('.chooseGoods').on('click','.delBtn',function(){
-    //     console.log($(this).attr('delIndex'))
-    //     if(goodsList.length==1){
-    //         layer.msg('不能全部删除',{icon:7});
-    //         return ;
-    //     }
-    //     layer.confirm('确定删除？', function (index) {
-    //         layer.close(index);
-    //         goodsList.splice($(this).attr('delIndex'),1);
-    //         chooseFun(goodsList);
-    //     })
-    // })
     // 已选择商品确定
     $('.chooseGoods .determineBtn').click(function () {
         popupHide('goodsCont', 'goodsBox');
@@ -695,67 +681,6 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
             $('.pickCode .playHeader span').html(obj.data.activity_name + '取货码列表')
             popupShow('pickCode', 'pickCodeBox')
         }
-        // if (obj.event == 'stop') {
-        //     if (stamp > obj.data.end_time) {
-        //         layer.msg('该活动已过期，不可进行操作', { icon: 7 });
-        //         return;
-        //     };
-        //     layer.confirm(obj.data.activity_status == 0 ? '确定暂停？' : '确定开始？', function (index) {
-        //         layer.close(index);
-        //         $('.mask').fadeIn();
-        //         $('.maskSpan').addClass('maskIcon');
-        //         var stopObj = JSON.stringify({
-        //             activity_id: obj.data.id,
-        //             activity_status: obj.data.activity_status == 0 ? 1 : 0
-        //         });
-        //         loadingAjax('/activity/operateActivity', 'post', stopObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
-        //             layer.msg(res.message, { icon: 1 });
-        //             activityTable.reload({
-        //                 where: {}
-        //             })
-        //         }).catch(err => {
-        //             layer.msg(err.message, { icon: 2 })
-        //         })
-        //     })
-        // } else if (obj.event == 'cancel') {
-        //     if (stamp > obj.data.end_time) {
-        //         layer.msg('该活动已过期，不可进行取消操作', { icon: 7 });
-        //         return;
-        //     }
-        //     layer.confirm(`确定取活动(取消后活动将停止并且取货码失效)`, function (index) {
-        //         layer.close(index);
-        //         $('.mask').fadeIn();
-        //         $('.maskSpan').addClass('maskIcon');
-        //         var cancelObj = JSON.stringify({
-        //             activity_id: obj.data.id,
-        //             activity_status: 2
-        //         })
-        //         loadingAjax('/activity/operateActivity', 'post', cancelObj, sessionStorage.token, 'mask', '', '', layer).then(res => {
-        //             layer.msg(res.message, { icon: 1 });
-        //             activityTable.reload({
-        //                 where: {}
-        //             })
-        //         }).catch(err => {
-        //             layer.msg(err.message, { icon: 2 })
-        //         })
-        //     })
-        // } else if (obj.event == 'machineIn') {
-        //     if (!activityMachineIn) {
-        //         activityMachineFun();
-        //     };
-        //     activityMachineIn.reload({
-        //         data: obj.data.activity_machine
-        //     });
-        //     $('.activityMachine .playHeader span').html(obj.data.activity_name + '活动售货机')
-        //     popupShow('activityMachine', 'activityMachineBox')
-
-        // } else if (obj.event == 'goodsIn') {
-        //     chooseFun(obj.data.goods_list);
-        //     $('.chooseFooter').hide();
-        //     $('.chooseGoods input').prop('disabled', true);
-        //     $('.activityMachine .playHeader span').html(obj.data.activity_name + '活动商品')
-        //     popupShow('chooseGoods', 'chooseGoodsBox')
-        // }
     });
 
     //
@@ -1013,7 +938,6 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
                 };
                 machineListArr.push(transObj)
             });
-            // console.log(machineListArr)
             transferFun(machineListArr, chooseMachine);
         }).catch(err => {
             layer.msg(err.message, { icon: 2 });
@@ -1023,40 +947,9 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
     $('.pushBtn').click(function () {
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        var myDate = new Date(),
-            // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-            xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/exportCodes?id=${pickupObj.id}&good_code=${$('.newKeyContent input[name="keyGoodsCode"]').val()}`, true);
-        xhr.setRequestHeader("token", sessionStorage.token);
-        //   xhr.setRequestHeader('Content-Type', 'charset=utf-8');
-        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-        xhr.onload = function (res) {
-            if (xhr.status == 200) {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                if (xhr.response.size < 50) {
-                    layer.msg('导出失败', { icon: 7 })
-                    return
-                }
-                var content = xhr.response;
-                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-                var fileName = `${pickupObj.activity_name}取货码.xls`
-                var elink = document.createElement('a');
-                elink.download = fileName;
-                elink.style.display = 'none';
-                var blob = new Blob([content]);
-                elink.href = URL.createObjectURL(blob);
-                document.body.appendChild(elink);
-                elink.click();
-                document.body.removeChild(elink);
-            } else {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', { icon: 2 });
-                return;
-            }
-        }
-        xhr.send();
+        let url = `${vApi}/exportCodes?id=${pickupObj.id}&good_code=${$('.newKeyContent input[name="keyGoodsCode"]').val()}`,
+            fileName = `${pickupObj.activity_name}取货码.xls`;
+        exportExcel(url ,fileName);
     });
 
     // 图片放大事件

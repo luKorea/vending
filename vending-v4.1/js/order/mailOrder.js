@@ -19,7 +19,7 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
             },
             height: 600,
             cols: [[
-                {field: 'number', width: 210, title: '订单编号', align: 'center', fixed: 'left'},
+                {field: 'number', width: 210, title: '订单编号', align: 'center'},
                 {
                     field: 'notes', width: 210, title: '下单时间', align: 'center', templet: function (d) {
                         return timeStamp(d.time)

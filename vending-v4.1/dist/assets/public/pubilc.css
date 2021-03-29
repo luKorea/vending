@@ -403,7 +403,7 @@ body .layui-form-checked[lay-skin=primary] i{
     -webkit-box-flex: 0;
     -ms-flex: 0 0 240px;
     flex: 0 0 240px;
-    width: 240px;
+    width: 245px;
     position: relative;
     padding-right: 40px;
 }

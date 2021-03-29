@@ -101,8 +101,6 @@ function aisleHtml(machieList) {
         });
         aisleStar += `</ul>`
     });
-    console.log(aisleStar);
-    console.log(aisleStar);
     document.getElementById('aisleCont').innerHTML = aisleStar;
     // $('#aisleCont').html(aisleStar);
     $('#aisleCont input').attr('checked', false)
