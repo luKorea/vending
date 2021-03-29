@@ -507,8 +507,8 @@ input:hover{
 
 
 ::-webkit-scrollbar {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 15px;
 }
 .iframe_show::-webkit-scrollbar {
     width: 2px !important;
