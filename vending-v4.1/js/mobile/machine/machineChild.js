@@ -50,9 +50,9 @@ function loadChild(machine) {
 
 loadChild(requestId);
 
+var wayList = [];
 // 渲染数据处理
 function againFun(res) {
-    let wayList = [];
     res.data.forEach(item => {
         if (item.row) {
             if (!(wayList[item.row - 1])) {
