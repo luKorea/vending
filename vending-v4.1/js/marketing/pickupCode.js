@@ -1,6 +1,7 @@
 // import { loadAjax, showPopup } from '../../common/common';
 import '../../MyCss/marketing/pickupCode.scss';
 layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
+    var merchantId = 1;
     var permissionsData0 = window.parent.permissionsData1(),
         permissionsObj = {
             436: false,
@@ -191,11 +192,8 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
 
     });
     $('.machineChooseBtn').click(function () {
-        if (machineListArr.length == 0) {
-            getMachineList(sessionStorage.UserId);
-        } else {
-            transferFun(machineListArr, chooseMachine)
-        }
+        machineListArr = [];
+        getMachineList(merchantId);
         popupShow('machineDetailsCont', 'machineDetailsBox');
     })
     // 售货机列表
@@ -629,7 +627,7 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
             start_time,
             end_time,
             code_count: $('.addActivityBody input[name="codeConst"]').val(),
-            merchantId: sessionStorage.machineID,
+            merchantId: merchantId,
             machines: chooseMachine,
             goods: pushGoodsList,
             type: Number($('.complex input[name="complexNum"]:checked').val()),
@@ -760,7 +758,7 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
         // }
     });
 
-    // 
+    //
     // 活动售货机
     $('.ListOperation .machineIn').click(function () {
         if (!activityMachineIn) {
@@ -1004,11 +1002,10 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
     var chooseMachine = [];
     //   获取商户下的售货机
     var machineListArr = [];
-    function getMachineList(uId) {
-        loadingAjax('/user/getUserMachine', 'post', JSON.stringify({ UUId: uId }), sessionStorage.token).then(res => {
-            // var getList = res.data.unSelect.concat(res.data.select)
-            // getList = res.data.unSelect.concat(res.data.select);
-            var getList=res.data.select;
+    function getMachineList(merchantId) {
+        loadingAjax(`/machine/getMachine?merchantId=${merchantId}`,
+            'GET',{}, sessionStorage.token).then(res => {
+            var getList=res.data.unSelect;
             getList.forEach(item => {
                 var transObj = {
                     value: item.machineId,
@@ -1127,7 +1124,7 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
             id: 'treelist',
             showLine: !0 //连接线
             ,
-            onlyIconControl: true, //左侧图标控制展开收缩 
+            onlyIconControl: true, //左侧图标控制展开收缩
             data,
             spread: true,
             text: {
@@ -1135,13 +1132,14 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
                 none: '您没有权限，请联系管理员授权!'
             },
             click: function (obj) {
-                if (permissionsObjFlag[436]) {
-                    if (obj.data.id == sessionStorage.machineID) {
-                        $('.addBtn').show()
-                    } else {
-                        $('.addBtn').hide()
-                    }
-                }
+                merchantId = obj.data.id;
+                // if (permissionsObjFlag[436]) {
+                //     if (obj.data.id == sessionStorage.machineID) {
+                //         $('.addBtn').show()
+                //     } else {
+                //         $('.addBtn').hide()
+                //     }
+                // }
                 tableID.reload({
                     where: {
                         merchant_id: obj.data.id

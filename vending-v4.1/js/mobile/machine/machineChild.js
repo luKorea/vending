@@ -169,73 +169,6 @@ var LongPress = 1;//2为长按，1为正常点击
 var timeOutEvent = null,
     ArrIndex = null,
     editFlag = null;
-// $(".aisleCont").on({
-//     touchstart: function (e) {
-//         // 长按事件触发
-//         timeOutEvent = setTimeout(function () {
-//             if(!delAisleFlag){
-//                 return ;
-//             }
-//             timeOutEvent = 0;
-//             $('.numberTop span').hide();
-//             $('.delCheckbox').show();
-//             $('.delFooter').addClass('height');
-//             $('.addAisle').fadeOut();
-//             LongPress = 2;
-//             $('.delBtn').text('删除(' + delNum + ')')
-//         }, 600);
-//         //长按400毫秒
-//         // e.preventDefault();
-//     },
-//     touchmove: function () {
-//         clearTimeout(timeOutEvent);
-//         timeOutEvent = 0;
-//         // alert(1)
-//     },
-//     touchend: function () {
-//         if(!editAisleFlag){
-//             toastTitle('您没有修改货道的权限','warn');
-//             return ;
-//         }
-//         console.log(LongPress)
-//         clearTimeout(timeOutEvent);
-//         if (timeOutEvent != 0) {
-//             if (LongPress == 2) {
-//                 if ($(this).find('.delChoose').prop('checked')) {
-//                     $(this).children('.delCheckbox').find('span').removeClass('delCheckboxTrue');
-//                     $(this).find('.delChoose').prop('checked', false);
-//                     delNum--;
-//                     console.log($(this).find('.delChoose').prop('checked'));
-//                     $('.delBtn').text('删除(' + delNum + ')')
-//                 } else {
-//                     $(this).children('.delCheckbox').find('span').addClass('delCheckboxTrue');
-//                     $(this).find('.delChoose').prop('checked', true);
-//                     console.log($(this).find('.delChoose').prop('checked'));
-//                     delNum++
-//                     $('.delBtn').text('删除(' + delNum + ')')
-//                 }
-//             }else if(LongPress==1){
-//                 // if(!editAisleFlag){
-//                 //     toastTitle('您没有编辑货道的权限','warn')
-//                 //     return ;
-//                 // }
-//                 console.log($(this).attr('fireIndex'));
-//                 ArrIndex = $(this).attr("fireIndex").split(',');
-//                 editFlag=1;
-//                 addFlag=null;
-//                 delFlag=null;
-
-//                 if(sessionStorage.independentPass){
-//                     aisleEdit()
-//                     showPopup('.editAisleContent','.editAisleBox','top50');
-//                 }else{
-//                     showPopup('.validationContent','.validationBox','top50')
-//                 }
-//             }
-//         }
-//         return false;
-//     }
-// }, '.aisleNumderGoods');
 // 选择需要删除的货道
 $('.aisleCont').on('click', '.aisleNumderGoods', function () {
     if (!editAisleFlag) {
@@ -539,7 +472,8 @@ $('.editAisleContent .confirmBtn').click(function () {
         price: goodsDetails.goods_Id ? goodsDetails.price + '' : '0'
         // open: $('.editAisle input[name="openVal"]').val()
     });
-    loadAjax('/machine/updateGoodWay', 'post', sessionStorage.token, editObj, 'mask', '.editAisleContent', 'top50').then(res => {
+    loadAjax('/machine/updateGoodWay',
+        'post', sessionStorage.token, editObj, 'mask', '.editAisleContent', 'top50').then(res => {
         // console.log(res);
         loadChild(requestId);
         toastTitle(res.message, 'success')

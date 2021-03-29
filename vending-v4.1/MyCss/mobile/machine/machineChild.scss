@@ -44,18 +44,20 @@
             }
             span{
                 display: inline-block;
-                width: 0.4rem;
-                height: 0.4rem;
-                color: #fff;
-                right: 5px;
-                text-align: left;
-                z-index: 2;
                 position: absolute;
-                top: 0px;
-                left: 0px;
-                border-radius: 0px 0px 200px;
-                background-color: #6c6d71;
+                top: 0;
+                left: 0;
+                width: 0.5rem;
+                height: 0.5rem;
+                line-height: 0.5rem;
+                color: #fff;
+                text-align: center;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
                 font-size: 12px;
+                z-index: 10;
+                background-color: #6c6d71;
             }
         }
         .numderBottom{
