@@ -1,11 +1,18 @@
 import '../../../MyCss/mobile/login/login.scss'
 import { loadAjax, loadingWith, loadingOut, toastTitle } from '../../../common/common.js'
+
+
+window.onload = function () {
+    $('#c1').attr('checked', true);
+}
+
 function swiperFun() {
     var swipe = new huiSwpie('#swipe');
     swipe.autoPlay = true;
     swipe.delay = 3000;
     swipe.run();
 }
+
 if (sessionStorage.accountPass) {
     var accountPass = JSON.parse(sessionStorage.accountPass);
     $('#c1').attr('checked', true);
@@ -62,7 +69,3 @@ function loginFUn(){
         toastTitle(err.message,'error')
     })
 }
-// loadingWith('数据加载中请稍后!')
-// setTimeout(function(){hui.loading(false,true);}, 2000);
-// hui.iconToast('服务器请求超时', 'error')
-// hui.loading('数据加载中');

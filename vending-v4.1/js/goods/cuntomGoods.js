@@ -50,9 +50,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         },
         cols: [[
             {align: 'center',type: 'checkbox', fixed: 'left'},
-            {field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center'},
-            {field: 'goods_Core', width: 180, title: '商品编号', align: 'center'},
+            {field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center', fixed: 'left'},
+            {field: 'goods_Core', width: 180, title: '商品编号', align: 'center',fixed: 'left'},
             {
+                fixed: 'left',
                 field: 'goods_Name',
                 width: 200,
                 title: '商品名',

@@ -269,7 +269,7 @@ $('.machineList').on('click', '.list', function () {
     machineListId = $(this).attr('machineid');
     machineIndex = $(this).attr('machinelistindex');
     console.log(machineIndex);
-    $('.machineTitle').html(machineArr1[machineIndex].info + '终端信息')
+    $('.machineTitle').html(machineArr1[machineIndex].info + '售货机信息')
     machineDetails = machineArr1[machineIndex];
 });
 // 关闭操作详情

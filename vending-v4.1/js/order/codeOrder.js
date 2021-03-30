@@ -41,7 +41,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                     <div>(${d.machineNumber})</div>`
                     }
                 },
-                {field: 'machineAddress', width: 210, title: '终端地址', align: 'center'},
+                {field: 'machineAddress', width: 210, title: '售货机地址', align: 'center'},
                 {
                     field: 'ship_info', width: 250, title: '出货情况', align: 'center', templet: function (d) {
                         if (d.ship_info.length == 0) {

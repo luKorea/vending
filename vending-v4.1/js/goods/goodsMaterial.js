@@ -133,8 +133,9 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       headers: {
         token,
       },
+      height: 500,
       cols: [[
-        { type: 'checkbox', },
+        { type: 'checkbox' },
         { field: 'img', width: 150, title: '图片', templet: "#imgtmp", align: 'center' },
         { field: 'name', width: 180, title: '图片名', align: 'center', },
         {
@@ -337,6 +338,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       headers: {
         token,
       },
+      height: 500,
       cols: [[
         // { field: 'Img', width: 150, title: '素材图',templet: "" },
         { type: 'checkbox', },
@@ -732,7 +734,6 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     preview: '.previewImg',//预览视图
     guides: false,  //裁剪框的虚线(九宫格)
     autoCropArea: 0.5,  //0-1之间的数值，定义自动剪裁区域的大小，默认0.8
-    movable: false, //是否允许移动图片
     dragCrop: true,  //是否允许移除当前的剪裁框，并通过拖动来新建一个剪裁框区域
     movable: true,  //是否允许移动剪裁框
     resizable: true,  //是否允许改变裁剪框的大小
@@ -845,6 +846,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       headers: {
         token,
       },
+      height: 500,
       cols: [[
         { type: 'checkbox', },
         { field: 'img', width: 150, title: '图片', templet: "#detailsImgtmp", align: 'center' },

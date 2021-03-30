@@ -80,11 +80,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'number', width: 150, title: '售货机编号', align: 'center', templet: function (d) {
-                        return d.number ? d.number : '-'
-                    }
-                },
-                {
+                    fixed: 'left',
                     field: 'info', width: 330, title: '售货机名', align: 'center', templet: function (d) {
                         if (d.info) {
                             return d.info
@@ -92,6 +88,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                             return `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>
                             <div><span style="color:red;">*</span>(序列号:${d.machineId})</div>`
                         }
+                    }
+                },
+                {
+                    field: 'number', width: 150, title: '售货机编号', align: 'center', templet: function (d) {
+                        return d.number ? d.number : '-'
                     }
                 },
                 {

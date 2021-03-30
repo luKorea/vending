@@ -43,6 +43,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             height: 600,
             cols: [[
                 {
+                    fixed: 'left',
                     field: 'info', width: 220, title: '售货机名(编号)', align: 'center', templet: function (d) {
                         return `<div>${d.info}</div>
                   <div>(${d.machineNumber})</div>`
