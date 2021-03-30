@@ -216,17 +216,6 @@ $('.footer1 h1').click(function () {
     if (phoneTest($('.phone').val()) != 1) {
         return;
     };
-    // nun=0;
-    // goodsData.goods.forEach(item=>{
-    //     nun+=Number(item.goods_Price)*Number(item.count)
-    // })
-    // var time = Date.parse(new Date());
-    // var alipay = JSON.stringify({
-    //     machineId: goodsData.machineId,
-    //     product_name: goodsData.goods[0].goods_Name+'等商品',
-    //     order_number: time + goodsData.merchant,
-    //     total_fee: nun+'',
-    // });
     $('.mask').show();
     if (payTypeIndex == 1) {
         var pushOrder = JSON.stringify({
@@ -243,31 +232,7 @@ $('.footer1 h1').click(function () {
         var alipayObj = JSON.stringify({
             data: encrypts(pushOrder)
         })
-        // $.ajax({
-        //     type: 'post',
-        //     url: '/api/pay/alipay_js',
-        //     timeout: 10000,
-        //     data: alipayObj,
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     success: function (res) {
-        //         $('.mask').hide();
-        //         console.log(res)
-        //         const form = res.data
-        //         const div = document.createElement('div')
-        //         div.id = 'alipay'
-        //         div.innerHTML = form
-        //         document.body.appendChild(div)
-        //         document.querySelector('#alipay').children[0].submit() // 执行后会唤起支付宝
-        //     },
-        //     error: function (res) {
-        //         $('.mask').hide();
-        //         prompt('下单失败')
-        //     }
-        // })
         loadAjax('/api/pay/alipay_js', 'post', alipayObj).then(res => {
-            // $('.mask').hide();
             var datas=decrypt1(res.data);
             var a = datas.indexOf('<qr_code>');
             var b =datas.lastIndexOf('</qr_code>')
@@ -298,14 +263,7 @@ $('.footer2 h1').click(function () {
             data: encrypts(pushOrder)
         })
         loadAjax('/api/pay/alipay_js', 'post', alipayObj).then(res => {
-
             var datas=decrypt1(res.data);
-            // const form = res.data
-            // const div = document.createElement('div')
-            // div.id = 'alipay'
-            // div.innerHTML = form
-            // document.body.appendChild(div)
-            // document.querySelector('#alipay').children[0].submit() // 执行后会唤起支付宝
             var a =datas.indexOf('<qr_code>');
             var b = datas.lastIndexOf('</qr_code>')
             var c = datas.slice((a + 9), (b));

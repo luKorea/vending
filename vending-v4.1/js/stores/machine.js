@@ -78,6 +78,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             headers: {
                 token,
             },
+            height: 600,
             cols: [[
                 {
                     fixed: 'left',
@@ -1242,10 +1243,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     var wayFlagArr = [];
 
     function againFun(res) {
-        // console.log(res)
-        wayList = [
-            // [], [], [], [], [], [],[]
-        ];
+        wayList = [];
         wayFlagArr = res.data
         res.data.forEach(item => {
             // console.log(item.row)
@@ -1308,10 +1306,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                     </div>
                                 <div class="numderBottom">
                                         <div class="status1 ${child.status == 1 ? '' : 'redF10'}">${child.status == 1 ? '正常' : '货道故障'}</div>
-                                    <div title="${child.count}">数量:${child.count}</div>
+                                        <div title="${child.count}">数量:${child.count}</div>
                                     </div>
                                     </div>  
-                                    <div class="chooseCheck" >
+                                    <div class="chooseCheck">
                                         <span >${child.mail ? '(邮寄)' : ''} ${child.goods_Name ? child.goods_Name : '-'}</span>
                                     </div>
                                 </div>`
@@ -2587,38 +2585,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.pushMachineBtn').click(function () {
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        var myDate = new Date(),
-            // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-            xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/excelMachine?merchantId=${sessionStorage.machineGoodsId}`, true);
-        xhr.setRequestHeader("token", sessionStorage.token);
-        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-        xhr.onload = function (res) {
-            if (xhr.status == 200) {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                if (xhr.response.size < 50) {
-                    layer.msg('导出失败', {icon: 2})
-                    return
-                }
-                var content = xhr.response;
-                var fileName = `${sessionStorage.machineName}售货机列表.xls`
-                var elink = document.createElement('a');
-                elink.download = fileName;
-                elink.style.display = 'none';
-                var blob = new Blob([content]);
-                elink.href = URL.createObjectURL(blob);
-                document.body.appendChild(elink);
-                elink.click();
-                document.body.removeChild(elink);
-            } else {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', {icon: 2});
-                return;
-            }
-        }
-        xhr.send();
+        let url = `${vApi}/excelMachine?merchantId=${sessionStorage.machineGoodsId}`,
+            fileName = `${sessionStorage.machineName}售货机列表.xls`;
+        exportExcel(url, fileName);
     });
 
     // 展板部分
@@ -2881,39 +2850,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.undoPushBtn').click(function () {
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/excelRemove?machineId=${machineSetData.machineId}`, true);
-        xhr.setRequestHeader("token", sessionStorage.token);
-        //   xhr.setRequestHeader('Content-Type', 'charset=utf-8');
-        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-
-        xhr.onload = function (res) {
-            if (xhr.status == 200) {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                if (xhr.response.size < 50) {
-                    layer.msg('导出失败', {icon: 2})
-                    return
-                }
-                var content = xhr.response;
-                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-                var fileName = `${machineSetData.info}撤货记录.xls`
-                var elink = document.createElement('a');
-                elink.download = fileName;
-                elink.style.display = 'none';
-                var blob = new Blob([content]);
-                elink.href = URL.createObjectURL(blob);
-                document.body.appendChild(elink);
-                elink.click();
-                document.body.removeChild(elink);
-            } else {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', {icon: 2});
-                return;
-            }
-        }
-        xhr.send();
+        let fileName = `${machineSetData.info}撤货记录.xls`,
+            url = `${vApi}/excelRemove?machineId=${machineSetData.machineId}`;
+        exportExcel(url, fileName);
     });
     // 图片放大事件
     $('.goodsCont').on('mouseenter', '.pic102', function (e) {

@@ -3,35 +3,6 @@ import {loadAjax, prompt, getQueryString, decrypt1, keepPass, loadAjax1} from '.
 
 var machineId = decrypt1(getQueryString('machineId')),
     machineInformtion = null;
-// $.ajax({
-//     type: 'post',
-//     url: '/api/machine/getStatus',
-//     timeout: 10000,
-//     async: false,
-//     data: JSON.stringify({
-//         machineId,
-//     }),
-//     headers: {
-//         "Content-Type": "application/json",
-//         token: sessionStorage.token
-//     },
-//     success: function (res) {
-//         if (res.code == 200) {
-//             machineInformtion = res.data;
-//         } else {
-//             prompt(res.message)
-//         }
-//     }, error: function (err) {
-//         prompt('服务器请求超时')
-//     }
-// });
-
-// 灯光与音量状态
-// var lamFlag = machineInformtion.is_light,
-//     soundFlag = machineInformtion.is_volume;
-
-// lamFlag == 1 ? $('.lamp p').html('售货机关灯') : $('.lamp p').html('售货机开灯');
-// soundFlag == 1 ? $('.sound p').html('售货机静音') : $('.sound p').html('售货机开启声音');
 
 // 开门部分
 $('.openTheDoor').click(function () {
@@ -60,19 +31,6 @@ $('.aloneContent .confirmBtn').click(function () {
     }).catch(err => {
         prompt(err.message)
     })
-    // loadAjax1('/api/user/verifyAlonePwd','post',sessionStorage.token,alonePassObj).then(res=>{
-    //     $('.aloneContent').fadeOut(100).children('.aloneBox').removeClass('top30')
-    //     loadAjax1('/api/openTheDoor','post',sessionStorage.token,JSON.stringify({machine:machineId}),'mask').then(res=>{
-    //     }).catch(err=>{
-    //         if(err=='false'){
-    //             prompt('开门失败')
-    //         }else{
-    //             prompt('开门成功')
-    //         }
-    //     })
-    // }).catch(err=>{
-    //     prompt(err.message)
-    // })
 })
 
 //indexFlag  1开灯 2声音

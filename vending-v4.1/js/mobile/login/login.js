@@ -21,6 +21,16 @@ if (sessionStorage.accountPass) {
 } else {
     $('#c1').attr('checked', false);
 }
+
+//
+// if (localStorage.accountPass) {
+//     var accountPass = JSON.parse(localStorage.accountPass);
+//     $('#c1').attr('checked', true);
+//     $('.flex input[name="account"]').val(accountPass.account);
+//     $('.flex input[name="pass"]').val(accountPass.pass)
+// } else {
+//     $('#c1').attr('checked', false);
+// }
 swiperFun();
 $('.loginBtn').click(function () {
     loginFUn();
