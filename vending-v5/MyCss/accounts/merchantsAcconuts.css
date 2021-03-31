@@ -1,0 +1,46 @@
+.sidebar{
+    height: 750px;
+}
+.dataListCont{
+    margin-bottom: 50px;
+}
+.dataList{
+    width: 200px;
+    background: linear-gradient(to right, #ebc682 5%, #be954a);
+    text-align: center;
+    border-radius: 5px;
+    color: #ffffff;
+    margin-right: 20px;
+    -webkit-appearance: none;
+    -webkit-transition: all .3s;
+    
+}
+.dataList header{
+    font-size: 16px;
+    line-height: 35px;
+}
+.dataList p{
+    font-size: 18px;
+    line-height: 40px;
+}
+.accountsDetailsBox{
+    width: 920px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    padding-bottom: 15px;
+}
+.accountBody{
+    width: 96%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.onLeft{
+border-radius: 0px 10px 10px 0px;
+}

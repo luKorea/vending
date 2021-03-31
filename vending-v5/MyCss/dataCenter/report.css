@@ -1,0 +1,125 @@
+.report-warp{
+    width: 100%;
+}
+/* 头部下拉切换部分 */
+.header-select-switch{
+    border-bottom: 20px solid rgb(238, 238, 238);
+}
+.header-select-part{
+    width: 130px;
+    display: inline-block;
+}
+.switch-button{
+    display: inline-block;
+    margin-left: 5px;
+}
+.header-select-part .layui-form .layui-this{
+    background-color: #409eff;
+}
+.switch-button button{
+    color: #fff;
+    background-color: #409eff;
+    border: none;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    transition: .1s;
+    padding: 11px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-right: 3px;
+}
+
+.switch-button button span{
+    color: #fff;
+}
+.data-switch-button{
+
+}
+.data-swicth-button-body{
+    padding-bottom: 20px;
+}
+.tagsBlue{
+    display: inline-block;
+    margin-right: 15px;
+    padding: 9px 20px;
+    color: #21A3FFFF;
+    border: 1px solid #21A3FFFF;
+    border-radius: 5px;
+    background: #fff;
+    font-size: 13px;
+    margin-top: 20px;
+}
+.data-swicth-button-body .blueBold{
+    background: linear-gradient(90deg,#0090ff,#49baff);
+    color: #fff;
+}
+
+/* 数据列表开始 */
+.body-header-black{
+    height: 50px;
+    background: #1F2640FF;
+}
+.blackContent{
+    margin-left: 20px;
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+}
+.blackContent>span{
+    display: inline-block;
+    width: 3px;
+    height: 20px;
+    background: rgb(0, 255, 255);
+    position: absolute;
+    top: 15px;
+}
+.blackContent>div{
+    display: inline-block;
+    height: 50px;
+    color: white;
+    margin-left: 10px;
+}
+.listContent{
+    margin: 20px;
+}
+.data-list-title{
+    width: 900px;
+    overflow: auto;
+    height: 50px;
+    line-height: 50px;
+}
+/* 排行箭头 */
+.grayActive{
+    border-bottom: 10px solid #d3d3d3;
+}
+.blackActive1{
+    border-top: 10px solid #616161;
+}
+.list-item{
+    margin-bottom: 3px;
+}
+.stores-data{
+    width: 900px;
+    overflow: hidden;
+}
+.details button{
+    padding: 9px 15px;
+    font-size: 12px;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #409eff;
+    border-color: #409eff;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #dcdfe6;
+}
