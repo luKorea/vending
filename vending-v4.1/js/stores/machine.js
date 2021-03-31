@@ -1304,6 +1304,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                         <img class="${child.status == 1 ? 'hide' : ''}" src="${require('../../img/fault1.png')}" alt="">
                                     <span>${child.way}</span>
                                     </div>
+                                    <div class="price">价格:${percentileMoney(child.price)}</div>
                                 <div class="numderBottom">
                                         <div class="status1 ${child.status == 1 ? '' : 'redF10'}">${child.status == 1 ? '正常' : '货道故障'}</div>
                                         <div title="${child.count}">数量:${child.count}</div>
@@ -1367,13 +1368,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         aisleEdit();
         disabledFun();
         popupShow('editAisle', 'editAisleBox');
-        // if (sessionStorage.independentPass) {
-        //     aisleEdit();
-        //     popupShow('editAisle', 'editAisleBox');
-        // } else {
-        //     popupShow('iPasswprd', 'passwordCont');
-        // }
-
     })
     // 独立密码
     $('.passBtn').click(function () {
@@ -1519,17 +1513,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('货道容量不能小于当前数量', {icon: 7});
             return;
         }
-        // if($('.editAisle input[name="goodsName"]').attr('IVal')!=goodsDetails.goods_Id){
-        //     var repeatFlag=wayFlagArr.every(item=>{
-        //         return item.goods_Id!=$('.editAisle input[name="goodsName"]').attr('IVal')
-        //     })
-        //     if(!repeatFlag){
-        //         layer.msg('该商品已在其他货道上架，请勿在不同货道上架同一商品',{icon:7})
-        //         return ;
-        //     }
-        // }
-        // console.log(repeatFlag)
-        // return ;
         var editData = JSON.stringify({
             machineId: machineSetData.machineId,
             way: goodsDetails.way,

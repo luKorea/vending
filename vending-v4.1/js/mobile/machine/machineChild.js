@@ -13,6 +13,23 @@ import {
 
 var editAisleFlag = false;
 
+// 千分位金额
+function percentileMoney(num) {
+    if (num === '') num = 0;
+    num = num.toString().replace(/[^\d\.-]/g, ''); //转成字符串并去掉其中除数字, . 和 - 之外的其它字符。
+    if (isNaN(num)) num = "0"; //是否非数字值
+    var sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num * 100 + 0.50000000001); //下舍入
+    var cents = num % 100; //求余 余数 = 被除数 - 除数 * 商
+    cents = (cents < 10) ? "0" + cents : cents; //小于2位数就补齐
+    num = Math.floor(num / 100).toString();
+    for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++) { //每隔三位小数分始开隔
+        num = num.substring(0, num.length - (4 * i + 3)) + ',' + num.substring(num.length - (4 * i + 3));
+    }
+    return '￥' + (((sign) ? '' : '-') + num + '.' + cents);
+}
+
+
 function permissions() {
     permissionsFun('/role/findUserPermission', 'post', sessionStorage.token).then(res => {
         res.data.forEach(item => {
@@ -20,12 +37,13 @@ function permissions() {
                 editAisleFlag = true;
             }
         });
-        // addAisleFlag ? $('.addAisle').removeClass('hides') : $('.addAisle').addClass('hides');
-        // console.log(addAisleFlag)
     }).catch(err => {
         console.log(err)
     })
 };
+
+// TODO 判断用户是不是管理员
+
 
 var parentWin = window.parent;
 // console.log(parentWin)
@@ -41,7 +59,6 @@ function loadChild(machine) {
         machineId: machine
     })
     loadAjax('/machine/getGoodWay', 'post', sessionStorage.token, requestIdData, 'mask').then(res => {
-        console.log(res)
         againFun(res)
     }).catch(err => {
         console.log(err)
@@ -51,8 +68,10 @@ function loadChild(machine) {
 loadChild(requestId);
 
 var wayList = [];
+
 // 渲染数据处理
 function againFun(res) {
+    wayList = [];
     res.data.forEach(item => {
         if (item.row) {
             if (!(wayList[item.row - 1])) {
@@ -85,6 +104,7 @@ function aisleHtml(machieList) {
                                 <img src="${child.goods_images ? child.goods_images : require('../../../img/failure.png')}" alt="">
                                 <span>${child.way}</span>
                             </div>
+                            <div class="price">价格:${percentileMoney(child.price)}</div>
                             <div class="numderBottom flex">
                                 <div class="${child.open == 1 ? 'status1' : 'status2'} ">
                                     
@@ -145,6 +165,9 @@ $('.validationContent .confirmBtn').click(function () {
             delAisle(delAisleObj);
         } else if (editFlag) {
             aisleEdit();
+            if (machineSystem != 1) {
+                disableFun();
+            }
             showPopup('.editAisleContent', '.editAisleBox', 'top50');
         }
     }).catch(err => {
@@ -160,18 +183,14 @@ $('.validationContent').click(function () {
 })
 // 输入框禁止提示
 $('input').attr('autocomplete', 'off')
-// 判断页面打开后有没有输入独立密码
-// sessionStorage.independentPass = '';
-// 判断点击是不是在长按之后
 var LongPress = 1;//2为长按，1为正常点击
 var timeOutEvent = null,
     ArrIndex = null,
     editFlag = null;
 // 选择需要删除的货道
 $('.aisleCont').on('click', '.aisleNumderGoods', function () {
-    if (!editAisleFlag) {
-        toastTitle('您没有修改货道的权限', 'warn');
-        return;
+    if (machineSystem != 1) {
+        disableFun();
     }
     ArrIndex = $(this).attr("fireIndex").split(',');
     editFlag = 1;
@@ -286,7 +305,8 @@ $('.addNumBox').click(function () {
 $('.addNumContent').click(function () {
     closeWindow(this, 'top50')
 })
-// 编辑货道部分
+
+
 // 关闭编辑
 $('.editAisleContent .close').click(function () {
     closeParents(this, 'top50')
@@ -300,6 +320,38 @@ $('.editAisleContent').click(function () {
 // 渲染货道信息
 var goodsDetails = null;
 
+let machineSystem = null;
+
+// 获取是否机器管理员
+function Amachinedmin() {
+    loadAjax('/machine/findMachineIdUser?machineId=' + requestId,
+        'get', sessionStorage.token).then(res => {
+        machineSystem = res.data;
+        console.log(res.data, 'test');
+    }).catch(err => {
+        machineSystem = 0;
+    })
+};
+
+Amachinedmin();
+
+function disableFun() {
+    console.log('hahha');
+    console.log($('input[name="goodsName"]'));
+    $('input[name="goodsName"]').attr("disabled",true);
+    $('input[name="price"]').attr("disabled",true);
+    $('input[name="count"]').attr("disabled",true);
+    $('input[name="total"]').attr("disabled",true);
+};
+
+
+$('.editAisleContent').click(function () {
+    if (machineSystem != 1) {
+        disableFun();
+    }
+})
+
+
 function aisleEdit() {
     goodsDetails = wayList[ArrIndex[0]][ArrIndex[1]];
     console.log(goodsDetails);
@@ -310,26 +362,35 @@ function aisleEdit() {
     $('.editiAsleBody input[name="total"]').val(goodsDetails.total);
     $('.editiAsleBody input[name="openText"]').val(goodsDetails.open == 1 ? '是' : '否');
     $('.editiAsleBody input[name="openVal"]').val(goodsDetails.open);
-    // console.log($('.editiAsleBody input[name="goodsName"]').attr('IVal'))
 };
+
+
+$('.pickerChoose').click(function () {
+    if (machineSystem !== 1) {
+        toastTitle('您不是该设备管理员！', 'warn');
+        return;
+    }
+});
 
 var picker1 = new huiPicker('.pickerChoose', function () {
     var val = picker1.getVal(0);
     var txt = picker1.getText(0);
-    // hui('#btn1').html(txt + '[' + val + ']');
-    console.log(val, txt)
     $('.pickerChoose input[name="openVal"]').val(val);
     $('.pickerChoose input[name="openText"]').val(txt);
 });
 picker1.bindData(0, [{value: 1, text: '是'}, {value: 0, text: '否'}]);
 // 点击选择商品
 $('.editAisleContent .goodsChoose').click(function () {
-    tabLoadEndArray = false;
-    pageNum = 1;
-    $('.goodsWrap').html(`<div class="goodsList flexThree" id="goodsList"></div>`)
-    $('.goodsList').empty();
-    showPopup('.goodsContnet', '.goodsBox', 'top50');
-    goodsLoad();
+    if (machineSystem === 1) {
+        tabLoadEndArray = false;
+        pageNum = 1;
+        $('.goodsWrap').html(`<div class="goodsList flexThree" id="goodsList"></div>`)
+        $('.goodsList').empty();
+        showPopup('.goodsContnet', '.goodsBox', 'top50');
+        goodsLoad();
+    } else {
+        toastTitle('您不是该设备管理员！', 'warn');
+    }
 });
 // 关闭选择商品
 $('.goodsContnet .close').click(function () {
@@ -437,6 +498,10 @@ $('.goodsWrap').on('click', '.chooseList', function () {
 
 // 确认修改
 $('.editAisleContent .confirmBtn').click(function () {
+    if (machineSystem !== 1) {
+        toastTitle('您不是该设备管理员！', 'warn');
+        return;
+    }
     if (!$('.editiAsleBody input[name="goodsName"]').attr('IVal')) {
         toastTitle('请选择商品', 'warn');
         return;
@@ -472,11 +537,9 @@ $('.editAisleContent .confirmBtn').click(function () {
     });
     loadAjax('/machine/updateGoodWay',
         'post', sessionStorage.token, editObj, 'mask', '.editAisleContent', 'top50').then(res => {
-        // console.log(res);
         loadChild(requestId);
         toastTitle(res.message, 'success')
     }).catch(err => {
-        // console.log(err)
         toastTitle(err.message, 'error')
     })
 });

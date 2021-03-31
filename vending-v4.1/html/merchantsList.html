@@ -14,17 +14,7 @@
             <div style="display: flex;">
                 <div class="left-mian">
                     <div class="accountContnet" style="margin-left: 15px;">
-                        <!-- <div class="input-account">
-                            <input type="text" placeholder="输入用户账号">
-                        </div> -->
                         <p style="margin:20px 20px 10px;color:#be954a;">商户列表</p>
-                        <!-- <div class="fixedAccount">
-                            <span> 粤宝商户-中邮广州</span>
-                        </div> -->
-                        <!-- <button class="layui-btn layui-btn-normal  btn refreshBtnList" type="button"style="margin:10px 20px 0px ;">
-                            <i class="layui-icon layui-icon-refresh "></i>
-                            <span>刷新</span>
-                        </button> -->
                         <div id="test1" class="demo-tree demo-tree-box"></div>
                     </div>
                     <!-- 右侧栏 -->
@@ -32,23 +22,6 @@
                 </div>
                 <i class="layui-icon layui-icon-right  onLeft"></i>
                 <div class="mian" style="margin-top: 20px;">
-                    <!-- <div class="addMember">
-                        <button class="layui-btn layui-btn-normal btn addBtn hide" style="margin-right: 25px;">
-                            <span>添加商户</span>
-                        </button>
-                        <div style="max-width: 350px;" class="key-contnet">
-                            <div class="key-text">关键字</div>
-                            <input type="text" placeholder="商户名" name="keyMerchants" class="KyeText">
-                        </div>
-                        <button class="layui-btn layui-btn-normal queryBtnClick btn" style="margin: 0 0 0 25px;">
-                            <i class="layui-icon layui-icon-search"></i>
-                            <span>查询</span>
-                        </button>
-                        <button class="layui-btn layui-btn-normal refreshBtn  btn" style="margin: 0 0 0 25px;">
-                            <i class="layui-icon layui-icon-refresh"></i>
-                            <span>刷新</span>
-                        </button>
-                    </div> -->
                     <div class="newHeader">
                         <div class="newHeaderText">
                             条件查询
@@ -62,16 +35,16 @@
                             </div>
                         </div>
                         <div class="newKeyContent">
-                            <button type="button" class="layui-btn layui-btn-primary queryBtnClick">          
+                            <button type="button" class="layui-btn layui-btn-primary queryBtnClick">
                                 <i class="layui-icon layui-icon-search"></i>
-                                <span>查询</span>   
+                                <span>查询</span>
                             </button>
                         </div>
                         <div class="newKeyContent">
                             <button type="button" class="layui-btn layui-btn-primary addBtn hide">
                                 <i class="layui-icon layui-icon-app"></i>
                                 <span>添加商户</span>
-                                
+
                             </button>
                         </div>
                         <div class="newKeyContent">
@@ -106,6 +79,10 @@
                             <label for=""><span style="color: red;">*</span> 商户名:</label>
                             <input type="text" name="merchantsName">
                         </div>
+<!--                        <div class="listInput">-->
+<!--                            <label for="">跳转地址:</label>-->
+<!--                            <input type="text" name="url">-->
+<!--                        </div>-->
                         <div class="listInput">
                             <label for=""><span style="color: red;">*</span> 售货机最大出货数:</label>
                             <input type="number" name="max_ship">
@@ -234,6 +211,10 @@
                         <label for=""><span style="color: red;">*</span> 商户名:</label>
                         <input type="text" name="merchantsName">
                     </div>
+<!--                    <div class="listInput">-->
+<!--                        <label for="">跳转地址:</label>-->
+<!--                        <input type="text" name="url">-->
+<!--                    </div>-->
                     <div class="listFlex">
                         <form class="layui-form" action="">
                             <div class="layui-form-item">
@@ -260,7 +241,7 @@
                             <img src="" alt="">
                         </div>
                     </div>
-                    <div class="listFlex" >
+                    <div class="listFlex">
                         <form class="layui-form" action="">
                             <div class="layui-form-item listFlex">
                                 <label class="layui-form-label">是否开启邮寄订单查询:</label>
@@ -273,19 +254,9 @@
                     </div>
                     <div class="listInput">
                         <label for=""><span style="color: red;">*</span> 上级商户:</label>
-                        <!-- <form class="layui-form" action="" >
-                            <div class="layui-form" lay-filter="">
-                                <select name="marchantsListname" class="addMarchantsList" lay-filter="stateSelect">
-                                    <option disabled value="1">启用</option> 
-                                </select>
-                            </div>
-                        </form> -->
                         <input type="text" name="marchantsListname" disabled>
                         <input type="text" name="addmarchantsVal" disabled style="display: none;">
                     </div>
-                    <!-- <div class="listInput" id="listInputTree">
-                        <div id="test2" class="demo-tree demo-tree-box" style="margin-left: 110px;"></div>
-                    </div> -->
                     <div style="text-align: center; margin-top: 15px;">
                         <button class="layui-btn layui-btn-normal btn addSubmiBtn" type="button">
                             <span>提交</span>
