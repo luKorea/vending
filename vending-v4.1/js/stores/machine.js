@@ -2265,7 +2265,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             cols: [[
                 {field: 'info', width: 250, title: '售货机名', align: 'center',},
                 {field: 'openType', width: 150, title: '类型', align: 'center',},
-                {field: 'username', width: 150, title: '操作人', align: 'center',},
+                {field: 'username', width: 150, title: '操作人', align: 'center'},
                 {
                     field: 'goods_Name', width: 250, title: '开门时间', align: 'center', templet: function (d) {
                         return d.open_time ? timeStamp(d.open_time) : '-'
