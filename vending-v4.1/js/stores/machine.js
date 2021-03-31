@@ -2212,8 +2212,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         if (timeFlag(editStartTime, editEndTime)) {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
-        }
-        ;
+        };
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),

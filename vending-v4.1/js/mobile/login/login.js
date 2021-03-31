@@ -35,6 +35,13 @@ swiperFun();
 $('.loginBtn').click(function () {
     loginFUn();
 });
+
+$('#pass').keydown(function (e) {
+    if (e.keyCode == 13) {
+        loginFUn()
+    }
+})
+
 var passIndex = 1,
     passType = 1;
 $('.flex input[name="pass"]').focus(function () {

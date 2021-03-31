@@ -321,7 +321,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         id: 'treelist',
         showLine: !0 //连接线
         ,
-        onlyIconControl: true, //左侧图标控制展开收缩 
+        onlyIconControl: true, //左侧图标控制展开收缩
         data: dataList,
         spread: true,
         text: {
@@ -358,7 +358,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 token: sessionStorage.token
             },
             cols: [[
-                { checkbox: true },
+                { checkbox: true, align: 'center', width: 70},
                 {
                     field: 'number', width: 180, title: '售货机编号', align: 'center', templet: function (d) {
                         return d.number ? d.number : '-'

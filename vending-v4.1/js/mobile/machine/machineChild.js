@@ -132,6 +132,11 @@ permissions();
 $('.validationContent .close').click(function () {
     closeParents(this, 'top50')
 });
+
+
+let flag = true;
+
+
 // 点击独立密码验证
 $('.validationContent .confirmBtn').click(function () {
     if (!$('.validationBody input[name="oldPass"]').val()) {
@@ -164,10 +169,9 @@ $('.validationContent .confirmBtn').click(function () {
             })
             delAisle(delAisleObj);
         } else if (editFlag) {
+            enableFun();
             aisleEdit();
-            if (machineSystem != 1) {
-                disableFun();
-            }
+            flag = false;
             showPopup('.editAisleContent', '.editAisleBox', 'top50');
         }
     }).catch(err => {
@@ -189,19 +193,13 @@ var timeOutEvent = null,
     editFlag = null;
 // 选择需要删除的货道
 $('.aisleCont').on('click', '.aisleNumderGoods', function () {
-    if (machineSystem != 1) {
-        disableFun();
-    }
+    disableFun();
     ArrIndex = $(this).attr("fireIndex").split(',');
     editFlag = 1;
     addFlag = null;
     delFlag = null;
-    if (sessionStorage.independentPass) {
-        aisleEdit()
-        showPopup('.editAisleContent', '.editAisleBox', 'top50');
-    } else {
-        showPopup('.validationContent', '.validationBox', 'top50')
-    }
+    aisleEdit();
+    showPopup('.editAisleContent', '.editAisleBox', 'top50');
 })
 var delNum = 0;
 // 取消删除
@@ -282,13 +280,8 @@ $('.aisleCont').on('click', '.addAisle', function () {
     addFlag = 1;
     delFlag = null;
     editFlag = null;
-    // console.log($(this).attr('indexVal'))
     addIndex = $(this).attr('indexVal');
-    if (sessionStorage.independentPass) {
-        showPopup('.addNumContent', '.addNumBox', 'top50')
-    } else {
-        showPopup('.validationContent', '.validationBox', 'top50')
-    }
+    showPopup('.addNumContent', '.addNumBox', 'top50')
 })
 // 关闭添加货道弹窗
 $('.addNumContent .close').click(function () {
@@ -335,13 +328,23 @@ function Amachinedmin() {
 
 Amachinedmin();
 
+
+function enableFun() {
+    // $('input[name="goodsName"]').attr("disabled",false);
+    $('input[name="price"]').attr("disabled",false);
+    $('input[name="count"]').attr("disabled",false);
+    $('input[name="total"]').attr("disabled",false);
+    $('.sumbitBtn').show();
+    $('.confirmBtn').hide();
+};
+
 function disableFun() {
-    console.log('hahha');
-    console.log($('input[name="goodsName"]'));
     $('input[name="goodsName"]').attr("disabled",true);
     $('input[name="price"]').attr("disabled",true);
     $('input[name="count"]').attr("disabled",true);
     $('input[name="total"]').attr("disabled",true);
+    $('.sumbitBtn').hide();
+    $('.confirmBtn').show();
 };
 
 
@@ -496,12 +499,23 @@ $('.goodsWrap').on('click', '.chooseList', function () {
     closeParents(this, 'top50')
 });
 
-// 确认修改
+// 维护
 $('.editAisleContent .confirmBtn').click(function () {
-    if (machineSystem !== 1) {
+    if (machineSystem  === 1) {
+        if (!sessionStorage.independentPass) {
+            showPopup('.validationContent', '.validationBox', 'top50');
+        } else {
+            enableFun();
+        }
+    } else {
+        disableFun();
         toastTitle('您不是该设备管理员！', 'warn');
         return;
     }
+});
+
+// 修改
+$('.editAisleContent .sumbitBtn').click(function () {
     if (!$('.editiAsleBody input[name="goodsName"]').attr('IVal')) {
         toastTitle('请选择商品', 'warn');
         return;
@@ -511,29 +525,23 @@ $('.editAisleContent .confirmBtn').click(function () {
         return;
     }
     if (!(Number($('.editiAsleBody input[name="total"]').val()) >= Number($('.editiAsleBody input[name="count"]').val()))) {
-        // layer.msg('货道容量不能小于当前数量', { icon: 7 });
         toastTitle('货道容量不能小于当前数量', 'warn');
         return;
-    }
-    ;
+    };
     loadingWith('正在修改，请稍后！')
     var editObj = JSON.stringify({
         machineId: requestId,
         way: goodsDetails.way,
-        // goodId: $('.editiAsleBody input[name="goodsName"]').attr('IVal'),
         goodId: Number(goodsDetails.goods_Id ? goodsDetails.goods_Id : $('.editiAsleBody input[name="goodsName"]').attr('IVal')),
         newGoodId: Number($('.editiAsleBody input[name="goodsName"]').attr('IVal')),
-        // count: $('.editiAsleBody input[name="count"]').val(),
         replenish: goodsDetails.goods_Id ? goodsDetails.count : 0,
         count: Number($('.editiAsleBody input[name="count"]').val()),
-        // total: $('.editiAsleBody input[name="total"]').val(),
         total: Number(goodsDetails.goods_Id ? goodsDetails.total : 0),
         newTotal: Number($('.editiAsleBody input[name="total"]').val()),
         status: goodsDetails.open,
         newStatus: Number($('.editiAsleBody input[name="openVal"]').val()),
         newPrice: $('.editAisleContent input[name="price"]').val(),
         price: goodsDetails.goods_Id ? goodsDetails.price + '' : '0'
-        // open: $('.editAisle input[name="openVal"]').val()
     });
     loadAjax('/machine/updateGoodWay',
         'post', sessionStorage.token, editObj, 'mask', '.editAisleContent', 'top50').then(res => {
@@ -542,7 +550,8 @@ $('.editAisleContent .confirmBtn').click(function () {
     }).catch(err => {
         toastTitle(err.message, 'error')
     })
-});
+})
+
 // 筛选商品搜索
 $('.goodsContnet .confirmBtn').click(function () {
     loadingWith('正在加载，请稍后！')

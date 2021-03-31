@@ -18,7 +18,7 @@
     transition: all 0.3s;
 }
 .machineBox{
-    width: 1050px;
+    width: 1284px;
     overflow-x: hidden;
 }
 .machineBody{
@@ -86,7 +86,7 @@
 .left-miana{
     height: 530px;
     overflow-y: auto;
-    padding-right: 40px;
+    /*padding-right: 40px;*/
 }
 .left-miana::-webkit-scrollbar{
     width: 3px;
