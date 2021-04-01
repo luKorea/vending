@@ -663,6 +663,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                 data: data,
                 id: 'treeMachine',
                 showCheckbox: true,
+                accordion: true,
                 spread: true,
                 onlyIconControl: true
             });
