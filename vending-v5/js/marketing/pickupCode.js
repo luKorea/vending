@@ -1,7 +1,7 @@
 // import { loadAjax, showPopup } from '../../common/common';
 import '../../MyCss/marketing/pickupCode.scss';
 layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
-    var merchantId = 1;
+    var merchantId = sessionStorage.machineID;
     var permissionsData0 = window.parent.permissionsData1(),
         permissionsObj = {
             436: false,
