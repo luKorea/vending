@@ -342,8 +342,8 @@ function keyNumber(NumberOne) {
         });
         loadAjax('/api/pay/getPayStatus', 'post', dataObj).then(res => {
             if (res.data.payStatus == 2) {
+                clearInterval(setTime)
                 if (res.data.url === '' || res.data.url === null) {
-                    clearInterval(setTime)
                     location.href = 'placeOrder.html';
                 } else {
                     location.href = res.data.url;
