@@ -622,67 +622,64 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             storesFun(data.uuid)
         });
 
-        let newData = [];
+        let allData = [], selectData = [];
 
         function storesFun(uid) {
             loadingAjax('/user/getUserMachine', 'post', JSON.stringify({UUId: uid}), sessionStorage.token).then(res => {
-                let data = res.data,
-                    allData = data.all,
-                    selectData = data.userSelect;
-                allData.forEach((item) => {
-                    item['checked'] = false;
-                    item.children.forEach(d => {
-                        d['checked'] = false;
-                    })
-                    selectData.forEach(child => {
-                        if (item.id === child.id && child.children) {
-                            item['checked'] = true;
-                        }
-                        item.children.forEach(i => {
-                            child.children.forEach(c => {
-                                if (i.id === c.id) {
-                                    i['checked'] = true;
-                                }
-                            })
-                        })
-                    });
-                    item && item.children && item.children.length > 0 && item.children.forEach(child => {
-                        if (child['checked'] === false) {
-                            item['checked'] = false;
-                        }
-                    })
-                });
-                renderSelect(allData)
+                let data = res.data;
+                allData = data.all;
+                selectData = data.userSelect;
+                renderSelect(allData, selectData, 'demo-transfer')
             })
         }
 
-        function renderSelect(data) {
-            //开启复选框
-            tree.render({
-                elem: '#test6',
-                data: data,
-                id: 'treeMachine',
-                showCheckbox: true,
-                spread: true,
-                onlyIconControl: true
+        function renderSelect(data, selectData, element) {
+            console.log(data);
+//             let ListData = `<div>
+//         <input type="checkbox" lay-filter="permissionsAll" name="${element}" title="全选"
+//             lay-skin="primary"  value="" style="margin-bottom: 10px">
+//          </div>
+// `;
+            let ListData = '',
+                all = [];
+            data.forEach((ele, index) => {
+                ListData += `
+<div style="font-weight: bold">${ele.merchantName}</div>
+`;
+                ele.machine.forEach((item, i) => {
+                    all.push(item);
+                    ListData += `<div class="item">
+                            <input type="checkbox" 
+                            lay-filter="permissions"
+                            lay-skin="primary"
+                            name="${item.machineId}" title="${item.machineName}" value="${item.machineId}">
+</div>`
+                })
             });
+            let ele = $(`.${element}`);
+            console.log(all, 'all');
+            ele.empty();
+            ele.html(ListData);
+            selectData.forEach((ele, index) => {
+                ele.machine.forEach((item) => {
+                    console.log(item, 'select');
+                    for (let i = 0; i < $(`.${element} input`).length; i++) {
+                            if (item.machineId == all[i].machineId) {
+                                $(`.${element} input`).eq(i).prop('checked', true)
+                            }
+                        };
+                })
+            });
+            form.render('checkbox');
         }
 
-        //　获取选中的节点
-        function getChildNodes(treeNode, result) {
-            for (var i in treeNode) {
-                if (!treeNode[i].children) {
-                    result.push(treeNode[i].id);
-                }
-                result = getChildNodes(treeNode[i].children, result);
-            }
-            return result;
-        }
 
         $('.storeSubmit').click(function () {
-            let checkedData = tree.getChecked('treeMachine'),
-                machineId = getChildNodes(checkedData, []);
-            console.log(machineId);
+            let userSelectRole = form.val("editInformation"),
+                machineId = [];
+            for (let i in userSelectRole) {
+                machineId.push(i);
+            }
             layer.confirm('确定修改配置？', function (index) {
                 layer.close(index);
                 var editStores = JSON.stringify({
@@ -691,11 +688,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                 });
                 loadingAjax('/user/configUserMachine', 'post', editStores, sessionStorage.token,
                     'mask', '', '', layer).then(res => {
-                    layer.msg(res.message, {icon: 1});
+                    layer.msg(res.message, { icon: 1 });
                     popupHide('storesCont', 'storesBox')
                     storesFun(memData.uuid);
                 }).catch(err => {
-                    layer.msg(err.message, {icon: 2});
+                    layer.msg(err.message, { icon: 2 });
                 })
             })
         })
