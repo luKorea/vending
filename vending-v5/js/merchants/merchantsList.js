@@ -25,9 +25,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 }
             },
             {
-                field: 'merchantURL', width: 220, title: '商品跳转地址', align: 'center',
+                field: 'merchantURL', width: 220, title: '支付成功跳转地址', align: 'center',
                 templet: function (d) {
-                    return `<a href="${d.merchantURL}" target="_blank" style="color: rgb(190, 149, 74)">${d.merchantURL}</a>`
+                    return (d.merchantURL && (d.merchantURL !== null || d.merchantURL !== undefined)) ? `<a href="${d.merchantURL}" target="_blank" style="color: rgb(190, 149, 74)">${d.merchantURL}</a>` : '-'
                 }
             },
             {field: 'alias', width: 120, title: '商户编号', align: 'center'},

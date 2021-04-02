@@ -2,6 +2,7 @@ import '../../MyCss/goods/customCategory.css';
 layui.use(['table', 'form', 'layer', 'tree'], function () {
   tooltip('.refreshBtnList', { transition: true, time: 200 });
   var permissionsData0 = window.parent.permissionsData1(),
+      merchantId = sessionStorage.machineID,
     permissionsObj = {
       373: false,
       374: false,
@@ -42,7 +43,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
           field: 'user', width: 150, title: '创建人', align: 'center', templet: function (d) {
             return d.user != null ? d.user.userName : ''
           }
-        },  // { field: 'users', width: 180, title: '商户名' }, //templet: '<div>{{d.user.userName}}</div>'      
+        },  // { field: 'users', width: 180, title: '商户名' }, //templet: '<div>{{d.user.userName}}</div>'
         {
           field: 'classifyTime', width: 200, title: '创建时间', align: 'center'
         },
@@ -62,7 +63,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         'limitName': 'pageSize'
       },
       where: {
-        merchantId: sessionStorage.machineID
+        merchantId: merchantId
       },
       parseData: function (res) {
         // console.log(res)
@@ -125,7 +126,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       var addObj = JSON.stringify({
         classifyName: addVal.addTypeName,
         remark: addVal.addNote,
-        merchantId: Number(sessionStorage.machineID)
+        merchantId: Number(merchantId)
       });
       $('.mask').fadeIn();
       $('.maskSpan').addClass('maskIcon');
@@ -169,7 +170,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
       var rankObj = JSON.stringify({
         topId: rank[obj.data.rank - 1].classifyId,
         bottomId: rank[obj.data.rank - 2].classifyId,
-        merchantId: sessionStorage.classTag
+        merchantId: merchantId
       })
       loadingAjax('/classify/sortClassify', 'post', rankObj, token, '', '', '', layer).then((res) => {
         layer.msg(res.message, { icon: 1 });
@@ -180,20 +181,6 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         layer.msg(err.message, { icon: 2 });
       })
     }
-    // if (obj.event === 'edit') {
-    //   popupShow('editClass', 'editContent');
-    //   form.val("editValData", {
-    //     "addTypeName": editData.classifyName,
-    //     "addNote": editData.remark,
-    //   })
-    // } else if (obj.event === 'delete') {
-    //   console.log(obj)
-    //   layer.confirm('确定删除？', function (index) {
-    //     Goodsdel(editData, 2, obj, index, tableIns, sessionStorage.classTag);
-    //   });
-
-    // }
-
   });
   // 编辑
   $('.ListOperation .edit').click(function () {
@@ -217,7 +204,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         classifyId: editData.classifyId,
         classifyName: editInputVal.addTypeName,
         remark: editInputVal.addNote,
-        merchantId: Number(sessionStorage.machineID)
+        merchantId: Number(merchantId)
       });
       $('.mask').fadeIn();
       $('.maskSpan').addClass('maskIcon');
@@ -246,16 +233,48 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
   });
 
   var dataList = treeList();
-  treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId', '', '', '', 'true');
+  treeFun1(tree, 'testGoods', tableIns, dataList);
+  function treeFun1(tree, element, tableID, data) {
+    tree.render({
+      elem: `#${element}`,
+      id: 'treelist',
+      showLine: !0 //连接线
+      ,
+      onlyIconControl: true, //左侧图标控制展开收缩
+      data,
+      spread: true,
+      text: {
+        defaultNodeName: '无数据',
+        none: '您没有权限，请联系管理员授权!'
+      },
+      click: function (obj) {
+        merchantId = String(obj.data.id);
+        console.log(merchantId, 'test');
+        tableID.reload({
+          where: {
+            merchantId: merchantId,
+            // merchant_id: obj.data.id
+          }
+        })
+        var nodes = $(`#${element} .layui-tree-txt`)
+        for (var i = 0; i < nodes.length; i++) {
+          if (nodes[i].innerHTML === obj.data.title)
+            nodes[i].style.color = "#be954a";
+          else
+            nodes[i].style.color = "#555";
+        }
+      },
+    });
+  };
   // 刷新商户列表
   $('.refreshBtnList').click(function () {
     var dataList1 = treeList();
     if (JSON.stringify(dataList1) != JSON.stringify(dataList)) {
       dataList = dataList1;
-      treeFun(tree, 'testGoods', tableIns, dataList, 'merchantId', '', '', '', 'true');
+      treeFun1(tree, 'testGoods', tableIns, dataList);
       tableIns.reload({
         where: {
-          merchantId: sessionStorage.machineID,
+          merchantId: merchantId,
         }
       })
       layer.msg('已刷新', { icon: 1 })
@@ -264,16 +283,6 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     }
 
   })
-  // 刷新页面
-  // $('.refreshBtn').click(function () {
-  //   // $('.keyText').val('')
-  //   tableIns.reload({
-  //     where:{
-  //       // classifyName:''
-  //     }
-  //   })
-  //   // location.reload();
-  // });
   // 收起
   $('.sidebar i').click(function () {
     $('.left-mian').hide();
@@ -293,4 +302,4 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     $('.ListOperation').fadeOut();
     operationFlag = null;
   });
-})                                                      
+})

@@ -804,6 +804,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
           if (res.code == 0) {
             // addGoodsImgIndex 1为编辑 2为添加
             addGoodsImg = res.data.src;
+            console.log(addGoodsImg, 'img');
             $('#GoodsImg').attr("src", addGoodsImg);
             $('.ImgCropping').fadeOut();
             $('.upload-list').fadeIn();

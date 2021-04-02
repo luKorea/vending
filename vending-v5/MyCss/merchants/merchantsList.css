@@ -73,7 +73,7 @@
     display: none;
 }
 .MemberContent,.addBox{
-    width: 800px;
+    width: 900px;
     position: relative;
     margin: 2vh auto 50px;
     background: #fff;
@@ -115,7 +115,7 @@
     align-items: center;
 }
 .listInput label{
-    width: 90px;
+    width: 126px;
     text-align: right;
     font-size: 14px;
     color: #606266;

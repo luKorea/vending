@@ -106,9 +106,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'machineURL', width: 220, title: '商品跳转地址', align: 'center',
+                    field: 'machineURL', width: 220, title: '支付成功跳转地址', align: 'center',
                     templet: function (d) {
-                        return `<a href="${d.machineURL}" target="_blank" style="color: rgb(190, 149, 74)">${d.machineURL}</a>`
+                        return (d.machineURL && (d.machineURL !== null || d.machineURL !== undefined)) ? `<a href="${d.machineURL}" target="_blank" style="color: rgb(190, 149, 74)">${d.machineURL}</a>` : '-'
                     }
                 },
                 {

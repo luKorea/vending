@@ -273,7 +273,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             , "goodsParam": singleData.goods_Param //规格描述
             , 'goodsStatus': singleData.goods_Status //商品状态
         });
-        console.log(singleData.goods_images)
+        console.log(singleData.mail, 'hdkjfksjdhfkjsdhfjk')
         singleData.mail == 1 ? $('.editor input[name="editmail"]').prop('checked', true) : $('.editor input[name="editmail"]').prop('checked', false)
         $('#editImg').attr("src", singleData.goods_images)
         var singGoodsDateils = singleData.goods_Descript.replace(/video/g, 'iframe')
@@ -858,7 +858,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                 token,
             },
             cols: [[
-                {type: 'checkbox',},
+                {type: 'checkbox'},
                 {field: 'goods_images', width: 80, title: '图片', templet: "#Listimgtmp", align: 'center'},
                 {
                     field: 'goods_Name',
@@ -932,6 +932,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                 ;
                 for (var i in res.data) {
                     var item = res.data[i];
+                    console.log(item.childMerchantId);
                     if (item.childMerchantId != sessionStorage.machineID || item.received == 1) {// 这里是判断需要禁用的条件（如：状态为0的）
                         // checkbox 根据条件设置不可选中
                         $('.list_table1 tr[data-index=' + i + '] input[type="checkbox"]').prop('disabled', true);
