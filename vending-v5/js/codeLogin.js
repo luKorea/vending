@@ -1,7 +1,9 @@
 import '../MyCss/codeLogin.scss'
-import {loadAjax, prompt, getQueryString, decrypt1, keepPass} from '../common/common-mail.js';
+import {loadAjax, prompt, getQueryString, decrypt1, keepPass, encrypt} from '../common/common-mail.js';
 
-var machineId = getQueryString('machineId');
+var machineId = getQueryString('machineId'),
+    time = getQueryString('time');
+
 if (sessionStorage.accountPass) {
     var passFlag = keepPass(sessionStorage.old, new Date().getTime())
     if (passFlag) {
@@ -35,72 +37,85 @@ $('.searchCont .btn').click(function () {
     }
     ;
     $('.mask').show();
-    console.log(machineId, decrypt1(machineId));
     var loginObj = JSON.stringify({
         username: $('.formCont input[name="name"]').val(),
         password: passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val()),
-        machineId: machineId
+        machineId: machineId,
+        time: time
     })
     loadAjax('/api/user/login', 'post', loginObj)
         .then(res => {
+            sessionStorage.machineName = res.data.machineName;
+            sessionStorage.machineNumber = res.data.machineNumber;
             sessionStorage.token = res.data.token;
-            $.ajax({
-                type: 'post',
-                url: '/api/scanLogin',
-                timeout: 10000,
-                data: JSON.stringify({
-                    action: sessionStorage.token,
-                    machine: decrypt1(machineId)
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                    token: sessionStorage.token
-                },
-                success: function (res) {
-                    $('.mask').hide();
-                    if (res == 'true') {
-                        if ($('.r1').prop('checked')) {
-                            sessionStorage.old = new Date().getTime();
-                            sessionStorage.accountPass = JSON.stringify({
-                                username: $('.formCont input[name="name"]').val(),
-                                password: passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val()),
-                            })
-                        } else {
-                            sessionStorage.accountPass = ''
-                        }
-                        window.location.href = `operation.html?machineId=${getQueryString('machineId')}`
-                    } else {
-                        prompt('售货机离线,登录失败')
-                    }
-                },
-                error: function (err) {
-                    $('.mask').hide();
-                    prompt('服务器请求超时')
-                }
-            });
+            if ($('.r1').prop('checked')) {
+                sessionStorage.old = new Date().getTime();
+                sessionStorage.accountPass = JSON.stringify({
+                    username: $('.formCont input[name="name"]').val(),
+                    password: passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val()),
+                })
+            } else {
+                sessionStorage.accountPass = ''
+            }
+            window.location.href = `operation.html?machineId=${getQueryString('machineId')}`
+            // $.ajax({
+            //     type: 'post',
+            //     url: '/api/scanLogin',
+            //     timeout: 10000,
+            //     data: JSON.stringify({
+            //         action: sessionStorage.token,
+            //         machine: decrypt1(machineId)
+            //     }),
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         token: sessionStorage.token
+            //     },
+            //     success: function (res) {
+            //         $('.mask').hide();
+            //         if (res == 'true') {
+            //             if ($('.r1').prop('checked')) {
+            //                 sessionStorage.old = new Date().getTime();
+            //                 sessionStorage.accountPass = JSON.stringify({
+            //                     username: $('.formCont input[name="name"]').val(),
+            //                     password: passType == 1 ? accountPass.password : hex_md5($('.formCont input[name="pass"]').val()),
+            //                 })
+            //             } else {
+            //                 sessionStorage.accountPass = ''
+            //             }
+            //             window.location.href = `operation.html?machineId=${getQueryString('machineId')}`
+            //         } else {
+            //             prompt('售货机离线,登录失败')
+            //         }
+            //     },
+            //     error: function (err) {
+            //         $('.mask').hide();
+            //         prompt('服务器请求超时')
+            //     }
+            // });
         })
         .catch(err => {
-            $.ajax({
-                type: 'post',
-                url: '/api/scanLogin',
-                timeout: 10000,
-                data: JSON.stringify({
-                    action: 'false',
-                    machine: decrypt1(machineId)
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                    token: sessionStorage.token
-                },
-                success: function (res) {
-                },
-                error: function (err) {
-                    $('.mask').hide();
-                    prompt('服务器请求超时')
-                }
-            });
+            console.log(err);
+            // $.ajax({
+            //     type: 'post',
+            //     url: '/api/scanLogin',
+            //     timeout: 10000,
+            //     data: JSON.stringify({
+            //         action: 'false',
+            //         machine: decrypt1(machineId)
+            //     }),
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         token: sessionStorage.token
+            //     },
+            //     success: function (res) {
+            //
+            //     },
+            //     error: function (err) {
+            //         $('.mask').hide();
+            //         prompt('服务器请求超时')
+            //     }
+            // });
             $('.mask').hide();
             prompt(err.message)
         })
-    // window.location.href=`operation.html?machineId=${getQueryString('machineId')}`
 })

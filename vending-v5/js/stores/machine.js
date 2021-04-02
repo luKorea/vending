@@ -1959,13 +1959,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
+                {field: 'username', title: '补货人', align: 'center', width: 220},
+                {field: 'name', title: '补货人姓名', align: 'center', width: 220},
                 {
-                    field: 'way', title: '补货人', align: 'center',width: 220, templet: function (d) {
-                        return d.name + '(' + d.username + ')'
-                    }
-                },
-                {
-                    field: 'replenish_time', title: '补货时间', align: 'center',width: 220,templet: function (d) {
+                    field: 'replenish_time', title: '补货时间', align: 'center', width: 220, templet: function (d) {
                         if (d.replenish_time) {
                             return timeStamp(d.replenish_time)
                         } else {
@@ -1975,10 +1972,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {field: 'way', title: '补货货道', align: 'center', width: 120,},
                 {
-                    field: 'good_name_core',  title: '商品名(编号)', width: 230,  align: 'center',
+                    field: 'good_name_core', title: '商品名(编号)', width: 230, align: 'center',
                 },
                 {
-                    field: 'replenish_count', title: '补货前数量', align: 'center',width: 120,templet: function (d) {
+                    field: 'replenish_count', title: '补货前数量', align: 'center', width: 120, templet: function (d) {
                         return d.after_count - d.replenish_count
                     }
                 },
@@ -1986,7 +1983,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     field: 'replenish_count', title: '补货数量', align: 'center', width: 120,
                 },
                 {
-                    field: 'after_count',  title: '补货后数量', align: 'center',width: 120,
+                    field: 'after_count', title: '补货后数量', align: 'center', width: 120,
                 },
 
 
@@ -2151,6 +2148,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {field: 'goods_Name', width: 275, title: '商品名(编号)', align: 'center',},
                 {field: 'user_name', width: 250, title: '修改人', align: 'center',},
+                {field: 'name', width: 200, title: '修改人姓名', align: 'center',},
                 {
                     field: 'way', width: 250, title: '修改时间', align: 'center', templet: function (d) {
                         return d.change_time ? timeStamp(d.change_time) : '-'
@@ -2274,7 +2272,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 {field: 'info', width: 250, title: '售货机名', align: 'center',},
                 {field: 'openType', width: 150, title: '类型', align: 'center',},
                 {field: 'username', width: 150, title: '操作人', align: 'center',},
-                {field: 'name', width: 150, title: '用户姓名', align: 'center'},
+                {field: 'name', width: 150, title: '操作人姓名', align: 'center'},
                 {
                     field: 'goods_Name', width: 250, title: '开门时间', align: 'center', templet: function (d) {
                         return d.open_time ? timeStamp(d.open_time) : '-'
@@ -2291,7 +2289,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 'limitName': 'pageSize'
             },
             where: {
-                machineId: machineSetData.machineId
+                machineId: machineSetData.machineId,
+                start_time: replenishmentStartTime ? replenishmentStartTime : null,
+                end_time: sreplenishmentEndTime ? sreplenishmentEndTime : null
             },
             parseData: function (res) {
                 // console.log(res)
@@ -2794,6 +2794,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 {field: 'count', width: 150, title: '数量', align: 'center',},
                 {field: 'price', width: 150, title: '价格', align: 'center', templet: d => percentileMoney(d.price)},
                 {field: 'userName', width: 215, title: '撤货人', align: 'center',},
+                {field: 'name', width: 215, title: '撤货人姓名', align: 'center',},
                 {field: 'removeDate', width: 200, title: '撤货时间', align: 'center',},
             ]]
             , id: 'undoId'

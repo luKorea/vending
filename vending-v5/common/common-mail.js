@@ -123,6 +123,7 @@ function keyText() {
 }
 
 function encrypt(cipher) {
+    console.log(cipher);
     let key = CryptoJS.enc.Utf8.parse("yuebaowenhua2020"),
         encrypted = CryptoJS.AES.encrypt(cipher, key, {
             iv: CryptoJS.enc.Utf8.parse("A-16-Byte-String"),

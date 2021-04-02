@@ -225,7 +225,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         tableIns.reload({
             where: {
                 condition: $('.addMember input[name="keyMerchants"]').val(),
-                conditionThree: '1'
+                conditionThree: '0'
             }
         })
     })
