@@ -5,9 +5,10 @@ var machineId = decrypt1(getQueryString('machineId')),
     machineInformtion = null;
 
 
-document.getElementById('mName').innerText += `${sessionStorage.machineName}`;
-document.getElementById('mId').innerText += `${sessionStorage.machineNumber}`;
+let id = sessionStorage.machineNumber  !== undefined ? `(${sessionStorage.machineNumber})` : '(暂无)',
+    name = sessionStorage.machineName  !== undefined ? sessionStorage.machineName : '无';
 
+document.getElementById('mName').innerText = `${name} ${id}`;
 
 
 // 开门部分

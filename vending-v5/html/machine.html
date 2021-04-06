@@ -838,16 +838,6 @@
                                 <label for=""><span style="color: red;">*</span>售货机名</label>
                                 <input type="text" name="tName">
                             </li>
-                            <li class="listFlex">
-                                <label for="">跳转类型</label>
-                                <input type="radio" name="urlStatus" value="0" title="不跳转" checked="">
-                                <input type="radio" name="urlStatus" value="1" title="跳转本身">
-                                <input type="radio" name="urlStatus" value="2" title="跟随商户">
-                            </li>
-                            <li class="listFlex">
-                                <label for="">支付成功跳转地址</label>
-                                <input type="text" name="machineURL">
-                            </li>
                             <li class="listFlex sequence">
                                 <label for=""><span style="color: red;">*</span>售货机序列号</label>
                                 <input type="text" disabled style="cursor: not-allowed;" name="number">
@@ -999,6 +989,16 @@
                             <li class="listFlex maxShipClass">
                                 <label for="">最大出货数:</label>
                                 <input type="number" name="max_ship">
+                            </li>
+                            <li class="listFlex">
+                                <label for="">跳转类型</label>
+                                <input type="radio" name="urlStatus" value="0" title="不跳转" checked="">
+                                <input type="radio" name="urlStatus" value="1" title="跳转本身">
+                                <input type="radio" name="urlStatus" value="2" title="跟随商户">
+                            </li>
+                            <li class="listFlex">
+                                <label for="">支付成功跳转地址</label>
+                                <input type="text" name="machineURL">
                             </li>
                             <li class="listFlex salseList" style="display: none;">
                                 <label style="flex-shrink:0" for="">销售经理类别：</label>
