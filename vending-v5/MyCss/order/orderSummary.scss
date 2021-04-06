@@ -6,9 +6,9 @@
 
 .mailFlex{
     display: flex;
-    justify-self: start;
+    justify-self: center;
     align-items: center;
-    text-align: left;
+    text-align: center;
     span:nth-child(1){
         flex-shrink: 0;
 
@@ -26,4 +26,32 @@
     border-right: none;
     width: 100%;
     /* overflow-x:auto ; */
+}
+
+.orderDetailsBox ,.exportBox{
+    width: 750px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    padding-bottom: 15px;
+    .detailsBody {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+        .mailFlex {
+            width: 420px;
+            padding: 10px;
+            :first-child {
+                text-align: right;
+                margin-right: 10px;
+                width: 100px;
+            }
+        }
+    }
 }

@@ -36,8 +36,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
         , headers: {
             token,
         }
-        ,cols: [[
+        , height: 600
+        , cols: [[
             {
+                fixed: 'left',
                 field: 'info', width: 220, title: '售货机名(编号)', align: 'center', templet: function (d) {
                     return `<div>${d.info}</div>
                       <div>(${d.machineNumber})</div>`
@@ -89,7 +91,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
                     } else {
                         var str = '';
                         d.ship_info.forEach((item, index) => {
-                            str += `<div>${item.goods_Name}(${item.way}货道${item.ship_status == 0 ? '出货失败' : item.ship_status == 1 ? '出货成功' : '货道故障'})</div>`
+                            str += `<span>${item.goods_Name}(${item.way}货道${item.ship_status == 0 ? '出货失败' : item.ship_status == 1 ? '出货成功' : '货道故障'}) </span>`
                         });
                         return str
                     }
@@ -98,14 +100,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             {
                 field: 'ship_info', width: 230, title: '邮寄信息', align: 'center', templet: function (d) {
                     if (d.mail == 1) {
-                        return `
-                                <div class="mailFlex"><span> 收货人:</span><span>${d.sign_name}</span></div>
-                                <div class="mailFlex"> <span>收货人电话:</span><span>${d.sign_phone}</span></div>
-                                <div class="mailFlex"><span>收货地址:</span><span>${d.sign_address}</span></div>
-                                <div class="mailFlex"><span>快递/物流状态:</span><span>${d.dispatch_status == 0 ? '未发货' : d.dispatch_status == 1 ? '已发货' : '已收货'}</span></div>
-                                <div class="mailFlex"><span>快递/物流公司:</span><span>${d.express_type ? d.express_type : '-'}</span></div>
-                                <div class="mailFlex"><span>快递/物流单号:</span><span>${d.express_number ? d.express_number : '-'}</span></div>
-                               `
+                        return `<span> 收货人:</span><span>${d.sign_name}</span>`
                     } else {
                         return '-'
                     }
@@ -163,6 +158,45 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             }
         }
     });
+
+
+    table.on('row', function (obj) {
+        let data = obj.data,
+            children = `
+                <div class="mailFlex">
+                    <span>收货人姓名:</span>
+                    <span class="OName">${data.sign_name}</span>
+                </div>
+                <div class="mailFlex">
+                    <span>收货人电话:</span>
+                    <span class="OName">${data.sign_phone}</span>
+                </div>
+                <div class="mailFlex">
+                    <span>收货地址:</span>
+                    <span class="address">${data.sign_address}</span>
+                </div>
+                <div class="mailFlex">
+                    <span>快递/物流状态:</span>
+                    <span class="status">${data.dispatch_status == 0 ? '未发货' : data.dispatch_status == 1 ? '已发货' : '已收货'}</span>
+                </div>
+                <div class="mailFlex">
+                    <span>快递/物流公司:</span>
+                    <span class="company">${data.express_type ? data.express_type : '-'}</span>
+                </div>
+                <div class="mailFlex">
+                    <span>快递/物流单号:</span>
+                    <span class="number">${data.express_number ? data.express_number : '-'}</span>
+                </div>`;
+        if (data.mail == 1) {
+            $('#info').html(children);
+            popupShow('orderDetails', 'orderDetailsBox');
+        }
+    });
+
+    $('.orderDetails .layui-icon-close').click(function () {
+        popupHide('orderDetails', 'orderDetailsBox');
+    })
+
 
     var form = layui.form;
 
@@ -235,7 +269,6 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             url = `${vApi}/complete?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}&conditionThree=${conditionThree}&conditionSix=${conditionSix}&refund=${refund}`;
         exportExcel(url, fileName);
     });
-
 
 
     // 树方法
