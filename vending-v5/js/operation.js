@@ -91,23 +91,22 @@ $('.inquiryBox .confirm').click(function () {
     $('.mask').show();
     let item = Number($(this).attr('indexFlag')),
         flag = Number($(this).attr('openFlag'));
-    console.log(item, flag);
     switch (item) {
         case 1:
-            one(flag);
+            openAndCloseLight(flag);
             break;
         case 2:
-            two(flag);
+            openAndCloseVolume(flag);
             break;
         case 3:
-            three(flag);
+            openMachine(flag);
             break;
         case 4:
-            four(flag);
+            closeMachine(flag);
             break;
     }
 
-    function one(flag) {
+    function openAndCloseLight(flag) {
         let lamObj = JSON.stringify({
             action: flag === 1 ? 'true' : 'false',
             machine: machineId
@@ -123,7 +122,7 @@ $('.inquiryBox .confirm').click(function () {
             }
         })
     }
-    function two(flag) {
+    function openAndCloseVolume(flag) {
         let soundObj = JSON.stringify({
             action: flag === 1 ? 'true' : 'false',
             machine: machineId
@@ -139,7 +138,7 @@ $('.inquiryBox .confirm').click(function () {
             }
         })
     }
-    function three(flag) {
+    function openMachine(flag) {
         let soundObj = JSON.stringify({
             action:  sessionStorage.token,
             machine: machineId
@@ -155,12 +154,12 @@ $('.inquiryBox .confirm').click(function () {
             }
         })
     }
-    function four(flag) {
+    function closeMachine(flag) {
         let soundObj = JSON.stringify({
             action:  sessionStorage.token,
             machine: machineId
         });
-        loadAjax1('/api/scanLogin', 'post', sessionStorage.token, soundObj, 'mask').then(res => {
+        loadAjax1('/api/loginOut', 'post', sessionStorage.token, soundObj, 'mask').then(res => {
             $('.mask').hide();
         }).catch(err => {
             $('.mask').hide();

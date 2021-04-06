@@ -31,9 +31,8 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             headers: {
                 token,
             },
-            height: 600,
             cols: [[
-                {field: 'activity_name', width: 130, title: '活动名', align: 'center'},
+                {field: 'activity_name', width: 130, title: '活动名', align: 'center', fixed: 'left'},
                 {field: 'good_code', width: 180, title: '取货码', align: 'center'},
                 {
                     field: 'machineName', width: 200, title: '售货机名(编号)', align: 'center', templet: function (d) {
@@ -49,7 +48,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                         } else {
                             var str = '';
                             d.ship_info.forEach((item, index) => {
-                                str += `<div>${item.goods_Name}(${item.way}货道${item.ship_status == 0 ? '出货失败' : item.ship_status == 1 ? '出货成功' : '货道故障'})</div>`
+                                str += `<span>${item.goods_Name}(${item.way}货道${item.ship_status == 0 ? '出货失败' : item.ship_status == 1 ? '出货成功' : '货道故障'}) </span>`
                             });
                             return str
                         }
