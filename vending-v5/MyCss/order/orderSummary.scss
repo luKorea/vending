@@ -1,3 +1,9 @@
+
+.over-line1 .layui-table-view .layui-table {
+    margin: 0 !important;
+    height: 100vh !important;
+}
+
 .mailFlex{
     display: flex;
     justify-self: start;
@@ -5,7 +11,7 @@
     text-align: left;
     span:nth-child(1){
         flex-shrink: 0;
-        
+
     }
 }
 .custom-warp{

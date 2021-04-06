@@ -205,3 +205,9 @@ input::-ms-clear, input::-ms-reveal{
 .selectUl li:last-child{
     border-bottom: 0 none;
 }
+
+
+.over-line .layui-table-view .layui-table {
+    margin: 0 !important;
+    height: 100% !important;
+}

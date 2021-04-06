@@ -36,7 +36,7 @@
                 background: #fff;
                 color: #606266;
                 overflow: auto;
-               
+
                 .active{
                     color: #be954a;
                     font-weight: bold;
@@ -71,4 +71,10 @@
             cursor: pointer;
         }
     }
-} 
+}
+
+
+.over-line .layui-table-view .layui-table {
+    margin: 0 !important;
+    height: 100% !important;
+}

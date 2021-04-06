@@ -36,8 +36,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
         , headers: {
             token,
         }
-        ,height: 600
-        , cols: [[
+        ,cols: [[
             {
                 field: 'info', width: 220, title: '售货机名(编号)', align: 'center', templet: function (d) {
                     return `<div>${d.info}</div>
