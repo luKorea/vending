@@ -1,6 +1,6 @@
 #!/bin/bash
-basepath=$(cd `dirname $0`; pwd)
-cd  $basepath
+baseball=$(cd $(dirname $0) || exit; pwd)
+cd  "$baseball" || exit
 git add .
 remark=$(date +"%Y-%m-%d %H:%M:%S")
 git commit -m "korea ${remark}"
