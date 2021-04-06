@@ -45,7 +45,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
                       <div>(${d.machineNumber})</div>`
                 }
             },
-            {field: 'number', width: 190, title: '订单编号', align: 'center'},
+            {field: 'number', width: 190, title: '订单编号', align: 'center',fixed: 'left'},
             {
                 field: 'number', width: 130, title: '订单类型', align: 'center', templet: function (d) {
                     return d.mail == 0 ? '售货机订单' : '邮寄订单'
