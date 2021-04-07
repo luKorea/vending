@@ -2,7 +2,7 @@ import '../../MyCss/advertising/fodder.css'
 layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     tooltip('.refreshBtnList', { transition: true, time: 200 });
     var permissionsData0 = window.parent.permissionsData1(),
-        merchantId = sessionStorage.merchantID,
+        merchantId = sessionStorage.machineID,
      permissionsObj = {
         362: false,
         371: false,
@@ -10,6 +10,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         387: false,
     },
         permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
+
     function permissions() {
         permissionsObjFlag[362] ? $('.uploadBtn').removeClass('hide') : $('.uploadBtn').addClass('hide');
         permissionsObjFlag[371] ? $('.ListOperation .edit').removeClass('hide') : $('.ListOperation .edit').addClass('hide');
@@ -93,7 +94,6 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             'merchantId': Number(merchantId),
             startTime: startTime,//开始时间
             endTime: endTime//结束时间
-            // merchantId: sessionStorage.machineID
         },
         parseData: function (res) {
             // console.log(res)

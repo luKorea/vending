@@ -270,11 +270,15 @@ $('.footer2 h1').click(function () {
             data: encrypts(pushOrder)
         })
         loadAjax('/api/pay/alipay_js', 'post', alipayObj).then(res => {
-            var datas = decrypt1(res.data);
-            var a = datas.indexOf('<qr_code>');
-            var b = datas.lastIndexOf('</qr_code>')
-            var c = datas.slice((a + 9), (b));
-            location.href = c;
+            // var datas = decrypt1(res.data);
+            // var a = datas.indexOf('<qr_code>');
+            // var b = datas.lastIndexOf('</qr_code>')
+            // var c = datas.slice((a + 9), (b));
+            // numberStr = res.message.slice(2, (res.message.indexOf('创')));
+            setTimeout(_ => {
+                keyNumber(res.data.order);
+            }, 5000);
+            // location.href = c;
             $('.mask').hide();
         }).catch(err => {
 

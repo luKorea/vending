@@ -223,19 +223,19 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       popupShow('editImgCont', 'editBox');
       $('.editImgCont .playHeader span').html('编辑商品图片')
       $('.editBody label').html('图片名：')
-      $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
+      $('.FlexInputWidth input[name="EidtImgNane"]').val(ImgDAtaVal.name);
       tableData = advertisingLis;
     } else if (operationType == 2) {
       popupShow('editImgCont', 'editBox');
       $('.editImgCont .playHeader span').html('编辑商品视频');
       $('.editBody label').html('视频名：');
-      $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
+      $('.FlexInputWidth input[name="EidtImgNane"]').val(ImgDAtaVal.name);
       tableData = videoTable;
     } else if (operationType == 3) {
       popupShow('editImgCont', 'editBox');
       $('.editImgCont .playHeader span').html('编辑详情图片')
       $('.editBody label').html('图片名：')
-      $('.FlexInputWidth input[name="EidtImgNane"]').val(obj.data.name);
+      $('.FlexInputWidth input[name="EidtImgNane"]').val(ImgDAtaVal.name);
       tableData = detailsTable;
     }
   });
