@@ -210,6 +210,8 @@ $("#city").click(function (e) {
 });
 // 提交
 var nun = 0;
+
+// 邮寄订单支付
 $('.footer1 h1').click(function () {
     if (!($('#hcity').val() && $('#hproper').val() && $('#harea').val())) {
         prompt('请选择省市区！');
@@ -241,10 +243,13 @@ $('.footer1 h1').click(function () {
         })
         loadAjax('/api/pay/alipay_js', 'post', alipayObj).then(res => {
             var datas = decrypt1(res.data);
-            var a = datas.indexOf('<qr_code>');
-            var b = datas.lastIndexOf('</qr_code>')
-            var c = datas.slice((a + 9), (b));
+            var a = datas.xml.indexOf('<qr_code>');
+            var b = datas.xml.lastIndexOf('</qr_code>')
+            var c = datas.xml.slice((a + 9), (b));
             location.href = c;
+            setTimeout(_ => {
+                keyNumber(datas.order);
+            }, 5000);
             $('.mask').hide();
         }).catch(err => {
             $('.mask').hide();
@@ -257,6 +262,7 @@ $('.footer1 h1').click(function () {
     }
 
 });
+// 普通订单支付
 $('.footer2 h1').click(function () {
     if (payTypeIndex == 1) {
         $('.mask').show();
@@ -281,10 +287,12 @@ $('.footer2 h1').click(function () {
             }, 5000);
             $('.mask').hide();
         }).catch(err => {
+            alert(err);
             $('.mask').hide();
             prompt('下单失败')
         })
-    } else if (payTypeIndex == 2) {
+    }
+    else if (payTypeIndex == 2) {
         $('.mask').show();
         wxPay();
     }
