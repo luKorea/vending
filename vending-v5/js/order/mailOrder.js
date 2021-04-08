@@ -18,6 +18,16 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
+                {
+                    field: 'info',
+                    width: 210,
+                    title: '售货机名(编号)',
+                    align: 'center',
+                    fixed: 'left',
+                    templet: function (d) {
+                        return `<span>${d.info}</span><span>(${d.machineNumber})</span>`
+                    }
+                },
                 {field: 'number', width: 210, title: '订单编号', align: 'center', fixed: 'left'},
                 {
                     field: 'notes', width: 210, title: '下单时间', align: 'center', templet: function (d) {
@@ -270,7 +280,7 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
-        let  fileName = `邮寄订单-${pushMName}(${startTime}至${endTime}).xls`,
+        let fileName = `邮寄订单-${pushMName}(${startTime}至${endTime}).xls`,
             url = `${vApi}/exportMailExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${pushMId}&dispatch_status=${$('.newKeyContent select[name="takeStatus"]').val()}&sign_name=${$('.newKeyContent input[name="takeName"]').val()}&sign_phone=${$('.newKeyContent input[name="takePhone"]').val()}&refund=${$('.newKeyContent select[name="keyrefundStatus"]').val()}&conditionThree=${$('.key-contnet input[name="orderCode"]').val()}`;
         exportExcel(url, fileName);
     });
