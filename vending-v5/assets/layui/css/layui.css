@@ -2051,7 +2051,8 @@ a cite {
 }
 
 .layui-bg-black {
-    background-color: #393D49 !important
+    /*background-color: #393D49 !important;*/
+    background-color: #202239 !important;
 }
 
 .layui-bg-gray {

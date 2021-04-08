@@ -9,6 +9,24 @@ if (document.documentElement.clientWidth <= 600) {
     window.location.href = 'M_my.html'
 }
 window.onload = function () {
+
+    let isShow = true; //定义一个标志位
+    $('#bread').click(function () {
+        if (isShow) {
+            //$('.layui-side.layui-bg-black').hide();
+            $('.layui-side.layui-bg-black').animate({width:'toggle'},200);
+            $('.layui-tab-content').css({"left":"0px"});
+            $('.header-nav-tabs-switch').css({"margin-left":"0px"});
+            isShow = false;
+        }else{
+            isShow = true;
+            //$('.layui-side.layui-bg-black').show();
+            $('.layui-side.layui-bg-black').animate({width:'toggle'},200);
+            $('.layui-tab-content').css({"left":"200px"});
+            $('.header-nav-tabs-switch').css({"margin-left":"200px"});
+        }
+    });
+
     var userName = sessionStorage.username;
     $('#userLogin .userName').html(userName)
     var navStr = []; //判断tba选项卡有没有这个参数;
