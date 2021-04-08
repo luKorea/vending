@@ -78,7 +78,8 @@ function decrypt(cipher) {
         ;
         payTypeIndex = 1;
         payTypeData = goodsData.payee[payFlag.indexOf(1)]
-    } else if (browser.match(/MicroMessenger/i) == "micromessenger") {
+    }
+    else if (browser.match(/MicroMessenger/i) == "micromessenger") {
         if (payFlag.indexOf(2) == -1) {
             $('.determineCont h1').html('当前不支持微信付款，请使用其他方式进行扫码购买！')
             $('.determineCont').show();
