@@ -8,6 +8,5 @@ npm run build
 git add .
 remark=$(date +"%Y-%m-%d %H:%M:%S")
 git commit -m "korea ${remark}"
-# git pull origin dev
+#git pull origin dev
 git push origin dev
-echo -e "\033[31m ---The Project Success Build And Push--- \033[0m"
