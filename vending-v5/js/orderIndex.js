@@ -241,29 +241,7 @@ $('.footer1 h1').click(function () {
         var alipayObj = JSON.stringify({
             data: encrypts(pushOrder)
         })
-        loadAjax('/api/pay/alipay_js', 'post', alipayObj).then(res => {
-            console.log(res);
-            let data = decrypt1(res.data)
-            if (data.message.indexOf('测试') !== -1) {
-                //创建一个标签，并把返回的表单放入其中，然后提交表单接口
-                var div = document.createElement('divForm');
-                div.innerHTML = res.data.body;
-                document.body.appendChild(div);
-                document.forms[0].acceptCharset = 'UTF-8';
-                document.forms[0].submit();
-            } else {
-                var a = data.indexOf('<qr_code>');
-                var b = data.lastIndexOf('</qr_code>')
-                var c = data.slice((a + 9), (b));
-                location.href = c;
-            }
-            $('.mask').hide();
-        }).catch(err => {
-            console.log(err);
-            $('.mask').hide();
-            prompt(err);
-            prompt('下单失败.')
-        })
+        aliPay(alipayObj);
     } else if (payTypeIndex == 2) {
         $('.mask').show();
         wxPay();
@@ -281,31 +259,11 @@ $('.footer2 h1').click(function () {
             goods: goodsData.goods,
             machineId: goodsData.machineId
         });
+
         var alipayObj = JSON.stringify({
             data: encrypts(pushOrder)
         })
-        loadAjax('/api/pay/alipay_js', 'post', alipayObj).then(res => {
-            let data = decrypt1(res.data)
-            if (data.message.indexOf('测试') !== -1) {
-                //创建一个标签，并把返回的表单放入其中，然后提交表单接口
-                var div = document.createElement('divForm');
-                div.innerHTML = res.data.body;
-                document.body.appendChild(div);
-                document.forms[0].acceptCharset = 'UTF-8';
-                document.forms[0].submit();
-            } else {
-                var a = data.indexOf('<qr_code>');
-                var b = data.lastIndexOf('</qr_code>')
-                var c = data.slice((a + 9), (b));
-                location.href = c;
-            }
-            $('.mask').hide();
-        })
-            .catch(err => {
-                $('.mask').hide();
-                prompt(err);
-                prompt('下单失败，请重新支付')
-            })
+        aliPay(alipayObj);
     } else if (payTypeIndex == 2) {
         $('.mask').show();
         wxPay();
@@ -382,4 +340,37 @@ function keyNumber(NumberOne) {
             }
         })
     }, 1500)
+}
+
+function aliPay(data) {
+    $.ajax({
+        type: 'post',
+        url: '/api/pay/alipay_js',
+        timeout: 10000,
+        data: data,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        success: function (res) {
+            let data = decrypt1(res.data)
+            if (data.message.indexOf('测试') !== -1) {
+                const form = data.body;
+                const div = document.createElement('div')
+                div.id = 'alipay'
+                div.innerHTML = form
+                document.body.appendChild(div)
+                document.querySelector('#alipay').children[0].submit() // 执行后会唤起支付宝
+            } else {
+                var a = data.indexOf('<qr_code>');
+                var b = data.lastIndexOf('</qr_code>')
+                var c = data.slice((a + 9), (b));
+                location.href = c;
+            }
+        },
+        error: function (res) {
+            prompt(res);
+            $('.mask').hide();
+            prompt('下单失败')
+        }
+    })
 }
