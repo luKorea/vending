@@ -140,69 +140,6 @@ function getCode(appid) {
     }
 }
 
-// 微信支付方法
-function wxPay() {
-    var pushOrder = JSON.stringify({
-        merchantId: goodsData.merchant,
-        sales_no: goodsData.goods[0].mail == 1 ?
-            $('.informationList input[name="salse"]').val() :
-            $('.informationList input[name="salse2"]').val(),
-        payee: payTypeData.payee,
-        notes: $('.informationList input[name="notes"]').val(),
-        sign_name: $('.informationList input[name="name"]').val(),
-        sign_address: $('#city').val() + $('.informationList input[name="addressss"]').val(),
-        sign_phone: $('.informationList input[name="phone"]').val(),
-        goods: goodsData.goods,
-        machineId: goodsData.machineId,
-        open_id: open
-    });
-    var alipayObj1 = JSON.stringify({
-        data: encrypts(pushOrder)
-    })
-    loadAjax('/api/pay/wxpay_js', 'post', alipayObj1).then(res => {
-        numberStr = res.message.slice(2, (res.message.indexOf('创')));
-        setTimeout(_ => {
-            keyNumber(numberStr);
-        }, 5000)
-        if (typeof WeixinJSBridge == "undefined") {
-            if (document.addEventListener) {
-                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-            } else if (document.attachEvent) {
-                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-            }
-        } else {
-            $('.mask').hide();
-            onBridgeReady(res.data)
-        }
-    }).catch(err => {
-        $('.mask').hide();
-        prompt('微信下单失败')
-    })
-}
-
-
-// 微信支付
-function onBridgeReady(wxData) {
-    WeixinJSBridge.invoke(
-        'getBrandWCPayRequest', {
-            appId: wxData.appId,
-            timeStamp: wxData.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-            nonceStr: wxData.nonceStr, // 支付签名随机串，不长于 32 位
-            package: wxData.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
-            signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-            paySign: wxData.paySign, // 支付签名
-        },
-        function (res) {
-            if (res.err_msg == "get_brand_wcpay_request:ok") {
-                // 使用以上方式判断前端返回,微信团队郑重提示：
-                //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
-            } else {
-                prompt('已取消支付');
-                clearInterval(setTime);
-            }
-        });
-}
 
 $("#city").click(function (e) {
     SelCity(this, e);
@@ -341,7 +278,69 @@ function keyNumber(NumberOne) {
         })
     }, 1500)
 }
+// 微信支付方法
+function wxPay() {
+    var pushOrder = JSON.stringify({
+        merchantId: goodsData.merchant,
+        sales_no: goodsData.goods[0].mail == 1 ?
+            $('.informationList input[name="salse"]').val() :
+            $('.informationList input[name="salse2"]').val(),
+        payee: payTypeData.payee,
+        notes: $('.informationList input[name="notes"]').val(),
+        sign_name: $('.informationList input[name="name"]').val(),
+        sign_address: $('#city').val() + $('.informationList input[name="addressss"]').val(),
+        sign_phone: $('.informationList input[name="phone"]').val(),
+        goods: goodsData.goods,
+        machineId: goodsData.machineId,
+        open_id: open
+    });
+    var alipayObj1 = JSON.stringify({
+        data: encrypts(pushOrder)
+    })
+    loadAjax('/api/pay/wxpay_js', 'post', alipayObj1).then(res => {
+        numberStr = res.message.slice(2, (res.message.indexOf('创')));
+        setTimeout(_ => {
+            keyNumber(numberStr);
+        }, 5000)
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+        } else {
+            $('.mask').hide();
+            onBridgeReady(res.data)
+        }
+    }).catch(err => {
+        $('.mask').hide();
+        prompt('微信下单失败')
+    })
+}
 
+// 微信支付
+function onBridgeReady(wxData) {
+    WeixinJSBridge.invoke(
+        'getBrandWCPayRequest', {
+            appId: wxData.appId,
+            timeStamp: wxData.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+            nonceStr: wxData.nonceStr, // 支付签名随机串，不长于 32 位
+            package: wxData.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+            signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+            paySign: wxData.paySign, // 支付签名
+        },
+        function (res) {
+            if (res.err_msg == "get_brand_wcpay_request:ok") {
+                // 使用以上方式判断前端返回,微信团队郑重提示：
+                //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+            } else {
+                prompt('已取消支付');
+                clearInterval(setTime);
+            }
+        });
+}
+// 支付宝支付
 function aliPay(data) {
     $.ajax({
         type: 'post',
