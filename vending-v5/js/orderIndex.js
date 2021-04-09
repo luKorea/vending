@@ -243,19 +243,26 @@ $('.footer1 h1').click(function () {
             data: encrypts(pushOrder)
         })
         loadAjax('/api/pay/alipay_js', 'post', alipayObj).then(res => {
-            var div = document.createElement('divForm');
-            div.innerHTML = res.msg.body;
-            document.body.appendChild(div);
-            document.forms[0].acceptCharset = 'UTF-8';
-            document.forms[0].submit();
-            // var datas = decrypt1(res.data);
-            // var a = datas.indexOf('<qr_code>');
-            // var b = datas.lastIndexOf('</qr_code>')
-            // var c = datas.slice((a + 9), (b));
-            // location.href = c;
+            let data = decrypt1(res.data)
+            if (data.message.indexOf('测试') !== -1) {
+                //创建一个标签，并把返回的表单放入其中，然后提交表单接口
+                var div = document.createElement('divForm');
+                div.innerHTML = res.data.body;
+                document.body.appendChild(div);
+                document.forms[0].acceptCharset = 'UTF-8';
+                document.forms[0].submit();
+            } else {
+                console.log(res);
+                var datas = decrypt1(res.data);
+                var a = datas.indexOf('<qr_code>');
+                var b = datas.lastIndexOf('</qr_code>')
+                var c = datas.slice((a + 9), (b));
+                location.href = c;
+            }
             $('.mask').hide();
         }).catch(err => {
             $('.mask').hide();
+            prompt(err);
             prompt('下单失败')
         })
     }
@@ -280,21 +287,25 @@ $('.footer2 h1').click(function () {
             data: encrypts(pushOrder)
         })
         loadAjax('/api/pay/alipay_js', 'post', alipayObj).then(res => {
-            //创建一个标签，并把返回的表单放入其中，然后提交表单接口
-            var div = document.createElement('divForm');
-            div.innerHTML = res.msg.body;
-            document.body.appendChild(div);
-            document.forms[0].acceptCharset = 'UTF-8';
-            document.forms[0].submit();
-            // console.log(res);
-            // var datas = decrypt1(res.data);
-            // var a = datas.indexOf('<qr_code>');
-            // var b = datas.lastIndexOf('</qr_code>')
-            // var c = datas.slice((a + 9), (b));
-            // location.href = c;
+            let data = decrypt1(res.data)
+            if (data.message.indexOf('测试') !== -1) {
+                //创建一个标签，并把返回的表单放入其中，然后提交表单接口
+                var div = document.createElement('divForm');
+                div.innerHTML = res.data.body;
+                document.body.appendChild(div);
+                document.forms[0].acceptCharset = 'UTF-8';
+                document.forms[0].submit();
+            } else {
+                var datas = decrypt1(res.data);
+                var a = datas.indexOf('<qr_code>');
+                var b = datas.lastIndexOf('</qr_code>')
+                var c = datas.slice((a + 9), (b));
+                location.href = c;
+            }
             $('.mask').hide();
         }).catch(err => {
             $('.mask').hide();
+            prompt(err);
             prompt('下单失败')
         })
     }

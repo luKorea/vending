@@ -329,7 +329,7 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
                 // { checkbox: true },
                 {field: 'goods_images', width: 80, title: '图片', templet: "#imgtmp", align: 'center'},
                 {
-                    field: 'good_name_core', width: 240, title: '商品名(编号)', align: 'center'
+                    field: 'good_name_core', width: 200, title: '商品名(编号)', align: 'center'
                 },
                 {field: 'count', width: 120, title: '购买数量', align: 'center'},
                 {field: 'refund_count', width: 120, title: '已退款数量', align: 'center'},
