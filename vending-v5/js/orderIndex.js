@@ -352,6 +352,12 @@ setTimeout(_ => {
 var numberStr = '',
     setTime = null;
 
+
+const [data, setData] = useState(0);
+
+setData()
+
+
 function keyNumber(NumberOne) {
     setTime = setInterval(_ => {
         var dataObj = JSON.stringify({
