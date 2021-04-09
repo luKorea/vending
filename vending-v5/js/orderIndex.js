@@ -78,8 +78,7 @@ function decrypt(cipher) {
         ;
         payTypeIndex = 1;
         payTypeData = goodsData.payee[payFlag.indexOf(1)]
-    }
-    else if (browser.match(/MicroMessenger/i) == "micromessenger") {
+    } else if (browser.match(/MicroMessenger/i) == "micromessenger") {
         if (payFlag.indexOf(2) == -1) {
             $('.determineCont h1').html('当前不支持微信付款，请使用其他方式进行扫码购买！')
             $('.determineCont').show();
@@ -243,6 +242,7 @@ $('.footer1 h1').click(function () {
             data: encrypts(pushOrder)
         })
         loadAjax('/api/pay/alipay_js', 'post', alipayObj).then(res => {
+            console.log(res);
             let data = decrypt1(res.data)
             if (data.message.indexOf('测试') !== -1) {
                 //创建一个标签，并把返回的表单放入其中，然后提交表单接口
@@ -252,21 +252,19 @@ $('.footer1 h1').click(function () {
                 document.forms[0].acceptCharset = 'UTF-8';
                 document.forms[0].submit();
             } else {
-                console.log(res);
-                var datas = decrypt1(res.data);
-                var a = datas.indexOf('<qr_code>');
-                var b = datas.lastIndexOf('</qr_code>')
-                var c = datas.slice((a + 9), (b));
+                var a = data.indexOf('<qr_code>');
+                var b = data.lastIndexOf('</qr_code>')
+                var c = data.slice((a + 9), (b));
                 location.href = c;
             }
             $('.mask').hide();
         }).catch(err => {
+            console.log(err);
             $('.mask').hide();
             prompt(err);
-            prompt('下单失败')
+            prompt('下单失败.')
         })
-    }
-    else if (payTypeIndex == 2) {
+    } else if (payTypeIndex == 2) {
         $('.mask').show();
         wxPay();
     }
@@ -296,20 +294,19 @@ $('.footer2 h1').click(function () {
                 document.forms[0].acceptCharset = 'UTF-8';
                 document.forms[0].submit();
             } else {
-                var datas = decrypt1(res.data);
-                var a = datas.indexOf('<qr_code>');
-                var b = datas.lastIndexOf('</qr_code>')
-                var c = datas.slice((a + 9), (b));
+                var a = data.indexOf('<qr_code>');
+                var b = data.lastIndexOf('</qr_code>')
+                var c = data.slice((a + 9), (b));
                 location.href = c;
             }
             $('.mask').hide();
-        }).catch(err => {
-            $('.mask').hide();
-            prompt(err);
-            prompt('下单失败')
         })
-    }
-    else if (payTypeIndex == 2) {
+            .catch(err => {
+                $('.mask').hide();
+                prompt(err);
+                prompt('下单失败，请重新支付')
+            })
+    } else if (payTypeIndex == 2) {
         $('.mask').show();
         wxPay();
     }

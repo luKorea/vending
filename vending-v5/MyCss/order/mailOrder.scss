@@ -98,9 +98,8 @@ label{
 .refundBox{
     width: 400px;
     position: relative;
-    margin: 40vh auto 50px;
+    margin: 20vh auto 50px;
     background: #fff;
-    border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0,0,0,.3);
     box-sizing: border-box;
     transition: all 0.3s;
@@ -205,6 +204,24 @@ input::-ms-clear, input::-ms-reveal{
 .selectUl li:last-child{
     border-bottom: 0 none;
 }
+
+
+.passwordCont{
+    width: 600px;
+    position: relative;
+    margin: 10vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.passBody{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+}
+
 
 
 .over-line .layui-table-view .layui-table {

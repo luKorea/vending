@@ -403,57 +403,80 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
         if ($('.refundNumber input').val() > 0 && $('.refundNumber input').val() <= goodsData.count - goodsData.refund_count) {
             layer.confirm('确定退款？', function (index) {
                 layer.close(index);
-                $('.mask').fadeIn();
-                $('.maskSpan').addClass('maskIcon');
-                console.log(mailOrderData);
-                // return ;
-                if (mailOrderData.payType == 0) {
-                    var refundData = JSON.stringify({
-                        machineId: mailOrderData.machineId,
-                        orderId: mailOrderData.number,
-                        goodId: goodsData.goods_Id,
-                        count: Number($('.refundNumber input').val()),
-                        amount: Number($('.sumInput input[name="sum"]').val()),
-                        pay_id: mailOrderData.pay_id
-                        // amount:0.01
-                    });
-                    loadingAjax('/pay/refund_alipay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox', layer).then(res => {
-                        layer.msg(res.message, {icon: 1});
-                        mailTable.reload({
-                            where: {}
-                        });
-                        popupHide('goodsCont ', 'goodsBox ');
-                    }).catch(err => {
-                        layer.msg(err.message, {icon: 2});
-                    })
-                } else if (mailOrderData.payType == 1) {
-                    var refundData = JSON.stringify({
-                        machineId: mailOrderData.machineId,
-                        orderId: mailOrderData.number,
-                        goodId: goodsData.goods_Id,
-                        count: Number($('.refundNumber input').val()),
-                        amount: Number($('.sumInput input[name="sum"]').val()),
-                        pay_id: mailOrderData.pay_id,
-                        // amount:0.01,
-                        transaction_id: mailOrderData.transaction_id,
-                        total: mailOrderData.amount,
-                        // total:0.01
-                    });
-                    loadingAjax('/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox', layer).then(res => {
-                        layer.msg(res.message, {icon: 1});
-
-                        mailTable.reload({
-                            where: {}
-                        });
-                        popupHide('goodsCont ', 'goodsBox ');
-                    }).catch(err => {
-                        layer.msg(err.message, {icon: 2});
-                    })
-                }
+                popupShow('iPasswprd', 'passwordCont')
             })
         } else {
             layer.msg('请按照提示填写数量', {icon: 7})
         }
+    });
+
+
+    // 退款输入独立密码
+    $('.iPasswprd .passBtn').click(function () {
+        if (!$('.passBody input[name="iPassword"]').val()) {
+            layer.msg('请输入独立密码', {icon: 7});
+            return;
+        }
+        var IPassWord = JSON.stringify({
+            alonePwd: hex_md5($('.iPasswprd input[name="iPassword"]').val())
+        })
+        loadingAjax('/user/verifyAlonePwd', 'post', IPassWord, sessionStorage.token,
+            'mask', 'iPasswprd', 'passwordCont', layer).then(res => {
+            $('.mask').fadeIn();
+            $('.maskSpan').addClass('maskIcon');
+            console.log(mailOrderData);
+            // return ;
+            if (mailOrderData.payType == 0) {
+                var refundData = JSON.stringify({
+                    machineId: mailOrderData.machineId,
+                    orderId: mailOrderData.number,
+                    goodId: goodsData.goods_Id,
+                    count: Number($('.refundNumber input').val()),
+                    amount: Number($('.sumInput input[name="sum"]').val()),
+                    pay_id: mailOrderData.pay_id
+                    // amount:0.01
+                });
+                loadingAjax('/pay/refund_alipay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox', layer).then(res => {
+                    layer.msg(res.message, {icon: 1});
+                    mailTable.reload({
+                        where: {}
+                    });
+                    popupHide('goodsCont ', 'goodsBox ');
+                }).catch(err => {
+                    layer.msg(err.message, {icon: 2});
+                })
+            } else if (mailOrderData.payType == 1) {
+                var refundData = JSON.stringify({
+                    machineId: mailOrderData.machineId,
+                    orderId: mailOrderData.number,
+                    goodId: goodsData.goods_Id,
+                    count: Number($('.refundNumber input').val()),
+                    amount: Number($('.sumInput input[name="sum"]').val()),
+                    pay_id: mailOrderData.pay_id,
+                    // amount:0.01,
+                    transaction_id: mailOrderData.transaction_id,
+                    total: mailOrderData.amount,
+                    // total:0.01
+                });
+                loadingAjax('/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox', layer).then(res => {
+                    layer.msg(res.message, {icon: 1});
+
+                    mailTable.reload({
+                        where: {}
+                    });
+                    popupHide('goodsCont ', 'goodsBox ');
+                }).catch(err => {
+                    layer.msg(err.message, {icon: 2});
+                })
+            }
+        })
+            .catch(err => {
+                console.log(err)
+                layer.msg(err.message, {icon: 2});
+            })
+    })
+    $('.iPasswprd .passCancelBtn').click(function () {
+        popupHide('iPasswprd', 'passwordCont')
     });
 
 
