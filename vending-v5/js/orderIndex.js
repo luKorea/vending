@@ -352,7 +352,7 @@ function aliPay(data) {
         },
         success: function (res) {
             let data = decrypt1(res.data)
-            if (data.message.indexOf('测试') !== -1) {
+            if (res.message.indexOf('测试') !== -1) {
                 const form = data.body;
                 const div = document.createElement('div')
                 div.id = 'alipay'
