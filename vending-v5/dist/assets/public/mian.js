@@ -711,12 +711,14 @@ function setOrderStatus(num) {
  * @description 导出模版
  * @param url {String}
  * @param fileName {String}
+ * @param data {Object}
+ * @param method {String}
  */
-function exportExcel(url, fileName) {
+function exportExcel(url, fileName, data, method='GET') {
     $('.mask').fadeIn();
     $('.maskSpan').addClass('maskIcon');
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
+    xhr.open(method, url, true);
     xhr.responseType = 'blob';//设置ajax的响应类型为blob;
     xhr.setRequestHeader("token", token);
     xhr.onload = function (res) {
@@ -746,5 +748,5 @@ function exportExcel(url, fileName) {
             return;
         }
     }
-    xhr.send();
+    xhr.send(data);
 }

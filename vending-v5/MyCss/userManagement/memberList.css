@@ -393,3 +393,9 @@
     width: 77%;
     margin: 0 auto;
 }
+
+
+.over .layui-table-view .layui-table {
+    margin: 0 !important;
+    height: 100% !important;
+}
