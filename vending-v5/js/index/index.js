@@ -13,7 +13,7 @@ window.onload = function () {
     let isShow = true; //定义一个标志位
     $('#bread').click(function () {
         if (isShow) {
-            $('#bread span').html('显示')
+            $('#bread span').html('显示侧边栏')
             //$('.layui-side.layui-bg-black').hide();
             $('.layui-side.layui-bg-black').animate({width:'toggle'},200);
             $('.layui-tab-content').css({"left":"0px"});
@@ -21,7 +21,7 @@ window.onload = function () {
             isShow = false;
         }else{
             isShow = true;
-            $('#bread span').html('隐藏')
+            $('#bread span').html('隐藏侧边栏')
             //$('.layui-side.layui-bg-black').show();
             $('.layui-side.layui-bg-black').animate({width:'toggle'},200);
             $('.layui-tab-content').css({"left":"200px"});
