@@ -555,15 +555,15 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             },
             cols: [[
                 {field: 'img', width: 100, title: '图片', align: 'center', templet: "#materiaImgtmp"},
-                {field: 'name', width: 120, title: '图片名', align: 'center',},
+                {field: 'name', width: 220, title: '图片名', align: 'center',},
                 // { field: 'number', width: 200, title: '图片编号', },
-                {field: 'publishTime', width: 180, title: '发布时间', align: 'center'},
-                {field: 'addUser', width: 150, title: '发布人', align: 'center',},
+                {field: 'publishTime', width: 200, title: '发布时间', align: 'center'},
+                {field: 'addUser', width: 120, title: '发布人', align: 'center',},
                 {
                     field: 'operationa',
                     right: 0,
                     align: 'center',
-                    width: 180,
+                    width: 100,
                     title: '操作',
                     toolbar: '#materiaImg',
                     fixed: 'right'

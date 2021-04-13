@@ -36,7 +36,8 @@ var editFlag = false,//修改设备
     salesListFlag = false,//销售记录
     shipmentListFlag = false,//出货记录
     replenishmentFlag = false,//补货记录
-    editWayFlag = false;
+    editWayFlag = false,
+    flag = false;
 function permissions() {
     permissionsFun('/role/findUserPermission', 'post', sessionStorage.token).then(res => {
         res.data.forEach(item => {

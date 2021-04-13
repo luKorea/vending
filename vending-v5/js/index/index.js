@@ -1,6 +1,7 @@
 //JavaScript代码区域
 import '../../MyCss/indexCss/index.css'
-import { navList } from '../../assets/public/navData.js'
+import {navList} from '../../assets/public/navData.js'
+
 if (!sessionStorage.token) {
     window.location.href = "login.html"
 }
@@ -13,19 +14,16 @@ window.onload = function () {
     let isShow = true; //定义一个标志位
     $('#bread').click(function () {
         if (isShow) {
-            $('#bread span').html('显示侧边栏')
-            //$('.layui-side.layui-bg-black').hide();
-            $('.layui-side.layui-bg-black').animate({width:'toggle'},200);
-            $('.layui-tab-content').css({"left":"0px"});
-            $('.header-nav-tabs-switch').css({"margin-left":"0px"});
+            $('.layui-tab-content').css({"left": "20px"});
+            $('.layui-side.layui-bg-black').css({left: -200})
+            $('.header-nav-tabs-switch').css({"margin-left": "20px"});
             isShow = false;
-        }else{
+        } else {
             isShow = true;
             $('#bread span').html('隐藏侧边栏')
-            //$('.layui-side.layui-bg-black').show();
-            $('.layui-side.layui-bg-black').animate({width:'toggle'},200);
-            $('.layui-tab-content').css({"left":"200px"});
-            $('.header-nav-tabs-switch').css({"margin-left":"200px"});
+            $('.layui-side.layui-bg-black').css({left: 0})
+            $('.layui-tab-content').css({"left": "220px"});
+            $('.header-nav-tabs-switch').css({"margin-left": "220px"});
         }
     });
 
@@ -58,6 +56,7 @@ window.onload = function () {
             });
 
         };
+
         //切换到指定Tab项
         function tabChange(index) {
             element.tabChange('demo', index);
@@ -97,7 +96,8 @@ window.onload = function () {
                 if ($(this).attr('lay-id') == $(".navClick").eq(i).attr('navId')) {
                     Indexs = i;
                 }
-            };
+            }
+            ;
             // 左侧菜单初始化
             $('.layui-nav-item').removeClass('layui-nav-itemed');
             $(".navClick").eq(Indexs).parent().parent().parent().addClass('layui-nav-itemed');
@@ -129,7 +129,7 @@ window.onload = function () {
         var theModule1 = getQueryString('theModule');
         if (theModule1) {
             // console.log(theModule1)
-          var  theModule = theModule1.split('-');
+            var theModule = theModule1.split('-');
             if (theModule[0] != 22 && theModule) {
                 tabAdd(theModule[0], theModule[1]);
                 tabChange(theModule[0]);
@@ -143,6 +143,7 @@ window.onload = function () {
         });
         var socket;
         var socketFlag = true;
+
         // websocket
         function openSocket() {
             if (typeof (WebSocket) == "undefined") {
@@ -240,23 +241,23 @@ window.onload = function () {
         });
 
         var permissionsObj = {
-            408: false,
-            407: false,
-            413: false,
-            414: false,
-            409: false,
-            410: false,
-            400: false,
-            431: false,
-            423: false,
-            419: false,
-            412: false,
-            411: false,
-            447: false,
-            448: false,
-            463: false,
-            455: false,
-        },
+                408: false,
+                407: false,
+                413: false,
+                414: false,
+                409: false,
+                410: false,
+                400: false,
+                431: false,
+                423: false,
+                419: false,
+                412: false,
+                411: false,
+                447: false,
+                448: false,
+                463: false,
+                455: false,
+            },
             permissionsData2 = null;
         // 权限控制
         permissionsFun('/role/findUserPermission', 'post', sessionStorage.token, layer).then(res => {
@@ -313,14 +314,16 @@ window.onload = function () {
             // pickupFlag ? $('.pickupCode').removeClass('hide').parents('.marketingCont').removeClass('hide') : $('.pickupCode').addClass('hide').parents('.marketingCont').addClass('hide');
             permissionsObjFlag[448] ? $('.pickupCode').removeClass('hide').parents('.marketingCont').removeClass('hide') : $('.pickupCode').addClass('hide').parents('.marketingCont').addClass('hide');
         }).catch(err => {
-            layer.msg(err.message, { icon: 2 })
+            layer.msg(err.message, {icon: 2})
         })
+
         // 储存权限
 
         function permissionsData1() {
             // return permissionsData2
             return permissionsData2
         }
+
         window.permissionsData1 = permissionsData1
         // 获取公告列表
         var noticeObj = JSON.stringify({
@@ -333,6 +336,7 @@ window.onload = function () {
         var carousel = layui.carousel;
         var noticeSwp = null;
         var noticeList = null;
+
         function shuffling() {
             loadingAjax('/notices/getNoticeList', 'post', noticeObj, sessionStorage.token).then(res => {
                 noticeList = res.data.list;
@@ -343,10 +347,12 @@ window.onload = function () {
                 }
                 noticeDrawing(noticeList)
             }).catch(err => {
-                layer.msg('获取公告失败', { icon: 2 })
+                layer.msg('获取公告失败', {icon: 2})
             });
         }
+
         shuffling();
+
         // 公告渲染
         function noticeDrawing(list) {
             var noticeStr = ''
@@ -405,6 +411,7 @@ window.onload = function () {
         // 未读消息部分
         var messageListArr = [];
         var unreadNum = 0;
+
         // 未读消息
         function messageFunList() {
             unreadNum = 0;
@@ -433,9 +440,10 @@ window.onload = function () {
                     $('.unreadMessageBox').html(emptyStr)
                 }
             }).catch(err => {
-                layer.msg('获取未读消息失败', { icon: 2 })
+                layer.msg('获取未读消息失败', {icon: 2})
             })
         }
+
         messageFunList();
         window.messageFunList = messageFunList;
 
@@ -454,6 +462,7 @@ window.onload = function () {
         $('.messageCont').click(function () {
             popupHide('messageCont', 'messageBox')
         });
+
         function status(id) {
             var messageObj = JSON.stringify({
                 message_id: id
@@ -466,12 +475,13 @@ window.onload = function () {
 
             }).catch(err => {
                 console.log(err)
-                layer.msg('阅读消息失败', { icon: 2 })
+                layer.msg('阅读消息失败', {icon: 2})
             })
         };
 
         // 公告列表部分
         var noticeTableIns = null;
+
         function noticeFun() {
             noticeTableIns = table.render({
                 elem: '#noticeTable',
@@ -482,7 +492,7 @@ window.onload = function () {
                     token: sessionStorage.token
                 },
                 cols: [[
-                    { field: 'title', width: 210, title: '标题', align: 'center' },
+                    {field: 'title', width: 210, title: '标题', align: 'center'},
                     {
                         field: 'attach_name', width: 150, title: '附件名', align: 'center', templet: function (d) {
                             return d.attach_name ? d.attach_name : '-'
@@ -493,7 +503,7 @@ window.onload = function () {
                             return d.attach_url ? d.attach_url : '-'
                         }
                     },
-                    { field: 'create_user', width: 130, title: '创建人', align: 'center', },
+                    {field: 'create_user', width: 130, title: '创建人', align: 'center',},
                     {
                         field: 'create_time', width: 180, title: '创建时间', align: 'center', templet: function (d) {
                             return timeStamp(d.create_time)
@@ -524,8 +534,7 @@ window.onload = function () {
                         };
                     } else if (res.code == 403) {
                         window.parent.location.href = "login.html";
-                    }
-                    else {
+                    } else {
                         return {
                             "code": res.code, //解析接口状态
                             "msg": res.message,   //解析提示文本

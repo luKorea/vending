@@ -932,6 +932,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 machineId: machineSetData.machineId,
                 start_time: startTime,
                 end_time: endTime,
+                way: $('.shipmentRecord select[name="shipSelect"]').val(),
             },
             parseData: function (res) {
                 // console.log(res)
@@ -1094,10 +1095,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token: sessionStorage.token,
             },
             cols: [[
-                {field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp"},
+                {field: 'goods_images', width: 100, title: '图片', align: 'center', templet: "#imgtmp"},
                 {
                     field: 'goods_Name',
-                    width: 200,
+                    width: 250,
                     align: 'center',
                     title: '商品名',
                     color: '#409eff',
@@ -1108,12 +1109,20 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {field: `classifyName`, align: 'center', width: 150, title: '商品类目'},
                 {
-                    field: 'mail', width: 130, title: '是否邮寄商品', align: 'center', templet: function (d) {
+                    field: 'mail', width: 150, title: '是否邮寄商品', align: 'center', templet: function (d) {
                         return d.mail == 0 ? '否' : '是'
                     }
                 },
-                {field: 'goods_Core', align: 'center', width: 180, title: '商品编号',},
-                {field: 'operation', position: 'absolute', right: 0, width: 80, title: '操作', toolbar: '#GoodsbarDemo'},
+                {field: 'goods_Core', align: 'center', width: 200, title: '商品编号',},
+                {
+                    field: 'operation',
+                    position: 'absolute',
+                    right: 0,
+                    width: 100,
+                    title: '操作',
+                    align: 'center',
+                    toolbar: '#GoodsbarDemo'
+                },
 
             ]],
             id: 'goodsID',
@@ -1201,11 +1210,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     };
     //选择商品
     $('.relative').click(function () {
+        // TODO
         if (editPermissionsFlag != 1) {
             layer.msg('您不是该设备管理员!', {icon: 7});
             return;
         }
-        popupShow('goodsCont', 'goodsBox')
+        if (flag) {
+            popupShow('goodsCont', 'goodsBox')
+        }
         if (goodsTableIns) {
             goodsTableIns.reload({
                 where: {
@@ -1306,6 +1318,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             return;
         }
         aisleType = 1;
+        flag = false;
         aisleEdit();
         disabledFun();
         popupShow('editAisle', 'editAisleBox');
@@ -1322,6 +1335,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // popupHide('iPasswprd', 'passwordCont')
                 // popupShow('editAisle', 'editAisleBox');
                 enableFun();
+                flag = true;
             } else if (aisleType == 2) {
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
@@ -1392,12 +1406,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     });
     var determineFlag = false,
-        editPermissionsFlag = false;
+        editPermissionsFlag = false,
+        flag = false;
     // 点击维护
     $('.editAisle .maintenanceBtn').click(function () {
         if (editPermissionsFlag == 1) {
             if (sessionStorage.independentPass) {
                 enableFun();
+                flag = true;
             } else {
                 popupShow('iPasswprd', 'passwordCont');
             }
@@ -1934,7 +1950,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             where: {
                 machineId: machineSetData.machineId,
                 start_time: replenishmentStartTime ? replenishmentStartTime : null,
-                end_time: sreplenishmentEndTime ? sreplenishmentEndTime : null
+                end_time: sreplenishmentEndTime ? sreplenishmentEndTime : null,
+                way: $('.replenishment select[name="shipSelect"]').val(),
             },
             parseData: function (res) {
                 // console.log(res)
@@ -2221,7 +2238,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         if (timeFlag(openSTime, openETime)) {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
-        };
+        }
+        ;
         let fileName = `${machineSetData.info}(${machineSetData.number})开门记录(${openSTime}-${openETime}).xls`,
             url = `${vApi}/excelDoorRecord?startDate=${openSTime}&endDate=${openETime}&machineId=${machineSetData.machineId}`;
         exportExcel(url, fileName);
