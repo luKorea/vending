@@ -22,6 +22,7 @@
 }
 .layui-nav{
 	background-color: rgb(32, 34, 57);
+	height: 100%;
 }
 .layui-layout-admin .layui-header{
 	background-color: black;
@@ -145,7 +146,7 @@
 }
 /* 头部选项卡*/
 .header-nav-tabs-switch{
-	margin-left:200px ;
+	margin-left:220px;
 	z-index: 9999999999;
 	box-sizing: border-box;
 	/* border: solid 15px rgb(238,238,238); */
@@ -209,7 +210,7 @@
 	bottom: 0px;
 	border: 15px solid rgb(238,238,238);
 	right: 0;
-	left: 200px;
+	left: 220px;
 	box-sizing: border-box;
 	border-top: 0;
 	border-right: 10px solid rgb(238,238,238);

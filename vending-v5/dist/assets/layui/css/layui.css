@@ -326,6 +326,11 @@ a cite {
     content: "\e602"
 }
 
+.layui-icon-right1:before {
+    content: "\e602"
+}
+
+
 .layui-icon-left:before {
     content: "\e603"
 }
@@ -971,7 +976,7 @@ a cite {
     top: 0;
     bottom: 0;
     z-index: 999;
-    width: 200px;
+    width: 220px;
     overflow-x: hidden
 }
 
@@ -979,7 +984,8 @@ a cite {
     position: relative;
     width: 220px;
     height: 100%;
-    overflow-x: hidden
+    overflow-x: hidden;
+    background-color: #FFf;
 }
 
 .layui-body {
@@ -1004,9 +1010,12 @@ a cite {
 
 .layui-layout-admin .layui-side {
     top: 60px;
-    width: 200px;
+    width: 220px;
     overflow-x: hidden
 }
+
+
+
 
 .layui-layout-admin .layui-body {
     position: fixed;

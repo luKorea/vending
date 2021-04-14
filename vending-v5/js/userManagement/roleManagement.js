@@ -17,12 +17,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
         },
         cols: [[
-            { field: 'name', width: 180, title: '角色名', align: 'center' },
-            { field: 'addUser', width: 150, title: '添加人', align: 'center' },
-            { field: 'addTime', width: 200, title: '添加时间', align: 'center' },
-            { field: 'lastUser', width: 180, title: '最后修改人', align: 'center', },
-            { field: 'lastTime', width: 200, title: '最后修改时间', align: 'center' },
-            { field: 'operation', position: 'absolute', align: 'center', right: 0, width: 200, title: '操作', toolbar: '#barDemo' },
+            { field: 'name',  title: '角色名', align: 'center' },
+            { field: 'addUser',  title: '添加人', align: 'center' },
+            { field: 'addTime', title: '添加时间', align: 'center' },
+            { field: 'lastUser',title: '最后修改人', align: 'center', },
+            { field: 'lastTime', title: '最后修改时间', align: 'center' },
+            { field: 'operation', align: 'center', right: 0, title: '操作', toolbar: '#barDemo' },
         ]]
         , id: 'tableId'
         , page: true
@@ -149,15 +149,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         //                                 break;
         //                             case 7:
         //                                 permissions6.push(item)
-        //                                 break;   
+        //                                 break;
         //                             case 10:
         //                                 permissions10.push(item)
-        //                                 break;  
+        //                                 break;
         //                             case 11:
-        //                                 permissions11.push(item) 
-        //                                 break; 
+        //                                 permissions11.push(item)
+        //                                 break;
         //                             case 13:
-        //                                 permissions13.push(item)  
+        //                                 permissions13.push(item)
         //                             // default:
         //                             //     console.log(index)
         //                         }
@@ -413,7 +413,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                             // sleep(1)
                             // setTimeout(()=>{
                             //     socketPush(userPushId)
-                            // },800)          
+                            // },800)
                         }
                     } else if (res.code == 403) {
                         window.parent.location.href = "login.html";
@@ -465,7 +465,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     //         $('.checkCont .checkboxList').prop("disabled",'');
     //         form.render();
     //       }
-    //     }); 
+    //     });
     // 角色权限函数
     function permissionsList(list, element, TrueData) {
         var ListData = `<div>

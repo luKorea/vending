@@ -18,28 +18,28 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
         },
         cols: [[
-            {field: 'title', width: 150, title: '商户名', align: 'center'},
+            {field: 'title', title: '商户名', align: 'center'},
             {
-                field: 'merchantName', width: 120, title: '上级商户', align: 'center', templet: function (d) {
+                field: 'merchantName',  title: '上级商户', align: 'center', templet: function (d) {
                     return d.id == 0 ? '' : d.merchantName
                 }
             },
             {
-                field: 'merchantURL', width: 220, title: '支付成功跳转地址', align: 'center',
+                field: 'merchantURL', title: '支付成功跳转地址', align: 'center',
                 templet: function (d) {
                     return (d.merchantURL && (d.merchantURL !== null || d.merchantURL !== undefined)) ? `<a href="${d.merchantURL}" target="_blank" style="color: rgb(190, 149, 74)">${d.merchantURL}</a>` : '-'
                 }
             },
-            {field: 'alias', width: 120, title: '商户编号', align: 'center'},
-            {field: 'addUser', width: 120, title: '创建人', align: 'center',},
+            {field: 'alias',  title: '商户编号', align: 'center'},
+            {field: 'addUser',  title: '创建人', align: 'center',},
             {
-                field: 'addTime', width: 160, title: '创建时间', align: 'center', templet: function (d) {
+                field: 'addTime',  title: '创建时间', align: 'center', templet: function (d) {
                     return timeStamp(d.addTime)
                 }
             },
-            {field: 'lastUser', width: 150, title: '最后修改人', align: 'center',},
+            {field: 'lastUser',  title: '最后修改人', align: 'center',},
             {
-                field: 'lastTime', width: 160, title: '最后修改时间', align: 'center', templet: function (d) {
+                field: 'lastTime', title: '最后修改时间', align: 'center', templet: function (d) {
                     if (d.lastTime) {
                         return timeStamp(d.lastTime)
                     } else {
@@ -47,7 +47,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }
                 }
             },
-            {field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', align: 'center'},
+            {field: 'operation',  title: '操作', toolbar: '#barDemo', align: 'center'},
         ]]
         , id: 'tableId'
         , page: true,
@@ -612,4 +612,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         $('.ListOperation').fadeOut();
         operationFlag = null;
     });
+
+    $('.refreshBtnList').click(function () {
+        layer.msg('已刷新', { icon: 1 })
+        var dataList = addEditData = treeList();
+    })
+
 });

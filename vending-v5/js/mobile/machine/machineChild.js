@@ -11,8 +11,8 @@ import {
     permissionsFun
 } from '../../../common/common.js';
 
-var editAisleFlag = false;
-
+var editAisleFlag = false,
+    flags = false;
 // 千分位金额
 function percentileMoney(num) {
     if (num === '') num = 0;
@@ -172,6 +172,7 @@ $('.validationContent .confirmBtn').click(function () {
             enableFun();
             aisleEdit();
             flag = false;
+            flags = true;
             showPopup('.editAisleContent', '.editAisleBox', 'top50');
         }
     }).catch(err => {
@@ -196,6 +197,7 @@ $('.aisleCont').on('click', '.aisleNumderGoods', function () {
     disableFun();
     ArrIndex = $(this).attr("fireIndex").split(',');
     editFlag = 1;
+    flags = false;
     addFlag = null;
     delFlag = null;
     aisleEdit();
@@ -349,6 +351,7 @@ function disableFun() {
 
 
 $('.editAisleContent').click(function () {
+    // flags = false;
     if (machineSystem != 1) {
         disableFun();
     }
@@ -384,15 +387,17 @@ var picker1 = new huiPicker('.pickerChoose', function () {
 picker1.bindData(0, [{value: 1, text: '是'}, {value: 0, text: '否'}]);
 // 点击选择商品
 $('.editAisleContent .goodsChoose').click(function () {
-    if (machineSystem === 1) {
-        tabLoadEndArray = false;
-        pageNum = 1;
-        $('.goodsWrap').html(`<div class="goodsList flexThree" id="goodsList"></div>`)
-        $('.goodsList').empty();
-        showPopup('.goodsContnet', '.goodsBox', 'top50');
-        goodsLoad();
-    } else {
-        toastTitle('您不是该设备管理员！', 'warn');
+    if (flags) {
+        if (machineSystem === 1) {
+            tabLoadEndArray = false;
+            pageNum = 1;
+            $('.goodsWrap').html(`<div class="goodsList flexThree" id="goodsList"></div>`)
+            $('.goodsList').empty();
+            showPopup('.goodsContnet', '.goodsBox', 'top50');
+            goodsLoad();
+        } else {
+            toastTitle('您不是该设备管理员！', 'warn');
+        }
     }
 });
 // 关闭选择商品
@@ -505,6 +510,7 @@ $('.editAisleContent .confirmBtn').click(function () {
         if (!sessionStorage.independentPass) {
             showPopup('.validationContent', '.validationBox', 'top50');
         } else {
+            flags = true;
             enableFun();
         }
     } else {

@@ -40,10 +40,10 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
                 token: sessionStorage.token
             },
             cols: [[
-                { field: 'activity_name', width: 200, title: '活动名', event: 'pickup', align: 'center' },
-                { field: 'code_count', width: 120, title: '取货码数量', event: 'pickup', align: 'center' },
+                { field: 'activity_name',title: '活动名', event: 'pickup', align: 'center' },
+                { field: 'code_count', title: '取货码数量', event: 'pickup', align: 'center' },
                 {
-                    field: 'roleSign', width: 180, title: '开始时间', event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'roleSign', title: '开始时间', event: 'pickup', align: 'center', templet: function (d) {
                         if (d.start_time) {
                             return timeStamp(d.start_time)
                         } else {
@@ -52,7 +52,7 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'alias', width: 180, title: '结束时间', event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'alias', title: '结束时间', event: 'pickup', align: 'center', templet: function (d) {
                         if (d.start_time) {
                             return timeStamp(d.end_time)
                         } else {
@@ -61,14 +61,14 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'phone', width: 130, title: '活动状态', event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'phone', title: '活动状态', event: 'pickup', align: 'center', templet: function (d) {
                         var time = new Date().getTime();
                         return d.activity_status == 1 ? '已暂停' : d.activity_status == 2 ? '已取消' : time > d.end_time ? '已过期' : '活动正常'
                     }
                 },
-                { field: 'create_user', width: 200, title: '创建人', event: 'pickup', align: 'center' },
+                { field: 'create_user',  title: '创建人', event: 'pickup', align: 'center' },
                 {
-                    field: 'addUser', width: 200, title: '创建时间', event: 'pickup', align: 'center', templet: function (d) {
+                    field: 'addUser', title: '创建时间', event: 'pickup', align: 'center', templet: function (d) {
                         if (d.start_time) {
                             return timeStamp(d.create_time)
                         } else {
@@ -78,7 +78,7 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
                 },
                 // { field: 'operation', width: 350, title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right', right: 0, },
                 // { field: 'operation', fixed: 'right', align: 'center', right: 0, width: 350, title: '操作', toolbar: '#barDemo' },
-                { field: 'operation', right: 0, width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },//fixed: 'right',
+                { field: 'operation',  title: '操作', toolbar: '#barDemo', align: 'center' },//fixed: 'right',
             ]],
             id: 'activityId',
             page: true,
@@ -209,9 +209,9 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
             },
             cols: [[
                 { type: 'checkbox', },
-                { field: 'info', width: 200, title: '售货机信息', align: 'center' },
-                { field: 'location', width: 300, title: '地址', align: 'center', },
-                { field: 'merchantName', width: 300, title: '所属商户', align: 'center', },
+                { field: 'info', title: '售货机信息', align: 'center' },
+                { field: 'location', title: '地址', align: 'center', },
+                { field: 'merchantName', title: '所属商户', align: 'center', },
             ]],
             page: true,
             id: 'machineAdvertisingList',
@@ -326,14 +326,14 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
             },
             cols: [[
                 { type: 'checkbox', },
-                { field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center' },
+                { field: 'goods_images', title: '图片', templet: "#imgtmp", align: 'center' },
                 {
-                    field: 'goods_Name', width: 200, title: '商品名', color: '#409eff', align: 'center', templet: function (d) {
+                    field: 'goods_Name',  title: '商品名', color: '#409eff', align: 'center', templet: function (d) {
                         return (d.mail == 1 ? '(邮寄)' + d.goods_Name : d.goods_Name)
                     }
                 },
-                { field: `classifyName`, width: 160, title: '商品类目', align: 'center' },
-                { field: 'goods_Core', width: 250, title: '商品编号', align: 'center', },
+                { field: `classifyName`, title: '商品类目', align: 'center' },
+                { field: 'goods_Core',  title: '商品编号', align: 'center', },
             ]],
             id: 'goodsID',
             page: true,
@@ -762,9 +762,9 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
         activityMachineIn = table.render({
             elem: '#activityMachine',
             cols: [[
-                { field: 'number', width: 200, title: '售货机编号', align: 'center' },
-                { field: 'info', width: 200, title: '售货机信息', align: 'center' },
-                { field: 'location', width: 310, title: '地址', align: 'center', },
+                { field: 'number',  title: '售货机编号', align: 'center' },
+                { field: 'info',  title: '售货机信息', align: 'center' },
+                { field: 'location',title: '地址', align: 'center', },
             ]],
             data: [
 
@@ -784,19 +784,19 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
                 token: sessionStorage.token
             },
             cols: [[
-                { field: 'good_code', width: 150, title: '取货码', align: 'center' },
+                { field: 'good_code',  title: '取货码', align: 'center' },
                 {
-                    field: 'code_status', width: 130, title: '使用情况', align: 'center', templet: function (d) {
+                    field: 'code_status', title: '使用情况', align: 'center', templet: function (d) {
                         return d.code_status == 0 ? '待使用' : '已使用'
                     }
                 },
                 {
-                    field: 'info', width: 210, title: '使用的售货机', align: 'center', templet: function (d) {
+                    field: 'info', title: '使用的售货机', align: 'center', templet: function (d) {
                         return d.info ? d.info : '-'
                     }
                 },
                 {
-                    field: 'excelShipInfos', width: 250, title: '出货情况', align: 'center', templet: function (d) {
+                    field: 'excelShipInfos', title: '出货情况', align: 'center', templet: function (d) {
                         if (d.excelShipInfos.length == 0) {
                             return '-'
                         } else {
@@ -809,7 +809,7 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'operate_time', width: 175, title: '使用时间', align: 'center', templet: function (d) {
+                    field: 'operate_time', title: '使用时间', align: 'center', templet: function (d) {
 
                         if (d.operate_time) {
                             return timeStamp(d.operate_time);
@@ -819,7 +819,7 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'refund', width: 100, title: '退货状态', align: 'center', templet: function (d) {
+                    field: 'refund',  title: '退货状态', align: 'center', templet: function (d) {
                         return d.refund == 1 ? '已退货' : '未退货'
                     }
                 },

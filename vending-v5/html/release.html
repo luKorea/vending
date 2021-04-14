@@ -17,7 +17,7 @@
                 <div class="accountContnet" style="margin-left:15px;">
                     <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表" data-direction="bottom" type="button">
                         <i class="layui-icon layui-icon-refresh-3 "></i>
-                        <!-- 刷新 -->
+                         刷新
                     </button>
                     <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
                     <!-- <div class="fixed-account">
@@ -93,7 +93,7 @@
                                 <span>审核不通过</span>
                             </button>
                         </div>
-                       
+
                     </div>
                 </div> -->
                 <div class="newHeader">
@@ -114,14 +114,14 @@
                             <button type="button" class="layui-btn layui-btn-primary keyBtn">
                                 <i class="layui-icon layui-icon-search"></i>
                                 <span>查询</span>
-                                
+
                             </button>
                         </div>
                         <div class="newKeyContent">
                             <button type="button" class="layui-btn layui-btn-primary hide publicAdvertisingBtn">
                                 <i class="layui-icon layui-icon-add-circle "></i>
                                 <span>发布广告</span>
-                                
+
                             </button>
                         </div>
                         <div class="newKeyContent">
@@ -154,7 +154,7 @@
                         <div class="newKeyContent">
                             <button type="button" class="layui-btn layui-btn-primary keyBtn">
                                 <i class="layui-icon layui-icon-refresh-3 "></i>
-                                <!-- 刷新 -->
+                                <span>刷新</span>
                             </button>
                         </div>
                     </form>
@@ -473,7 +473,7 @@
                         <span>查询</span>
                     </button>
                 </div>
-                <div style="margin-left: 20px;">
+                <div style="margin:0 20px;">
                     <table class="layui-hide" id="chooseData" lay-filter="chooseData"></table>
                 </div>
                 <div style="text-align: right;margin:10px 30px 20px 0;padding-bottom: 20px  ;">
@@ -609,8 +609,6 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
-                        <div style="margin-top: 10px;">
                             <div class="key-contnet">
                                 <div class="key-text">推送类型</div>
                                 <form class="layui-form" action="" style="max-width: 240px;">
@@ -632,12 +630,34 @@
                                 <span>接收</span>
                             </button>
                         </div>
+<!--                        <div style="margin-top: 10px;">-->
+<!--                            <div class="key-contnet">-->
+<!--                                <div class="key-text">推送类型</div>-->
+<!--                                <form class="layui-form" action="" style="max-width: 240px;">-->
+<!--                                    <div class="layui-form" lay-filter="">-->
+<!--                                        <select name="receiveType" id="" lay-filter="">-->
+<!--                                            <option value="0">全部</option>-->
+<!--                                            <option value="1">推送</option>-->
+<!--                                            <option value="2">接收</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                </form>-->
+<!--                            </div>-->
+<!--                            <button class="layui-btn layui-btn-normal pushQueryBtn btn">-->
+<!--                                <i class="layui-icon layui-icon-search"></i>-->
+<!--                                <span>查询</span>-->
+<!--                            </button>-->
+<!--                            <button class="layui-btn layui-btn-normal pushReleaseListBtn btn">-->
+<!--                                <i class="layui-icon layui-icon-download-circle"></i>-->
+<!--                                <span>接收</span>-->
+<!--                            </button>-->
+<!--                        </div>-->
 
                     </div>
                     <!-- 数据列表内容 -->
                     <div>
                         <div class="data-list-contnet">
-                            <div class="list_table1" style="margin-left: 20px;">
+                            <div class="list_table1" style="margin:0 20px;">
                                 <table class="layui-hide" id="parentTableTest" lay-filter="parentTableTest"></table>
                             </div>
                         </div>
@@ -705,7 +725,7 @@
             <span>广告详情</span>
         </button>
         <button class="layui-btn layui-btn-sm btn del-btn" lay-event="toView">
-            <span>广告使用情况</span>        
+            <span>广告使用情况</span>
         </button>
         <button class="layui-btn layui-btn-sm btn operation {{d.attribute!=2?'hide':''}}" title="推送广告到售货机" lay-event="push">
             <span>广告推送到售货机</span>
@@ -721,7 +741,7 @@
         <button class="layui-btn layui-btn-sm btn operation" lay-event="query">
             <span>查看地址</span>
         </button>
-       
+
     </div>
 </script>
 <script type="text/html" id="pushReleaseDemo">
@@ -729,7 +749,7 @@
         <button class="layui-btn layui-btn-sm btn " lay-event="pushPreview">
             <span>预览</span>
         </button>
-       
+
     </div>
 </script>
 <!-- <script type="text/html" id="machineAdvertising">

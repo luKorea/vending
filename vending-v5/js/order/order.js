@@ -108,7 +108,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                         } else {
                             var str = '';
                             d.ship_info.forEach((item, index) => {
-                                str += `<span>${item.goods_Name} (${item.way}货道 ${item.ship_status == 0 ? '出货失败' : item.ship_status == 1 ? '出货成功' : '货道故障'}) </span>`
+                                str += `<span>${item.goods_Name} (${item.way}货道 ${setOrderDetailStatus(item.ship_status)}) </span>`
                             });
                             return str
                         }
@@ -356,10 +356,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             elem: '#GooodsData',
             cols: [[
                 // { checkbox: true },
-                {field: 'goods_images', width: 120, title: '图片', templet: "#imgtmp", align: 'center'},
-                {field: 'good_name_core', width: 250, title: '商品名(编号)', align: 'center',},
+                {field: 'goods_images', title: '图片', templet: "#imgtmp", align: 'center'},
+                {field: 'good_name_core',  title: '商品名(编号)', align: 'center',},
                 // { field: 'goods_Core', width: 140, title: '商品编号', align: 'center', },
-                {field: 'count', width: 120, title: '购买数量', align: 'center'},
+                {field: 'count',title: '购买数量', align: 'center'},
                 // {
                 //   field: 'ship_info', width: 300, title: '出货情况', align: 'center', templet: function (d) {
                 //     var str = '';
@@ -371,7 +371,6 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 // },
                 {
                     field: 'refund_count',
-                    width: 120,
                     title: '已退款数量',
                     align: 'center'
                 },
@@ -384,7 +383,6 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
 
                 {
                     field: 'price',
-                    width: 140,
                     title: '销售价 ',
                     align: 'center',
                     templet: (e) => percentileMoney(e.price)
@@ -392,12 +390,9 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 // { field: 'goods_Cost', width: 140, title: '成本价 ', align: 'center', },
                 {
                     field: 'operation',
-                    right: 0,
-                    width: 80,
                     align: 'center',
                     title: '操作',
-                    toolbar: '#refundDemo',
-                    fixed: 'right'
+                    toolbar: '#refundDemo'
                 },
             ]],
             data: [],
@@ -613,6 +608,89 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
     $('.iPasswprd .passCancelBtn').click(function () {
         popupHide('iPasswprd', 'passwordCont')
     });
+// 退款输入独立密码
+    $('.iPasswprd .passBtn').click(function () {
+        if (!$('.passBody input[name="iPassword"]').val()) {
+            layer.msg('请输入独立密码', {icon: 7});
+            return;
+        }
+        var IPassWord = JSON.stringify({
+            alonePwd: hex_md5($('.iPasswprd input[name="iPassword"]').val())
+        })
+        loadingAjax('/user/verifyAlonePwd', 'post', IPassWord, sessionStorage.token, 'mask', 'iPasswprd', 'passwordCont', layer).then(res => {
+            $('.mask').fadeIn();
+            $('.maskSpan').addClass('maskIcon');
+            $('.iPasswprd input[name="iPassword"]').val('')
+            if (orderData.payType == 0) {
+                var refundData = JSON.stringify({
+                    machineId: orderData.machineId,
+                    orderId: orderData.number,
+                    goodId: goodsData.goods_Id,
+                    count: Number($('.refundNumber input').val()),
+                    amount: Number($('.sumInput input[name="sum"]').val()),
+                    pay_id: orderData.pay_id
+                    // amount:0.01
+                });
+                loadingAjax('/pay/refund_alipay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox', layer).then(res => {
+                    layer.msg(res.message, {icon: 1});
+                    popupHide('orderDetails', 'orderDetailsBox');
+                    orderTable.reload({
+                        where: {}
+                    })
+                }).catch(err => {
+                    layer.msg(err.message, {icon: 2});
+                })
+            } else if (orderData.payType == 1) {
+                var refundData = JSON.stringify({
+                    machineId: orderData.machineId,
+                    orderId: orderData.number,
+                    goodId: goodsData.goods_Id,
+                    count: Number($('.refundNumber input').val()),
+                    amount: Number($('.sumInput input[name="sum"]').val()),
+                    // amount: 0.01,
+                    transaction_id: orderData.transaction_id,
+                    total: orderData.amount,
+                    pay_id: orderData.pay_id
+                    // total: 0.01
+                });
+                loadingAjax('/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
+                    layer.msg(res.message, {icon: 1});
+                    popupHide('orderDetails', 'orderDetailsBox');
+                    orderTable.reload({
+                        where: {}
+                    })
+                }).catch(err => {
+                    layer.msg(err.message, {icon: 2});
+                })
+            } else if (orderData.payType == 3) {
+                var refundData = JSON.stringify({
+                    machineId: orderData.machineId,
+                    orderId: orderData.number,
+                    goodId: goodsData.goods_Id,
+                    count: Number($('.refundNumber input').val()),
+                    transaction_id: orderData.transaction_id,
+                    amount: Number($('.sumInput input[name="sum"]').val()),
+                    pay_id: orderData.pay_id
+                });
+                loadingAjax('/pay/refund_icbc', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
+                    layer.msg(res.message, {icon: 1});
+                    popupHide('orderDetails', 'orderDetailsBox');
+                    orderTable.reload({
+                        where: {}
+                    })
+                }).catch(err => {
+                    layer.msg(err.message, {icon: 2});
+                })
+            }
+        }).catch(err => {
+            console.log(err)
+            layer.msg(err.message, {icon: 2});
+
+        })
+    })
+    $('.iPasswprd .passCancelBtn').click(function () {
+        popupHide('iPasswprd', 'passwordCont')
+    });
 
 
     // 正则检验只能输入正整数
@@ -734,5 +812,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         if (PImgSHow) {
             $('#pic101').hide();
         }
+    });
+
+    $('.refreshBtnList').click(function () {
+        layer.msg('已刷新', {icon: 1})
+        dataList = treeList(marchantName);
     })
 })

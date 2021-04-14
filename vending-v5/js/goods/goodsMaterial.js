@@ -136,20 +136,20 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       height: 500,
       cols: [[
         { type: 'checkbox' },
-        { field: 'img', width: 150, title: '图片', templet: "#imgtmp", align: 'center' },
-        { field: 'name', width: 180, title: '图片名', align: 'center', },
+        { field: 'img',  title: '图片', templet: "#imgtmp", align: 'center' },
+        { field: 'name',  title: '图片名', align: 'center', },
         {
-          field: 'status', width: 180, title: '审核状态', align: 'center', templet: function (d) {
+          field: 'status',  title: '审核状态', align: 'center', templet: function (d) {
             return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
 
           }
         },
-        { field: 'number', width: 200, title: '图片编号', align: 'center', },
-        { field: 'addUser', width: 150, title: '创建人', align: 'center', },
-        { field: 'publishTime', width: 180, title: '创建时间', align: 'center' },
+        { field: 'number', title: '图片编号', align: 'center', },
+        { field: 'addUser',  title: '创建人', align: 'center', },
+        { field: 'publishTime',  title: '创建时间', align: 'center' },
 
         // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
-        { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoImg', align: 'center', },
+        { field: 'operation',  title: '操作', toolbar: '#barDemoImg', align: 'center', },
       ]]
       , page: true
       , id: 'ImgListData'
@@ -342,18 +342,18 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       cols: [[
         // { field: 'Img', width: 150, title: '素材图',templet: "" },
         { type: 'checkbox', },
-        { field: 'name', width: 180, title: '视频名', align: 'center', },
+        { field: 'name', title: '视频名', align: 'center', },
         {
-          field: 'name', width: 180, title: '审核状态', align: 'center', templet: function (d) {
+          field: 'name', title: '审核状态', align: 'center', templet: function (d) {
             return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
           }
         },
-        { field: 'number', width: 200, title: '视频编号', align: 'center', },
-        { field: 'addUser', width: 150, title: '创建人', align: 'center', },
-        { field: 'publishTime', width: 180, title: '创建时间', align: 'center' },
+        { field: 'number',  title: '视频编号', align: 'center', },
+        { field: 'addUser',  title: '创建人', align: 'center', },
+        { field: 'publishTime',title: '创建时间', align: 'center' },
 
         // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
-        { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoVideo', align: 'center', },
+        { field: 'operation', title: '操作', toolbar: '#barDemoVideo', align: 'center', },
 
       ]]
       , page: true
@@ -850,20 +850,20 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       height: 500,
       cols: [[
         { type: 'checkbox', },
-        { field: 'img', width: 150, title: '图片', templet: "#detailsImgtmp", align: 'center' },
-        { field: 'name', width: 180, title: '图片名', align: 'center', },
+        { field: 'img', title: '图片', templet: "#detailsImgtmp", align: 'center' },
+        { field: 'name',  title: '图片名', align: 'center', },
         {
-          field: 'status', width: 180, title: '审核状态', align: 'center', templet: function (d) {
+          field: 'status',  title: '审核状态', align: 'center', templet: function (d) {
             return d.status == 0 ? '未审核' : d.status == 1 ? '待审核' : d.status == 2 ? '审核通过' : '审核不通过'
 
           }
         },
-        { field: 'number', width: 200, title: '图片编号', align: 'center', },
-        { field: 'addUser', width: 150, title: '创建人', align: 'center', },
-        { field: 'publishTime', width: 180, title: '创建时间', align: 'center' },
+        { field: 'number', title: '图片编号', align: 'center', },
+        { field: 'addUser', title: '创建人', align: 'center', },
+        { field: 'publishTime',  title: '创建时间', align: 'center' },
 
         // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
-        { field: 'operation', width: 150, title: '操作', toolbar: '#barDemoImg', align: 'center', },
+        { field: 'operation',  title: '操作', toolbar: '#barDemoImg', align: 'center', },
       ]]
       , page: true
       , id: 'detailsId'
@@ -1107,5 +1107,12 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
     if (PImgSHow) {
       $('#pic101').hide();
     }
+  });
+  $('.refreshBtnList').click(function () {
+    layer.msg('已刷新', { icon: 1 })
+    var dataListGoodsImg,
+        detailsIMGList,
+        dataGoodsVideoList;
+    dataListGoodsImg = detailsIMGList = dataGoodsVideoList = treeList();
   })
 })

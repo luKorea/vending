@@ -68,13 +68,13 @@ layui.use(['table', 'form', 'layer', 'laydate','tree'], function () {
         },
         cols: [[
             { checkbox: true },
-            { field: 'sm_no', width: 200, title: '编号', align: 'center' },
-            { field: 'sm_name', width: 230, title: '姓名', align: 'center' },
-            { field: 'sm_phone', width: 230, title: '电话号', align: 'center' },
-            { field: 'sm_classify', width: 230, title: '类别', align: 'center' },
-            { field: 'create_name', width: 230, title: '创建人', align: 'center' },
+            { field: 'sm_no',  title: '编号', align: 'center' },
+            { field: 'sm_name', title: '姓名', align: 'center' },
+            { field: 'sm_phone',  title: '电话号', align: 'center' },
+            { field: 'sm_classify', title: '类别', align: 'center' },
+            { field: 'create_name',  title: '创建人', align: 'center' },
             {
-                field: 'create_time', width: 200, align: 'center', title: '创建时间', templet: function (d) {
+                field: 'create_time', align: 'center', title: '创建时间', templet: function (d) {
                     if (d.create_time) {
                         return timeStamp(d.create_time)
                     } else {
@@ -292,7 +292,7 @@ layui.use(['table', 'form', 'layer', 'laydate','tree'], function () {
       id: 'treelist',
       showLine: !0 //连接线
       ,
-      onlyIconControl: true, //左侧图标控制展开收缩 
+      onlyIconControl: true, //左侧图标控制展开收缩
       data,
       spread: true,
       text: {

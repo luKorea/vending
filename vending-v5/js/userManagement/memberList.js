@@ -36,19 +36,19 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                 },
                 height: 600,
                 cols: [[
-                    {field: 'userName', width: 180, title: '用户名', align: 'center'},
-                    {field: 'name', width: 150, title: '姓名', align: 'center'},
+                    {field: 'userName', width: 150, title: '用户名', align: 'center'},
+                    {field: 'name', width: 120, title: '姓名', align: 'center'},
                     {
-                        field: 'open', width: 150, title: '状态', align: 'center', templet: function (d) {
+                        field: 'open', width: 100, title: '状态', align: 'center', templet: function (d) {
                             return d.open == 0 ? '不启用' : '启用'
                         }
                     },
                     {
-                        field: 'roleSign', width: 150, align: 'center', title: '售货机管理员', templet: function (d) {
+                        field: 'roleSign', width: 120, align: 'center', title: '售货机管理员', templet: function (d) {
                             return d.roleSign == 0 ? '否' : '是'
                         }
                     },
-                    {field: 'alias', width: 250, title: '用户编号', align: 'center'},
+                    {field: 'alias', width: 200, title: '用户编号', align: 'center'},
                     {field: 'phone', width: 150, title: '手机号', align: 'center'},
                     {field: 'merchantName', width: 200, title: '所属商户', align: 'center'},
                     {field: 'addUser', width: 150, title: '创建人', align: 'center',},

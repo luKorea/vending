@@ -778,26 +778,26 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'time', width: 200, title: '时间', align: 'center', templet: function (d) {
+                    field: 'time',  title: '时间', align: 'center', templet: function (d) {
                         return timeStamp(d.time)
                     }
                 },
-                {field: 'number', width: 250, title: '订单号', align: 'center',},
+                {field: 'number', title: '订单号', align: 'center',},
                 // {
                 //     field: 'shipStatus', width: 150, title: '出货状态', templet: function (d) {
                 //         return `<div><span class="${d.shipStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.shipStatus == 0 ? '出货失败' : d.shipStatus == 1 ? '出货成功' : '货道故障'}</span></div>`
                 //     }
                 // },
                 {
-                    field: 'payResult', width: 150, align: 'center', title: '支付状态', templet: function (d) {
+                    field: 'payResult',  align: 'center', title: '支付状态', templet: function (d) {
                         return `<div><span class="${d.payStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payResult}</span></div>`
                     }
                 },
                 {
-                    field: 'payTypes', width: 150, align: 'center', title: '支付类型',
+                    field: 'payTypes', align: 'center', title: '支付类型',
                 },
-                {field: 'payee', width: 150, align: 'center', title: '收款方',},
-                {field: 'amount', width: 150, align: 'center', title: '金额', templet: d => percentileMoney(d.amount)},
+                {field: 'payee',align: 'center', title: '收款方',},
+                {field: 'amount', align: 'center', title: '金额', templet: d => percentileMoney(d.amount)},
             ]],
             id: 'salesId',
             page: true,
@@ -846,43 +846,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
-        $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon');
-        var myDate = new Date(),
-            // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-            xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/exportMachineOrder?startDate=${selesStartTime}&endDate=${selesEndTime}&condition=${machineSetData.machineId}`, true);
-        xhr.setRequestHeader("token", sessionStorage.token);
-        // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
-        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-
-        xhr.onload = function (res) {
-            if (xhr.status == 200) {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                if (xhr.response.size < 50) {
-                    layer.msg('导出失败', {icon: 2})
-                    return
-                }
-                var content = xhr.response;
-                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-                var fileName = `${machineSetData.info}(${machineSetData.number})销售详情(${selesStartTime}-${selesEndTime}).xls`
-                var elink = document.createElement('a');
-                elink.download = fileName;
-                elink.style.display = 'none';
-                var blob = new Blob([content]);
-                elink.href = URL.createObjectURL(blob);
-                document.body.appendChild(elink);
-                elink.click();
-                document.body.removeChild(elink);
-            } else {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', {icon: 2});
-                return;
-            }
-        }
-        xhr.send();
+        let fileName = `${machineSetData.info}(${machineSetData.number})销售详情(${selesStartTime}-${selesEndTime}).xls`,
+            url = `${vApi}/exportMachineOrder?startDate=${selesStartTime}&endDate=${selesEndTime}&condition=${machineSetData.machineId}`;
+        exportExcel(url, fileName);
     })
     // 销售详情查询
     $('.selesQueryBtn').click(function () {
@@ -916,7 +882,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'time', width: 230, title: '出货时间', align: 'center', templet: function (d) {
+                    field: 'time',  title: '出货时间', align: 'center', templet: function (d) {
                         if (d.create_time) {
                             return timeStamp(d.create_time)
                         } else {
@@ -925,22 +891,22 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'good_name_core', width: 295, title: '商品名(编号)', align: 'center', templet: function (d) {
+                    field: 'good_name_core',  title: '商品名(编号)', align: 'center', templet: function (d) {
                         return d.good_name_core ? d.good_name_core : '-'
                     }
                 },
                 {
-                    field: 'ship_status', width: 165, title: '出货状态', align: 'center', templet: function (d) {
-                        return d.ship_status == 0 ? '出货失败' : d.ship_status == 1 ? '出货成功' : '货道故障'
+                    field: 'ship_status',  title: '出货状态', align: 'center', templet: function (d) {
+                        return setOrderDetailStatus(d.ship_status)
                     }
                 },
-                {field: 'before_count', width: 165, align: 'center', title: '出货前数量',},
+                {field: 'before_count',align: 'center', title: '出货前数量',},
                 // { field: 'ship_count', width: 135, align: 'center', title: '出货数量',templet:function(d){
                 //     return d.ship_status==1?'1':'0'
                 // } },
                 {
-                    field: 'before_count', width: 165, align: 'center', title: '出货后数量', templet: function (d) {
-                        return d.ship_status == 1 ? d.before_count - 1 : d.before_count
+                    field: 'before_count', align: 'center', title: '出货后数量', templet: function (d) {
+                        return d.before_count ?  (d.ship_status == 1 ? d.before_count - 1 : d.before_count) : '-'
                     }
                 },
                 // { field: 'ship_f', width: 140, align: 'center', title: '出货失败数量',templet:function(d){
@@ -948,12 +914,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // } },
 
                 {
-                    field: 'ship_type', width: 165, align: 'center', title: '出货类型', templet: function (d) {
+                    field: 'ship_type', align: 'center', title: '出货类型', templet: function (d) {
                         return d.ship_type == 1 ? '订单' : '取货码'
                     }
                 },
-                {field: 'way', width: 120, align: 'center', title: '出货货道'},
-                {field: 'order_code', width: 210, align: 'center', title: '订单号/取货码',},
+                {field: 'way', align: 'center', title: '出货货道'},
+                {field: 'order_code', align: 'center', title: '订单号/取货码',},
             ]]
             , id: 'shipmentId'
             , page: true
@@ -966,6 +932,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 machineId: machineSetData.machineId,
                 start_time: startTime,
                 end_time: endTime,
+                way: $('.shipmentRecord select[name="shipSelect"]').val(),
             },
             parseData: function (res) {
                 // console.log(res)
@@ -1002,42 +969,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
-        $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon');
-        // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/excelShipping?startDate=${startTime}&endDate=${endTime}&machineId=${machineSetData.machineId}&way=${$('.shipmentRecord select[name="shipSelect"]').val()}&goods_Name=${$('.shipmentRecord input[name="shipGoodName"]').val()}&order_code=${$('.shipmentRecord input[name="order_code"]').val()}`, true);
-        xhr.setRequestHeader("token", sessionStorage.token);
-        // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
-        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-
-        xhr.onload = function (res) {
-            if (xhr.status == 200) {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                if (xhr.response.size < 50) {
-                    layer.msg('导出失败', {icon: 2})
-                    return
-                }
-                var content = xhr.response;
-                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-                var fileName = `${machineSetData.info}(${machineSetData.number})出货记录(${startTime}-${endTime}).xls`
-                var elink = document.createElement('a');
-                elink.download = fileName;
-                elink.style.display = 'none';
-                var blob = new Blob([content]);
-                elink.href = URL.createObjectURL(blob);
-                document.body.appendChild(elink);
-                elink.click();
-                document.body.removeChild(elink);
-            } else {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', {icon: 2});
-                return;
-            }
-        }
-        xhr.send();
+        let fileName = `${machineSetData.info}(${machineSetData.number})出货记录(${startTime}-${endTime}).xls`,
+            url = `${vApi}/excelShipping?startDate=${startTime}&endDate=${endTime}&machineId=${machineSetData.machineId}&way=${$('.shipmentRecord select[name="shipSelect"]').val()}&goods_Name=${$('.shipmentRecord input[name="shipGoodName"]').val()}&order_code=${$('.shipmentRecord input[name="order_code"]').val()}`;
+        exportExcel(url, fileName);
     })
     // 出货记录列表
     $('.shipmentQueryBtn').click(function () {
@@ -1161,10 +1095,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token: sessionStorage.token,
             },
             cols: [[
-                {field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp"},
+                {field: 'goods_images', width: 100, title: '图片', align: 'center', templet: "#imgtmp"},
                 {
                     field: 'goods_Name',
-                    width: 200,
+                    width: 250,
                     align: 'center',
                     title: '商品名',
                     color: '#409eff',
@@ -1175,12 +1109,20 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 },
                 {field: `classifyName`, align: 'center', width: 150, title: '商品类目'},
                 {
-                    field: 'mail', width: 130, title: '是否邮寄商品', align: 'center', templet: function (d) {
+                    field: 'mail', width: 150, title: '是否邮寄商品', align: 'center', templet: function (d) {
                         return d.mail == 0 ? '否' : '是'
                     }
                 },
-                {field: 'goods_Core', align: 'center', width: 180, title: '商品编号',},
-                {field: 'operation', position: 'absolute', right: 0, width: 80, title: '操作', toolbar: '#GoodsbarDemo'},
+                {field: 'goods_Core', align: 'center', width: 200, title: '商品编号',},
+                {
+                    field: 'operation',
+                    position: 'absolute',
+                    right: 0,
+                    width: 100,
+                    title: '操作',
+                    align: 'center',
+                    toolbar: '#GoodsbarDemo'
+                },
 
             ]],
             id: 'goodsID',
@@ -1268,11 +1210,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     };
     //选择商品
     $('.relative').click(function () {
+        // TODO
         if (editPermissionsFlag != 1) {
             layer.msg('您不是该设备管理员!', {icon: 7});
             return;
         }
-        popupShow('goodsCont', 'goodsBox')
+        if (flag) {
+            popupShow('goodsCont', 'goodsBox')
+        }
         if (goodsTableIns) {
             goodsTableIns.reload({
                 where: {
@@ -1303,17 +1248,19 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                 <span>${index + 1}</span>
                             </div>`
             item.forEach((child, Cindex) => {
+                let status = Number(child.status) === 1;
+                console.log(status);
                 if (child.open != 0) {
                     aisleStr += `<div class="aisleNumderGoods" >
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">                                   
-                                        <img class="${child.status == 1 ? '' : 'hide'} ${child.goods_images ? 'wayImg' : ''}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt=""> 
-                                        <img class="${child.status == 1 ? 'hide' : ''}" src="${require('../../img/fault1.png')}" alt="">
+                                        <img class="${status ? '' : 'hide '} ${child.goods_images ? 'wayImg' : ''}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt=""> 
+                                        <img class="${status ? 'hide ' : ''}" src="${require('../../img/fault1.png')}" alt="">
                                     <span>${child.way}</span>
                                     </div>
                                     <div class="price">价格:${percentileMoney(child.price)}</div>
                                 <div class="numderBottom">
-                                        <div class="status1 ${child.status == 1 ? '' : 'redF10'}">${child.status == 1 ? '正常' : '货道故障'}</div>
+                                        <div class="status1 ${status ? '' : 'redF10'}">${status ? '正常' : '货道故障'}</div>
                                         <div title="${child.count}">数量:${child.count}</div>
                                     </div>
                                     </div>  
@@ -1325,17 +1272,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     aisleStr += `<div class="aisleNumderGoods" >
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">
-                                    <img class="${child.status == 1 ? '' : 'hide'}${child.goods_images ? 'wayImg' : ''}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt="">
-                                    <img class="${child.status == 1 ? 'hide' : ''}" src="${require('../../img/fault1.png')}" alt="">
+                                    <img class="${status ? '' : 'hide '} ${child.goods_images ? 'wayImg' : ''}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt="">
+                                    <img class="${status ? 'hide ' : ''}" src="${require('../../img/fault1.png')}" alt="">
                                         <span>${child.way}</span>
                                     </div>
                                     <div class="numderBottom">
-                                        <div class="status2">${child.status == 1 ? '禁用' : '货道故障'}</div>
+                                        <div class="status2">${status ? '禁用' : '货道故障'}</div>
                                         <div title="${child.count}">数量:${child.count}</div>
                                     </div>
                                     </div>  
                                     <div class="chooseCheck" >
-                                        <span >${child.mail == 1 ? '(邮寄)' : ''}${child.goods_Name ? child.goods_Name : ''}</span>
+                                        <span >${Number(child.mail) === 1 ? '(邮寄)' : ''}${child.goods_Name ? child.goods_Name : ''}</span>
                                     </div>
                                 </div>`
                 }
@@ -1372,6 +1319,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             return;
         }
         aisleType = 1;
+        flag = false;
         aisleEdit();
         disabledFun();
         popupShow('editAisle', 'editAisleBox');
@@ -1388,6 +1336,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // popupHide('iPasswprd', 'passwordCont')
                 // popupShow('editAisle', 'editAisleBox');
                 enableFun();
+                flag = true;
             } else if (aisleType == 2) {
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
@@ -1458,12 +1407,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     });
     var determineFlag = false,
-        editPermissionsFlag = false;
+        editPermissionsFlag = false,
+        flag = false;
     // 点击维护
     $('.editAisle .maintenanceBtn').click(function () {
         if (editPermissionsFlag == 1) {
             if (sessionStorage.independentPass) {
                 enableFun();
+                flag = true;
             } else {
                 popupShow('iPasswprd', 'passwordCont');
             }
@@ -1959,10 +1910,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                {field: 'username', title: '补货人', align: 'center', width: 220},
-                {field: 'name', title: '补货人姓名', align: 'center', width: 220},
+                {field: 'username', title: '补货人', align: 'center'},
+                {field: 'name', title: '补货人姓名', align: 'center'},
                 {
-                    field: 'replenish_time', title: '补货时间', align: 'center', width: 220, templet: function (d) {
+                    field: 'replenish_time', title: '补货时间', align: 'center', templet: function (d) {
                         if (d.replenish_time) {
                             return timeStamp(d.replenish_time)
                         } else {
@@ -1970,20 +1921,20 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         }
                     }
                 },
-                {field: 'way', title: '补货货道', align: 'center', width: 120,},
+                {field: 'way', title: '补货货道', align: 'center',},
                 {
-                    field: 'good_name_core', title: '商品名(编号)', width: 230, align: 'center',
+                    field: 'good_name_core', title: '商品名(编号)',  align: 'center',
                 },
                 {
-                    field: 'replenish_count', title: '补货前数量', align: 'center', width: 120, templet: function (d) {
+                    field: 'replenish_count', title: '补货前数量', align: 'center',  templet: function (d) {
                         return d.after_count - d.replenish_count
                     }
                 },
                 {
-                    field: 'replenish_count', title: '补货数量', align: 'center', width: 120,
+                    field: 'replenish_count', title: '补货数量', align: 'center',
                 },
                 {
-                    field: 'after_count', title: '补货后数量', align: 'center', width: 120,
+                    field: 'after_count', title: '补货后数量', align: 'center',
                 },
 
 
@@ -2000,7 +1951,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             where: {
                 machineId: machineSetData.machineId,
                 start_time: replenishmentStartTime ? replenishmentStartTime : null,
-                end_time: sreplenishmentEndTime ? sreplenishmentEndTime : null
+                end_time: sreplenishmentEndTime ? sreplenishmentEndTime : null,
+                way: $('.replenishment select[name="shipSelect"]').val(),
             },
             parseData: function (res) {
                 // console.log(res)
@@ -2066,42 +2018,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
-        $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon');
-        // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/excelReplenish?startDate=${replenishmentStartTime}&endDate=${sreplenishmentEndTime}&machineId=${machineSetData.machineId}&way=${$('.replenishment select[name="shipSelect"]').val()}&goods_Name=${$('.replenishment input[name="replenishmentGoodName"]').val()}`, true);
-        xhr.setRequestHeader("token", sessionStorage.token);
-        // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
-        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-
-        xhr.onload = function (res) {
-            if (xhr.status == 200) {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                if (xhr.response.size < 50) {
-                    layer.msg('导出失败', {icon: 2})
-                    return
-                }
-                var content = xhr.response;
-                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-                var fileName = `${machineSetData.info}(${machineSetData.number})补货记录(${replenishmentStartTime}-${sreplenishmentEndTime}).xls`
-                var elink = document.createElement('a');
-                elink.download = fileName;
-                elink.style.display = 'none';
-                var blob = new Blob([content]);
-                elink.href = URL.createObjectURL(blob);
-                document.body.appendChild(elink);
-                elink.click();
-                document.body.removeChild(elink);
-            } else {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', {icon: 2});
-                return;
-            }
-        }
-        xhr.send();
+        let fileName = `${machineSetData.info}(${machineSetData.number})补货记录(${replenishmentStartTime}-${sreplenishmentEndTime}).xls`,
+            url = `${vApi}/excelReplenish?startDate=${replenishmentStartTime}&endDate=${sreplenishmentEndTime}&machineId=${machineSetData.machineId}&way=${$('.replenishment select[name="shipSelect"]').val()}&goods_Name=${$('.replenishment input[name="replenishmentGoodName"]').val()}`;
+        exportExcel(url, fileName);
     })
     //开始时间
     var editStartTime = getKeyTime().startTime;
@@ -2134,23 +2053,21 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // { field: 'way', width: 150, title: '货道', align: 'center', },
                 {
                     field: 'old_price',
-                    width: 150,
                     title: '修改前价格',
                     align: 'center',
                     templet: d => percentileMoney(d.old_price)
                 },
                 {
                     field: 'new_price',
-                    width: 150,
                     title: '修改后价格',
                     align: 'center',
                     templet: d => percentileMoney(d.new_price)
                 },
-                {field: 'goods_Name', width: 275, title: '商品名(编号)', align: 'center',},
-                {field: 'user_name', width: 250, title: '修改人', align: 'center',},
-                {field: 'name', width: 200, title: '修改人姓名', align: 'center',},
+                {field: 'goods_Name', title: '商品名(编号)', align: 'center',},
+                {field: 'user_name', title: '修改人', align: 'center',},
+                {field: 'name',  title: '修改人姓名', align: 'center',},
                 {
-                    field: 'way', width: 250, title: '修改时间', align: 'center', templet: function (d) {
+                    field: 'way', title: '修改时间', align: 'center', templet: function (d) {
                         return d.change_time ? timeStamp(d.change_time) : '-'
                     }
                 },
@@ -2219,42 +2136,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             return;
         }
         ;
-        $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon');
-        // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/excelPriceRecord?startDate=${editStartTime}&endDate=${editEndTime}&machineId=${machineSetData.machineId}&goods_Name=${$('.price input[name="priceGoodName"]').val()}`, true);
-        xhr.setRequestHeader("token", sessionStorage.token);
-        // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
-        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-
-        xhr.onload = function (res) {
-            if (xhr.status == 200) {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                if (xhr.response.size < 50) {
-                    layer.msg('导出失败', {icon: 2})
-                    return
-                }
-                var content = xhr.response;
-                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-                var fileName = `${machineSetData.info}(${machineSetData.number})修改价格记录(${editStartTime}-${editEndTime}).xls`
-                var elink = document.createElement('a');
-                elink.download = fileName;
-                elink.style.display = 'none';
-                var blob = new Blob([content]);
-                elink.href = URL.createObjectURL(blob);
-                document.body.appendChild(elink);
-                elink.click();
-                document.body.removeChild(elink);
-            } else {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', {icon: 2});
-                return;
-            }
-        }
-        xhr.send();
+        let url = `${vApi}/excelPriceRecord?startDate=${editStartTime}&endDate=${editEndTime}&machineId=${machineSetData.machineId}&goods_Name=${$('.price input[name="priceGoodName"]').val()}`,
+            fileName = `${machineSetData.info}(${machineSetData.number})修改价格记录(${editStartTime}-${editEndTime}).xls`
+        exportExcel(url, fileName);
     })
     // 开门记录部分
     var openDoorTable = null;
@@ -2269,12 +2153,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                {field: 'info', width: 250, title: '售货机名', align: 'center',},
-                {field: 'openType', width: 150, title: '类型', align: 'center',},
-                {field: 'username', width: 150, title: '操作人', align: 'center',},
-                {field: 'name', width: 150, title: '操作人姓名', align: 'center'},
+                {field: 'info', title: '售货机名', align: 'center',},
+                {field: 'openType', title: '类型', align: 'center',},
+                {field: 'username', title: '操作人', align: 'center',},
+                {field: 'name',  title: '操作人姓名', align: 'center'},
                 {
-                    field: 'goods_Name', width: 250, title: '开门时间', align: 'center', templet: function (d) {
+                    field: 'goods_Name',  title: '开门时间', align: 'center', templet: function (d) {
                         return d.open_time ? timeStamp(d.open_time) : '-'
                     }
                 },
@@ -2355,42 +2239,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             return;
         }
         ;
-        $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon');
-        // dataOf = myDate.getFullYear() + '' + (myDate.getMonth()+1>=10?myDate.getMonth()+1:'0'+(myDate.getMonth()+1) )+ '' +( myDate.getDate()>=10?myDate.getDate():'0'+myDate.getDate()),
-        var xhr = new XMLHttpRequest();//定义一个XMLHttpRequest对象
-        xhr.open("GET", `${vApi}/excelDoorRecord?startDate=${openSTime}&endDate=${openETime}&machineId=${machineSetData.machineId}`, true);
-        xhr.setRequestHeader("token", sessionStorage.token);
-        // xhr.setRequestHeader('Content-Type', 'charset=utf-8');
-        xhr.responseType = 'blob';//设置ajax的响应类型为blob;
-
-        xhr.onload = function (res) {
-            if (xhr.status == 200) {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                if (xhr.response.size < 50) {
-                    layer.msg('导出失败', {icon: 2})
-                    return
-                }
-                var content = xhr.response;
-                // var fileName = `${marchantName}(${dataOf}).xlsx`; // 保存的文件名
-                var fileName = `${machineSetData.info}(${machineSetData.number})开门记录(${openSTime}-${openETime}).xls`
-                var elink = document.createElement('a');
-                elink.download = fileName;
-                elink.style.display = 'none';
-                var blob = new Blob([content]);
-                elink.href = URL.createObjectURL(blob);
-                document.body.appendChild(elink);
-                elink.click();
-                document.body.removeChild(elink);
-            } else {
-                $('.mask').fadeOut();
-                $('.maskSpan').removeClass('maskIcon');
-                layer.msg('服务器请求超时', {icon: 2});
-                return;
-            }
-        }
-        xhr.send();
+        let fileName = `${machineSetData.info}(${machineSetData.number})开门记录(${openSTime}-${openETime}).xls`,
+            url = `${vApi}/excelDoorRecord?startDate=${openSTime}&endDate=${openETime}&machineId=${machineSetData.machineId}`;
+        exportExcel(url, fileName);
     });
     laydate.render({
         elem: '#test101'
@@ -2574,8 +2425,6 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     });
     // 导出售货机
     $('.pushMachineBtn').click(function () {
-        $('.mask').fadeIn();
-        $('.maskSpan').addClass('maskIcon');
         let url = `${vApi}/excelMachine?merchantId=${sessionStorage.machineGoodsId}`,
             fileName = `${sessionStorage.machineName}售货机列表.xls`;
         exportExcel(url, fileName);
@@ -2594,21 +2443,18 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                {field: 'goods_images', width: 150, title: '图片', align: 'center', templet: "#panelImg"},
-                {field: 'good_name_core', width: 150, title: '商品名(编号)', align: 'center',},
-                {field: 'goodCount', width: 150, title: '数量', align: 'center',},
-                {field: 'oldGoodCount', width: 150, title: '原数量', align: 'center',},
-                {field: 'last_user', width: 150, title: '修改人', align: 'center',},
+                {field: 'goods_images', title: '图片', align: 'center', templet: "#panelImg"},
+                {field: 'good_name_core',  title: '商品名(编号)', align: 'center',},
+                {field: 'goodCount', title: '数量', align: 'center',},
+                {field: 'oldGoodCount',  title: '原数量', align: 'center',},
+                {field: 'last_user',  title: '修改人', align: 'center',},
                 {
-                    field: 'last_time', width: 180, title: '修改时间', align: 'center', templet: function (d) {
+                    field: 'last_time', title: '修改时间', align: 'center', templet: function (d) {
                         return d.last_time ? timeStamp(d.last_time) : '-'
                     }
                 },
                 {
                     field: 'operation',
-                    fixed: 'right',
-                    right: 0,
-                    width: 150,
                     title: '操作',
                     toolbar: '#panelId',
                     align: 'center'
@@ -2789,13 +2635,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                {field: 'goodName', width: 150, title: '商品名', align: 'center',},
-                {field: 'way', width: 130, title: '货道', align: 'center',},
-                {field: 'count', width: 150, title: '数量', align: 'center',},
-                {field: 'price', width: 150, title: '价格', align: 'center', templet: d => percentileMoney(d.price)},
-                {field: 'userName', width: 215, title: '撤货人', align: 'center',},
-                {field: 'name', width: 215, title: '撤货人姓名', align: 'center',},
-                {field: 'removeDate', width: 200, title: '撤货时间', align: 'center',},
+                {field: 'goodName',  title: '商品名', align: 'center',},
+                {field: 'way', title: '货道', align: 'center',},
+                {field: 'count',  title: '数量', align: 'center',},
+                {field: 'price',  title: '价格', align: 'center', templet: d => percentileMoney(d.price)},
+                {field: 'userName',  title: '撤货人', align: 'center',},
+                {field: 'name',  title: '撤货人姓名', align: 'center',},
+                {field: 'removeDate',  title: '撤货时间', align: 'center',},
             ]]
             , id: 'undoId'
             , page: true

@@ -684,6 +684,12 @@ function percentileMoney(num) {
 // 2 全部出货成功
 // 3 出货中
 // 4 全部出货失败
+// 5 光检失败
+/**
+ * @method setOrderStatus
+ * @param num
+ * @returns {string}
+ */
 function setOrderStatus(num) {
     let str = '';
     switch (num) {
@@ -702,21 +708,61 @@ function setOrderStatus(num) {
         case 4:
             str = '全部出货失败';
             break;
+        case 5:
+            str = '光检失败';
+            break;
     }
     return str;
 }
+
+
+// 出货详情 ship_status
+// 0 出货失败
+// 1 出货成功
+// 2 光检失败
+// 3 电机故障
+// default 货道故障
+/**
+ * @method setOrderDetailStatus
+ * @param ship_status {String}
+ * @returns {string}
+ */
+function setOrderDetailStatus(ship_status) {
+    let str = '';
+    switch (ship_status) {
+        case 0:
+            str = '出货失败';
+            break;
+        case 1:
+            str = '出货成功';
+            break;
+        case 2:
+            str = '出货正常 光检失败';
+            break;
+        case 3:
+            str = '电机故障';
+            break;
+        default:
+            str = '货道故障';
+            break;
+    }
+    return str;
+}
+
 
 /**
  * @method exportExcel
  * @description 导出模版
  * @param url {String}
  * @param fileName {String}
+ * @param data {Object}
+ * @param method {String}
  */
-function exportExcel(url, fileName) {
+function exportExcel(url, fileName, data, method = 'GET') {
     $('.mask').fadeIn();
     $('.maskSpan').addClass('maskIcon');
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
+    xhr.open(method, url, true);
     xhr.responseType = 'blob';//设置ajax的响应类型为blob;
     xhr.setRequestHeader("token", token);
     xhr.onload = function (res) {
@@ -746,5 +792,5 @@ function exportExcel(url, fileName) {
             return;
         }
     }
-    xhr.send();
+    xhr.send(data);
 }
