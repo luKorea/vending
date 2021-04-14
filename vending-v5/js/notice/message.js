@@ -180,22 +180,22 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 token,
             },
             cols: [[
-                { checkbox: true },
-                { field: 'userName', width: 180, title: '用户名', align: 'center' },
-                { field: 'name', width: 150, title: '姓名', align: 'center' },
+                { checkbox: true, width: 70, align: 'center' },
+                { field: 'userName',  title: '用户名', align: 'center' },
+                { field: 'name', title: '姓名', align: 'center' },
                 {
-                    field: 'open', width: 150, title: '状态', align: 'center', templet: function (d) {
+                    field: 'open', title: '状态', align: 'center', templet: function (d) {
                         return d.open == 0 ? '不启用' : '启用'
                     }
                 },
                 {
-                    field: 'roleSign', width: 150, align: 'center', title: '售货机管理员', templet: function (d) {
+                    field: 'roleSign',  align: 'center', title: '售货机管理员', templet: function (d) {
                         return d.roleSign == 0 ? '否' : '是'
                     }
                 },
-                { field: 'alias', width: 250, title: '用户编号', align: 'center' },
-                { field: 'phone', width: 150, title: '手机号', align: 'center' },
-                { field: 'merchantName', width: 150, title: '所属商户', align: 'center' },
+                { field: 'alias',  title: '用户编号', align: 'center' },
+                { field: 'phone',  title: '手机号', align: 'center' },
+                { field: 'merchantName',  title: '所属商户', align: 'center' },
             ]],
             id: 'userId',
             page: true,
@@ -427,15 +427,15 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 token: sessionStorage.token
             },
             cols: [[
-                { field: 'title', width: 200, title: '消息标题', align: 'center' },
-                { field: 'create_user', width: 200, title: '创建人', align: 'center' },
+                { field: 'title',  title: '消息标题', align: 'center' },
+                { field: 'create_user', title: '创建人', align: 'center' },
                 {
-                    field: 'is_read', width: 150, title: '接收人', align: 'center', templet: function (d) {
+                    field: 'is_read',title: '接收人', align: 'center', templet: function (d) {
                         return `<div>${d.name}</div><div>(${d.username})</div>`
                     }
                 },
                 {
-                    field: 'create_time', width: 200, align: 'center', title: '创建时间', templet: function (d) {
+                    field: 'create_time', align: 'center', title: '创建时间', templet: function (d) {
                         if (d.create_time) {
                             return timeStamp(d.create_time)
                         } else {
