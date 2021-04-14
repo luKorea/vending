@@ -778,26 +778,26 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'time', width: 200, title: '时间', align: 'center', templet: function (d) {
+                    field: 'time',  title: '时间', align: 'center', templet: function (d) {
                         return timeStamp(d.time)
                     }
                 },
-                {field: 'number', width: 250, title: '订单号', align: 'center',},
+                {field: 'number', title: '订单号', align: 'center',},
                 // {
                 //     field: 'shipStatus', width: 150, title: '出货状态', templet: function (d) {
                 //         return `<div><span class="${d.shipStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.shipStatus == 0 ? '出货失败' : d.shipStatus == 1 ? '出货成功' : '货道故障'}</span></div>`
                 //     }
                 // },
                 {
-                    field: 'payResult', width: 150, align: 'center', title: '支付状态', templet: function (d) {
+                    field: 'payResult',  align: 'center', title: '支付状态', templet: function (d) {
                         return `<div><span class="${d.payStatus == 2 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.payResult}</span></div>`
                     }
                 },
                 {
-                    field: 'payTypes', width: 150, align: 'center', title: '支付类型',
+                    field: 'payTypes', align: 'center', title: '支付类型',
                 },
-                {field: 'payee', width: 150, align: 'center', title: '收款方',},
-                {field: 'amount', width: 150, align: 'center', title: '金额', templet: d => percentileMoney(d.amount)},
+                {field: 'payee',align: 'center', title: '收款方',},
+                {field: 'amount', align: 'center', title: '金额', templet: d => percentileMoney(d.amount)},
             ]],
             id: 'salesId',
             page: true,
@@ -882,7 +882,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             },
             cols: [[
                 {
-                    field: 'time', width: 230, title: '出货时间', align: 'center', templet: function (d) {
+                    field: 'time',  title: '出货时间', align: 'center', templet: function (d) {
                         if (d.create_time) {
                             return timeStamp(d.create_time)
                         } else {
@@ -891,21 +891,21 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'good_name_core', width: 295, title: '商品名(编号)', align: 'center', templet: function (d) {
+                    field: 'good_name_core',  title: '商品名(编号)', align: 'center', templet: function (d) {
                         return d.good_name_core ? d.good_name_core : '-'
                     }
                 },
                 {
-                    field: 'ship_status', width: 165, title: '出货状态', align: 'center', templet: function (d) {
-                        return d.ship_status == 0 ? '出货失败' : d.ship_status == 1 ? '出货成功' : '货道故障'
+                    field: 'ship_status',  title: '出货状态', align: 'center', templet: function (d) {
+                        return setOrderDetailStatus(d.ship_status)
                     }
                 },
-                {field: 'before_count', width: 165, align: 'center', title: '出货前数量',},
+                {field: 'before_count',align: 'center', title: '出货前数量',},
                 // { field: 'ship_count', width: 135, align: 'center', title: '出货数量',templet:function(d){
                 //     return d.ship_status==1?'1':'0'
                 // } },
                 {
-                    field: 'before_count', width: 165, align: 'center', title: '出货后数量', templet: function (d) {
+                    field: 'before_count', align: 'center', title: '出货后数量', templet: function (d) {
                         return d.ship_status == 1 ? d.before_count - 1 : d.before_count
                     }
                 },
@@ -914,12 +914,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // } },
 
                 {
-                    field: 'ship_type', width: 165, align: 'center', title: '出货类型', templet: function (d) {
+                    field: 'ship_type', align: 'center', title: '出货类型', templet: function (d) {
                         return d.ship_type == 1 ? '订单' : '取货码'
                     }
                 },
-                {field: 'way', width: 120, align: 'center', title: '出货货道'},
-                {field: 'order_code', width: 210, align: 'center', title: '订单号/取货码',},
+                {field: 'way', align: 'center', title: '出货货道'},
+                {field: 'order_code', align: 'center', title: '订单号/取货码',},
             ]]
             , id: 'shipmentId'
             , page: true
@@ -1249,12 +1249,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                             </div>`
             item.forEach((child, Cindex) => {
                 let status = Number(child.status) === 1;
+                console.log(status);
                 if (child.open != 0) {
                     aisleStr += `<div class="aisleNumderGoods" >
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">                                   
-                                        <img class="${status ? '' : 'hide'} ${child.goods_images ? 'wayImg' : ''}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt=""> 
-                                        <img class="${status ? 'hide' : ''} wayImg" src="${require('../../img/fault1.png')}" alt="">
+                                        <img class="${status ? '' : 'hide '} ${child.goods_images ? 'wayImg' : ''}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt=""> 
+                                        <img class="${status ? 'hide ' : ''}" src="${require('../../img/fault1.png')}" alt="">
                                     <span>${child.way}</span>
                                     </div>
                                     <div class="price">价格:${percentileMoney(child.price)}</div>
@@ -1271,8 +1272,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     aisleStr += `<div class="aisleNumderGoods" >
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">
-                                    <img class="${status ? '' : 'hide'}${child.goods_images ? 'wayImg' : ''}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt="">
-                                    <img class="${status ? 'hide' : ''} wayImg" src="${require('../../img/fault1.png')}" alt="">
+                                    <img class="${status ? '' : 'hide '} ${child.goods_images ? 'wayImg' : ''}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt="">
+                                    <img class="${status ? 'hide ' : ''}" src="${require('../../img/fault1.png')}" alt="">
                                         <span>${child.way}</span>
                                     </div>
                                     <div class="numderBottom">
@@ -1909,10 +1910,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                {field: 'username', title: '补货人', align: 'center', width: 220},
-                {field: 'name', title: '补货人姓名', align: 'center', width: 220},
+                {field: 'username', title: '补货人', align: 'center'},
+                {field: 'name', title: '补货人姓名', align: 'center'},
                 {
-                    field: 'replenish_time', title: '补货时间', align: 'center', width: 220, templet: function (d) {
+                    field: 'replenish_time', title: '补货时间', align: 'center', templet: function (d) {
                         if (d.replenish_time) {
                             return timeStamp(d.replenish_time)
                         } else {
@@ -1920,20 +1921,20 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         }
                     }
                 },
-                {field: 'way', title: '补货货道', align: 'center', width: 120,},
+                {field: 'way', title: '补货货道', align: 'center',},
                 {
-                    field: 'good_name_core', title: '商品名(编号)', width: 230, align: 'center',
+                    field: 'good_name_core', title: '商品名(编号)',  align: 'center',
                 },
                 {
-                    field: 'replenish_count', title: '补货前数量', align: 'center', width: 120, templet: function (d) {
+                    field: 'replenish_count', title: '补货前数量', align: 'center',  templet: function (d) {
                         return d.after_count - d.replenish_count
                     }
                 },
                 {
-                    field: 'replenish_count', title: '补货数量', align: 'center', width: 120,
+                    field: 'replenish_count', title: '补货数量', align: 'center',
                 },
                 {
-                    field: 'after_count', title: '补货后数量', align: 'center', width: 120,
+                    field: 'after_count', title: '补货后数量', align: 'center',
                 },
 
 
@@ -2052,23 +2053,21 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // { field: 'way', width: 150, title: '货道', align: 'center', },
                 {
                     field: 'old_price',
-                    width: 150,
                     title: '修改前价格',
                     align: 'center',
                     templet: d => percentileMoney(d.old_price)
                 },
                 {
                     field: 'new_price',
-                    width: 150,
                     title: '修改后价格',
                     align: 'center',
                     templet: d => percentileMoney(d.new_price)
                 },
-                {field: 'goods_Name', width: 275, title: '商品名(编号)', align: 'center',},
-                {field: 'user_name', width: 250, title: '修改人', align: 'center',},
-                {field: 'name', width: 200, title: '修改人姓名', align: 'center',},
+                {field: 'goods_Name', title: '商品名(编号)', align: 'center',},
+                {field: 'user_name', title: '修改人', align: 'center',},
+                {field: 'name',  title: '修改人姓名', align: 'center',},
                 {
-                    field: 'way', width: 250, title: '修改时间', align: 'center', templet: function (d) {
+                    field: 'way', title: '修改时间', align: 'center', templet: function (d) {
                         return d.change_time ? timeStamp(d.change_time) : '-'
                     }
                 },
@@ -2154,12 +2153,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                {field: 'info', width: 250, title: '售货机名', align: 'center',},
-                {field: 'openType', width: 150, title: '类型', align: 'center',},
-                {field: 'username', width: 150, title: '操作人', align: 'center',},
-                {field: 'name', width: 150, title: '操作人姓名', align: 'center'},
+                {field: 'info', title: '售货机名', align: 'center',},
+                {field: 'openType', title: '类型', align: 'center',},
+                {field: 'username', title: '操作人', align: 'center',},
+                {field: 'name',  title: '操作人姓名', align: 'center'},
                 {
-                    field: 'goods_Name', width: 250, title: '开门时间', align: 'center', templet: function (d) {
+                    field: 'goods_Name',  title: '开门时间', align: 'center', templet: function (d) {
                         return d.open_time ? timeStamp(d.open_time) : '-'
                     }
                 },
@@ -2444,21 +2443,18 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                {field: 'goods_images', width: 150, title: '图片', align: 'center', templet: "#panelImg"},
-                {field: 'good_name_core', width: 150, title: '商品名(编号)', align: 'center',},
-                {field: 'goodCount', width: 150, title: '数量', align: 'center',},
-                {field: 'oldGoodCount', width: 150, title: '原数量', align: 'center',},
-                {field: 'last_user', width: 150, title: '修改人', align: 'center',},
+                {field: 'goods_images', title: '图片', align: 'center', templet: "#panelImg"},
+                {field: 'good_name_core',  title: '商品名(编号)', align: 'center',},
+                {field: 'goodCount', title: '数量', align: 'center',},
+                {field: 'oldGoodCount',  title: '原数量', align: 'center',},
+                {field: 'last_user',  title: '修改人', align: 'center',},
                 {
-                    field: 'last_time', width: 180, title: '修改时间', align: 'center', templet: function (d) {
+                    field: 'last_time', title: '修改时间', align: 'center', templet: function (d) {
                         return d.last_time ? timeStamp(d.last_time) : '-'
                     }
                 },
                 {
                     field: 'operation',
-                    fixed: 'right',
-                    right: 0,
-                    width: 150,
                     title: '操作',
                     toolbar: '#panelId',
                     align: 'center'
@@ -2639,13 +2635,13 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             cols: [[
-                {field: 'goodName', width: 150, title: '商品名', align: 'center',},
-                {field: 'way', width: 130, title: '货道', align: 'center',},
-                {field: 'count', width: 150, title: '数量', align: 'center',},
-                {field: 'price', width: 150, title: '价格', align: 'center', templet: d => percentileMoney(d.price)},
-                {field: 'userName', width: 215, title: '撤货人', align: 'center',},
-                {field: 'name', width: 215, title: '撤货人姓名', align: 'center',},
-                {field: 'removeDate', width: 200, title: '撤货时间', align: 'center',},
+                {field: 'goodName',  title: '商品名', align: 'center',},
+                {field: 'way', title: '货道', align: 'center',},
+                {field: 'count',  title: '数量', align: 'center',},
+                {field: 'price',  title: '价格', align: 'center', templet: d => percentileMoney(d.price)},
+                {field: 'userName',  title: '撤货人', align: 'center',},
+                {field: 'name',  title: '撤货人姓名', align: 'center',},
+                {field: 'removeDate',  title: '撤货时间', align: 'center',},
             ]]
             , id: 'undoId'
             , page: true

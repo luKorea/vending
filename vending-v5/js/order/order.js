@@ -108,7 +108,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                         } else {
                             var str = '';
                             d.ship_info.forEach((item, index) => {
-                                str += `<span>${item.goods_Name} (${item.way}货道 ${item.ship_status == 0 ? '出货失败' : item.ship_status == 1 ? '出货成功' : '货道故障'}) </span>`
+                                str += `<span>${item.goods_Name} (${item.way}货道 ${setOrderDetailStatus(item.ship_status)}) </span>`
                             });
                             return str
                         }
@@ -817,5 +817,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         if (PImgSHow) {
             $('#pic101').hide();
         }
+    });
+
+    $('.refreshBtnList').click(function () {
+        layer.msg('已刷新', {icon: 1})
+        dataList = treeList(marchantName);
     })
 })

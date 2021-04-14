@@ -554,11 +554,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                 token,
             },
             cols: [[
-                {field: 'img', width: 100, title: '图片', align: 'center', templet: "#materiaImgtmp"},
-                {field: 'name', width: 220, title: '图片名', align: 'center',},
+                {field: 'img',  title: '图片', align: 'center', templet: "#materiaImgtmp"},
+                {field: 'name',  title: '图片名', align: 'center',},
                 // { field: 'number', width: 200, title: '图片编号', },
-                {field: 'publishTime', width: 200, title: '发布时间', align: 'center'},
-                {field: 'addUser', width: 120, title: '发布人', align: 'center',},
+                {field: 'publishTime',  title: '发布时间', align: 'center'},
+                {field: 'addUser', title: '发布人', align: 'center',},
                 {
                     field: 'operationa',
                     right: 0,
@@ -689,11 +689,11 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             cols: [[
                 // { field: 'Img', width: 150, title: '素材图',templet: "" },
                 // { type: 'checkbox', },
-                {field: 'name', width: 120, title: '视频名', align: 'center',},
-                {field: 'publishTime', width: 180, title: '发布时间', align: 'center'},
-                {field: 'addUser', width: 150, title: '发布人', align: 'center',},
+                {field: 'name',  title: '视频名', align: 'center',},
+                {field: 'publishTime',  title: '发布时间', align: 'center'},
+                {field: 'addUser', title: '发布人', align: 'center',},
                 // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
-                {field: 'operation', width: 150, title: '操作', toolbar: '#barDemoVideo', align: 'center',},
+                {field: 'operation', title: '操作', toolbar: '#barDemoVideo', align: 'center',},
 
             ]]
             , page: true
@@ -859,10 +859,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             },
             cols: [[
                 {type: 'checkbox'},
-                {field: 'goods_images', width: 80, title: '图片', templet: "#Listimgtmp", align: 'center'},
+                {field: 'goods_images',title: '图片', templet: "#Listimgtmp", align: 'center'},
                 {
                     field: 'goods_Name',
-                    width: 150,
+
                     title: '商品名',
                     color: '#409eff',
                     align: 'center',
@@ -870,17 +870,17 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                         return (d.mail == 1 ? '(邮寄)' + d.goods_Name : d.goods_Name)
                     }
                 },
-                {field: `classifyName`, width: 140, title: '商品类目', align: 'center',},
-                {field: `tempMerchant`, width: 150, title: '商品所属商户', align: 'center',},
-                {field: `topMerchant`, width: 150, title: '推送商户', align: 'center',},
-                {field: `targetMerchant`, width: 140, title: '接收商户', align: 'center',},
+                {field: `classifyName`,  title: '商品类目', align: 'center',},
+                {field: `tempMerchant` , title: '商品所属商户', align: 'center',},
+                {field: `topMerchant`,  title: '推送商户', align: 'center',},
+                {field: `targetMerchant`,  title: '接收商户', align: 'center',},
                 {
-                    field: 'goods_Param', width: 120, title: '接收状态 ', align: 'center', templet: function (d) {
+                    field: 'goods_Param',  title: '接收状态 ', align: 'center', templet: function (d) {
                         return d.received == 0 ? '未接收' : '已接收'
                     }
                 },
                 {
-                    field: 'sendTime', width: 180, title: '推送时间 ', align: 'center', templet: function (d) {
+                    field: 'sendTime', title: '推送时间 ', align: 'center', templet: function (d) {
                         var myDate = new Date(d.sendTime);
                         var y = myDate.getFullYear();
                         var m = myDate.getMonth() + 1;
@@ -1120,11 +1120,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             },
             cols: [[
                 {checkbox: true},
-                {field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center'},
-                {field: 'goods_Core', width: 150, title: '商品编号', align: 'center'},
+                {field: 'goods_images', title: '图片', templet: "#imgtmp", align: 'center'},
+                {field: 'goods_Core',  title: '商品编号', align: 'center'},
                 {
                     field: 'goods_Name',
-                    width: 150,
                     title: '商品名',
                     color: '#409eff',
                     align: 'center',
@@ -1133,10 +1132,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                     }
                 },
                 {
-                    field: 'goods_Price', width: 100, align: 'center', title: '销售价 ', templet: d => percentileMoney(d.goods_Price)
+                    field: 'goods_Price', align: 'center', title: '销售价 ', templet: d => percentileMoney(d.goods_Price)
                 },
                 {
-                    field: 'mail', width: 150, title: '是否邮寄商品', align: 'center', templet: function (d) {
+                    field: 'mail',title: '是否邮寄商品', align: 'center', templet: function (d) {
                         return d.mail == 0 ? '否' : '是'
                     }
                 },
@@ -1211,17 +1210,17 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             cols: [[
                 {checkbox: true},
                 {
-                    field: 'number', width: 150, title: '售货机编号', align: 'center', templet: function (d) {
+                    field: 'number',  title: '售货机编号', align: 'center', templet: function (d) {
                         return d.number ? d.number : '-'
                     }
                 },
                 {
-                    field: 'info', width: 250, title: '售货机信息', align: 'center', templet: function (d) {
+                    field: 'info', title: '售货机信息', align: 'center', templet: function (d) {
                         return d.info ? `<div>${d.info}</div>` : `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>`
                     }
                 },
                 {
-                    field: 'location', width: 250, title: '地址', align: 'center', templet: function (d) {
+                    field: 'location', title: '地址', align: 'center', templet: function (d) {
                         return d.location ? d.location : ' - '
                     }
                 },

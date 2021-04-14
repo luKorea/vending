@@ -326,6 +326,11 @@ a cite {
     content: "\e602"
 }
 
+.layui-icon-right1:before {
+    content: "\e602"
+}
+
+
 .layui-icon-left:before {
     content: "\e603"
 }

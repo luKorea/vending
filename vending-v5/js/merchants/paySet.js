@@ -17,15 +17,15 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 token: sessionStorage.token,
             },
             cols: [[
-                { field: '1', width: 80, title: '', templet: "#imgtmp", event: 'rank', align: 'center' },
-                { field: 'rank', width: 80, title: '排序', align: 'center' },
-                { field: 'payName', width: 180, title: '支付类型', align: 'center' },
-                { field: 'app_id', width: 300, title: '微信公众号id/支付宝商户id', align: 'center', },
-                { field: 'merchantName', width: 250, title: '所属商户', align: 'center' },
-                { field: 'payee', width: 280, title: '收款方', align: 'center' },
-                { field: 'update_user', width: 200, title: '最后修改人', align: 'center' },
+                { field: '1', title: '升降序', templet: "#imgtmp", event: 'rank', align: 'center' },
+                { field: 'rank',  title: '排序', align: 'center' },
+                { field: 'payName', title: '支付类型', align: 'center' },
+                { field: 'app_id',  title: '微信公众号id/支付宝商户id', align: 'center', },
+                { field: 'merchantName', title: '所属商户', align: 'center' },
+                { field: 'payee', title: '收款方', align: 'center' },
+                { field: 'update_user',  title: '最后修改人', align: 'center' },
                 {
-                    field: 'update_time', width: 250, title: '最后修改时间', align: 'center', templet: function (d) {
+                    field: 'update_time', title: '最后修改时间', align: 'center', templet: function (d) {
                         if (d.update_time) {
                             return timeStamp(d.update_time)
                         } else {
@@ -34,7 +34,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     }
                 },
                 // { field: 'operation',right: 0, width: 150, title: '操作', toolbar: '#barDemo' ,fixed: 'right'},
-                { field: 'operation', right: 0, width: 150, align: 'center', title: '操作', toolbar: '#barDemo', fixed: 'right' },
+                { field: 'operation', align: 'center', title: '操作', toolbar: '#barDemo'},
             ]],
             id: 'tablePayId',
             // page:true,
@@ -182,7 +182,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         //             layer.msg(err.message, { icon: 2 })
         //         })
         //     })
-        // } 
+        // }
 
     });
     // 编辑
@@ -376,7 +376,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         id: 'treelist',
         showLine: !0 //连接线
         ,
-        onlyIconControl: true, //左侧图标控制展开收缩 
+        onlyIconControl: true, //左侧图标控制展开收缩
         data: dataList,
         spread: true,
         text: {
@@ -421,6 +421,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             }
 
         });
+        console.log(optionList);
         $('#editTypeSelect').html(optionList);
         $('#addTypeSelect').html(optionList);
         form.render('select');
@@ -445,6 +446,11 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             $('.addePay .IcbcPay').hide();
         } else if (data.value == 3) {
             $('.addePay .IcbcPay').show();
+            $('.addePay .WeChat').hide();
+            $('.addePay .Alipay').hide();
+        } else if (data.value == 4) {
+            // $('.addePay .juhePay').show();
+            $('.addePay .IcbcPay').hide();
             $('.addePay .WeChat').hide();
             $('.addePay .Alipay').hide();
         } else {

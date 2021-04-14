@@ -13,10 +13,10 @@
 <body>
     <div class="materia-wrap">
         <div class="tabsHeader">
-            <!-- <button class="layui-btn  refreshBtn btn" style="float: right; margin:-5px 10px 0 0;">
-                <i class="layui-icon layui-icon-refresh"></i>
-                <span>刷新</span>
-            </button> -->
+<!--            <button class="layui-btn  refreshBtn btn" style="float: right; margin:-5px 10px 0 0;">-->
+<!--                <i class="layui-icon layui-icon-refresh"></i>-->
+<!--                <span>刷新</span>-->
+<!--            </button>-->
             <ul class="navTab">
                 <li class="active">商品图片</li>
                 <li>详情图片</li>
@@ -30,6 +30,11 @@
             <div class="ImgContnet">
                 <div class="left-mian">
                     <div class="accountContnet" style="margin-left:15px;">
+                        <button type="button" class="layui-btn layui-btn-primary refreshBtnList one" data-tip="刷新商户列表"
+                                data-direction="bottom" type="button">
+                            <i class="layui-icon layui-icon-refresh-3 "></i>
+                            刷新
+                        </button>
                         <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
                         <div id="LogoIMG" class="demo-tree demo-tree-box"></div>
                     </div>
@@ -113,7 +118,7 @@
                         <div class="newKeyContent" >
                             <button type="button" class="layui-btn layui-btn-primary ImgQueyuBtnClick" style="margin: 0;">
                                 <i class="layui-icon layui-icon-refresh-3 "></i>
-                                <!-- 刷新 -->
+                                <span>刷新</span>
                             </button>
                         </div>
 
@@ -132,6 +137,11 @@
                 <div style="display: flex;justify-content: start;">
                     <div class="left-mian">
                         <div class="accountContnet" style="margin-left:15px;">
+                            <button type="button" class="layui-btn layui-btn-primary refreshBtnList two" data-tip="刷新商户列表"
+                                    data-direction="bottom" type="button">
+                                <i class="layui-icon layui-icon-refresh-3 "></i>
+                                刷新
+                            </button>
                             <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
                             <div id="detailsIMG" class="demo-tree demo-tree-box"></div>
                         </div>
@@ -217,7 +227,7 @@
                             <div class="newKeyContent">
                                 <button type="button" class="layui-btn layui-btn-primary detailsImgQueyuBtnClick" style="margin: 0;">
                                     <i class="layui-icon layui-icon-refresh-3 "></i>
-                                    <!-- 刷新 -->
+                                    <span>刷新</span>
                                 </button>
                             </div>
                         </div>
@@ -237,6 +247,11 @@
                 <div style="display: flex;justify-content: start;">
                     <div class="left-mian">
                         <div class="accountContnet" style="margin-left:15px;">
+                            <button type="button" class="layui-btn layui-btn-primary refreshBtnList three" data-tip="刷新商户列表"
+                                    data-direction="bottom" type="button">
+                                <i class="layui-icon layui-icon-refresh-3 "></i>
+                                刷新
+                            </button>
                             <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
                             <div id="dataGoodsVideo" class="demo-tree demo-tree-box"></div>
                         </div>
@@ -320,7 +335,7 @@
                             <div class="newKeyContent">
                                 <button type="button" class="layui-btn layui-btn-primary VideoQueryBtnClick">
                                     <i class="layui-icon layui-icon-refresh-3 "></i>
-                                    <!-- 刷新 -->
+                                    <span>刷新</span>
                                 </button>
                             </div>
 
@@ -455,7 +470,7 @@
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
                 </div>
-                
+
                 <div class="editBody">
                     <div class="listFlex">
                         <label for="">图片名：</label>

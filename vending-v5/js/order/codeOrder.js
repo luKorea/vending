@@ -16,6 +16,15 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             endTime = timerKey[1];
         }
     });
+
+    $('.sidebar i').click(function () {
+        $('.activityBox').hide();
+        $('.onLeft').show();
+    });
+    $('.onLeft').click(function () {
+        $('.onLeft').hide();
+        $('.activityBox').show();
+    })
     var token = sessionStorage.token,
         flow = layui.flow,
         layer = layui.layer,
@@ -32,30 +41,30 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 token,
             },
             cols: [[
-                {field: 'activity_name', width: 130, title: '活动名', align: 'center', fixed: 'left'},
-                {field: 'good_code', width: 180, title: '取货码', align: 'center'},
+                {field: 'activity_name',  title: '活动名', align: 'center', fixed: 'left'},
+                {field: 'good_code',  title: '取货码', align: 'center'},
                 {
-                    field: 'machineName', width: 200, title: '售货机名(编号)', align: 'center', templet: function (d) {
+                    field: 'machineName', title: '售货机名(编号)', align: 'center', templet: function (d) {
                         return `<div>${d.machineName}</div>
                     <div>(${d.machineNumber})</div>`
                     }
                 },
-                {field: 'machineAddress', width: 210, title: '售货机地址', align: 'center'},
+                {field: 'machineAddress',  title: '售货机地址', align: 'center'},
                 {
-                    field: 'ship_info', width: 250, title: '出货情况', align: 'center', templet: function (d) {
+                    field: 'ship_info',  title: '出货情况', align: 'center', templet: function (d) {
                         if (d.ship_info.length == 0) {
                             return '-'
                         } else {
                             var str = '';
                             d.ship_info.forEach((item, index) => {
-                                str += `<span>${item.goods_Name}(${item.way}货道${item.ship_status == 0 ? '出货失败' : item.ship_status == 1 ? '出货成功' : '货道故障'}) </span>`
+                                str += `<span>${item.goods_Name}(${item.way} ${setOrderDetailStatus(item.ship_status)})</span>`
                             });
                             return str
                         }
                     }
                 },
                 {
-                    field: 'operate_time', width: 160, align: 'center', title: '取货时间', templet: function (d) {
+                    field: 'operate_time',  align: 'center', title: '取货时间', templet: function (d) {
                         if (d.operate_time) {
                             return timeStamp(d.operate_time)
                         } else {
@@ -64,12 +73,12 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                     }
                 },
                 {
-                    field: 'operate_time', width: 100, title: '退货状态', align: 'center', templet: function (d) {
+                    field: 'operate_time',  title: '退货状态', align: 'center', templet: function (d) {
                         return d.refund == 0 ? '未退货' : '已退货'
                     }
                 },
                 {
-                    field: 'operation', width: 100, title: '操作',
+                    field: 'operation', title: '操作',
                     toolbar: '#refundDemo', align: 'center'
                 },
             ]],
@@ -281,5 +290,11 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             url = `${vApi}/exportCodesExcel?startDate=${startTime}&endDate=${endTime}&merchant_id=${merchantId}&code=${code}`;
         exportExcel(url, fileName);
     });
+
+
+    $('.refreshBtnList').click(function () {
+        layer.msg('已刷新', {icon: 1})
+        var dataList = treeList();
+    })
 
 })

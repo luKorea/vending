@@ -14,13 +14,16 @@ window.onload = function () {
     let isShow = true; //定义一个标志位
     $('#bread').click(function () {
         if (isShow) {
+            $('.layui-icon-right1').show();
+            $('.layui-icon-left').hide();
             $('.layui-tab-content').css({"left": "20px"});
             $('.layui-side.layui-bg-black').css({left: -200})
             $('.header-nav-tabs-switch').css({"margin-left": "20px"});
             isShow = false;
         } else {
             isShow = true;
-            $('#bread span').html('隐藏侧边栏')
+            $('.layui-icon-right1').hide();
+            $('.layui-icon-left').show();
             $('.layui-side.layui-bg-black').css({left: 0})
             $('.layui-tab-content').css({"left": "220px"});
             $('.header-nav-tabs-switch').css({"margin-left": "220px"});
@@ -492,20 +495,20 @@ window.onload = function () {
                     token: sessionStorage.token
                 },
                 cols: [[
-                    {field: 'title', width: 210, title: '标题', align: 'center'},
+                    {field: 'title', title: '标题', align: 'center'},
                     {
-                        field: 'attach_name', width: 150, title: '附件名', align: 'center', templet: function (d) {
+                        field: 'attach_name', title: '附件名', align: 'center', templet: function (d) {
                             return d.attach_name ? d.attach_name : '-'
                         }
                     },
                     {
-                        field: 'attach_url', width: 320, title: '附件地址', align: 'center', templet: function (d) {
+                        field: 'attach_url', title: '附件地址', align: 'center', templet: function (d) {
                             return d.attach_url ? d.attach_url : '-'
                         }
                     },
-                    {field: 'create_user', width: 130, title: '创建人', align: 'center',},
+                    {field: 'create_user', title: '创建人', align: 'center',},
                     {
-                        field: 'create_time', width: 180, title: '创建时间', align: 'center', templet: function (d) {
+                        field: 'create_time', title: '创建时间', align: 'center', templet: function (d) {
                             return timeStamp(d.create_time)
                         }
                     },

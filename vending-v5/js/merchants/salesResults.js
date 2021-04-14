@@ -49,12 +49,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         },
         cols: [[
             // { checkbox: true },
-            { field: 'sm_no', width: 200, title: '销售经理编号', align: 'center' },
-            { field: 'sm_name', width: 230, title: '销售经理姓名', align: 'center' },
-            { field: 'sm_phone', width: 230, title: '销售经理电话', align: 'center' },
-            { field: 'sm_classify', width: 230, title: '销售经理类别', align: 'center' },
+            { field: 'sm_no',  title: '销售经理编号', align: 'center' },
+            { field: 'sm_name', title: '销售经理姓名', align: 'center' },
+            { field: 'sm_phone', title: '销售经理电话', align: 'center' },
+            { field: 'sm_classify',  title: '销售经理类别', align: 'center' },
             {
-                field: 'create_name', width: 230, title: '总单数', align: 'center', templet: function (d) {
+                field: 'create_name', title: '总单数', align: 'center', templet: function (d) {
                     if (d.achievement.length == 0) {
                         return '-'
                     } else {
@@ -63,17 +63,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 }
             },
             {
-                field: 'create_name', width: 230, title: '总金额(￥)', align: 'center', templet: d => percentileMoney(d.achievement)
+                field: 'create_name', title: '总金额(￥)', align: 'center', templet: d => percentileMoney(d.achievement)
             },
-            // {
-            //     field: 'create_time', width: 200, title: '创建时间', templet: function (d) {
-            //         if (d.create_time) {
-            //             return timeStamp(d.create_time)
-            //         } else {
-            //             return '-'
-            //         }
-            //     }
-            // },
         ]],
         id: 'salesId',
         page: true,

@@ -30,18 +30,18 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             token: sessionStorage.token
         },
         cols: [[
-            { field: 'title', width: 200, title: '消息标题', align: 'center' },
+            { field: 'title',title: '消息标题', align: 'center' },
             {
-                field: 'name', width: 200, title: '状态', align: 'center', templet: function (d) {
+                field: 'name', title: '状态', align: 'center', templet: function (d) {
                     return d.is_read == 0 ? '未读' : '已读'
                 }
             },
-         
-            { field: 'create_user', width: 230, title: '创建人', align: 'center' ,templet:function(d){
+
+            { field: 'create_user', title: '创建人', align: 'center' ,templet:function(d){
                 return `<div>${d.usName}</div><div>(${d.um})</div>`
             }},
             {
-                field: 'create_time', width: 200, title: '创建时间', align: 'center', templet: function (d) {
+                field: 'create_time', title: '创建时间', align: 'center', templet: function (d) {
                     if (d.create_time) {
                         return timeStamp(d.create_time)
                     } else {
@@ -141,7 +141,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             id: 'treelist',
             showLine: !0 //连接线
             ,
-            onlyIconControl: true, //左侧图标控制展开收缩 
+            onlyIconControl: true, //左侧图标控制展开收缩
             data: dataList,
             spread: true,
             text: {
@@ -428,7 +428,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             },
             cols: [[
                 { field: 'title', width: 200, title: '消息标题', align: 'center' },
-                { field: 'create_user', width: 230, title: '创建人', align: 'center' },
+                { field: 'create_user', width: 200, title: '创建人', align: 'center' },
                 {
                     field: 'is_read', width: 150, title: '接收人', align: 'center', templet: function (d) {
                         return `<div>${d.name}</div><div>(${d.username})</div>`

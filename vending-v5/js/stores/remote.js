@@ -14,18 +14,19 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             headers: {
                 token: sessionStorage.token
             },
+            height: 600,
             cols: [[
-                {field: 'version_code', width: 180, title: '版本号', align: 'center'},
-                {field: 'version_name', width: 180, title: '版本名', align: 'center'},
+                {field: 'version_code', title: '版本号', align: 'center'},
+                {field: 'version_name',  title: '版本名', align: 'center'},
                 {
-                    field: 'apk_url', width: 400, title: '下载地址', align: 'center', templet: function (d) {
+                    field: 'apk_url',  title: '下载地址', align: 'center', templet: function (d) {
                         return `<a href="${d.apk_url}" style="color: rgb(190, 149, 74)">${d.apk_url}</a>`
                     }
                 },
-                {field: 'content', width: 350, title: '描述', align: 'center'},
-                {field: 'upload_user', width: 150, title: '创建人', align: 'center'},
+                {field: 'content', title: '描述', align: 'center'},
+                {field: 'upload_user',  title: '创建人', align: 'center'},
                 {
-                    field: 'upload_time', width: 180, title: '创建时间', align: 'center', templet: function (d) {
+                    field: 'upload_time', title: '创建时间', align: 'center', templet: function (d) {
                         if (d.upload_time) {
                             return timeStamp(d.upload_time)
                         } else {
@@ -35,9 +36,6 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 },
                 {
                     field: 'operation',
-                    fixed: 'right',
-                    right: 0,
-                    width: 150,
                     title: '操作',
                     toolbar: '#barDemo',
                     align: 'center'
@@ -373,28 +371,28 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 token: sessionStorage.token
             },
             cols: [[
-                {checkbox: true, align: 'center', width: 70},
+                {checkbox: true, align: 'center', width: 70,},
                 {
-                    field: 'number', width: 180, title: '售货机编号', align: 'center', templet: function (d) {
+                    field: 'number', title: '售货机编号', align: 'center', templet: function (d) {
                         return d.number ? d.number : '-'
                     }
                 },
                 {
-                    field: 'info', width: 180, title: '售货机名', align: 'center', templet: function (d) {
+                    field: 'info',  title: '售货机名', align: 'center', templet: function (d) {
                         return d.info ? `<div>${d.info}</div>` : `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>`
                     }
                 },
                 {
-                    field: 'location', width: 180, title: '地址', align: 'center', templet: function (d) {
+                    field: 'location', title: '地址', align: 'center', templet: function (d) {
                         return d.location ? d.location : ' - '
                     }
                 },
                 {
-                    field: 'versions', width: 200, align: 'center', title: '当前版本(待升级版本)', templet: function (d) {
+                    field: 'versions',  align: 'center', title: '当前版本(待升级版本)', templet: function (d) {
                         return `${d.versions ? d.versions : '-'}(${d.appVersion ? d.appVersion : '-'})`
                     }
                 },
-                {field: 'merchantName', width: 150, align: 'center', title: '所属商户'}
+                {field: 'merchantName',  align: 'center', title: '所属商户'}
             ]],
             id: 'mId',
             loading: true,

@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="wrap">
-        <div class="margin">
+        <div class="margin" style="width: 100%;">
             <div class="newHeader" style="margin-top: 30px;">
                 <div class="newHeaderText">
                     条件查询
@@ -47,7 +47,7 @@
                 <div class="newKeyContent">
                     <button type="button" class="layui-btn layui-btn-primary queryBtn">
                         <i class="layui-icon layui-icon-refresh-3 "></i>
-                        <!-- 刷新 -->
+                        <span>刷新</span>
                     </button>
                 </div>
             </div>
@@ -57,6 +57,11 @@
                         <div class="width50">
                             <p>商户列表</p>
                             <div class="activityList">
+                                <button type="button" class="layui-btn layui-btn-primary refreshBtnList" data-tip="刷新商户列表"
+                                        data-direction="bottom" type="button">
+                                    <i class="layui-icon layui-icon-refresh-3 "></i>
+                                    刷新
+                                </button>
                                 <div style="padding: 10px;">
                                     <div id="test1" class="demo-tree demo-tree-box"></div>
                                 </div>
@@ -72,9 +77,12 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="sidebar">
+                            <i class="layui-icon layui-icon-left"></i>
+                        </div>
                     </div>
-                    <div class="orderTable">
+                    <i class="layui-icon layui-icon-right  onLeft" style="z-index: 888;"></i>
+                    <div class="orderTable" style="width: 100%">
                         <div class="over-line">
                             <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
                         </div>

@@ -346,7 +346,7 @@ body .layui-form-checked[lay-skin=primary] i{
     animation: mymove 1s 1;
 }
 
-.layui-icon-right{
+.layui-icon-right {
     position: absolute;
     text-align: center;
     cursor: pointer;
@@ -437,14 +437,13 @@ body .layui-form-checked[lay-skin=primary] i{
     top: 300px !important;
     right: -6px;
     display: block;
-    width: 32px;
+    width: 28px;
     line-height: 76px;
-    font-size: 24px;
+    font-size: 20px;
     height: 76px;
     background-color: #eee;
     border-radius: 10px 0 0 10px;
     -webkit-transition: right 1s;
-
 }
 .on-left{
     color: #999;

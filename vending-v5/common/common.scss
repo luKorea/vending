@@ -519,3 +519,9 @@ input:disabled{
         transform: translate(-50%,-50%);
     }
 }
+
+
+.img-hide{
+    display: none !important;
+    transition: all 0.3s;
+}

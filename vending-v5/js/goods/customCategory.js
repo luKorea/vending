@@ -34,26 +34,26 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         token,
       }
       , cols: [[
-        { field: '1', width: 80, title: '', templet: "#imgtmp", event: 'rank', align: 'center' },
-        { field: 'rank', width: 80, title: '排序', align: 'center' },
-        { field: 'classifyName', width: 150, title: '类目名', align: 'center' },
-        { field: 'remark', width: 150, title: '备注', align: 'center' },
+        { field: '1', title: '升降序', templet: "#imgtmp", event: 'rank', align: 'center' },
+        { field: 'rank', title: '排序', align: 'center' },
+        { field: 'classifyName', title: '类目名', align: 'center' },
+        { field: 'remark',title: '备注', align: 'center' },
         // { field: 'type', width: 180, title: '使用机型'},
         {
-          field: 'user', width: 150, title: '创建人', align: 'center', templet: function (d) {
+          field: 'user',  title: '创建人', align: 'center', templet: function (d) {
             return d.user != null ? d.user.userName : ''
           }
         },  // { field: 'users', width: 180, title: '商户名' }, //templet: '<div>{{d.user.userName}}</div>'
         {
-          field: 'classifyTime', width: 200, title: '创建时间', align: 'center'
+          field: 'classifyTime',  title: '创建时间', align: 'center'
         },
         {
-          field: 'lastUser', width: 150, title: '最后修改人', align: 'center',
+          field: 'lastUser', title: '最后修改人', align: 'center',
         },
         {
-          field: 'lastTime', width: 190, title: '最后修改时间', align: 'center'
+          field: 'lastTime',  title: '最后修改时间', align: 'center'
         },
-        { field: 'operation', align: 'center', position: 'absolute', right: 0, width: 150, title: '操作', toolbar: '#barDemo' }
+        { field: 'operation', align: 'center', title: '操作', toolbar: '#barDemo' }
       ]]
       , id: 'tableId'
       , page: true

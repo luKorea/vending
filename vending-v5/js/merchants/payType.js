@@ -12,20 +12,20 @@ layui.use(['table', 'form', 'layer'], function () {
                 token:sessionStorage.token
             },
             cols: [[
-                { field: 'logo', width: 180, title: '图标',templet: "#imgtmp", align: 'center' },
-                { field: 'name', width: 180, title: '类型名', align: 'center' },
-                { field: 'status', width: 180, title: '状态', align: 'center',templet:function(d){
+                { field: 'logo',  title: '图标',templet: "#imgtmp", align: 'center' },
+                { field: 'name', title: '类型名', align: 'center' },
+                { field: 'status',  title: '状态', align: 'center',templet:function(d){
                     return d.status==1?'启用':'禁用'
                 }},
-                { field: 'update_user', width: 180, title: '最后修改人', align: 'center' },
-                { field: 'update_time', width: 180, title: '最后修改时间', align: 'center',templet:function(d){
+                { field: 'update_user',  title: '最后修改人', align: 'center' },
+                { field: 'update_time', title: '最后修改时间', align: 'center',templet:function(d){
                     if (d.update_time) {
                         return timeStamp(d.update_time)
                       } else {
                         return '-';
                       }
                 }},
-                { field: 'operation', fixed: 'right', align: 'center', right: 0, width: 250, title: '操作', toolbar: '#barDemo' },
+                { field: 'operation', align: 'center', title: '操作', toolbar: '#barDemo' },
             ]]
             , id: 'tableId'
             , loading: true,
@@ -164,7 +164,7 @@ layui.use(['table', 'form', 'layer'], function () {
                 tableIns.reload({
                     where:{}
                 })
-                
+
             }).catch(err=>{
                 layer.msg(err.message,{icon:2})
             })
@@ -184,7 +184,7 @@ layui.use(['table', 'form', 'layer'], function () {
                 tableIns.reload({
                     where:{}
                 })
-                
+
             }).catch(err=>{
                 console.log(err)
                 layer.msg(err.message,{icon:2})
@@ -242,7 +242,7 @@ $('.editpayType .RdetermineBtn').click(function(){
             where:{}
         })
         addImg=null;
-        
+
     }).catch(err=>{
         console.log(err)
         layer.msg(err.message,{icon:2})

@@ -91,7 +91,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
                     } else {
                         var str = '';
                         d.ship_info.forEach((item, index) => {
-                            str += `<span>${item.goods_Name}(${item.way}货道${item.ship_status == 0 ? '出货失败' : item.ship_status == 1 ? '出货成功' : '货道故障'}) </span>`
+                            str += `<span>${item.goods_Name}(${item.way}货道 ${setOrderDetailStatus(item.ship_status)})</span>`
                         });
                         return str
                     }

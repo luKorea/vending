@@ -14,35 +14,35 @@ layui.use(['table', 'form', 'layer',], function () {
                 token: sessionStorage.token
             },
             cols: [[
-                { field: 'n_number', width: 200, title: '公告编号', align: 'center' },
-                { field: 'title', width: 210, title: '标题', align: 'center' },
+                { field: 'n_number', title: '公告编号', align: 'center' },
+                { field: 'title',  title: '标题', align: 'center' },
                 {
-                    field: 'isShow', width: 135, title: '是否展示', align: 'center', templet: function (d) {
+                    field: 'isShow',  title: '是否展示', align: 'center', templet: function (d) {
                         return d.is_show == 1 ? '是' : '否'
                     }
                 },
                 {
-                    field: 'status', width: 130, title: '状态', align: 'center', templet: function (d) {
+                    field: 'status',title: '状态', align: 'center', templet: function (d) {
                         return d.n_status == 1 ? '已发布' : '草稿箱'
                     }
                 },
                 {
-                    field: 'attach_name', width: 150, title: '附件名', align: 'center', templet: function (d) {
+                    field: 'attach_name',  title: '附件名', align: 'center', templet: function (d) {
                         return d.attach_name ? d.attach_name : '-'
                     }
                 },
                 {
-                    field: 'attach_url', width: 320, title: '附件地址', align: 'center', templet: function (d) {
-                        return d.attach_url ? d.attach_url : '-'
+                    field: 'attach_url',  title: '附件地址', align: 'center', templet: function (d) {
+                        return d.attach_url ? `<a href="${d.attach_url}" target="_blank" style="color: rgb(190, 149, 74)">${d.attach_url}</a>` : '-'
                     }
                 },
-                { field: 'create_user', width: 130, title: '创建人', align: 'center', },
+                { field: 'create_user', title: '创建人', align: 'center', },
                 {
-                    field: 'create_time', width: 180, title: '创建时间', align: 'center', templet: function (d) {
+                    field: 'create_time',  title: '创建时间', align: 'center', templet: function (d) {
                         return timeStamp(d.create_time)
                     }
                 },
-                { field: 'operation', width: 180, title: '操作', align: 'center', toolbar: '#barDemo' },
+                { field: 'operation',  title: '操作', align: 'center', toolbar: '#barDemo' },
             ]],
             id: 'noticeId',
             page: true,
@@ -52,7 +52,7 @@ layui.use(['table', 'form', 'layer',], function () {
                 'limitName': 'pageSize'
             },
             where: {
-                // merchantId:Number(sessionStorage.machineID) 
+                // merchantId:Number(sessionStorage.machineID)
             },
             parseData: function (res) {
                 // console.log(res)
