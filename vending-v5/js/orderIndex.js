@@ -83,8 +83,7 @@ function decrypt(cipher) {
             $('.determineCont h1').html('当前不支持微信付款，请使用其他方式进行扫码购买！')
             $('.determineCont').show();
             return;
-        }
-        ;
+        };
         payTypeIndex = 2;
         payTypeData = goodsData.payee[payFlag.indexOf(2)];
         getCode(payTypeData.app_id)
@@ -179,11 +178,11 @@ $('.footer1 h1').click(function () {
             data: encrypts(pushOrder)
         })
         aliPay(alipayObj);
-    } else if (payTypeIndex == 2) {
+    }
+    else if (payTypeIndex == 2) {
         $('.mask').show();
         wxPay();
     }
-
 });
 // 普通订单支付
 $('.footer2 h1').click(function () {
@@ -201,7 +200,8 @@ $('.footer2 h1').click(function () {
             data: encrypts(pushOrder)
         })
         aliPay(alipayObj);
-    } else if (payTypeIndex == 2) {
+    }
+    else if (payTypeIndex == 2) {
         $('.mask').show();
         wxPay();
     }
@@ -254,12 +254,6 @@ setTimeout(_ => {
 // 轮询查询订单支付结果
 var numberStr = '',
     setTime = null;
-
-
-const [data, setData] = useState(0);
-
-setData()
-
 
 function keyNumber(NumberOne) {
     setTime = setInterval(_ => {
@@ -320,7 +314,7 @@ function wxPay() {
 }
 
 // 微信支付
-function onBridgeReady(wxData) {
+function onBridgeReady(wxData)  {
     WeixinJSBridge.invoke(
         'getBrandWCPayRequest', {
             appId: wxData.appId,

@@ -737,7 +737,7 @@ function setOrderDetailStatus(ship_status) {
             str = '出货成功';
             break;
         case 2:
-            str = '光检失败';
+            str = '出货正常 光检失败';
             break;
         case 3:
             str = '电机故障';
