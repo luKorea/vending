@@ -10,6 +10,7 @@ import {
     mulCaluter,
     fixedFun,
     timeStampM,
+    formatDate,
     setTableColor
 } from '../../common/common.js';
 
@@ -143,7 +144,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     table.on('tool(tableTest)', function (obj) {
         event.stopPropagation();
         companyData = obj.data;
-        console.log(companyData,'companyData');
+        console.log(companyData, 'companyData');
         if (obj.event === 'operation') {
             if (operationFlag == obj.data.companyId) {
                 $('.ListOperation').fadeOut();
@@ -512,7 +513,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         }
                     }
                 },
-                { field: 'operationUse', width: 150, title: '操作', toolbar: '#barUser', align: 'center' },
+                {
+                    field: 'updateTime', width: 180, title: '更新时间', align: 'center', templet: function (d) {
+                        if (d.updateTime) {
+                            return formatDate(d.updateTime)
+             
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                { field: 'operationUse', width: 120, title: '操作', toolbar: '#barUser', align: 'center' },
             ]]
             , id: 'useId'
             , page: true,
@@ -558,11 +569,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     var useData = null;
     table.on('tool(useTable)', function (obj) {
-        console.log('useData---',obj,$(this));
-        
+        console.log('useData---', obj, $(this));
+
         event.stopPropagation();
         useData = obj.data;
-        console.log('useData---',useData);
+        console.log('useData---', useData);
         if (obj.event === "operation") {
             $('.ListUseOperation').fadeIn();
             $('.ListUseOperation').css({
@@ -574,9 +585,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     //使用记录种点击查看详情
     $('.ListUseOperation .detail').click(function () {
-     
+
         if (dayIns) {
-            console.log(timeStampM(useData.statisticsTime),companyData.companyName,companyData.bicId);
+            console.log(timeStampM(useData.statisticsTime), companyData.companyName, companyData.bicId);
             dayIns.reload({
                 where: {
                     bicId: companyData.bicId,
@@ -670,9 +681,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     };
 
     $('.ListUseOperation .quality').click(function () {
-     
+
         if (QualityData) {
-            console.log(timeStampM(useData.statisticsTime),companyData.companyName,companyData.bicId);
+            console.log(timeStampM(useData.statisticsTime), companyData.companyName, companyData.bicId);
             QualityData.reload({
                 where: {
                     bicId: companyData.bicId,
@@ -762,9 +773,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         });
     };
     $('.ListUseOperation .express').click(function () {
-    
+
         if (dayExpressData) {
-            console.log(timeStampM(useData.statisticsTime),companyData.companyName,companyData.bicId);
+            console.log(timeStampM(useData.statisticsTime), companyData.companyName, companyData.bicId);
             dayExpressData.reload({
                 where: {
                     bicId: companyData.bicId,
@@ -792,6 +803,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             cols: [[
                 { field: 'day', width: 150, title: '使用时间', align: 'center' },
+
                 {
                     field: 'expressFee', width: 150, title: '快递费用', align: 'center', templet: function (d) {
                         if (d.expressFee && d.expressFee > 0) {
@@ -875,7 +887,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         }
     });
     $('.ListDateOperation .detail').click(function () {
-        
+
         if (orderIns) {
             orderIns.reload({
                 where: {
@@ -901,9 +913,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 token,
             },
             contentType: "application/json",
-           // totalRow: true,
+            // totalRow: true,
             cols: [[
-               // { field: 'id', width: 180, title: '质检编号', align: 'center', },
+                // { field: 'id', width: 180, title: '质检编号', align: 'center', },
                 { field: 'date', width: 180, title: '质检日期', align: 'center', },
                 { field: 'bicName', width: 180, title: '公司名称', align: 'center', },
                 { field: 'certificateType', width: 180, title: '证书类型', align: 'center', },
@@ -982,7 +994,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 token,
             },
             contentType: "application/json",
-           // totalRow: true,
+            // totalRow: true,
             cols: [[
                 { field: 'orderId', width: 180, title: '订单编号', align: 'center', },
                 // { field: 'orderYard', width: 180, title: '订单码', align: 'center' },
