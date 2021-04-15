@@ -52,9 +52,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
         },
         cols: [[
-            {field: 'bicId', width: 160, title: '商家ID', align: 'center', templet: "#imgtmp",},
-            {field: 'companyName', width: 250, title: '商家名称', align: 'center'},
-            {field: 'startUsingStr', width: 110, title: '是否启用', align: 'center'},
+            { field: 'bicId', width: 160, title: '商家ID', align: 'center', templet: "#imgtmp", },
+            { field: 'companyName', width: 250, title: '商家名称', align: 'center' },
+            { field: 'startUsingStr', width: 110, title: '是否启用', align: 'center' },
             {
                 field: 'balance', width: 160, title: '余额', align: 'center', templet: function (d) {
                     return numFormat2(d.balance)
@@ -75,8 +75,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     return numFormat2(d.moneyRemind)
                 }
             },
-            {field: 'remark', width: 180, title: '备注', align: 'center'},
-            {field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', align: 'center'},
+            { field: 'remark', width: 180, title: '备注', align: 'center' },
+            { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },
         ]]
         , id: 'tableId'
         , page: true,
@@ -107,7 +107,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         },
         done: function (res) {
             if (res.code == 403) {
-                layer.msg('登录过期,请重新登录', {icon: 2})
+                layer.msg('登录过期,请重新登录', { icon: 2 })
                 setTimeout(__ => {
                     window.parent.location.href = "login.html";
                 }, 1500)
@@ -143,6 +143,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     table.on('tool(tableTest)', function (obj) {
         event.stopPropagation();
         companyData = obj.data;
+        console.log(companyData,'companyData');
         if (obj.event === 'operation') {
             if (operationFlag == obj.data.companyId) {
                 $('.ListOperation').fadeOut();
@@ -170,7 +171,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 確定添加
     $('.addMBox .determine1').click(function () {
         if (!($('.addMBody input[name="companyName"]').val() && $('.addMBody input[name="bicId"]').val() && $('.addMBody input[name="moneyRemind"]').val())) {
-            layer.msg('带*为必填', {icon: '7'});
+            layer.msg('带*为必填', { icon: '7' });
             return;
         }
         // if (!(wholeNum($('.addMBody input[name="moneyRemind"]').val()))) {
@@ -188,7 +189,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             // mulCaluter(Number($('.topUPBox input[name="topUpNum"]').val()), 100),
         });
         loadAjax('/company/addCompany', 'post', sessionStorage.token, addCompanyObj, layer, 'mask', '.addMerchantsCont', '.addMBox').then(res => {
-            layer.msg(res.message, {icon: 1});
+            layer.msg(res.message, { icon: 1 });
             tableIns.reload({
                 where: {}
             });
@@ -198,7 +199,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             $('.addMBody input[name="balance"]').val('');
             $('.addMBody input[name="remark"]').val('');
         }).catch(err => {
-            layer.msg(err.message, {icon: 2});
+            layer.msg(err.message, { icon: 2 });
         })
     })
     // 点击充值
@@ -211,11 +212,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 确定充值
     $('.topUPBox .determine1').click(function () {
         if (!($('.topUPBox input[name="topUpNum"]').val())) {
-            layer.msg('带*为必填', {icon: 7})
+            layer.msg('带*为必填', { icon: 7 })
             return;
         }
         if (!($('.topUPBox input[name="topUpNum"]').val() > 0)) {
-            layer.msg('充值金额必须大于0', {icon: 7});
+            layer.msg('充值金额必须大于0', { icon: 7 });
             return;
         }
         layer.confirm('确定充值?', function (index) {
@@ -228,14 +229,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 remark: $('.topUPBox input[name="remark"]').val()
             });
             loadAjax('/company/addBalance', 'post', sessionStorage.token, topUpObj, layer, 'mask', '.topUPContent', '.topUPBox').then(res => {
-                layer.msg(res.message, {icon: 1});
+                layer.msg(res.message, { icon: 1 });
                 tableIns.reload({
                     where: {}
                 });
                 $('.topUPBox input[name="topUpNum"]').val('');
                 $('.topUPBox input[name="remark"]').val('')
             }).catch(err => {
-                layer.msg(err.message, {icon: 2});
+                layer.msg(err.message, { icon: 2 });
             })
         })
 
@@ -254,11 +255,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 确定核销
     $('.reductionsBox .determine1').click(function () {
         if (!($('.reductionsBox input[name="reductionsNum"]').val())) {
-            layer.msg('带*为必填', {icon: 7})
+            layer.msg('带*为必填', { icon: 7 })
             return;
         }
         if (!($('.reductionsBox input[name="reductionsNum"]').val() > 0)) {
-            layer.msg('调减金额必须大于0', {icon: 7});
+            layer.msg('调减金额必须大于0', { icon: 7 });
             return;
         }
         layer.confirm('确定调减?', function (index) {
@@ -270,14 +271,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 remark: $('.reductionsBox input[name="remark"]').val()
             });
             loadAjax('/company/subBalance', 'post', sessionStorage.token, reductionObj, layer, 'mask', '.reductionsCOntent', '.reductionsBox').then(res => {
-                layer.msg(res.message, {icon: 1});
+                layer.msg(res.message, { icon: 1 });
                 tableIns.reload({
                     where: {}
                 });
                 $('.reductionsBox input[name="reductionsNum"]').val('');
                 $('.reductionsBox input[name="remark"]').val('')
             }).catch(err => {
-                layer.msg(err.message, {icon: 2});
+                layer.msg(err.message, { icon: 2 });
             })
         })
     });
@@ -298,7 +299,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     // 确定编辑
     $('.editBox .determine1').click(function () {
         if (!($('.editBox input[name="companyName"]').val() && $('.editBox input[name="bicId"]').val() && $('.editBox input[name="moneyRemind"]').val())) {
-            layer.msg('带*为必填', {icon: '7'});
+            layer.msg('带*为必填', { icon: '7' });
             return;
         }
         dataLoading();
@@ -311,12 +312,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             remark: $('.editBox input[name="remark"]').val(),
         });
         loadAjax('/company/updateCompany', 'post', sessionStorage.token, editCompanyObj, layer, 'mask', '.editContent', '.editBox').then(res => {
-            layer.msg(res.message, {icon: 1});
+            layer.msg(res.message, { icon: 1 });
             tableIns.reload({
                 where: {}
             });
         }).catch(err => {
-            layer.msg(err.message, {icon: 2});
+            layer.msg(err.message, { icon: 2 });
         })
     })
     // 取消编辑
@@ -341,12 +342,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 companyId: companyData.companyId,
             };
             loadAjax('/company/deleteCompanyId', 'get', sessionStorage.token, delObj, layer, 'mask').then(res => {
-                layer.msg(res.message, {icon: 1});
+                layer.msg(res.message, { icon: 1 });
                 tableIns.reload({
                     where: {}
                 });
             }).catch(err => {
-                layer.msg(err.message, {icon: 2});
+                layer.msg(err.message, { icon: 2 });
             })
         })
     })
@@ -415,7 +416,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         return numFormat2(d.laterBalance)
                     }
                 },
-                {field: 'remark', width: 160, title: '备注', align: 'center'},
+                { field: 'remark', width: 160, title: '备注', align: 'center' },
                 {
                     field: 'logTime', width: 180, title: '充值/调减时间', align: 'center'
                 },
@@ -452,7 +453,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             done: function (res) {
                 if (res.code == 403) {
-                    layer.msg('登录过期,请重新登录', {icon: 2})
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
                     setTimeout(__ => {
                         window.parent.location.href = "login.html";
                     }, 1500)
@@ -485,13 +486,21 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }
                 },
                 {
-                    field: 'orderstatisticsId', width: 150, title: '快递费用', align: 'center', templet: function (d) {
-                        return '-'
+                    field: 'expressFee', width: 150, title: '快递费用', align: 'center', templet: function (d) {
+                        if (d.expressFee && d.expressFee > 0) {
+                            return numFormat2(d.expressFee)
+                        } else {
+                            return '-'
+                        }
                     }
                 },
                 {
-                    field: 'ID', width: 150, title: '质检费用', align: 'center', templet: function (d) {
-                        return '-'
+                    field: 'qualityInspectionFee', width: 150, title: '质检费用', align: 'center', templet: function (d) {
+                        if (d.qualityInspectionFee && d.qualityInspectionFee > 0) {
+                            return numFormat2(d.qualityInspectionFee)
+                        } else {
+                            return '-'
+                        }
                     }
                 },
                 {
@@ -503,7 +512,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         }
                     }
                 },
-                {field: 'operationUse', width: 150, title: '操作', toolbar: '#barUser', align: 'center'},
+                { field: 'operationUse', width: 150, title: '操作', toolbar: '#barUser', align: 'center' },
             ]]
             , id: 'useId'
             , page: true,
@@ -537,7 +546,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             done: function (res) {
                 if (res.code == 403) {
-                    layer.msg('登录过期,请重新登录', {icon: 2})
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
                     setTimeout(__ => {
                         window.parent.location.href = "login.html";
                     }, 1500)
@@ -549,9 +558,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     var useData = null;
     table.on('tool(useTable)', function (obj) {
-        console.log(obj);
+        console.log('useData---',obj,$(this));
+        
         event.stopPropagation();
         useData = obj.data;
+        console.log('useData---',useData);
         if (obj.event === "operation") {
             $('.ListUseOperation').fadeIn();
             $('.ListUseOperation').css({
@@ -563,8 +574,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     //使用记录种点击查看详情
     $('.ListUseOperation .detail').click(function () {
-        console.log(1);
+     
         if (dayIns) {
+            console.log(timeStampM(useData.statisticsTime),companyData.companyName,companyData.bicId);
             dayIns.reload({
                 where: {
                     bicId: companyData.bicId,
@@ -578,222 +590,38 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         popupShow('.dayRecordContent', '.dayRecordBox')
     });
 
-    // TODO 获取质检费列表
-    let qualityData = null;
 
-    function getQuality() {
-        qualityData = table.render({
+
+
+
+
+    //TODO 获取当月质检费列表
+
+    var QualityData = null;
+    function dayQuality() {
+        QualityData = table.render({
             elem: '#qualityTable',
-            url: `${Vapi}/logCompany/orderStatistics`,
-            method: 'GET',
-            headers: {
-                token,
-            },
-            totalRow: true,
-            cols: [[
-                {
-                    field: 'statisticsTime',title: '使用月份', align: 'center',  totalRowText: '合计', templet: function (d) {
-                        if (d.statisticsTime) {
-                            return timeStampM(d.statisticsTime)
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
-                {
-                    field: 'monthMoney', title: '使用金额', align: 'center', templet: function (d) {
-                        if (d.monthMoney || d.monthMoney == 0) {
-                            return numFormat2(d.monthMoney)
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
-                {
-                    field: 'ID', title: '质检费用', align: 'center', totalRow: true, templet: function (d) {
-                        return '-'
-                    }
-                },
-            ]]
-            , id: 'useId'
-            , page: true,
-            loading: true,
-            even: true,
-            request: {
-                'pageName': 'pageNum',
-                'limitName': 'pageSize'
-            },
-            where: {
-                bicId: companyData.companyId
-            },
-            parseData: function (res) {
-                //res 即为原始返回的数据
-                if (res.code == 200) {
-                    return {
-                        "code": res.code,//解析接口状态
-                        "msg": res.message,//解析提示文本
-                        "count": res.data.total,//解析数据长度
-                        "data": res.data.list //解析数据列表
-                    };
-                } else {
-                    return {
-                        "code": res.code,//解析接口状态
-                        "msg": res.message,  //解析提示文本
-                    }
-                }
-            },
-            response: {
-                statusCode: 200//规定成功的状态码，默认：0
-            },
-            done: function (res) {
-                if (res.code == 403) {
-                    layer.msg('登录过期,请重新登录', {icon: 2})
-                    setTimeout(__ => {
-                        window.parent.location.href = "login.html";
-                    }, 1500)
-                }
-                fixedFun();
-            }
-        });
-    }
-
-    // TODO 获取质检费列表
-    let expressData = null;
-
-    function getExpress() {
-        expressData = table.render({
-            elem: '#expressTable',
-            url: `${Vapi}/logCompany/orderStatistics`,
-            method: 'GET',
-            headers: {
-                token,
-            },
-            totalRow: true,
-            cols: [[
-                {
-                    field: 'statisticsTime', title: '使用月份',  totalRowText: '合计', align: 'center', templet: function (d) {
-                        if (d.statisticsTime) {
-                            return timeStampM(d.statisticsTime)
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
-                {
-                    field: 'monthMoney', title: '使用金额', align: 'center', templet: function (d) {
-                        if (d.monthMoney || d.monthMoney == 0) {
-                            return numFormat2(d.monthMoney)
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
-                {
-                    field: 'orderstatisticsId',
-                    title: '快递费用',
-                    totalRow: true,
-                    align: 'center',
-                    templet: function (d) {
-                        return '-'
-                    }
-                },
-            ]]
-            , id: 'useId'
-            , page: true,
-            loading: true,
-            even: true,
-            request: {
-                'pageName': 'pageNum',
-                'limitName': 'pageSize'
-            },
-            where: {
-                bicId: companyData.companyId
-            },
-            parseData: function (res) {
-                //res 即为原始返回的数据
-                if (res.code == 200) {
-                    return {
-                        "code": res.code,//解析接口状态
-                        "msg": res.message,//解析提示文本
-                        "count": res.data.total,//解析数据长度
-                        "data": res.data.list //解析数据列表
-                    };
-                } else {
-                    return {
-                        "code": res.code,//解析接口状态
-                        "msg": res.message,  //解析提示文本
-                    }
-                }
-            },
-            response: {
-                statusCode: 200//规定成功的状态码，默认：0
-            },
-            done: function (res) {
-                if (res.code == 403) {
-                    layer.msg('登录过期,请重新登录', {icon: 2})
-                    setTimeout(__ => {
-                        window.parent.location.href = "login.html";
-                    }, 1500)
-                }
-                fixedFun();
-            }
-        });
-    }
-
-
-    $('.ListUseOperation .quality').click(function () {
-        if (qualityData) {
-            qualityData.reload({
-                where: {}
-            })
-        } else {
-            getQuality();
-        }
-        $('.qualityRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)}) 质检费用`)
-        popupShow('.qualityRecordContent', '.qualityRecordBox')
-    });
-    $('.ListUseOperation .express').click(function () {
-        if (expressData) {
-            expressData.reload({
-                where: {}
-            })
-        } else {
-            getExpress();
-        }
-        $('.expressRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)}) 快递费用`)
-        popupShow('.expressRecordContent', '.expressRecordBox')
-    });
-
-    //   每日使用情况
-    var dayIns = null;
-
-    // TODO 每天
-    function dayUseFun() {
-        dayIns = table.render({
-            elem: '#dayTable',
             url: `${Vapi}/company/findDayOrder`,
             method: 'GET',
             headers: {
                 token,
             },
             cols: [[
-                {field: 'day', width: 150, title: '使用时间', align: 'center'},
+                { field: 'day', title: '使用时间', align: 'center' },
                 {
-                    field: 'orderstatisticsId', width: 150, title: '快递费用', align: 'center', templet: function (d) {
-                        return '-'
+                    field: 'qualityInspectionFee', title: '质检费用', align: 'center', templet: function (d) {
+                        if (d.qualityInspectionFee && d.qualityInspectionFee > 0) {
+                            return numFormat2(d.qualityInspectionFee)
+                        } else {
+                            return '-'
+                        }
                     }
                 },
                 {
-                    field: 'ID', width: 150, title: '质检费用', align: 'center', templet: function (d) {
-                        return '-'
-                    }
-                },
-                {
-                    field: 'money', width: 150, title: '使用金额', align: 'center', templet: function (d) {
+                    field: 'money', title: '使用金额', align: 'center', templet: function (d) {
                         return numFormat2(d.money)
                     }
                 },
-                {field: 'operationDate', width: 150, title: '操作', toolbar: '#barDate', align: 'center'},
             ]]
             , id: 'dayId',
             loading: true,
@@ -831,7 +659,201 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             done: function (res) {
                 if (res.code == 403) {
-                    layer.msg('登录过期,请重新登录', {icon: 2})
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    setTimeout(__ => {
+                        window.parent.location.href = "login.html";
+                    }, 1500)
+                }
+                fixedFun();
+            }
+        });
+    };
+
+    $('.ListUseOperation .quality').click(function () {
+     
+        if (QualityData) {
+            console.log(timeStampM(useData.statisticsTime),companyData.companyName,companyData.bicId);
+            QualityData.reload({
+                where: {
+                    bicId: companyData.bicId,
+                    time: timeStampM(useData.statisticsTime),
+                }
+            })
+        } else {
+            dayQuality();
+        }
+        $('.qualityRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)})质检费用`)
+        popupShow('.qualityRecordContent', '.qualityRecordBox')
+    });
+
+
+
+    //TODO 获取当月快递费列表
+
+    var dayExpressData = null;
+    function dayExpress() {
+        dayExpressData = table.render({
+            elem: '#expressTable',
+            url: `${Vapi}/company/findDayOrder`,
+            method: 'GET',
+            headers: {
+                token,
+            },
+            cols: [[
+                { field: 'day', title: '使用时间', align: 'center' },
+                {
+                    field: 'expressFee', title: '快递费用', align: 'center', templet: function (d) {
+                        if (d.expressFee && d.expressFee > 0) {
+                            return numFormat2(d.expressFee)
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    field: 'money', title: '使用金额', align: 'center', templet: function (d) {
+                        return numFormat2(d.money)
+                    }
+                },
+            ]]
+            , id: 'dayId',
+            loading: true,
+            even: true,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            initSort: {
+                field: 'day' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            },
+            where: {
+                bicId: companyData.bicId,
+                time: timeStampM(useData.statisticsTime),
+            },
+            parseData: function (res) {
+                //res即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.length, //解析数据长度
+                        "data": res.data //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    setTimeout(__ => {
+                        window.parent.location.href = "login.html";
+                    }, 1500)
+                }
+                fixedFun();
+            }
+        });
+    };
+    $('.ListUseOperation .express').click(function () {
+    
+        if (dayExpressData) {
+            console.log(timeStampM(useData.statisticsTime),companyData.companyName,companyData.bicId);
+            dayExpressData.reload({
+                where: {
+                    bicId: companyData.bicId,
+                    time: timeStampM(useData.statisticsTime),
+                }
+            })
+        } else {
+            dayExpress();
+        }
+        $('.expressRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)}) 快递费用`)
+        popupShow('.expressRecordContent', '.expressRecordBox')
+    });
+
+    //   每日使用情况
+    var dayIns = null;
+
+    // TODO 每天
+    function dayUseFun() {
+        dayIns = table.render({
+            elem: '#dayTable',
+            url: `${Vapi}/company/findDayOrder`,
+            method: 'GET',
+            headers: {
+                token,
+            },
+            cols: [[
+                { field: 'day', width: 150, title: '使用时间', align: 'center' },
+                {
+                    field: 'expressFee', width: 150, title: '快递费用', align: 'center', templet: function (d) {
+                        if (d.expressFee && d.expressFee > 0) {
+                            return numFormat2(d.expressFee)
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    field: 'qualityInspectionFee', width: 150, title: '质检费用', align: 'center', templet: function (d) {
+                        if (d.qualityInspectionFee && d.qualityInspectionFee > 0) {
+                            return numFormat2(d.qualityInspectionFee)
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    field: 'money', width: 150, title: '使用金额', align: 'center', templet: function (d) {
+                        return numFormat2(d.money)
+                    }
+                },
+                { field: 'operationDate', width: 150, title: '操作', toolbar: '#barDate', align: 'center' },
+            ]]
+            , id: 'dayId',
+            loading: true,
+            even: true,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            initSort: {
+                field: 'day' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            },
+            where: {
+                bicId: companyData.bicId,
+                time: timeStampM(useData.statisticsTime),
+            },
+            parseData: function (res) {
+                //res即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.length, //解析数据长度
+                        "data": res.data //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
                     setTimeout(__ => {
                         window.parent.location.href = "login.html";
                     }, 1500)
@@ -853,7 +875,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         }
     });
     $('.ListDateOperation .detail').click(function () {
-        console.log(dateData);
+        
         if (orderIns) {
             orderIns.reload({
                 where: {
@@ -866,27 +888,176 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         $('.dayOrderBox .playHeader span').html(`${companyData.companyName}(${dateData.day})使用记录`)
         popupShow('.dayOrderContent', '.dayOrderBox')
     });
+
+
+    // TODO 获取每天质检费列表
+    let dayqualityData = null;
+    function getQuality() {
+        dayqualityData = table.render({
+            elem: '#dayqualityTable',
+            url: `${Vapi}/logCompany/getQualityTestingByDayAndbicName`,
+            method: 'post',
+            headers: {
+                token,
+            },
+            contentType: "application/json",
+           // totalRow: true,
+            cols: [[
+               // { field: 'id', width: 180, title: '质检编号', align: 'center', },
+                { field: 'date', width: 180, title: '质检日期', align: 'center', },
+                { field: 'bicName', width: 180, title: '公司名称', align: 'center', },
+                { field: 'certificateType', width: 180, title: '证书类型', align: 'center', },
+                { field: 'unitPriceReceivable', width: 180, title: '应收单价', align: 'center', },
+                { field: 'number', width: 180, title: '数量（件）', align: 'center', },
+                { field: 'totalReceivables', width: 180, title: '应收合计', align: 'center', },
+                { field: 'preferentialAmount', width: 180, title: '优惠金额', align: 'center', },
+                { field: 'amountActuallyReceived', width: 180, title: '实收金额', align: 'center', },
+                { field: 'affiliatedInstitutions', width: 180, title: '所属机构', align: 'center', },
+
+            ]]
+            , id: 'id'
+            , page: true,
+            loading: true,
+            even: true,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where: {
+                date: dateData.day,
+                bicName: companyData.companyName,
+            },
+            parseData: function (res) {
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,//解析提示文本
+                        "count": res.data.total,//解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,  //解析提示文本
+                    }
+                }
+            },
+            response: {
+                statusCode: 200//规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    setTimeout(__ => {
+                        window.parent.location.href = "login.html";
+                    }, 1500)
+                }
+                fixedFun();
+            }
+        });
+    }
+    //每天质检费用
     $('.ListDateOperation .quality').click(function () {
-        if (qualityData) {
-            qualityData.reload({
+        if (dayqualityData) {
+            dayqualityData.reload({
                 where: {}
             })
         } else {
             getQuality();
         }
-        $('.qualityRecordBox .playHeader span').html(`${companyData.companyName}(${dateData.day}) 的质检费用`)
-        popupShow('.qualityRecordContent', '.qualityRecordBox')
+        $('.dayqualityRecordBox .playHeader span').html(`${companyData.companyName}(${dateData.day}) 的质检费用`)
+        popupShow('.dayqualityRecordContent', '.dayqualityRecordBox')
     });
+
+    // TODO 获取每天快递费列表
+    let dayexpressData = null;
+
+    function getExpress() {
+        dayexpressData = table.render({
+            elem: '#dayexpressTable',
+            url: `${Vapi}/logCompany/getOrderByDayAndbicId`,
+            method: 'post',
+            headers: {
+                token,
+            },
+            contentType: "application/json",
+           // totalRow: true,
+            cols: [[
+                { field: 'orderId', width: 180, title: '订单编号', align: 'center', },
+                // { field: 'orderYard', width: 180, title: '订单码', align: 'center' },
+                // { field: 'flagStr', width: 130, title: '扣费状态', align: 'center' },        
+                // { field: 'bicId', width: 160, title: '商家ID', align: 'center' },
+                // { field: 'companyName', width: 160, title: '商家名称', align: 'center' },
+                // { field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center' },
+                // { field: 'cancelStr', width: 160, title: '是否取消', align: 'center' },
+                // { field: 'interceptStr', width: 160, title: '是否拦截', align: 'center' },
+                // { field: 'interceptCause', width: 160, title: '拦截原因', align: 'center' },
+                // { field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center' },
+                // { field: 'storageNumber', width: 160, title: '入库件数', align: 'center' },
+                { field: 'planExpress', width: 160, title: '计划发货快递', align: 'center' },
+                { field: 'realityExpress', width: 160, title: '实际发货快递', align: 'center' },
+                { field: 'expressNumber', width: 160, title: '快递单号', align: 'center' },
+                { field: 'placeReceipt', width: 160, title: '收货省份', align: 'center' },
+                // { field: 'orderTimeStr', width: 180, title: '下单时间', align: 'center' },
+                // { field: 'storageTimeStr', width: 180, title: '入库时间', align: 'center' },
+                // { field: ' deliveryTime', width: 180, title: '出库时间', align: 'center' },
+            ]]
+            , id: 'orderId'
+            , page: true,
+            loading: true,
+            even: true,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+            where: {
+                bicId: companyData.bicId,
+                orderTime: dateData.day,
+            },
+            parseData: function (res) {
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,//解析提示文本
+                        "count": res.data.total,//解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,  //解析提示文本
+                    }
+                }
+            },
+            response: {
+                statusCode: 200//规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    setTimeout(__ => {
+                        window.parent.location.href = "login.html";
+                    }, 1500)
+                }
+                fixedFun();
+            }
+        });
+    }
+
+    //每天快递费用
     $('.ListDateOperation .express').click(function () {
-        if (expressData) {
-            expressData.reload({
+        if (dayexpressData) {
+            dayexpressData.reload({
                 where: {}
             })
         } else {
             getExpress();
         }
-        $('.expressRecordBox .playHeader span').html(`${companyData.companyName}(${dateData.day}) 的快递费用`)
-        popupShow('.expressRecordContent', '.expressRecordBox')
+
+        $('.dayexpressRecordBox .playHeader span').html(`${companyData.companyName}(${dateData.day}) 的快递费用`)
+        popupShow('.dayexpressRecordContent', '.dayexpressRecordBox')
     });
 
 
@@ -897,9 +1068,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         orderIns = table.render({
             elem: '#orderTable',
             cols: [[
-                {field: 'orderId', width: 180, title: '订单编号', align: 'center',},
-                {field: 'orderYard', width: 180, title: '订单码', align: 'center'},
-                {field: 'flagStr', width: 130, title: '扣费状态', align: 'center'},
+                { field: 'orderId', width: 180, title: '订单编号', align: 'center', },
+                { field: 'orderYard', width: 180, title: '订单码', align: 'center' },
+                { field: 'flagStr', width: 130, title: '扣费状态', align: 'center' },
                 {
                     field: 'expressMoney', width: 130, title: '物流费用', align: 'center', templet: function (d) {
                         return numFormat2(d.expressMoney)
@@ -910,26 +1081,26 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         return numFormat2(d.qualityMoney)
                     }
                 },
-                {field: 'bicId', width: 160, title: '商家ID', align: 'center'},
-                {field: 'companyName', width: 160, title: '商家名称', align: 'center'},
-                {field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center'},
-                {field: 'cancelStr', width: 160, title: '是否取消', align: 'center'},
-                {field: 'interceptStr', width: 160, title: '是否拦截', align: 'center'},
-                {field: 'interceptCause', width: 160, title: '拦截原因', align: 'center'},
-                {field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center'},
-                {field: 'storageNumber', width: 160, title: '入库件数', align: 'center'},
-                {field: 'testingInstitutes', width: 160, title: '质检机构', align: 'center'},
-                {field: 'qualityResult', width: 160, title: '质检结果', align: 'center'},
-                {field: 'recheckResult', width: 160, title: '复检结果', align: 'center'},
-                {field: 'planExpress', width: 160, title: '计划发货快递', align: 'center'},
-                {field: 'realityExpress', width: 160, title: '实际发货快递', align: 'center'},
-                {field: 'expressNumber', width: 160, title: '快递单号', align: 'center'},
-                {field: 'placeReceipt', width: 160, title: '收货省份', align: 'center'},
-                {field: 'orderTimeStr', width: 180, title: '下单时间', align: 'center'},
-                {field: 'storageTimeStr', width: 180, title: '入库时间', align: 'center'},
-                {field: 'inspectTimeStr', width: 180, title: '送检时间', align: 'center'},
-                {field: 'accomplishTimeStr', width: 180, title: '质检完成时间', align: 'center'},
-                {field: ' deliveryTime', width: 180, title: '出库时间', align: 'center'},
+                { field: 'bicId', width: 160, title: '商家ID', align: 'center' },
+                { field: 'companyName', width: 160, title: '商家名称', align: 'center' },
+                { field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center' },
+                { field: 'cancelStr', width: 160, title: '是否取消', align: 'center' },
+                { field: 'interceptStr', width: 160, title: '是否拦截', align: 'center' },
+                { field: 'interceptCause', width: 160, title: '拦截原因', align: 'center' },
+                { field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center' },
+                { field: 'storageNumber', width: 160, title: '入库件数', align: 'center' },
+                { field: 'testingInstitutes', width: 160, title: '质检机构', align: 'center' },
+                { field: 'qualityResult', width: 160, title: '质检结果', align: 'center' },
+                { field: 'recheckResult', width: 160, title: '复检结果', align: 'center' },
+                { field: 'planExpress', width: 160, title: '计划发货快递', align: 'center' },
+                { field: 'realityExpress', width: 160, title: '实际发货快递', align: 'center' },
+                { field: 'expressNumber', width: 160, title: '快递单号', align: 'center' },
+                { field: 'placeReceipt', width: 160, title: '收货省份', align: 'center' },
+                { field: 'orderTimeStr', width: 180, title: '下单时间', align: 'center' },
+                { field: 'storageTimeStr', width: 180, title: '入库时间', align: 'center' },
+                { field: 'inspectTimeStr', width: 180, title: '送检时间', align: 'center' },
+                { field: 'accomplishTimeStr', width: 180, title: '质检完成时间', align: 'center' },
+                { field: ' deliveryTime', width: 180, title: '出库时间', align: 'center' },
             ]]
             , id: 'orderId',
             loading: true,
@@ -958,7 +1129,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             if (xhr.status == 200) {
                 closeData();
                 if (xhr.response.size < 50) {
-                    layer.msg('导出失败', {icon: 7})
+                    layer.msg('导出失败', { icon: 7 })
                     return
                 }
                 var content = xhr.response;
@@ -973,7 +1144,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 document.body.removeChild(elink);
             } else {
                 closeData();
-                layer.msg('服务器请求超时', {icon: 2});
+                layer.msg('服务器请求超时', { icon: 2 });
                 return;
             }
         }
@@ -1006,13 +1177,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 closeData();
                 $(that).val('')
                 if (res.code == 200) {
-                    layer.msg(res.message, {icon: 1});
+                    layer.msg(res.message, { icon: 1 });
                     popupHide('.pushOrderContent', '.pushOrderBox');
                     tableIns.reload({
                         where: {}
                     });
                 } else if (res.code == 403) {
-                    layer.msg('登录过期,请重新登录', {icon: 2})
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
                     setTimeout(__ => {
                         window.parent.location.href = "login.html";
                     }, 1500)
@@ -1031,7 +1202,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 $(that).val('');
                 closeData();
                 $('.maskSpan').removeClass('maskIcon')
-                layer.msg('服务器请求超时', {icon: 2})
+                layer.msg('服务器请求超时', { icon: 2 })
             }
         })
 
@@ -1049,6 +1220,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     // 导入质检费模块
     $('.importQuality').click(function () {
+        console.log('导入质检费模块');
         popupShow('.pushQualityContent', '.pushQualityBox')
     });
     $('#pushQualityMerchants').change(function (e) {
@@ -1059,9 +1231,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         var upDetails = new FormData();
         upDetails.append('file', e.target.files[0]);
         dataLoading();
+
+        console.log('导入质检费模块2');
         $.ajax({
             type: 'post',
-            url: `${Vapi}/company/qualityInspection`,
+            url: `${Vapi}/quelityTesting/excelOrder`,
             processData: false,
             contentType: false,
             timeout: 60000,
@@ -1073,13 +1247,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 closeData();
                 $(that).val('')
                 if (res.code == 200) {
-                    layer.msg(res.message, {icon: 1});
+                    layer.msg(res.message, { icon: 1 });
                     popupHide('.pushQualityContent', '.pushQualityBox');
                     tableIns.reload({
                         where: {}
                     });
                 } else if (res.code == 403) {
-                    layer.msg('登录过期,请重新登录', {icon: 2})
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
                     setTimeout(__ => {
                         window.parent.location.href = "login.html";
                     }, 1500)
@@ -1098,7 +1272,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 $(that).val('');
                 closeData();
                 $('.maskSpan').removeClass('maskIcon')
-                layer.msg('服务器请求超时', {icon: 2})
+                layer.msg('服务器请求超时', { icon: 2 })
             }
         })
 

@@ -420,7 +420,7 @@ a {
   }
 }
 
-.ListDateOperation li:hover {
+.ListDateOperation li:not(.no):hover {
   color: #be954a;
   background-color: rgba(102, 102, 102, 0.1);
 }
