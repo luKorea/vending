@@ -1,6 +1,9 @@
 import { loadAjax, loadingWith, toastTitle, showPopup, closeParents, closeWindow, timeStamp, treeList, numFormat2, getKeyTime, timeFlag } from '../../../common/common';
 import '../../../MyCss/mobile/order/machineOrder.scss';
 
+
+let str = '';
+
 // 千分位金额
 function percentileMoney(num) {
     if (num === '') num = 0;
@@ -16,6 +19,134 @@ function percentileMoney(num) {
     }
     return '￥' + (((sign) ? '' : '-') + num + '.' + cents);
 }
+
+/**
+ * @method setOrderStatus 设置订单状态
+ * @param num
+ * @returns {string}
+ */
+function setOrderStatus(num) {
+    let str = '';
+    switch (num) {
+        case 0:
+            str = '未出货';
+            break;
+        case 1:
+            str = '部分出货失败';
+            break;
+        case 2:
+            str = '全部出货成功';
+            break;
+        case 3:
+            str = '出货中';
+            break;
+        case 4:
+            str = '全部出货失败';
+            break;
+        case 5:
+            str = '光检失败';
+            break;
+    }
+    return str;
+}
+
+/**
+ * @method setOrderDetailStatus 设置出货详情状态
+ * @param ship_status {String}
+ * @returns {string}
+ */
+function setOrderDetailStatus(ship_status) {
+    let str = '';
+    switch (ship_status) {
+        case 0:
+            str = '出货失败';
+            break;
+        case 1:
+            str = '出货成功';
+            break;
+        case 2:
+            str = '出货正常 光检失败';
+            break;
+        case 3:
+            str = '电机故障';
+            break;
+        default:
+            str = '货道故障';
+            break;
+    }
+    return str;
+}
+
+
+/**
+ * @method setPayStatus 设置支付状态
+ * @param status
+ * @returns {string}
+ */
+function setPayStatus(status) {
+    let str = '';
+    switch (status) {
+        case 1:
+            str = '等待支付';
+            break;
+        case 2:
+            str = '已支付';
+            break;
+        default:
+            str = '未支付';
+            break;
+    }
+    return str;
+}
+
+/**
+ * @method setRefundStatus 设置退款状态
+ * @param status
+ * @returns {string}
+ */
+function setRefundStatus(status) {
+    let str = '';
+    switch (status) {
+        case 1:
+            str = '未退款';
+            break;
+        case 2:
+            str = '部分退款';
+            break;
+        case 3:
+            str = '全部退款';
+            break;
+        default:
+            str = '-';
+            break;
+    }
+    return str;
+}
+
+/**
+ * @method setPayType 设置支付类型
+ * @param type
+ * @returns {string}
+ */
+function setPayType(type) {
+    let str = '';
+    switch (type) {
+        case 0:
+            str = '支付宝';
+            break;
+        case 1:
+            str = '微信';
+            break;
+        case 3:
+            str = '工行支付';
+            break;
+        case 4:
+            str = '杉德支付';
+            break;
+    }
+    return str;
+}
+
 
 
 hui('#select1').selectBeautify();
@@ -67,7 +198,7 @@ function orderArrList(mId, mNum) {
             var shipDetails = '';
             item.ship_info.forEach(items => {
                 shipDetails += `<p>
-                        ${items.goods_Name}(${items.way}货道${items.ship_status == 0 ? '出货失败' : items.ship_status == 1 ? '出货成功' : '货道故障'})
+                        ${items.goods_Name}(${items.way}货道${setOrderDetailStatus(items.ship_status)})
                           </p>`
             });
             str += ` <li dataIndex="${index}" class="orderIn">
@@ -85,7 +216,7 @@ function orderArrList(mId, mNum) {
                         </div>
                         <div class="flex">
                             <label for="">支付状态:</label>
-                            <p>${item.payStatus == 1 ? '等待支付' : item.payStatus == 2 ? '已支付' : '未支付'}</p>
+                            <p>${setPayStatus(item.payStatus)}</p>
                         </div>
                         <div class="flex">
                             <label for="">下单时间:</label>
@@ -93,15 +224,15 @@ function orderArrList(mId, mNum) {
                         </div>
                         <div class="flex">
                             <label for="">支付类型:</label>
-                            <p>${item.payType == 1 ? '微信' : item.payType == 0 ? '支付宝' : '工行支付'}</p>
+                            <p>${setPayType(item.payType)}</p>
                         </div>
                         <div class="flex">
                             <label for="">退款状态:</label>
-                            <p>${item.refund == 1 ? '未退款' : item.refund == 2 ? '部分退款' : item.refund == 3 ? '全部退款' : '-'}</p>
+                            <p>${setRefundStatus(item.refund)}</p>
                         </div>
                         <div class="flex">
                             <label for="">出货状态:</label>
-                            <p>${item.shipStatus == 0 ? '未出货' : item.shipStatus == 1 ? '部分出货失败' : item.shipStatus == 2 ? '全部出货成功' : '出货中'}</p>
+                            <p>${setOrderStatus(item.shipStatus)}</p>
                         </div>
                         <div class="flex">
                             <label for="">出货详情:</label>

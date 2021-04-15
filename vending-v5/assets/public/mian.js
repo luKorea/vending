@@ -3,6 +3,9 @@ document.write("<script type='text/javascript' src='../assets/public/jquery.anim
 // 删除商品数据列表数据
 // 传id
 
+
+
+let str = '';
 const vApi = `/api`;
 var token = sessionStorage.token;
 var machineId = sessionStorage.machineID;
@@ -678,15 +681,10 @@ function percentileMoney(num) {
     return '￥' + (((sign) ? '' : '-') + num + '.' + cents);
 }
 
-// 校验订单状态
-// 0 未出货
-// 1 部分出货失败
-// 2 全部出货成功
-// 3 出货中
-// 4 全部出货失败
-// 5 光检失败
+
+
 /**
- * @method setOrderStatus
+ * @method setOrderStatus 设置订单状态
  * @param num
  * @returns {string}
  */
@@ -715,15 +713,8 @@ function setOrderStatus(num) {
     return str;
 }
 
-
-// 出货详情 ship_status
-// 0 出货失败
-// 1 出货成功
-// 2 光检失败
-// 3 电机故障
-// default 货道故障
 /**
- * @method setOrderDetailStatus
+ * @method setOrderDetailStatus 设置出货详情状态
  * @param ship_status {String}
  * @returns {string}
  */
@@ -748,6 +739,77 @@ function setOrderDetailStatus(ship_status) {
     }
     return str;
 }
+
+
+/**
+ * @method setPayStatus 设置支付状态
+ * @param status
+ * @returns {string}
+ */
+function setPayStatus(status) {
+    let str = '';
+    switch (status) {
+        case 1:
+            str = '等待支付';
+            break;
+        case 2:
+            str = '已支付';
+            break;
+        default:
+            str = '未支付';
+            break;
+    }
+    return str;
+}
+
+/**
+ * @method setRefundStatus 设置退款状态
+ * @param status
+ * @returns {string}
+ */
+function setRefundStatus(status) {
+    let str = '';
+    switch (status) {
+        case 1:
+            str = '未退款';
+            break;
+        case 2:
+            str = '部分退款';
+            break;
+        case 3:
+            str = '全部退款';
+            break;
+        default:
+            str = '-';
+            break;
+    }
+    return str;
+}
+
+/**
+ * @method setPayType 设置支付类型
+ * @param type
+ * @returns {string}
+ */
+function setPayType(type) {
+    let str = '';
+    switch (type) {
+        case 0:
+            str = '支付宝';
+            break;
+        case 1:
+            str = '微信';
+            break;
+        case 3:
+            str = '工行支付';
+            break;
+        case 4:
+            str = '杉德支付';
+            break;
+    }
+    return str;
+}
+
 
 
 /**

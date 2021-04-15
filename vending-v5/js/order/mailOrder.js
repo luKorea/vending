@@ -44,7 +44,7 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
                 },
                 {
                     field: 'payType', width: 150, title: '付款类型', align: 'center', templet: function (d) {
-                        return d.payType == 0 ? '支付宝' : '微信'
+                        return setPayType(d.payType)
                     }
                 },
                 {field: 'payee', width: 210, title: '收款账号', align: 'center'},
@@ -57,7 +57,7 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
                 },
                 {
                     field: 'sign_name', width: 180, title: '退款状态', align: 'center', templet: function (d) {
-                        return d.refund == 1 ? '未退款' : d.refund == 2 ? '部分退款' : d.refund == 3 ? '全部退款' : '-'
+                        return setRefundStatus(d.refund)
                     }
                 },
                 {
