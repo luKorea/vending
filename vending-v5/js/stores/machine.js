@@ -500,7 +500,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon')
             loadingAjax('/machine/getStatus', 'post', JSON.stringify({machineId: machineSetData.machineId}), token).then(Dres => {
-                console.log(Dres)
+                console.log(Dres, 'lallalala')
                 if (Dres.data.actionStatus == 1) {
                     loadingAjax('/pushActive', 'post', JSON.stringify({
                         machine: machineSetData.machineId,
@@ -1251,11 +1251,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 let status = Number(child.status) === 1;
                 console.log(status);
                 if (child.open != 0) {
-                    aisleStr += `<div class="aisleNumderGoods" >
+                    aisleStr += `<div class="aisleNumderGoods">
+                                    ${status ? '' : `<i class="layui-icon layui-icon-util icon" title="货道故障"></i>`}
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">                                   
-                                        <img class="${status ? '' : 'hide '} ${child.goods_images ? 'wayImg' : ''}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt=""> 
-                                        <img class="${status ? 'hide ' : ''}" src="${require('../../img/fault1.png')}" alt="">
+                                        <img class="${child.goods_images ? 'wayImg' : ''}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt=""> 
                                     <span>${child.way}</span>
                                     </div>
                                     <div class="price">价格:${percentileMoney(child.price)}</div>
@@ -1263,17 +1263,17 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                         <div class="status1 ${status ? '' : 'redF10'}">${status ? '正常' : '货道故障'}</div>
                                         <div title="${child.count}">数量:${child.count}</div>
                                     </div>
-                                    </div>  
+                                    </div>
                                     <div class="chooseCheck">
                                         <span >${child.mail ? '(邮寄)' : ''} ${child.goods_Name ? child.goods_Name : '-'}</span>
                                     </div>
                                 </div>`
                 } else {
                     aisleStr += `<div class="aisleNumderGoods" >
+                                    ${status ? '' : `<i class="layui-icon layui-icon-util icon" title="货道故障"></i>`}
                                     <div class="aisleNumderClick" fireIndex="${index + ',' + Cindex}">
                                     <div class="numderTop">
-                                    <img class="${status ? '' : 'hide '} ${child.goods_images ? 'wayImg' : ''}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt="">
-                                    <img class="${status ? 'hide ' : ''}" src="${require('../../img/fault1.png')}" alt="">
+                                    <img class="${child.goods_images ? 'wayImg' : ''}" src="${child.goods_images ? child.goods_images : require('../../img/failure.png')}" alt="">
                                         <span>${child.way}</span>
                                     </div>
                                     <div class="numderBottom">
