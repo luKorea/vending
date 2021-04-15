@@ -201,6 +201,21 @@ function timeStampM(time) {
     return y + '-' + m
 }
 
+
+// 时间戳转日期问题
+function add0(m) { return m < 10 ? '0' + m : m }
+function formatDate(time) {
+
+    var time = new Date(time);
+    var y = time.getFullYear();
+    var m = time.getMonth() + 1;
+    var d = time.getDate();
+    var h = time.getHours();
+    var mm = time.getMinutes();
+    var s = time.getSeconds();
+    return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+}
+
 // 千分位金额
 function percentileMoney(num) {
     if (!num) {
@@ -258,5 +273,6 @@ export {
     timeFlag,
     timeStampM,
     percentileMoney,
-    setTableColor
+    setTableColor,
+    formatDate
 }
