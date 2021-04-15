@@ -1,6 +1,7 @@
 import '../../MyCss/merchants/paySet.css'
+
 layui.use(['table', 'form', 'layer', 'tree'], function () {
-    tooltip('.refreshBtnList', { transition: true, time: 200 });
+    tooltip('.refreshBtnList', {transition: true, time: 200});
     var table = layui.table,
         layer = layui.layer,
         layer = layui.layer,
@@ -17,13 +18,13 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 token: sessionStorage.token,
             },
             cols: [[
-                { field: '1', title: '升降序', templet: "#imgtmp", event: 'rank', align: 'center' },
-                { field: 'rank',  title: '排序', align: 'center' },
-                { field: 'payName', title: '支付类型', align: 'center' },
-                { field: 'app_id',  title: '微信公众号id/支付宝商户id', align: 'center', },
-                { field: 'merchantName', title: '所属商户', align: 'center' },
-                { field: 'payee', title: '收款方', align: 'center' },
-                { field: 'update_user',  title: '最后修改人', align: 'center' },
+                {field: '1', title: '升降序', templet: "#imgtmp", event: 'rank', align: 'center'},
+                {field: 'rank', title: '排序', align: 'center'},
+                {field: 'payName', title: '支付类型', align: 'center'},
+                {field: 'app_id', title: '微信公众号id/支付宝商户id', align: 'center',},
+                {field: 'merchantName', title: '所属商户', align: 'center'},
+                {field: 'payee', title: '收款方', align: 'center'},
+                {field: 'update_user', title: '最后修改人', align: 'center'},
                 {
                     field: 'update_time', title: '最后修改时间', align: 'center', templet: function (d) {
                         if (d.update_time) {
@@ -34,7 +35,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     }
                 },
                 // { field: 'operation',right: 0, width: 150, title: '操作', toolbar: '#barDemo' ,fixed: 'right'},
-                { field: 'operation', align: 'center', title: '操作', toolbar: '#barDemo'},
+                {field: 'operation', align: 'center', title: '操作', toolbar: '#barDemo'},
             ]],
             id: 'tablePayId',
             // page:true,
@@ -120,87 +121,43 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 bottomId: rank[obj.data.rank - 2].id
             })
             loadingAjax('/pay/sortPayParam', 'post', rankObj, sessionStorage.token, '', '', '', layer).then(res => {
-                layer.msg('修改成功', { icon: 1 });
+                layer.msg('修改成功', {icon: 1});
                 tableIns.reload({
                     where: {}
                 })
             }).catch(err => {
                 console.log(res)
-                layer.msg('修改失败', { icon: 1 })
+                layer.msg('修改失败', {icon: 1})
             })
         }
-        // if (obj.event == "edit") {
-        //     if (payData.payName == '微信') {
-        //         $('.changePay .WeChat').show();
-        //         $('.changePay .Alipay').hide();
-        //         $('.changePay .IcbcPay').hide();
-        //         editUploadVal=payData.cert_dir;
-        //     } else if (payData.payName == '支付宝') {
-        //         $('.changePay .WeChat').hide();
-        //         $('.changePay .IcbcPay').hide();
-        //         $('.changePay .Alipay').show();
-        //     }else if(payData.payType==3){
-        //         $('.changePay .IcbcPay').show();
-        //         $('.changePay .WeChat').hide();
-        //         $('.changePay .Alipay').hide();
-        //     }else {
-        //         $('.changePay .WeChat').hide();
-        //         $('.changePay .Alipay').hide();
-        //         $('.changePay .IcbcPay').hide();
-        //     }
-        //     // 编辑部分
-        //     form.val("SetPay", {
-        //         'typeIndex': payData.payType,
-        //         'payee': payData.payee,
-        //         'officialId': payData.payName == '微信' ? payData.app_id : '',
-        //         'MerchantsId': payData.payName == '微信' ? payData.mchId : '',
-        //         'app_key': payData.payName == '微信' ? payData.app_key : '',
-        //         'MerchantsKey': payData.payName == '微信' ? payData.app_private_key : '',
-        //         'aliPayId': payData.payName == '支付宝' ? payData.app_id : '',
-        //         'alipay_public_key': payData.payName == '支付宝' ? payData.alipay_public_key : '',
-        //         'app_private_key': payData.payName == '支付宝' ? payData.app_private_key : '',
-        //         'mchId':payData.payType==3?payData.mchId:'',
-        //         'app_id':payData.payType==3?payData.app_id:'',
-        //         'ICBC_app_key':payData.payType==3?payData.app_key:'',
-        //         'ICBC_alipay_public_key':payData.payType==3?payData.alipay_public_key:'',
-        //         'ICBC_app_private_key':payData.payType==3?payData.app_private_key:'',
-        //     })
-        //     popupShow('changePay', 'changeBox')
-        // } else if (obj.event == "del") {
-        //     layer.confirm('确定删除？', function (index) {
-        //         layer.close(index);
-        //         var paySetDel = JSON.stringify({
-        //             merchantId: Number(merchantsPay),
-        //             id: payData.id
-        //         })
-        //         loadingAjax('/pay/deletePayParam', 'post', paySetDel, sessionStorage.token, '', '', '', layer).then(res => {
-        //             layer.msg(res.message, { icon: 1 });
-        //             tableIns.reload({
-        //                 where: {}
-        //             })
-        //         }).catch(err => {
-        //             layer.msg(err.message, { icon: 2 })
-        //         })
-        //     })
-        // }
 
     });
     // 编辑
     $('.ListOperation .edit').click(function () {
+        console.log(payData.payType);
         if (payData.payName == '微信') {
             $('.changePay .WeChat').show();
             $('.changePay .Alipay').hide();
             $('.changePay .IcbcPay').hide();
+            $('.changePay .juhePay').hide();
             editUploadVal = payData.cert_dir;
         } else if (payData.payName == '支付宝') {
             $('.changePay .WeChat').hide();
             $('.changePay .IcbcPay').hide();
+            $('.changePay .juhePay').hide();
             $('.changePay .Alipay').show();
         } else if (payData.payType == 3) {
             $('.changePay .IcbcPay').show();
             $('.changePay .WeChat').hide();
             $('.changePay .Alipay').hide();
+            $('.changePay .juhePay').hide();
+        } else if (payData.payType == 4) {
+            $('.changePay .juhePay').show();
+            $('.changePay .IcbcPay').hide();
+            $('.changePay .WeChat').hide();
+            $('.changePay .Alipay').hide();
         } else {
+            $('.changePay .juhePay').hide();
             $('.changePay .WeChat').hide();
             $('.changePay .Alipay').hide();
             $('.changePay .IcbcPay').hide();
@@ -233,12 +190,12 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 id: payData.id
             })
             loadingAjax('/pay/deletePayParam', 'post', paySetDel, sessionStorage.token, '', '', '', layer).then(res => {
-                layer.msg(res.message, { icon: 1 });
+                layer.msg(res.message, {icon: 1});
                 tableIns.reload({
                     where: {}
                 })
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
             })
         })
     })
@@ -250,22 +207,22 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         var payFormData = form.val("SetPay");
         if (payFormData.typeIndex == '2') {
             if (!(payFormData.payee && payFormData.officialId && payFormData.MerchantsId && payFormData.app_key && payFormData.MerchantsKey)) {
-                layer.msg('带*为必填', { icon: 7 });
+                layer.msg('带*为必填', {icon: 7});
                 return;
             }
         } else if (payFormData.typeIndex == '1') {
             if (!(payFormData.payee && payFormData.aliPayId && payFormData.alipay_public_key && payFormData.app_private_key)) {
-                layer.msg('带*为必填', { icon: 7 });
+                layer.msg('带*为必填', {icon: 7});
                 return;
             }
         } else if (payFormData.typeIndex == '3') {
             if (!(payFormData.payee && payFormData.mchId && payFormData.app_id && payFormData.ICBC_app_key && payFormData.ICBC_alipay_public_key && payFormData.ICBC_app_private_key)) {
-                layer.msg('带*为必填', { icon: 7 });
+                layer.msg('带*为必填', {icon: 7});
                 return;
             }
         } else {
             if (!(payFormData.payee && payFormData.aliPayId)) {
-                layer.msg('带*为必填', { icon: 7 });
+                layer.msg('带*为必填', {icon: 7});
                 return;
             }
         }
@@ -310,7 +267,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     app_private_key: payFormData.ICBC_app_private_key,
                 });
                 loadingAjax('/pay/updatePayParam', 'post', editPayObj1, sessionStorage.token, 'mask', 'changePay', 'changeBox', layer).then(res => {
-                    layer.msg(res.message, { icon: 1 });
+                    layer.msg(res.message, {icon: 1});
                     tableIns.reload({
                         where: {}
                     })
@@ -324,14 +281,15 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                         'app_private_key': '',
                     })
                 }).catch(err => {
-                    layer.msg(err.message, { icon: 2 })
+                    layer.msg(err.message, {icon: 2})
                 })
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
             })
 
             return;
-        };
+        }
+        ;
         loadingAjax(editUrl, 'post', textParam, sessionStorage.token, 'mask', '', '', layer).then(res => {
             var editPay = JSON.stringify({
                 merchantId: merchantsPay,
@@ -346,7 +304,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 cert_dir: payFormData.typeIndex == 2 ? editUploadVal : null
             });
             loadingAjax('/pay/updatePayParam', 'post', editPay, sessionStorage.token, 'mask', 'changePay', 'changeBox', layer).then(res => {
-                layer.msg(res.message, { icon: 1 });
+                layer.msg(res.message, {icon: 1});
                 tableIns.reload({
                     where: {}
                 })
@@ -361,10 +319,10 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     'app_private_key': '',
                 })
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
             })
         }).catch(err => {
-            layer.msg(err.message, { icon: 2 })
+            layer.msg(err.message, {icon: 2})
         })
 
     })
@@ -440,20 +398,24 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             $('.addePay .WeChat').hide();
             $('.addePay .IcbcPay').hide();
             $('.addePay .Alipay').show();
+            $('.addePay .juhePay').hide();
         } else if (data.value == 2) {
             $('.addePay .WeChat').show();
             $('.addePay .Alipay').hide();
             $('.addePay .IcbcPay').hide();
+            $('.addePay .juhePay').hide();
         } else if (data.value == 3) {
             $('.addePay .IcbcPay').show();
             $('.addePay .WeChat').hide();
             $('.addePay .Alipay').hide();
+            $('.addePay .juhePay').hide();
         } else if (data.value == 4) {
-            // $('.addePay .juhePay').show();
+            $('.addePay .juhePay').show();
             $('.addePay .IcbcPay').hide();
             $('.addePay .WeChat').hide();
             $('.addePay .Alipay').hide();
         } else {
+            $('.addePay .juhePay').hide();
             $('.addePay .IcbcPay').hide();
             $('.addePay .WeChat').hide();
             $('.addePay .Alipay').hide();
@@ -461,43 +423,56 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     });
     //   添加提交
     $('.addePay .submit_btn').click(function () {
-        var addData = form.val("addPay");
-        if (addData.typeIndex == '2') {
+        var addData = form.val("addPay"),
+            typeIndex = String(addData.typeIndex);
+        if (typeIndex === '2') {
             if (!(addData.payee && addData.officialId && addData.MerchantsId && addData.app_key && addData.MerchantsKey)) {
-                layer.msg('带*为必填', { icon: 7 });
+                layer.msg('带*为必填', {icon: 7});
                 return;
             }
             if (!addUploadVal) {
-                layer.msg('请上传微信证书', { icon: 7 });
+                layer.msg('请上传微信证书', {icon: 7});
                 return;
             }
-        } else if (addData.typeIndex == '1') {
+        } else if (typeIndex === '1') {
             if (!(addData.payee && addData.aliPayId && addData.alipay_public_key && addData.app_private_key)) {
-                layer.msg('带*为必填', { icon: 7 });
+                layer.msg('带*为必填', {icon: 7});
                 return;
             }
-        } else if (addData.typeIndex == '3') {
+        } else if (typeIndex === '3') {
             if (!(addData.payee && addData.mchId && addData.app_id && addData.ICBC_app_key && addData.ICBC_alipay_public_key && addData.ICBC_app_private_key)) {
-                layer.msg('带*为必填', { icon: 7 });
+                layer.msg('带*为必填', {icon: 7});
                 return;
             }
-        }
-        else {
+        } else if (typeIndex === '4') {
+            if (!(addData.payee && addData.mchId && addData.app_id && addData.app_key)) {
+                layer.msg('带*为必填', {icon: 7});
+                return;
+            }
+            if (!juheUploadSiVal) {
+                layer.msg('请上传杉德商户私钥证书', {icon: 7});
+                return;
+            }
+            if (!juheUploadGongVal) {
+                layer.msg('请上传杉德公钥证书', {icon: 7});
+                return;
+            }
+        } else {
             if (!(addData.payee && addData.typeIndex)) {
-                layer.msg('带*为必填', { icon: 7 });
+                layer.msg('带*为必填', {icon: 7});
                 return;
             }
         }
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        if (addData.typeIndex != 2 && addData.typeIndex != 1 && addData.typeIndex != 3) {
+        if (typeIndex !== '2' && typeIndex !== '1' && typeIndex !== '3' && typeIndex !== '4') {
             var editPay = JSON.stringify({
                 merchantId: merchantsPay,
                 payee: addData.payee,
                 payType: addData.typeIndex,
             })
             loadingAjax('/pay/newPayParam', 'post', editPay, sessionStorage.token, 'mask', 'addePay', 'addBox', layer).then(res => {
-                layer.msg(res.message, { icon: 1 });
+                layer.msg(res.message, {icon: 1});
                 tableIns.reload({
                     where: {}
                 });
@@ -515,32 +490,31 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 return;
             }).catch(err => {
                 console.log(err)
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
                 return;
             })
         }
-        // if (addData.typeIndex != 2 && addData.typeIndex != 1) {
-        //     return;
-        // }
-        if (addData.typeIndex == 2) {
+        // TODO 微信支付
+        if (typeIndex === '2') {
             var textParam = JSON.stringify({
                 app_id: addData.officialId,//微信公众号id
                 mchId: addData.MerchantsId,//商户号ID
                 app_key: addData.app_key,//公众号密钥
             });
             var editUrl = `/pay/testWxPay`
-        } else if (addData.typeIndex == 1) {
+        }
+        // TODO 支付宝支付
+        else if (typeIndex === '1') {
             var textParam = JSON.stringify({
                 app_id: addData.aliPayId,//支付宝商户ID
                 app_private_key: addData.app_private_key,//应用私钥
                 alipay_public_key: addData.alipay_public_key//公众号密钥
             });
             var editUrl = `/pay/testAliPay`
-        } else if (addData.typeIndex == 3) {
+        }
+        // TODO 工行支付
+        else if (typeIndex === '3') {
             var addPayObj = JSON.stringify({
-                // merchantId: merchantsPay,
-                // payee: addData.payee,
-                // payType: addData.typeIndex,
                 alipay_public_key: addData.ICBC_alipay_public_key,
                 mchId: addData.mchId,
                 app_id: addData.app_id,
@@ -560,7 +534,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     cert_dir: addData.typeIndex == 2 ? addUploadVal : null
                 });
                 loadingAjax('/pay/newPayParam', 'post', addPayObj1, sessionStorage.token, 'mask', 'addePay', 'addBox', layer).then(res => {
-                    layer.msg(res.message, { icon: 1 });
+                    layer.msg(res.message, {icon: 1});
                     tableIns.reload({
                         where: {}
                     });
@@ -576,26 +550,41 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     $('.uploadFlag').html('未上传');
                     addUploadVal = null
                 }).catch(err => {
-                    layer.msg(err.message, { icon: 2 })
+                    layer.msg(err.message, {icon: 2})
                 })
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
             })
             return;
+        }
+        // TODO 杉德支付
+        // 收款方    payee
+        // 杉德商户号    mchId
+        // 杉德平台商户号   app_id
+        // 杉德商户私钥证书(.pfx) app_private_key
+        // 杉德商户私钥证书密码  app_key
+        // 杉德公钥证书(.cer)   alipay_public_key
+        else if (typeIndex === '4') {
+            var textParam = JSON.stringify({
+                app_id: addData.officialId,//微信公众号id
+                mchId: addData.MerchantsId,//商户号ID
+                app_key: addData.app_key,//公众号密钥
+            });
+            var editUrl = `/pay/testWxPay`
         }
         loadingAjax(editUrl, 'post', textParam, sessionStorage.token, 'mask', '', '', layer).then(res => {
             var editPay = JSON.stringify({
                 merchantId: merchantsPay,
                 payee: addData.payee,
-                payType: addData.typeIndex,
-                app_id: addData.typeIndex == '2' ? addData.officialId : addData.aliPayId,
-                app_key: addData.typeIndex == '2' ? addData.app_key : '',
-                mchId: addData.typeIndex == '2' ? addData.MerchantsId : '',
-                alipay_public_key: addData.typeIndex == '1' ? addData.alipay_public_key : '',
-                app_private_key: addData.typeIndex == '1' ? addData.app_private_key : addData.MerchantsKey
+                payType: typeIndex,
+                app_id: typeIndex === '2' ? addData.officialId : addData.aliPayId,
+                app_key: typeIndex === '2' ? addData.app_key : '',
+                mchId: typeIndex === '2' ? addData.MerchantsId : '',
+                alipay_public_key: typeIndex === '1' ? addData.alipay_public_key : '',
+                app_private_key: typeIndex === '1' ? addData.app_private_key : addData.MerchantsKey
             })
             loadingAjax('/pay/newPayParam', 'post', editPay, sessionStorage.token, 'mask', 'addePay', 'addBox', layer).then(res => {
-                layer.msg(res.message, { icon: 1 });
+                layer.msg(res.message, {icon: 1});
                 tableIns.reload({
                     where: {}
                 });
@@ -611,10 +600,10 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     'MerchantsKey': '',
                 })
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
             })
         }).catch(err => {
-            layer.msg(err.message, { icon: 2 })
+            layer.msg(err.message, {icon: 2})
         })
     });
     $('.addePay .cancel_btn').click(function () {
@@ -635,13 +624,17 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 }
             })
         } else {
-            layer.msg('已刷新', { icon: 1 })
+            layer.msg('已刷新', {icon: 1})
         }
     });
 
     // 上传附件
     var addUploadVal = null,
-        editUploadVal = null;
+        editUploadVal = null,
+        juheUploadSiVal = null,
+        juheUploadEditSiVal = null,
+        juheUploadGongVal = null,
+        juheUploadEditGongVal = null;
     $('.addBody .WeChat input[name="addUpload"]').change(function (e) {
         if (!$(this).val()) {
             return;
@@ -663,7 +656,54 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         uploadFun(upDetails, 2, that);
+    });
+
+    $('.addBody .juhePay input[name="juheAddSi"]').change(function (e) {
+        if (!$(this).val()) {
+            return;
+        }
+        var that = this;
+        var upDetails = new FormData();
+        upDetails.append('file', e.target.files[0]);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        uploadFun(upDetails, 3, that);
+    });
+    $('.changePay .juhePay input[name="juheAddSi"]').change(function (e) {
+        if (!$(this).val()) {
+            return;
+        }
+        var that = this;
+        var upDetails = new FormData();
+        upDetails.append('file', e.target.files[0]);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        uploadFun(upDetails, 4, that);
+    });
+    $('.addBody .juhePay input[name="juheEditGong"]').change(function (e) {
+        if (!$(this).val()) {
+            return;
+        }
+        var that = this;
+        var upDetails = new FormData();
+        upDetails.append('file', e.target.files[0]);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        uploadFun(upDetails, 5, that);
+    });
+    $('.changePay .juhePay input[name="juheEditGong"]').change(function (e) {
+        if (!$(this).val()) {
+            return;
+        }
+        var that = this;
+        var upDetails = new FormData();
+        upDetails.append('file', e.target.files[0]);
+        $('.mask').fadeIn();
+        $('.maskSpan').addClass('maskIcon');
+        uploadFun(upDetails, 6, that);
     })
+
+
     function uploadFun(data, index, that) {
         $.ajax({
             type: 'post',
@@ -679,23 +719,33 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
                 $(that).val('')
-                if (res.code == 0) {
-                    layer.msg('上传成功', { icon: 1 })
-                    if (index == 1) {
+                if (res.code === 0) {
+                    layer.msg('上传成功', {icon: 1})
+                    if (index === 1) {
                         addUploadVal = res.data.src;
                         $('.uploadFlag').html('已上传');
-                    } else if (index == 2) {
+                    } else if (index === 2) {
                         editUploadVal = res.data.src;
+                    } else if (index === 3) {
+                        juheUploadSiVal = res.data.src;
+                        $('.uploadFlag').html('已上传');
+                    } else if (index === 4) {
+                        juheUploadEditSiVal = res.data.src;
+                    } else if (index === 5) {
+                        juheUploadGongVal = res.data.src;
+                        $('.uploadFlag').html('已上传');
+                    } else if (index === 6) {
+                        juheUploadEditGongVal = res.data.src;
                     }
                 } else {
-                    layer.msg(res.message, { icon: 7 });
+                    layer.msg(res.message, {icon: 7});
                 }
             },
             error: function (err) {
                 $(that).val('')
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon')
-                layer.msg('上传失败', { icon: 2 })
+                layer.msg('上传失败', {icon: 2})
             }
         })
     };
