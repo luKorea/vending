@@ -1,0 +1,1 @@
+var Vapi='/fk/api';
