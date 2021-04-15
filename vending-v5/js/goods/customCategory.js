@@ -1,6 +1,6 @@
 import '../../MyCss/goods/customCategory.css';
 layui.use(['table', 'form', 'layer', 'tree'], function () {
-  tooltip('.refreshBtnList', { transition: true, time: 200 });
+  // tooltip('.refreshBtnList', { transition: true, time: 200 });
   var permissionsData0 = window.parent.permissionsData1(),
       merchantId = sessionStorage.machineID,
     permissionsObj = {

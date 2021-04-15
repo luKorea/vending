@@ -1,7 +1,7 @@
 import '../../MyCss/userManagement/memberList.css'
 
 layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
-        tooltip('.refreshBtnList', {transition: true, time: 200});
+        // tooltip('.refreshBtnList', {transition: true, time: 200});
         var permissionsData0 = window.parent.permissionsData1(),
             permissionsObj = {
                 389: false,

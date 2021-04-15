@@ -1,7 +1,7 @@
 import '../../MyCss/merchants/paySet.css'
 
 layui.use(['table', 'form', 'layer', 'tree'], function () {
-    tooltip('.refreshBtnList', {transition: true, time: 200});
+    // tooltip('.refreshBtnList', {transition: true, time: 200});
     var table = layui.table,
         layer = layui.layer,
         layer = layui.layer,
