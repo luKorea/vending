@@ -1,7 +1,7 @@
 import '../../MyCss/order/orderSummary.scss';
 
 layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
-    tooltip('.refreshBtnList', {transition: true, time: 200});
+    // tooltip('.refreshBtnList', {transition: true, time: 200});
     sessionStorage.classTag = sessionStorage.machineID;
     var table = layui.table,
         layer = layui.layer,
