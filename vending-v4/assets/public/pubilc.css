@@ -54,7 +54,7 @@ input{
 .key-text{
     background-color: #f5f7fa;
     color: #909399;
-    vertical-align: middle;   
+    vertical-align: middle;
     position: relative;
     border: 1px solid #dcdfe6;
     border-radius: 4px;
@@ -132,14 +132,14 @@ input{
 }
 h1{
     font-size: 20px;
-    font-weight: 800; 
+    font-weight: 800;
 }
 .flexTwo{
     display: flex;
     justify-content: start;
     align-items: center;
     padding: 10px 0;
-}   
+}
 .flexSb{
     display: flex;
     justify-content: space-between;
@@ -266,7 +266,7 @@ body .layui-form-checked[lay-skin=primary] i{
     line-height: 24px;
     font-size: 18px;
     color: #303133;
-} 
+}
 .playHeader .close{
     position: absolute;
     top: 20px;
@@ -356,7 +356,6 @@ body .layui-form-checked[lay-skin=primary] i{
     transition: all 0.3s;
 }
 .hide{
-    
     display: none !important;
     transition: all 0.3s;
 }
@@ -424,7 +423,7 @@ body .layui-form-checked[lay-skin=primary] i{
     background-color: #eee;
     border-radius: 10px 0 0 10px;
     -webkit-transition: right 1s;
-    
+
 }
 .on-left{
     color: #999;
@@ -450,7 +449,7 @@ body .layui-form-checked[lay-skin=primary] i{
 .accountContnet p{
     font-size: 16px;
     font-weight: bold;
-    
+
 }
 .accountContnet{
     margin: 10px;
