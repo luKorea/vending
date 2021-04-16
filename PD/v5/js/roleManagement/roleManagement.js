@@ -286,18 +286,19 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     popupHide('.editRold', '.editBox');
                     if (res.code == 200) {
                         layer.msg(res.message, {icon: 1});
-                        layer.open({
-                            content: "用户权限已更新，请重新登陆",
-                            btn: ['确定'],
-                            yes(index) {
-                                layer.close(index);
-                                sessionStorage.clear();
-                                window.parent.location.href = "login.html";
-                            },
-                            cancel() {
-                                return false
-                            }
-                        });
+                        layer.close(index);
+                        // layer.open({
+                        //     content: "用户权限已更新，请重新登陆",
+                        //     btn: ['确定'],
+                        //     yes(index) {
+                        //         layer.close(index);
+                        //        // sessionStorage.clear();
+                        //         window.parent.location.href = "login.html";
+                        //     },
+                        //     cancel() {
+                        //         return false
+                        //     }
+                        // });
                         tableIns.reload({
                             where: {}
                         })
