@@ -888,17 +888,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     });
     $('.ListDateOperation .detail').click(function () {
 
-        if (orderIns) {
-            orderIns.reload({
-                where: {
-                    data: dateData.orders
-                }
-            })
-        } else {
-            dayOrderFun(dateData.orders)
-        }
-        $('.dayOrderBox .playHeader span').html(`${companyData.companyName}(${dateData.day})使用记录`)
-        popupShow('.dayOrderContent', '.dayOrderBox')
+        // if (orderIns) {
+        //     orderIns.reload({
+        //         where: {
+        //             data: dateData.orders
+        //         }
+        //     })
+        // } else {
+        //     dayOrderFun(dateData.orders)
+        // }
+        // $('.dayOrderBox .playHeader span').html(`${companyData.companyName}(${dateData.day})使用记录`)
+        // popupShow('.dayOrderContent', '.dayOrderBox')
     });
 
 
