@@ -168,22 +168,22 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             $('.changePay .IcbcPay').hide();
         }
         // 编辑部分
-        let tyoe = String(payData.payType);
+        let tyoe = payData.payType + '';
         form.val("SetPay", {
-            'typeIndex': payData.payType,
-            'payee': payData.payee,
-            'officialId': payData.payName === '微信' ? payData.app_id : '',
-            'MerchantsId': payData.payName === '微信' ? payData.mchId : '',
-            'app_key': payData.payName === '微信' ? payData.app_key : '',
-            'MerchantsKey': payData.payName === '微信' ? payData.app_private_key : '',
-            'aliPayId': payData.payName === '支付宝' ? payData.app_id : '',
-            'alipay_public_key': payData.payName === '支付宝' || tyoe === '4' ? payData.alipay_public_key : '',
-            'app_private_key': payData.payName === '支付宝' || tyoe === '4' ? payData.app_private_key : '',
-            'mchId': tyoe === '3' ? payData.mchId : '',
-            'app_id': tyoe === '3' ? payData.app_id : '',
-            'ICBC_app_key': tyoe === '3' ? payData.app_key : '',
-            'ICBC_alipay_public_key': tyoe === '3' ? payData.alipay_public_key : '',
-            'ICBC_app_private_key': tyoe === '3' ? payData.app_private_key : '',
+            typeIndex: payData.payType,
+            payee: payData.payee,
+            officialId: payData.payName === '微信' ? payData.app_id : '',
+            MerchantsId: payData.payName === '微信' ? payData.mchId : '',
+            app_key: payData.payName === '微信' ? payData.app_key : '',
+            MerchantsKey: payData.payName === '微信' ? payData.app_private_key : '',
+            aliPayId: payData.payName === '支付宝' ? payData.app_id : '',
+            alipay_public_key: payData.payName === '支付宝' || tyoe === '4' ? payData.alipay_public_key : '',
+            app_private_key: payData.payName === '支付宝' || tyoe === '4' ? payData.app_private_key : '',
+            mchId: tyoe === '3' ? payData.mchId : '',
+            app_id: tyoe === '3' ? payData.app_id : '',
+            ICBC_app_key: tyoe === '3' ? payData.app_key : '',
+            ICBC_alipay_public_key: tyoe === '3' ? payData.alipay_public_key : '',
+            ICBC_app_private_key: tyoe === '3' ? payData.app_private_key : '',
             juhemchId: tyoe === '4' ? payData.mchId : '',
             juheapp_id: tyoe === '4' ? payData.app_id : '',
             juheapp_key: tyoe === '4' ? payData.app_key : '',
@@ -214,7 +214,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     // 编辑提交
     $('.changeBody .submit_btn').click(function () {
         var payFormData = form.val("SetPay"),
-            type = payFormData.typeIndex;
+            type = payFormData.typeIndex + '';
         if (type === '2') {
             if (!(payFormData.payee && payFormData.officialId && payFormData.MerchantsId && payFormData.app_key && payFormData.MerchantsKey)) {
                 layer.msg('带*为必填', {icon: 7});
