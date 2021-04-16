@@ -1,5 +1,5 @@
 // 公共方法
-document.write("<script type='text/javascript' src='../assets/public/jquery.animateNumber.min.js'></script>");
+document.write("<script type='text/javascript' src='./assets/public/jquery.animateNumber.min.js'></script>");
 // 删除商品数据列表数据
 // 传id
 
