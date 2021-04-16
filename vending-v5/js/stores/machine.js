@@ -1095,30 +1095,25 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token: sessionStorage.token,
             },
             cols: [[
-                {field: 'goods_images', width: 100, title: '图片', align: 'center', templet: "#imgtmp"},
+                {field: 'goods_images',  title: '图片', align: 'center', templet: "#imgtmp"},
                 {
                     field: 'goods_Name',
-                    width: 250,
                     align: 'center',
                     title: '商品名',
-                    color: '#409eff',
                     templet: function (d) {
                         return (d.mail == 1 ? '(邮寄)' + d.goods_Name : d.goods_Name)
                         // return '1'
                     }
                 },
-                {field: `classifyName`, align: 'center', width: 150, title: '商品类目'},
+                {field: `classifyName`, align: 'center',  title: '商品类目'},
                 {
-                    field: 'mail', width: 150, title: '是否邮寄商品', align: 'center', templet: function (d) {
+                    field: 'mail',  title: '是否邮寄商品', align: 'center', templet: function (d) {
                         return d.mail == 0 ? '否' : '是'
                     }
                 },
-                {field: 'goods_Core', align: 'center', width: 200, title: '商品编号',},
+                {field: 'goods_Core', align: 'center',  title: '商品编号',},
                 {
                     field: 'operation',
-                    position: 'absolute',
-                    right: 0,
-                    width: 100,
                     title: '操作',
                     align: 'center',
                     toolbar: '#GoodsbarDemo'
@@ -1143,15 +1138,15 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 //res 即为原始返回的数据
                 if (res.code == 200) {
                     return {
-                        "code": res.code, //解析接口状态
-                        "msg": '', //解析提示文本
-                        "count": res.data.total, //解析数据长度
-                        "data": res.data.list //解析数据列表
+                        "code": res.code,//解析接口状态
+                        "msg": '',//解析提示文本
+                        "count": res.data.total,//解析数据长度
+                        "data": res.data.list//解析数据列表
                     };
                 } else {
                     return {
-                        "code": res.code, //解析接口状态
-                        "msg": res.message, //解析提示文本
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,//解析提示文本
                     }
                 }
 

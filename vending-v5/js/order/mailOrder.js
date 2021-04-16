@@ -492,22 +492,6 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
         permissionsObjFlag[421] ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
     };
     permissions();
-    // var addFlag = false,
-    //   editFlag = false;
-
-    // permissionsVal(420, 421).then(res => {
-    //   addFlag = res.addFlag;
-    //   editFlag = res.editFlag;
-    //   permissions();
-    // }).catch(err => {
-    //   layer.msg('服务器请求超时', { icon: 7 })
-    // });
-    // function permissions() {
-    //   addFlag ? $('.pushBtn').removeClass('hide') : $('.pushBtn').addClass('hide');
-    //   editFlag ? $('.refundBtnTwo').removeClass('hide') : $('.refundBtnTwo').addClass('hide');
-    // };
-
-
     // 编辑部分下拉框
     $(".selectBox1 .fa").on("click", function (event) {
         $(this).parent().next().toggle();//ul弹窗展开
