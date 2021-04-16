@@ -1,6 +1,6 @@
 import '../../MyCss/advertising/fodder.css'
 layui.use(['laydate', 'table', 'layer', 'tree'], function () {
-    tooltip('.refreshBtnList', { transition: true, time: 200 });
+    // tooltip('.refreshBtnList', { transition: true, time: 200 });
     var permissionsData0 = window.parent.permissionsData1(),
         merchantId = sessionStorage.machineID,
      permissionsObj = {

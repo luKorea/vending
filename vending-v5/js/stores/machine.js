@@ -1607,10 +1607,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
     };
     //支付类型设置
-    // 获取支付参数
+    // 获取支付参数 TODO
     var weId = null,
         aliId = null,
-        AcbcId = null;
+        AcbcId = null,
+        shadeId = null;
 
     function supportpay(machindID, merchantsID) {
         var payList = JSON.stringify({
@@ -1626,6 +1627,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                         weId = item.selectPay.length > 0 ? item.selectPay[0].mpId : 0
                     } else if (item.id == 3) {
                         AcbcId = item.selectPay.length > 0 ? item.selectPay[0].mpId : 0
+                    } else if (item.id == 4) {
+                        shadeId = item.selectPay.length > 0 ? item.selectPay[0].mpId : 0
                     }
                     if (item.status == 1) {
                         setPayStr += `<div class="layui-form-item">
@@ -1663,7 +1666,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     form.on('radio(radioTest)', function (data) {
         console.log(data)
-        layer.confirm('确定修改收款账户？(温馨提示：工行支付不能与微信支付、支付宝支付共用)', function (index) {
+        layer.confirm('确定修改收款账户？(温馨提示：工行支付, 杉德支付不能与微信支付、支付宝支付共用)', function (index) {
             layer.close(index);
             console.log(data); //被点击的radio的value值;
             var dataID = data.value.split('-');

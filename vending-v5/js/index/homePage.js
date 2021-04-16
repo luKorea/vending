@@ -143,9 +143,6 @@ window.onload = function () {
                         fontWeight: 'bold'
                     }
                 },
-                label: {
-                    //                 color: 'rgba(255, 255, 255, 0.3)'
-                },
                 labelLine: {
                     lineStyle: {
                         //                     color: 'rgba(255, 255, 255, 0.3)'
@@ -226,9 +223,6 @@ window.onload = function () {
                         fontSize: '15',
                         fontWeight: 'bold'
                     }
-                },
-                label: {
-                    //                 color: 'rgba(255, 255, 255, 0.3)'
                 },
                 labelLine: {
                     lineStyle: {

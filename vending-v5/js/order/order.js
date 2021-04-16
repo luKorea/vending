@@ -48,16 +48,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                   <div>(${d.machineNumber})</div>`
                     }
                 },
-                // { field: 'machineId', width: 220, title: '设备编号', },
-                // { field: 'CreationTime', width: 100, title: '下单时间', },
-
                 {field: 'number', width: 190, title: '订单编号', align: 'center',fixed: 'left'},
-                // { field: 'bili', width: 100, title: '购买数量' },
-                // { field: 'bili', width: 120, title: '订单金额', },
-                // { field: 'bili', width: 120, title: '支付金额', },
-                // { field: 'hah', width: 160, title: '成本', },
-                // { field: '2', width: 160, title: '利润', },
-                // { field: 'bili', width: 160, title: '退款金额', },
                 {
                     field: 'amount', width: 130, title: '订单金额', align: 'center'
                     , templet: function (d) {
@@ -66,7 +57,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 },
                 {
                     field: 'payStatus', width: 130, align: 'center', title: '支付状态', templet: function (d) {
-                        return d.payStatus == 1 ? '等待支付' : d.payStatus == 2 ? '已支付' : '未支付'
+                        return setPayStatus(d.payStatus)
                     }
                 },
                 {
@@ -80,17 +71,14 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 },
                 {
                     field: 'bili', width: 135, align: 'center', title: '支付类型', templet: function (d) {
-                        return d.payType == 1 ? '微信' : d.payType == 0 ? '支付宝' : '工行支付'
+                        return setPayType(d.payType)
                     }
                 },
                 {
                     field: 'sign_name', width: 135, title: '退款状态', align: 'center', templet: function (d) {
-                        return d.refund == 1 ? '未退款' : d.refund == 2 ? '部分退款' : d.refund == 3 ? '全部退款' : '-'
+                        return setRefundStatus(d.refund)
                     }
                 },
-                // { field: 'shipStatus', align: 'center', width: 160, title: '出货状态', templet:function(d){
-                //   return d.shipStatus==0?'未出货':d.shipStatus==1?'出货失败':'出货成功'
-                // }},
                 {
                     field: 'shipStatus', width: 150, title: '出货状态', align: 'center', templet: function (d) {
                         if (d.shipStatus || d.shipStatus == 0) {
@@ -98,7 +86,6 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                         } else {
                             return '-'
                         }
-                        // return d.shipStatus == 0 ? '未出货' : d.shipStatus == 1 ? '部分出货失败' : d.shipStatus == 2? '全部出货成功':'出货中'
                     }
                 },
                 {
@@ -160,33 +147,6 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 statusCode: 200 //规定成功的状态码，默认：0
             },
             done: function (res) {
-                // console.log(res);
-                // if (res.code == 200) {
-                //   console.log(res)
-                //   var orderAllSumVal = 0,
-                //     profitsSum = 0,
-                //     PaidInSum = 0,
-                //     refundSum = 0;
-                //   $('.ban-input input[name="orderNumVal"]').val(res.data.length);
-                //   res.data.forEach((item, index) => {
-                //     if (item.payStatus == 2) {
-                //       orderAllSumVal += item.amount;
-                //       item.goodsList.forEach((v, i) => {
-                //         profitsSum += (v.price - v.goods_Cost) * (v.count - v.refund_count);
-                //         PaidInSum += v.price * (v.count - v.refund_count);
-                //         refundSum += (v.price * v.refund_count)
-                //       })
-                //     }
-                //   });
-                //   // $('.ban-input input[name="orderAllSumVal"]').val(Number(orderAllSumVal.toFixed(2)).toLocaleString());
-                //   $('.ban-input input[name="orderAllSumVal"]').val(numFormat1(orderAllSumVal));
-
-                //   $('.ban-input input[name="profitsSum"]').val(numFormat1(profitsSum));
-                //   $('.ban-input input[name="orderPaidInSum"]').val(numFormat1(PaidInSum));
-                //   $('.ban-input input[name="orderRefundSum"]').val(numFormat1(refundSum));
-                // } else if (res.code == 405) {
-                //   $('.hangContent').show();
-                // }
             }
         });
 
@@ -358,36 +318,18 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 // { checkbox: true },
                 {field: 'goods_images', title: '图片', templet: "#imgtmp", align: 'center'},
                 {field: 'good_name_core',  title: '商品名(编号)', align: 'center',},
-                // { field: 'goods_Core', width: 140, title: '商品编号', align: 'center', },
                 {field: 'count',title: '购买数量', align: 'center'},
-                // {
-                //   field: 'ship_info', width: 300, title: '出货情况', align: 'center', templet: function (d) {
-                //     var str = '';
-                //     d.ship_info.forEach(item => {
-                //       str += `<div>${item.goods_Name + (item.ship_error == 0 ? '全部出货成功' : '出货（' + ((item.ship_total - item.ship_error) + '/' + item.ship_total) + ')')}</div>`
-                //     });
-                //     return str
-                //   }
-                // },
                 {
                     field: 'refund_count',
                     title: '已退款数量',
                     align: 'center'
                 },
-                // {
-                //   field: 'goods_Cost', align: 'center', width: 140, title: '退款状态 ', templet: function (d) {
-                //     return d.refund == 0 ? '-' : '已退款'
-                //   }
-                // },
-
-
                 {
                     field: 'price',
                     title: '销售价 ',
                     align: 'center',
                     templet: (e) => percentileMoney(e.price)
                 },
-                // { field: 'goods_Cost', width: 140, title: '成本价 ', align: 'center', },
                 {
                     field: 'operation',
                     align: 'center',
@@ -428,19 +370,28 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         if (!orderGoods) {
             goodsDetails();
         }
-        if (orderData.payStatus == 2) {
-            loadingAjax('/order/getOrderStatistics', 'post', JSON.stringify({number: orderData.number}), '', '', '', layer).then(res => {
-                $('.paidInSum').html(percentileMoney(res.data.real));
-                $('.profitsSum').html(percentileMoney(res.data.cost));
-                $('.refundSum').html(percentileMoney(res.data.refund));
-                $('.collectionBody').show();
+        loadingAjax('/order/getOrderStatistics', 'post', JSON.stringify({number: orderData.number}), '', '', '', layer).then(res => {
+            $('.paidInSum').html(percentileMoney(res.data.real));
+            $('.profitsSum').html(percentileMoney(res.data.cost));
+            $('.refundSum').html(percentileMoney(res.data.refund));
+            $('.collectionBody').show();
 
-            }).catch(err => {
-                $('.collectionBody').hide();
-            });
-        } else {
+        }).catch(err => {
             $('.collectionBody').hide();
-        }
+        });
+        // if (orderData.payStatus == 2) {
+        //     loadingAjax('/order/getOrderStatistics', 'post', JSON.stringify({number: orderData.number}), '', '', '', layer).then(res => {
+        //         $('.paidInSum').html(percentileMoney(res.data.real));
+        //         $('.profitsSum').html(percentileMoney(res.data.cost));
+        //         $('.refundSum').html(percentileMoney(res.data.refund));
+        //         $('.collectionBody').show();
+        //
+        //     }).catch(err => {
+        //         $('.collectionBody').hide();
+        //     });
+        // } else {
+        //     $('.collectionBody').hide();
+        // }
 
         $('.detailsOrderCode').html(obj.data.number);//订单编号
         $('.payTime').html(timeStamp(obj.data.time));//支付时间
@@ -450,11 +401,10 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         obj.data.goodsList.forEach((item, index) => {
             payNum += item.count;
         })
-        $('.payType').html((obj.data.payType == 0 ? '支付宝' : obj.data.payType == 1 ? '微信' : '工行支付'));
+        $('.payType').html((setPayType(obj.data.payType)));
         $('.payNUmber').html(payNum);
-        // $('.paidInSum').html(orderData.amount);
         $('.orderSum').html(percentileMoney(orderData.amount));
-        $('.collection button span').html((obj.data.payStatus == 1 ? '等待支付' : obj.data.payStatus == 2 ? '已支付' : '未支付'));
+        $('.collection button span').html((setPayStatus(obj.data.payStatus)));
         $('.machineCode').html(obj.data.machineNumber);
         $('.merchantName').html(obj.data.merchantName);
         $('.merchantCode ').html(obj.data.alias);

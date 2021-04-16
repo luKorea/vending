@@ -1,6 +1,6 @@
 import '../../MyCss/advertising/release.css'
 layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function () {
-    tooltip('.refreshBtnList', { transition: true, time: 200 });
+    // tooltip('.refreshBtnList', { transition: true, time: 200 });
     var permissionsData0 = window.parent.permissionsData1(),
         permissionsObj = {
             383: false,

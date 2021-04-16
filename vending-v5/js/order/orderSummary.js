@@ -57,7 +57,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             },
             {
                 field: 'payStatus', width: 130, align: 'center', title: '支付状态', templet: function (d) {
-                    return d.payStatus == 1 ? '等待支付' : d.payStatus == 2 ? '已支付' : '未支付'
+                    return setPayStatus(d.payStatus)
                 }
             },
             {
@@ -71,12 +71,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             },
             {
                 field: 'bili', width: 130, align: 'center', title: '支付类型', templet: function (d) {
-                    return d.payType == 1 ? '微信' : d.payType == 0 ? '支付宝' : '工行支付'
+                    return setPayType(d.payType)
                 }
             },
             {
                 field: 'sign_name', width: 150, title: '退款状态', align: 'center', templet: function (d) {
-                    return d.refund == 1 ? '未退款' : d.refund == 2 ? '部分退款' : d.refund == 3 ? '全部退款' : '-'
+                    return setRefundStatus(d.refund)
                 }
             },
             {

@@ -1,0 +1,12 @@
+{
+  "swaggerURL": [
+    "http://172.16.90.231:8093/v2/api-docs"
+  ],
+  "basicAuthor": false,
+  "version": "js",
+  "output": "api/api.js",
+  "axiosFrom": "@/utils/request.js",
+  "customResponse": "",
+  "addHostToBaseUrl": false,
+  "protocol": "https"
+}

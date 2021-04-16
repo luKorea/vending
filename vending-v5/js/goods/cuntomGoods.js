@@ -1,7 +1,7 @@
 import '../../MyCss/goods/customGoods.css'
 
 layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
-    tooltip('.refreshBtnList', {transition: true, time: 200},);
+    // tooltip('.refreshBtnList', {transition: true, time: 200},);
     var $ = layui.jquery,
         tree = layui.tree,
         permissionsData0 = window.parent.permissionsData1(),

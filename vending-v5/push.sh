@@ -4,7 +4,7 @@ baseball=$(
   pwd
 )
 cd "$baseball" || exit
-npm run build
+pnpm run build
 git add .
 remark=$(date +"%Y-%m-%d %H:%M:%S")
 git commit -m "korea ${remark}"
