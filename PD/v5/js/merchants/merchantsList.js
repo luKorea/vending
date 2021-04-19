@@ -53,8 +53,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
         },
         cols: [[
-            { field: 'bicId', width: 160, title: '商家ID', align: 'center', templet: "#imgtmp", },
-            { field: 'companyName', width: 250, title: '商家名称', align: 'center' },
+            { field: 'bicId',fixed:'left', width: 160, title: '商家ID', align: 'center', templet: "#imgtmp", },
+            { field: 'companyName',fixed:'left', width: 250, title: '商家名称', align: 'center' },
             { field: 'startUsingStr', width: 110, title: '是否启用', align: 'center' },
             {
                 field: 'balance', width: 160, title: '余额', align: 'center', templet: function (d) {

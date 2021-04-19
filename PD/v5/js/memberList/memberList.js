@@ -24,8 +24,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             },
             align: 'center',
             cols: [[
-                {field: 'username', width: 150, title: '用户名', align: 'center'},
-                {field: 'name', width: 150, title: '姓名', align: 'center'},
+                { field: 'username', width: 150, title: '用户名', fixed: 'left', align: 'center' },
+                { field: 'name', width: 150, title: '姓名', align: 'center' },
                 {
                     field: 'company', width: 200, title: '商家名', align: 'center', templet: function (e) {
                         return e.company ? e.company.companyName : ''
@@ -39,9 +39,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                 {
                     field: 'roleList', width: 150, title: '用户角色', align: 'center', templet: function (e) {
                         let name = '';
-                        e.roleList && e.roleList.forEach(item => {
-                            name += item.roleName + '<br>'
-                        })
+                        name = e.roleList && e.roleList.map(item => {
+                            return item.roleName
+                        }).join(',')
                         return name
                     }
                 },
@@ -50,13 +50,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                         return e.addUser ? e.addUser.username : ''
                     }
                 },
-                {field: 'addTime', width: 180, title: '创建时间', align: 'center'},
+                { field: 'addTime', width: 180, title: '创建时间', align: 'center' },
                 {
                     field: 'updateUser', width: 150, title: '更改人', align: 'center', templet: function (e) {
                         return e.updateUser ? e.updateUser.username : ''
                     }
                 },
-                {field: 'updateTime', width: 180, title: '更改时间', align: 'center'},
+                { field: 'updateTime', width: 180, title: '更改时间', align: 'center' },
                 {
                     field: 'operation',
                     align: 'center',
@@ -171,7 +171,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             error(err) {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon')
-                layer.msg('请求服务器超时', {icon: 2})
+                layer.msg('请求服务器超时', { icon: 2 })
             }
         })
     }
@@ -193,7 +193,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                 console.log(roleList);
             }
         }, error: function (err) {
-            layer.msg('服务器请求超时', {icon: 2})
+            layer.msg('服务器请求超时', { icon: 2 })
         }
     })
 
@@ -226,7 +226,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     $('.delete').click(function () {
         selected = data.id;
         if (data.username === sessionStorage.username) {
-            layer.msg('该用户为当前登陆用户，不可删除！！', {icon: 2});
+            layer.msg('该用户为当前登陆用户，不可删除！！', { icon: 2 });
             return;
         } else {
             layer.confirm('确定删除？', function (index) {
@@ -245,12 +245,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                             tableIns.reload({
                                 where: {}
                             });
-                            layer.msg(res.message, {icon: 1});
+                            layer.msg(res.message, { icon: 1 });
                             layer.close(index);
                         } else if (res.code === 403) {
                             window.parent.location.href = "login.html";
                         } else {
-                            layer.msg(res.message, {icon: 2});
+                            layer.msg(res.message, { icon: 2 });
                         }
                     }
                 });
@@ -310,7 +310,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         }
         if (!(informData.username && informData.name && informData.password
             && informData.companyId)) {
-            layer.msg('带*为必填', {icon: 7});
+            layer.msg('带*为必填', { icon: 7 });
             return;
         }
         $('.mask').fadeIn();
@@ -363,17 +363,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                             companyId: ''
                         })
                         $('.MemberOperation').fadeOut();
-                        layer.msg(res.message, {icon: 1})
+                        layer.msg(res.message, { icon: 1 })
                     } else if (res.code == 403) {
                         window.parent.location.href = "login.html";
                     } else {
-                        layer.msg(res.message, {icon: 2})
+                        layer.msg(res.message, { icon: 2 })
                     }
                 },
                 error: function (err) {
                     $('.mask').fadeOut();
                     $('.maskSpan').removeClass('maskIcon')
-                    layer.msg('请求服务器超时', {icon: 2})
+                    layer.msg('请求服务器超时', { icon: 2 })
                 }
             })
         }
@@ -389,7 +389,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         if (phone) {
             if (!(/^1[3456789]\d{9}$/.test(phone))) {
                 // alert("手机号码有误，请重填");
-                layer.msg('请填写正确的手机号码', {icon: 7});
+                layer.msg('请填写正确的手机号码', { icon: 7 });
                 $(this).val('')
                 return false;
             }
@@ -407,7 +407,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         var passwork = $(that).val();
         if (passwork) {
             if (!(reg.test(passwork))) {
-                layer.msg('密码必须包含英文和数字以及特殊字符且不少于6位数', {icon: 7});
+                layer.msg('密码必须包含英文和数字以及特殊字符且不少于6位数', { icon: 7 });
                 $(that).val('')
                 return false;
             }

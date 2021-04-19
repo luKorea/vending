@@ -18,7 +18,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             method: 'GET',
             headers: {token},
             cols: [[
-                {field: 'roleName', width: 180, title: '角色名', align: 'center'},
+                {field: 'roleName', width: 180, title: '角色名', fixed: 'left', align: 'center'},
                 {field: 'remark', width: 200, title: '备注', align: 'center'},
                 {
                     field: 'addUser', width: 150, title: '创建人', align: 'center', templet: function (e) {
