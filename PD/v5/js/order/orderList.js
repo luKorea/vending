@@ -266,7 +266,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
                     return
                 }
                 var content = xhr.response;
-                var fileName = `${companyName}订单(${startTime}-${endTime}).xls`
+                var fileName = `${companyName}订单(${startTime}-${endTime}).xlsx`
                 var elink = document.createElement('a');
                 elink.download = fileName;
                 elink.style.display = 'none';
