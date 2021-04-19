@@ -97,7 +97,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     //　TODO　添加, 编辑节点
     let addRoleNode = $('.addInput input[name="roleName"]'),
-        addRemarkNode = $('.addInput input[name="remark"]'),
+        addRemarkNode = $('.addInput textarea[name="remark"]'),
         editRoleNode = $('.editInput input[name="roleName"]'),
         editRemarkNode = $('.editInput input[name="remark"]');
     // 关闭弹窗

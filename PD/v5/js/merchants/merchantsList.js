@@ -917,7 +917,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             cols: [[
                 // { field: 'id', width: 180, title: '质检编号', align: 'center', },
                 { field: 'date', width: 180, title: '质检日期', align: 'center', },
-                { field: 'bicName', width: 180, title: '公司名称', align: 'center', },
+                { field: 'bicName', width: 180, title: '商家名称', align: 'center', },
                 { field: 'certificateType', width: 180, title: '证书类型', align: 'center', },
                 { field: 'unitPriceReceivable', width: 180, title: '应收单价', align: 'center', },
                 { field: 'number', width: 180, title: '数量（件）', align: 'center', },
