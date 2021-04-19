@@ -25,7 +25,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         return e.addUser ? e.addUser.username : ''
                     }
                 },
-                {field: 'addTime', width: 200, title: '添加时间', align: 'center'},
+                {field: 'addTime', width: 200, title: '创建时间', align: 'center'},
                 {
                     field: 'updateUser', width: 150, title: '最后修改人', align: 'center', templet: function (e) {
                         return e.updateUser ? e.updateUser.username : ''
