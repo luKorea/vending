@@ -53,8 +53,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             token,
         },
         cols: [[
-            { field: 'bicId', width: 160, title: '商家ID', align: 'center', templet: "#imgtmp", },
-            { field: 'companyName', width: 250, title: '商家名称', align: 'center' },
+            { field: 'bicId',fixed:'left', width: 160, title: '商家ID', align: 'center', templet: "#imgtmp", },
+            { field: 'companyName',fixed:'left', width: 250, title: '商家名称', align: 'center' },
             { field: 'startUsingStr', width: 110, title: '是否启用', align: 'center' },
             {
                 field: 'balance', width: 160, title: '余额', align: 'center', templet: function (d) {
@@ -917,7 +917,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             cols: [[
                 // { field: 'id', width: 180, title: '质检编号', align: 'center', },
                 { field: 'date', width: 180, title: '质检日期', align: 'center', },
-                { field: 'bicName', width: 180, title: '公司名称', align: 'center', },
+                { field: 'bicName', width: 180, title: '商家名称', align: 'center', },
                 { field: 'certificateType', width: 180, title: '证书类型', align: 'center', },
                 { field: 'unitPriceReceivable', width: 180, title: '应收单价', align: 'center', },
                 { field: 'number', width: 180, title: '数量（件）', align: 'center', },

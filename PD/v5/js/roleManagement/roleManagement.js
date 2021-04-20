@@ -18,14 +18,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             method: 'GET',
             headers: {token},
             cols: [[
-                {field: 'roleName', width: 180, title: '角色名', align: 'center'},
+                {field: 'roleName', width: 180, title: '角色名', fixed: 'left', align: 'center'},
                 {field: 'remark', width: 200, title: '备注', align: 'center'},
                 {
                     field: 'addUser', width: 150, title: '创建人', align: 'center', templet: function (e) {
                         return e.addUser ? e.addUser.username : ''
                     }
                 },
-                {field: 'addTime', width: 200, title: '添加时间', align: 'center'},
+                {field: 'addTime', width: 200, title: '创建时间', align: 'center'},
                 {
                     field: 'updateUser', width: 150, title: '最后修改人', align: 'center', templet: function (e) {
                         return e.updateUser ? e.updateUser.username : ''
@@ -97,7 +97,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     //　TODO　添加, 编辑节点
     let addRoleNode = $('.addInput input[name="roleName"]'),
-        addRemarkNode = $('.addInput input[name="remark"]'),
+        addRemarkNode = $('.addInput textarea[name="remark"]'),
         editRoleNode = $('.editInput input[name="roleName"]'),
         editRemarkNode = $('.editInput input[name="remark"]');
     // 关闭弹窗

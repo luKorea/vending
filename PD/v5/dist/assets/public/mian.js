@@ -695,7 +695,7 @@ let permissionData = {
     10: false, // 查询商家
     11: false, // 充值金额
     12: false, // 调减金额
-    13: false, // 删除公司
+    13: false, // 删除商家
     14: false, // 导入商家
     15: false, // 导出商家
     16: false, // 查看使用记录

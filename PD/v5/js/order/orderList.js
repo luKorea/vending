@@ -53,9 +53,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
             token,
         },
         cols: [[
-            {field: 'bicId', width: 160, title: '商家ID', align: 'center'},
-            {field: 'companyName', width: 160, title: '商家名称', align: 'center'},
-            {field: 'orderId', width: 180, title: '订单编号', align: 'center',},
+            {field: 'bicId', width: 160,fixed:'left', title: '商家ID', align: 'center'},
+            {field: 'companyName', width: 160,fixed:'left', title: '商家名称', align: 'center'},
+            {field: 'orderId', width: 180,fixed:'left', title: '订单编号', align: 'center',},
             {field: 'orderYard', width: 180, title: '订单码', align: 'center'},
             {field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center'},
             {
@@ -266,7 +266,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
                     return
                 }
                 var content = xhr.response;
-                var fileName = `${companyName}订单(${startTime}-${endTime}).xls`
+                var fileName = `${companyName}订单(${startTime}-${endTime}).xlsx`
                 var elink = document.createElement('a');
                 elink.download = fileName;
                 elink.style.display = 'none';
