@@ -1145,7 +1145,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     return
                 }
                 var content = xhr.response;
-                var fileName = `商家信息汇总.xls`
+                var fileName = `商家信息汇总.xlsx`
                 var elink = document.createElement('a');
                 elink.download = fileName;
                 elink.style.display = 'none';
