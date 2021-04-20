@@ -14,18 +14,17 @@ function getNetworkIp() {
         // 获得网络接口列表
         let network = os.networkInterfaces();
         for (let dev in network) {
-            let iface = network[dev];
-            for (let i = 0; i < iface.length; i++) {
-                let alias = iface[i];
+            network[dev].forEach((item, index) => {
+                let alias = network[dev][index];
                 if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
                     needHost = alias.address;
                 }
-            }
+            })
         }
     } catch (e) {
         needHost = 'localhost';
     }
-    console.log(needHost);
+    console.log(needHost, 'listen host');
     return needHost;
 }
 //进行合并，将webpack.base.conf.js中的配置合并到这
@@ -38,6 +37,7 @@ module.exports = merge(base, {
         inline: false, //实时刷新
         historyApiFallback: true, //不跳转
         host: getNetworkIp(),
+        disableHostCheck: true,
         //代理转发接口
         proxy: {
             //把/api/t转发到target，但是转发的是http://xxx/api/t

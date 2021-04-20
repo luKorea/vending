@@ -815,10 +815,10 @@ function setPayType(type) {
 /**
  * @method exportExcel
  * @description 导出模版
- * @param url {String}
- * @param fileName {String}
- * @param data {Object}
- * @param method {String}
+ * @param {String} url
+ * @param {String} fileName
+ * @param {Object} data
+ * @param {String} method [method='GET']
  */
 function exportExcel(url, fileName, data, method = 'GET') {
     $('.mask').fadeIn();
