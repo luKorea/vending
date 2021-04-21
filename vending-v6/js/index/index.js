@@ -91,11 +91,9 @@ window.onload = function () {
         // 监听tab切换事件
         var Indexs = null;
         element.on('tab(demo)', function (data) {
-            // console.log($(this).html());
-            // console.log($(this).html().indexOf('<'))
             var theModuleNameStr = $(this).html().substr(0, $(this).html().indexOf('<'))
-            history.replaceState(null, "", '?theModule=' + $(this).attr('lay-id'));
-            // history.replaceState(null, "", '?theModule=' + $(this).attr('lay-id') + '-' + theModuleNameStr);
+            // history.replaceState(null, "", '?theModule=' + $(this).attr('lay-id'));
+            history.replaceState(null, "", '?theModule=' + $(this).attr('lay-id') + '-' + encodeURI(theModuleNameStr));
             var Len = $(".navClick").length;
             for (var i = 0; i < Len; i++) {
                 if ($(this).attr('lay-id') == $(".navClick").eq(i).attr('navId')) {
@@ -113,13 +111,6 @@ window.onload = function () {
                 $(".navClick").parent().removeClass('layui-this');
             }
         });
-        // 获取地址栏参数
-        // function getQueryString(name) {
-        //     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        //     var r = window.location.search.substr(1).match(reg);
-        //     if (r != null) return unescape(r[2]);
-        //     return null;
-        // };
         function getQueryString(key) {
             // 获取参数
             var url = window.location.search;
@@ -136,7 +127,7 @@ window.onload = function () {
             // console.log(theModule1)
             var theModule = theModule1.split('-');
             if (theModule[0] != 22 && theModule) {
-                tabAdd(theModule[0], theModule[1]);
+                tabAdd(theModule[0], decodeURI(theModule[1]));
                 tabChange(theModule[0]);
                 navStr.push(theModule[0]);
             }
