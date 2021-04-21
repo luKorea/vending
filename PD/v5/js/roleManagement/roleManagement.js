@@ -16,22 +16,22 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             elem: '#tableTest',
             url: `${Vapi}/role/findAll`,
             method: 'GET',
-            headers: {token},
+            headers: { token },
             cols: [[
-                {field: 'roleName', width: 180, title: '角色名', fixed: 'left', align: 'center'},
-                {field: 'remark', width: 200, title: '备注', align: 'center'},
+                { field: 'roleName', title: '角色名', fixed: 'left', align: 'center' },
+                { field: 'remark', title: '备注', align: 'center' },
                 {
-                    field: 'addUser', width: 150, title: '创建人', align: 'center', templet: function (e) {
+                    field: 'addUser', title: '创建人', align: 'center', templet: function (e) {
                         return e.addUser ? e.addUser.username : ''
                     }
                 },
-                {field: 'addTime', width: 200, title: '创建时间', align: 'center'},
+                { field: 'addTime', title: '创建时间', align: 'center' },
                 {
                     field: 'updateUser', width: 150, title: '最后修改人', align: 'center', templet: function (e) {
                         return e.updateUser ? e.updateUser.username : ''
                     }
                 },
-                {field: 'updateTime', width: 200, title: '最后修改时间', align: 'center'},
+                { field: 'updateTime', width: 200, title: '最后修改时间', align: 'center' },
                 {
                     field: 'operation',
                     position: 'absolute',
@@ -67,10 +67,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }
                 }
             },
-            response: {statusCode: 200},
+            response: { statusCode: 200 },
             done: function (res) {
                 if (res.code === 403) {
-                    layer.msg('登录过期,请重新登录', {icon: 2})
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
                     setTimeout(__ => {
                         window.parent.location.href = "login.html";
                     }, 1500)
@@ -156,7 +156,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 success: function (res) {
                     popupHide('.MemberOperation', '.MemberContent');
                     if (res.code === 200) {
-                        layer.msg(res.message, {icon: 1});
+                        layer.msg(res.message, { icon: 1 });
                         addRoleNode.val('');
                         addRemarkNode.val('');
                         tableIns.reload({
@@ -165,15 +165,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     } else if (res.code == 403) {
                         window.history.go(-1)
                     } else {
-                        layer.msg(res.message, {icon: 2});
+                        layer.msg(res.message, { icon: 2 });
                     }
                 },
                 error: function (err) {
-                    layer.msg('服务器请求超时', {icon: 2})
+                    layer.msg('服务器请求超时', { icon: 2 })
                 }
             })
         } else {
-            layer.msg('带*为必填', {icon: 7});
+            layer.msg('带*为必填', { icon: 7 });
             return;
         }
     });
@@ -285,7 +285,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     $('.maskSpan').removeClass('maskIcon');
                     popupHide('.editRold', '.editBox');
                     if (res.code == 200) {
-                        layer.msg(res.message, {icon: 1});
+                        layer.msg(res.message, { icon: 1 });
                         layer.close(index);
                         // layer.open({
                         //     content: "用户权限已更新，请重新登陆",
@@ -305,17 +305,17 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     } else if (res.code === 403) {
                         window.parent.location.href = "login.html";
                     } else {
-                        layer.msg(res.message, {icon: 2});
+                        layer.msg(res.message, { icon: 2 });
                     }
                 },
                 error: function (err) {
-                    layer.msg('服务器请求超时', {icon: 2})
+                    layer.msg('服务器请求超时', { icon: 2 })
                 }
             })
 
 
         } else {
-            layer.msg('带*为必填', {icon: 7});
+            layer.msg('带*为必填', { icon: 7 });
         }
     });
     // 删除
@@ -332,7 +332,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     layer.close(index);
                     if (res.code == 200) {
                         socketPush(userPushId)
-                        layer.msg(res.message, {icon: 1});
+                        layer.msg(res.message, { icon: 1 });
                         tableIns.reload({
                             where: {}
                         });
@@ -340,11 +340,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     } else if (res.code == 403) {
                         window.parent.location.href = "login.html";
                     } else {
-                        layer.msg(res.message, {icon: 2});
+                        layer.msg(res.message, { icon: 2 });
                     }
                 },
                 error: function (err) {
-                    layer.msg('服务器请求超时', {icon: 2});
+                    layer.msg('服务器请求超时', { icon: 2 });
                 }
             })
         })

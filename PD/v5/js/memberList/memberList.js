@@ -24,8 +24,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             },
             align: 'center',
             cols: [[
-                { field: 'username', width: 150, title: '用户名', fixed: 'left', align: 'center' },
-                { field: 'name', width: 150, title: '姓名', align: 'center' },
+                { field: 'username', title: '用户名', fixed: 'left', align: 'center' },
+                { field: 'name', title: '姓名', align: 'center' },
                 {
                     field: 'company', width: 200, title: '商家名', align: 'center', templet: function (e) {
                         return e.company ? e.company.companyName : ''

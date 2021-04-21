@@ -57,7 +57,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         },
         height: '600',
         cols: [[
-            { field: 'bicId',fixed:'left', width: 160, title: '商家ID', align: 'center', templet: "#imgtmp", },
+            { field: 'bicId',fixed:'left',  title: '商家ID', align: 'center', templet: "#imgtmp", },
             { field: 'companyName',fixed:'left', width: 250, title: '商家名称', align: 'center' },
             { field: 'startUsingStr', width: 110, title: '是否启用', align: 'center' },
             {
@@ -80,7 +80,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     return numFormat2(d.moneyRemind)
                 }
             },
-            { field: 'remark', width: 180, title: '备注', align: 'center' },
+            { field: 'remark',  title: '备注', align: 'center' },
             { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },
         ]]
         , id: 'tableId'
