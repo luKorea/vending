@@ -256,7 +256,23 @@ function setTableColor(TabDivId, RowIndex, ColorString) {
         console.log(e.message);
     }
 }
+//权限
+function control() {
+    $('[data-controlbtn]').hide();
+    try {
+        var list = JSON.parse(sessionStorage.roleData).controlList
+        list.forEach((v) => {
+            v.controlList.forEach((v1) => {
+                v1.controlList.forEach((v2) => {
+                    $(`[data-controlbtn="${v2.controlName}"]`).show();
+                })
+            })
+        })
+    } catch (error) {
 
+    }
+
+}
 export {
     ajaxFun,
     loadAjax,
@@ -274,5 +290,6 @@ export {
     timeStampM,
     percentileMoney,
     setTableColor,
-    formatDate
+    formatDate,
+    control
 }

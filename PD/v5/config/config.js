@@ -3,6 +3,7 @@ const webpack = require('webpack');
 var entry = {
     index: './js/index/index.js',
     login: './js/login/login.js',
+    home: './js/home/home.js',
     merchantsList: './js/merchants/merchantsList.js',
     orderList: './js/order/orderList.js',
     memberList: './js/memberList/memberList.js',
@@ -12,6 +13,9 @@ var entry = {
 var htmlConfig = [
     {
         name: "index",
+    },
+    {
+        name: "home",
     },
     {
         name: "login",

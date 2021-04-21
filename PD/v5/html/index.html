@@ -4,8 +4,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>物流-质检费控系统</title>
-	<link rel="icon" type="image/png" sizes="144x144" href="../img/icon.png"/>
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="icon" type="image/png" sizes="144x144" href="../img/icon.png" />
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<script src="./assets/public/documentWrite.js"></script>
 	<script src="./assets/layui/layui.js"></script>
 </head>
@@ -22,8 +23,9 @@
 					</a>
 					<dl class="layui-nav-child">
 						<dd class="exitLogin">
-							<a >
-								<span style="text-align: center;display: inline-block;width: 100%;color: #333;">退出登录</span>			
+							<a>
+								<span
+									style="text-align: center;display: inline-block;width: 100%;color: #333;">退出登录</span>
 							</a>
 						</dd>
 					</dl>
@@ -58,27 +60,55 @@
 			<div class="layui-side-scroll">
 				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 				<ul class="layui-nav layui-nav-tree my-nav-tab" lay-filter="testNav" id="nav">
-					<li class="layui-nav-item merchantsCont">
+					<!-- <li class="layui-nav-item merchantsCont">
 						<dl class="layui-nav-child" style="display: block;">
 							<dd class="navClick" navId="0">
 								<a href="javascript:;"><i class="layui-icon layui-icon-home"></i>商家列表</a>
 							</dd>
 							<dd class="navClick" navId="1">
-								<a href="javascript:;" ><i class="layui-icon layui-icon-list"></i>订单列表</a>
+								<a href="javascript:;"><i class="layui-icon layui-icon-list"></i>订单列表</a>
+							</dd>
+						</dl>
+					</li> -->
+					<li class="layui-nav-item" data-control="商家列表">
+						<a href="javascript:;">
+							<i class="layui-icon layui-icon-home"></i>
+							<label>商家列表</label>
+						</a>
+						<dl class="layui-nav-child">
+							<dd class="userListFlag hide" data-control="商家列表(全部)">
+								<a href="javascript:;" class="navClick" navId="1">商家列表(全部)</a>
+							</dd>
+							<dd class="roleListFlag hide" data-control="商家列表(我的)">
+								<a href="javascript:;" class="navClick" navId="2">商家列表(我的)</a>
 							</dd>
 						</dl>
 					</li>
-					<li class="layui-nav-item">
+					<li class="layui-nav-item" data-control="订单列表">
+						<a href="javascript:;"  >
+							<i class="layui-icon layui-icon-list"></i>
+							<label>订单列表</label>
+						</a>
+						<dl class="layui-nav-child">
+							<dd class="userListFlag hide" data-control="订单列表(全部)">
+								<a href="javascript:;" class="navClick"  navId="3">订单列表(全部)</a>
+							</dd>
+							<dd class="roleListFlag hide" data-control="订单列表(我的)">
+								<a href="javascript:;" class="navClick"  navId="4">订单列表(我的)</a>
+							</dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item" data-control="用户及角色管理">
 						<a href="javascript:;">
 							<i class="layui-icon layui-icon-user"></i>
 							<label>用户及角色管理</label>
 						</a>
 						<dl class="layui-nav-child">
-							<dd class="userListFlag hide">
-								<a href="javascript:;" class="navClick" navId="2">用户管理</a>
+							<dd class="userListFlag hide" data-control="用户管理">
+								<a href="javascript:;" class="navClick" navId="5">用户管理</a>
 							</dd>
-							<dd class="roleListFlag hide">
-								<a href="javascript:;" class="navClick" navId="3">角色管理</a>
+							<dd class="roleListFlag hide" data-control="角色管理">
+								<a href="javascript:;" class="navClick" navId="6">角色管理</a>
 							</dd>
 						</dl>
 					</li>
@@ -87,4 +117,5 @@
 		</div>
 	</div>
 </body>
+
 </html>
