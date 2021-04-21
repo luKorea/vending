@@ -57,8 +57,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         },
         height: '600',
         cols: [[
-            { field: 'bicId',fixed:'left',  title: '商家ID', align: 'center', templet: "#imgtmp", },
-            { field: 'companyName',fixed:'left', width: 250, title: '商家名称', align: 'center' },
+            { field: 'bicId', fixed: 'left', title: '商家ID', align: 'center', templet: "#imgtmp", },
+            { field: 'companyName', fixed: 'left', width: 250, title: '商家名称', align: 'center' },
             { field: 'startUsingStr', width: 110, title: '是否启用', align: 'center' },
             {
                 field: 'balance', width: 160, title: '余额', align: 'center', templet: function (d) {
@@ -80,7 +80,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     return numFormat2(d.moneyRemind)
                 }
             },
-            { field: 'remark',  title: '备注', align: 'center' },
+            {
+                field: 'initialAmount', width: 150, title: '初始化金额', align: 'center', templet: function (d) {
+                    return numFormat2(d.initialAmount||0)
+                }
+            },
+
+            { field: 'remark', title: '备注', align: 'center' },
             { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', align: 'center' },
         ]]
         , id: 'tableId'
@@ -521,7 +527,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     field: 'updateTime', width: 180, title: '更新时间', align: 'center', templet: function (d) {
                         if (d.updateTime) {
                             return formatDate(d.updateTime)
-             
+
                         } else {
                             return '-'
                         }

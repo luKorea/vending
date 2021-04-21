@@ -38,7 +38,7 @@ module.exports = merge(base, {
     devServer: {
         open: true,
         contentBase: "./dist", //本地服务器所加载的页面所在的目录
-        port: "8889", //设置默认监听端口，如果省略，默认为"8080"
+        port: "8890", //设置默认监听端口，如果省略，默认为"8080"
         inline: true, //实时刷新
         historyApiFallback: true, //不跳转
         host: getNetworkIp(),
