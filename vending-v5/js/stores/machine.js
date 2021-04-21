@@ -233,11 +233,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 statusCode: 200 //规定成功的状态码，默认：0
             },
             done: function (res) {
-                // permissions();
                 permissions1();
-                if (res.code == 403) {
+                if (+res.code === 403) {
                     window.parent.location.href = "login.html";
-                } else if (res.code == 405) {
+                } else if (+res.code === 405) {
                     $('.hangContent').show();
                 }
                 fixedFun();
@@ -532,6 +531,66 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             })
         })
     })
+    // TODO 关联分则规则
+    $('.relation').click(function () {
+        console.log(machineSetData);
+        if (machineSetData.payType.indexOf('4') > -1) {
+            $('.relationRules').show();
+            getRulesList(sessionStorage.machineID).then(res => {
+                getRulesDetails(1)
+            })
+        } else {
+            layer.msg('您的支付方式不是杉德支付，不能关联分则规则', {icon: 7});
+        }
+    });
+
+    // 获取分账详情
+    function getRulesDetails(machineId) {
+        form.val('relationRules', {
+            'state': 0,
+            'rulesId': 210
+        });
+        form.render();// 重新渲染一下
+    }
+
+    // 获取分账列表
+    function getRulesList(merchantId) {
+        return new Promise((resolve, reject) => {
+            loadingAjax('/classify/findAll', 'post', JSON.stringify({
+                pageNum: 1,
+                pageSize: 200,
+                merchantId,
+            }), sessionStorage.token).then(res => {
+                var optionList = ``;
+                $.each(res.data.list, function (index, ele) {
+                    console.log(typeof ele.classifyId, ele.classifyId);
+                    optionList += `<option value="${ele.classifyId}">${ele.classifyName}</option>`
+                });
+                $('#rules').html(optionList);
+                form.render('select');
+                resolve();
+            }).catch(err => {
+                reject(err);
+            })
+        })
+    }
+
+    // 提交分账
+    $('.relationBtn').click(function () {
+        let data = form.val('relationRules');
+        console.log(data);
+        hideRules();
+    });
+
+    // 取消分账
+    function hideRules() {
+        $('.relationRules').hide();
+    }
+
+    $('.relationRules .cancelBtn').click(function () {
+        hideRules();
+    })
+
 
     // 货道数
     function aisleNum() {

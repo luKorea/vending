@@ -50,6 +50,7 @@ window.onload = function () {
         //新增一个Tab项
         // console.log(table)
         function tabAdd(index, title) {
+            console.log(title, index);
             element.tabAdd('demo', {
                 title,
                 content: `<div class="content-tbas-iframe-html">
@@ -93,7 +94,8 @@ window.onload = function () {
             // console.log($(this).html());
             // console.log($(this).html().indexOf('<'))
             var theModuleNameStr = $(this).html().substr(0, $(this).html().indexOf('<'))
-            history.replaceState(null, "", '?theModule=' + $(this).attr('lay-id') + '-' + theModuleNameStr);
+            history.replaceState(null, "", '?theModule=' + $(this).attr('lay-id'));
+            // history.replaceState(null, "", '?theModule=' + $(this).attr('lay-id') + '-' + theModuleNameStr);
             var Len = $(".navClick").length;
             for (var i = 0; i < Len; i++) {
                 if ($(this).attr('lay-id') == $(".navClick").eq(i).attr('navId')) {

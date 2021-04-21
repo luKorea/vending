@@ -695,10 +695,10 @@ input:hover {
     background-color: rgb(108, 109, 113);
     font-size: 12px;
 }*/
-.passwordCont, .editAisleBox, .addCont, .addPanelBox {
+.passwordCont, .editAisleBox, .addCont, .addPanelBox, .relationBox {
     width: 600px;
     position: relative;
-    margin: 10vh auto 50px;
+    margin: 12vh auto 50px;
     background: #fff;
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
