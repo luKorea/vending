@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>结算详情</title>
+    <link rel="stylesheet" href="../../MyCss/public/pubilc.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../MyCss/merchants/settlementDetails.css">
+</head>
+<body>
+    <div class="details-wrap">
+        <div class="margin">
+            <div class="details-header">
+                <div class="header-title">
+                    <h1>结算详情</h1>
+                </div>
+                <div class="prompt">
+                    温馨提醒：商户、代理分成=(分账总金额-平台手续费-供应商成本价)*分账比例
+                </div>
+            </div>
+            <div class="flexTwo">
+                <div class="times">
+                        <div class="layui-form">
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" id="itemrs1">
+                                </div>
+                            </div>
+                        </div>
+                        至
+                        <div class="layui-form">
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" id="itemrs2">
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div style="max-width: 250px;" class="key-contnet">
+                    <div class="key-text">订单号</div>
+                    <input type="text" placeholder="请输入订单号">
+                </div>
+                <div style="max-width: 250px;margin-left: 25px;" class="key-contnet">
+                    <div class="key-text">商户编号</div>
+                    <input type="text" placeholder="请输入商户编号">
+                </div>
+                <div style="margin-left: 25px;">
+                    结算状态：
+                    <form class="layui-form" action=""  style="max-width: 240px;">
+                        <div class="layui-form" lay-filter="myDiv">
+                            <select name="" id="" lay-filter="mySelect">
+                                <option value="zhang">全部</option>
+                                <option value="wang">纪念币</option>
+                                <option value="li">红包</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <button class="layui-btn layui-btn-normal query-btn btn">
+                    <span>查询</span>
+                </button>
+            </div>
+            <!-- 数据表格 -->
+            <div class="details-data-list">
+                <div>
+                    <table class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script src="../../layui/layui.js"></script>
+<script>
+    layui.use(['table', 'laydate'], function () {
+        var $ = layui.jquery;
+        // 时间选择器
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#itemrs1',
+            value: new Date(),
+            max:'0'
+        });
+        laydate.render({
+            elem: '#itemrs2',
+            value: new Date(),
+            max:'0'
+        });
+    
+        var table = layui.table;
+        table.render({
+            elem: '#moneyData'
+            , cols: [[
+                { field: 'username', width: 200, title: '订单号' },
+                { field: 'phone', width: 120, title: '商户编码' },
+                { field: 'CreationTime', width: 120, title: '支付类型' },
+                { field: 'amendTime', width: 120, title: '订单金额' ,},
+                { field: 'bili', width: 120, title: '分帐比例'  },
+                { field: 'jine', width: 120, title: '分帐金额 ' },
+                { field: 'leixing', width: 120, title: '分帐类型 ' },
+                { field: 'danhao', width: 150, title: '结算单号 ' },
+                { field: 'zhuangtai', width: 120, title: '结算状态' ,},
+                { field: 'time', width: 150, title: '结算时间'  },
+                { field: 'details', width: 120, title: '商品详情 ' },
+                { field: 'times', width: 150, title: '记录时间 ' },
+                { field: 'beizhu', width: 250, title: '备注'},
+            ]],
+            data: [
+               {username:'2222'
+               ,phone:'cs45121'
+               ,CreationTime:'支付宝'
+               ,amendTime:'99'
+               ,bili:'1:2'
+               ,jine:'88'
+               ,leixing:'支付宝'
+               ,danhao:'555'
+               ,zhuangtai:'已结算'
+               ,time:'2020'
+               ,details:'555'
+               ,times:'202004'
+               ,beizhu:'无'
+               },
+               {username:'2222'
+               ,phone:'cs45121'
+               ,CreationTime:'支付宝'
+               ,amendTime:'99'
+               ,bili:'1:2'
+               ,jine:'88'
+               ,leixing:'支付宝'
+               ,danhao:'555'
+               ,zhuangtai:'已结算'
+               ,time:'2020'
+               ,details:'555'
+               ,times:'202004'
+               ,beizhu:'无'
+               }
+            ]
+            , page: true
+        });
+        
+    })
+</script>
+</html>

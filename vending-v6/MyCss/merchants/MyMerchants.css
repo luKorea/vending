@@ -1,0 +1,96 @@
+.my-warp{
+    width: 100%;
+}
+/* 个人信息部分 */
+.MyInformation{
+    width: 50%;
+}
+.informtion-list li{
+    width: 100%;
+    border-bottom: 1px solid #cccccc;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
+.informtion-list li:nth-child(2){
+    display: flex;
+}
+.account{
+    display: flex;
+    align-items: center;
+}
+.updata{
+    font-size: 14px;
+    border-bottom: 1px solid #cccccc;
+}
+.config-btn{
+    margin-top: 20px;
+}
+.serrlement{
+    width: 50%;
+    margin-top: 50px;
+}
+.padding{
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+.flex{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.flex div{
+    width: 12.5%;
+    text-align: center;
+    margin: 10px 0;
+}
+h1{
+    font-size: 20px;
+    font-weight: 800;
+}
+.times{
+    width: 30%;
+}
+.flexTwo{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 10px 0;
+}
+.layui-input{
+    padding: 0 15px;
+    width: 220px;
+}
+.layui-this{
+    background-color: #409eff !important;
+}
+.money-data-list{
+    width: 100%;
+    margin-top: 20px;
+}
+.withdrawal-input span{
+    text-align: right;
+    font-size: 14px;
+    color: #606266;
+    line-height: 40px;
+    box-sizing: border-box;
+}
+.withdrawal-input input{
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: none;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+}
+.withdrawal-btn span{
+    color: #fff;
+}

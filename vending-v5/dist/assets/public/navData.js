@@ -34,6 +34,8 @@ var navList = [
     '<iframe class="iframe_show" src="codeOrder.html?id=' + Math.random() + '"></iframe>',
     '<iframe class="iframe_show" src="salesResults.html?id=' + Math.random() + '"></iframe>',
     '<iframe class="iframe_show" src="orderSummary.html?id=' + Math.random() + '"></iframe>',
+    '<iframe class="iframe_show" src="rules.html?id=' + Math.random() + '"></iframe>',
+    '<iframe class="iframe_show" src="receiver.html?id=' + Math.random() + '"></iframe>',
 ];
 export {
     navList,
