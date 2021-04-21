@@ -11,7 +11,7 @@ import {
     fixedFun,
     timeStampM
 } from '../../common/common.js';
-
+console.log(sessionStorage,'sessionStorage');
 layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
     var table = layui.table, layer = layui.layer, token = sessionStorage.token,
         tableIns = table.render({
