@@ -11,8 +11,11 @@ import {
     fixedFun,
     timeStampM,
     formatDate,
-    setTableColor
+    setTableColor,
+    control
 } from '../../common/common.js';
+
+
 
 layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     if (!sessionStorage.token) {

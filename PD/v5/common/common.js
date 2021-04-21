@@ -259,13 +259,28 @@ function setTableColor(TabDivId, RowIndex, ColorString) {
 //权限
 function control() {
     $('[data-controlbtn]').hide();
+    // 获取地址栏参数
+    function getParentQueryString(key) {
+        // 获取参数
+        var url = window.parent.location.search;
+        // 正则筛选地址栏
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        // 匹配目标参数
+        var result = url.substr(1).match(reg);
+        //返回参数值
+        return result ? decodeURIComponent(result[2]) : null;
+    }
     try {
+        console.log(getParentQueryString('key'));
+        let key = getParentQueryString('key');
         var list = JSON.parse(sessionStorage.roleData).controlList
         list.forEach((v) => {
             v.controlList.forEach((v1) => {
-                v1.controlList.forEach((v2) => {
-                    $(`[data-controlbtn="${v2.controlName}"]`).show();
-                })
+                if (v1.controlName == key) {
+                    v1.controlList.forEach((v2) => {
+                        $(`[data-controlbtn="${v2.controlName}"]`).show();
+                    })
+                }
             })
         })
     } catch (error) {

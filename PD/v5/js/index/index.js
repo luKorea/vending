@@ -33,7 +33,7 @@ window.onload = function () {
 
                         Navs = res.data && res.data.controlList || []
 
-                        initNav()
+                        // initNav()
 
                     }
                 }).catch(err => {
@@ -42,19 +42,19 @@ window.onload = function () {
         };
         getRole();
         // 动态渲染导航
-        function initNav() {
-            $('[data-control]').hide();
-            Navs.forEach((v) => {
-                $(`[data-control="${v.controlName}"]`).show();
-                v.controlList.forEach((v1) => {
-                    $(`[data-control="${v1.controlName}"]`).show();
-                })
-            })
-        }
+        // function initNav() {
+        //     $('[data-control]').hide();
+        //     Navs.forEach((v) => {
+        //         $(`[data-control="${v.controlName}"]`).show();
+        //         v.controlList.forEach((v1) => {
+        //             $(`[data-control="${v1.controlName}"]`).show();
+        //         })
+        //     })
+        // }
 
         // 导航切换事件
         $('.navClick').click(function () {
-            history.replaceState(null, "", '?theModule=' + $(this).attr('navId'));
+            history.replaceState(null, "", `?theModule=${$(this).attr('navId')}&key=${$(this).data('key')}`);
             $('.wrapContent').html(navList[$(this).attr('navId')]);
         })
 
