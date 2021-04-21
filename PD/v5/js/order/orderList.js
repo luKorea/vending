@@ -52,6 +52,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
         headers: {
             token,
         },
+        height: '600',
         cols: [[
           
             { field: 'orderId', width: 180, fixed: 'left', title: '订单编号', align: 'center', },
@@ -80,21 +81,21 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
             { field: 'sfFreightReceivable', width: 160, title: '顺丰应收运费', align: 'center' },
             { field: 'total', width: 160, title: '合计', align: 'center' },
             { field: 'totalAfterDiscount', width: 160, title: '优惠后合计', align: 'center' },
-            { field: 'mergeBatch', width: 160, title: '合并批次', align: 'center' },
+            { field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center' },
 
             { field: 'storageNumber', width: 160, title: '入库件数', align: 'center' },
 
             { field: 'testingInstitutes', width: 160, title: '质检机构', align: 'center' },
             { field: 'qualityResult', width: 160, title: '质检结果', align: 'center' },
             { field: 'recheckResult', width: 160, title: '复检结果', align: 'center' },
-            { field: 'planExpress', width: 160, title: '计划快递', align: 'center' },
-            { field: 'realityExpress', width: 160, title: '实际快递', align: 'center' },
+            { field: 'planExpress', width: 160, title: '计划发货快递', align: 'center' },
+            { field: 'realityExpress', width: 160, title: '实际发货快递', align: 'center' },
             { field: 'expressNumber', width: 160, title: '快递单号', align: 'center' },
-            { field: 'placeReceipt', width: 160, title: '收货地', align: 'center' },
+            { field: 'placeReceipt', width: 160, title: '收货省份', align: 'center' },
             { field: 'orderTime', width: 180, title: '下单时间', align: 'center' },
             { field: 'storageTime', width: 180, title: '入库时间', align: 'center' },
             { field: 'inspectTime', width: 180, title: '送检时间', align: 'center' },
-            { field: 'accomplishTime', width: 180, title: '完成时间', align: 'center' },
+            { field: 'accomplishTime', width: 180, title: '质检完成时间', align: 'center' },
             { field: 'deliveryTime', width: 180, title: '出库时间', align: 'center' },
             // {field: 'flagStr', width: 130, title: '扣费状态', align: 'center'},
             // {field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center'},

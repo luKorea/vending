@@ -55,6 +55,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         headers: {
             token,
         },
+        height: '600',
         cols: [[
             { field: 'bicId',fixed:'left', width: 160, title: '商家ID', align: 'center', templet: "#imgtmp", },
             { field: 'companyName',fixed:'left', width: 250, title: '商家名称', align: 'center' },
