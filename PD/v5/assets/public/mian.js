@@ -603,7 +603,7 @@ async function permissionsVal(addIndex, editIndex, delIndex, four, five, six) {
 
 function permissionsVal1(data, res) {
     for (var i in data) {
-        data[i] = res.controls.some(item => {
+        data[i] = res.some(item => {
             return i == item.controlId;
         })
     }
