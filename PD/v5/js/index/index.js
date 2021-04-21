@@ -1,6 +1,6 @@
 //JavaScript代码区域
 import '../../MyCss/indexCss/index.scss';
-import {navList} from '../../assets/public/navData.js'
+import { navList } from '../../assets/public/navData.js'
 import {
     loadAjax,
     popupShow,
@@ -29,10 +29,17 @@ window.onload = function () {
                 .then(res => {
                     if (res.code === 200) {
                         sessionStorage.roleData = JSON.stringify(res.data);
+                        var flag = res.data.filter((v) => {
+                            return v.controlName.indexOf('商家列表') > -1;
+                        })
+                        if (flag && flag.length > 0) {//判断是否商家列表权限
+                            $('.wrapContent').html(navList[1])
+                        }
+
                     }
                 }).catch(err => {
-                layer.msg(err.message, {icon: 2})
-            })
+                    layer.msg(err.message, { icon: 2 })
+                })
         };
         getRole();
         // 导航切换事件
