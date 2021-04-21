@@ -1,6 +1,6 @@
 //JavaScript代码区域
 import '../../MyCss/indexCss/index.scss';
-import {navList} from '../../assets/public/navData.js'
+import { navList } from '../../assets/public/navData.js'
 import {
     loadAjax,
     popupShow,
@@ -15,6 +15,7 @@ import {
 window.onload = function () {
     var userName = sessionStorage.username,
         token = sessionStorage.token;
+    var Navs = [];
     $('#userLogin .userName').html(userName);
 
     var navStr = []; //判断tba选项卡有没有这个参数;
@@ -29,15 +30,31 @@ window.onload = function () {
                 .then(res => {
                     if (res.code === 200) {
                         sessionStorage.roleData = JSON.stringify(res.data);
+
+                        Navs = res.data && res.data.controlList || []
+
+                        // initNav()
+
                     }
                 }).catch(err => {
-                layer.msg(err.message, {icon: 2})
-            })
+                    layer.msg(err.message, { icon: 2 })
+                })
         };
         getRole();
+        // 动态渲染导航
+        // function initNav() {
+        //     $('[data-control]').hide();
+        //     Navs.forEach((v) => {
+        //         $(`[data-control="${v.controlName}"]`).show();
+        //         v.controlList.forEach((v1) => {
+        //             $(`[data-control="${v1.controlName}"]`).show();
+        //         })
+        //     })
+        // }
+
         // 导航切换事件
         $('.navClick').click(function () {
-            history.replaceState(null, "", '?theModule=' + $(this).attr('navId'));
+            history.replaceState(null, "", `?theModule=${$(this).attr('navId')}&key=${$(this).data('key')}`);
             $('.wrapContent').html(navList[$(this).attr('navId')]);
         })
 
