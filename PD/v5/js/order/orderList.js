@@ -55,19 +55,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
         cols: [[
           
             { field: 'orderId', width: 180, fixed: 'left', title: '订单编号', align: 'center', },
-            { field: 'orderYard', width: 180, title: '订单码', align: 'center' },
+            { field: 'orderYard', width: 180,fixed: 'left', title: '订单码', align: 'center' },
             { field: 'bicId', width: 160, fixed: 'left', title: '商家ID', align: 'center' },
             { field: 'companyName', width: 160, fixed: 'left', title: '商家名称', align: 'center' },
 
 
             { field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center' },
-            {
-                field: 'expressMoney',
-                width: 130,
-                title: '物流费用',
-                align: 'center',
-                templet: d => percentileMoney(d.money)
-            },
+          
 
             { field: 'combinedBillFee', width: 160, title: '合单费', align: 'center' },
             { field: 'ztBasicFreight', width: 160, title: '中通基本运费', align: 'center' },
