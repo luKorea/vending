@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>购买商品</title>
+</head>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="../assets/jquery-3.1.1.min.js"></script>
+<link rel="icon" type="image/png" sizes="144x144" href="../img/logo.png"/>
+<script src="../assets/rem.js"></script>
+<body>
+<div class="wrap" style="display: none;">
+	<div class="header">
+		<h1>购买商品</h1>
+	</div>
+	<div class="goodsBox">
+		<ul class="goodsList">
+			<!-- <li class="list flex">
+                <div class="img">
+                    <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1603087445&di=a4ad1b7211323421f7fe3d5e8080edf5&src=http://a0.att.hudong.com/70/91/01300000261284122542917592865.jpg" />
+                </div>
+                <div class="goodsInform">
+                    <h5>金币足球</h5>
+                    <div class="flexC of">
+                        <p>￥128.00</p>
+                        <p>X3</p>
+                    </div>
+                    <h5>总价：384.00</h5>
+                </div>
+            </li> -->
+		</ul>
+		<div class="userInformation userInformation1 hide">
+			<div class="flex informationList">
+				<label><span style="color: red;">*</span>省市区:</label>
+				<input type="text" id="city" >
+			</div>
+			<div class="flex informationList">
+				<label><span style="color: red;">*</span>详细地址:</label>
+				<input type="text" name="addressss" class="address" />
+			</div>
+			<div class="flex informationList">
+				<label><span style="color: red;">*</span>收货人:</label>
+				<input type="text" name="name" class="name" />
+			</div>
+			<div class="flex informationList">
+				<label><span style="color: red;">*</span>手机号:</label>
+				<input type="number" name="phone" class="phone" />
+			</div>
+			<div class="flex informationList">
+				<label>销售经理:</label>
+				<input type="text" name="salse" class="salse" />
+			</div>
+			<div class="flex informationList">
+				<label>备注:</label>
+				<input type="text" name="notes" class="note" />
+			</div>
+		</div>
+		<div class="userInformation userInformation2 hide" style="padding-bottom: 0;">
+			<div class="flex informationList border0">
+				<label style="width: 2.3rem;">销售经理编号:</label>
+				<input type="text" name="salse2" class="" placeholder="请输入销售经理编号"  />
+			</div>
+		</div>
+	</div>
+	<div class="footer footer1 hide">
+		<h1>确定购买</h1>
+	</div>
+	<div class="footer footer2 hide">
+		<h1>确定购买</h1>
+	</div>
+</div>
+<!-- 轻提示 -->
+<div class="prompt">
+	确定购买
+</div>
+<!-- 确认 -->
+<div class="determineCont" >
+	<div class="determineBox">
+		<!-- <h1>购买的是《金币足球》等商品</h1>
+        <div class="cancelFlag flex">
+            <p>取消</p>
+            <p>确定</p>
+        </div> -->
+		<h1></h1>
+	</div>
+</div>
+<div class="mask">
+	<img src="../img/loading2.gif" alt="">
+</div>
+</body>
+
+<script src="../assets/Popt.js"></script>
+<script src="../assets/cityJson.js"></script>
+<script src="../assets/citySet.js"></script>
+</html>

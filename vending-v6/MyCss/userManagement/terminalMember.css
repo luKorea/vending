@@ -1,0 +1,213 @@
+.teminal-wrap{
+    width: 100%;
+}
+.content-body{
+    width: 98%;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin: 15px;
+    margin-top: 0;
+}
+.content-body{
+    margin: 20px;
+}
+.header-search-part{
+    width: 100%;
+}
+.search-kay{
+    width: 250px;
+    line-height: normal;
+    display: inline-table;
+    border-collapse: separate;
+}
+.key-text{
+    background-color: #f5f7fa;
+    color: #909399;
+    vertical-align: middle;
+    display: table-cell;
+    position: relative;
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    padding: 0 20px;
+    width: 1px;
+    white-space: nowrap;
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    font-size: 14px;
+}
+.key-input{
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: none;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+    vertical-align: middle;
+    display: table-cell;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    font-size: 14px;
+}
+.key-button{
+    color: #fff;
+    background-color: #409eff;
+    border-color: #409eff;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    transition: .1s;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+.key-button:hover{
+    background-color: #67adf3;
+    /* border-color: #73b2f1; */
+}
+.key-button i{
+    color: #fff;
+}
+.key-button span{
+    margin-left: 5px;
+    font-size: 14px;
+    color: #fff;
+}
+.list-content{
+    width: 100%;
+}
+.layui-table{
+    width: 100%;
+}
+.layui-form{
+    width: 100% !important;
+}
+.anUp{
+    position: absolute;
+    top: 35px;
+    left: -20px;
+    z-index: 11;
+    display: none;
+}
+.anUp ul{
+    margin: 15px 0;
+}
+.anUp ul li{
+    list-style: none;
+    line-height: 36px;
+    padding: 0 20px;
+    margin: 0;
+    font-size: 14px;
+    color: #606266;
+    cursor: pointer;
+    outline: none;
+    background-color: #fff;
+}
+.block{
+    display: block !important;
+    transition: all 1s;
+}
+.anUp ul li:hover{
+    color: #409eff;
+}
+.editBox{
+    width: 700px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.5s;
+}
+.editHeader,.machineHeader{
+    padding: 20px 20px 10px;
+}
+.editHeader span,.machineHeader span{
+    line-height: 24px;
+    font-size: 18px;
+    color: #303133;
+}
+.editBody{
+    padding: 30px 20px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.editFooter{
+    padding: 10px 20px 20px;
+    text-align: right;
+    box-sizing: border-box;
+}
+.cancel-btn{
+    border: 1px solid #dcdfe6 !important;
+    color: #606266 !important;
+    background-color: #fff !important;
+}
+.cancel-btn:hover{
+    border: 1px solid #409eff !important;
+    color:#409eff !important ;
+}
+.machineBox{
+    width: 680px;
+    position: relative;
+    margin: 3vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.5s;
+}
+.machineBody{
+    padding: 30px 20px;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}
+.keySearch{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+}
+.machineHeader button{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 0;
+    background: 0 0;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+.machineHeader button i{
+    color: #909399;
+}
+.machineHeader button i:hover{
+    color: #409eff;
+}
+.listFlex{
+    display: flex;
+    justify-content: space-between;
+    color: #606266;
+    line-height: 24px;
+    font-size: 14px;
+}

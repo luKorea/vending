@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <script src="../assets/public/echarts.min.js"></script>
+    <script src="../assets/public/documentWrite.js"></script>
+</head>
+
+<body>
+    <div class="home-page-warp">
+        <!-- 交易额部分 -->
+        <!-- <div class="page-data-details">
+            <div class="layui-row" style="margin-bottom:20px;">
+                <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3">
+                    <div class="data-details-minContent">
+                        <div class="minContent-header-title">
+                            <div>
+                                <span class="ft-black">今日交易额</span>
+                                <span class="detailinfo">查看详情</span>
+                            </div>
+                        </div>
+                        <div class="minContent-body-data">
+                            <div class="todayprice">
+                                <span class="data-numder">￥906.00</span>
+                                <span style="font-size: 12px; position: absolute;top: -1px;">
+                                    <span>
+                                        <span class="up updown">↑</span>
+                                        <span class="upred">59.00%</span>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="todaynum">
+                                <span style="margin-right: 10px;">新订单数</span>
+                                <span>6 笔</span>
+                                <span style="font-size: 12px; position: absolute; top: -5px;">
+                                    <span>
+                                        <span class="up updown">↑</span>
+                                        <span class="upred">17.00%</span>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3 ">
+                    <div class="data-details-minContent">
+                        <div class="minContent-header-title">
+                            <div>
+                                <span class="ft-black">总交易额</span>
+                                <span class="detailinfo">查看详情</span>
+                            </div>
+                        </div>
+                        <div class="minContent-body-data">
+                            <div class="allprice">￥472,282.28</div>
+                            <div class="todaynum">
+                                <span style="margin-right: 10px;">总订单数</span>
+                                <span>2,281 笔</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3 ">
+                    <div class="data-details-minContent">
+                        <div class="minContent-header-title">
+                            <div>
+                                <span class="ft-black">新增设备</span>
+                                <span class="detailinfo">查看详情</span>
+                            </div>
+                        </div>
+                        <div class="minContent-body-data">
+                            <div class="equipment addmachine">
+                                <div class="addnum">0</div>
+                                <div>本日(台)</div>
+                            </div>
+                            <div class="equipment addmachine">
+                                <div class="addnum">0</div>
+                                <div>本月(台)</div>
+                            </div>
+                            <div class="equipment addmachine">
+                                <div class="addnum">0</div>
+                                <div>本季(台)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" layui-col-sm6 layui-col-md6 layui-col-lg3 ">
+                    <div class="data-details-minContent">
+                        <div class="minContent-header-title">
+                            <div>
+                                <span class="ft-black">总设备</span>
+                                <span class="detailinfo">查看详情</span>
+                            </div>
+                        </div>
+                        <div class="minContent-body-data">
+                            <div class="totalEquipment addmachine">
+                                <div class="addnum">115</div>
+                                <div>在线
+                                    <span class="onlineMachine">110</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> -->
+        <!-- 间隙 -->
+        <!-- <div class="clearance"></div> -->
+        <!-- 图表部分 -->
+        <div class="echarts-data-content">
+            <div class="layui-row">
+                <div class=" layui-col-sm6 layui-col-md9 layui-col-lg6">
+                    <div class="seven-days-sum">
+                        <div class="echarts-padding-content">
+                            <div class="seven-day-barCharts">
+                                <!-- <div id="my-seven-day-echarts-canvas"> -->
+                                    <!-- 七天图表位置 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" layui-col-sm3 layui-col-md6 layui-col-lg3">
+                    <div class="percentage-number">
+                        <div class="echarts-padding-content">
+                            <div class="percentage-barEcharts">
+                                <!-- <div id="my-percentage-echarts-canvas"> -->
+                                    <!-- 占比图表位置 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" layui-col-sm3 layui-col-md6 layui-col-lg3">
+                    <!-- 三十天退款 -->
+                    <div class="thirty-refund">
+                        <div class="echarts-padding-content">
+                            <div class="refund-barEcharts">
+                                <!-- 三十天退款图表 -->
+                                <!-- <div id="my-thirty-refund-echarts-canvas"> -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- 间隙 -->
+        <!-- <div class="clearance"></div> -->
+        <!-- 底部销售排行数据 -->
+        <!-- <div class="footer-sales-data">
+            <div class="layui-row">
+                <div class=" layui-col-sm3 layui-col-md6 layui-col-lg3">
+                    <div class="footer-padding">
+                        <div class="footer-machine-data">
+                            <div class="machine-header-title sales-public-hader">
+                                <span>售货机销量排行</span>
+                                <button>查看详情</button>
+                            </div>
+                            <div class="machine-body-content sales-public-body">
+                                <div class="machine-content-text sales-public-text">
+                                    <span class="ranking front">1</span>
+                                    <span title="Y2019119057南沙潭洲邮政支局">Y2019119057南沙潭洲邮政支局</span>
+                                    <span style="float:right;">￥49022.00</span>
+                                </div>
+                                <div class="machine-content-text">
+                                    <span class="ranking front">2</span>
+                                    <span title="Y2019119057南沙潭洲邮政支局">Y2019119057南沙潭洲邮政支局</span>
+                                    <span style="float:right;">￥49022.00</span>
+                                </div>
+                                <div class="machine-content-text">
+                                    <span class="ranking front">3</span>
+                                    <span title="Y2019119057南沙潭洲邮政支局">Y2019119057南沙潭洲邮政支局</span>
+                                    <span style="float:right;">￥49022.00</span>
+                                </div>
+                                <div class="machine-content-text">
+                                    <span class="ranking">4</span>
+                                    <span title="Y2019119057南沙潭洲邮政支局">Y2019119057南沙潭洲邮政支局</span>
+                                    <span style="float:right;">￥49022.00</span>
+                                </div>
+                                <div class="machine-content-text">
+                                    <span class="ranking">5</span>
+                                    <span title="Y2019119057南沙潭洲邮政支局">Y2019119057南沙潭洲邮政支局</span>
+                                    <span style="float:right;">￥49022.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" layui-col-sm3 layui-col-md6 layui-col-lg3">
+                    <div class="footer-padding">
+                        <div class="footer-goods-data">
+                            <div class="goods-header-title sales-public-hader">
+                                <span>商品销量排行</span>
+                                <button>查看详情</button>
+                            </div>
+                            <div class="goods-body-content sales-public-body">
+                                <div class="googs=content-text sales-public-text">
+                                    <span class="ranking front">1</span>
+                                    <span title="建国70周年纪念币">建国70周年纪念币</span>
+                                    <span style="float:right;">￥49022.00</span>
+                                </div>
+                                <div class="googs=content-text sales-public-text">
+                                    <span class="ranking front">2</span>
+                                    <span title="建国70周年纪念币">建国70周年纪念币</span>
+                                    <span style="float:right;">￥49022.00</span>
+                                </div>
+                                <div class="googs=content-text sales-public-text">
+                                    <span class="ranking front">3</span>
+                                    <span title="建国70周年纪念币">建国70周年纪念币</span>
+                                    <span style="float:right;">￥49022.00</span>
+                                </div>
+                                <div class="googs=content-text sales-public-text">
+                                    <span class="ranking">4</span>
+                                    <span title="建国70周年纪念币">建国70周年纪念币</span>
+                                    <span style="float:right;">￥49022.00</span>
+                                </div>
+                                <div class="googs=content-text sales-public-text">
+                                    <span class="ranking">5</span>
+                                    <span title="建国70周年纪念币">建国70周年纪念币</span>
+                                    <span style="float:right;">￥49022.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" layui-col-sm3 layui-col-md6 layui-col-lg3">
+                    <div class="footer-padding">
+                        <div class="footer-lack-data">
+                            <div class="lack-header-title sales-public-hader">
+                                 <span>缺货设备</span>
+                                <button style="display: none">查看详情</button>
+                            </div>
+                            <div class="lack-body-content seles-pulic-body">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" layui-col-sm3 layui-col-md6 layui-col-lg3">
+                    <div class="footer-padding">
+                        <div class="footer-abnormal-data">
+                            <div class="abnormal-header-title sales-public-hader">
+                                    <span>缺货设备</span>
+                                    <button style="display: none">查看详情</button>
+                            </div>
+                            <div class="abnormal-body-content seles-pulic-body">
+
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div> -->
+    </div>
+</body>
+
+</html>
