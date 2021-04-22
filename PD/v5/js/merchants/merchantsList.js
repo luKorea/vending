@@ -81,8 +81,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 }
             },
             {
-                field: 'initialAmount', width: 150, title: '初始化金额', align: 'center', templet: function (d) {
-                    return numFormat2(d.initialAmount||0)
+                field: 'initialAmount', width: 150, title: '初始化余额', align: 'center', templet: function (d) {
+                    return numFormat2(d.initialAmount || 0)
                 }
             },
 
@@ -983,16 +983,20 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     $('.ListDateOperation .quality').click(function () {
         if (dayqualityData) {
             dayqualityData.reload({
-                where: {}
+                where: {
+                    date: dateData.day,
+                    bicName: companyData.companyName,
+                }
             })
         } else {
             getQuality();
         }
+        console.log(dateData, 'dateData');
         $('.dayqualityRecordBox .playHeader span').html(`${companyData.companyName}(${dateData.day}) 的质检费用`)
         popupShow('.dayqualityRecordContent', '.dayqualityRecordBox')
     });
 
-    // TODO 获取每天快递费列表
+    // // TODO 获取每天快递费列表
     let dayexpressData = null;
 
     function getExpress() {
@@ -1072,11 +1076,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     $('.ListDateOperation .express').click(function () {
         if (dayexpressData) {
             dayexpressData.reload({
-                where: {}
+                where: {
+                    bicId: companyData.bicId,
+                    orderTime: dateData.day,
+                }
             })
         } else {
             getExpress();
         }
+        console.log(dateData, 'dateData');
 
         $('.dayexpressRecordBox .playHeader span').html(`${companyData.companyName}(${dateData.day}) 的快递费用`)
         popupShow('.dayexpressRecordContent', '.dayexpressRecordBox')
