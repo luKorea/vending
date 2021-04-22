@@ -281,7 +281,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
             companyName = $("input[name='companyName']").val(),
             bicId = $("input[name='bicId']").val(),
             orderYard = $("input[name='orderYard']").val(),
-            url = `/order/exportOrder?startDate=${startTime}&endDate=${endTime}&bicId=${bicId}&orderId=${orderId}&companyName=${companyName}&orderYard=${orderYard}`;
+            url = `/order/exportOrder?startTime=${startTime}&endTime=${endTime}&bicId=${bicId}&orderId=${orderId}&companyName=${companyName}&orderYard=${orderYard}`;
         xhr.open("GET",
             `${Vapi}${url}`, true);
         xhr.setRequestHeader("token", token);
