@@ -1,9 +1,10 @@
 /* 规则 */
 import '../../MyCss/merchants/salesManager.scss';
 
+
 layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     var permissionsData0 = window.parent.permissionsData1(),
-        machineId = +sessionStorage.machineID,
+        merchantId = +sessionStorage.machineID,
         permissionsObj = {
             436: false,
             437: false,
@@ -50,29 +51,35 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     let salesTableIn = table.render({
         elem: '#salesTable',
         method: 'post',
-        url: `${vApi}/sales_manager/getSalesManager`,
+        url: `${vApi}/accSplit/getReceiverList`,
         contentType: "application/json",
         headers: {
             token: token
         },
+        height: 600,
         cols: [[
             {field: 'accsplitMerName', title: '接收方名称', align: 'center'},
-            {field: 'merType', title: '接收方类型', align: 'center'},
+            {field: 'accountName', title: '户名', align: 'center'},
+            {field: 'merType', title: '接收方类型', align: 'center', templet: d => d.merType === '01' ? '个人' : '企业'},
+            {field: 'account', title: '账号', align: 'center'},
+            {
+                field: 'accountNature',
+                title: '账户属性',
+                align: 'center',
+                templet: d => d.accountNature === '1' ? '对公' : '对私'
+            },
+            {field: 'accountType', title: '账户类型', align: 'center', templet: d => accountType(d.accountType)},
+            {field: 'payee', title: '收款账户', align: 'center'},
+            {field: 'effectiveDate', title: '生效时间', align: 'center'},
+            {field: 'expiryDate', title: '失效时间', align: 'center'},
+            {field: 'accountBank', title: '开户行', align: 'center'},
             // {field: 'businessLicenseType', title: '企业证件类型', align: 'center'},
             // {field: 'businessLicense', title: '企业证件号码', align: 'center'},
             // {field: 'userPapersType', title: '个人证件类型', align: 'center'},
             // {field: 'papersNo', title: '个人证件号码', align: 'center'},
-            {field: 'clearCycle', title: '结算周期', align: 'center'},
-            {field: 'accountNature', title: '账户属性', align: 'center'},
-            {field: 'accountType', title: '账户类型', align: 'center'},
-            // {field: 'account', title: '账号', align: 'center'},
-            {field: 'accountBank', title: '开户行', align: 'center'},
+            // {field: 'clearCycle', title: '结算周期', align: 'center'},
             // {field: 'accountBankCode', title: '开户行联行号', align: 'center'},
-            {field: 'accountName', title: '户名', align: 'center'},
-            {field: 'effectiveDate', title: '生效时间', align: 'center'},
-            {field: 'expiryDate', title: '失效时间', align: 'center'},
-            {field: 'payId', title: '收款账户', align: 'center'},
-            {field: 'status', title: '状态', align: 'center'},
+            {field: 'status', title: '状态', align: 'center', templet: d => d.status === '1' ? '启用' : '禁用'},
             {field: 'operation', align: 'center', title: '操作', toolbar: '#barDemo'},
         ]],
         id: 'salesId',
@@ -83,7 +90,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             'limitName': 'pageSize'
         },
         where: {
-            merchantId: machineId,
+            merchantId: merchantId,
         },
         parseData: function (res) {
             // console.log(res)
@@ -106,7 +113,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
         },
         response: {
-            statusCode: 200 //规定成功的状态码，默认：0
+            statusCode: 200//规定成功的状态码，默认：0
         },
         done: function (res) {
             if (res.code == 403) {
@@ -124,14 +131,9 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         type = 1; // 1 新增 2 编辑
     table.on('tool(salesTable)', function (obj) {
         objData = obj.data;
+        console.log(objData);
         event.stopPropagation();
-        $('.editInput input[name="userName"]').val(objData.name)
         if (obj.event === 'operation') {
-            if (operationFlag == obj.data.id) {
-                $('.ListOperation').fadeOut();
-                operationFlag = null;
-                return;
-            }
             operationFlag = obj.data.id;
             $('.ListOperation').fadeIn();
             $('.ListOperation').css({
@@ -165,7 +167,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.queryBtn').click(function () {
         salesTableIn.reload({
             where: {
-                keyword: $('.KyeText').val()
+                keyword: $('.KyeText').val().trim()
             }
         })
     })
@@ -181,6 +183,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
         // return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
     }
+
     // 获取收款账号
     function getPayAccount(merchantId) {
         return new Promise((resolve, reject) => {
@@ -220,7 +223,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         });
         type = 1;
         $('.text').html('新增接收方');
-        getPayAccount(machineId).then(res => {
+        getPayAccount(merchantId).then(res => {
             popupShow('addSalesCont', 'addSalesBox');
         }).catch(({flag}) => {
             console.log(flag);
@@ -229,9 +232,46 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         })
     });
     // 编辑
+    let accsplitMerNo = null;
     $('.ListOperation .edit').click(function () {
+        $('.J-datepicker-range').datePicker({
+            hasShortcut: true,
+            min: formatTime(),
+            max: '',
+            isRange: true,
+            hide: function (type) {
+                start_time = this.$input.eq(0).val();
+                end_time = this.$input.eq(1).val();
+            }
+        });
         type = 2;
-        $('.text').html('编辑接收方')
+        $('.text').html('编辑接收方');
+        getPayAccount(merchantId).then(res => {
+            objData.merType === '01' ? ($('.personal').show(), $('.enterprise').hide())
+                : ($('.personal').hide(), $('.enterprise').show());
+            objData.accountType === '02' ?  $('.accountType').show() :  $('.accountType').hide();
+            disableOperation();
+            accsplitMerNo = objData.accsplitMerNo;
+            form.val('formData', {
+                account: objData.account,
+                accountBank: objData.accountBank,
+                accountBankCode: objData.accountBankCode,
+                accountName: objData.accountName,
+                accsplitMerName: objData.accsplitMerName,
+                businessLicense: objData.businessLicense,
+                businessLicenseType: objData.businessLicenseType,
+                clearCycle: objData.clearCycle,
+                effectiveDate: objData.effectiveDate,
+                expiryDate: objData.expiryDate,
+                papersNo: objData.papersNo,
+                payId: objData.payId,
+                status: objData.status,
+                userPapersType: objData.userPapersType,
+                merType: objData.merType,
+                accountNature: objData.accountNature,
+                accountType: objData.accountType
+            })
+        })
         popupShow('addSalesCont', 'addSalesBox');
     })
     // 删除
@@ -242,22 +282,42 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         });
     })
 
+    function disableOperation() {
+        $('input[name="merType"]').prop('disabled', true);
+        $('select[name="businessLicenseType"]').prop('disabled', true);
+        $('input[name="businessLicense"]').prop('disabled', true);
+        $('select[name="userPapersType"]').prop('disabled', true);
+        $('select[name="payId"]').prop('disabled', true);
+        $('input[name="papersNo"]').prop('disabled', true);
+    }
+    function enDisableOperation() {
+        $('input[name="merType"]').prop('disabled', false);
+        $('select[name="businessLicenseType"]').prop('disabled', false);
+        $('input[name="businessLicense"]').prop('disabled', false);
+        $('select[name="userPapersType"]').prop('disabled', false);
+        $('select[name="payId"]').prop('disabled', false);
+        $('input[name="papersNo"]').prop('disabled', false);
+    }
     function clearInfo() {
+        enDisableOperation();
         form.val('formData', {
-            account: "",
-            accountBank: "",
-            accountBankCode: "",
-            accountName: "",
-            accsplitMerName: "",
-            businessLicense: "",
-            businessLicenseType: "",
-            clearCycle: "",
-            effectiveDate: "",
-            expiryDate: "",
-            papersNo: "",
-            payId: "",
-            status: "",
-            userPapersType: "",
+            account: '',
+            accountBank: '',
+            accountBankCode: '',
+            accountName: '',
+            accsplitMerName: '',
+            businessLicense: '',
+            businessLicenseType: '',
+            clearCycle: '',
+            effectiveDate: '',
+            expiryDate: '',
+            papersNo: '',
+            payId: '',
+            status: '',
+            userPapersType: '',
+            merType: '',
+            accountNature: '',
+            accountType: '',
         });
     }
 
@@ -275,15 +335,18 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 添加编辑
     $('.addSalesCont .confirmBtn').click(function () {
         let res = form.val('formData');
-        res['machineId'] = machineId;
+        res['merchantId'] = merchantId;
+        console.log(res);
         if (type === 1) {
             addOrEditData('/accSplit/insertReceiver', JSON.stringify(res))
         } else {
-            addOrEditData('/sales_manager/edit',  JSON.stringify(res))
+            res['accsplitMerNo'] = accsplitMerNo;
+            addOrEditData('/accSplit/updateReceiver', JSON.stringify(res))
         }
     })
     // 取消添加
     $('.addSalesCont .cancelBtn').click(function () {
+        clearInfo()
         popupHide('addSalesCont', 'addSalesBox')
     });
 
@@ -297,7 +360,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             treeFun1(tree, 'testGoods', salesTableIn, dataList,)
             salesTableIn.reload({
                 where: {
-                    merchantId: machineId,
+                    merchantId: merchantId,
                 }
             });
             layer.msg('已刷新', {icon: 1})
@@ -336,7 +399,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 //         $('.pushImportBtn').hide()
                 //     }
                 // }
-                machineId = obj.data.id;
+                merchantId = obj.data.id;
                 tableID.reload({
                     where: {
                         merchantId: obj.data.id
