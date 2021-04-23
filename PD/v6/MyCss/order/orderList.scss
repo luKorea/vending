@@ -1,0 +1,67 @@
+@import '../../common/common.scss';
+.data_list1{
+    //.layui-table-body{
+    //    td{
+    //        padding: 3px 0;
+    //    }
+    //}
+}
+.pushOrderBox{
+    width: 500px;
+    p{
+        color: red;
+        text-align: center;
+        padding: 3px 0;
+    }
+    .pushOrderBody{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 14px;
+
+        .tip {
+            margin-left: 20px;
+            a{
+                border-bottom: 1px solid #be954a;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img {
+                    margin-right: 4px;
+                }
+            }
+        }
+
+        .pushuBtnCon{
+            label{
+                display: inline-block;
+                height: 32px;
+                line-height: 32px;
+                font-size: 12px;
+                padding: 0 10px;
+                background-color: #be954a;
+                color: #fff;
+                white-space: nowrap;
+                text-align: center;
+                border: none;
+                border-radius: 2px;
+                cursor: pointer;
+            }
+            input{
+                display: none;
+            }
+        }
+    }
+
+    img{
+        width: 15px;
+    }
+
+  
+}
+.ListOperation {
+    z-index: 99999 !important;;
+}
