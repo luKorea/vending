@@ -345,6 +345,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
             headers: {
                 token,
             },
+            height: '600',
             cols: [[
                 { field: 'id', width: 100, title: 'ID', align: 'center' },
                 {
