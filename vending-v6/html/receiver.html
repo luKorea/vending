@@ -130,15 +130,15 @@
                 </div>
                 <div class="listFlex">
                     <label for="" style="width: 130px"><span style="color: red">*</span>账户属性：</label>
-                    <input type="radio" name="accountNature" value="1" title="对公">
-                    <input type="radio" name="accountNature" value="2" title="对私">
+                    <input type="radio" name="accountNature" value="1" lay-filter="accountNature"  title="对公">
+                    <input type="radio" name="accountNature" value="2" lay-filter="accountNature"  title="对私">
                 </div>
                 <div class="listFlex">
                     <label for="" style="width: 130px"><span style="color: red">*</span>账户类型：</label>
-                    <input type="radio" name="accountType" lay-filter="accountType" value="01" title="个人银行卡账户">
-                    <input type="radio" name="accountType" lay-filter="accountType" value="02" title="对公银行账户">
-                    <input type="radio" name="accountType" lay-filter="accountType" value="03" title="对私支付账户">
-                    <input type="radio" name="accountType" lay-filter="accountType" value="04" title="对公支付账户">
+                    <input type="radio" name="accountType" value="01" title="个人银行卡账户">
+                    <input type="radio" name="accountType"  value="02" title="对公银行账户">
+                    <input type="radio" name="accountType" value="03" title="对私支付账户">
+                    <input type="radio" name="accountType" value="04" title="对公支付账户">
                 </div>
 
                 <div class="listFlex accountType" style="display: none">
@@ -149,8 +149,6 @@
                     <label for="" style="width: 130px"><span style="color: red;">*</span>开户行联行号:</label>
                     <input type="text" name="accountBankCode" placeholder="请输入开户行联行号">
                 </div>
-
-
 
                 <div class="listFlex">
                     <label for="" style="width: 110px"><span style="color: red;">*</span>收款账户:</label>

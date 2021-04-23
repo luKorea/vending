@@ -1359,7 +1359,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 {
                     field: 'status', width: 150, title: '状态', align: 'center',
                     templet: function (e) {
-                        return (e.status === 0) ? '未完成' : (e.status === 1) ? '已完成' : '已失败'
+                        return (e.status === 0) ? '未完成' : (e.status === 1) ? '已完成' : (e.status === 2?'已失败':'部分数据导入失败')
                     },
 
                 },
@@ -1456,7 +1456,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 {
                     field: 'status', width: 150, title: '状态', align: 'center',
                     templet: function (e) {
-                        return (e.status === 0) ? '未完成' : (e.status === 1) ? '已完成' : '已失败'
+                        return (e.status === 0) ? '未完成' : (e.status === 1) ? '已完成' : (e.status === 2?'已失败':'部分数据导入失败')
                     },
 
                 },
