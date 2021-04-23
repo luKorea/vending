@@ -436,5 +436,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         $('.ListOperation').fadeOut();
         operationFlag = null;
     });
+
+
+   
 });
 

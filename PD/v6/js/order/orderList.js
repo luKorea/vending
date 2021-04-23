@@ -332,8 +332,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
         } else {
             recordFun();
         }
-        $('.dayRecordBox .playHeader span').html(`导入订单信息`)
-        popupShow('.dayRecordContent', '.dayRecordBox')
+        $('.recordOrderBox .playHeader span').html(`导入订单信息`)
+
         popupShow('.recordOrderContent', '.recordOrderBox');
     });
     var recordIns = null;
@@ -346,10 +346,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
                 token,
             },
             cols: [[
-                { field: 'id', width: 150, title: 'ID', align: 'center' },
-                { field: 'userName', title: '操作用户', align: 'center' },
-                { field: 'createTime', title: '创建时间', align: 'center' },
-                { field: 'updateTime',  title: '更新时间', align: 'center' },
+                { field: 'id', width: 100, title: 'ID', align: 'center' },
+                {
+                    field: 'userName', title: '操作用户', align: 'center',
+                    templet: function (e) {
+                        return `${e.name}(${e.userName})`
+                    },
+                },
+                { field: 'createTime', title: '导入开始时间', align: 'center' },
+                { field: 'updateTime', title: '导入结束时间', align: 'center' },
                 {
                     field: 'status', width: 150, title: '状态', align: 'center',
                     templet: function (e) {
@@ -357,7 +362,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
                     },
 
                 },
-                { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', fixed: 'right', align: 'center' },
+                {
+                    field: 'message', title: '消息', align: 'center',
+                    templet: function (e) {
+                        return e.excelTaskErrList.map((item) => { return item.message }).join('<br>')
+                    },
+                },
 
 
             ]],
@@ -413,7 +423,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
         recordData = obj.data;
 
         if (obj.event === 'operation') {
-       
+
             if (operationFlag == obj.data.id) {
                 $('.ListOperation').fadeOut();
                 operationFlag = null;
@@ -443,7 +453,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
         } else {
             useFun();
         }
-        $('.useRecordBox .playHeader span').html('任务'+recordData.id + '导入结果')
+        $('.useRecordBox .playHeader span').html('任务' + recordData.id + '导入结果')
         popupShow('.useRecordContent', '.useRecordBox');
 
     });
@@ -461,9 +471,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
             },
             cols: [[
                 { field: 'id', width: 150, title: 'ID', align: 'center' },
-               // { field: 'taskId', title: '任务ID', align: 'center' },
+                // { field: 'taskId', title: '任务ID', align: 'center' },
                 { field: 'message', title: '失败消息', align: 'center' },
-               // { field: 'sort', title: '排序', align: 'center' },
+                // { field: 'sort', title: '排序', align: 'center' },
             ]]
             , id: 'taskId'
             ,

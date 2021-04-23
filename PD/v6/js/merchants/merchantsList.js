@@ -1318,6 +1318,200 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         $('.messageQualityBox .message .import_fail').html(str)
     }
 
+
+
+     //   导入质检费信息
+     $('.recordBtnShow').click(function () {
+      
+        if (recordIns) {
+
+            recordIns.reload({
+                where: {
+                    type: 2
+                }
+            })
+        } else {
+            recordFun();
+        }
+        $('.recordOrderBox .playHeader span').html(`导入质检费信息`)
+    
+        popupShow('.recordOrderContent', '.recordOrderBox');
+    });
+    var recordIns = null;
+    function recordFun() {
+        recordIns = table.render({
+            elem: '#recordTable',
+            url: `${Vapi}/excelTask/getExcelTaskList`,
+            method: 'GET',
+            headers: {
+                token,
+            },
+            cols: [[
+                { field: 'id', width: 100, title: 'ID', align: 'center' },
+                {
+                    field: 'userName', title: '操作用户', align: 'center',
+                    templet: function (e) {
+                        return `${e.name}(${e.userName})`
+                    },
+                },
+                { field: 'createTime', title: '导入开始时间', align: 'center' },
+                { field: 'updateTime', title: '导入结束时间', align: 'center' },
+                {
+                    field: 'status', width: 150, title: '状态', align: 'center',
+                    templet: function (e) {
+                        return (e.status === 0) ? '未完成' : (e.status === 1) ? '已完成' : '已失败'
+                    },
+
+                },
+                {
+                    field: 'message', title: '消息', align: 'center',
+                    templet: function (e) {
+                        return e.excelTaskErrList.map((item) => { return item.message }).join('<br>')
+                    },
+                },
+            ]],
+            id: 'id',
+            page: true,
+            loading: true,
+            even: true,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+
+            where: {
+                type:2
+            },
+            parseData: function (res) {
+                //res即为原始返回的数据
+
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    setTimeout(__ => {
+                        window.parent.location.href = "login.html";
+                    }, 1500)
+                }
+                fixedFun();
+            }
+        });
+    };
+
+
+
+    
+     //   导入商家信息
+     $('.record2BtnShow').click(function () {
+      
+        if (record2Ins) {
+
+            record2Ins.reload({
+                where: {
+                    type: 3
+                }
+            })
+        } else {
+            record2Fun();
+        }
+        $('.record2OrderBox .playHeader span').html(`导入商家信息`)
+    
+        popupShow('.record2OrderContent', '.record2OrderBox');
+    });
+    var record2Ins = null;
+    function record2Fun() {
+        record2Ins = table.render({
+            elem: '#record2Table',
+            url: `${Vapi}/excelTask/getExcelTaskList`,
+            method: 'GET',
+            headers: {
+                token,
+            },
+            cols: [[
+                { field: 'id', width: 100, title: 'ID', align: 'center' },
+                {
+                    field: 'userName', title: '操作用户', align: 'center',
+                    templet: function (e) {
+                        return `${e.name}(${e.userName})`
+                    },
+                },
+                { field: 'createTime', title: '导入开始时间', align: 'center' },
+                { field: 'updateTime', title: '导入结束时间', align: 'center' },
+                {
+                    field: 'status', width: 150, title: '状态', align: 'center',
+                    templet: function (e) {
+                        return (e.status === 0) ? '未完成' : (e.status === 1) ? '已完成' : '已失败'
+                    },
+
+                },
+                {
+                    field: 'message', title: '消息', align: 'center',
+                    templet: function (e) {
+                        return e.excelTaskErrList.map((item) => { return item.message }).join('<br>')
+                    },
+                },
+            ]],
+            id: 'id',
+            page: true,
+            loading: true,
+            even: true,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+
+            where: {
+                type:3
+            },
+            parseData: function (res) {
+                //res即为原始返回的数据
+
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    setTimeout(__ => {
+                        window.parent.location.href = "login.html";
+                    }, 1500)
+                }
+                fixedFun();
+            }
+        });
+    };
+
+
 });
 
 
