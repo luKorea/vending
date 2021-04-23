@@ -856,3 +856,27 @@ function exportExcel(url, fileName, data, method = 'GET') {
     }
     xhr.send(data);
 }
+
+/**
+ * @description 账户类型
+ * @method accountType
+ * @param {String} type
+ */
+function accountType(type) {
+    let str = '';
+    switch (type) {
+        case '01':
+            str = '个人银行卡账户';
+            break;
+        case '02':
+            str = '对公银行账户 ';
+            break;
+        case '03':
+            str = '对私支付账户';
+            break;
+        case '04':
+            str = '对公支付账户';
+            break;
+    }
+    return str;
+}

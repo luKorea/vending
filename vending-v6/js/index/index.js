@@ -91,9 +91,8 @@ window.onload = function () {
         // 监听tab切换事件
         var Indexs = null;
         element.on('tab(demo)', function (data) {
-            var theModuleNameStr = $(this).html().substr(0, $(this).html().indexOf('<'))
-            // history.replaceState(null, "", '?theModule=' + $(this).attr('lay-id'));
-            history.replaceState(null, "", '?theModule=' + $(this).attr('lay-id') + '-' + encodeURI(theModuleNameStr));
+            sessionStorage.setItem('nameStr', $(this).html().substr(0, $(this).html().indexOf('<')));
+            history.replaceState(null, "", '?theModule=' + $(this).attr('lay-id'));
             var Len = $(".navClick").length;
             for (var i = 0; i < Len; i++) {
                 if ($(this).attr('lay-id') == $(".navClick").eq(i).attr('navId')) {
@@ -111,6 +110,7 @@ window.onload = function () {
                 $(".navClick").parent().removeClass('layui-this');
             }
         });
+
         function getQueryString(key) {
             // 获取参数
             var url = window.location.search;
@@ -127,7 +127,7 @@ window.onload = function () {
             // console.log(theModule1)
             var theModule = theModule1.split('-');
             if (theModule[0] != 22 && theModule) {
-                tabAdd(theModule[0], decodeURI(theModule[1]));
+                tabAdd(theModule[0], sessionStorage.getItem('nameStr'));
                 tabChange(theModule[0]);
                 navStr.push(theModule[0]);
             }
