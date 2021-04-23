@@ -1,0 +1,127 @@
+<template>
+    <div class="app-container">
+        <avue-crud v-bind="bindVal" v-on="onEvent" :search.sync="search" v-model="form" :before-open="beforeOpen" :page.sync="page">
+        </avue-crud>
+    </div>
+</template>
+<script>
+import crudMix from "@/mixins/crudMix";
+import { mapGetters } from 'vuex'
+import { req } from '@/utils/req.js'
+export default {
+  components: {
+
+  },
+  computed: {
+    ...mapGetters([
+      'name'
+    ])
+  },
+  mixins: [
+    crudMix,
+  ],
+  data() {
+    return {
+      search: {
+        conditionTwo: '',
+      },
+      config: {
+        detail: 'role/findByRId',
+        save: 'role/addRole',
+        delete: 'role/deRoleByUId',
+        update: 'role/updateRole',
+        list: 'role/findAll'
+      },
+      method: {//修改请求method post GET
+        detail: 'GET',
+        delete: 'GET',
+        list: 'GET'
+      },
+      rowKey: 'id',
+      option: {
+        addBtn: true,
+        column: [
+
+          {
+            label: "角色名", prop: "roleName", fixed: 'left',
+            searchSpan: 6,
+            search: true, minWidth: 180,
+            rules: [
+              {
+                required: true,
+                message: "请输入角色名",
+                trigger: "blur"
+              },
+            ],
+          },
+          {
+            label: "备注", prop: "remark", minWidth: 180,
+          },
+          {
+            label: "用户角色", prop: "controlList", minWidth: 180,
+            type: 'select', multiple: true, hide: true,
+            dicData: [],
+          },
+          {
+            label: "创建人", prop: "addUser", display: false,
+            formatter: function (row, value, label, column) {
+              return row.addUser ? row.addUser.username : ''
+            },
+          },
+          { label: "创建时间", prop: "addTime", display: false, minWidth: 180, },
+          {
+            label: "最后更改人", prop: "updateUser", display: false,
+            formatter: function (row, value, label, column) {
+              return row.updateUser ? row.updateUser.username : ''
+            },
+          },
+          { label: "最后更改时间", prop: "updateTime", display: false, minWidth: 180, },
+        ]
+      },
+    }
+  },
+  methods: {
+    delBefore(row) {
+      let rowtemp = row
+      rowtemp = { roleId: row.roleId }
+      return rowtemp
+    },
+    openBefore(type) {
+      let that = this;
+      if (type == 'edit') {
+        that.form.id = that.form.roleId
+      }
+    },
+    openAfter(res, form, index, type) {
+      let that = this
+      form = {
+        t: new Date(),
+        controlList: res.data.map((item) => {
+          return item.controlId
+        })
+      }
+      that.form = Object.assign(that.form, form)
+      console.log(that.form);
+
+    },
+    getControl() {
+      let that = this;
+      req('control/getControl', {}, "GET").then(function (res) {
+        that.option.column.forEach((v) => {
+          if (v.prop == 'controlList') {
+            v.dicData = res.data.map((item) => {
+              return { label: item.controlName, value: item.controlId }
+            })
+          }
+        })
+      }).catch(function (error) {
+        reject(error);
+      });
+    },
+  },
+  created() {
+    this.getControl();
+
+  },
+}
+</script>
