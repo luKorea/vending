@@ -1,4 +1,4 @@
-/* 规则 */
+/* 接收方 */
 import '../../MyCss/merchants/salesManager.scss';
 
 
@@ -154,8 +154,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         }
     });
     // 监听对公账号
-    form.on('radio(accountType)', function ({value}) {
-        if (value === '02') {
+    form.on('radio(accountNature)', function ({value}) {
+        if (value === '1') {
             $('.accountType').show();
         } else {
             $('.accountType').hide();
@@ -227,7 +227,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             popupShow('addSalesCont', 'addSalesBox');
         }).catch(({flag}) => {
             console.log(flag);
-            layer.msg('该商户不具备新增接收方的功能，请先配置对应的杉德支付功能', {icon: 7});
+            layer.msg('该商户不具备新增接收方的功能，请先配置对应的杉德支付方式', {icon: 7});
             return
         })
     });
@@ -249,7 +249,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         getPayAccount(merchantId).then(res => {
             objData.merType === '01' ? ($('.personal').show(), $('.enterprise').hide())
                 : ($('.personal').hide(), $('.enterprise').show());
-            objData.accountType === '02' ?  $('.accountType').show() :  $('.accountType').hide();
+            objData.accountNature === '1' ?  $('.accountType').show() :  $('.accountType').hide();
             disableOperation();
             accsplitMerNo = objData.accsplitMerNo;
             form.val('formData', {
@@ -276,9 +276,21 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     })
     // 删除
     $('.ListOperation .del').click(function () {
-        console.log(objData);
         layer.confirm('确定删除？', function (index) {
             layer.close(index);
+            $('.mask').fadeIn();
+            $('.maskSpan').addClass('maskIcon');
+            loadingAjax('/accSplit/deleteReceiver', 'post',
+                JSON.stringify({
+                    accsplitMerNo: objData.accsplitMerNo,
+                }), token, 'mask', '', '', layer).then(res => {
+                layer.msg(res.message, { icon: 1 });
+                salesTableIn.reload({
+                    where: {}
+                })
+            }).catch(err => {
+                layer.msg(err.message, { icon: 2 })
+            })
         });
     })
 
