@@ -54,15 +54,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
         },
         height: '600',
         cols: [[
-          
+
             { field: 'orderId', width: 180, fixed: 'left', title: '订单编号', align: 'center', },
-            { field: 'orderYard', width: 180,fixed: 'left', title: '订单码', align: 'center' },
+            { field: 'orderYard', width: 180, fixed: 'left', title: '订单码', align: 'center' },
             { field: 'bicId', width: 160, fixed: 'left', title: '商家ID', align: 'center' },
             { field: 'companyName', width: 160, fixed: 'left', title: '商家名称', align: 'center' },
 
 
             { field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center' },
-          
+
 
             { field: 'combinedBillFee', width: 160, title: '合单费', align: 'center' },
             { field: 'ztBasicFreight', width: 160, title: '中通基本运费', align: 'center' },
@@ -318,4 +318,191 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
         $('.ListOperation').fadeOut();
         operationFlag = null;
     });
+
+
+    //   点击导入订单信息
+    $('.recordBtnShow').click(function () {
+        if (recordIns) {
+
+            recordIns.reload({
+                where: {
+                    type: 1
+                }
+            })
+        } else {
+            recordFun();
+        }
+        $('.dayRecordBox .playHeader span').html(`导入订单信息`)
+        popupShow('.dayRecordContent', '.dayRecordBox')
+        popupShow('.recordOrderContent', '.recordOrderBox');
+    });
+    var recordIns = null;
+    function recordFun() {
+        recordIns = table.render({
+            elem: '#recordTable',
+            url: `${Vapi}/excelTask/getExcelTaskList`,
+            method: 'GET',
+            headers: {
+                token,
+            },
+            cols: [[
+                { field: 'id', width: 150, title: 'ID', align: 'center' },
+                { field: 'userName', title: '操作用户', align: 'center' },
+                { field: 'createTime', title: '创建时间', align: 'center' },
+                { field: 'updateTime',  title: '更新时间', align: 'center' },
+                {
+                    field: 'status', width: 150, title: '状态', align: 'center',
+                    templet: function (e) {
+                        return (e.status === 0) ? '未完成' : (e.status === 1) ? '已完成' : '已失败'
+                    },
+
+                },
+                { field: 'operation', width: 150, title: '操作', toolbar: '#barDemo', fixed: 'right', align: 'center' },
+
+
+            ]],
+            id: 'id',
+            page: true,
+            loading: true,
+            even: true,
+            request: {
+                'pageName': 'pageNum',
+                'limitName': 'pageSize'
+            },
+
+            where: {
+                type: 1
+            },
+            parseData: function (res) {
+                //res即为原始返回的数据
+
+                if (res.code == 200) {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.message,   //解析提示文本
+                    }
+                }
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    setTimeout(__ => {
+                        window.parent.location.href = "login.html";
+                    }, 1500)
+                }
+                fixedFun();
+            }
+        });
+    };
+
+    //监听工具条
+    var recordData = null,
+        operationFlag = null;
+    table.on('tool(recordTable)', function (obj) {
+        event.stopPropagation();
+        recordData = obj.data;
+
+        if (obj.event === 'operation') {
+       
+            if (operationFlag == obj.data.id) {
+                $('.ListOperation').fadeOut();
+                operationFlag = null;
+                return;
+            }
+            operationFlag = obj.data.id;
+            $('.ListOperation').fadeIn();
+            $('.ListOperation').css({
+                left: $(this).offset().left - 35 + 'px',
+                top: $(this).offset().top + 35 + 'px'
+            })
+        }
+    });
+    $('body').click(function () {
+        $('.ListOperation').fadeOut();
+        operationFlag = null;
+    });
+
+    //  错误信息
+    $('.ListOperation .Err').click(function () {
+        if (useIns) {
+            useIns.reload({
+                where: {
+                    taskId: recordData.id
+                }
+            })
+        } else {
+            useFun();
+        }
+        $('.useRecordBox .playHeader span').html('任务'+recordData.id + '导入结果')
+        popupShow('.useRecordContent', '.useRecordBox');
+
+    });
+    // 错误信息
+    var useIns = null;
+
+
+    function useFun() {
+        useIns = table.render({
+            elem: '#useTable',
+            url: `${Vapi}/excelTask/getExcelTaskErrList`,
+            method: 'GET',
+            headers: {
+                token,
+            },
+            cols: [[
+                { field: 'id', width: 150, title: 'ID', align: 'center' },
+               // { field: 'taskId', title: '任务ID', align: 'center' },
+                { field: 'message', title: '失败消息', align: 'center' },
+               // { field: 'sort', title: '排序', align: 'center' },
+            ]]
+            , id: 'taskId'
+            ,
+            loading: true,
+            even: true,
+            request: {
+
+            },
+            where: {
+                taskId: recordData.id
+            },
+            parseData: function (res) {
+                //res 即为原始返回的数据
+                if (res.code == 200) {
+                    return {
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,//解析提示文本
+                        "count": res.data.length,//解析数据长度
+                        "data": res.data //解析数据列表
+                    };
+                } else {
+                    return {
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,  //解析提示文本
+                    }
+                }
+            },
+            response: {
+                statusCode: 200//规定成功的状态码，默认：0
+            },
+            done: function (res) {
+                if (res.code == 403) {
+                    layer.msg('登录过期,请重新登录', { icon: 2 })
+                    setTimeout(__ => {
+                        window.parent.location.href = "login.html";
+                    }, 1500)
+                }
+                fixedFun();
+            }
+        });
+    }
 });
