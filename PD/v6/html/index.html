@@ -9,6 +9,12 @@
 		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<script src="./assets/public/documentWrite.js"></script>
 	<script src="./assets/layui/layui.js"></script>
+	<style>
+		.header-nav-tabs-switch .layui-this {
+			background: #1a2036;
+			color: #fff;
+		}
+	</style>
 </head>
 
 <body class="layui-layout-body">
@@ -33,29 +39,25 @@
 			</ul>
 		</div>
 		<!-- 顶部选项卡 -->
-		<div>
-		</div>
 		<div class="header-nav-tabs-switch">
-			<div class="wrapContent">
-				<!-- sad -->
-				<!-- <iframe class="iframe_show" src="orderList.html" style="width: 100%;height: 100%;border: 0;"></iframe> -->
-			</div>
-			<!-- <div>
-				sad
+			<div>
 				<div class="layui-tab" lay-filter="demo" lay-allowclose="true">
 					<ul class="layui-tab-title">
-						<li class="layui-this" lay-id="22">个人信息</li>
+						<li class="layui-this" lay-id="22"><em></em>首页  </li>
 					</ul>
 					<div class="layui-tab-content">
 						<div class="layui-tab-item layui-show">
 							<div class="content-tbas-iframe-html">
-								<iframe class="iframe_show" src="myInformation.html"></iframe>
+								<!-- 首页 -->
+								<iframe class="iframe_show" src="home.html"></iframe>
 							</div>
 						</div>
 					</div>
+
 				</div>
-			</div> -->
+			</div>
 		</div>
+
 		<div class="layui-side layui-bg-black">
 			<div class="layui-side-scroll">
 				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
@@ -74,16 +76,18 @@
 
 					<li class="layui-nav-item merchantsCont">
 						<dl class="layui-nav-child" style="display: block;">
-							<dd class="navClick" navId="1">
-								<a href="javascript:;"><i class="layui-icon layui-icon-home"></i>商家列表</a>
+							<dd>
+								<a href="javascript:;" class="navClick" navId="1"><i
+										class="layui-icon layui-icon-home"></i><em></em>商家列表</a>
 							</dd>
-							<dd class="navClick" navId="3">
-								<a href="javascript:;" ><i class="layui-icon layui-icon-list"></i>订单列表</a>
+							<dd>
+								<a href="javascript:;" class="navClick" navId="3"><i
+										class="layui-icon layui-icon-list"></i><em></em>订单列表</a>
 							</dd>
 						</dl>
 					</li>
 
-<!-- 
+					<!-- 
 					<li class="layui-nav-item" data-control="商家列表">
 						<a href="javascript:;">
 							<i class="layui-icon layui-icon-home"></i>
@@ -115,10 +119,10 @@
 						</a>
 						<dl class="layui-nav-child">
 							<dd class="userListFlag hide" data-control="用户管理">
-								<a href="javascript:;" class="navClick" data-key="用户管理" navId="5">用户管理</a>
+								<a href="javascript:;" class="navClick" data-key="用户管理" navId="5"><em></em>用户管理</a>
 							</dd>
 							<dd class="roleListFlag hide" data-control="角色管理">
-								<a href="javascript:;" class="navClick" data-key="角色管理" navId="6">角色管理</a>
+								<a href="javascript:;" class="navClick" data-key="角色管理" navId="6"><em></em>角色管理</a>
 							</dd>
 						</dl>
 					</li>
