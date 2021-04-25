@@ -57,7 +57,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         },
         height: '600',
         cols: [[
-            { field: 'bicId', fixed: 'left', title: '商家ID', align: 'center', templet: "#imgtmp", },
+            { field: 'bicId', fixed: 'left', title: '商家ID', align: 'center', templet: "#imgtmp", width: 180},
             { field: 'companyName', fixed: 'left', width: 250, title: '商家名称', align: 'center' },
             { field: 'startUsingStr', width: 110, title: '是否启用', align: 'center' },
             {
@@ -406,7 +406,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 token,
             },
             cols: [[
-
+                {
+                    field: 'logTime', width: 180, title: '充值/调减时间', align: 'center'
+                },
                 {
                     field: 'frontBalance', width: 160, title: '充值/调减前余额', align: 'center', templet: function (d) {
                         return numFormat2(d.frontBalance)
@@ -428,9 +430,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }
                 },
                 { field: 'remark', width: 160, title: '备注', align: 'center' },
-                {
-                    field: 'logTime', width: 180, title: '充值/调减时间', align: 'center'
-                },
+
             ]]
             , id: 'tioUpId'
             , page: true,
@@ -533,7 +533,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         }
                     }
                 },
-                { field: 'operationUse', width: 120, title: '操作', toolbar: '#barUser', align: 'center' },
+                { field: 'operationUse', width: 120, title: '详情', toolbar: '#barUser', align: 'center' },
             ]]
             , id: 'useId'
             , page: true,
@@ -579,17 +579,18 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     var useData = null;
     table.on('tool(useTable)', function (obj) {
-        console.log('useData---', obj, $(this));
+
 
         event.stopPropagation();
         useData = obj.data;
-        console.log('useData---', useData);
+
         if (obj.event === "operation") {
-            $('.ListUseOperation').fadeIn();
-            $('.ListUseOperation').css({
-                left: $(this).offset().left - 35 + 'px',
-                top: $(this).offset().top + 35 + 'px'
-            })
+            $('.ListUseOperation .detail').click();
+            // $('.ListUseOperation').fadeIn();
+            // $('.ListUseOperation').css({
+            //     left: $(this).offset().left - 35 + 'px',
+            //     top: $(this).offset().top + 35 + 'px'
+            // })
         }
     });
 
@@ -1320,9 +1321,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
 
 
-     //   导入质检费信息
-     $('.recordBtnShow').click(function () {
-      
+    //   导入质检费信息
+    $('.recordBtnShow').click(function () {
+
         if (recordIns) {
 
             recordIns.reload({
@@ -1334,7 +1335,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             recordFun();
         }
         $('.recordOrderBox .playHeader span').html(`导入质检费信息`)
-    
+
         popupShow('.recordOrderContent', '.recordOrderBox');
     });
     var recordIns = null;
@@ -1346,7 +1347,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             headers: {
                 token,
             },
-            height: '600',
+            height: '600',
             cols: [[
                 { field: 'id', width: 100, title: 'ID', align: 'center' },
                 {
@@ -1360,7 +1361,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 {
                     field: 'status', width: 150, title: '状态', align: 'center',
                     templet: function (e) {
-                        return (e.status === 0) ? '未完成' : (e.status === 1) ? '已完成' : (e.status === 2?'已失败':'部分数据导入失败')
+                        return (e.status === 0) ? '未完成' : (e.status === 1) ? '已完成' : (e.status === 2 ? '已失败' : '部分数据导入失败')
                     },
 
                 },
@@ -1381,7 +1382,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
 
             where: {
-                type:2
+                type: 2
             },
             parseData: function (res) {
                 //res即为原始返回的数据
@@ -1417,10 +1418,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
 
 
-    
-     //   导入商家信息
-     $('.record2BtnShow').click(function () {
-      
+
+    //   导入商家信息
+    $('.record2BtnShow').click(function () {
+
         if (record2Ins) {
 
             record2Ins.reload({
@@ -1432,7 +1433,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             record2Fun();
         }
         $('.record2OrderBox .playHeader span').html(`导入商家信息`)
-    
+
         popupShow('.record2OrderContent', '.record2OrderBox');
     });
     var record2Ins = null;
@@ -1444,7 +1445,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             headers: {
                 token,
             },
-            height: '600',
+            height: '600',
             cols: [[
                 { field: 'id', width: 100, title: 'ID', align: 'center' },
                 {
@@ -1458,7 +1459,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 {
                     field: 'status', width: 150, title: '状态', align: 'center',
                     templet: function (e) {
-                        return (e.status === 0) ? '未完成' : (e.status === 1) ? '已完成' : (e.status === 2?'已失败':'部分数据导入失败')
+                        return (e.status === 0) ? '未完成' : (e.status === 1) ? '已完成' : (e.status === 2 ? '已失败' : '部分数据导入失败')
                     },
 
                 },
@@ -1479,7 +1480,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
 
             where: {
-                type:3
+                type: 3
             },
             parseData: function (res) {
                 //res即为原始返回的数据

@@ -50,12 +50,17 @@ window.onload = function () {
 
         var theModule1 = getQueryString('theModule');
         if (theModule1 || theModule1 == 0) {
-            $('.navClick').eq(theModule1).addClass('layui-this').siblings().removeClass('layui-this');
-            $('.wrapContent').html(navList[theModule1])
 
+         
+            $(`.navClick[navid="${theModule1}"]`).eq(0).addClass('layui-this').siblings().removeClass('layui-this');
+            //$('.navClick').eq(theModule1).addClass('layui-this').siblings().removeClass('layui-this');
+            $('.wrapContent').html(navList[theModule1])
+        
         } else {
-            $('.navClick').eq(theModule1).addClass('layui-this').siblings().removeClass('layui-this');
+            $(`.navClick[navid="${theModule1}"]`).eq(0).addClass('layui-this').siblings().removeClass('layui-this');
+            //$('.navClick').eq(theModule1).addClass('layui-this').siblings().removeClass('layui-this');
             $('.wrapContent').html(navList[0])
+          
         }
 
         // 点击导航分类，其他分类收起
