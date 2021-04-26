@@ -405,6 +405,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             headers: {
                 token,
             },
+            height: '600',
             cols: [[
                 {
                     field: 'logTime', width: 180, title: '充值/调减时间', align: 'center'
@@ -486,6 +487,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             headers: {
                 token,
             },
+            height: '600',
             cols: [[
                 {
                     field: 'statisticsTime', width: 200, title: '使用月份', align: 'center', templet: function (d) {
@@ -628,6 +630,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             headers: {
                 token,
             },
+            height: '600',
             cols: [[
                 { field: 'day', title: '使用时间', align: 'center' },
                 {
@@ -721,6 +724,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             headers: {
                 token,
             },
+            height: '600',
             cols: [[
                 { field: 'day', title: '使用时间', align: 'center' },
                 {
@@ -812,6 +816,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             headers: {
                 token,
             },
+            height: '600',
             cols: [[
                 { field: 'day', width: 150, title: '使用时间', align: 'center' },
 
@@ -925,6 +930,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             contentType: "application/json",
             // totalRow: true,
+            height: '600',
             cols: [[
                 // { field: 'id', width: 180, title: '质检编号', align: 'center', },
                 { field: 'date', width: 180, title: '质检日期', align: 'center', },
@@ -1010,6 +1016,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             contentType: "application/json",
             // totalRow: true,
+            height: '600',
             cols: [[
                 { field: 'orderId', width: 180, title: '订单编号', align: 'center', },
                 // { field: 'orderYard', width: 180, title: '订单码', align: 'center' },
@@ -1098,6 +1105,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     function dayOrderFun(data) {
         orderIns = table.render({
             elem: '#orderTable',
+            height: '600',
             cols: [[
                 { field: 'orderId', width: 180, title: '订单编号', align: 'center', },
                 { field: 'orderYard', width: 180, title: '订单码', align: 'center' },
@@ -1338,6 +1346,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
         popupShow('.recordOrderContent', '.recordOrderBox');
     });
+    $('.queryBtnClickrecordIns').click(function () {
+        recordIns.reload({
+            where: {
+                type: 2
+            },
+        })
+    });
     var recordIns = null;
     function recordFun() {
         recordIns = table.render({
@@ -1435,6 +1450,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         $('.record2OrderBox .playHeader span').html(`导入商家信息`)
 
         popupShow('.record2OrderContent', '.record2OrderBox');
+    });
+    $('.queryBtnClickrecord2Ins').click(function () {
+        record2Ins.reload({
+            where: {
+                type: 3
+            },
+        })
     });
     var record2Ins = null;
     function record2Fun() {

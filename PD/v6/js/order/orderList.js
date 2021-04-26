@@ -336,6 +336,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
 
         popupShow('.recordOrderContent', '.recordOrderBox');
     });
+    $('.queryBtnClickrecordIns').click(function () {
+        recordIns.reload({
+            where: {
+                type: 1
+            },
+        })
+    });
     var recordIns = null;
     function recordFun() {
         recordIns = table.render({
@@ -470,6 +477,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'laydate'], function () {
             headers: {
                 token,
             },
+            height: '600',
             cols: [[
                 { field: 'id', width: 150, title: 'ID', align: 'center' },
                 // { field: 'taskId', title: '任务ID', align: 'center' },

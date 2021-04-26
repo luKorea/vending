@@ -17,6 +17,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             url: `${Vapi}/role/findAll`,
             method: 'GET',
             headers: { token },
+            height: '600',
             cols: [[
                 { field: 'roleName', title: '角色名', fixed: 'left', align: 'center' },
                 { field: 'remark', title: '备注', align: 'center' },
@@ -99,7 +100,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     let addRoleNode = $('.addInput input[name="roleName"]'),
         addRemarkNode = $('.addInput textarea[name="remark"]'),
         editRoleNode = $('.editInput input[name="roleName"]'),
-        editRemarkNode = $('.editInput input[name="remark"]');
+        editRemarkNode = $('.editInput textarea[name="remark"]');
     // 关闭弹窗
     $('.playHeader .close').click(function () {
         $(this).parent().parent().addClass('margin0')
