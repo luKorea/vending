@@ -688,7 +688,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 'limitName': 'pageSize'
             },
             where: {
-                date: dateData.day,
+                date: timeStampM(useData.statisticsTime),
                 bicName: companyData.companyName,
                 type: "1",
             },

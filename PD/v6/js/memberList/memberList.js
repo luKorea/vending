@@ -291,7 +291,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             username: data.username,
             name: data.name,
             password: '      ',
-            companyId: data.company.companyId,
+            companyId: data.company&&data.company.companyId,
             lockCount: data.lockCount
         });
         $('input[name="password"]').val('      ')
