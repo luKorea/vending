@@ -490,7 +490,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             height: '600',
             cols: [[
                 {
-                    field: 'statisticsTime', width: 200, title: '使用月份', align: 'center', templet: function (d) {
+                    field: 'statisticsTime',  title: '使用月份', align: 'center', templet: function (d) {
                         if (d.statisticsTime) {
                             return timeStampM(d.statisticsTime)
                         } else {
@@ -499,7 +499,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }
                 },
                 {
-                    field: 'expressFee', width: 150, title: '快递费用1', event: 'expressFee', align: 'center', templet: function (d) {
+                    field: 'expressFee', width: 150, title: '快递费用', event: 'expressFee', align: 'center', templet: function (d) {
                         if (d.expressFee && d.expressFee > 0) {
                             return `<span style="color: rgb(190, 149, 74);cursor: pointer;">${numFormat2(d.expressFee)}</span>`
                             // return numFormat2(d.expressFee)
@@ -509,7 +509,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }
                 },
                 {
-                    field: 'qualityInspectionFee', width: 150, title: '质检费用1', event: 'qualityInspectionFee', align: 'center', templet: function (d) {
+                    field: 'qualityInspectionFee', width: 150, title: '质检费用', event: 'qualityInspectionFee', align: 'center', templet: function (d) {
                         if (d.qualityInspectionFee && d.qualityInspectionFee > 0) {
                             return `<span style="color: rgb(190, 149, 74);cursor: pointer;">${numFormat2(d.qualityInspectionFee)}</span>`
                             // return numFormat2(d.qualityInspectionFee)

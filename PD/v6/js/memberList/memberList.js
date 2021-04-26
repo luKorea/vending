@@ -294,8 +294,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             companyId: data.company.companyId,
             lockCount: data.lockCount
         });
-        $('input[name="password"]').val('')
-        $('input[name="password2"]').val('')
+        $('input[name="password"]').val('      ')
+        $('input[name="password2"]').val('      ')
         userRoles(roleList, 'checkCont', data.roleList)
         form.render('select');
     });
@@ -373,8 +373,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                         form.val("information", {
                             username: '',
                             name: '',
-                            password: '',
-                            password2: '',
+                            password: '      ',
+                            password2: '      ',
                             companyId: ''
                         })
                         $('.MemberOperation').fadeOut();
