@@ -57,7 +57,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         },
         height: '600',
         cols: [[
-            { field: 'bicId', fixed: 'left', title: '商家ID', align: 'center', templet: "#imgtmp", width: 180},
+            { field: 'bicId', fixed: 'left', title: '商家ID', align: 'center', templet: "#imgtmp", width: 180 },
             { field: 'companyName', fixed: 'left', width: 250, title: '商家名称', align: 'center' },
             { field: 'startUsingStr', width: 110, title: '是否启用', align: 'center' },
             {
@@ -499,18 +499,20 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     }
                 },
                 {
-                    field: 'expressFee', width: 150, title: '快递费用', align: 'center', templet: function (d) {
+                    field: 'expressFee', width: 150, title: '快递费用1', event: 'expressFee', align: 'center', templet: function (d) {
                         if (d.expressFee && d.expressFee > 0) {
-                            return numFormat2(d.expressFee)
+                            return `<span style="color: rgb(190, 149, 74);cursor: pointer;">${numFormat2(d.expressFee)}</span>`
+                            // return numFormat2(d.expressFee)
                         } else {
                             return '-'
                         }
                     }
                 },
                 {
-                    field: 'qualityInspectionFee', width: 150, title: '质检费用', align: 'center', templet: function (d) {
+                    field: 'qualityInspectionFee', width: 150, title: '质检费用1', event: 'qualityInspectionFee', align: 'center', templet: function (d) {
                         if (d.qualityInspectionFee && d.qualityInspectionFee > 0) {
-                            return numFormat2(d.qualityInspectionFee)
+                            return `<span style="color: rgb(190, 149, 74);cursor: pointer;">${numFormat2(d.qualityInspectionFee)}</span>`
+                            // return numFormat2(d.qualityInspectionFee)
                         } else {
                             return '-'
                         }
@@ -588,11 +590,42 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
         if (obj.event === "operation") {
             $('.ListUseOperation .detail').click();
-            // $('.ListUseOperation').fadeIn();
-            // $('.ListUseOperation').css({
-            //     left: $(this).offset().left - 35 + 'px',
-            //     top: $(this).offset().top + 35 + 'px'
-            // })
+        }
+        //TODO 获取当月快递费列表
+        if (obj.event === 'expressFee') {
+            if (dayExpressData) {
+                console.log(timeStampM(useData.statisticsTime), companyData.companyName, companyData.bicId);
+                dayExpressData.reload({
+                    where: {
+                        bicId: companyData.bicId,
+                        orderTime: timeStampM(useData.statisticsTime),
+                        type: "1",
+                    }
+                })
+            } else {
+                dayExpress();
+            }
+            $('.expressRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)}) 快递费用`)
+            popupShow('.expressRecordContent', '.expressRecordBox')
+        }
+         //TODO 获取当月质检费列表
+        if (obj.event === 'qualityInspectionFee') {
+            if (QualityData) {
+                console.log(timeStampM(useData.statisticsTime), companyData.companyName, companyData.bicId);
+                QualityData.reload({
+                    where: {
+                        // bicId: companyData.bicId,
+                        // time: timeStampM(useData.statisticsTime),
+                        date: timeStampM(useData.statisticsTime),
+                        bicName: companyData.companyName,
+                        type: "1",
+                    }
+                })
+            } else {
+                dayQuality();
+            }
+            $('.qualityRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)})质检费用`)
+            popupShow('.qualityRecordContent', '.qualityRecordBox')
         }
     });
 
@@ -625,62 +658,58 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     function dayQuality() {
         QualityData = table.render({
             elem: '#qualityTable',
-            url: `${Vapi}/company/findDayOrder`,
-            method: 'GET',
+            url: `${Vapi}/logCompany/getQualityTestingByDayAndbicName`,
+            method: 'post',
             headers: {
                 token,
             },
+            contentType: "application/json",
+            // totalRow: true,
             height: '600',
             cols: [[
-                { field: 'day', title: '使用时间', align: 'center' },
-                {
-                    field: 'qualityInspectionFee', title: '质检费用', align: 'center', templet: function (d) {
-                        if (d.qualityInspectionFee && d.qualityInspectionFee > 0) {
-                            return numFormat2(d.qualityInspectionFee)
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
-                {
-                    field: 'money', title: '使用金额', align: 'center', templet: function (d) {
-                        return numFormat2(d.money)
-                    }
-                },
+                // { field: 'id', width: 180, title: '质检编号', align: 'center', },
+                { field: 'date', width: 180, title: '质检日期', align: 'center', },
+                { field: 'bicName', width: 180, title: '商家名称', align: 'center', },
+                { field: 'certificateType', width: 180, title: '证书类型', align: 'center', },
+                { field: 'unitPriceReceivable', width: 180, title: '应收单价', align: 'center', },
+                { field: 'number', width: 180, title: '数量（件）', align: 'center', },
+                { field: 'totalReceivables', width: 180, title: '应收合计', align: 'center', },
+                { field: 'preferentialAmount', width: 180, title: '优惠金额', align: 'center', },
+                { field: 'amountActuallyReceived', width: 180, title: '实收金额', align: 'center', },
+                { field: 'affiliatedInstitutions', width: 180, title: '所属机构', align: 'center', },
+
             ]]
-            , id: 'dayId',
+            , id: 'id'
+            , page: true,
             loading: true,
             even: true,
             request: {
                 'pageName': 'pageNum',
                 'limitName': 'pageSize'
             },
-            initSort: {
-                field: 'day' //排序字段，对应 cols 设定的各字段名
-                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
-            },
             where: {
-                bicId: companyData.bicId,
-                time: timeStampM(useData.statisticsTime),
+                date: dateData.day,
+                bicName: companyData.companyName,
+                type: "1",
             },
             parseData: function (res) {
-                //res即为原始返回的数据
+                //res 即为原始返回的数据
                 if (res.code == 200) {
                     return {
-                        "code": res.code, //解析接口状态
-                        "msg": res.message, //解析提示文本
-                        "count": res.data.length, //解析数据长度
-                        "data": res.data //解析数据列表
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,//解析提示文本
+                        "count": res.data.total,//解析数据长度
+                        "data": res.data.list //解析数据列表
                     };
                 } else {
                     return {
-                        "code": res.code, //解析接口状态
-                        "msg": res.message,   //解析提示文本
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,  //解析提示文本
                     }
                 }
             },
             response: {
-                statusCode: 200 //规定成功的状态码，默认：0
+                statusCode: 200//规定成功的状态码，默认：0
             },
             done: function (res) {
                 if (res.code == 403) {
@@ -694,22 +723,21 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         });
     };
 
-    $('.ListUseOperation .quality').click(function () {
-
-        if (QualityData) {
-            console.log(timeStampM(useData.statisticsTime), companyData.companyName, companyData.bicId);
-            QualityData.reload({
-                where: {
-                    bicId: companyData.bicId,
-                    time: timeStampM(useData.statisticsTime),
-                }
-            })
-        } else {
-            dayQuality();
-        }
-        $('.qualityRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)})质检费用`)
-        popupShow('.qualityRecordContent', '.qualityRecordBox')
-    });
+    // $('.ListUseOperation .quality').click(function () {
+    //     if (QualityData) {
+    //         console.log(timeStampM(useData.statisticsTime), companyData.companyName, companyData.bicId);
+    //         QualityData.reload({
+    //             where: {
+    //                 bicId: companyData.bicId,
+    //                 time: timeStampM(useData.statisticsTime),
+    //             }
+    //         })
+    //     } else {
+    //         dayQuality();
+    //     }
+    //     $('.qualityRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)})质检费用`)
+    //     popupShow('.qualityRecordContent', '.qualityRecordBox')
+    // });
 
 
 
@@ -719,62 +747,89 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     function dayExpress() {
         dayExpressData = table.render({
             elem: '#expressTable',
-            url: `${Vapi}/company/findDayOrder`,
-            method: 'GET',
+            url: `${Vapi}/logCompany/getOrderByDayAndbicId`,
+            method: 'post',
             headers: {
                 token,
             },
+            contentType: "application/json",
+            // totalRow: true,
             height: '600',
             cols: [[
-                { field: 'day', title: '使用时间', align: 'center' },
-                {
-                    field: 'expressFee', title: '快递费用', align: 'center', templet: function (d) {
-                        if (d.expressFee && d.expressFee > 0) {
-                            return numFormat2(d.expressFee)
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
-                {
-                    field: 'money', title: '使用金额', align: 'center', templet: function (d) {
-                        return numFormat2(d.money)
-                    }
-                },
+                { field: 'orderId', width: 180, title: '订单编号', align: 'center', },
+                { field: 'orderYard', width: 180, title: '订单码', align: 'center' },
+                { field: 'bicId', width: 160, title: '商家ID', align: 'center' },
+                { field: 'companyName', width: 160, title: '商家名称', align: 'center' },
+
+
+                { field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center' },
+
+
+                { field: 'combinedBillFee', width: 160, title: '合单费', align: 'center' },
+                { field: 'ztBasicFreight', width: 160, title: '中通基本运费', align: 'center' },
+                { field: 'packingCharge', width: 160, title: '打包费', align: 'center' },
+                { field: 'ztFreightReceivable', width: 160, title: '中通应收运费', align: 'center' },
+                { field: 'jdFeedbackFreight', width: 160, title: '京东反馈运费', align: 'center' },
+                { field: 'jdBillingWeight', width: 160, title: '京东计费重量', align: 'center' },
+
+                { field: 'jdFirstWeightAmount', width: 160, title: '京东首重金额', align: 'center' },
+                { field: 'jdFreightReceivable', width: 160, title: '京东应收运费', align: 'center' },
+                { field: 'sfFeedbackFreight', width: 160, title: '顺丰反馈的运费', align: 'center' },
+                { field: 'sfBillingWeight', width: 160, title: '顺丰计费重量', align: 'center' },
+                { field: 'sfPartsType', width: 160, title: '顺丰件类型', align: 'center' },
+
+                { field: 'sfFirstWeightAmount', width: 160, title: '顺丰首重金额', align: 'center' },
+                { field: 'sfFreightReceivable', width: 160, title: '顺丰应收运费', align: 'center' },
+                { field: 'total', width: 160, title: '合计', align: 'center' },
+                { field: 'totalAfterDiscount', width: 160, title: '优惠后合计', align: 'center' },
+                { field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center' },
+
+                { field: 'storageNumber', width: 160, title: '入库件数', align: 'center' },
+
+                { field: 'testingInstitutes', width: 160, title: '质检机构', align: 'center' },
+                { field: 'qualityResult', width: 160, title: '质检结果', align: 'center' },
+                { field: 'recheckResult', width: 160, title: '复检结果', align: 'center' },
+                { field: 'planExpress', width: 160, title: '计划发货快递', align: 'center' },
+                { field: 'realityExpress', width: 160, title: '实际发货快递', align: 'center' },
+                { field: 'expressNumber', width: 160, title: '快递单号', align: 'center' },
+                { field: 'placeReceipt', width: 160, title: '收货省份', align: 'center' },
+                { field: 'orderTime', width: 180, title: '下单时间', align: 'center' },
+                { field: 'storageTime', width: 180, title: '入库时间', align: 'center' },
+                { field: 'inspectTime', width: 180, title: '送检时间', align: 'center' },
+                { field: 'accomplishTime', width: 180, title: '质检完成时间', align: 'center' },
+                { field: 'deliveryTime', width: 180, title: '出库时间', align: 'center' },
             ]]
-            , id: 'dayId',
+            , id: 'orderId'
+            , page: true,
             loading: true,
             even: true,
             request: {
                 'pageName': 'pageNum',
                 'limitName': 'pageSize'
             },
-            initSort: {
-                field: 'day' //排序字段，对应 cols 设定的各字段名
-                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
-            },
             where: {
                 bicId: companyData.bicId,
-                time: timeStampM(useData.statisticsTime),
+                orderTime: timeStampM(useData.statisticsTime),
+                type: "1",
             },
             parseData: function (res) {
-                //res即为原始返回的数据
+                //res 即为原始返回的数据
                 if (res.code == 200) {
                     return {
-                        "code": res.code, //解析接口状态
-                        "msg": res.message, //解析提示文本
-                        "count": res.data.length, //解析数据长度
-                        "data": res.data //解析数据列表
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,//解析提示文本
+                        "count": res.data.total,//解析数据长度
+                        "data": res.data.list //解析数据列表
                     };
                 } else {
                     return {
-                        "code": res.code, //解析接口状态
-                        "msg": res.message,   //解析提示文本
+                        "code": res.code,//解析接口状态
+                        "msg": res.message,  //解析提示文本
                     }
                 }
             },
             response: {
-                statusCode: 200 //规定成功的状态码，默认：0
+                statusCode: 200//规定成功的状态码，默认：0
             },
             done: function (res) {
                 if (res.code == 403) {
@@ -787,22 +842,22 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             }
         });
     };
-    $('.ListUseOperation .express').click(function () {
+    // $('.ListUseOperation .express').click(function () {
 
-        if (dayExpressData) {
-            console.log(timeStampM(useData.statisticsTime), companyData.companyName, companyData.bicId);
-            dayExpressData.reload({
-                where: {
-                    bicId: companyData.bicId,
-                    time: timeStampM(useData.statisticsTime),
-                }
-            })
-        } else {
-            dayExpress();
-        }
-        $('.expressRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)}) 快递费用`)
-        popupShow('.expressRecordContent', '.expressRecordBox')
-    });
+    //     if (dayExpressData) {
+    //         console.log(timeStampM(useData.statisticsTime), companyData.companyName, companyData.bicId);
+    //         dayExpressData.reload({
+    //             where: {
+    //                 bicId: companyData.bicId,
+    //                 time: timeStampM(useData.statisticsTime),
+    //             }
+    //         })
+    //     } else {
+    //         dayExpress();
+    //     }
+    //     $('.expressRecordBox .playHeader span').html(`${companyData.companyName}(${timeStampM(useData.statisticsTime)}) 快递费用`)
+    //     popupShow('.expressRecordContent', '.expressRecordBox')
+    // });
 
     //   每日使用情况
     var dayIns = null;
@@ -818,21 +873,22 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             },
             height: '600',
             cols: [[
-                { field: 'day', width: 150, title: '使用时间', align: 'center' },
+                { field: 'day', title: '使用时间', align: 'center' },
 
                 {
-                    field: 'expressFee', width: 150, title: '快递费用', align: 'center', templet: function (d) {
+                    field: 'expressFee', width: 150, title: '快递费用', event: 'expressFee', align: 'center', templet: function (d) {
                         if (d.expressFee && d.expressFee > 0) {
-                            return numFormat2(d.expressFee)
+                            return `<span style="color: rgb(190, 149, 74);cursor: pointer;">${numFormat2(d.expressFee)}</span>`
                         } else {
                             return '-'
                         }
                     }
                 },
                 {
-                    field: 'qualityInspectionFee', width: 150, title: '质检费用', align: 'center', templet: function (d) {
+                    field: 'qualityInspectionFee', width: 150, title: '质检费用', event: 'qualityInspectionFee', align: 'center', templet: function (d) {
                         if (d.qualityInspectionFee && d.qualityInspectionFee > 0) {
-                            return numFormat2(d.qualityInspectionFee)
+                            return `<span style="color: rgb(190, 149, 74);cursor: pointer;">${numFormat2(d.qualityInspectionFee)}</span>`
+
                         } else {
                             return '-'
                         }
@@ -843,7 +899,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                         return numFormat2(d.money)
                     }
                 },
-                { field: 'operationDate', width: 150, title: '操作', toolbar: '#barDate', align: 'center' },
+                // { field: 'operationDate', width: 150, title: '操作', toolbar: '#barDate', align: 'center' },
             ]]
             , id: 'dayId',
             loading: true,
@@ -890,9 +946,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             }
         });
     };
+
     var dateData = null;
     table.on('tool(dayTable)', function (obj) {
         event.stopPropagation();
+        console.log('obj.event', obj.event);
         dateData = obj.data;
         if (obj.event === "operation") {
             $('.ListDateOperation').fadeIn();
@@ -901,6 +959,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 top: $(this).offset().top + 35 + 'px'
             })
         }
+
+        if (obj.event === 'expressFee') {
+            $('.ListDateOperation .express').click();
+        }
+        if (obj.event === 'qualityInspectionFee') {
+            $('.ListDateOperation .quality').click();
+        }
+
+
     });
     $('.ListDateOperation .detail').click(function () {
 
@@ -955,6 +1022,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             where: {
                 date: dateData.day,
                 bicName: companyData.companyName,
+                type:"2",
             },
             parseData: function (res) {
                 //res 即为原始返回的数据
@@ -993,6 +1061,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 where: {
                     date: dateData.day,
                     bicName: companyData.companyName,
+                    type:"2",
                 }
             })
         } else {
@@ -1019,23 +1088,47 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             height: '600',
             cols: [[
                 { field: 'orderId', width: 180, title: '订单编号', align: 'center', },
-                // { field: 'orderYard', width: 180, title: '订单码', align: 'center' },
-                // { field: 'flagStr', width: 130, title: '扣费状态', align: 'center' },        
-                // { field: 'bicId', width: 160, title: '商家ID', align: 'center' },
-                // { field: 'companyName', width: 160, title: '商家名称', align: 'center' },
-                // { field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center' },
-                // { field: 'cancelStr', width: 160, title: '是否取消', align: 'center' },
-                // { field: 'interceptStr', width: 160, title: '是否拦截', align: 'center' },
-                // { field: 'interceptCause', width: 160, title: '拦截原因', align: 'center' },
-                // { field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center' },
-                // { field: 'storageNumber', width: 160, title: '入库件数', align: 'center' },
+                { field: 'orderYard', width: 180, title: '订单码', align: 'center' },
+                { field: 'bicId', width: 160, title: '商家ID', align: 'center' },
+                { field: 'companyName', width: 160, title: '商家名称', align: 'center' },
+
+
+                { field: 'orderAppointFlag', width: 160, title: '订单履约状态', align: 'center' },
+
+
+                { field: 'combinedBillFee', width: 160, title: '合单费', align: 'center' },
+                { field: 'ztBasicFreight', width: 160, title: '中通基本运费', align: 'center' },
+                { field: 'packingCharge', width: 160, title: '打包费', align: 'center' },
+                { field: 'ztFreightReceivable', width: 160, title: '中通应收运费', align: 'center' },
+                { field: 'jdFeedbackFreight', width: 160, title: '京东反馈运费', align: 'center' },
+                { field: 'jdBillingWeight', width: 160, title: '京东计费重量', align: 'center' },
+
+                { field: 'jdFirstWeightAmount', width: 160, title: '京东首重金额', align: 'center' },
+                { field: 'jdFreightReceivable', width: 160, title: '京东应收运费', align: 'center' },
+                { field: 'sfFeedbackFreight', width: 160, title: '顺丰反馈的运费', align: 'center' },
+                { field: 'sfBillingWeight', width: 160, title: '顺丰计费重量', align: 'center' },
+                { field: 'sfPartsType', width: 160, title: '顺丰件类型', align: 'center' },
+
+                { field: 'sfFirstWeightAmount', width: 160, title: '顺丰首重金额', align: 'center' },
+                { field: 'sfFreightReceivable', width: 160, title: '顺丰应收运费', align: 'center' },
+                { field: 'total', width: 160, title: '合计', align: 'center' },
+                { field: 'totalAfterDiscount', width: 160, title: '优惠后合计', align: 'center' },
+                { field: 'mergeBatch', width: 160, title: '合并批次号', align: 'center' },
+
+                { field: 'storageNumber', width: 160, title: '入库件数', align: 'center' },
+
+                { field: 'testingInstitutes', width: 160, title: '质检机构', align: 'center' },
+                { field: 'qualityResult', width: 160, title: '质检结果', align: 'center' },
+                { field: 'recheckResult', width: 160, title: '复检结果', align: 'center' },
                 { field: 'planExpress', width: 160, title: '计划发货快递', align: 'center' },
                 { field: 'realityExpress', width: 160, title: '实际发货快递', align: 'center' },
                 { field: 'expressNumber', width: 160, title: '快递单号', align: 'center' },
                 { field: 'placeReceipt', width: 160, title: '收货省份', align: 'center' },
-                // { field: 'orderTimeStr', width: 180, title: '下单时间', align: 'center' },
-                // { field: 'storageTimeStr', width: 180, title: '入库时间', align: 'center' },
-                // { field: ' deliveryTime', width: 180, title: '出库时间', align: 'center' },
+                { field: 'orderTime', width: 180, title: '下单时间', align: 'center' },
+                { field: 'storageTime', width: 180, title: '入库时间', align: 'center' },
+                { field: 'inspectTime', width: 180, title: '送检时间', align: 'center' },
+                { field: 'accomplishTime', width: 180, title: '质检完成时间', align: 'center' },
+                { field: 'deliveryTime', width: 180, title: '出库时间', align: 'center' },
             ]]
             , id: 'orderId'
             , page: true,
@@ -1048,6 +1141,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
             where: {
                 bicId: companyData.bicId,
                 orderTime: dateData.day,
+                type: "2",
             },
             parseData: function (res) {
                 //res 即为原始返回的数据
@@ -1080,6 +1174,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         });
     }
 
+
     //每天快递费用
     $('.ListDateOperation .express').click(function () {
         if (dayexpressData) {
@@ -1087,6 +1182,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 where: {
                     bicId: companyData.bicId,
                     orderTime: dateData.day,
+                    type: "2",
                 }
             })
         } else {

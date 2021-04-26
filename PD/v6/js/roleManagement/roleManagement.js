@@ -287,7 +287,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                     popupHide('.editRold', '.editBox');
                     if (res.code == 200) {
                         layer.msg(res.message, { icon: 1 });
-                        layer.close(index);
+                        //layer.close(index);
                         // layer.open({
                         //     content: "用户权限已更新，请重新登陆",
                         //     btn: ['确定'],
