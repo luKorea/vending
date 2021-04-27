@@ -34,7 +34,7 @@ export default {
       rowKey: 'id',
       option: {
        
-        index: false,
+        index: true,
         menu: false,
         column: [
           { label: "ID", prop: "id", width: 60 },
