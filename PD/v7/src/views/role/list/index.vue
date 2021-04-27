@@ -9,8 +9,6 @@ import crudMix from "@/mixins/crudMix";
 import { mapGetters } from 'vuex'
 import { req } from '@/utils/req.js'
 import permissionMix from "@/mixins/permissionMix";
-
-import { unique } from '@/utils/filters.js'
 export default {
   components: {
 
@@ -46,7 +44,6 @@ export default {
         addBtn: true,
         viewBtn: false,
         column: [
-
           {
             label: "角色名", prop: "roleName", fixed: 'left',
             searchSpan: 6,
@@ -72,7 +69,6 @@ export default {
             hide: true,
             dicData: [],
           },
-
           {
             label: "创建人", prop: "addUser", display: false,
             formatter: function (row, value, label, column) {
@@ -116,10 +112,9 @@ export default {
         v.controlList = [];//声明参数，绑定组件
       })
     },
-    getControl() {
+    findControl() {
       let that = this;
-      req('/control/getControl', {}, "GET").then(function (res) {
-        // res.data = [...new Set(res.data)]
+      req('/role/findControl', {}, "GET").then(function (res) {
         let obj = {};
         res.data.forEach((v) => {
           obj[v.controlId] = v;
@@ -141,7 +136,7 @@ export default {
     },
   },
   created() {
-    this.getControl();
+    this.findControl();
   },
 }
 </script>

@@ -28,7 +28,7 @@ export default {
   ],
   props: {
     type: {},
-    exportParams:{},
+    exportParams: {},
   },
   data() {
     return {
@@ -61,7 +61,7 @@ export default {
             label: "状态", prop: "status", type: 'select', width: 60, dicData: [{ value: 0, label: '未完成' }, { value: 1, label: '已完成' }, { value: 2, label: '已失败' },
             ]
           },
-          { label: "文件名", prop: "fileName", solt: true },
+          { label: "文件名", prop: "fileName", },
           { label: "文件下载", prop: "filePath", solt: true },
         ],
 

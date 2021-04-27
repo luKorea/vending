@@ -55,7 +55,7 @@ export default {
       rowKey: 'orderId',
       option: {
         menu: false,
-        // columnBtn: true,
+        columnBtn: true,
         clearExclude: ['orderTime'],
         column: [
 
