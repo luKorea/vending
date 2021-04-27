@@ -80,8 +80,33 @@
     }
   }
 }
+
 // .el-dialog__body{
 //   overflow: hidden;
 //   overflow-y: auto;
 //   max-height: 600px;
 // }
+
+
+.avue-checkbox .el-checkbox-group {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  // justify-content: space-between;
+
+  label.el-checkbox {
+    width: 30%;
+    display: inline-block;
+    text-align: left;
+    .el-checkbox__label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      vertical-align: bottom
+    }
+    .el-checkbox__input {
+      vertical-align: bottom;
+    }
+  }
+}

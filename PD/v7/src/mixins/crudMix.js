@@ -8,7 +8,7 @@ export default {
             callback();
         };
         return {
-            dayjs:dayjs,//声明dayjs  eg：dayjs().format('YYYY-MM-DD dddd HH:mm:ss.SSS A')
+            dayjs: dayjs,//声明dayjs  eg：dayjs().format('YYYY-MM-DD dddd HH:mm:ss.SSS A')
             page: {
                 pageSize: 10,
                 pagerCount: 5,
@@ -135,7 +135,7 @@ export default {
         }
     },
     filters: {
-       
+
         /**
          * 格式化金钱
          * @param {*} num 
@@ -148,7 +148,13 @@ export default {
 
     },
     methods: {
-
+        
+        closeDialog(name) {
+            if (this.$refs[name]) {
+                this.$refs[name].getList()
+            }
+            this.getList()
+        },
         rowView(row, index) {//自定义查看
             if (this.option && this.option.group && this.option.group.length > 0) {
                 this.option.group[0].column.forEach((v) => {
@@ -166,27 +172,26 @@ export default {
             console.log('toggleRowExpansion');
             console.log(row, expanded);
         },
-        beforeOpen(done, type) {
+        async beforeOpen(done, type) {
             let that = this;
-            const callback = () => {
+            const callback = async () => {
                 if (that.config['detail']) {
                     let params = {}
                     params[that.rowKey] = that.form[that.rowKey];
-                    req(that.config['detail'], params, that.method['detail'] || "post")
-                        .then((res) => {
-                            if (that.openAfter) {
-                                that.openAfter(res, that.form, that.form.$index, type)
-                            } else {
-                                that.form = Object.assign(that.form, res.data)
-                            }
-                        })
+                    let res = await req(that.config['detail'], params, that.method['detail'] || "post")
+                    if (that.openAfter) {
+                        that.openAfter(res, that.form, that.form.$index, type)
+                    } else {
+                        that.form = Object.assign(that.form, res.data)
+                    }
+
                 }
             }
             if (that.openBefore) {
                 that.openBefore(type)
             }
             if (type == "edit" || type == "view") {
-                callback()
+                await callback()
             }
             done()
         },

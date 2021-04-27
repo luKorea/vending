@@ -76,6 +76,22 @@ export const asyncRouterMap = [
     ]
   },
   {
+    path: '/quality',
+    component: Layout,
+    redirect: '/quality/list',
+    // alwaysShow: true,
+    name: '质检管理',
+    meta: { title: '质检管理', icon: 'el-icon-s-claim', },
+    children: [
+      {
+        path: 'list',
+        name: '质检列表',
+        component: () => import('@/views/quality/list'),
+        meta: { title: '质检列表', icon: 'el-icon-s-claim', }
+      },
+    ]
+  },
+  {
     path: '/user',
     component: Layout,
     redirect: '/user/list',

@@ -89,7 +89,11 @@ export default {
           },
           {
             label: "用户角色", prop: "roleList", minWidth: 180,
-            type: 'select', multiple: true,
+
+            multiple: true,
+            type: 'checkbox',
+            all: true,
+            span: 24,
             dicData: [],
             overHidden: true,
             formatter: function (row, value, label, column) {

@@ -20,8 +20,10 @@
             <template slot="menuLeft">
                 <el-button v-if="hasPermission('/company/excelCompany')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelCompany',viewTitle:'导入商家'},0)">导入商家</el-button>
                 <el-button v-if="hasPermission('/company/deriveExcel')" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出商家'},0)">导出商家</el-button>
-                <el-button v-if="hasPermission('/quelityTesting/excelOrder')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入质检费'},0)">导入质检费</el-button>
-
+                <!-- <el-button v-if="hasPermission('/quelityTesting/excelOrder')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入质检费'},0)">导入质检费</el-button>
+                <el-button class="el-icon-download" size="small" @click="rowView({formslot:'exportQualityTesting',viewTitle:'导出质检费'},0)">
+                    导出质检费</el-button> -->
+     
             </template>
             <template slot="uploadExcelCompanyForm" slot-scope="scope" v-if="form&&form.formslot==scope.column.prop">
                 <div>
@@ -47,7 +49,12 @@
             </template>
             <template slot="getExportTaskListForm" slot-scope="scope">
                 <div>
-                    <exportTask :row="scope.row" type="3" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                    <exportTask :row="scope.row" type="3" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                </div>
+            </template>
+            <template slot="exportQualityTestingForm" slot-scope="scope">
+                <div>
+                    <exportTask :row="scope.row" type="2" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
                 </div>
             </template>
         </avue-crud>
@@ -202,6 +209,10 @@ export default {
                 prop: "getExportTaskList",
                 hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
               },
+              {
+                prop: "exportQualityTesting",
+                hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
+              },
             ]
           },
         ]
@@ -260,13 +271,7 @@ export default {
       this.option.editTitle = this.form.editTitle;
       this.option = Object.assign(this.option, {})
     },
-    closeDialog(name) {
-      // this.$refs.crud.closeDialog();
-      if (this.$refs[name]) {
-        this.$refs[name].getList()
-      }
-      this.getList()
-    },
+  
     tableRowClassName({ row, rowIndex }) {
       if (row.flag == 1) {
         return '';

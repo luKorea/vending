@@ -9,6 +9,8 @@ import crudMix from "@/mixins/crudMix";
 import { mapGetters } from 'vuex'
 import { req } from '@/utils/req.js'
 import permissionMix from "@/mixins/permissionMix";
+
+import { unique } from '@/utils/filters.js'
 export default {
   components: {
 
@@ -58,16 +60,19 @@ export default {
               },
             ],
           },
-
-          {
-            label: "用户角色", prop: "controlList", minWidth: 180,
-            type: 'select', multiple: true, hide: true,
-            overHidden: true,
-            dicData: [],
-          },
           {
             label: "备注", prop: "remark", type: "textarea", minWidth: 180,
           },
+          {
+            label: "用户角色", prop: "controlList", minWidth: 180,
+            type: 'checkbox',
+            all: true,
+            multiple: true,
+            span: 24,
+            hide: true,
+            dicData: [],
+          },
+
           {
             label: "创建人", prop: "addUser", display: false,
             formatter: function (row, value, label, column) {
@@ -97,26 +102,35 @@ export default {
       if (type == 'edit') {
         that.form.id = that.form.roleId
       }
+      that.form = Object.assign(that.form, that.form)
     },
     openAfter(res, form, index, type) {
       let that = this
-      form = {
-        t: new Date(),
-        controlList: res.data.map((item) => {
-          return item.controlId
-        })
-      }
-      that.form = Object.assign(that.form, form)
-      console.log(that.form);
-
+      form.controlList = res.data.map((item) => {
+        return item.controlId
+      })
+      that.form = Object.assign(form, {})
+    },
+    listAfter(data) {
+      this.data.forEach((v) => {
+        v.controlList = [];//声明参数，绑定组件
+      })
     },
     getControl() {
       let that = this;
-
       req('/control/getControl', {}, "GET").then(function (res) {
+        // res.data = [...new Set(res.data)]
+        let obj = {};
+        res.data.forEach((v) => {
+          obj[v.controlId] = v;
+        })
+        let arr = [];
+        for (let k in obj) {
+          arr.push(obj[k])
+        }
         that.option.column.forEach((v) => {
           if (v.prop == 'controlList') {
-            v.dicData = res.data.map((item) => {
+            v.dicData = arr.map((item) => {
               return { label: item.controlName, value: item.controlId }
             })
           }
@@ -128,7 +142,6 @@ export default {
   },
   created() {
     this.getControl();
-
   },
 }
 </script>
