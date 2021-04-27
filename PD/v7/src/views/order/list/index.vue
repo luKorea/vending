@@ -2,8 +2,8 @@
     <div class="app-container">
         <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :before-open="beforeOpen" :page.sync="page">
             <template slot="menuLeft">
-                <el-button class="el-icon-download" size="small" :loading="Excelloading" @click.native="exportOrder">导出订单</el-button>
-                <el-button class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入订单'},0)">导入订单</el-button>
+                <el-button v-if="hasPermission('/order/exportOrder')" class="el-icon-download" size="small" :loading="Excelloading" @click.native="exportOrder">导出订单</el-button>
+                <el-button v-if="hasPermission('/order/excelOrder')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入订单'},0)">导入订单</el-button>
             </template>
             <template slot="uploadExcelOrderForm" slot-scope="scope">
                 <div>
@@ -15,6 +15,7 @@
 </template>
 <script>
 import crudMix from "@/mixins/crudMix";
+import permissionMix from "@/mixins/permissionMix";
 import uploadExcel from '@/views/company/list/uploadExcel'
 import { xhrGet } from '@/utils/req.js'
 export default {
@@ -23,12 +24,14 @@ export default {
   },
   mixins: [
     crudMix,
+    permissionMix,
   ],
+
   data() {
     let endTime = dayjs().format('YYYY-MM-DD')
     let startTime = dayjs().subtract(1, 'month').format('YYYY-MM-DD')
-
     return {
+
       Excelloading: false,
       endTime: endTime,
       startTime: startTime,
@@ -37,13 +40,13 @@ export default {
         save: '',
         delete: '',
         update: '',
-        list: 'order/getOrder'
+        list: '/order/getOrder'
       },
       rowKey: 'orderId',
       option: {
         menu: false,
-        columnBtn: true,
-
+        // columnBtn: true,
+        clearExclude: ['orderTime'],
         column: [
 
           { prop: 'orderId', fixed: 'left', label: '订单编号', minWidth: 180, search: true, searchSpan: 6, viewDisplay: false, },
@@ -87,6 +90,22 @@ export default {
             valueFormat: 'yyyy-MM-dd',
             format: 'yyyy-MM-dd',
             searchValue: [startTime, endTime], viewDisplay: false,
+            searchClearable: false,
+            pickerOptions: {
+              onPick: ({ maxDate, minDate }) => {
+                this.selectDate = minDate.getTime();
+                if (maxDate) {
+                  this.selectDate = ''
+                }
+              }, disabledDate: (time) => {
+                if (this.selectDate !== '') {
+                  const one = 30 * 24 * 3600 * 1000 *3;
+                  const minTime = this.selectDate - one;
+                  const maxTime = this.selectDate + one;
+                  return time.getTime() < minTime || time.getTime() > maxTime
+                }
+              }
+            }
 
           },
           { prop: 'storageTime', label: '入库时间', minWidth: 180, viewDisplay: false, },
@@ -128,7 +147,7 @@ export default {
       }
       paramsStr = paramsStr.slice(0, -1);
       console.log('paramsStr:', paramsStr)
-      xhrGet('order/exportOrder' + (paramsStr ? ('?' + paramsStr) : ''), `${this.params.companyName || ''}订单(${this.params.startTime || ''}-${this.params.endTime || ''})`).then(function (res) {
+      xhrGet('/order/exportOrder' + (paramsStr ? ('?' + paramsStr) : ''), `${this.params.companyName || ''}订单(${this.params.startTime || ''}-${this.params.endTime || ''})`).then(function (res) {
         that.deriveExcelloading = false;
       }).catch(function (err) {
         that.deriveExcelloading = false;
@@ -139,7 +158,7 @@ export default {
         this.params.startTime = this.params.orderTime[0];
         this.params.endTime = this.params.orderTime[1];
       }
-    }
+    },
   },
   created() {
     this.params.startTime = this.startTime;

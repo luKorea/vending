@@ -10,15 +10,18 @@
                 </div>
             </template>
             <template slot-scope="scope" slot="menuBtn">
-                <el-dropdown-item @click.native="$refs.crud.rowEdit({ ...scope.row, editType:'Recharge',editTitle:'充值' },scope.index)">充值</el-dropdown-item>
-                <el-dropdown-item @click.native="$refs.crud.rowEdit({ ...scope.row, editType:'Reduce' ,editTitle:'调减'},scope.index)">调减</el-dropdown-item>
-                <el-dropdown-item @click.native="rowView({ ...scope.row, formslot:'reduceBalance' ,viewTitle:`商家[${scope.row.companyName}]的充值/调减记录`},scope.index)">充值/调减记录</el-dropdown-item>
-                <el-dropdown-item @click.native="rowView({ ...scope.row, formslot:'usageRecord' ,viewTitle:`商家[${scope.row.companyName}]的使用记录`},scope.index)">使用记录</el-dropdown-item>
+                <el-dropdown-item v-if="hasPermission('/company/addBalance')" @click.native="$refs.crud.rowEdit({ ...scope.row, editType:'Recharge',editTitle:'充值' },scope.index)">充值</el-dropdown-item>
+                <el-dropdown-item v-if="hasPermission('/company/subBalance')" @click.native="$refs.crud.rowEdit({ ...scope.row, editType:'Reduce' ,editTitle:'调减'},scope.index)">调减</el-dropdown-item>
+                <el-dropdown-item v-if="hasPermission('/logCompany/getTopUpLog')"
+                    @click.native="rowView({ ...scope.row, formslot:'reduceBalance' ,viewTitle:`商家[${scope.row.companyName}]的充值/调减记录`},scope.index)">充值/调减记录</el-dropdown-item>
+                <el-dropdown-item v-if="hasPermission('/logCompany/orderStatistics')"
+                    @click.native="rowView({ ...scope.row, formslot:'usageRecord' ,viewTitle:`商家[${scope.row.companyName}]的使用记录`},scope.index)">使用记录</el-dropdown-item>
             </template>
             <template slot="menuLeft">
-                <el-button class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelCompany',viewTitle:'导入商家'},0)">导入商家</el-button>
-                <el-button class="el-icon-download" size="small" :loading="deriveExcelloading" @click.native="deriveExcel">导出商家</el-button>
-                <el-button class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入质检费'},0)">导入质检费</el-button>
+                <el-button v-if="hasPermission('/company/excelCompany')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelCompany',viewTitle:'导入商家'},0)">导入商家</el-button>
+                <el-button v-if="hasPermission('/company/deriveExcel')" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出商家'},0)">导出商家</el-button>
+                <el-button v-if="hasPermission('/quelityTesting/excelOrder')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入质检费'},0)">导入质检费</el-button>
+
             </template>
             <template slot="uploadExcelCompanyForm" slot-scope="scope" v-if="form&&form.formslot==scope.column.prop">
                 <div>
@@ -42,6 +45,11 @@
                     <usageRecord :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></usageRecord>
                 </div>
             </template>
+            <template slot="getExportTaskListForm" slot-scope="scope">
+                <div>
+                    <exportTask :row="scope.row" type="3" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                </div>
+            </template>
         </avue-crud>
     </div>
 </template>
@@ -50,29 +58,36 @@ import crudMix from "@/mixins/crudMix";
 import uploadExcel from '@/views/company/list/uploadExcel'
 import balanceRecord from '@/views/company/list/balanceRecord'
 import usageRecord from '@/views/company/list/usageRecord'
+import exportTask from '@/views/exportTask'
 import excelTask from '@/views/excelTask/'
+import { formatterFiltersFormatMoney } from '@/utils/filters.js'
+import { required } from '@/utils/rules.js'
 
-import { filtersFormatMoney } from '@/utils/filters.js'
-import { xhrGet } from '@/utils/req.js'
+import permissionMix from "@/mixins/permissionMix";
+/**
+ * TODO:商家列表
+ */
 export default {
   components: {
     uploadExcel,
     balanceRecord,
     usageRecord,
-    excelTask
+    excelTask,
+    exportTask
   },
   mixins: [
     crudMix,
+    permissionMix
   ],
   data() {
     return {
-      deriveExcelloading: false,
+
       config: {
         detail: '',
-        save: 'company/addCompany',
-        delete: 'company/deleteCompanyId',
-        update: 'company/updateCompany',
-        list: 'company/getCompany'
+        save: '/company/addCompany',
+        delete: '/company/deleteCompanyId',
+        update: '/company/updateCompany',
+        list: '/company/getCompany'
       },
       method: {
         delete: 'GET'
@@ -88,21 +103,11 @@ export default {
         column: [
           {
             label: "商家id", prop: "bicId", search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false,
-            rules: [{
-              required: true,
-              message: "请输入商家id",
-              trigger: "blur"
-            },
-            ],
+            rules: required("商家id"),
           },
           {
             label: "商家名称", prop: "companyName", search: true, searchSpan: 6, fixed: 'left', viewDisplay: false,
-            rules: [{
-              required: true,
-              message: "请输入商家名称",
-              trigger: "blur"
-            },
-            ],
+            rules: required("商家名称"),
           },
           { label: "是否启用", prop: "startUsingStr", addDisplay: false, editDisplay: false, viewDisplay: false },
           { label: "是否启用", prop: "startUsing", type: 'switch', hide: true, value: 2, viewDisplay: false, dicData: [{ value: 1, label: '否' }, { value: 2, label: '是' }], },
@@ -110,16 +115,8 @@ export default {
             label: "余额", prop: "balance", type: 'number', value: 0,
             minRows: 0,
             precision: 2, viewDisplay: false, editDisabled: true,
-            formatter: function (row, value, label, column) {
-              return filtersFormatMoney(label)
-            },
-            rules: [
-              {
-                required: true,
-                message: "请输入余额",
-                trigger: "blur"
-              },
-            ],
+            formatter: formatterFiltersFormatMoney,
+            rules: required("余额"),
           },
           {
             label: "冻结金额", prop: "freezeMoney", type: 'number', value: 0,
@@ -128,16 +125,8 @@ export default {
             editDisplay: false,
             minRows: 0,
             precision: 2,
-            formatter: function (row, value, label, column) {
-              return filtersFormatMoney(label)
-            },
-            rules: [
-              {
-                required: true,
-                message: "请输入冻结金额",
-                trigger: "blur"
-              },
-            ],
+            formatter: formatterFiltersFormatMoney,
+            rules: required("冻结金额"),
           },
           {
             label: "可用余额", prop: "usableBalance", type: 'number', value: 0,
@@ -146,16 +135,8 @@ export default {
             editDisplay: false,
             minRows: 0,
             precision: 2,
-            formatter: function (row, value, label, column) {
-              return filtersFormatMoney(label)
-            },
-            rules: [
-              {
-                required: true,
-                message: "请输入可用余额",
-                trigger: "blur"
-              },
-            ],
+            formatter: formatterFiltersFormatMoney,
+            rules: required("可用余额"),
           },
           {
             label: "余额预警值", prop: "moneyRemind", type: 'number', value: 0,
@@ -163,18 +144,9 @@ export default {
             editDisplay: false,
             minRows: 0,
             precision: 2,
-            formatter: function (row, value, label, column) {
-              return filtersFormatMoney(label)
-            },
-            rules: [
-              {
-                required: true,
-                message: "请输入余额预警值",
-                trigger: "blur"
-              },
-            ],
+            formatter: formatterFiltersFormatMoney,
+            rules: required("余额预警值"),
           },
-
           {
             label: "充值金额", prop: "Recharge", type: 'number', value: 0,
             minRows: 0,
@@ -183,13 +155,7 @@ export default {
             viewDisplay: false,
             display: true,
             hide: true,
-            rules: [
-              {
-                required: true,
-                message: "请输入充值金额",
-                trigger: "blur"
-              },
-            ],
+            rules: required("充值金额"),
           },
           {
             label: "调减金额", prop: "Reduce", type: 'number', value: 0,
@@ -199,13 +165,8 @@ export default {
             viewDisplay: false,
             display: true,
             hide: true,
-            rules: [
-              {
-                required: true,
-                message: "请输入调减金额",
-                trigger: "blur"
-              },
-            ],
+            rules: required("调减金额"),
+
           },
           { label: "备注", prop: "remark", type: "textarea", viewDisplay: false, editDisplay: true },
         ],
@@ -228,6 +189,7 @@ export default {
                 uploadData: { title: '质检费', url: 'quelityTesting/excelOrder', href: './assets/uploadQuality.xlsx' },
                 hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
               },
+
               {
                 prop: "reduceBalance",
                 hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
@@ -236,25 +198,17 @@ export default {
                 prop: "usageRecord",
                 hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
               },
+              {
+                prop: "getExportTaskList",
+                hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
+              },
             ]
           },
         ]
       },
     }
   },
-  mounted() {
-    console.log(this.$refs.crud);
-  },
   methods: {
-    deriveExcel() {
-      let that = this;
-      that.deriveExcelloading = true;
-      xhrGet('company/deriveExcel', '商家信息汇总').then(function (res) {
-        that.deriveExcelloading = false;
-      }).catch(function (err) {
-        that.deriveExcelloading = false;
-      });
-    },
     By100() {
       let that = this;
       that.form.balance = that.form.balance * 100;
@@ -306,10 +260,8 @@ export default {
       this.option.editTitle = this.form.editTitle;
       this.option = Object.assign(this.option, {})
     },
-
     closeDialog(name) {
       // this.$refs.crud.closeDialog();
-      console.log(this.$refs[name]);
       if (this.$refs[name]) {
         this.$refs[name].getList()
       }

@@ -8,6 +8,7 @@
 import crudMix from "@/mixins/crudMix";
 import { mapGetters } from 'vuex'
 import { req } from '@/utils/req.js'
+import permissionMix from "@/mixins/permissionMix";
 export default {
   components: {
 
@@ -19,6 +20,7 @@ export default {
   },
   mixins: [
     crudMix,
+    permissionMix,
   ],
   data() {
     return {
@@ -26,11 +28,11 @@ export default {
         conditionTwo: '',
       },
       config: {
-        detail: 'role/findByRId',
-        save: 'role/addRole',
-        delete: 'role/deRoleByUId',
-        update: 'role/updateRole',
-        list: 'role/findAll'
+        detail: '/role/findByRId',
+        save: '/role/addRole',
+        delete: '/role/deRoleByUId',
+        update: '/role/updateRole',
+        list: '/role/findAll'
       },
       method: {//修改请求method post GET
         detail: 'GET',
@@ -40,11 +42,13 @@ export default {
       rowKey: 'id',
       option: {
         addBtn: true,
+        viewBtn: false,
         column: [
 
           {
             label: "角色名", prop: "roleName", fixed: 'left',
             searchSpan: 6,
+
             search: true, minWidth: 180,
             rules: [
               {
@@ -54,13 +58,15 @@ export default {
               },
             ],
           },
-          {
-            label: "备注", prop: "remark", minWidth: 180,
-          },
+
           {
             label: "用户角色", prop: "controlList", minWidth: 180,
             type: 'select', multiple: true, hide: true,
+            overHidden: true,
             dicData: [],
+          },
+          {
+            label: "备注", prop: "remark", type: "textarea", minWidth: 180,
           },
           {
             label: "创建人", prop: "addUser", display: false,
@@ -106,7 +112,8 @@ export default {
     },
     getControl() {
       let that = this;
-      req('control/getControl', {}, "GET").then(function (res) {
+
+      req('/control/getControl', {}, "GET").then(function (res) {
         that.option.column.forEach((v) => {
           if (v.prop == 'controlList') {
             v.dicData = res.data.map((item) => {
@@ -115,7 +122,7 @@ export default {
           }
         })
       }).catch(function (error) {
-        reject(error);
+        console.log(error);
       });
     },
   },

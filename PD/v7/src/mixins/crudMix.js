@@ -1,6 +1,5 @@
 import { req } from '@/utils/req.js'
 import { filtersFormatMoney } from '@/utils/filters.js'
-
 export default {
     components: {
     },
@@ -9,6 +8,7 @@ export default {
             callback();
         };
         return {
+            dayjs:dayjs,//声明dayjs  eg：dayjs().format('YYYY-MM-DD dddd HH:mm:ss.SSS A')
             page: {
                 pageSize: 10,
                 pagerCount: 5,
@@ -31,6 +31,8 @@ export default {
 
                 //searchMenuPosition: 'right',
                 searchMenuSpan: 6,
+
+
 
                 menuBtnTitle: '操作',
 
@@ -102,6 +104,7 @@ export default {
                 list: ''
             },
             search: {},
+            permission: {},
         };
     },
     computed: {
@@ -111,6 +114,7 @@ export default {
                 data: this.data,
                 option: this.option,
                 tableLoading: this.loading,
+                permission: this.permission
             }
         },
         onEvent() {
@@ -120,7 +124,7 @@ export default {
                 'row-update': this.rowUpdate,
                 'row-del': this.rowDel,
                 'refresh-change': this.refreshChange,
-                'search-reset': this.searchReset,
+                'search-reset': this.searchChange,
                 'search-change': this.searchChange,
                 'expand-change': this.toggleRowExpansion,
 
@@ -131,14 +135,17 @@ export default {
         }
     },
     filters: {
-        //dayjs().format('YYYY-MM-DD dddd HH:mm:ss.SSS A')
+       
         /**
          * 格式化金钱
          * @param {*} num 
          * @returns 
          * this.$options.filters['filtersFormatMoney']
          */
-        filtersFormatMoney: filtersFormatMoney
+        filtersFormatMoney: filtersFormatMoney,
+
+
+
     },
     methods: {
 
@@ -203,6 +210,7 @@ export default {
                         // that.$message.success('获取成功')
                     }
                 }).catch(function (error) {
+                    that.loading = false
                 });
             }
             if (that.listBefore) {
@@ -316,12 +324,7 @@ export default {
             this.page.currentPage = 1
             this.getList()
         },
-        searchReset(params, done) {
-            if (done) done()
-            this.params = {}
-            this.page.currentPage = 1
-            this.getList()
-        },
+
         refreshChange() {
             this.getList()
         },

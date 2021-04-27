@@ -7,6 +7,9 @@
 <script>
 import crudMix from "@/mixins/crudMix";
 import { filtersFormatMoney } from '@/utils/filters.js'
+/**
+ * TODO:充值/调减记录
+ */
 export default {
   components: {
   },
@@ -23,7 +26,7 @@ export default {
         save: '',
         delete: '',
         update: '',
-        list: 'logCompany/getTopUpLog'
+        list: '/logCompany/getTopUpLog'
       },
       rowKey: 'logcompanyId',
       option: {

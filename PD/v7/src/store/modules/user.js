@@ -1,6 +1,6 @@
 
 import { getToken, setToken, removeToken } from '@/utils/auth'
-
+import defaultSettings from '@/settings.js'
 import { req } from '@/utils/req.js'
 const getDefaultState = () => {
   return {
@@ -43,15 +43,14 @@ const actions = {
   // user login
   login({ commit }, userInfo) {
     return new Promise((resolve, reject) => {
-      req('user/login', userInfo, "post").then(function (res) {
-     
+      req('/user/login', userInfo, "post").then(function (res) {
+
         const { data } = res
         commit('SET_NAME', data.username)
         commit('SET_AVATAR', '')
         commit('SET_UUID', data.id)
-        commit('SET_ROLES', [])
         commit('SET_TOKEN', data.token)
-        window.localStorage.setItem("USERINFO_F",
+        window.localStorage.setItem("USERINFO_" + defaultSettings.KEY,
           JSON.stringify(data)
         );
         setToken(data.token)
@@ -67,7 +66,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       let USERINFO = {};
       try {
-        USERINFO = JSON.parse(window.localStorage.getItem('USERINFO_F'));
+        USERINFO = JSON.parse(window.localStorage.getItem('USERINFO_' + defaultSettings.KEY));
       } catch (error) {
 
       }
@@ -75,7 +74,7 @@ const actions = {
         commit('SET_NAME', USERINFO.username)
         commit('SET_AVATAR', '')
         commit('SET_UUID', USERINFO.id)
-        commit('SET_ROLES', [])
+        commit('SET_ROLES', USERINFO.ROLES)
         resolve(state)
       } else {
         reject('登录失效，重新登录')
@@ -86,7 +85,7 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      window.localStorage.removeItem("USERINFO_F");
+      window.localStorage.removeItem("USERINFO_" + defaultSettings.KEY);
       removeToken()
       commit('RESET_STATE')
       resolve()
@@ -106,6 +105,33 @@ const actions = {
     return new Promise(resolve => {
       commit('SET_INIT', true)
       resolve()
+    })
+  },
+  // getControl
+  getControl({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      let USERINFO = {};
+      try {
+        USERINFO = JSON.parse(window.localStorage.getItem('USERINFO_' + defaultSettings.KEY));
+      } catch (error) {
+
+      }
+      try {
+        req('/control/getControl', {}, "GET", false, true).then(function (res) {
+          const { data } = res
+          commit('SET_ROLES', data)
+          USERINFO.ROLES = data
+          window.localStorage.setItem("USERINFO_" + defaultSettings.KEY,
+            JSON.stringify(USERINFO)
+          );
+          resolve()
+        }).catch(function (error) {
+          reject(error)
+        });
+      } catch (error) {
+        resolve()
+      }
+
     })
   },
 

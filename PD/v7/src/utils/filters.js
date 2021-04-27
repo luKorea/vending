@@ -1,4 +1,8 @@
-
+/**
+ * 格式化金钱
+ * @param {*} num 
+ * @returns 
+ */
 export function filtersFormatMoney(num) {
     var oldNum = num;
     num = Number(Number(num).toFixed(2));
@@ -11,3 +15,15 @@ export function filtersFormatMoney(num) {
         return oldNum;
     }
 }
+/**
+ * 格式化金钱--avue
+ * @param {*} row 
+ * @param {*} value 
+ * @param {*} label 
+ * @param {*} column 
+ * @returns 
+ */
+export function formatterFiltersFormatMoney(row, value, label, column) {
+    return filtersFormatMoney(label)
+}
+

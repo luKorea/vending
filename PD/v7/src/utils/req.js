@@ -74,7 +74,7 @@ export function req(url, data, type, tips, flag) {
             $.ajax({
                 type: "post",
                 timeout: 120000, //超时时间设置，单位毫秒
-                url: process.env.VUE_APP_PATH_REWRITE + '/' + url,
+                url: process.env.VUE_APP_PATH_REWRITE + url,
                 data: data,
                 contentType: false,
                 // 告诉jQuery不要去设置Content-Type请求头
@@ -88,7 +88,7 @@ export function req(url, data, type, tips, flag) {
             $.ajax({
                 type: type,
                 timeout: 120000, //超时时间设置，单位毫秒
-                url: process.env.VUE_APP_PATH_REWRITE + '/' + url,
+                url: process.env.VUE_APP_PATH_REWRITE + url,
                 data: data,
                 cache: false,
                 headers: headers,
@@ -104,7 +104,59 @@ export function req(url, data, type, tips, flag) {
 export function xhrGet(url, name) {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", process.env.VUE_APP_PATH_REWRITE + '/' + url, true);
+        let xhrurl = '';
+        if ((url && url.indexOf('http://')) || (url && url.indexOf('https://'))) {
+            xhrurl = url;
+        } else {
+            xhrurl = process.env.VUE_APP_PATH_REWRITE + url;
+        }
+        
+
+        xhr.open("GET", xhrurl, true);
+        xhr.setRequestHeader("token", getToken());
+        xhr.responseType = "blob";
+        xhr.onload = function (oEvent) {
+            if (xhr.status == 200) {
+                if (xhr.response.size < 100) {
+                    Message({
+                        message: '下载失败',
+                        type: 'error',
+                        duration: 3 * 1000
+                    })
+                    return
+                } else {
+                    var content = xhr.response;
+                    var fileName = `${name}.xlsx`; // 保存的文件名
+                    var elink = document.createElement('a');
+                    elink.download = fileName;
+                    elink.style.display = 'none';
+                    var blob = new Blob([content]);
+                    elink.href = URL.createObjectURL(blob);
+                    document.body.appendChild(elink);
+                    elink.click();
+                    document.body.removeChild(elink);
+                }
+                resolve();
+            } else {
+                Message({
+                    message: '服务器端响应超时,请稍后再试',
+                    type: 'error',
+                    duration: 3 * 1000
+                })
+                reject('服务器端响应超时,请稍后再试');
+                return
+            }
+
+        };
+        xhr.send();
+    });
+}
+
+
+export function xhrGetFile(url, name) {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
         xhr.setRequestHeader("token", getToken());
         xhr.responseType = "blob";
         xhr.onload = function (oEvent) {

@@ -1,14 +1,15 @@
 <template>
     <div class="app-container">
         <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :before-open="beforeOpen" :page.sync="page">
-
         </avue-crud>
     </div>
 </template>
 <script>
 import crudMix from "@/mixins/crudMix";
 import { filtersFormatMoney } from '@/utils/filters.js'
-
+/**
+ * TODO:每天/每月质检详情
+ */
 export default {
   components: {
 
@@ -26,7 +27,7 @@ export default {
         save: '',
         delete: '',
         update: '',
-        list: 'logCompany/getQualityTestingByDayAndbicName'
+        list: '/logCompany/getQualityTestingByDayAndbicName'
       },
 
       rowKey: 'bicId',
@@ -87,9 +88,13 @@ export default {
   methods: {
 
     listBefore() {
-
+      let type = '1';
+      if (this.row.day) {
+        type = '2';
+      }
       this.params.bicName = this.row.companyName
-      this.params.date = this.row.day
+      this.params.date = this.row.day || dayjs(this.row.statisticsTime).format('YYYY-MM') || ''
+      this.params.type = type
     },
   }
 }

@@ -16,8 +16,10 @@
     </div>
 </template>
 <script>
-import { req,xhrGet } from '@/utils/req.js'
-
+import { req } from '@/utils/req.js'
+/**
+ * TODO:上传文件模板
+ */
 export default {
   components: {},
   props: {

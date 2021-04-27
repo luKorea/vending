@@ -1,17 +1,15 @@
 <template>
     <div class="app-container">
         <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :before-open="beforeOpen" :page.sync="page">
-            <!-- <template slot="expand" slot-scope="{row}">
-                <div v-for="(item,index) in row.excelTaskErrList " :key="item">
-                  {{index+1}} : {{item.message}}
-                </div>
-            </template> -->
+
         </avue-crud>
     </div>
 </template>
 <script>
 import crudMix from "@/mixins/crudMix";
-
+/**
+ * TODO:导入记录
+ */
 export default {
   components: {
   },
@@ -28,15 +26,15 @@ export default {
         save: '',
         delete: '',
         update: '',
-        list: 'excelTask/getExcelTaskList'
+        list: '/excelTask/getExcelTaskList'
       },
       method: {//修改请求method post GET
         list: 'GET',
       },
       rowKey: 'id',
       option: {
-        // expand: true,
-        index: true,
+       
+        index: false,
         menu: false,
         column: [
           { label: "ID", prop: "id", width: 60 },
