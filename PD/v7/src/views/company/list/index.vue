@@ -20,10 +20,6 @@
             <template slot="menuLeft">
                 <el-button v-if="hasPermission('/company/excelCompany')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelCompany',viewTitle:'导入商家'},0)">导入商家</el-button>
                 <el-button v-if="hasPermission('/company/deriveExcel')" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出商家'},0)">导出商家</el-button>
-                <!-- <el-button v-if="hasPermission('/quelityTesting/excelOrder')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入质检费'},0)">导入质检费</el-button>
-                <el-button class="el-icon-download" size="small" @click="rowView({formslot:'exportQualityTesting',viewTitle:'导出质检费'},0)">
-                    导出质检费</el-button> -->
-     
             </template>
             <template slot="uploadExcelCompanyForm" slot-scope="scope" v-if="form&&form.formslot==scope.column.prop">
                 <div>
@@ -69,7 +65,6 @@ import exportTask from '@/views/exportTask'
 import excelTask from '@/views/excelTask/'
 import { formatterFiltersFormatMoney } from '@/utils/filters.js'
 import { required } from '@/utils/rules.js'
-
 import permissionMix from "@/mixins/permissionMix";
 /**
  * TODO:商家列表
@@ -88,7 +83,6 @@ export default {
   ],
   data() {
     return {
-
       config: {
         detail: '',
         save: '/company/addCompany',

@@ -4,7 +4,6 @@ export default {
     },
     data() {
         return {
-
         };
     },
     methods: {
@@ -34,7 +33,6 @@ export default {
                 this.permission.editBtn = this.$store.state.user.roles.filter((v) => { return v.url == this.config.update }).join(',') ? true : false;
                 this.permission.editBtn ? falg++ : '';
             }
-
             if (!falg) {
                 this.permission.menu = false
             }
@@ -43,7 +41,6 @@ export default {
                 this.option.searchShow = show;
                 this.option.searchShowBtn = show;
                 this.option.refreshBtn = show;
-
             }
         }
     },

@@ -127,7 +127,6 @@ export default {
                 'search-reset': this.searchChange,
                 'search-change': this.searchChange,
                 'expand-change': this.toggleRowExpansion,
-
             }
         },
         rowKey() {
@@ -135,7 +134,6 @@ export default {
         }
     },
     filters: {
-
         /**
          * 格式化金钱
          * @param {*} num 
@@ -143,12 +141,8 @@ export default {
          * this.$options.filters['filtersFormatMoney']
          */
         filtersFormatMoney: filtersFormatMoney,
-
-
-
     },
     methods: {
-        
         closeDialog(name) {
             if (this.$refs[name]) {
                 this.$refs[name].getList()
@@ -184,7 +178,6 @@ export default {
                     } else {
                         that.form = Object.assign(that.form, res.data)
                     }
-
                 }
             }
             if (that.openBefore) {
@@ -203,16 +196,16 @@ export default {
                 pageParams['pageNum'] = that.page.currentPage
                 pageParams['pageSize'] = that.page.pageSize
                 const params = Object.assign(pageParams, that.params)
-                that.data = []
                 req(that.config['list'], params, that.method['list'] || "post").then(function (res) {
-                    that.loading = false
+                    setTimeout(() => {
+                        that.loading = false
+                    }, 150);
                     const data = res.data
-                    that.data = Object.assign(res.data.list || []);
+                    that.data = Object.assign(res.data.list || [], []);
                     that.page.total = res.data.total;
                     if (that.listAfter) {
                         that.listAfter(data)
                     } else {
-                        // that.$message.success('获取成功')
                     }
                 }).catch(function (error) {
                     that.loading = false
@@ -240,7 +233,6 @@ export default {
                         loading()
                     })
             }
-
             if (that.validateFn) {
                 if (that.validateFn('add')) {
                     loading()
@@ -262,7 +254,6 @@ export default {
             let that = this;
             const callback = () => {
                 delete that.form.params
-
                 req(that.config['update'], that.form, that.method['update'] || "post")
                     .then((data) => {
                         that.getList()
@@ -288,7 +279,6 @@ export default {
                 } else {
                     loading()
                 }
-
             } else {
                 callback()
             }
@@ -306,7 +296,6 @@ export default {
                         }
                     })
             }
-
             let PageIndex = ((that.page.currentPage - 1) * that.page.pageSize) + index + 1
             that.$confirm(`此操作将永久删除序号【${PageIndex}】的数据, 是否继续?`, '提示', {
                 confirmButtonText: '确定',
@@ -321,7 +310,6 @@ export default {
                 }
             }).catch(() => {
             });
-
         },
         searchChange(params, done) {
             if (done) done()
@@ -329,11 +317,9 @@ export default {
             this.page.currentPage = 1
             this.getList()
         },
-
         refreshChange() {
             this.getList()
         },
-
     },
     created() {
     },
