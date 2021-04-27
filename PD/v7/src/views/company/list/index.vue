@@ -151,6 +151,7 @@ export default {
     //打开窗口前
     openBefore(type) {
       let that = this;
+      //充值&调减
       if (that.form.editType && (that.form.editType == 'Recharge' || that.form.editType == 'Reduce')) {
         that.option.column.forEach((v) => {
           v.prop == 'Reduce' && that.form.editType == 'Recharge' ? v.display = false : 0;

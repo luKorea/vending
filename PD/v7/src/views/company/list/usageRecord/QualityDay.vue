@@ -6,7 +6,7 @@
 </template>
 <script>
 import crudMix from "@/mixins/crudMix";
-import { filtersFormatMoney } from '@/utils/filters.js'
+import { column_money } from '@/utils/base-crud.js'
 /**
  * TODO:每天/每月质检详情
  */
@@ -42,51 +42,20 @@ export default {
           { label: "质检日期", prop: "date" },
           { label: "商家名称", prop: "bicName" },
           { label: "证书类型", prop: "certificateType" },
-          {
-            label: "应收单价", prop: "unitPriceReceivable", type: 'number', value: 0, viewDisplay: false,
-            minRows: 0,
-            precision: 2,
-            formatter: function (row, value, label, column) {
-              return filtersFormatMoney(label)
-            },
-          },
+          ...column_money("应收单价", "unitPriceReceivable", false, { viewDisplay: false }),
           { label: "数量（件）", prop: "number" },
-          {
-            label: "应收合计", prop: "totalReceivables", type: 'number', value: 0, viewDisplay: false,
-            minRows: 0,
-            precision: 2,
-            formatter: function (row, value, label, column) {
-              return filtersFormatMoney(label)
-            },
-          },
-          {
-            label: "优惠金额", prop: "preferentialAmount", type: 'number', value: 0, viewDisplay: false,
-            minRows: 0,
-            precision: 2,
-            formatter: function (row, value, label, column) {
-              return filtersFormatMoney(label)
-            },
-          },
-          {
-            label: "实收金额", prop: "amountActuallyReceived", type: 'number', value: 0, viewDisplay: false,
-            minRows: 0,
-            precision: 2,
-            formatter: function (row, value, label, column) {
-              return filtersFormatMoney(label)
-            },
-          },
+          ...column_money("应收合计", "totalReceivables", false, { viewDisplay: false }),
+          ...column_money("优惠金额", "preferentialAmount", false, { viewDisplay: false }),
+          ...column_money("实收金额", "amountActuallyReceived", false, { viewDisplay: false }),
           { label: "所属机构", prop: "affiliatedInstitutions" },
         ],
-
-
       },
     }
   },
   created() {
-
   },
   methods: {
-
+    //获取列表前
     listBefore() {
       let type = '1';
       if (this.row.day) {

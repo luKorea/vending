@@ -6,7 +6,7 @@
 </template>
 <script>
 import crudMix from "@/mixins/crudMix";
-import { filtersFormatMoney } from '@/utils/filters.js'
+import { column_money, column_textarea } from '@/utils/base-crud.js'
 /**
  * TODO:充值/调减记录
  */
@@ -34,43 +34,19 @@ export default {
         menu: false,
         column: [
           { label: "充值/调减时间", prop: "logTime", type: "datetime", format: 'yyyy-MM-DD HH:mm', },
-          {
-            label: "充值/调减前余额", prop: "frontBalance", type: 'number', value: 0, viewDisplay: false,
-            minRows: 0,
-            precision: 2,
-            formatter: function (row, value, label, column) {
-              return filtersFormatMoney(label)
-            },
-          },
-          {
-            label: "充值/调减金额", prop: "money", type: 'number', value: 0, viewDisplay: false,
-            minRows: 0,
-            precision: 2,
-            formatter: function (row, value, label, column) {
-              return filtersFormatMoney(label)
-            },
-          },
-          {
-            label: "充值/调减后余额", prop: "laterBalance", type: 'number', value: 0, viewDisplay: false,
-            minRows: 0,
-            precision: 2,
-            formatter: function (row, value, label, column) {
-              return filtersFormatMoney(label)
-            },
-          },
-          { label: "备注", prop: "remark", type: "textarea", viewDisplay: false, },
-
+          ...column_money("充值/调减前余额", "frontBalance", false, { viewDisplay: false }),
+          ...column_money("充值/调减金额", "money", false, { viewDisplay: false }),
+          ...column_money("充值/调减后余额", "laterBalance", false, { viewDisplay: false }),
+          ...column_textarea("备注", "remark", false, { viewDisplay: false }),
         ],
-
       },
     }
   },
   created() {
-
   },
   methods: {
+    //获取列表前
     listBefore() {
-
       this.params.companyId = this.row.companyId
     }
   }
