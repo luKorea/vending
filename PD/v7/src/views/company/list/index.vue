@@ -1,58 +1,46 @@
 <template>
     <div class="app-container">
         <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :before-open="beforeOpen" :row-class-name="tableRowClassName" :page.sync="page">
-            <template slot="bicId" slot-scope="scope">
-                <div class="row-c">
-                    <el-tooltip content="您的可用余额低于预警值，请及时充值" placement="top" v-if="scope.row.flag!=1">
-                        <svg-icon icon-class="warning" style="font-size: 25px;margin-right: 10px;" />
-                    </el-tooltip>
-                    <span>{{scope.row.bicId}}</span>
-                </div>
-            </template>
+            <div class="row-c" slot="bicId" slot-scope="scope">
+                <el-tooltip content="您的可用余额低于预警值，请及时充值" placement="top" v-if="scope.row.flag!=1">
+                    <svg-icon icon-class="warning" style="font-size: 25px;margin-right: 10px;" />
+                </el-tooltip>
+                <span>{{scope.row.bicId}}</span>
+            </div>
             <template slot-scope="scope" slot="menuBtn">
                 <el-dropdown-item v-if="hasPermission('/company/addBalance')" @click.native="$refs.crud.rowEdit({ ...scope.row, editType:'Recharge',editTitle:'充值' },scope.index)">充值</el-dropdown-item>
                 <el-dropdown-item v-if="hasPermission('/company/subBalance')" @click.native="$refs.crud.rowEdit({ ...scope.row, editType:'Reduce' ,editTitle:'调减'},scope.index)">调减</el-dropdown-item>
                 <el-dropdown-item v-if="hasPermission('/logCompany/getTopUpLog')"
-                    @click.native="rowView({ ...scope.row, formslot:'reduceBalance' ,viewTitle:`商家[${scope.row.companyName}]的充值/调减记录`},scope.index)">充值/调减记录</el-dropdown-item>
+                    @click.native="rowView({ ...scope.row, formslot:'reduceBalance' ,viewTitle:`商家[${scope.row.companyName}]的充值/调减记录`},scope.index)">
+                    充值/调减记录</el-dropdown-item>
                 <el-dropdown-item v-if="hasPermission('/logCompany/orderStatistics')"
-                    @click.native="rowView({ ...scope.row, formslot:'usageRecord' ,viewTitle:`商家[${scope.row.companyName}]的使用记录`},scope.index)">使用记录</el-dropdown-item>
+                    @click.native="rowView({ ...scope.row, formslot:'usageRecord' ,viewTitle:`商家[${scope.row.companyName}]的使用记录`},scope.index)">
+                    使用记录</el-dropdown-item>
             </template>
             <template slot="menuLeft">
                 <el-button v-if="hasPermission('/company/excelCompany')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelCompany',viewTitle:'导入商家'},0)">导入商家</el-button>
                 <el-button v-if="hasPermission('/company/deriveExcel')" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出商家'},0)">导出商家</el-button>
             </template>
-            <template slot="uploadExcelCompanyForm" slot-scope="scope" v-if="form&&form.formslot==scope.column.prop">
-                <div>
-                    <uploadExcel @closeDialog="closeDialog('excelTask3')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                    <excelTask ref="excelTask3" type="3"></excelTask>
-                </div>
-            </template>
-            <template slot="uploadExcelOrderForm" slot-scope="scope">
-                <div>
-                    <uploadExcel @closeDialog="closeDialog('excelTask2')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                    <excelTask ref="excelTask2" type="2"></excelTask>
-                </div>
-            </template>
-            <template slot="reduceBalanceForm" slot-scope="scope">
-                <div>
-                    <balanceRecord :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></balanceRecord>
-                </div>
-            </template>
-            <template slot="usageRecordForm" slot-scope="scope">
-                <div>
-                    <usageRecord :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></usageRecord>
-                </div>
-            </template>
-            <template slot="getExportTaskListForm" slot-scope="scope">
-                <div>
-                    <exportTask :row="scope.row" type="3" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
-                </div>
-            </template>
-            <template slot="exportQualityTestingForm" slot-scope="scope">
-                <div>
-                    <exportTask :row="scope.row" type="2" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
-                </div>
-            </template>
+            <div slot="uploadExcelCompanyForm" slot-scope="scope">
+                <uploadExcel @closeDialog="closeDialog('excelTask3')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
+                <excelTask ref="excelTask3" type="3"></excelTask>
+            </div>
+            <div slot="uploadExcelOrderForm" slot-scope="scope">
+                <uploadExcel @closeDialog="closeDialog('excelTask2')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
+                <excelTask ref="excelTask2" type="2"></excelTask>
+            </div>
+            <div slot="reduceBalanceForm" slot-scope="scope">
+                <balanceRecord :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></balanceRecord>
+            </div>
+            <div slot="usageRecordForm" slot-scope="scope">
+                <usageRecord :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></usageRecord>
+            </div>
+            <div slot="getExportTaskListForm" slot-scope="scope">
+                <exportTask :row="scope.row" type="3" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+            </div>
+            <div slot="exportQualityTestingForm" slot-scope="scope">
+                <exportTask :row="scope.row" type="2" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+            </div>
         </avue-crud>
     </div>
 </template>
@@ -63,9 +51,8 @@ import balanceRecord from '@/views/company/list/balanceRecord'
 import usageRecord from '@/views/company/list/usageRecord'
 import exportTask from '@/views/exportTask'
 import excelTask from '@/views/excelTask/'
-import { formatterFiltersFormatMoney } from '@/utils/filters.js'
-import { required } from '@/utils/rules.js'
 import permissionMix from "@/mixins/permissionMix";
+import { column_def, column_money, column_textarea, column_switch, group_column_formslot, group_def } from '@/utils/base-crud.js'
 /**
  * TODO:商家列表
  */
@@ -102,128 +89,48 @@ export default {
         menuWidth: 120,
         viewBtn: false,
         column: [
-          {
-            label: "商家id", prop: "bicId", search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false,
-            rules: required("商家id"),
-          },
-          {
-            label: "商家名称", prop: "companyName", search: true, searchSpan: 6, fixed: 'left', viewDisplay: false,
-            rules: required("商家名称"),
-          },
-          { label: "是否启用", prop: "startUsingStr", addDisplay: false, editDisplay: false, viewDisplay: false },
-          { label: "是否启用", prop: "startUsing", type: 'switch', hide: true, value: 2, viewDisplay: false, dicData: [{ value: 1, label: '否' }, { value: 2, label: '是' }], },
-          {
-            label: "余额", prop: "balance", type: 'number', value: 0,
-            minRows: 0,
-            precision: 2, viewDisplay: false, editDisabled: true,
-            formatter: formatterFiltersFormatMoney,
-            rules: required("余额"),
-          },
-          {
-            label: "冻结金额", prop: "freezeMoney", type: 'number', value: 0,
-            addDisplay: false,
-            viewDisplay: false,
-            editDisplay: false,
-            minRows: 0,
-            precision: 2,
-            formatter: formatterFiltersFormatMoney,
-            rules: required("冻结金额"),
-          },
-          {
-            label: "可用余额", prop: "usableBalance", type: 'number', value: 0,
-            addDisplay: false,
-            viewDisplay: false,
-            editDisplay: false,
-            minRows: 0,
-            precision: 2,
-            formatter: formatterFiltersFormatMoney,
-            rules: required("可用余额"),
-          },
-          {
-            label: "余额预警值", prop: "moneyRemind", type: 'number', value: 0,
-            viewDisplay: false,
-            editDisplay: false,
-            minRows: 0,
-            precision: 2,
-            formatter: formatterFiltersFormatMoney,
-            rules: required("余额预警值"),
-          },
-          {
-            label: "充值金额", prop: "Recharge", type: 'number', value: 0,
-            minRows: 0,
-            precision: 2,
-            addDisplay: false,
-            viewDisplay: false,
-            display: true,
-            hide: true,
-            rules: required("充值金额"),
-          },
-          {
-            label: "调减金额", prop: "Reduce", type: 'number', value: 0,
-            minRows: 0,
-            precision: 2,
-            addDisplay: false,
-            viewDisplay: false,
-            display: true,
-            hide: true,
-            rules: required("调减金额"),
-
-          },
-          { label: "备注", prop: "remark", type: "textarea", viewDisplay: false, editDisplay: true },
+          ...column_def("商家id", "bicId", true, { search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false, }),
+          ...column_def("商家名称", "companyName", true, { search: true, searchSpan: 6, fixed: 'left', viewDisplay: false, }),
+          ...column_def("是否启用", "startUsingStr", false, { addDisplay: false, editDisplay: false, viewDisplay: false }),
+          ...column_switch("是否启用", "startUsing", false, { hide: true, value: 2, viewDisplay: false, dicData: [{ value: 1, label: '否' }, { value: 2, label: '是' }], }),
+          ...column_money("余额", "balance", true, { viewDisplay: false, editDisabled: true }),
+          ...column_money("冻结金额", "freezeMoney", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
+          ...column_money("可用余额", "usableBalance", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
+          ...column_money("余额预警值", "moneyRemind", true, { viewDisplay: false, editDisabled: true }),
+          ...column_money("充值金额", "Recharge", true, { addDisplay: false, viewDisplay: false, display: true, hide: true }),
+          ...column_money("调减金额", "Reduce", true, { addDisplay: false, viewDisplay: false, display: true, hide: true }),
+          ...column_textarea("备注", "remark", false, { viewDisplay: false, editDisplay: true })
         ],
-        group: [
-          {
-            prop: 'group',
-            arrow: false,
-            addDisplay: false,
-            viewDisplay: true,
-            editDisplay: false,
-            column: [
-              {
-                prop: "uploadExcelCompany",
-                msg: "若商家在系统中已存在，余额将会以系统中余额为准，不做修改!",
-                uploadData: { title: '商家', url: 'company/excelCompany', href: './assets/uploadCompany.xlsx' },
-                hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
-              },
-              {
-                prop: "uploadExcelOrder",
-                uploadData: { title: '质检费', url: 'quelityTesting/excelOrder', href: './assets/uploadQuality.xlsx' },
-                hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
-              },
-
-              {
-                prop: "reduceBalance",
-                hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
-              },
-              {
-                prop: "usageRecord",
-                hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
-              },
-              {
-                prop: "getExportTaskList",
-                hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
-              },
-              {
-                prop: "exportQualityTesting",
-                hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
-              },
-            ]
-          },
-        ]
+        ...group_def([
+          ...group_column_formslot("uploadExcelCompany", {
+            msg: "若商家在系统中已存在，余额将会以系统中余额为准，不做修改!",
+            uploadData: { title: '商家', url: 'company/excelCompany', href: './assets/uploadCompany.xlsx' },
+          }),
+          ...group_column_formslot("uploadExcelOrder", {
+            uploadData: { title: '质检费', url: 'quelityTesting/excelOrder', href: './assets/uploadQuality.xlsx' },
+          }),
+          ...group_column_formslot("reduceBalance", {}),
+          ...group_column_formslot("usageRecord", {}),
+          ...group_column_formslot("getExportTaskList", {}),
+          ...group_column_formslot("exportQualityTesting", {}),
+        ]),
       },
     }
   },
   methods: {
+    //*100
     By100() {
       let that = this;
       that.form.balance = that.form.balance * 100;
       that.form.usableBalance = that.form.usableBalance * 100;
       that.form.moneyRemind = that.form.moneyRemind * 100;
     },
+    //添加前
     addBefore() {
       this.By100();
       return 1
     },
+    //更新前
     updateBefore() {
       let that = this;
       if (that.form.editType && (that.form.editType == 'Recharge' || that.form.editType == 'Reduce')) {
@@ -241,6 +148,7 @@ export default {
       this.By100();
       return 1
     },
+    //打开窗口前
     openBefore(type) {
       let that = this;
       if (that.form.editType && (that.form.editType == 'Recharge' || that.form.editType == 'Reduce')) {
@@ -251,6 +159,7 @@ export default {
           v.prop == 'Reduce' && that.form.editType == 'Reduce' ? v.display = true : 0;
           (v.prop == 'moneyRemind' || v.prop == 'startUsing') ? v.editDisplay = false : 0;
           v.prop == 'companyName' ? v.editDisabled = true : 0;
+            v.prop == 'balance' ? v.editDisplay = true : 0;
         })
       }
       else {
@@ -258,14 +167,16 @@ export default {
           v.prop == 'Reduce' ? v.display = false : 0;
           v.prop == 'Recharge' ? v.display = false : 0;
           v.prop == 'companyName' ? v.editDisabled = false : 0;
-          (v.prop == 'moneyRemind' || v.prop == 'startUsing') ? v.editDisplay = true : 0;
+          (v.prop == 'moneyRemind' || v.prop == 'startUsing') ? (v.editDisplay = true, v.editDisabled = false) : 0;
+          v.prop == 'balance' ? v.editDisplay = false : 0;
         })
         that.option = Object.assign(that.option, {})
       }
       this.option.editTitle = this.form.editTitle;
       this.option = Object.assign(this.option, {})
+      console.log(this.option);
     },
-  
+    //提示颜色
     tableRowClassName({ row, rowIndex }) {
       if (row.flag == 1) {
         return '';
