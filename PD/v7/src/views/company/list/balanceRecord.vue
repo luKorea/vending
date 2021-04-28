@@ -1,12 +1,11 @@
 <template>
     <div class="app-container">
-        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :before-open="beforeOpen" :page.sync="page">
+        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :page.sync="page">
         </avue-crud>
     </div>
 </template>
 <script>
 import crudMix from "@/mixins/crudMix";
-import { column_money, column_textarea } from '@/utils/base-crud.js'
 /**
  * TODO:充值/调减记录
  */
@@ -34,10 +33,10 @@ export default {
         menu: false,
         column: [
           { label: "充值/调减时间", prop: "logTime", type: "datetime", format: 'yyyy-MM-DD HH:mm', },
-          ...column_money("充值/调减前余额", "frontBalance", false, { viewDisplay: false }),
-          ...column_money("充值/调减金额", "money", false, { viewDisplay: false }),
-          ...column_money("充值/调减后余额", "laterBalance", false, { viewDisplay: false }),
-          ...column_textarea("备注", "remark", false, { viewDisplay: false }),
+          ...this.column_money("充值/调减前余额", "frontBalance", false, { viewDisplay: false }),
+          ...this.column_money("充值/调减金额", "money", false, { viewDisplay: false }),
+          ...this.column_money("充值/调减后余额", "laterBalance", false, { viewDisplay: false }),
+          ...this.column_textarea("备注", "remark", false, { viewDisplay: false }),
         ],
       },
     }

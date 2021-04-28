@@ -127,9 +127,10 @@ export default {
             that.$store.dispatch('user/getControl', {}).then(() => {
               that.$router.push({ path: '/' })
             }).catch(() => {
-               that.loading = false
+              that.loading = false
             })
-
+            //删除缓存面包屑导航
+            that.$store.dispatch('tagsView/delAllViews', null, { root: true })
             that.loading = false
           }).catch(() => {
             that.loading = false

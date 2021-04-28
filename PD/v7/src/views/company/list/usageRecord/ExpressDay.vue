@@ -1,20 +1,15 @@
 <template>
     <div class="app-container">
-        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :before-open="beforeOpen" :page.sync="page">
-
+        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :page.sync="page">
         </avue-crud>
     </div>
 </template>
 <script>
 import crudMix from "@/mixins/crudMix";
-
 /**
  * TODO:每天/每月快递详情
  */
 export default {
-  components: {
-
-  },
   mixins: [
     crudMix,
   ],
@@ -30,27 +25,17 @@ export default {
         update: '',
         list: '/logCompany/getOrderByDayAndbicId'
       },
-
-      rowKey: 'bicId',
+      rowKey: 'orderId',
       option: {
         index: true,
-        addBtn: false,
-        delBtn: false,
-        editBtn: false,
-        viewBtn: false,
         menu: false,
         column: [
-
-
           { prop: 'orderId', fixed: 'left', label: '订单编号', minWidth: 180, viewDisplay: false, },
           { prop: 'orderYard', label: '订单码', minWidth: 100, viewDisplay: false, },
           { prop: 'bicId', label: '商家ID', minWidth: 100, viewDisplay: false, },
           { prop: 'companyName', label: '商家名称', minWidth: 180, viewDisplay: false, },
-
           { prop: 'orderAppointFlag', label: '订单履约状态', minWidth: 180, overHidden: true, viewDisplay: false, },
           { prop: 'combinedBillFee', label: '合单费', minWidth: 180, overHidden: true, viewDisplay: false, },
-
-
           { prop: 'ztBasicFreight', label: '中通基本运费', minWidth: 180, overHidden: true, viewDisplay: false, },
           { prop: 'packingCharge', label: '打包费', minWidth: 180, overHidden: true, viewDisplay: false, },
           { prop: 'ztFreightReceivable', label: '中通应收运费', minWidth: 180, overHidden: true, viewDisplay: false, },
@@ -84,20 +69,13 @@ export default {
           { prop: 'inspectTime', label: '送检时间', minWidth: 180, viewDisplay: false, },
           { prop: 'accomplishTime', label: '质检完成时间', minWidth: 180, viewDisplay: false, },
           { prop: 'deliveryTime', label: '出库时间', minWidth: 180, viewDisplay: false, },
-
         ],
-
-
       },
     }
   },
-  created() {
-
-  },
   methods: {
-
+    //获取列表前
     listBefore() {
-    
       let type = '1';
       if (this.row.day) {
         type = '2';
@@ -105,7 +83,6 @@ export default {
       this.params.bicId = this.row.bicId
       this.params.orderTime = this.row.day || dayjs(this.row.statisticsTime).format('YYYY-MM') || ''
       this.params.type = type
-
     },
   }
 }

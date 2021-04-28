@@ -33,9 +33,7 @@ export default {
     msg: "",
   },
   watch: {
-    allClassList(val) {
-      this.setallClassList(val)
-    },
+
   },
   data() {
     return {

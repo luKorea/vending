@@ -7,6 +7,11 @@ export default {
         };
     },
     methods: {
+        /**
+         * 是否有权限
+         * @param {*} key 
+         * @returns 
+         */
         hasPermission(key) {
             let arr = this.$store.state.user.roles.filter((v) => { return v.url == key });
             if (arr && arr.length > 0) {
@@ -15,6 +20,9 @@ export default {
                 return 0
             }
         },
+        /**
+         * avue 按钮控制
+         */
         configPermission() {
             let falg = 0;
             if (this.config.detail) {

@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :before-open="beforeOpen" :page.sync="page">
+        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :page.sync="page">
             <template slot-scope="scope" slot="menu">
                 <el-button type="text" size="small"
                     @click="rowView({ ...scope.row, formslot:'DetailsMonth',viewTitle:`商家[${row.companyName}](${dayjs(scope.row.statisticsTime).format('YYYY-MM')})的每日详情` },scope.index)">每日详情
@@ -32,7 +32,7 @@
 </template>
 <script>
 import crudMix from "@/mixins/crudMix";
-import { column_money, group_def, group_column_formslot } from '@/utils/base-crud.js'
+
 import detailsMonth from '@/views/company/list/usageRecord/DetailsMonth'
 import qualityDay from '@/views/company/list/usageRecord/QualityDay'
 import expressDay from '@/views/company/list/usageRecord/ExpressDay'
@@ -75,13 +75,13 @@ export default {
           { label: "使用月份", prop: "statisticsTime", type: "datetime", format: 'yyyy-MM', },
           { label: "快递费用", prop: "expressFee", solt: true, },
           { label: "质检费用", prop: "qualityInspectionFee", solt: true, },
-          ...column_money("使用金额", "monthMoney", false, {}),
+          ...this.column_money("使用金额", "monthMoney", false, {}),
           { label: "更新时间", prop: "updateTime", type: "datetime", format: 'yyyy-MM-DD HH:mm', },
         ],
-        ...group_def([
-          ...group_column_formslot("DetailsMonth", {}),
-          ...group_column_formslot("qualityDay", {}),
-          ...group_column_formslot("expressDay", {}),
+        ...this.group_def([
+          ...this.group_column_formslot("DetailsMonth", {}),
+          ...this.group_column_formslot("qualityDay", {}),
+          ...this.group_column_formslot("expressDay", {}),
         ]),
       },
     }

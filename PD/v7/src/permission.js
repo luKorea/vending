@@ -14,7 +14,6 @@ router.beforeEach(async (to, from, next) => {
   document.title = getPageTitle(to.meta.title)
   async function rolesfun() {
     let roles = getroles();
-    console.log(roles);
     if (store.getters.init) {
       if (roles && roles.length > 0) {//有权限
         if (hasPermission(store.getters.roles, to.meta.roles)) {

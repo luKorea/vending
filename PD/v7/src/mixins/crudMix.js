@@ -1,8 +1,12 @@
 import { req } from '@/utils/req.js'
-import { filtersFormatMoney } from '@/utils/filters.js'
+import crudOptionMix from "@/mixins/crudOptionMix";
 export default {
-    components: {
-    },
+    mixins: [
+        /**
+         * 参数处理
+         */
+        crudOptionMix
+    ],
     data() {
         var checkfun = (rule, value, callback) => {
             callback();
@@ -28,14 +32,8 @@ export default {
                 editBtn: true,
                 viewBtn: true,
                 indexLabel: '序号',
-
-                //searchMenuPosition: 'right',
                 searchMenuSpan: 6,
-
-
-
                 menuBtnTitle: '操作',
-
                 viewTitle: '查看',
                 editTitle: '编辑',
                 column: [
@@ -62,7 +60,7 @@ export default {
                         precision: 2,//数字框输入精度（当type为number时）0.00
                         minRows: 1,//设置计数器允许的最小值
                         maxRows: 10,//设置计数器允许的最大值
-
+                        filters:true,//筛选
 
                         rules://表单规则,参考ele表单规则配置
                             [
@@ -108,15 +106,25 @@ export default {
         };
     },
     computed: {
+        /**
+         * 绑定属性 avue
+         * @returns 
+         */
         bindVal() {
             return {
                 ref: 'crud',
                 data: this.data,
                 option: this.option,
                 tableLoading: this.loading,
-                permission: this.permission
+                permission: this.permission,
+                beforeOpen: this.beforeOpen,
+                'row-class-name': this.tableRowClassName,
             }
         },
+        /**
+         * 绑定事件 avue
+         * @returns 
+         */
         onEvent() {
             return {
                 'on-load': this.getList,
@@ -129,26 +137,31 @@ export default {
                 'expand-change': this.toggleRowExpansion,
             }
         },
+        /**
+         * 列表key
+         * @returns 
+         */
         rowKey() {
             return this.config.rowKey || 'id'
         }
     },
-    filters: {
-        /**
-         * 格式化金钱
-         * @param {*} num 
-         * @returns 
-         * this.$options.filters['filtersFormatMoney']
-         */
-        filtersFormatMoney: filtersFormatMoney,
-    },
+
     methods: {
+        /**
+         * 关闭对话框
+         * @param {*} name 
+         */
         closeDialog(name) {
             if (this.$refs[name]) {
                 this.$refs[name].getList()
             }
             this.getList()
         },
+        /**
+         * 自定义查看对话框
+         * @param {*} row 
+         * @param {*} index 
+         */
         rowView(row, index) {//自定义查看
             if (this.option && this.option.group && this.option.group.length > 0) {
                 this.option.group[0].column.forEach((v) => {
@@ -159,14 +172,30 @@ export default {
             this.option = Object.assign(this.option, {})
             this.$refs.crud.rowView(row, index)
         },
-        tableRowClassName({ row, rowIndex }) {//修改行class
+        /**
+         * 返回行类名
+         * @param {*} param0 
+         * @returns 
+         */
+        tableRowClassName({ row, rowIndex }) {
             return '';
         },
+        /**
+         * 展开
+         * @param {*} row 
+         * @param {*} expanded 
+         */
         toggleRowExpansion(row, expanded) {
             console.log('toggleRowExpansion');
             console.log(row, expanded);
         },
+        /**
+         * 打开对话框
+         * @param {*} done 
+         * @param {*} type 
+         */
         async beforeOpen(done, type) {
+            console.log('beforeOpen', type);
             let that = this;
             const callback = async () => {
                 if (that.config['detail']) {
@@ -188,6 +217,9 @@ export default {
             }
             done()
         },
+        /**
+         * 获取列表
+         */
         getList() {
             let that = this;
             const callback = () => {
@@ -216,6 +248,13 @@ export default {
             }
             callback()
         },
+        /**
+         * 新增保存
+         * @param {*} row 
+         * @param {*} done 
+         * @param {*} loading 
+         * @returns 
+         */
         rowSave(row, done, loading) {
             let that = this;
             const callback = () => {
@@ -250,6 +289,14 @@ export default {
                 callback()
             }
         },
+        /**
+         * 更新保存
+         * @param {*} row 
+         * @param {*} index 
+         * @param {*} done 
+         * @param {*} loading 
+         * @returns 
+         */
         rowUpdate(row, index, done, loading) {
             let that = this;
             const callback = () => {
@@ -283,6 +330,11 @@ export default {
                 callback()
             }
         },
+        /**
+         * 删除
+         * @param {*} row 
+         * @param {*} index 
+         */
         rowDel(row, index) {
             let that = this;
             const callback = () => {
@@ -311,12 +363,20 @@ export default {
             }).catch(() => {
             });
         },
+        /**
+         * 查询
+         * @param {*} params 
+         * @param {*} done 
+         */
         searchChange(params, done) {
             if (done) done()
             this.params = params
             this.page.currentPage = 1
             this.getList()
         },
+        /**
+         * 刷新
+         */
         refreshChange() {
             this.getList()
         },
@@ -324,5 +384,6 @@ export default {
     created() {
     },
     mounted() {
+        console.log(this.$refs.crud);
     },
 }

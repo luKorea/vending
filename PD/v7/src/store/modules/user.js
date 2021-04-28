@@ -54,12 +54,6 @@ const actions = {
           JSON.stringify(data)
         );
         setToken(data.token)
-
-       try {
-        dispatch('tagsView/delAllViews', null, { root: true })
-       } catch (error) {
-         console.log(error);
-       }
         resolve()
       }).catch(function (error) {
         reject(error)

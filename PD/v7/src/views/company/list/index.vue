@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :before-open="beforeOpen" :row-class-name="tableRowClassName" :page.sync="page">
+        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :page.sync="page">
             <div class="row-c" slot="bicId" slot-scope="scope">
                 <el-tooltip content="您的可用余额低于预警值，请及时充值" placement="top" v-if="scope.row.flag!=1">
                     <svg-icon icon-class="warning" style="font-size: 25px;margin-right: 10px;" />
@@ -45,14 +45,21 @@
     </div>
 </template>
 <script>
+/**
+ * 混入
+ */
 import crudMix from "@/mixins/crudMix";
+import permissionMix from "@/mixins/permissionMix";
+
+/**
+ * 组件
+ */
 import uploadExcel from '@/views/company/list/uploadExcel'
 import balanceRecord from '@/views/company/list/balanceRecord'
 import usageRecord from '@/views/company/list/usageRecord'
 import exportTask from '@/views/exportTask'
 import excelTask from '@/views/excelTask/'
-import permissionMix from "@/mixins/permissionMix";
-import { column_def, column_money, column_textarea, column_switch, group_column_formslot, group_def } from '@/utils/base-crud.js'
+
 /**
  * TODO:商家列表
  */
@@ -82,37 +89,37 @@ export default {
       },
       rowKey: 'companyId',
       option: {
-        index: false,
+        index: true,
         addBtn: true,
         addBtnText: '新增商家',
         menuType: 'menu',
         menuWidth: 120,
         viewBtn: false,
         column: [
-          ...column_def("商家id", "bicId", true, { search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false, }),
-          ...column_def("商家名称", "companyName", true, { search: true, searchSpan: 6, fixed: 'left', viewDisplay: false, }),
-          ...column_def("是否启用", "startUsingStr", false, { addDisplay: false, editDisplay: false, viewDisplay: false }),
-          ...column_switch("是否启用", "startUsing", false, { hide: true, value: 2, viewDisplay: false, dicData: [{ value: 1, label: '否' }, { value: 2, label: '是' }], }),
-          ...column_money("余额", "balance", true, { viewDisplay: false, editDisabled: true }),
-          ...column_money("冻结金额", "freezeMoney", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
-          ...column_money("可用余额", "usableBalance", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
-          ...column_money("余额预警值", "moneyRemind", true, { viewDisplay: false, editDisabled: true }),
-          ...column_money("充值金额", "Recharge", true, { addDisplay: false, viewDisplay: false, display: true, hide: true }),
-          ...column_money("调减金额", "Reduce", true, { addDisplay: false, viewDisplay: false, display: true, hide: true }),
-          ...column_textarea("备注", "remark", false, { viewDisplay: false, editDisplay: true })
+          ...this.column_def("商家id", "bicId", true, { search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false, }),
+          ...this.column_def("商家名称", "companyName", true, { search: true, searchSpan: 6, fixed: 'left', viewDisplay: false, }),
+          ...this.column_def("是否启用", "startUsingStr", false, { addDisplay: false, editDisplay: false, viewDisplay: false }),
+          ...this.column_switch("是否启用", "startUsing", false, { hide: true, value: 2, viewDisplay: false, dicData: [{ value: 1, label: '否' }, { value: 2, label: '是' }], }),
+          ...this.column_money("余额", "balance", true, { viewDisplay: false, editDisabled: true }),
+          ...this.column_money("冻结金额", "freezeMoney", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
+          ...this.column_money("可用余额", "usableBalance", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
+          ...this.column_money("余额预警值", "moneyRemind", true, { viewDisplay: false, editDisabled: true }),
+          ...this.column_money("充值金额", "Recharge", true, { addDisplay: false, viewDisplay: false, display: true, hide: true }),
+          ...this.column_money("调减金额", "Reduce", true, { addDisplay: false, viewDisplay: false, display: true, hide: true }),
+          ...this.column_textarea("备注", "remark", false, { viewDisplay: false, editDisplay: true })
         ],
-        ...group_def([
-          ...group_column_formslot("uploadExcelCompany", {
+        ...this.group_def([
+          ...this.group_column_formslot("uploadExcelCompany", {
             msg: "若商家在系统中已存在，余额将会以系统中余额为准，不做修改!",
             uploadData: { title: '商家', url: 'company/excelCompany', href: './assets/uploadCompany.xlsx' },
           }),
-          ...group_column_formslot("uploadExcelOrder", {
+          ...this.group_column_formslot("uploadExcelOrder", {
             uploadData: { title: '质检费', url: 'quelityTesting/excelOrder', href: './assets/uploadQuality.xlsx' },
           }),
-          ...group_column_formslot("reduceBalance", {}),
-          ...group_column_formslot("usageRecord", {}),
-          ...group_column_formslot("getExportTaskList", {}),
-          ...group_column_formslot("exportQualityTesting", {}),
+          ...this.group_column_formslot("reduceBalance", {}),
+          ...this.group_column_formslot("usageRecord", {}),
+          ...this.group_column_formslot("getExportTaskList", {}),
+          ...this.group_column_formslot("exportQualityTesting", {}),
         ]),
       },
     }
@@ -160,7 +167,7 @@ export default {
           v.prop == 'Reduce' && that.form.editType == 'Reduce' ? v.display = true : 0;
           (v.prop == 'moneyRemind' || v.prop == 'startUsing') ? v.editDisplay = false : 0;
           v.prop == 'companyName' ? v.editDisabled = true : 0;
-            v.prop == 'balance' ? v.editDisplay = true : 0;
+          v.prop == 'balance' ? v.editDisplay = true : 0;
         })
       }
       else {

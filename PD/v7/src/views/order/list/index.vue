@@ -1,21 +1,17 @@
 <template>
     <div class="app-container">
-        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :before-open="beforeOpen" :page.sync="page">
+        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :page.sync="page">
             <template slot="menuLeft">
                 <el-button v-if="hasPermission('/order/excelOrder')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入订单'},0)">导入订单</el-button>
                 <el-button v-if="hasPermission('/order/exportOrder')" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出订单'},0)">导出订单</el-button>
             </template>
-            <template slot="uploadExcelOrderForm" slot-scope="scope">
-                <div>
-                    <uploadExcel @closeDialog="closeDialog('excelTask1')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                    <excelTask ref="excelTask1" type="1"></excelTask>
-                </div>
-            </template>
-            <template slot="getExportTaskListForm" slot-scope="scope">
-                <div>
-                    <exportTask :row="scope.row" :exportParams="params" type="1" v-if="form&&form.formslot==scope.column.prop"></exportTask>
-                </div>
-            </template>
+            <div slot="uploadExcelOrderForm" slot-scope="scope">
+                <uploadExcel @closeDialog="closeDialog('excelTask1')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
+                <excelTask ref="excelTask1" type="1"></excelTask>
+            </div>
+            <div slot="getExportTaskListForm" slot-scope="scope">
+                <exportTask :row="scope.row" :exportParams="params" type="1" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+            </div>
         </avue-crud>
     </div>
 </template>
@@ -24,7 +20,6 @@ import crudMix from "@/mixins/crudMix";
 import permissionMix from "@/mixins/permissionMix";
 import uploadExcel from '@/views/company/list/uploadExcel'
 import exportTask from '@/views/exportTask'
-import { xhrGet } from '@/utils/req.js'
 import excelTask from '@/views/excelTask/'
 export default {
   components: {
@@ -36,13 +31,10 @@ export default {
     crudMix,
     permissionMix,
   ],
-
   data() {
     let endTime = dayjs().format('YYYY-MM-DD')
     let startTime = dayjs().subtract(1, 'month').format('YYYY-MM-DD')
     return {
-
-      Excelloading: false,
       endTime: endTime,
       startTime: startTime,
       config: {
@@ -58,16 +50,12 @@ export default {
         columnBtn: true,
         clearExclude: ['orderTime'],
         column: [
-
           { prop: 'orderId', fixed: 'left', label: '订单编号', minWidth: 180, search: true, searchSpan: 6, viewDisplay: false, },
           { prop: 'orderYard', fixed: 'left', label: '订单码', minWidth: 100, search: true, searchSpan: 6, viewDisplay: false, },
           { prop: 'bicId', fixed: 'left', label: '商家ID', minWidth: 100, search: true, searchSpan: 6, viewDisplay: false, },
           { prop: 'companyName', fixed: 'left', label: '商家名称', minWidth: 180, search: true, searchSpan: 6, viewDisplay: false, },
-
           { prop: 'orderAppointFlag', label: '订单履约状态', minWidth: 180, overHidden: true, viewDisplay: false, },
           { prop: 'combinedBillFee', label: '合单费', minWidth: 180, overHidden: true, viewDisplay: false, },
-
-
           { prop: 'ztBasicFreight', label: '中通基本运费', minWidth: 180, overHidden: true, viewDisplay: false, },
           { prop: 'packingCharge', label: '打包费', minWidth: 180, overHidden: true, viewDisplay: false, },
           { prop: 'ztFreightReceivable', label: '中通应收运费', minWidth: 180, overHidden: true, viewDisplay: false, },
@@ -92,64 +80,37 @@ export default {
           { prop: 'expressNumber', label: '快递单号', minWidth: 180, overHidden: true, viewDisplay: false, },
           { prop: 'placeReceipt', label: '收货省份', minWidth: 180, overHidden: true, viewDisplay: false, },
           {
-            prop: 'orderTime', label: '下单时间', minWidth: 180,
+            prop: 'orderTime', label: '下单时间',
+            minWidth: 180,
             type: 'date',
             searchSpan: 6,
             searchRange: true,
             search: true,
             valueFormat: 'yyyy-MM-dd',
             format: 'yyyy-MM-dd',
-            searchValue: [startTime, endTime], viewDisplay: false,
+            searchValue: [startTime, endTime],
+            viewDisplay: false,
             searchOrder: 1,
             order: 1,
             searchClearable: false,
-            pickerOptions: {
-              onPick: ({ maxDate, minDate }) => {
-                this.selectDate = minDate.getTime();
-                if (maxDate) {
-                  this.selectDate = ''
-                }
-              }, disabledDate: (time) => {
-                if (this.selectDate !== '') {
-                  const one = 30 * 24 * 3600 * 1000 * 3;
-                  const minTime = this.selectDate - one;
-                  const maxTime = this.selectDate + one;
-                  return time.getTime() < minTime || time.getTime() > maxTime
-                }
-              }
-            }
-
+            ...this.pickerOptions,
           },
           { prop: 'storageTime', label: '入库时间', minWidth: 180, viewDisplay: false, },
           { prop: 'inspectTime', label: '送检时间', minWidth: 180, viewDisplay: false, },
           { prop: 'accomplishTime', label: '质检完成时间', minWidth: 180, viewDisplay: false, },
           { prop: 'deliveryTime', label: '出库时间', minWidth: 180, viewDisplay: false, },
         ],
-        group: [
-          {
-            prop: 'group',
-            arrow: false,
-            addDisplay: false,
-            viewDisplay: true,
-            editDisplay: false,
-            column: [
-              {
-                prop: "uploadExcelOrder",
-                uploadData: { title: '订单', url: 'order/excelOrder', href: './assets/uploadOrder.xlsx' },
-                hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
-              },
-              {
-                prop: "getExportTaskList",
-                hide: true, editDisplay: false, viewDisplay: true, addDisplay: false, formslot: true, span: 24, labelWidth: 0,
-              },
-
-            ]
-          },
-        ]
+        ...this.group_def([
+          ...this.group_column_formslot("uploadExcelOrder", {
+            uploadData: { title: '订单', url: 'order/excelOrder', href: './assets/uploadOrder.xlsx' },
+          }),
+          ...this.group_column_formslot("getExportTaskList", {}),
+        ]),
       }
     }
   },
   methods: {
+    //列表请求前
     listBefore() {
       if (this.params.orderTime && this.params.orderTime.length > 0) {
         this.params.startTime = this.params.orderTime[0];
@@ -162,8 +123,6 @@ export default {
     this.params.endTime = this.endTime;
   },
   mounted() {
-
   },
-
 }
 </script>
