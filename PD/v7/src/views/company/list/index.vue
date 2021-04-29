@@ -96,10 +96,10 @@ export default {
         menuWidth: 120,
         viewBtn: false,
         column: [
-          ...this.column_def("商家id", "bicId", true, { search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false, }),
+          ...this.column_def("商家ID", "bicId", true, { search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false, }),
           ...this.column_def("商家名称", "companyName", true, { search: true, searchSpan: 6, fixed: 'left', viewDisplay: false, }),
-          ...this.column_def("是否启用", "startUsingStr", false, { addDisplay: false, editDisplay: false, viewDisplay: false }),
-          ...this.column_switch("是否启用", "startUsing", false, { hide: true, value: 2, viewDisplay: false, dicData: [{ value: 1, label: '否' }, { value: 2, label: '是' }], }),
+          ...this.column_def("是否启用", "startUsingStr", false, {  hide: true,addDisplay: false, editDisplay: false, viewDisplay: false }),
+          ...this.column_switch("是否启用", "startUsing", false, { hide: true, value: 2, addDisplay: false,editDisplay: false,viewDisplay: false, dicData: [{ value: 1, label: '否' }, { value: 2, label: '是' }], }),
           ...this.column_money("余额", "balance", true, { viewDisplay: false, editDisabled: true }),
           ...this.column_money("冻结金额", "freezeMoney", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
           ...this.column_money("可用余额", "usableBalance", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
@@ -165,7 +165,7 @@ export default {
           v.prop == 'Recharge' && that.form.editType == 'Reduce' ? v.display = false : 0;
           v.prop == 'Recharge' && that.form.editType == 'Recharge' ? v.display = true : 0;
           v.prop == 'Reduce' && that.form.editType == 'Reduce' ? v.display = true : 0;
-          (v.prop == 'moneyRemind' || v.prop == 'startUsing') ? v.editDisplay = false : 0;
+          (v.prop == 'moneyRemind' ) ? v.editDisplay = false : 0;
           v.prop == 'companyName' ? v.editDisabled = true : 0;
           v.prop == 'balance' ? v.editDisplay = true : 0;
         })
@@ -175,7 +175,7 @@ export default {
           v.prop == 'Reduce' ? v.display = false : 0;
           v.prop == 'Recharge' ? v.display = false : 0;
           v.prop == 'companyName' ? v.editDisabled = false : 0;
-          (v.prop == 'moneyRemind' || v.prop == 'startUsing') ? (v.editDisplay = true, v.editDisabled = false) : 0;
+          (v.prop == 'moneyRemind' ) ? (v.editDisplay = true, v.editDisabled = false) : 0;
           v.prop == 'balance' ? v.editDisplay = false : 0;
         })
         that.option = Object.assign(that.option, {})

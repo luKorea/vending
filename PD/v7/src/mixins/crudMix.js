@@ -36,6 +36,8 @@ export default {
                 menuBtnTitle: '操作',
                 viewTitle: '查看',
                 editTitle: '编辑',
+                emptyBtnText: '重置',
+                dialogWidth: '60%',
                 column: [
                     {
                         label: '编号',//列名称
@@ -60,7 +62,7 @@ export default {
                         precision: 2,//数字框输入精度（当type为number时）0.00
                         minRows: 1,//设置计数器允许的最小值
                         maxRows: 10,//设置计数器允许的最大值
-                        filters:true,//筛选
+                        filters: true,//筛选
 
                         rules://表单规则,参考ele表单规则配置
                             [
@@ -132,7 +134,7 @@ export default {
                 'row-update': this.rowUpdate,
                 'row-del': this.rowDel,
                 'refresh-change': this.refreshChange,
-                'search-reset': this.searchChange,
+                'search-reset': this.searchChangeReset,
                 'search-change': this.searchChange,
                 'expand-change': this.toggleRowExpansion,
             }
@@ -362,6 +364,21 @@ export default {
                 }
             }).catch(() => {
             });
+        },
+        /**
+         * 清空|重置
+         * @param {*} params 
+         * @param {*} done 
+         */
+        searchChangeReset(params, done) {
+            if (this.resetBefore) {
+                this.resetBefore()
+            }
+            console.log(params);
+            if (done) done()
+            this.params = params
+            this.page.currentPage = 1
+            this.getList()
         },
         /**
          * 查询

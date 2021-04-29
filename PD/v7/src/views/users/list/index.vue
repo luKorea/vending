@@ -70,7 +70,7 @@ export default {
               { label: '是', value: 2 },
             ],
           },
-          { label: "状态", prop: "lockCountStr", display: false, },
+          // { label: "状态", prop: "lockCountStr", display: false, },
           {
             label: "用户角色", prop: "roleList", minWidth: 180,
             multiple: true,

@@ -117,6 +117,10 @@ export default {
         this.params.endTime = this.params.orderTime[1];
       }
     },
+    resetBefore() {
+      console.log(this.option.column.filter((v)=>{ return v.prop=='orderTime'}));
+      this.params.orderTime = [this.startTime, this.endTime]
+    },
   },
   created() {
     this.params.startTime = this.startTime;

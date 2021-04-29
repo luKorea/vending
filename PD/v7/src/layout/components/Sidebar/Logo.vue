@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       title: defaultSettings.title,
-      logo: '/favicon.ico'
+      logo: './favicon.ico'
     }
   }
 }

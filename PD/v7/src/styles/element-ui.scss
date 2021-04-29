@@ -98,6 +98,7 @@
     width: 30%;
     display: inline-block;
     text-align: left;
+
     .el-checkbox__label {
       white-space: nowrap;
       overflow: hidden;
@@ -105,8 +106,22 @@
       width: 100%;
       vertical-align: bottom
     }
+
     .el-checkbox__input {
       vertical-align: bottom;
     }
   }
+}
+
+.el-checkbox__input.is-checked+.el-checkbox__label {
+  color: #666;
+}
+
+.avue-dialog .el-dialog {
+  max-width: 768px;
+}
+
+.avue-crud__dialog .el-dialog__body {
+  padding: 20px 11px 18px 10px;
+  // padding: 15px;
 }
