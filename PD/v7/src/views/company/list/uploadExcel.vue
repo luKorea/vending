@@ -3,7 +3,6 @@
         <el-upload ref="upload" style="margin: auto;" :limit="1" accept=".xlsx, .xls" :action="uploadData.url" :disabled="isUploading" :http-request="handleFileUpload" :auto-upload="true" drag>
             <i class="el-icon-upload" />
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-
             <div slot="tip" class="el-upload__tip" style="color:#ff0000;text-align: center;">
                 <el-link :href="uploadData.href" class="dowloadX" :download="uploadData.title+'导入模板.xlsx'" type="primary" style="font-size:12px" icon="el-icon-warning-outline">
                     下载{{uploadData.title}}导入模板</el-link>
@@ -16,8 +15,10 @@
     </div>
 </template>
 <script>
-import { req,xhrGet } from '@/utils/req.js'
-
+import { req } from '@/utils/req.js'
+/**
+ * TODO:上传文件模板
+ */
 export default {
   components: {},
   props: {
@@ -32,9 +33,7 @@ export default {
     msg: "",
   },
   watch: {
-    allClassList(val) {
-      this.setallClassList(val)
-    },
+
   },
   data() {
     return {
@@ -42,10 +41,8 @@ export default {
     };
   },
   created() {
-
   },
   methods: {
-  
     // http-request(请求)
     handleFileUpload(val) {
       let that = this;

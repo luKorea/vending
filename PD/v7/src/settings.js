@@ -13,7 +13,12 @@ module.exports = {
    * @description Whether show the logo in sidebar
    */
   sidebarLogo: true,
-
+  /**
+   * @type {boolean} true | false
+   * @description Whether need tagsView
+   */
+   tagsView: true,
+   
   KEY: 'fk',
 
 }

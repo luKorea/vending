@@ -578,7 +578,8 @@ a {
 }
 
 .warning {
-  background: #f2dede !important;
+  background: #f2dede;
+  // background: #f2dede !important;
 }
 
 body .layui-table .layui-table-header{

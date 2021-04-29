@@ -1,14 +1,18 @@
 import { req } from '@/utils/req.js'
-import { filtersFormatMoney } from '@/utils/filters.js'
-
+import crudOptionMix from "@/mixins/crudOptionMix";
 export default {
-    components: {
-    },
+    mixins: [
+        /**
+         * 参数处理
+         */
+        crudOptionMix
+    ],
     data() {
         var checkfun = (rule, value, callback) => {
             callback();
         };
         return {
+            dayjs: dayjs,//声明dayjs  eg：dayjs().format('YYYY-MM-DD dddd HH:mm:ss.SSS A')
             page: {
                 pageSize: 10,
                 pagerCount: 5,
@@ -28,14 +32,14 @@ export default {
                 editBtn: true,
                 viewBtn: true,
                 indexLabel: '序号',
-
-                //searchMenuPosition: 'right',
                 searchMenuSpan: 6,
-
                 menuBtnTitle: '操作',
-
                 viewTitle: '查看',
                 editTitle: '编辑',
+                emptyBtnText: '重置',
+                dialogWidth: '60%',
+
+                searchMenuPosition:'left',
                 column: [
                     {
                         label: '编号',//列名称
@@ -60,7 +64,8 @@ export default {
                         precision: 2,//数字框输入精度（当type为number时）0.00
                         minRows: 1,//设置计数器允许的最小值
                         maxRows: 10,//设置计数器允许的最大值
-
+                        filters: true,//筛选
+                        
 
                         rules://表单规则,参考ele表单规则配置
                             [
@@ -102,17 +107,29 @@ export default {
                 list: ''
             },
             search: {},
+            permission: {},
         };
     },
     computed: {
+        /**
+         * 绑定属性 avue
+         * @returns 
+         */
         bindVal() {
             return {
                 ref: 'crud',
                 data: this.data,
                 option: this.option,
                 tableLoading: this.loading,
+                permission: this.permission,
+                beforeOpen: this.beforeOpen,
+                'row-class-name': this.tableRowClassName,
             }
         },
+        /**
+         * 绑定事件 avue
+         * @returns 
+         */
         onEvent() {
             return {
                 'on-load': this.getList,
@@ -120,28 +137,36 @@ export default {
                 'row-update': this.rowUpdate,
                 'row-del': this.rowDel,
                 'refresh-change': this.refreshChange,
-                'search-reset': this.searchReset,
+                'search-reset': this.searchChangeReset,
                 'search-change': this.searchChange,
                 'expand-change': this.toggleRowExpansion,
-
             }
         },
+        /**
+         * 列表key
+         * @returns 
+         */
         rowKey() {
             return this.config.rowKey || 'id'
         }
     },
-    filters: {
-        //dayjs().format('YYYY-MM-DD dddd HH:mm:ss.SSS A')
-        /**
-         * 格式化金钱
-         * @param {*} num 
-         * @returns 
-         * this.$options.filters['filtersFormatMoney']
-         */
-        filtersFormatMoney: filtersFormatMoney
-    },
-    methods: {
 
+    methods: {
+        /**
+         * 关闭对话框
+         * @param {*} name 
+         */
+        closeDialog(name) {
+            if (this.$refs[name]) {
+                this.$refs[name].getList()
+            }
+            this.getList()
+        },
+        /**
+         * 自定义查看对话框
+         * @param {*} row 
+         * @param {*} index 
+         */
         rowView(row, index) {//自定义查看
             if (this.option && this.option.group && this.option.group.length > 0) {
                 this.option.group[0].column.forEach((v) => {
@@ -152,37 +177,54 @@ export default {
             this.option = Object.assign(this.option, {})
             this.$refs.crud.rowView(row, index)
         },
-        tableRowClassName({ row, rowIndex }) {//修改行class
+        /**
+         * 返回行类名
+         * @param {*} param0 
+         * @returns 
+         */
+        tableRowClassName({ row, rowIndex }) {
             return '';
         },
+        /**
+         * 展开
+         * @param {*} row 
+         * @param {*} expanded 
+         */
         toggleRowExpansion(row, expanded) {
             console.log('toggleRowExpansion');
             console.log(row, expanded);
         },
-        beforeOpen(done, type) {
+        /**
+         * 打开对话框
+         * @param {*} done 
+         * @param {*} type 
+         */
+        async beforeOpen(done, type) {
+            console.log('beforeOpen', type);
             let that = this;
-            const callback = () => {
+            const callback = async () => {
                 if (that.config['detail']) {
                     let params = {}
                     params[that.rowKey] = that.form[that.rowKey];
-                    req(that.config['detail'], params, that.method['detail'] || "post")
-                        .then((res) => {
-                            if (that.openAfter) {
-                                that.openAfter(res, that.form, that.form.$index, type)
-                            } else {
-                                that.form = Object.assign(that.form, res.data)
-                            }
-                        })
+                    let res = await req(that.config['detail'], params, that.method['detail'] || "post")
+                    if (that.openAfter) {
+                        that.openAfter(res, that.form, that.form.$index, type)
+                    } else {
+                        that.form = Object.assign(that.form, res.data)
+                    }
                 }
             }
             if (that.openBefore) {
                 that.openBefore(type)
             }
             if (type == "edit" || type == "view") {
-                callback()
+                await callback()
             }
             done()
         },
+        /**
+         * 获取列表
+         */
         getList() {
             let that = this;
             const callback = () => {
@@ -191,18 +233,19 @@ export default {
                 pageParams['pageNum'] = that.page.currentPage
                 pageParams['pageSize'] = that.page.pageSize
                 const params = Object.assign(pageParams, that.params)
-                that.data = []
                 req(that.config['list'], params, that.method['list'] || "post").then(function (res) {
-                    that.loading = false
+                    setTimeout(() => {
+                        that.loading = false
+                    }, 150);
                     const data = res.data
-                    that.data = Object.assign(res.data.list || []);
+                    that.data = Object.assign(res.data.list || [], []);
                     that.page.total = res.data.total;
                     if (that.listAfter) {
                         that.listAfter(data)
                     } else {
-                        // that.$message.success('获取成功')
                     }
                 }).catch(function (error) {
+                    that.loading = false
                 });
             }
             if (that.listBefore) {
@@ -210,6 +253,13 @@ export default {
             }
             callback()
         },
+        /**
+         * 新增保存
+         * @param {*} row 
+         * @param {*} done 
+         * @param {*} loading 
+         * @returns 
+         */
         rowSave(row, done, loading) {
             let that = this;
             const callback = () => {
@@ -227,7 +277,6 @@ export default {
                         loading()
                     })
             }
-
             if (that.validateFn) {
                 if (that.validateFn('add')) {
                     loading()
@@ -245,11 +294,18 @@ export default {
                 callback()
             }
         },
+        /**
+         * 更新保存
+         * @param {*} row 
+         * @param {*} index 
+         * @param {*} done 
+         * @param {*} loading 
+         * @returns 
+         */
         rowUpdate(row, index, done, loading) {
             let that = this;
             const callback = () => {
                 delete that.form.params
-
                 req(that.config['update'], that.form, that.method['update'] || "post")
                     .then((data) => {
                         that.getList()
@@ -275,11 +331,15 @@ export default {
                 } else {
                     loading()
                 }
-
             } else {
                 callback()
             }
         },
+        /**
+         * 删除
+         * @param {*} row 
+         * @param {*} index 
+         */
         rowDel(row, index) {
             let that = this;
             const callback = () => {
@@ -293,7 +353,6 @@ export default {
                         }
                     })
             }
-
             let PageIndex = ((that.page.currentPage - 1) * that.page.pageSize) + index + 1
             that.$confirm(`此操作将永久删除序号【${PageIndex}】的数据, 是否继续?`, '提示', {
                 confirmButtonText: '确定',
@@ -308,27 +367,43 @@ export default {
                 }
             }).catch(() => {
             });
-
         },
+        /**
+         * 清空|重置
+         * @param {*} params 
+         * @param {*} done 
+         */
+        searchChangeReset(params, done) {
+            if (this.resetBefore) {
+                this.resetBefore()
+            }
+            console.log(params);
+            if (done) done()
+            this.params = params
+            this.page.currentPage = 1
+            this.getList()
+        },
+        /**
+         * 查询
+         * @param {*} params 
+         * @param {*} done 
+         */
         searchChange(params, done) {
             if (done) done()
             this.params = params
             this.page.currentPage = 1
             this.getList()
         },
-        searchReset(params, done) {
-            if (done) done()
-            this.params = {}
-            this.page.currentPage = 1
-            this.getList()
-        },
+        /**
+         * 刷新
+         */
         refreshChange() {
             this.getList()
         },
-
     },
     created() {
     },
     mounted() {
+        console.log(this.$refs.crud);
     },
 }

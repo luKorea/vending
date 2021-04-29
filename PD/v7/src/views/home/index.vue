@@ -3,10 +3,8 @@
         <div class="dashboard-text">欢迎: {{ name }}</div>
     </div>
 </template>
-
 <script>
 import { mapGetters } from 'vuex'
-import { req } from '@/utils/req.js'
 export default {
   name: 'Dashboard',
   computed: {
@@ -15,12 +13,9 @@ export default {
     ])
   },
   created() {
-
-  
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .dashboard {
   &-container {

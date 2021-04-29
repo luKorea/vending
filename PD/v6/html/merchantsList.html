@@ -378,14 +378,14 @@
 
         <!-- 质检 -->
         <div class="dayqualityRecordContent maskContnet">
-            <div class="dayqualityRecordBox margin0 maskBoxCom">
+            <div class="dayqualityRecordBox margin0 maskBoxCom" style="width: 1000px;margin: 3vh auto 0;">
                 <div class="playHeader">
                     <span>质检</span>
                     <button class="close" type="button">
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
                 </div>
-                <div class="dayqualityRecordBody">
+                <div class="dayqualityRecordBody" style="padding: 10px 0;" >
                     <div class="data-list data_list">
                         <div class="list-table">
                             <table class="layui-hide" id="dayqualityTable" lay-filter="dayqualityTable"></table>
@@ -404,7 +404,7 @@
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
                 </div>
-                <div class="dayexpressRecordBody">
+                <div class="dayexpressRecordBody" style="padding: 10px 0;">
                     <div class="data-list data_list">
                         <div class="list-table">
                             <table class="layui-hide" id="dayexpressTable" lay-filter="dayexpressTable"></table>
@@ -428,24 +428,24 @@
                     <div class="newKeyContent tip">
                         <a href="javascript:;" class="record2BtnShow" style="color: #be954a;">
                             <!-- <i class="layui-icon "> -->
-                                <svg t="1619154107385" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg" p-id="2649" width="20" height="16">
-                                    <path
-                                        d="M513 354c86.709 0 157 70.291 157 157s-70.291 157-157 157-157-70.291-157-157 70.291-157 157-157z m0.5 53C455.786 407 409 453.786 409 511.5S455.786 616 513.5 616 618 569.214 618 511.5 571.214 407 513.5 407z"
-                                        fill="#B18E5D" p-id="2650"></path>
-                                    <path
-                                        d="M512.5 171.001c236.555 0 435.347 145.297 491.887 341.996h-71.29C878.506 350.662 710.854 232.465 512.5 232.465S146.493 350.661 91.904 512.998l-71.29-0.001C77.153 316.297 275.943 171 512.5 171z"
-                                        fill="#B18E5D" p-id="2651"></path>
-                                    <path
-                                        d="M512.5 854.001c236.555 0 435.347-145.296 491.887-341.995h-71.29C878.506 674.342 710.853 792.539 512.5 792.539c-198.354 0-366.007-118.197-420.596-280.533h-71.29c56.54 196.699 255.33 341.995 491.886 341.995z"
-                                        fill="#B18E5D" p-id="2652"></path>
-                                </svg>
+                            <svg t="1619154107385" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="2649" width="20" height="16">
+                                <path
+                                    d="M513 354c86.709 0 157 70.291 157 157s-70.291 157-157 157-157-70.291-157-157 70.291-157 157-157z m0.5 53C455.786 407 409 453.786 409 511.5S455.786 616 513.5 616 618 569.214 618 511.5 571.214 407 513.5 407z"
+                                    fill="#B18E5D" p-id="2650"></path>
+                                <path
+                                    d="M512.5 171.001c236.555 0 435.347 145.297 491.887 341.996h-71.29C878.506 350.662 710.854 232.465 512.5 232.465S146.493 350.661 91.904 512.998l-71.29-0.001C77.153 316.297 275.943 171 512.5 171z"
+                                    fill="#B18E5D" p-id="2651"></path>
+                                <path
+                                    d="M512.5 854.001c236.555 0 435.347-145.296 491.887-341.995h-71.29C878.506 674.342 710.853 792.539 512.5 792.539c-198.354 0-366.007-118.197-420.596-280.533h-71.29c56.54 196.699 255.33 341.995 491.886 341.995z"
+                                    fill="#B18E5D" p-id="2652"></path>
+                            </svg>
                             <!-- </i> -->
                             <span>查看导入结果</span>
                         </a>
                     </div>
                 </div>
-                <div class="pushOrderBody"  style="">
+                <div class="pushOrderBody" style="">
                     <div class="newKeyContent">
                         <div class="pushuBtnCon">
                             <label for="pushMerchants">导入商家</label>
@@ -463,13 +463,19 @@
             </div>
         </div>
 
-         <!-- 导入订单记录 -->
-         <div class="record2OrderContent maskContnet">
+        <!-- 导入订单记录 -->
+        <div class="record2OrderContent maskContnet">
             <div class="record2OrderBox maskBoxCom margin0" style="    width: 1000px;margin: 3vh auto 0;">
                 <div class="playHeader">
                     <span>导入订单记录</span>
                     <button class="close" type="button">
                         <i class="layui-icon layui-icon-close"></i>
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary queryBtnClickrecord2Ins">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                        刷新
                     </button>
                 </div>
                 <div class="record2OrderBody" style="padding: 10px 0;">
@@ -501,7 +507,7 @@
                 </div>
             </div>
         </div>
-       
+
         <!-- 导入质检费 -->
         <div class="pushQualityContent maskContnet">
             <div class="pushQualityBox maskBoxCom margin0">
@@ -515,18 +521,18 @@
                     <div class="newKeyContent tip">
                         <a href="javascript:;" class="recordBtnShow" style="color: #be954a;">
                             <!-- <i class="layui-icon "> -->
-                                <svg t="1619154107385" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg" p-id="2649" width="20" height="16">
-                                    <path
-                                        d="M513 354c86.709 0 157 70.291 157 157s-70.291 157-157 157-157-70.291-157-157 70.291-157 157-157z m0.5 53C455.786 407 409 453.786 409 511.5S455.786 616 513.5 616 618 569.214 618 511.5 571.214 407 513.5 407z"
-                                        fill="#B18E5D" p-id="2650"></path>
-                                    <path
-                                        d="M512.5 171.001c236.555 0 435.347 145.297 491.887 341.996h-71.29C878.506 350.662 710.854 232.465 512.5 232.465S146.493 350.661 91.904 512.998l-71.29-0.001C77.153 316.297 275.943 171 512.5 171z"
-                                        fill="#B18E5D" p-id="2651"></path>
-                                    <path
-                                        d="M512.5 854.001c236.555 0 435.347-145.296 491.887-341.995h-71.29C878.506 674.342 710.853 792.539 512.5 792.539c-198.354 0-366.007-118.197-420.596-280.533h-71.29c56.54 196.699 255.33 341.995 491.886 341.995z"
-                                        fill="#B18E5D" p-id="2652"></path>
-                                </svg>
+                            <svg t="1619154107385" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="2649" width="20" height="16">
+                                <path
+                                    d="M513 354c86.709 0 157 70.291 157 157s-70.291 157-157 157-157-70.291-157-157 70.291-157 157-157z m0.5 53C455.786 407 409 453.786 409 511.5S455.786 616 513.5 616 618 569.214 618 511.5 571.214 407 513.5 407z"
+                                    fill="#B18E5D" p-id="2650"></path>
+                                <path
+                                    d="M512.5 171.001c236.555 0 435.347 145.297 491.887 341.996h-71.29C878.506 350.662 710.854 232.465 512.5 232.465S146.493 350.661 91.904 512.998l-71.29-0.001C77.153 316.297 275.943 171 512.5 171z"
+                                    fill="#B18E5D" p-id="2651"></path>
+                                <path
+                                    d="M512.5 854.001c236.555 0 435.347-145.296 491.887-341.995h-71.29C878.506 674.342 710.853 792.539 512.5 792.539c-198.354 0-366.007-118.197-420.596-280.533h-71.29c56.54 196.699 255.33 341.995 491.886 341.995z"
+                                    fill="#B18E5D" p-id="2652"></path>
+                            </svg>
                             <!-- </i> -->
                             <span>查看导入结果</span>
                         </a>
@@ -549,7 +555,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- 失败提示 -->
         <div class="catchQualityContent maskContnet">
             <div class="messageQualityBox maskBoxCom margin0">
@@ -570,8 +576,9 @@
             </div>
         </div>
 
-         <!-- 导入订单记录 -->
-         <div class="recordOrderContent maskContnet">
+        <!-- 导入订单记录 -->
+        <div class="recordOrderContent maskContnet">
+            
             <div class="recordOrderBox maskBoxCom margin0" style="    width: 1000px;margin: 3vh auto 0;">
                 <div class="playHeader">
                     <span>导入订单记录</span>
@@ -579,7 +586,15 @@
                         <i class="layui-icon layui-icon-close"></i>
                     </button>
                 </div>
+                
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary queryBtnClickrecordIns">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                        刷新
+                    </button>
+                </div>
                 <div class="recordOrderBody" style="padding: 10px 0;">
+
                     <div class="data-list data_list">
                         <div class="list-table">
                             <table class="layui-hide" id="recordTable" lay-filter="recordTable"></table>
@@ -602,8 +617,6 @@
         <!-- 每月操作部分 -->
         <ul class="ListUseOperation">
             <li class="detail ">当月详情</li>
-            <!-- <li class="quality">质检</li>
-        <li class="express">快递</li> -->
         </ul>
         <!-- 每日操作部分 -->
         <ul class="ListDateOperation">
@@ -643,8 +656,8 @@
 <script type="text/html" id="barUser">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm btn operationClass" lay-event="operation">
-            <span style="color:#fff;">操作</span>
-            <i class="layui-icon layui-icon-triangle-d"></i>
+            <span style="color:#fff;">每日详情</span>
+            <!-- <i class="layui-icon layui-icon-triangle-d"></i> -->
         </button>
     </div>
 </script>

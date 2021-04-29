@@ -19,7 +19,7 @@ export const constantRoutesStart = [
       path: 'home',
       name: '首页',
       component: () => import('@/views/home/index'),
-      meta: { title: '首页', icon: 'el-icon-s-home' }
+      meta: { title: '首页', icon: 'el-icon-s-home' , affix: true}
     }]
   },
   {
@@ -41,11 +41,12 @@ export const constantRoutes = constantRoutesStart
 
 /** 异步加载Routes 根据权限 */
 export const asyncRouterMap = [
+
   {
     path: '/company',
     component: Layout,
     redirect: '/company/list',
-    alwaysShow: true,
+    // alwaysShow: true,
     name: '商家管理',
     meta: { title: '商家管理', icon: 'el-icon-s-goods', },
     children: [
@@ -62,7 +63,7 @@ export const asyncRouterMap = [
     path: '/order',
     component: Layout,
     redirect: '/order/list',
-    alwaysShow: true,
+    // alwaysShow: true,
     name: '订单管理',
     meta: { title: '订单管理', icon: 'el-icon-s-order', },
     children: [
@@ -75,24 +76,40 @@ export const asyncRouterMap = [
     ]
   },
   {
+    path: '/quality',
+    component: Layout,
+    redirect: '/quality/list',
+    // alwaysShow: true,
+    name: '质检管理',
+    meta: { title: '质检管理', icon: 'el-icon-s-claim', },
+    children: [
+      {
+        path: 'list',
+        name: '质检列表',
+        component: () => import('@/views/quality/list'),
+        meta: { title: '质检列表', icon: 'el-icon-s-claim', }
+      },
+    ]
+  },
+  {
     path: '/user',
     component: Layout,
     redirect: '/user/list',
     alwaysShow: true,
-    name: '系统管理',
-    meta: { title: '系统管理', icon: 'el-icon-user-solid', },
+    name: '用户及角色管理',
+    meta: { title: '用户及角色管理', icon: 'el-icon-user-solid', },
     children: [
       {
         path: 'list',
         name: '用户管理',
         component: () => import('@/views/users/list'),
-        meta: { title: '用户管理', icon: 'el-icon-user-solid', }
+        meta: { title: '用户管理', icon: '', }
       },
       {
         path: 'rolelist',
         name: '角色管理',
         component: () => import('@/views/role/list'),
-        meta: { title: '角色管理', icon: 'el-icon-user-solid', }
+        meta: { title: '角色管理', icon: '', }
       },
     ]
   },

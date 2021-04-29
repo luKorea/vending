@@ -57,7 +57,7 @@ layui.use(['form', 'layer', 'carousel'], function () {
             if (logData.pass) {
                 let loginObj = JSON.stringify({
                     username: logData.account,
-                    password: passType === 1 ? accountPass.pass : hex_md5(logData.pass)
+                    password: passType === 1 ? accountPass&&accountPass.pass : hex_md5(logData.pass)
                 })
                 loadAjax('/user/login', 'post', '', loginObj, layer)
                     .then(res => {
@@ -67,7 +67,7 @@ layui.use(['form', 'layer', 'carousel'], function () {
                         if (logData.keep === 'on') {
                             sessionStorage.accountPass = JSON.stringify({
                                 account: logData.account,
-                                pass: passType === 1 ? accountPass.pass : hex_md5(logData.pass)
+                                pass: passType === 1 ? accountPass&&accountPass.pass : hex_md5(logData.pass)
                             })
                         } else {
                             sessionStorage.accountPass = ''

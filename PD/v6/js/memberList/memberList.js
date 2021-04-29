@@ -22,6 +22,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             headers: {
                 token,
             },
+            height: '600',
             align: 'center',
             cols: [[
                 { field: 'username', title: '用户名', fixed: 'left', align: 'center' },
@@ -272,6 +273,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             password: '',
             companyId: '',
         });
+        $('input[name="password"]').val('')
+        $('input[name="password2"]').val('')
         userRoles(roleList, 'checkCont');
     });
     // 编辑
@@ -288,9 +291,11 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             username: data.username,
             name: data.name,
             password: '      ',
-            companyId: data.company.companyId,
+            companyId: data.company&&data.company.companyId,
             lockCount: data.lockCount
         });
+        $('input[name="password"]').val('      ')
+        $('input[name="password2"]').val('      ')
         userRoles(roleList, 'checkCont', data.roleList)
         form.render('select');
     });
@@ -313,6 +318,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
             layer.msg('带*为必填', { icon: 7 });
             return;
         }
+
+        if (informData.password){
+            if (informData.password!=informData.password2){
+                layer.msg('两次输入的密码不同', { icon: 7 });
+                return;
+            }
+        }
+
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         let data = JSON.stringify({
@@ -356,10 +369,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                         tableIns.reload({
                             where: {}
                         });
+                      
                         form.val("information", {
                             username: '',
                             name: '',
-                            password: '',
+                            password: '      ',
+                            password2: '      ',
                             companyId: ''
                         })
                         $('.MemberOperation').fadeOut();

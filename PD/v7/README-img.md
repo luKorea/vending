@@ -2,6 +2,8 @@
 ```
 public目录下的图片资源
 background: url(/img/login/bg.png); 
+src="../../../public/img/1.jpg"
+相对于根文件目录层数+/public/+图片路径
 
 src目录下 assets图片资源 style 中引入图片
 background: url(../../assets/icon.png);

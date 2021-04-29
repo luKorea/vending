@@ -38,7 +38,7 @@ export default {
 
       form.append("file", fileObj);
       let that = this;
-      req("goods/uploadMediaImg", form, "upload").then(function (res) {
+      req("/goods/uploadMediaImg", form, "upload").then(function (res) {
 
         that.$emit('successCBK', [{ url: res.data.preFix + res.data.address }])
         // console.log(res.data.preFix + res.data.address)

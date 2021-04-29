@@ -209,7 +209,7 @@ export default {
 
       form.append("file", file);
       let vm = this;
-      req("goods/uploadMediaImg", form, "upload").then(function (res) {
+      req("/goods/uploadMediaImg", form, "upload").then(function (res) {
         vm.setfileList(res.data);
       }).catch(function (err) { });
     },
