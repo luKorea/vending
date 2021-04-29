@@ -144,3 +144,8 @@
     overflow-x: auto;
   }
 }
+@media screen and (max-width: 646px) {
+  .app-breadcrumb {
+    display: none !important;
+  }
+}
