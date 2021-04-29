@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :page.sync="page">
+        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :search.sync="search" :page.sync="page">
             <template slot="menuLeft">
                 <el-button v-if="hasPermission('/quelityTesting/excelOrder')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入质检费'},0)">导入质检费</el-button>
                 <el-button class="el-icon-download" size="small" @click="rowView({formslot:'exportQualityTesting',viewTitle:'导出质检费'},0)">
@@ -91,6 +91,10 @@ export default {
         this.params.endTime = this.params.date[1];
         delete this.params.date
       }
+    },
+    //重置条件
+    resetBefore() {
+      this.search.date = [this.startTime, this.endTime]
     },
   },
   created() {

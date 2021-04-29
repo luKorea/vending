@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :page.sync="page">
+        <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :search.sync="search" :page.sync="page">
             <template slot="menuLeft">
                 <el-button v-if="hasPermission('/order/excelOrder')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入订单'},0)">导入订单</el-button>
                 <el-button v-if="hasPermission('/order/exportOrder')" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出订单'},0)">导出订单</el-button>
@@ -47,7 +47,7 @@ export default {
       rowKey: 'orderId',
       option: {
         menu: false,
-        columnBtn: true,
+        columnBtn: false,
         clearExclude: ['orderTime'],
         column: [
           { prop: 'orderId', fixed: 'left', label: '订单编号', minWidth: 180, search: true, searchSpan: 6, viewDisplay: false, },
@@ -117,9 +117,9 @@ export default {
         this.params.endTime = this.params.orderTime[1];
       }
     },
+    //重置条件
     resetBefore() {
-      console.log(this.option.column.filter((v)=>{ return v.prop=='orderTime'}));
-      this.params.orderTime = [this.startTime, this.endTime]
+      this.search.orderTime = [this.startTime, this.endTime]
     },
   },
   created() {

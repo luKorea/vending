@@ -81,13 +81,6 @@
   }
 }
 
-// .el-dialog__body{
-//   overflow: hidden;
-//   overflow-y: auto;
-//   max-height: 600px;
-// }
-
-
 .avue-checkbox .el-checkbox-group {
   width: 100%;
   display: flex;
@@ -120,8 +113,34 @@
 .avue-dialog .el-dialog {
   max-width: 768px;
 }
-
+//弹框
 .avue-crud__dialog .el-dialog__body {
   padding: 20px 11px 18px 10px;
-  // padding: 15px;
+}
+//搜索栏 
+.avue-crud__search .avue-form__menu .el-form-item--mini.el-form-item,
+.avue-crud__search .avue-form__menu .el-form-item--small.el-form-item {
+  margin-left: 22px;
+}
+
+.avue-crud__search .avue-form__group .el-col {
+  min-width: 320px;
+  max-width: 320px;
+}
+
+.avue-crud__search .avue-form__row .el-form-item__label {
+  width: 70px !important;
+  padding-right: 5px;
+}
+.avue-crud__search .avue-form__row .el-form-item__content{
+  margin-left: 70px !important;
+}
+
+//时间选择
+@media screen and (max-width: 646px) {
+  .el-date-range-picker{
+    width: 300px;
+    overflow: hidden;
+    overflow-x: auto;
+  }
 }
