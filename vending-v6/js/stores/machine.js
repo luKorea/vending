@@ -25,6 +25,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             474: false,
             475: false,
         },
+        machineId = +sessionStorage.machineID,
         permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
 
     function permissions1() {
@@ -533,38 +534,31 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     })
     // TODO 关联分则规则
     $('.relation').click(function () {
-        console.log(machineSetData);
+        console.log(machineSetData, 'relationData');
+        $('.text').html(`${machineSetData.info} 关联分则规则`);
         if (machineSetData.payType.indexOf('4') > -1) {
             $('.relationRules').show();
-            getRulesList(sessionStorage.machineID).then(res => {
-                getRulesDetails(1)
+            getRulesList(merchantsListData.machineId).then(res => {
+                form.val('relationRules', {
+                    status: machineSetData.status,
+                    accsplitRuleNo: machineSetData.accsplitRuleNo
+                })
             })
         } else {
             layer.msg('您的支付方式不是杉德支付，不能关联分则规则', {icon: 7});
         }
     });
-
-    // 获取分账详情
-    function getRulesDetails(machineId) {
-        form.val('relationRules', {
-            'state': 0,
-            'rulesId': 210
-        });
-        form.render();// 重新渲染一下
-    }
-
     // 获取分账列表
     function getRulesList(merchantId) {
         return new Promise((resolve, reject) => {
-            loadingAjax('/classify/findAll', 'post', JSON.stringify({
+            loadingAjax('/accSplit/getAccRule', 'post', JSON.stringify({
                 pageNum: 1,
                 pageSize: 200,
                 merchantId,
             }), sessionStorage.token).then(res => {
                 var optionList = ``;
                 $.each(res.data.list, function (index, ele) {
-                    console.log(typeof ele.classifyId, ele.classifyId);
-                    optionList += `<option value="${ele.classifyId}">${ele.classifyName}</option>`
+                    optionList += `<option value="${ele.accsplitRuleNo}">${ele.accsplitRuleName}</option>`
                 });
                 $('#rules').html(optionList);
                 form.render('select');
@@ -578,8 +572,21 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 提交分账
     $('.relationBtn').click(function () {
         let data = form.val('relationRules');
-        console.log(data);
-        hideRules();
+        data['machineId'] = machineSetData.machineId;
+        data['payId'] = machineSetData.payType;
+        loadingAjax('/accSplit/associationRule', 'post', JSON.stringify(data), token).then(res => {
+            if (res.code === 200) {
+                layer.msg('关联成功', {icon: 1});
+                machineList.reload({
+                    where: {}
+                })
+                hideRules();
+            } else {
+                layer.msg('失败', {icon: 2})
+            }
+        }).catch(err => {
+            layer.msg(err, {icon: 2})
+        })
     });
 
     // 取消分账

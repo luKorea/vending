@@ -20,9 +20,38 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
         permissions();
         var table = layui.table;
         var layer = layui.layer,
-            layer = layui.layer,
-            util = layui.util,
             tree = layui.tree,
+            tableCols = [[
+                {field: 'userName', title: '用户名', align: 'center'},
+                {field: 'name', title: '姓名', align: 'center'},
+                {
+                    field: 'open', title: '状态', align: 'center', templet: function (d) {
+                        return +d.open === 0 ? '不启用' : '启用'
+                    }
+                },
+                {
+                    field: 'roleSign', align: 'center', title: '售货机管理员', templet: function (d) {
+                        return +d.roleSign === 0 ? '否' : '是'
+                    }
+                },
+                {field: 'alias', title: '用户编号', align: 'center'},
+                {field: 'phone', title: '手机号', align: 'center'},
+                {field: 'merchantName', title: '所属商户', align: 'center'},
+                {field: 'addUser', title: '创建人', align: 'center',},
+                {field: 'addTime', title: '创建时间', align: 'center'},
+                {field: 'lastUser', title: '最后修改人', align: 'center',},
+                {field: 'lastTime', title: '最后修改时间', align: 'center'},
+
+                {
+                    field: 'operation',
+                    fixed: 'right',
+                    align: 'center',
+                    right: 0,
+                    width: 150,
+                    title: '操作',
+                    toolbar: '#barDemo'
+                },
+            ]],
             transfer = layui.transfer;
         var token = sessionStorage.token,
             UserId = sessionStorage.UserId,
@@ -35,37 +64,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                     token,
                 },
                 height: 600,
-                cols: [[
-                    {field: 'userName', width: 150, title: '用户名', align: 'center'},
-                    {field: 'name', width: 120, title: '姓名', align: 'center'},
-                    {
-                        field: 'open', width: 100, title: '状态', align: 'center', templet: function (d) {
-                            return d.open == 0 ? '不启用' : '启用'
-                        }
-                    },
-                    {
-                        field: 'roleSign', width: 120, align: 'center', title: '售货机管理员', templet: function (d) {
-                            return d.roleSign == 0 ? '否' : '是'
-                        }
-                    },
-                    {field: 'alias', width: 200, title: '用户编号', align: 'center'},
-                    {field: 'phone', width: 150, title: '手机号', align: 'center'},
-                    {field: 'merchantName', width: 200, title: '所属商户', align: 'center'},
-                    {field: 'addUser', width: 150, title: '创建人', align: 'center',},
-                    {field: 'addTime', width: 180, title: '创建时间', align: 'center'},
-                    {field: 'lastUser', width: 150, title: '最后修改人', align: 'center',},
-                    {field: 'lastTime', width: 180, title: '最后修改时间', align: 'center'},
-
-                    {
-                        field: 'operation',
-                        fixed: 'right',
-                        align: 'center',
-                        right: 0,
-                        width: 150,
-                        title: '操作',
-                        toolbar: '#barDemo'
-                    },
-                ]]
+                cols: tableCols
                 , id: 'tableId'
                 , page: true
                 , loading: true,
@@ -80,19 +79,19 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
                     // console.log(res)
                     //res 即为原始返回的数据
                     fixedFun();
-                    if (res.code == 200) {
+                    if (+res.code === 200) {
                         return {
-                            "code": res.code, //解析接口状态
-                            "msg": res.message, //解析提示文本
-                            "count": res.data.total, //解析数据长度
+                            "code": res.code,//解析接口状态
+                            "msg": res.message,//解析提示文本
+                            "count": res.data.total,//解析数据长度
                             "data": res.data.list //解析数据列表
                         };
-                    } else if (res.code == 403) {
+                    } else if (+res.code === 403) {
                         window.parent.location.href = "login.html";
                     } else {
                         return {
-                            "code": res.code, //解析接口状态
-                            "msg": res.message,   //解析提示文本
+                            "code": res.code,//解析接口状态
+                            "msg": res.message, //解析提示文本
                         }
                     }
 
@@ -113,12 +112,14 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
 
         // 查询
         $('.queryBtnClick ').click(function () {
+            // saveTableWidth(tableCols);
+            // tableIns.reload({
+            //     where: {conditionTwo: $('.mian input[name="keyMerchants"]').val()},
+            //     cols: tableCols
+            // });
             tableIns.reload({
-                where: {
-                    conditionTwo: $('.mian input[name="keyMerchants"]').val(),
-                    // condition:2
-                }
-            })
+                where: {conditionTwo: $('.mian input[name="keyMerchants"]').val()}
+            });
         });
         //监听工具条
         var data = null;

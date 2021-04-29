@@ -5,6 +5,37 @@ layui.use(['table', 'form', 'layer',], function () {
         form = layui.form,
         layer = layui.layer,
         token = sessionStorage.token,
+        tableCols = [[
+            { field: 'n_number', title: '公告编号', align: 'center' },
+            { field: 'title',  title: '标题', align: 'center' },
+            {
+                field: 'isShow',  title: '是否展示', align: 'center', templet: function (d) {
+                    return d.is_show == 1 ? '是' : '否'
+                }
+            },
+            {
+                field: 'status',title: '状态', align: 'center', templet: function (d) {
+                    return d.n_status == 1 ? '已发布' : '草稿箱'
+                }
+            },
+            {
+                field: 'attach_name',  title: '附件名', align: 'center', templet: function (d) {
+                    return d.attach_name ? d.attach_name : '-'
+                }
+            },
+            {
+                field: 'attach_url',  title: '附件地址', align: 'center', templet: function (d) {
+                    return d.attach_url ? `<a href="${d.attach_url}" target="_blank" style="color: rgb(190, 149, 74)">${d.attach_url}</a>` : '-'
+                }
+            },
+            { field: 'create_user', title: '创建人', align: 'center', },
+            {
+                field: 'create_time',  title: '创建时间', align: 'center', templet: function (d) {
+                    return timeStamp(d.create_time)
+                }
+            },
+            { field: 'operation',  title: '操作', align: 'center', toolbar: '#barDemo' },
+        ]],
         noticeTableIns = table.render({
             elem: '#noticeTable',
             method: 'post',
@@ -13,37 +44,7 @@ layui.use(['table', 'form', 'layer',], function () {
             headers: {
                 token: sessionStorage.token
             },
-            cols: [[
-                { field: 'n_number', title: '公告编号', align: 'center' },
-                { field: 'title',  title: '标题', align: 'center' },
-                {
-                    field: 'isShow',  title: '是否展示', align: 'center', templet: function (d) {
-                        return d.is_show == 1 ? '是' : '否'
-                    }
-                },
-                {
-                    field: 'status',title: '状态', align: 'center', templet: function (d) {
-                        return d.n_status == 1 ? '已发布' : '草稿箱'
-                    }
-                },
-                {
-                    field: 'attach_name',  title: '附件名', align: 'center', templet: function (d) {
-                        return d.attach_name ? d.attach_name : '-'
-                    }
-                },
-                {
-                    field: 'attach_url',  title: '附件地址', align: 'center', templet: function (d) {
-                        return d.attach_url ? `<a href="${d.attach_url}" target="_blank" style="color: rgb(190, 149, 74)">${d.attach_url}</a>` : '-'
-                    }
-                },
-                { field: 'create_user', title: '创建人', align: 'center', },
-                {
-                    field: 'create_time',  title: '创建时间', align: 'center', templet: function (d) {
-                        return timeStamp(d.create_time)
-                    }
-                },
-                { field: 'operation',  title: '操作', align: 'center', toolbar: '#barDemo' },
-            ]],
+            cols: tableCols,
             id: 'noticeId',
             page: true,
             loading: true,
@@ -488,10 +489,12 @@ layui.use(['table', 'form', 'layer',], function () {
     })
     // 查询公告
     $('.queryBtn').click(function () {
+        // saveTableWidth(tableCols)
         noticeTableIns.reload({
             where: {
                 keyword: $('.key-contnet input[name="keyMerchants"]').val()
-            }
+            },
+            // cols: tableCols
         })
     })
     // $('.xlsx').change(function(e){

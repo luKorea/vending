@@ -21,6 +21,28 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     $('.refreshBtn').click(function () {
         location.reload();
     });
+    let tableCols = [[
+        { field: 'title',title: '消息标题', align: 'center' },
+        {
+            field: 'name', title: '状态', align: 'center', templet: function (d) {
+                return d.is_read == 0 ? '未读' : '已读'
+            }
+        },
+
+        { field: 'create_user', title: '创建人', align: 'center' ,templet:function(d){
+                return `<div>${d.usName}</div><div>(${d.um})</div>`
+            }},
+        {
+            field: 'create_time', title: '创建时间', align: 'center', templet: function (d) {
+                if (d.create_time) {
+                    return timeStamp(d.create_time)
+                } else {
+                    return '-'
+                }
+            }
+        },
+        // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo' },
+    ]];
     massageTableIn = table.render({
         elem: '#massageTable',
         method: 'post',
@@ -29,28 +51,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         headers: {
             token: sessionStorage.token
         },
-        cols: [[
-            { field: 'title',title: '消息标题', align: 'center' },
-            {
-                field: 'name', title: '状态', align: 'center', templet: function (d) {
-                    return d.is_read == 0 ? '未读' : '已读'
-                }
-            },
-
-            { field: 'create_user', title: '创建人', align: 'center' ,templet:function(d){
-                return `<div>${d.usName}</div><div>(${d.um})</div>`
-            }},
-            {
-                field: 'create_time', title: '创建时间', align: 'center', templet: function (d) {
-                    if (d.create_time) {
-                        return timeStamp(d.create_time)
-                    } else {
-                        return '-'
-                    }
-                }
-            },
-            // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo' },
-        ]],
+        cols: tableCols,
         id: 'messageId',
         page: true,
         loading: true,
@@ -365,10 +366,12 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     }
     // 查询消息
     $('.queryBtn').click(function () {
+        // saveTableWidth(tableCols)
         massageTableIn.reload({
             where: {
                 keyword: $('.KyeText').val()
-            }
+            },
+            // cols: tableCols
         })
     })
     // 监听点击信息

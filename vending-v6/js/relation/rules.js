@@ -1,6 +1,7 @@
 /* 规则 */
 import '../../MyCss/merchants/salesManager.scss';
 import '../../MyCss/relation/rules.scss';
+
 layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     var permissionsData0 = window.parent.permissionsData1(),
         merchantId = +sessionStorage.machineID,
@@ -47,40 +48,27 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.refreshBtn').click(function () {
         location.reload();
     });
+    let tableCols = [[
+        {field: 'accsplitRuleName', title: '规则名', align: 'center'},
+        {field: 'payee', title: '收款账户', align: 'center'},
+        {field: 'defaultRule', title: '默认规则标识', align: 'center', templet: d => +d.defaultRule === 0 ? '非默认' : '默认'},
+        {field: 'accsplitMode', title: '接收方分账模式', align: 'center', templet: d => +d.accsplitMode === 0 ? '指定金额' : '指定比例'},
+        {field: 'accsplitRule', title: '分账金额计算模式', align: 'center', templet: d => +d.accsplitRule === 0 ? '固定金额' : '按订单金额比例'},
+        {field: 'effectiveDate', title: '生效时间', align: 'center'},
+        {field: 'expiryDate', title: '失效时间', align: 'center'},
+        {field: 'status', title: '状态', align: 'center', templet: d => d.status === '1' ? '启用' : '禁用'},
+        {field: 'operation', align: 'center', title: '操作', toolbar: '#barDemo'},
+    ]]
     let salesTableIn = table.render({
         elem: '#salesTable',
         method: 'post',
-        url: `${vApi}/accSplit/getReceiverList`,
+        url: `${vApi}/accSplit/getAccRule`,
         contentType: "application/json",
         headers: {
             token: token
         },
         height: 600,
-        cols: [[
-            {field: 'accsplitMerName', title: '接收方名称', align: 'center'},
-            {field: 'accountName', title: '户名', align: 'center'},
-            {field: 'merType', title: '接收方类型', align: 'center', templet: d => d.merType === '01' ? '个人' : '企业'},
-            {field: 'account', title: '账号', align: 'center'},
-            {
-                field: 'accountNature',
-                title: '账户属性',
-                align: 'center',
-                templet: d => d.accountNature === '1' ? '对公' : '对私'
-            },
-            {field: 'accountType', title: '账户类型', align: 'center', templet: d => accountType(d.accountType)},
-            {field: 'payee', title: '收款账户', align: 'center'},
-            {field: 'effectiveDate', title: '生效时间', align: 'center'},
-            {field: 'expiryDate', title: '失效时间', align: 'center'},
-            {field: 'accountBank', title: '开户行', align: 'center'},
-            // {field: 'businessLicenseType', title: '企业证件类型', align: 'center'},
-            // {field: 'businessLicense', title: '企业证件号码', align: 'center'},
-            // {field: 'userPapersType', title: '个人证件类型', align: 'center'},
-            // {field: 'papersNo', title: '个人证件号码', align: 'center'},
-            // {field: 'clearCycle', title: '结算周期', align: 'center'},
-            // {field: 'accountBankCode', title: '开户行联行号', align: 'center'},
-            {field: 'status', title: '状态', align: 'center', templet: d => d.status === '1' ? '启用' : '禁用'},
-            {field: 'operation', align: 'center', title: '操作', toolbar: '#barDemo'},
-        ]],
+        cols: tableCols,
         id: 'salesId',
         page: true,
         loading: true,
@@ -164,10 +152,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 查询
     $('.queryBtn').click(function () {
+        // saveTableWidth(tableCols)
         salesTableIn.reload({
             where: {
                 keyword: $('.KyeText').val().trim()
-            }
+            },
+            // cols: tableCols
         })
     })
 
@@ -237,6 +227,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     //   商品列表
     var goodsTableIns = null;
+
     // 商品列表
     function goodsreload() {
         goodsTableIns = table.render({
@@ -248,10 +239,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token: token,
             },
             cols: [[
-                { type: 'checkbox' },
-                { field: `accsplitMerName`, title: '接收方名称', align: 'center' },
-                { field: 'accsplitMerNo',  title: '接收方编号', align: 'center', },
-                { field: 'expiryDate',  title: '失效日期', align: 'center', },
+                {type: 'checkbox'},
+                {field: `accsplitMerName`, title: '接收方名称', align: 'center'},
+                {field: 'accsplitMerNo', title: '接收方编号', align: 'center',},
+                {field: 'expiryDate', title: '失效日期', align: 'center',},
             ]],
             id: 'goodsID',
             page: true,
@@ -310,6 +301,24 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             }
         })
     }
+
+    form.on('radio(accsplitRule)', function ({value}) {
+        if (+value === 0) {
+            $('.money').show();
+            $('.proportion').hide();
+        } else {
+            $('.proportion').show();
+            $('.money').hide();
+        }
+    });
+
+    $('input[name="accsplitTotalRate"]').on('change', function (e) {
+        if (+e.currentTarget.value > 100) {
+            layer.msg('输入的比例不能大于100', {icon: 7});
+            $(this).val(0);
+        }
+    })
+
     var goodsList = [];
     table.on('checkbox(goodsTable)', function (obj) {
         // console.log(obj.data); //选中行的相关数据
@@ -319,6 +328,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             if (obj.checked) {
                 goodsList.push({
                     accsplitMerName: data.accsplitMerName,
+                    expiryDateMer: data.expiryDateMer,
                     accsplitMerNo: data.accsplitMerNo,
                     expiryDate: data.expiryDate,
                     fixedAmt: 0,
@@ -343,7 +353,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.goodsCont .determineBtn').click(function () {
         console.log(goodsList);
         if (goodsList.length === 0) {
-            layer.msg('请选择接收方', { icon: 7 })
+            layer.msg('请选择接收方', {icon: 7})
             return;
         }
         chooseFun(goodsList);
@@ -351,6 +361,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.chooseGoods input').prop('disabled', false)
         popupShow('chooseGoods', 'chooseGoodsBox')
     })
+
     // 渲染已选择接收方
     function chooseFun(goods) {
         var goodsStr = '';
@@ -363,16 +374,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                                 <div>${item.accsplitMerNo}</div>
                             </div>
                             <div class="SetName">
-                                <div>${item.expiryDate}</div>
+                                <div>${item.expiryDate ? item.expiryDate : item.expiryDateMer}</div>
                             </div>
                             <div class="duration">
-                                <div><input type="number" min="0" inputIndex="${index}" value="${item.fixedAmt}"></div>
+                                <div><input type="number" min="0"  name='fixedAmt' inputIndex="${index}" value="${item.fixedAmt}"></div>
                             </div>
                             <div class="duration">
-                                <div><input type="number" min="0" inputIndex="${index}" value="${item.accsplitAmt}"></div>
+                                <div><input type="number" min="0" name='accsplitAmt' inputIndex="${index}" value="${item.accsplitAmt}"></div>
                             </div>
                             <div class="duration">
-                                <div><input type="number" min="0" inputIndex="${index}" value="${item.accsplitRate}"></div>
+                                <div><input type="number" min="0" max="100" name='accsplitRate' inputIndex="${index}" value="${item.accsplitRate}"></div>
                             </div>
                         </li>`
         });
@@ -381,29 +392,45 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     var reduction = 1;
     // 设置用户配置的分账金额
-    $('.SetContList').on('change', '.setMateraialList input', function () {
+    $('.SetContList').on('change', '.setMateraialList input', function (e) {
         var num = $(this).val(),
             re = /^\d*$/;
-        console.log(num)
-        if ((!re.test(num)) || (num == 0)) {
-            layer.msg('只能输入正整数', { icon: 7 });
+        switch (e.currentTarget.name) {
+            case 'fixedAmt':
+                sessionStorage.fixedAmt = +e.currentTarget.value;
+                break;
+            case 'accsplitAmt':
+                sessionStorage.accsplitAmt = +e.currentTarget.value;
+                break;
+            case 'accsplitRate':
+                if (+e.currentTarget.value > 100) {
+                    layer.msg('输入的比例不能大于100', {icon: 7});
+                    $(this).val(0);
+                    return
+                }
+                sessionStorage.accsplitRate = +e.currentTarget.value;
+                break;
+        }
+        if ((!re.test(num))) {
+            layer.msg('只能输入正整数', {icon: 7});
             if (reduction) {
                 $(this).val(reduction);
-                goodsList[$(this).attr('inputIndex')].fixedAmt = $(this).val();
-                goodsList[$(this).attr('inputIndex')].accsplitAmt = $(this).val();
-                goodsList[$(this).attr('inputIndex')].accsplitRate = $(this).val();
+                goodsList[$(this).attr('inputIndex')].fixedAmt = sessionStorage.fixedAmt;
+                goodsList[$(this).attr('inputIndex')].accsplitAmt = sessionStorage.accsplitAmt
+                goodsList[$(this).attr('inputIndex')].accsplitRate = sessionStorage.accsplitRate
             } else {
                 $(this).val(1);
-                goodsList[$(this).attr('inputIndex')].fixedAmt = $(this).val();
-                goodsList[$(this).attr('inputIndex')].accsplitAmt = $(this).val();
-                goodsList[$(this).attr('inputIndex')].accsplitRate = $(this).val();
+                goodsList[$(this).attr('inputIndex')].fixedAmt = sessionStorage.fixedAmt;
+                goodsList[$(this).attr('inputIndex')].accsplitAmt = sessionStorage.accsplitAmt
+                goodsList[$(this).attr('inputIndex')].accsplitRate = sessionStorage.accsplitRate
             }
 
-        } else {
+        }
+        else {
             reduction = $(this).val();
-            goodsList[$(this).attr('inputIndex')].fixedAmt = $(this).val();
-            goodsList[$(this).attr('inputIndex')].accsplitAmt = $(this).val();
-            goodsList[$(this).attr('inputIndex')].accsplitRate = $(this).val();
+            goodsList[$(this).attr('inputIndex')].fixedAmt = sessionStorage.fixedAmt;
+            goodsList[$(this).attr('inputIndex')].accsplitAmt = sessionStorage.accsplitAmt
+            goodsList[$(this).attr('inputIndex')].accsplitRate = sessionStorage.accsplitRate
         }
     });
 
@@ -431,6 +458,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         popupHide('chooseGoods', 'chooseGoodsBox')
         popupShow('goodsCont', 'goodsBox');
     });
+
     // 编辑
     function disableOperation() {
         $('input[name="accsplitRuleName"]').prop('disabled', true);
@@ -440,6 +468,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('input[name="expiryDate"]').prop('disabled', true);
         $('.machineChoose').hide();
     }
+
     function enDisableOperation() {
         $('input[name="accsplitRuleName"]').prop('disabled', false);
         $('select[name="payId"]').prop('disabled', false);
@@ -454,20 +483,25 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.text').html('编辑分账规则');
         getPayAccount(merchantId).then(res => {
             disableOperation();
+            +objData.accsplitRule === 0 ? ($('.money').show(), $('.proportion').hide())
+                : ($('.money').hide(), $('.proportion').show());
             form.val('formData', {
-                accsplitRuleName: objData.accsplitMerName,
+                accsplitRuleName: objData.accsplitRuleName,
                 defaultRule: objData.defaultRule,
                 effectiveDate: objData.effectiveDate,
                 expiryDate: objData.expiryDate,
                 payId: objData.payId,
                 status: objData.status,
+                accsplitRule: objData.accsplitRule,
+                accsplitTotalAmt: objData.accsplitTotalAmt,
+                accsplitTotalRate: objData.accsplitTotalRate
             })
             popupHide('chooseGoods', 'chooseGoodsBox')
             popupShow('addSalesCont', 'addSalesBox');
         })
     })
     $('.ListOperation .receiverList').click(function () {
-        chooseFun(goodsList);
+        chooseFun(objData.accMerList);
         $('.chooseFooter').hide();
         $('.chooseGoods input').prop('disabled', true);
         popupShow('chooseGoods', 'chooseGoodsBox')
@@ -478,16 +512,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.close(index);
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon');
-            loadingAjax('/accSplit/deleteReceiver', 'post',
+            loadingAjax('/accSplit/deleteAccRule', 'post',
                 JSON.stringify({
-                    accsplitMerNo: objData.accsplitMerNo,
+                    accsplitRuleNo: objData.accsplitRuleNo,
                 }), token, 'mask', '', '', layer).then(res => {
-                layer.msg(res.message, { icon: 1 });
+                layer.msg(res.message, {icon: 1});
                 salesTableIn.reload({
                     where: {}
                 })
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 })
+                layer.msg(err.message, {icon: 2})
             })
         });
     })
@@ -501,7 +535,10 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             expiryDate: "",
             payId: "",
             status: "",
+            accsplitTotalAmt: '',
+            accsplitTotalRate: ''
         });
+        goodsList = [];
     }
 
     function addOrEditData(url, data) {
@@ -518,17 +555,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 添加编辑
     $('.addSalesCont .confirmBtn').click(function () {
         let res = form.val('formData');
-        console.log(res);
-        res['accMerList"'] = goodsList;
-        console.log(res);
-        goodsList = [];
-        // res['merchantId'] = merchantId;
-        // if (type === 1) {
-        //     addOrEditData('/accSplit/insertReceiver', JSON.stringify(res))
-        // } else {
-        //     res['accsplitMerNo'] = accsplitMerNo;
-        //     addOrEditData('/accSplit/updateReceiver', JSON.stringify(res))
-        // }
+        res['accMerList'] = goodsList;
+        res['merchantId'] = merchantId;
+        if (type === 1) {
+            addOrEditData('/accSplit/insertAccRule', JSON.stringify(res))
+        } else {
+            res['accsplitRuleNo'] = objData.accsplitRuleNo;
+            addOrEditData('/accSplit/updateAccRule', JSON.stringify(res))
+        }
     })
     // 取消添加
     $('.addSalesCont .cancelBtn').click(function () {

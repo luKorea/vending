@@ -1,4 +1,5 @@
-import { loadAjax, loadingWith, toastTitle, showPopup, closeParents, closeWindow, timeStamp, treeList, numFormat2, getKeyTime, timeFlag } from '../../../common/common';
+import { loadAjax, loadingWith, toastTitle, showPopup,
+    closeParents, closeWindow, timeStamp, treeList, numFormat2, getKeyTime, timeFlag } from '../../../common/common';
 import '../../../MyCss/mobile/order/machineOrder.scss';
 
 

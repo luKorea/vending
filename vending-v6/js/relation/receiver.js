@@ -48,6 +48,31 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     $('.refreshBtn').click(function () {
         location.reload();
     });
+    let tableCols = [[
+        {field: 'accsplitMerName', title: '接收方名称', align: 'center'},
+        {field: 'accountName', title: '户名', align: 'center'},
+        {field: 'merType', title: '接收方类型', align: 'center', templet: d => d.merType === '01' ? '个人' : '企业'},
+        {field: 'account', title: '账号', align: 'center'},
+        {
+            field: 'accountNature',
+            title: '账户属性',
+            align: 'center',
+            templet: d => d.accountNature === '1' ? '对公' : '对私'
+        },
+        {field: 'accountType', title: '账户类型', align: 'center', templet: d => accountType(d.accountType)},
+        {field: 'payee', title: '收款账户', align: 'center'},
+        {field: 'effectiveDate', title: '生效时间', align: 'center'},
+        {field: 'expiryDate', title: '失效时间', align: 'center'},
+        {field: 'accountBank', title: '开户行', align: 'center'},
+        // {field: 'businessLicenseType', title: '企业证件类型', align: 'center'},
+        // {field: 'businessLicense', title: '企业证件号码', align: 'center'},
+        // {field: 'userPapersType', title: '个人证件类型', align: 'center'},
+        // {field: 'papersNo', title: '个人证件号码', align: 'center'},
+        // {field: 'clearCycle', title: '结算周期', align: 'center'},
+        // {field: 'accountBankCode', title: '开户行联行号', align: 'center'},
+        {field: 'status', title: '状态', align: 'center', templet: d => d.status === '1' ? '启用' : '禁用'},
+        {field: 'operation', align: 'center', title: '操作', toolbar: '#barDemo'},
+    ]]
     let salesTableIn = table.render({
         elem: '#salesTable',
         method: 'post',
@@ -57,31 +82,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             token: token
         },
         height: 600,
-        cols: [[
-            {field: 'accsplitMerName', title: '接收方名称', align: 'center'},
-            {field: 'accountName', title: '户名', align: 'center'},
-            {field: 'merType', title: '接收方类型', align: 'center', templet: d => d.merType === '01' ? '个人' : '企业'},
-            {field: 'account', title: '账号', align: 'center'},
-            {
-                field: 'accountNature',
-                title: '账户属性',
-                align: 'center',
-                templet: d => d.accountNature === '1' ? '对公' : '对私'
-            },
-            {field: 'accountType', title: '账户类型', align: 'center', templet: d => accountType(d.accountType)},
-            {field: 'payee', title: '收款账户', align: 'center'},
-            {field: 'effectiveDate', title: '生效时间', align: 'center'},
-            {field: 'expiryDate', title: '失效时间', align: 'center'},
-            {field: 'accountBank', title: '开户行', align: 'center'},
-            // {field: 'businessLicenseType', title: '企业证件类型', align: 'center'},
-            // {field: 'businessLicense', title: '企业证件号码', align: 'center'},
-            // {field: 'userPapersType', title: '个人证件类型', align: 'center'},
-            // {field: 'papersNo', title: '个人证件号码', align: 'center'},
-            // {field: 'clearCycle', title: '结算周期', align: 'center'},
-            // {field: 'accountBankCode', title: '开户行联行号', align: 'center'},
-            {field: 'status', title: '状态', align: 'center', templet: d => d.status === '1' ? '启用' : '禁用'},
-            {field: 'operation', align: 'center', title: '操作', toolbar: '#barDemo'},
-        ]],
+        cols: tableCols,
         id: 'salesId',
         page: true,
         loading: true,
@@ -165,10 +166,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 查询
     $('.queryBtn').click(function () {
+        // saveTableWidth(tableCols)
         salesTableIn.reload({
             where: {
                 keyword: $('.KyeText').val().trim()
-            }
+            },
+            // cols: tableCols
         })
     })
 
@@ -250,7 +253,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             objData.merType === '01' ? ($('.personal').show(), $('.enterprise').hide())
                 : ($('.personal').hide(), $('.enterprise').show());
             objData.accountNature === '1' ?  $('.accountType').show() :  $('.accountType').hide();
-            disableOperation();
+            disableOperation(true);
             accsplitMerNo = objData.accsplitMerNo;
             form.val('formData', {
                 account: objData.account,
@@ -294,24 +297,16 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         });
     })
 
-    function disableOperation() {
-        $('input[name="merType"]').prop('disabled', true);
-        $('select[name="businessLicenseType"]').prop('disabled', true);
-        $('input[name="businessLicense"]').prop('disabled', true);
-        $('select[name="userPapersType"]').prop('disabled', true);
-        $('select[name="payId"]').prop('disabled', true);
-        $('input[name="papersNo"]').prop('disabled', true);
-    }
-    function enDisableOperation() {
-        $('input[name="merType"]').prop('disabled', false);
-        $('select[name="businessLicenseType"]').prop('disabled', false);
-        $('input[name="businessLicense"]').prop('disabled', false);
-        $('select[name="userPapersType"]').prop('disabled', false);
-        $('select[name="payId"]').prop('disabled', false);
-        $('input[name="papersNo"]').prop('disabled', false);
+    function disableOperation(flag) {
+        $('input[name="merType"]').prop('disabled', flag);
+        $('select[name="businessLicenseType"]').prop('disabled', flag);
+        $('input[name="businessLicense"]').prop('disabled', flag);
+        $('select[name="userPapersType"]').prop('disabled', flag);
+        $('select[name="payId"]').prop('disabled', flag);
+        $('input[name="papersNo"]').prop('disabled', flag);
     }
     function clearInfo() {
-        enDisableOperation();
+        disableOperation(false);
         form.val('formData', {
             account: '',
             accountBank: '',
