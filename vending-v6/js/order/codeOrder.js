@@ -32,6 +32,48 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
         form = layui.form,
         tree = layui.tree,
         merchantId = sessionStorage.machineID,
+        tableCols = [[
+            {field: 'activity_name',  title: '活动名', align: 'center', fixed: 'left'},
+            {field: 'good_code',  title: '取货码', align: 'center'},
+            {
+                field: 'machineName', title: '售货机名(编号)', align: 'center', templet: function (d) {
+                    return `<div>${d.machineName}</div>
+                    <div>(${d.machineNumber})</div>`
+                }
+            },
+            {field: 'machineAddress',  title: '售货机地址', align: 'center'},
+            {
+                field: 'ship_info',  title: '出货情况', align: 'center', templet: function (d) {
+                    if (d.ship_info.length == 0) {
+                        return '-'
+                    } else {
+                        var str = '';
+                        d.ship_info.forEach((item, index) => {
+                            str += `<span>${item.goods_Name}(${item.way} ${setOrderDetailStatus(item.ship_status)})</span>`
+                        });
+                        return str
+                    }
+                }
+            },
+            {
+                field: 'operate_time',  align: 'center', title: '取货时间', templet: function (d) {
+                    if (d.operate_time) {
+                        return timeStamp(d.operate_time)
+                    } else {
+                        return '-';
+                    }
+                }
+            },
+            {
+                field: 'operate_time',  title: '退货状态', align: 'center', templet: function (d) {
+                    return d.refund == 0 ? '未退货' : '已退货'
+                }
+            },
+            {
+                field: 'operation', title: '操作',
+                toolbar: '#refundDemo', align: 'center'
+            },
+        ]],
         orderTable = table.render({
             elem: '#moneyData',
             url: `${vApi}/order/getCodeOrder`,
@@ -40,48 +82,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             headers: {
                 token,
             },
-            cols: [[
-                {field: 'activity_name',  title: '活动名', align: 'center', fixed: 'left'},
-                {field: 'good_code',  title: '取货码', align: 'center'},
-                {
-                    field: 'machineName', title: '售货机名(编号)', align: 'center', templet: function (d) {
-                        return `<div>${d.machineName}</div>
-                    <div>(${d.machineNumber})</div>`
-                    }
-                },
-                {field: 'machineAddress',  title: '售货机地址', align: 'center'},
-                {
-                    field: 'ship_info',  title: '出货情况', align: 'center', templet: function (d) {
-                        if (d.ship_info.length == 0) {
-                            return '-'
-                        } else {
-                            var str = '';
-                            d.ship_info.forEach((item, index) => {
-                                str += `<span>${item.goods_Name}(${item.way} ${setOrderDetailStatus(item.ship_status)})</span>`
-                            });
-                            return str
-                        }
-                    }
-                },
-                {
-                    field: 'operate_time',  align: 'center', title: '取货时间', templet: function (d) {
-                        if (d.operate_time) {
-                            return timeStamp(d.operate_time)
-                        } else {
-                            return '-';
-                        }
-                    }
-                },
-                {
-                    field: 'operate_time',  title: '退货状态', align: 'center', templet: function (d) {
-                        return d.refund == 0 ? '未退货' : '已退货'
-                    }
-                },
-                {
-                    field: 'operation', title: '操作',
-                    toolbar: '#refundDemo', align: 'center'
-                },
-            ]],
+            cols: tableCols,
             page: true,
             loading: true,
             // limits: [10, 20, 50],
@@ -163,6 +164,15 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
 
     //查询
     $('.queryBtn').click(function () {
+        // saveTableWidth(tableCols);
+        // orderTable.reload({
+        //     where: {
+        //         good_code: $('.newKeyContent input[name="codeNumber"]').val(),
+        //         start_time: startTime ? startTime : null,
+        //         end_time: endTime ? endTime : null,
+        //     },
+        //     cols: tableCols
+        // })
         orderTable.reload({
             where: {
                 good_code: $('.newKeyContent input[name="codeNumber"]').val(),

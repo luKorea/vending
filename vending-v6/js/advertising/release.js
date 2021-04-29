@@ -52,12 +52,18 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             layer.msg('时间选择范围最多三个月', { icon: 7 });
             return;
         }
+        // saveTableWidth(tableCols)
+        // advertisingLis.reload({
+        //     where: {
+        //         condition: startTime,
+        //         conditionTwo: endTime,
+        //     },
+        //     cols: tableCols
+        // })
         advertisingLis.reload({
             where: {
                 condition: startTime,
                 conditionTwo: endTime,
-                // conditionThree:$('input[name="minSize"]').val(),
-                // conditionFour:$('input[name="maxSize"]').val()
             }
         })
     })
@@ -66,16 +72,8 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
     $('.an-btn').click(function () {
         $(".pack-up").slideToggle();
     });
-    var table = layui.table;
-    var advertisingLis = table.render({
-        elem: '#machineListData',
-        url: `${vApi}/publicized/selectPublicize`,
-        method: 'post',
-        contentType: "application/json",
-        headers: {
-            token,
-        },
-        cols: [[
+    var table = layui.table,
+        tableCols = [[
             { type: 'checkbox', },
             { field: 'number',  title: '发布单号', align: 'center' },
             {
@@ -107,7 +105,16 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             { field: 'addUser', title: '创建人', align: 'center', },
             { field: 'creationTime', title: '创建时间', align: 'center' },
             { field: 'operation', align: 'center',  title: '操作', toolbar: '#barDemo', },//fixed: 'right'
-        ]],
+        ]];
+    var advertisingLis = table.render({
+        elem: '#machineListData',
+        url: `${vApi}/publicized/selectPublicize`,
+        method: 'post',
+        contentType: "application/json",
+        headers: {
+            token,
+        },
+        cols: tableCols,
         page: true,
         id: 'advertisingData',
         loading: true,

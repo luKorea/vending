@@ -4,7 +4,6 @@ document.write("<script type='text/javascript' src='../assets/public/jquery.anim
 // 传id
 
 
-
 let str = '';
 const vApi = `/api`;
 var token = sessionStorage.token;
@@ -682,7 +681,6 @@ function percentileMoney(num) {
 }
 
 
-
 /**
  * @method setOrderStatus 设置订单状态
  * @param num
@@ -811,7 +809,6 @@ function setPayType(type) {
 }
 
 
-
 /**
  * @method exportExcel
  * @description 导出模版
@@ -879,4 +876,17 @@ function accountType(type) {
             break;
     }
     return str;
+}
+
+// 锁定列宽
+function saveTableWidth(cols) {
+    //把表格的宽度设置到数组里面：
+    let theTable = $(".layui-table")[0];
+    let theThs = $(theTable).find('th');
+    $.each(theThs, function (ind, e) {
+        if (ind > cols[0].length) {
+            return false;
+        }
+        cols[0][ind] ? cols[0][ind].width = $(e)[0].clientWidth : {};
+    })
 }

@@ -31,6 +31,45 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
         table = layui.table,
         transfer = layui.transfer,
         tree = layui.tree,
+        tableCols = [[
+            { field: 'activity_name',title: '活动名', event: 'pickup', align: 'center' },
+            { field: 'code_count', title: '取货码数量', event: 'pickup', align: 'center' },
+            {
+                field: 'roleSign', title: '开始时间', event: 'pickup', align: 'center', templet: function (d) {
+                    if (d.start_time) {
+                        return timeStamp(d.start_time)
+                    } else {
+                        return '-';
+                    }
+                }
+            },
+            {
+                field: 'alias', title: '结束时间', event: 'pickup', align: 'center', templet: function (d) {
+                    if (d.start_time) {
+                        return timeStamp(d.end_time)
+                    } else {
+                        return '-';
+                    }
+                }
+            },
+            {
+                field: 'phone', title: '活动状态', event: 'pickup', align: 'center', templet: function (d) {
+                    var time = new Date().getTime();
+                    return d.activity_status == 1 ? '已暂停' : d.activity_status == 2 ? '已取消' : time > d.end_time ? '已过期' : '活动正常'
+                }
+            },
+            { field: 'create_user',  title: '创建人', event: 'pickup', align: 'center' },
+            {
+                field: 'addUser', title: '创建时间', event: 'pickup', align: 'center', templet: function (d) {
+                    if (d.start_time) {
+                        return timeStamp(d.create_time)
+                    } else {
+                        return '-';
+                    }
+                }
+            },
+            { field: 'operation',  title: '操作', toolbar: '#barDemo', align: 'center' },//fixed: 'right',
+        ]],
         activityTable = table.render({
             elem: '#tableactivity',
             method: 'post',
@@ -39,47 +78,7 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
             headers: {
                 token: sessionStorage.token
             },
-            cols: [[
-                { field: 'activity_name',title: '活动名', event: 'pickup', align: 'center' },
-                { field: 'code_count', title: '取货码数量', event: 'pickup', align: 'center' },
-                {
-                    field: 'roleSign', title: '开始时间', event: 'pickup', align: 'center', templet: function (d) {
-                        if (d.start_time) {
-                            return timeStamp(d.start_time)
-                        } else {
-                            return '-';
-                        }
-                    }
-                },
-                {
-                    field: 'alias', title: '结束时间', event: 'pickup', align: 'center', templet: function (d) {
-                        if (d.start_time) {
-                            return timeStamp(d.end_time)
-                        } else {
-                            return '-';
-                        }
-                    }
-                },
-                {
-                    field: 'phone', title: '活动状态', event: 'pickup', align: 'center', templet: function (d) {
-                        var time = new Date().getTime();
-                        return d.activity_status == 1 ? '已暂停' : d.activity_status == 2 ? '已取消' : time > d.end_time ? '已过期' : '活动正常'
-                    }
-                },
-                { field: 'create_user',  title: '创建人', event: 'pickup', align: 'center' },
-                {
-                    field: 'addUser', title: '创建时间', event: 'pickup', align: 'center', templet: function (d) {
-                        if (d.start_time) {
-                            return timeStamp(d.create_time)
-                        } else {
-                            return '-';
-                        }
-                    }
-                },
-                // { field: 'operation', width: 350, title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right', right: 0, },
-                // { field: 'operation', fixed: 'right', align: 'center', right: 0, width: 350, title: '操作', toolbar: '#barDemo' },
-                { field: 'operation',  title: '操作', toolbar: '#barDemo', align: 'center' },//fixed: 'right',
-            ]],
+            cols: tableCols,
             id: 'activityId',
             page: true,
             loading: true,
@@ -868,6 +867,13 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
 
     // 活动查询
     $('.queryBtnClick').click(function () {
+        // saveTableWidth(tableCols)
+        // activityTable.reload({
+        //     where: {
+        //         condition: $('.activityListKey .KyeText').val()
+        //     },
+        //      cols: tableCols
+        // });
         activityTable.reload({
             where: {
                 condition: $('.activityListKey .KyeText').val()

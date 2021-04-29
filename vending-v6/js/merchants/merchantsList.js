@@ -7,17 +7,9 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         layer = layui.layer,
         util = layui.util,
         tree = layui.tree,
-        form = layui.form;
-    token = sessionStorage.token;
-    var tableIns = table.render({
-        elem: '#tableTest',
-        url: `${vApi}/merchant/getMerchantList`,
-        method: 'post',
-        contentType: "application/json",
-        headers: {
-            token,
-        },
-        cols: [[
+        form = layui.form,
+        token = sessionStorage.token,
+        tableCols =  [[
             {field: 'title', title: '商户名', align: 'center'},
             {
                 field: 'merchantName',  title: '上级商户', align: 'center', templet: function (d) {
@@ -48,7 +40,16 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
                 }
             },
             {field: 'operation',  title: '操作', toolbar: '#barDemo', align: 'center'},
-        ]]
+        ]];
+    var tableIns = table.render({
+        elem: '#tableTest',
+        url: `${vApi}/merchant/getMerchantList`,
+        method: 'post',
+        contentType: "application/json",
+        headers: {
+            token,
+        },
+        cols: tableCols
         , id: 'tableId'
         , page: true,
         // height: 'full-2000',
@@ -222,11 +223,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     // 查询
     $('.queryBtnClick').click(function () {
+        // saveTableWidth(tableCols);
         tableIns.reload({
             where: {
                 condition: $('.addMember input[name="keyMerchants"]').val(),
                 conditionThree: '0'
-            }
+            },
+            // cols: tableCols
         })
     })
     //点击添加成员事件

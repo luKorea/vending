@@ -7,6 +7,31 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         tree = layui.tree,
         form = layui.form,
         rank = null,
+        tableCols = [[
+            {field: '1', title: '升降序', templet: "#imgtmp", event: 'rank', align: 'center'},
+            {field: 'rank', title: '排序', align: 'center'},
+            {field: 'payName', title: '支付类型', align: 'center'},
+            {
+                field: 'appId', title: '微信公众号id/支付宝商户id/杉德商户号', align: 'center',
+                templet: function (d) {
+                    return d.app_id ? d.app_id : d.mchId
+                }
+            },
+            {field: 'merchantName', title: '所属商户', align: 'center'},
+            {field: 'payee', title: '收款方', align: 'center'},
+            {field: 'update_user', title: '最后修改人', align: 'center'},
+            {
+                field: 'update_time', title: '最后修改时间', align: 'center', templet: function (d) {
+                    if (d.update_time) {
+                        return timeStamp(d.update_time)
+                    } else {
+                        return '-';
+                    }
+                }
+            },
+            // { field: 'operation',right: 0, width: 150, title: '操作', toolbar: '#barDemo' ,fixed: 'right'},
+            {field: 'operation', align: 'center', title: '操作', toolbar: '#barDemo'},
+        ]],
         tableIns = table.render({
             elem: '#payList',
             url: `${vApi}/pay/getPayParam`,
@@ -15,31 +40,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             headers: {
                 token: sessionStorage.token,
             },
-            cols: [[
-                {field: '1', title: '升降序', templet: "#imgtmp", event: 'rank', align: 'center'},
-                {field: 'rank', title: '排序', align: 'center'},
-                {field: 'payName', title: '支付类型', align: 'center'},
-                {
-                    field: 'appId', title: '微信公众号id/支付宝商户id/杉德商户号', align: 'center',
-                    templet: function (d) {
-                        return d.app_id ? d.app_id : d.mchId
-                    }
-                },
-                {field: 'merchantName', title: '所属商户', align: 'center'},
-                {field: 'payee', title: '收款方', align: 'center'},
-                {field: 'update_user', title: '最后修改人', align: 'center'},
-                {
-                    field: 'update_time', title: '最后修改时间', align: 'center', templet: function (d) {
-                        if (d.update_time) {
-                            return timeStamp(d.update_time)
-                        } else {
-                            return '-';
-                        }
-                    }
-                },
-                // { field: 'operation',right: 0, width: 150, title: '操作', toolbar: '#barDemo' ,fixed: 'right'},
-                {field: 'operation', align: 'center', title: '操作', toolbar: '#barDemo'},
-            ]],
+            cols: tableCols,
             id: 'tablePayId',
             // page:true,
             loading: true,

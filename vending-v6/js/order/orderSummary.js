@@ -28,6 +28,84 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             endTime = timerKey[1];
         }
     });
+    let tableCols = [[
+        {
+            fixed: 'left',
+            field: 'info', width: 220, title: '售货机名(编号)', align: 'center', templet: function (d) {
+                return `<div>${d.info}</div>
+                      <div>(${d.machineNumber})</div>`
+            }
+        },
+        {field: 'number', width: 190, title: '订单编号', align: 'center',fixed: 'left'},
+        {
+            field: 'number', width: 130, title: '订单类型', align: 'center', templet: function (d) {
+                return d.mail == 0 ? '售货机订单' : '邮寄订单'
+            }
+        },
+        {
+            field: 'amount', width: 130, title: '订单金额(￥)', align: 'center',
+            templet: (e) => percentileMoney(e.amount)
+        },
+        {
+            field: 'payStatus', width: 130, align: 'center', title: '支付状态', templet: function (d) {
+                return setPayStatus(d.payStatus)
+            }
+        },
+        {
+            field: 'time', width: 180, title: '支付时间', align: 'center', templet: function (d) {
+                if (d.time) {
+                    return timeStamp(d.time)
+                } else {
+                    return '-'
+                }
+            }
+        },
+        {
+            field: 'bili', width: 130, align: 'center', title: '支付类型', templet: function (d) {
+                return setPayType(d.payType)
+            }
+        },
+        {
+            field: 'sign_name', width: 150, title: '退款状态', align: 'center', templet: function (d) {
+                return setRefundStatus(d.refund)
+            }
+        },
+        {
+            field: 'shipStatus', width: 150, title: '出货状态', align: 'center', templet: function (d) {
+                return d.mail == 0 ? setOrderStatus(d.shipStatus) : '-'
+            }
+        },
+        {
+            field: 'ship_info', width: 200, title: '出货详情', align: 'center', templet: function (d) {
+                if (d.ship_info.length == 0) {
+                    return '-'
+                } else {
+                    var str = '';
+                    d.ship_info.forEach((item, index) => {
+                        str += `<span>${item.goods_Name}(${item.way}货道 ${setOrderDetailStatus(item.ship_status)})</span>`
+                    });
+                    return str
+                }
+            }
+        },
+        {
+            field: 'ship_info', width: 230, title: '邮寄信息', align: 'center', templet: function (d) {
+                if (d.mail == 1) {
+                    return `<span> 收货人:</span><span>${d.sign_name}</span>`
+                } else {
+                    return '-'
+                }
+
+            }
+        },
+        {
+            field: 'sales_no', width: 160, title: '销售经理', align: 'center', templet: function (d) {
+                return d.sales_no ? d.sales_no : '-'
+            }
+        },
+
+        {field: 'payee', width: 160, title: '收款方', align: 'center',},
+    ]];
     var tableIns = table.render({
         elem: '#tableTest'
         , url: `${vApi}/order/getOrderMerchant`
@@ -37,84 +115,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             token,
         }
         , height: 600
-        , cols: [[
-            {
-                fixed: 'left',
-                field: 'info', width: 220, title: '售货机名(编号)', align: 'center', templet: function (d) {
-                    return `<div>${d.info}</div>
-                      <div>(${d.machineNumber})</div>`
-                }
-            },
-            {field: 'number', width: 190, title: '订单编号', align: 'center',fixed: 'left'},
-            {
-                field: 'number', width: 130, title: '订单类型', align: 'center', templet: function (d) {
-                    return d.mail == 0 ? '售货机订单' : '邮寄订单'
-                }
-            },
-            {
-                field: 'amount', width: 130, title: '订单金额(￥)', align: 'center',
-                templet: (e) => percentileMoney(e.amount)
-            },
-            {
-                field: 'payStatus', width: 130, align: 'center', title: '支付状态', templet: function (d) {
-                    return setPayStatus(d.payStatus)
-                }
-            },
-            {
-                field: 'time', width: 180, title: '支付时间', align: 'center', templet: function (d) {
-                    if (d.time) {
-                        return timeStamp(d.time)
-                    } else {
-                        return '-'
-                    }
-                }
-            },
-            {
-                field: 'bili', width: 130, align: 'center', title: '支付类型', templet: function (d) {
-                    return setPayType(d.payType)
-                }
-            },
-            {
-                field: 'sign_name', width: 150, title: '退款状态', align: 'center', templet: function (d) {
-                    return setRefundStatus(d.refund)
-                }
-            },
-            {
-                field: 'shipStatus', width: 150, title: '出货状态', align: 'center', templet: function (d) {
-                    return d.mail == 0 ? setOrderStatus(d.shipStatus) : '-'
-                }
-            },
-            {
-                field: 'ship_info', width: 200, title: '出货详情', align: 'center', templet: function (d) {
-                    if (d.ship_info.length == 0) {
-                        return '-'
-                    } else {
-                        var str = '';
-                        d.ship_info.forEach((item, index) => {
-                            str += `<span>${item.goods_Name}(${item.way}货道 ${setOrderDetailStatus(item.ship_status)})</span>`
-                        });
-                        return str
-                    }
-                }
-            },
-            {
-                field: 'ship_info', width: 230, title: '邮寄信息', align: 'center', templet: function (d) {
-                    if (d.mail == 1) {
-                        return `<span> 收货人:</span><span>${d.sign_name}</span>`
-                    } else {
-                        return '-'
-                    }
-
-                }
-            },
-            {
-                field: 'sales_no', width: 160, title: '销售经理', align: 'center', templet: function (d) {
-                    return d.sales_no ? d.sales_no : '-'
-                }
-            },
-
-            {field: 'payee', width: 160, title: '收款方', align: 'center',},
-        ]]
+        , cols: tableCols
         , id: 'tableId'
         , page: true
         , loading: true
@@ -314,6 +315,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
+        // saveTableWidth(tableCols)
         tableIns.reload({
             where: {
                 startTime,
@@ -321,8 +323,8 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
                 conditionThree: $('.key-contnet input[name="orderCode"]').val(),
                 conditionSix: $('.newKeyContent select[name="keyPayStatus"]').val(),
                 refund: $('.newKeyContent select[name="keyrefundStatus"]').val(),
-
-            }
+            },
+            // cols: tableCols
         })
     })
 })

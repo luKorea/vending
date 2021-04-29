@@ -6,6 +6,32 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         layer = layui.layer,
         tree = layui.tree,
         pushAppMerchantId = sessionStorage.machineID,
+        tableCols = [[
+            {field: 'version_code', title: '版本号', align: 'center'},
+            {field: 'version_name',  title: '版本名', align: 'center'},
+            {
+                field: 'apk_url',  title: '下载地址', align: 'center', templet: function (d) {
+                    return `<a href="${d.apk_url}" style="color: rgb(190, 149, 74)">${d.apk_url}</a>`
+                }
+            },
+            {field: 'content', title: '描述', align: 'center'},
+            {field: 'upload_user',  title: '创建人', align: 'center'},
+            {
+                field: 'upload_time', title: '创建时间', align: 'center', templet: function (d) {
+                    if (d.upload_time) {
+                        return timeStamp(d.upload_time)
+                    } else {
+                        return '-'
+                    }
+                }
+            },
+            {
+                field: 'operation',
+                title: '操作',
+                toolbar: '#barDemo',
+                align: 'center'
+            },
+        ]],
         tableIns = table.render({
             elem: '#appList',
             url: `${vApi}/app/getAppVersionList`,
@@ -15,32 +41,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 token: sessionStorage.token
             },
             height: 600,
-            cols: [[
-                {field: 'version_code', title: '版本号', align: 'center'},
-                {field: 'version_name',  title: '版本名', align: 'center'},
-                {
-                    field: 'apk_url',  title: '下载地址', align: 'center', templet: function (d) {
-                        return `<a href="${d.apk_url}" style="color: rgb(190, 149, 74)">${d.apk_url}</a>`
-                    }
-                },
-                {field: 'content', title: '描述', align: 'center'},
-                {field: 'upload_user',  title: '创建人', align: 'center'},
-                {
-                    field: 'upload_time', title: '创建时间', align: 'center', templet: function (d) {
-                        if (d.upload_time) {
-                            return timeStamp(d.upload_time)
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
-                {
-                    field: 'operation',
-                    title: '操作',
-                    toolbar: '#barDemo',
-                    align: 'center'
-                },
-            ]],
+            cols: tableCols,
             id: 'tableId',
             page: true,
             loading: true,
@@ -123,14 +124,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     loadNext();
                 } else {
                     AppMD5 = spark.end();
-                    console.log(100)
-                    console.log(currentChunk);
-                    console.log(chunks)
                     $('input[name="AppMD"]').val(AppMD5);
-                    console.log(AppMD5)
-                    // $('.mask').fadeOut();
-                    // $('.maskSpan').removeClass('maskIcon');
-                    // $(that).val('');
                     var uploadAPK = new FormData();
                     uploadAPK.append('file', ue.target.files[0]);
                     $.ajax({

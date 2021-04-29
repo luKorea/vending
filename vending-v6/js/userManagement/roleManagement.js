@@ -6,7 +6,15 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     var layer = layui.layer,
         layer = layui.layer,
         util = layui.util,
-        tree = layui.tree
+        tree = layui.tree,
+        tableCols =  [[
+            { field: 'name',  title: '角色名', align: 'center' },
+            { field: 'addUser',  title: '添加人', align: 'center' },
+            { field: 'addTime', title: '添加时间', align: 'center' },
+            { field: 'lastUser',title: '最后修改人', align: 'center', },
+            { field: 'lastTime', title: '最后修改时间', align: 'center' },
+            { field: 'operation', align: 'center', right: 0, title: '操作', toolbar: '#barDemo' },
+        ]];
     var token = sessionStorage.token;
     var tableIns = table.render({
         elem: '#tableTest',
@@ -16,14 +24,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
         headers: {
             token,
         },
-        cols: [[
-            { field: 'name',  title: '角色名', align: 'center' },
-            { field: 'addUser',  title: '添加人', align: 'center' },
-            { field: 'addTime', title: '添加时间', align: 'center' },
-            { field: 'lastUser',title: '最后修改人', align: 'center', },
-            { field: 'lastTime', title: '最后修改时间', align: 'center' },
-            { field: 'operation', align: 'center', right: 0, title: '操作', toolbar: '#barDemo' },
-        ]]
+        cols: tableCols
         , id: 'tableId'
         , page: true
         , loading: true

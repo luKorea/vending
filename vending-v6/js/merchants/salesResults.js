@@ -39,6 +39,25 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         $('.left-mian').show();
         $('.on-left').hide()
     });
+    let tableCols = [[
+        // { checkbox: true },
+        { field: 'sm_no',  title: '销售经理编号', align: 'center' },
+        { field: 'sm_name', title: '销售经理姓名', align: 'center' },
+        { field: 'sm_phone', title: '销售经理电话', align: 'center' },
+        { field: 'sm_classify',  title: '销售经理类别', align: 'center' },
+        {
+            field: 'create_name', title: '总单数', align: 'center', templet: function (d) {
+                if (d.achievement.length == 0) {
+                    return '-'
+                } else {
+                    return d.order_total
+                }
+            }
+        },
+        {
+            field: 'create_name', title: '总金额(￥)', align: 'center', templet: d => percentileMoney(d.achievement)
+        },
+    ]];
     var salesTableIn = table.render({
         elem: '#salesTable',
         method: 'post',
@@ -47,25 +66,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         headers: {
             token: sessionStorage.token
         },
-        cols: [[
-            // { checkbox: true },
-            { field: 'sm_no',  title: '销售经理编号', align: 'center' },
-            { field: 'sm_name', title: '销售经理姓名', align: 'center' },
-            { field: 'sm_phone', title: '销售经理电话', align: 'center' },
-            { field: 'sm_classify',  title: '销售经理类别', align: 'center' },
-            {
-                field: 'create_name', title: '总单数', align: 'center', templet: function (d) {
-                    if (d.achievement.length == 0) {
-                        return '-'
-                    } else {
-                        return d.order_total
-                    }
-                }
-            },
-            {
-                field: 'create_name', title: '总金额(￥)', align: 'center', templet: d => percentileMoney(d.achievement)
-            },
-        ]],
+        cols: tableCols,
         id: 'salesId',
         page: true,
         loading: true,
@@ -120,12 +121,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('时间选择范围最多三个月', { icon: 7 });
             return;
         }
+        // saveTableWidth(tableCols)
         salesTableIn.reload({
             where: {
                 start_time: startTime,
                 end_time: endTime,
                 refund: $('.newKeyItem input[name="open"]').prop('checked') ? 0 : 1,
-            }
+            },
+            // cols: tableCols
         })
     });
     // 刷新页面

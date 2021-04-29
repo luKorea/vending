@@ -23,33 +23,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         form = layui.form,
         // 日期选择
         laydate = layui.laydate,
-        tree = layui.tree;
-    //开始时间
-    var startTime = getKeyTime().startTime,
-        //结束时间
-        endTime = getKeyTime().endTime;
-    laydate.render({
-        elem: '#test6',
-        range: true,
-        value: getKeyTime().keyTimeData,
-        done: function (value, date, endDate) {
-            console.log(value); //得到日期生成的值，如：2017-08-18
-            var timerKey = value.split(' - ');
-            console.log(timerKey);
-            startTime = timerKey[0];
-            endTime = timerKey[1];
-        }
-    });
-    var table = layui.table;
-    var tableIns = table.render({
-        elem: '#moneyData',
-        url: `${vApi}/advertising/selectAdvertising`,
-        method: 'post',
-        contentType: "application/json",
-        headers: {
-            token,
-        },
-        cols: [[
+        tableCols = [[
             { type: 'checkbox', },
             { field: 'img', title: '微缩图', templet: "#imgtmp", align: 'center' },
             { field: 'name', title: '素材名', align: 'center', },
@@ -82,10 +56,36 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo',fixed: 'right',right: 0 },
             { field: 'operation', title: '操作', toolbar: '#barDemo', align: 'center'},
         ]],
+        tree = layui.tree;
+    //开始时间
+    var startTime = getKeyTime().startTime,
+        //结束时间
+        endTime = getKeyTime().endTime;
+    laydate.render({
+        elem: '#test6',
+        range: true,
+        value: getKeyTime().keyTimeData,
+        done: function (value, date, endDate) {
+            console.log(value); //得到日期生成的值，如：2017-08-18
+            var timerKey = value.split(' - ');
+            console.log(timerKey);
+            startTime = timerKey[0];
+            endTime = timerKey[1];
+        }
+    });
+    var table = layui.table;
+    var tableIns = table.render({
+        elem: '#moneyData',
+        url: `${vApi}/advertising/selectAdvertising`,
+        method: 'post',
+        contentType: "application/json",
+        headers: {
+            token,
+        },
+        cols: tableCols,
         page: true,
         id: 'tableId',
         loading: true,
-        height: 'full-200',
         request: {
             'pageName': 'pageNum',
             'limitName': 'pageSize'
@@ -133,7 +133,21 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             return;
         }
         var KeyValData = form.val("KeyValData");
-        console.log(KeyValData);
+        // saveTableWidth(tableCols)
+        // advertisingLis.reload({
+        // where: {
+        //     keyWord: KeyValData.name,//关键字
+        //         attribute: KeyValData.attribute,//素材属性
+        //         type: KeyValData.type,//素材类别
+        //         checkStatus: KeyValData.checkStatus,//审核状态
+        //         minSize: KeyValData.minSize,//最小mb
+        //         maxSize: KeyValData.maxSize,//最大mb
+        //         status: KeyValData.advertisingStatus,//素材状态
+        //         startTime: startTime,//开始时间
+        //         endTime: endTime//结束时间
+        // }
+        //     cols: tableCols
+        // })
         tableIns.reload({
             where: {
                 keyWord: KeyValData.name,//关键字

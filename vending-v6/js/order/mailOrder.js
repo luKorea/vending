@@ -9,6 +9,84 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
         startTime = getKeyTime().startTime,
         //结束时间
         endTime = getKeyTime().endTime,
+        tableCols = [[
+            {
+                field: 'info',
+                width: 210,
+                title: '售货机名(编号)',
+                align: 'center',
+                fixed: 'left',
+                templet: function (d) {
+                    return `<span>${d.info}</span><span>(${d.machineNumber})</span>`
+                }
+            },
+            {field: 'number', width: 210, title: '订单编号', align: 'center', fixed: 'left'},
+            {
+                field: 'notes', width: 210, title: '下单时间', align: 'center', templet: function (d) {
+                    return timeStamp(d.time)
+                }
+            },
+            {field: 'sign_name', width: 180, title: '收货人', align: 'center'},
+            {field: 'sign_phone', width: 180, title: '收货人电话', align: 'center'},
+            {field: 'sign_address', width: 300, title: '收货地址', align: 'center'},
+            {
+                field: 'notes', width: 230, title: '备注', align: 'center', templet: function (d) {
+                    return d.notes ? d.notes : '-'
+                }
+            },
+            {
+                field: 'payType', width: 150, title: '付款类型', align: 'center', templet: function (d) {
+                    return setPayType(d.payType)
+                }
+            },
+            {field: 'payee', width: 210, title: '收款账号', align: 'center'},
+            {
+                field: 'amount',
+                width: 150,
+                title: '订单金额',
+                align: 'center',
+                templet: (e) => percentileMoney(e.amount)
+            },
+            {
+                field: 'sign_name', width: 180, title: '退款状态', align: 'center', templet: function (d) {
+                    return setRefundStatus(d.refund)
+                }
+            },
+            {
+                field: 'sales_no', width: 210, title: '销售经理', align: 'center', templet: function (d) {
+                    return d.sales_no ? d.sales_no : '-'
+                }
+            },
+            {
+                field: 'dispatch_status', width: 210, title: '快递/物流状态', align: 'center', templet: function (d) {
+                    return d.dispatch_status == 0 ? '未发货' : d.dispatch_status == 1 ? '已发货' : '已收货'
+                }
+            },
+            {
+                field: 'express_type', width: 190, title: '快递/物流公司', align: 'center', templet: function (d) {
+                    return d.express_type ? d.express_type : '-'
+                }
+            },
+            {
+                field: 'express_number', width: 210, title: '快递/物流单号', align: 'center', templet: function (d) {
+                    return d.express_number ? d.express_number : '-'
+                }
+            },
+            {
+                field: 'express_number', width: 210, title: '发货时间', align: 'center', templet: function (d) {
+                    return d.express_time ? timeStamp(d.express_time) : '-'
+                }
+            },
+            {
+                field: 'operation',
+                width: 150,
+                title: '操作 ',
+                fixed: 'right',
+                right: 0,
+                toolbar: '#barDemo',
+                align: 'center'
+            },
+        ]],
         mailTable = table.render({
             elem: '#mailTableOn',
             url: `${vApi}/order/getOrderList`,
@@ -17,84 +95,7 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
             headers: {
                 token,
             },
-            cols: [[
-                {
-                    field: 'info',
-                    width: 210,
-                    title: '售货机名(编号)',
-                    align: 'center',
-                    fixed: 'left',
-                    templet: function (d) {
-                        return `<span>${d.info}</span><span>(${d.machineNumber})</span>`
-                    }
-                },
-                {field: 'number', width: 210, title: '订单编号', align: 'center', fixed: 'left'},
-                {
-                    field: 'notes', width: 210, title: '下单时间', align: 'center', templet: function (d) {
-                        return timeStamp(d.time)
-                    }
-                },
-                {field: 'sign_name', width: 180, title: '收货人', align: 'center'},
-                {field: 'sign_phone', width: 180, title: '收货人电话', align: 'center'},
-                {field: 'sign_address', width: 300, title: '收货地址', align: 'center'},
-                {
-                    field: 'notes', width: 230, title: '备注', align: 'center', templet: function (d) {
-                        return d.notes ? d.notes : '-'
-                    }
-                },
-                {
-                    field: 'payType', width: 150, title: '付款类型', align: 'center', templet: function (d) {
-                        return setPayType(d.payType)
-                    }
-                },
-                {field: 'payee', width: 210, title: '收款账号', align: 'center'},
-                {
-                    field: 'amount',
-                    width: 150,
-                    title: '订单金额',
-                    align: 'center',
-                    templet: (e) => percentileMoney(e.amount)
-                },
-                {
-                    field: 'sign_name', width: 180, title: '退款状态', align: 'center', templet: function (d) {
-                        return setRefundStatus(d.refund)
-                    }
-                },
-                {
-                    field: 'sales_no', width: 210, title: '销售经理', align: 'center', templet: function (d) {
-                        return d.sales_no ? d.sales_no : '-'
-                    }
-                },
-                {
-                    field: 'dispatch_status', width: 210, title: '快递/物流状态', align: 'center', templet: function (d) {
-                        return d.dispatch_status == 0 ? '未发货' : d.dispatch_status == 1 ? '已发货' : '已收货'
-                    }
-                },
-                {
-                    field: 'express_type', width: 190, title: '快递/物流公司', align: 'center', templet: function (d) {
-                        return d.express_type ? d.express_type : '-'
-                    }
-                },
-                {
-                    field: 'express_number', width: 210, title: '快递/物流单号', align: 'center', templet: function (d) {
-                        return d.express_number ? d.express_number : '-'
-                    }
-                },
-                {
-                    field: 'express_number', width: 210, title: '发货时间', align: 'center', templet: function (d) {
-                        return d.express_time ? timeStamp(d.express_time) : '-'
-                    }
-                },
-                {
-                    field: 'operation',
-                    width: 150,
-                    title: '操作 ',
-                    fixed: 'right',
-                    right: 0,
-                    toolbar: '#barDemo',
-                    align: 'center'
-                },
-            ]],
+            cols: tableCols,
             page: true,
             loading: true,
             request: {
@@ -302,6 +303,19 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
+        // saveTableWidth(tableCols);
+        // mailTable.reload({
+        //     where: {
+        //         condition: startTime,
+        //         conditionTwo: endTime,
+        //         conditionThree: $('.key-contnet input[name="orderCode"]').val(),
+        //         dispatch_status: $('.newKeyContent select[name="takeStatus"]').val(),
+        //         sign_name: $('.newKeyContent input[name="takeName"]').val(),
+        //         sign_phone: $('.newKeyContent input[name="takePhone"]').val(),
+        //         refund: $('.newKeyContent select[name="keyrefundStatus"]').val(),
+        //     },
+        //     cols: tableCols
+        // })
         mailTable.reload({
             where: {
                 condition: startTime,

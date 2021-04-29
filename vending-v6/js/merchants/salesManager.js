@@ -58,6 +58,23 @@ layui.use(['table', 'form', 'layer', 'laydate','tree'], function () {
     $('.refreshBtn').click(function () {
         location.reload();
     });
+    let tableCols = [[
+        { checkbox: true },
+        { field: 'sm_no',  title: '编号', align: 'center' },
+        { field: 'sm_name', title: '姓名', align: 'center' },
+        { field: 'sm_phone',  title: '电话号', align: 'center' },
+        { field: 'sm_classify', title: '类别', align: 'center' },
+        { field: 'create_name',  title: '创建人', align: 'center' },
+        {
+            field: 'create_time', align: 'center', title: '创建时间', templet: function (d) {
+                if (d.create_time) {
+                    return timeStamp(d.create_time)
+                } else {
+                    return '-'
+                }
+            }
+        }
+    ]]
     var salesTableIn = table.render({
         elem: '#salesTable',
         method: 'post',
@@ -66,24 +83,7 @@ layui.use(['table', 'form', 'layer', 'laydate','tree'], function () {
         headers: {
             token: sessionStorage.token
         },
-        cols: [[
-            { checkbox: true },
-            { field: 'sm_no',  title: '编号', align: 'center' },
-            { field: 'sm_name', title: '姓名', align: 'center' },
-            { field: 'sm_phone',  title: '电话号', align: 'center' },
-            { field: 'sm_classify', title: '类别', align: 'center' },
-            { field: 'create_name',  title: '创建人', align: 'center' },
-            {
-                field: 'create_time', align: 'center', title: '创建时间', templet: function (d) {
-                    if (d.create_time) {
-                        return timeStamp(d.create_time)
-                    } else {
-                        return '-'
-                    }
-                }
-            },
-            // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo' },
-        ]],
+        cols: tableCols,
         id: 'salesId',
         page: true,
         loading: true,
@@ -135,6 +135,7 @@ layui.use(['table', 'form', 'layer', 'laydate','tree'], function () {
             layer.msg('时间选择范围最多三个月', { icon: 7 });
             return;
         }
+        // saveTableWidth(tableCols)
         if (startTime) {
             salesTableIn.reload({
                 where: {
@@ -142,14 +143,16 @@ layui.use(['table', 'form', 'layer', 'laydate','tree'], function () {
                     sm_no: $('.keyNumder').val(),
                     start_time: startTime,
                     end_time: endTime
-                }
+                },
+                // cols: tableCols
             })
         } else {
             salesTableIn.reload({
                 where: {
                     keyword: $('.KyeText').val(),
                     sm_no: $('.keyNumder').val(),
-                }
+                },
+                // cols: tableCols
             })
         }
 
