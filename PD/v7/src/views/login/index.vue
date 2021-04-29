@@ -3,12 +3,12 @@
     <div class="login-container">
         <div class="bg">
             <div class="swiper-container">
-                <div class="swiper-wrapper ">
-                    <img src="/img/1.jpg" alt="" class="swiper-slide ">
-                    <img src="/img/2.jpg" alt="" class="swiper-slide ">
-                    <img src="/img/3.jpg" alt="" class="swiper-slide ">
-                    <img src="/img/4.jpg" alt="" class="swiper-slide ">
-                    <img src="/img/5.jpg" alt="" class="swiper-slide ">
+                <div class="swiper-wrapper " >
+                    <img src="../../../public/img/1.jpg" alt="" class="swiper-slide ">
+                    <img src="../../../public/img/2.jpg" alt="" class="swiper-slide ">
+                    <img src="../../../public/img/3.jpg" alt="" class="swiper-slide ">
+                    <img src="../../../public/img/4.jpg" alt="" class="swiper-slide ">
+                    <img src="../../../public/img/5.jpg" alt="" class="swiper-slide ">
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -21,15 +21,15 @@
             <div class="login-container">
                 <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="layui-form" style="width: 100%;" auto-complete="on" label-position="left">
                     <div class="wrap-left">
-                        <img src="/img/icon.png" alt="" style="border-radius: 50%;">
+                        <img src="../../../public/img/icon.png" alt="" style="border-radius: 50%;">
                         <div style="font-size: 26px;">物流-质检费控系统</div>
                     </div>
                     <div class="login-inp list">
-                        <img src="/img/account.png" alt="">
+                        <img src="../../../public/img/account.png" alt="">
                         <el-input ref="username" v-model="loginForm.username" placeholder="请输入账号" name="username" type="text" tabindex="1" auto-complete="on" />
                     </div>
                     <div class="login-inp list">
-                        <img src="/img/flag1.png" alt="">
+                        <img src="../../../public/img/flag1.png" alt="">
                         <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="请输入您的密码" name="password" tabindex="2" auto-complete="new-password"
                             @keyup.enter.native="handleLogin" />
                         <span class="show-pwd" @click="showPwd">
@@ -241,20 +241,6 @@ $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
-// .login-container {
-//   display: -webkit-box;
-//   display: -ms-flexbox;
-//   display: flex;
-//   -webkit-box-align: center;
-//   -ms-flex-align: center;
-//   align-items: center;
-//   position: relative;
-//   width: 100%;
-//   height: 100%;
-//   margin: 0 auto;
-//   background: url(https://ftp.bmp.ovh/imgs/2020/09/d2f78dd8c1b7f794.png) 0
-//     bottom repeat-x #049ec4;
-// }
 
 .login-container {
   min-height: 100%;
@@ -281,7 +267,7 @@ $light_gray: #eee;
     width: 480px;
     height: 460px;
     position: fixed;
-    background: #fff url(/img/loginBG.png) no-repeat;
+    background: #fff url(../../../public/img/loginBG.png) no-repeat;
     z-index: 10;
     overflow: hidden;
     border-radius: 10px;
@@ -339,7 +325,7 @@ $light_gray: #eee;
   width: 480px;
   height: 460px;
   position: fixed;
-  background: #fff url(/img/loginBG.png) no-repeat;
+  background: #fff url(../../../public/img/loginBG.png) no-repeat;
   z-index: 10;
   overflow: hidden;
   border-radius: 10px;
