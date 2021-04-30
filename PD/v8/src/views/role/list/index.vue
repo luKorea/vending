@@ -58,7 +58,7 @@ export default {
           ...this.column_def("角色名", "roleName", true, { search: true, searchSpan: 6, fixed: 'left', minWidth: 180, }),
           ...this.column_textarea("备注", "remark", false, { minWidth: 180, }),
           {
-            label: "用户角色", prop: "controlList", minWidth: 180,
+            label: "用户权限", prop: "controlList", minWidth: 180,
             span: 24,
             hide: true,
             formslot: true,
