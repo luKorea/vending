@@ -14,6 +14,7 @@ router.beforeEach(async (to, from, next) => {
   document.title = getPageTitle(to.meta.title)
   async function rolesfun() {
     let roles = getroles();
+    console.log('store.getters.init',store.getters.init);
     if (store.getters.init) {
       if (roles && roles.length > 0) {//有权限
         if (hasPermission(store.getters.roles, to.meta.roles)) {
@@ -27,6 +28,7 @@ router.beforeEach(async (to, from, next) => {
       }
     } else {
       store.dispatch('GenerateRoutes', { roles }).then(async () => { // 根据roles权限生成可访问的路由表
+        console.log('store.getters.addRouters',store.getters.addRouters);
         router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
         store.dispatch('user/setInit').then(() => {
           next({ ...to, replace: true })// hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record

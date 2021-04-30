@@ -1,6 +1,9 @@
 <template>
     <div class="app-container">
         <avue-crud v-bind="bindVal" v-on="onEvent" :search.sync="search" v-model="form" :page.sync="page">
+            <template slot-scope="scope" slot="controlListForm">
+                <controlTree :key="scope" @checked="checked" :defaultExpandedKeys="form.controlList" :data="controlList"></controlTree>
+            </template>
         </avue-crud>
     </div>
 </template>
@@ -9,7 +12,11 @@ import crudMix from "@/mixins/crudMix";
 import { mapGetters } from 'vuex'
 import { req } from '@/utils/req.js'
 import permissionMix from "@/mixins/permissionMix";
+import controlTree from "@/views/role/list/controlTree";
 export default {
+  components: {
+    controlTree
+  },
   computed: {
     ...mapGetters([
       'name'
@@ -21,6 +28,13 @@ export default {
   ],
   data() {
     return {
+      controlList: [],
+      controlListChecked: [],
+      isIndeterminate: false,
+      defaultProps: {
+        children: 'controlList',
+        label: 'controlName'
+      },
       search: {
         conditionTwo: '',
       },
@@ -45,12 +59,9 @@ export default {
           ...this.column_textarea("备注", "remark", false, { minWidth: 180, }),
           {
             label: "用户角色", prop: "controlList", minWidth: 180,
-            type: 'checkbox',
-            all: true,
-            multiple: true,
             span: 24,
             hide: true,
-            dicData: [],
+            formslot: true,
           },
           {
             label: "创建人", prop: "addUser", display: false,
@@ -71,6 +82,18 @@ export default {
     }
   },
   methods: {
+    updateBefore() {
+      this.form.controlList = this.controlListChecked
+      return 1;
+    },
+    addBefore() {
+      this.form.controlList = this.controlListChecked
+      return 1;
+    },
+    //选择
+    checked(val) {
+      this.controlListChecked = val;
+    },
     //删除前
     delBefore(row) {
       let rowtemp = row
@@ -91,6 +114,25 @@ export default {
       form.controlList = res.data.map((item) => {
         return item.controlId
       })
+      //form.controlList//去除有上级节点的选中//上级选中下级就会全选
+      let obj = {};
+      var recursiveFunction = function () {
+        const getStr = function (list) {
+          list.forEach(function (row) {
+            if (row.controlList && row.controlList.length > 0) {
+              row.controlList = getStr(row.controlList || [])
+            } else {
+              obj[row.controlId] = true;
+            }
+          })
+          return list
+        }
+        getStr(that.controlList)
+      }
+      recursiveFunction()
+      form.controlList = form.controlList.filter((v) => {
+        return obj[v]
+      })
       that.form = Object.assign(form, {})
     },
     //获取列表后
@@ -103,21 +145,7 @@ export default {
     findControl() {
       let that = this;
       req('/role/findControl', {}, "GET").then(function (res) {
-        let obj = {};
-        res.data.forEach((v) => {
-          obj[v.controlId] = v;
-        })
-        let arr = [];
-        for (let k in obj) {
-          arr.push(obj[k])
-        }
-        that.option.column.forEach((v) => {
-          if (v.prop == 'controlList') {
-            v.dicData = arr.map((item) => {
-              return { label: item.controlName, value: item.controlId }
-            })
-          }
-        })
+        that.controlList = res.data
       }).catch(function (error) {
         console.log(error);
       });

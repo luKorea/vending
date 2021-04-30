@@ -404,6 +404,6 @@ export default {
     created() {
     },
     mounted() {
-        console.log(this.$refs.crud);
+        //console.log(this.$refs.crud);
     },
 }

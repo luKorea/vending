@@ -2,10 +2,7 @@
     <div class="app-container">
         <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :page.sync="page">
             <template slot="menuLeft">
-                <el-button v-if="type==2" type="primary" class="el-icon-download" size="small" :loading="deriveExcelloading" @click.native="exportURL('/quelityTesting/exportQualityTesting')">导出质检费
-                </el-button>
-                <el-button v-if="type==3" type="primary" class="el-icon-download" size="small" :loading="deriveExcelloading" @click.native="exportURL('/company/deriveExcel')">导出商家</el-button>
-                <el-button v-if="type==1" type="primary" class="el-icon-download" size="small" :loading="deriveExcelloading" @click.native="exportURL('/order/exportOrder')">导出订单</el-button>
+                <el-button type="primary" class="el-icon-download" size="small" :loading="deriveExcelloading" @click.native="exportURL(config.exportExcel)">{{title}}</el-button>
             </template>
             <template slot="filePath" slot-scope="scope">
                 <el-link v-if="scope.row.filePath&&scope.row.status==1" :href="scope.row.filePath" class="dowloadX" :download="scope.row.fileName+'.xlsx'" type="primary" style="font-size:12px"
@@ -30,6 +27,8 @@ export default {
   props: {
     type: {},
     exportParams: {},
+    Pconfig: {},
+    title: {}
   },
   data() {
     return {
@@ -39,7 +38,8 @@ export default {
         save: '',
         delete: '',
         update: '',
-        list: '/exportTask/getExportTaskList'
+        list: '/exportTask/getExportTaskList',
+        exportExcel: '',
       },
       method: {//修改请求method post GET
         list: 'GET',
@@ -70,6 +70,14 @@ export default {
           { label: "文件下载", prop: "filePath", solt: true },
         ],
       },
+    }
+  },
+  created() {
+    if (this.Pconfig && this.Pconfig.exportTask) {
+      this.config.list = this.Pconfig.exportTask;
+    }
+    if (this.Pconfig && this.Pconfig.exportExcel) {
+      this.config.exportExcel = this.Pconfig.exportExcel;
     }
   },
   methods: {

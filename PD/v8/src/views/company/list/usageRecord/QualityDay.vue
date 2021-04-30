@@ -15,6 +15,7 @@ export default {
   ],
   props: {
     row: {},
+     Pconfig: {},
   },
   data() {
     return {
@@ -45,6 +46,11 @@ export default {
           { label: "所属机构", prop: "affiliatedInstitutions" },
         ],
       },
+    }
+  },
+   created() {
+     if (this.Pconfig && this.Pconfig.getQualityTestingByDayAndbicName) {
+      this.config.list = this.Pconfig.getQualityTestingByDayAndbicName;
     }
   },
   methods: {

@@ -2,15 +2,15 @@
     <div class="app-container">
         <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :search.sync="search" :page.sync="page">
             <template slot="menuLeft">
-                <el-button v-if="hasPermission('/order/excelOrder')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入订单'},0)">导入订单</el-button>
-                <el-button v-if="hasPermission('/order/exportOrder')" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出订单'},0)">导出订单</el-button>
+                <el-button v-if="hasPermission(config.excelTask)" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入订单'},0)">导入订单</el-button>
+                <el-button v-if="hasPermission(config.exportExcel)" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出订单'},0)">导出订单</el-button>
             </template>
             <div slot="uploadExcelOrderForm" slot-scope="scope">
                 <uploadExcel @closeDialog="closeDialog('excelTask1')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                <excelTask ref="excelTask1" type="1"></excelTask>
+                <excelTask listurl="/excelTask/getOrderExcelTaskList" ref="excelTask1" type="1"></excelTask>
             </div>
             <div slot="getExportTaskListForm" slot-scope="scope">
-                <exportTask :row="scope.row" :exportParams="params" type="1" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                <exportTask title="导出订单" :Pconfig="config" :row="scope.row" :exportParams="params" type="1" v-if="form&&form.formslot==scope.column.prop"></exportTask>
             </div>
         </avue-crud>
     </div>
@@ -42,7 +42,10 @@ export default {
         save: '',
         delete: '',
         update: '',
-        list: '/order/getOrder'
+        list: '/order/getOrder',
+        exportExcel: '/order/exportOrder',
+        exportTask: '/exportTask/getOrderExportTaskList',
+        excelTask: '/order/excelOrder'
       },
       rowKey: 'orderId',
       option: {

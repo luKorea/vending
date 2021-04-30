@@ -17,6 +17,7 @@ export default {
   ],
   props: {
     type: {},
+    listurl: {},
   },
   data() {
     return {
@@ -62,6 +63,12 @@ export default {
           },
         ],
       },
+    }
+  },
+  created() {
+    console.log(this.listurl);
+    if (this.listurl) {
+      this.config.list = this.listurl;
     }
   },
   methods: {

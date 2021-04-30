@@ -13,10 +13,10 @@
                 <span v-else>--</span>
             </template>
             <div slot="qualityDayForm" slot-scope="scope">
-                <qualityDay :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></qualityDay>
+                <qualityDay :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></qualityDay>
             </div>
             <div slot="expressDayForm" slot-scope="scope">
-                <expressDay :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></expressDay>
+                <expressDay :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></expressDay>
             </div>
         </avue-crud>
     </div>
@@ -44,6 +44,7 @@ export default {
   ],
   props: {
     row: {},
+    Pconfig: {},
   },
   data() {
     return {
@@ -75,6 +76,9 @@ export default {
     }
   },
   created() {
+     if (this.Pconfig && this.Pconfig.findDayOrder) {
+      this.config.list = this.Pconfig.findDayOrder;
+    }
   },
   methods: {
     //获取列表后

@@ -2,16 +2,16 @@
     <div class="app-container">
         <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :search.sync="search" :page.sync="page">
             <template slot="menuLeft">
-                <el-button v-if="hasPermission('/quelityTesting/excelOrder')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入质检费'},0)">导入质检费</el-button>
-                <el-button v-if="hasPermission('/quelityTesting/exportQualityTesting')" class="el-icon-download" size="small" @click="rowView({formslot:'exportQualityTesting',viewTitle:'导出质检费'},0)">
+                <el-button class="el-icon-upload2" v-if="hasPermission('/quelityTesting/excelOrder')" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入质检费'},0)">导入质检费</el-button>
+                <el-button class="el-icon-download" v-if="hasPermission('/quelityTesting/exportQualityTesting')" size="small" @click="rowView({formslot:'exportQualityTesting',viewTitle:'导出质检费'},0)">
                     导出质检费</el-button>
             </template>
             <div slot="uploadExcelOrderForm" slot-scope="scope">
                 <uploadExcel @closeDialog="closeDialog('excelTask2')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                <excelTask ref="excelTask2" type="2"></excelTask>
+                <excelTask listurl="/excelTask/getQualityTestingExcelTaskList" ref="excelTask2" type="2"></excelTask>
             </div>
             <div slot="exportQualityTestingForm" slot-scope="scope">
-                <exportTask :row="scope.row" type="2" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                <exportTask title="导出质检费" :Pconfig="config" :row="scope.row" type="2" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
             </div>
         </avue-crud>
     </div>
@@ -43,7 +43,12 @@ export default {
         save: '',
         delete: '',
         update: '',
-        list: '/quelityTesting/getQualityTesting'
+        list: '/quelityTesting/getQualityTesting',
+
+        exportExcel: '/quelityTesting/exportQualityTesting',
+        exportTask: '/exportTask/getQualityTestingExportTaskList',
+        excelTask: '/quelityTesting/excelOrder'
+
       },
       rowKey: 'id',
       option: {
@@ -76,7 +81,7 @@ export default {
         ],
         ...this.group_def([
           ...this.group_column_formslot("uploadExcelOrder", {
-            uploadData: { title: '质检费', url: 'quelityTesting/excelOrder', href: './assets/uploadQuality.xlsx' },
+            uploadData: { title: '质检费', url: '/quelityTesting/excelOrder', href: './assets/uploadQuality.xlsx' },
           }),
           ...this.group_column_formslot("exportQualityTesting", {}),
         ]),

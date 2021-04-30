@@ -20,9 +20,27 @@ export function removeToken() {
  * @param roles//用户权限
  * @param route//网页路由权限
  */
-export function hasPermission(roles, route) {
+export function hasPermission(userRoles, route) {
+ 
+  let userRolesTemp = [];
+  var recursiveFunction = function () {
+    const getStr = function (list) {
+      list.forEach(function (row) {
+        if (row.controlList && row.controlList.length > 0) {
+          getStr(row.controlList || [])
+          userRolesTemp.push(row.url)
+        } else {
+          userRolesTemp.push(row.url)
+        }
+      })
+    }
+    getStr(userRoles.menuList || userRoles || [])
+  }
+  recursiveFunction()
+  // console.log(userRolesTemp)
+
   if (route && route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.indexOf(role) >= 0)
+    return userRolesTemp.some(role => route.meta.roles.indexOf(role) >= 0)
   } else {
     return true
   }

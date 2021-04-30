@@ -19,7 +19,7 @@ export default {
          * @returns 
          */
         hasPermission(key) {
-            let arr = this.routes.controls.filter((v) => { return v.url == key });
+            let arr = this.routes.controls&&this.routes.controls.filter((v) => { return v.url == key });
             if (arr && arr.length > 0) {
                 return 1
             } else {
@@ -47,19 +47,23 @@ export default {
                 this.permission.editBtn = this.routes.controls.filter((v) => { return v.url == this.config.update }).join(',') ? true : false;
                 this.permission.editBtn ? falg++ : '';
             }
-            if (!falg) {
-                this.permission.menu = false
-            }
+            // if (!falg) {
+            //     this.permission.menu = false
+            //     console.log(this.permission.menu,'this.permission.menu');
+            // }
             if (this.config.list) {
                 let show = this.routes.controls.filter((v) => { return v.url == this.config.list }).join(',') ? true : false;
                 this.option.searchShow = show;
                 this.option.searchShowBtn = show;
                 this.option.refreshBtn = show;
             }
-        }
+        },
+        runPermission() {
+            this.configPermission();
+        },
     },
     created() {
-        this.configPermission();
+        this.runPermission();
     },
     mounted() {
     },

@@ -84,6 +84,7 @@ export default {
                 return item.roleName
               }).join(',')
             },
+       
           },
           {
             label: "创建人", prop: "addUser", display: false,

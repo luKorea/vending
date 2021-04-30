@@ -7,7 +7,7 @@
                 </el-button>
             </template>
             <div slot="DetailsMonthForm" slot-scope="scope">
-                <detailsMonth :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></detailsMonth>
+                <detailsMonth :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></detailsMonth>
             </div>
             <template slot-scope="scope" slot="expressFee">
                 <span v-if="scope.row.expressFee&&scope.row.expressFee>0"
@@ -22,10 +22,10 @@
                 <span v-else>--</span>
             </template>
             <div slot="qualityDayForm" slot-scope="scope">
-                <qualityDay :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></qualityDay>
+                <qualityDay :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></qualityDay>
             </div>
             <div slot="expressDayForm" slot-scope="scope">
-                <expressDay :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></expressDay>
+                <expressDay :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></expressDay>
             </div>
         </avue-crud>
     </div>
@@ -50,6 +50,7 @@ export default {
   ],
   props: {
     row: {},
+    Pconfig: {},
   },
   data() {
     return {
@@ -87,6 +88,9 @@ export default {
     }
   },
   created() {
+    if (this.Pconfig && this.Pconfig.orderStatistics) {
+      this.config.list = this.Pconfig.orderStatistics;
+    }
   },
   methods: {
     listBefore() {

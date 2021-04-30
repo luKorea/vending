@@ -15,6 +15,7 @@ export default {
   ],
   props: {
     row: {},
+     Pconfig: {},
   },
   data() {
     return {
@@ -71,6 +72,11 @@ export default {
           { prop: 'deliveryTime', label: '出库时间', minWidth: 180, viewDisplay: false, },
         ],
       },
+    }
+  },
+   created() {
+     if (this.Pconfig && this.Pconfig.getOrderByDayAndbicId) {
+      this.config.list = this.Pconfig.getOrderByDayAndbicId;
     }
   },
   methods: {

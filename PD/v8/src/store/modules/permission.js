@@ -1,4 +1,4 @@
-import { asyncRouterMap, constantRoutesStart } from '@/router'
+import { asyncRouterMap, constantRoutesStart,asyncRouterMapStr } from '@/router'
 
 import { hasPermission } from '@/utils/auth'
 
@@ -38,7 +38,13 @@ const permission = {
             return new Promise(resolve => {
                 const { roles } = data;
                 let accessedRouters;
-                accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+                let abc={
+                    abc:[...asyncRouterMap]
+                }
+                accessedRouters = filterAsyncRouter(abc.abc, roles)
+                console.log('asyncRouterMap1',asyncRouterMap);
+                console.log('asyncRouterMap2',[...asyncRouterMap]);
+                console.log('asyncRouterMapStr',JSON.parse(asyncRouterMapStr));
                 commit('SET_ROUTERS', accessedRouters)
                 resolve()
             })

@@ -17,6 +17,7 @@ export default {
   ],
   props: {
     row: {},
+    Pconfig: {}
   },
   data() {
     return {
@@ -42,6 +43,9 @@ export default {
     }
   },
   created() {
+    if (this.Pconfig&&this.Pconfig.getTopUpLog) {
+      this.config.list = this.Pconfig.getTopUpLog;
+    }
   },
   methods: {
     //获取列表前

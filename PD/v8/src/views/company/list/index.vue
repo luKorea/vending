@@ -23,11 +23,7 @@
             </template>
             <div slot="uploadExcelCompanyForm" slot-scope="scope">
                 <uploadExcel @closeDialog="closeDialog('excelTask3')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                <excelTask ref="excelTask3" type="3"></excelTask>
-            </div>
-            <div slot="uploadExcelOrderForm" slot-scope="scope">
-                <uploadExcel @closeDialog="closeDialog('excelTask2')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                <excelTask ref="excelTask2" type="2"></excelTask>
+                <excelTask listurl="/excelTask/getCompanyExcelTaskList" ref="excelTask3" type="3"></excelTask>
             </div>
             <div slot="reduceBalanceForm" slot-scope="scope">
                 <balanceRecord :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></balanceRecord>
@@ -36,10 +32,8 @@
                 <usageRecord :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></usageRecord>
             </div>
             <div slot="getExportTaskListForm" slot-scope="scope">
-                <exportTask :row="scope.row" type="3" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
-            </div>
-            <div slot="exportQualityTestingForm" slot-scope="scope">
-                <exportTask :row="scope.row" type="2" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                <exportTask title="导出商家" exporturl="/company/deriveExcel" listurl="/exportTask/getCompanyExportTaskList" :row="scope.row" type="3" :exportParams="params"
+                    v-if="form&&form.formslot==scope.column.prop"></exportTask>
             </div>
         </avue-crud>
     </div>
@@ -75,6 +69,9 @@ export default {
     crudMix,
     permissionMix
   ],
+  props: {
+    my: {},
+  },
   data() {
     return {
       config: {
@@ -82,7 +79,7 @@ export default {
         save: '/company/addCompany',
         delete: '/company/deleteCompanyId',
         update: '/company/updateCompany',
-        list: '/company/getCompany'
+        list: '/company/getCompany',
       },
       method: {
         delete: 'GET'
@@ -98,8 +95,8 @@ export default {
         column: [
           ...this.column_def("商家ID", "bicId", true, { search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false, }),
           ...this.column_def("商家名称", "companyName", true, { search: true, searchSpan: 6, fixed: 'left', viewDisplay: false, }),
-          ...this.column_def("是否启用", "startUsingStr", false, {  hide: true,addDisplay: false, editDisplay: false, viewDisplay: false }),
-          ...this.column_switch("是否启用", "startUsing", false, { hide: true, value: 2, addDisplay: false,editDisplay: false,viewDisplay: false, dicData: [{ value: 1, label: '否' }, { value: 2, label: '是' }], }),
+          ...this.column_def("是否启用", "startUsingStr", false, { hide: true, addDisplay: false, editDisplay: false, viewDisplay: false }),
+          ...this.column_switch("是否启用", "startUsing", false, { hide: true, value: 2, addDisplay: false, editDisplay: false, viewDisplay: false, dicData: [{ value: 1, label: '否' }, { value: 2, label: '是' }], }),
           ...this.column_money("余额", "balance", true, { viewDisplay: false, editDisabled: true }),
           ...this.column_money("冻结金额", "freezeMoney", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
           ...this.column_money("可用余额", "usableBalance", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
@@ -111,10 +108,10 @@ export default {
         ...this.group_def([
           ...this.group_column_formslot("uploadExcelCompany", {
             msg: "若商家在系统中已存在，余额将会以系统中余额为准，不做修改!",
-            uploadData: { title: '商家', url: 'company/excelCompany', href: './assets/uploadCompany.xlsx' },
+            uploadData: { title: '商家', url: '/company/excelCompany', href: './assets/uploadCompany.xlsx' },
           }),
           ...this.group_column_formslot("uploadExcelOrder", {
-            uploadData: { title: '质检费', url: 'quelityTesting/excelOrder', href: './assets/uploadQuality.xlsx' },
+            uploadData: { title: '质检费', url: '/quelityTesting/excelOrder', href: './assets/uploadQuality.xlsx' },
           }),
           ...this.group_column_formslot("reduceBalance", {}),
           ...this.group_column_formslot("usageRecord", {}),
@@ -123,6 +120,8 @@ export default {
         ]),
       },
     }
+  },
+  created() {
   },
   methods: {
     //*100
@@ -165,7 +164,7 @@ export default {
           v.prop == 'Recharge' && that.form.editType == 'Reduce' ? v.display = false : 0;
           v.prop == 'Recharge' && that.form.editType == 'Recharge' ? v.display = true : 0;
           v.prop == 'Reduce' && that.form.editType == 'Reduce' ? v.display = true : 0;
-          (v.prop == 'moneyRemind' ) ? v.editDisplay = false : 0;
+          (v.prop == 'moneyRemind') ? v.editDisplay = false : 0;
           v.prop == 'companyName' ? v.editDisabled = true : 0;
           v.prop == 'balance' ? v.editDisplay = true : 0;
         })
@@ -175,7 +174,7 @@ export default {
           v.prop == 'Reduce' ? v.display = false : 0;
           v.prop == 'Recharge' ? v.display = false : 0;
           v.prop == 'companyName' ? v.editDisabled = false : 0;
-          (v.prop == 'moneyRemind' ) ? (v.editDisplay = true, v.editDisabled = false) : 0;
+          (v.prop == 'moneyRemind') ? (v.editDisplay = true, v.editDisabled = false) : 0;
           v.prop == 'balance' ? v.editDisplay = false : 0;
         })
         that.option = Object.assign(that.option, {})
