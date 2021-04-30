@@ -155,6 +155,7 @@ module.exports = {
       'vue-router': 'VueRouter',
       'vuex': 'Vuex',
       'element-ui': 'ELEMENT',
+      'axios': 'axios',
     });
     process.env.npm_config_report ? config
       .plugin('webpack-bundle-analyzer')

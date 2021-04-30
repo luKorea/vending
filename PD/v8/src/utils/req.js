@@ -110,7 +110,7 @@ export function xhrGet(url, name) {
         } else {
             xhrurl = process.env.VUE_APP_PATH_REWRITE + url;
         }
-        
+
 
         xhr.open("GET", xhrurl, true);
         xhr.setRequestHeader("token", getToken());

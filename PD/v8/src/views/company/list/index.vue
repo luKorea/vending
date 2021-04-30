@@ -54,6 +54,8 @@ import usageRecord from '@/views/company/list/usageRecord'
 import exportTask from '@/views/exportTask'
 import excelTask from '@/views/excelTask/'
 
+
+//import api from "@/api/api";
 /**
  * TODO:商家列表
  */
@@ -121,7 +123,8 @@ export default {
       },
     }
   },
-  created() {
+  async created() {
+
   },
   methods: {
     //*100
