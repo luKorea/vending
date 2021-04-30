@@ -141,7 +141,7 @@ export const asyncRouterMap = [
 
   { path: '*', redirect: '/404', hidden: true, meta: { title: '404' } }
 ];
-export const asyncRouterMapStr=JSON.stringify(asyncRouterMap)
+
 const createRouter = () => new VueRouter({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),

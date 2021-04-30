@@ -1,8 +1,6 @@
-import { asyncRouterMap, constantRoutesStart,asyncRouterMapStr } from '@/router'
-
+import { asyncRouterMap, constantRoutesStart } from '@/router'
 import { hasPermission } from '@/utils/auth'
-
-
+import { DeepClone } from '@/utils/parameterCopy'//解决登陆后 异步路由原数据被改变
 /**
  * 递归过滤异步路由表，返回符合用户角色权限的路由表
  * @param asyncRouterMap
@@ -20,6 +18,7 @@ function filterAsyncRouter(asyncRouterMap, roles) {
     });
     return accessedRouters
 }
+
 /**/
 const permission = {
     state: {
@@ -38,13 +37,7 @@ const permission = {
             return new Promise(resolve => {
                 const { roles } = data;
                 let accessedRouters;
-                let abc={
-                    abc:[...asyncRouterMap]
-                }
-                accessedRouters = filterAsyncRouter(abc.abc, roles)
-                console.log('asyncRouterMap1',asyncRouterMap);
-                console.log('asyncRouterMap2',[...asyncRouterMap]);
-                console.log('asyncRouterMapStr',JSON.parse(asyncRouterMapStr));
+                accessedRouters = filterAsyncRouter(DeepClone(asyncRouterMap), roles)
                 commit('SET_ROUTERS', accessedRouters)
                 resolve()
             })
