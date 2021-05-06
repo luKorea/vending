@@ -18,8 +18,8 @@
                 <div class="word">请<br>登<br>录</div>
                 <div class="line"></div>
             </div>
-            <div class="login-container">
-                <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="layui-form" style="width: 100%;" auto-complete="on" label-position="left">
+            <div class="container">
+                <el-form ref="loginForm" :model="loginForm" :rules="loginRules" style="width: 100%;" auto-complete="on" label-position="left">
                     <div class="wrap-left">
                         <img src="../../../public/img/icon.png" alt="" style="border-radius: 50%;">
                         <div style="font-size: 26px;">物流-质检费控系统</div>
@@ -337,7 +337,7 @@ $light_gray: #eee;
       border-right: 4px solid #be954a;
     }
   }
-  .login-container {
+  .container {
     width: 350px;
     display: flex;
     flex-direction: column;
@@ -403,21 +403,63 @@ $light_gray: #eee;
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 768px) {
   .tabBox {
     display: none !important;
   }
+
+  .login-container {
+    .bg {
+      z-index: 11;
+      .swiper-container {
+        width: 100%;
+        height: 40vw;
+        top: 0;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+      }
+    }
+    .wrap {
+      right: 0;
+      top: 0;
+      margin-top: 0;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      .container {
+        width: 96%;
+        margin: 0 auto;
+        form {
+          text-align: center;
+          .wrap-left {
+            width: 96vw;
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+          }
+        }
+        .login-tip {
+          display: none;
+        }
+        .login-inp {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-height: 500px) {
+  .login-container {
+    .wrap {
+      .container {
+        margin-top: 100px;
+      }
+    }
+  }
 }
 
-/* swiper */
 
-.swiper-pagination-bullet-active {
-  background-color: #fff;
-}
-
-.swiper-pagination-bullet {
-  width: 10px;
-  height: 10px;
-  margin: 0 3px;
-}
 </style>

@@ -17,7 +17,8 @@ export default {
   ],
   props: {
     type: {},
-    listurl: {},
+   
+    Pconfig: {},
   },
   data() {
     return {
@@ -66,9 +67,9 @@ export default {
     }
   },
   created() {
-    console.log(this.listurl);
-    if (this.listurl) {
-      this.config.list = this.listurl;
+
+    if (this.Pconfig && this.Pconfig.excelTask) {
+      this.config.list = this.Pconfig.excelTask;
     }
   },
   methods: {

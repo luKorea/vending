@@ -104,4 +104,14 @@ input:-webkit-autofill:active {
   transition-delay: 111111s;
   transition: color 11111s ease-out, background-color 111111s ease-out;
 }
+/* swiper */
 
+.swiper-pagination-bullet-active {
+  background-color: #fff;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  margin: 0 3px;
+}

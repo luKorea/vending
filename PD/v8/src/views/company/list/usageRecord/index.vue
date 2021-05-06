@@ -71,7 +71,7 @@ export default {
         delBtn: false,
         editBtn: false,
         viewBtn: false,
-        menuWidth: 100,
+    
         column: [
           { label: "使用月份", prop: "statisticsTime", type: "datetime", format: 'yyyy-MM', },
           { label: "快递费用", prop: "expressFee", solt: true, },

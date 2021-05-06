@@ -13,6 +13,7 @@ import { mapGetters } from 'vuex'
 import { req } from '@/utils/req.js'
 import permissionMix from "@/mixins/permissionMix";
 import controlTree from "@/views/role/list/controlTree";
+import { DeepClone } from '@/utils/parameterCopy'
 export default {
   components: {
     controlTree
@@ -28,8 +29,6 @@ export default {
   ],
   data() {
     return {
-      controlList: [],
-      controlListChecked: [],
       isIndeterminate: false,
       defaultProps: {
         children: 'controlList',
@@ -82,17 +81,10 @@ export default {
     }
   },
   methods: {
-    updateBefore() {
-      this.form.controlList = this.controlListChecked
-      return 1;
-    },
-    addBefore() {
-      this.form.controlList = this.controlListChecked
-      return 1;
-    },
     //选择
     checked(val) {
-      this.controlListChecked = val;
+      //深拷贝
+      this.form.controlList = DeepClone(val)
     },
     //删除前
     delBefore(row) {
@@ -100,11 +92,35 @@ export default {
       rowtemp = { roleId: row.roleId }
       return rowtemp
     },
+    recursive(flag) {
+      let that = this;
+      var recursiveFunction = function () {
+        const getStr = function (list) {
+          list.forEach(function (row) {
+            if (row.controlList && row.controlList.length > 0) {
+              row.controlList = getStr(row.controlList || [])
+            }
+
+            row.disabled = flag;
+          })
+          return list
+        }
+        that.controlList = Object.assign(getStr(that.controlList), {})
+      }
+      recursiveFunction()
+    },
     //打开前
     openBefore(type) {
       let that = this;
+      //获取列表参数给个默认值
       if (type == 'edit') {
         that.form.id = that.form.roleId
+        console.log('openBefore', that.form);
+        if (that.form.status && that.form.status == 1) {
+          that.recursive(true)
+        } else {
+          that.recursive(false)
+        }
       }
       that.form = Object.assign(that.form, that.form)
     },

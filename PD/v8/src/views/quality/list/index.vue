@@ -8,7 +8,7 @@
             </template>
             <div slot="uploadExcelOrderForm" slot-scope="scope">
                 <uploadExcel @closeDialog="closeDialog('excelTask2')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                <excelTask listurl="/excelTask/getQualityTestingExcelTaskList" ref="excelTask2" type="2"></excelTask>
+                <excelTask :Pconfig="config" ref="excelTask2" type="2"></excelTask>
             </div>
             <div slot="exportQualityTestingForm" slot-scope="scope">
                 <exportTask title="导出质检费" :Pconfig="config" :row="scope.row" type="2" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
@@ -47,7 +47,8 @@ export default {
 
         exportExcel: '/quelityTesting/exportQualityTesting',
         exportTask: '/exportTask/getQualityTestingExportTaskList',
-        excelTask: '/quelityTesting/excelOrder'
+
+        excelTask: '/excelTask/getQualityTestingExcelTaskList'
 
       },
       rowKey: 'id',

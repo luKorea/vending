@@ -7,7 +7,7 @@
             </template>
             <div slot="uploadExcelOrderForm" slot-scope="scope">
                 <uploadExcel @closeDialog="closeDialog('excelTask1')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                <excelTask listurl="/excelTask/getOrderExcelTaskList" ref="excelTask1" type="1"></excelTask>
+                <excelTask :Pconfig="config"  ref="excelTask1" type="1"></excelTask>
             </div>
             <div slot="getExportTaskListForm" slot-scope="scope">
                 <exportTask title="导出订单" :Pconfig="config" :row="scope.row" :exportParams="params" type="1" v-if="form&&form.formslot==scope.column.prop"></exportTask>
@@ -45,7 +45,8 @@ export default {
         list: '/order/getOrder',
         exportExcel: '/order/exportOrder',
         exportTask: '/exportTask/getOrderExportTaskList',
-        excelTask: '/order/excelOrder'
+        excelTask: '/excelTask/getOrderExcelTaskList'
+       
       },
       rowKey: 'orderId',
       option: {

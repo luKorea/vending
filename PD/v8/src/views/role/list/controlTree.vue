@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-tree ref="tree" @check="check" :data="data" show-checkbox node-key="controlId" :default-expanded-keys="defaultExpandedKeys" :default-checked-keys="defaultExpandedKeys" :props="defaultProps">
+        <el-tree ref="tree" accordion @check="check" :data="data" show-checkbox node-key="controlId"  :default-checked-keys="defaultExpandedKeys" :props="defaultProps">
         </el-tree>
     </div>
 </template>

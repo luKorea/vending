@@ -38,7 +38,7 @@ export default {
                 editTitle: '编辑',
                 emptyBtnText: '重置',
                 dialogWidth: '60%',
-
+                menuWidth: 140,
                 searchMenuPosition:'left',
                 column: [
                     {

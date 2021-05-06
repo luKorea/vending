@@ -8,32 +8,31 @@
                 <span>{{scope.row.bicId}}</span>
             </div>
             <template slot-scope="scope" slot="menuBtn">
-                <el-dropdown-item v-if="hasPermission('/company/addBalance')" @click.native="$refs.crud.rowEdit({ ...scope.row, editType:'Recharge',editTitle:'充值' },scope.index)">充值</el-dropdown-item>
-                <el-dropdown-item v-if="hasPermission('/company/subBalance')" @click.native="$refs.crud.rowEdit({ ...scope.row, editType:'Reduce' ,editTitle:'调减'},scope.index)">调减</el-dropdown-item>
-                <el-dropdown-item v-if="hasPermission('/logCompany/getTopUpLog')"
+                <el-dropdown-item v-if="hasPermission(config.addBalance)" @click.native="$refs.crud.rowEdit({ ...scope.row, editType:'Recharge',editTitle:'充值' },scope.index)">充值</el-dropdown-item>
+                <el-dropdown-item v-if="hasPermission(config.subBalance)" @click.native="$refs.crud.rowEdit({ ...scope.row, editType:'Reduce' ,editTitle:'调减'},scope.index)">调减</el-dropdown-item>
+                <el-dropdown-item v-if="hasPermission(config.getTopUpLog)"
                     @click.native="rowView({ ...scope.row, formslot:'reduceBalance' ,viewTitle:`商家[${scope.row.companyName}]的充值/调减记录`},scope.index)">
                     充值/调减记录</el-dropdown-item>
-                <el-dropdown-item v-if="hasPermission('/logCompany/orderStatistics')"
+                <el-dropdown-item v-if="hasPermission(config.orderStatistics )"
                     @click.native="rowView({ ...scope.row, formslot:'usageRecord' ,viewTitle:`商家[${scope.row.companyName}]的使用记录`},scope.index)">
                     使用记录</el-dropdown-item>
             </template>
             <template slot="menuLeft">
                 <el-button v-if="hasPermission('/company/excelCompany')" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelCompany',viewTitle:'导入商家'},0)">导入商家</el-button>
-                <el-button v-if="hasPermission('/company/deriveExcel')" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出商家'},0)">导出商家</el-button>
+                <el-button v-if="hasPermission(config.exportExcel)" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出商家'},0)">导出商家</el-button>
             </template>
             <div slot="uploadExcelCompanyForm" slot-scope="scope">
                 <uploadExcel @closeDialog="closeDialog('excelTask3')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                <excelTask listurl="/excelTask/getCompanyExcelTaskList" ref="excelTask3" type="3"></excelTask>
+                <excelTask :Pconfig="config"  ref="excelTask3" type="3"></excelTask>
             </div>
             <div slot="reduceBalanceForm" slot-scope="scope">
-                <balanceRecord :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></balanceRecord>
+                <balanceRecord :Pconfig="config" :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></balanceRecord>
             </div>
             <div slot="usageRecordForm" slot-scope="scope">
-                <usageRecord :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></usageRecord>
+                <usageRecord :Pconfig="config" :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></usageRecord>
             </div>
             <div slot="getExportTaskListForm" slot-scope="scope">
-                <exportTask title="导出商家" exporturl="/company/deriveExcel" listurl="/exportTask/getCompanyExportTaskList" :row="scope.row" type="3" :exportParams="params"
-                    v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                <exportTask title="导出商家" :Pconfig="config" :row="scope.row" type="3" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
             </div>
         </avue-crud>
     </div>
@@ -82,6 +81,20 @@ export default {
         delete: '/company/deleteCompanyId',
         update: '/company/updateCompany',
         list: '/company/getCompany',
+        addBalance: '/company/addBalance',//充值
+        subBalance: '/company/subBalance',//调减
+        getTopUpLog: '/logCompany/getTopUpLog',  // 查看充值/调减记录
+        orderStatistics: '/logCompany/orderStatistics',  // 使用记录
+
+        findDayOrder: '/company/findDayOrder',  // 每日详情：
+        getOrderByDayAndbicId: '/logCompany/getOrderByDayAndbicId',  // 根据日期获取快递
+        getQualityTestingByDayAndbicName: '/logCompany/getQualityTestingByDayAndbicName',  // 根据日期获取质检
+
+        exportExcel: '/company/deriveExcel',  // 导出商家
+        exportTask: '/exportTask/getCompanyExportTaskList',  // 获取商家导出任务列表
+
+
+        excelTask:'/excelTask/getCompanyExcelTaskList', // 导入
       },
       method: {
         delete: 'GET'
@@ -92,7 +105,7 @@ export default {
         addBtn: true,
         addBtnText: '新增商家',
         menuType: 'menu',
-        menuWidth: 120,
+
         viewBtn: false,
         column: [
           ...this.column_def("商家ID", "bicId", true, { search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false, }),
