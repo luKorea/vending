@@ -9,6 +9,16 @@ const vApi = `/api`;
 var token = sessionStorage.token;
 var machineId = sessionStorage.machineID;
 
+/**
+ *
+ * @param id
+ * @param indexs
+ * @param obj
+ * @param index
+ * @param tableID
+ * @param classTag
+ * @constructor
+ */
 function Goodsdel(id, indexs, obj, index, tableID, classTag) {
     // index 1为自定义商品 2为自定义类目 3为通用商品
     if (indexs == 1) {
@@ -36,7 +46,8 @@ function Goodsdel(id, indexs, obj, index, tableID, classTag) {
                 }
             }
         })
-    } else if (indexs == 2) {
+    }
+    else if (indexs == 2) {
         $.ajax({
             type: 'post',
             url: `${vApi}/classify/deleteById`,
@@ -68,10 +79,14 @@ function Goodsdel(id, indexs, obj, index, tableID, classTag) {
             }
         })
     }
-
 }
 
 // tab切换下一步事件
+/**
+ *
+ * @param before
+ * @param after
+ */
 function nextStep(before, after) {
     $(`.${before}`).animate({
         left: -100 + '%'
@@ -82,6 +97,11 @@ function nextStep(before, after) {
 };
 
 // tab切换上一步
+/**
+ *
+ * @param before
+ * @param after
+ */
 function onStep(before, after) {
     $(`.${before}`).animate({
         left: 100 + '%'
@@ -92,17 +112,32 @@ function onStep(before, after) {
 }
 
 // 弹窗显示
+/**
+ *
+ * @param contnet
+ * @param contnetChild
+ */
 function popupShow(contnet, contnetChild) {
     $(`.${contnet}`).fadeIn();
     $(`.${contnetChild}`).removeClass('margin0')
 };
 
 // 取消关闭弹窗
+/**
+ *
+ * @param contnet
+ * @param contnetChild
+ */
 function popupHide(contnet, contnetChild) {
     $(`.${contnetChild}`).addClass('margin0')
     $(`.${contnet}`).fadeOut();
 };
 
+/**
+ *
+ * @param file
+ * @param element
+ */
 function base64(file, element) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -113,6 +148,12 @@ function base64(file, element) {
 }
 
 // base64转化为file
+/**
+ *
+ * @param dataurl
+ * @param filename
+ * @returns {File}
+ */
 function dataURLtoFile(dataurl, filename) {//将base64转换为文件
     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
         bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -122,6 +163,12 @@ function dataURLtoFile(dataurl, filename) {//将base64转换为文件
     return new File([u8arr], filename, {type: mime});
 }
 
+/**
+ *
+ * @param that
+ * @param layer
+ * @returns {boolean}
+ */
 function phoneRegular(that, layer) {
     var phone = $(that).val()
     if (phone) {
@@ -135,6 +182,12 @@ function phoneRegular(that, layer) {
 }
 
 // 密码正则
+/**
+ *
+ * @param that
+ * @param layer
+ * @returns {boolean}
+ */
 function passRegular(that, layer) {
     var reg = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,.\/]).{6,64}$/;
     var passwork = $(that).val();
@@ -148,6 +201,13 @@ function passRegular(that, layer) {
 };
 
 // 检测中文正则
+/**
+ *
+ * @param that
+ * @param layer
+ * @returns {boolean}
+ * @constructor
+ */
 function ChineseREgular(that, layer) {
     var reg = /[\u4E00-\u9FA5]/g;
     if ($(that).val()) {
@@ -160,6 +220,11 @@ function ChineseREgular(that, layer) {
 };
 
 // / 获取商户列表
+/**
+ *
+ * @param id
+ * @returns {*[]}
+ */
 function merchantsListMian(id) {
     var marchantsList = []
     $.ajax({
@@ -193,6 +258,11 @@ function merchantsListMian(id) {
 
 
 // 树装列表数据
+/**
+ *
+ * @param marchantName
+ * @returns {*[]}
+ */
 function treeList(marchantName) {
     var dataList = []
     $.ajax({
@@ -231,6 +301,18 @@ function treeList(marchantName) {
 }
 
 //树方法实列
+/**
+ *
+ * @param tree
+ * @param element
+ * @param tableID
+ * @param data
+ * @param key
+ * @param goodsCLass
+ * @param selectData
+ * @param conditionThree
+ * @param flag
+ */
 function treeFun(tree, element, tableID, data, key, goodsCLass, selectData, conditionThree, flag) {
     tree.render({
         elem: `#${element}`,
@@ -276,6 +358,15 @@ function treeFun(tree, element, tableID, data, key, goodsCLass, selectData, cond
 }
 
 // 树复选方法
+/**
+ *
+ * @param tree
+ * @param element
+ * @param tableID
+ * @param data
+ * @param key
+ * @param layer
+ */
 function treeFunCheck(tree, element, tableID, data, key, layer) {
     tree.render({
         elem: `#${element}`,
@@ -344,6 +435,12 @@ function treeFunCheck(tree, element, tableID, data, key, layer) {
 };
 
 // 获取树选中id
+/**
+ *
+ * @param treeNode
+ * @param result
+ * @returns {*}
+ */
 function getChildNodes(treeNode, result) {
     for (var i in treeNode) {
         result.push(treeNode[i].id);
@@ -353,6 +450,12 @@ function getChildNodes(treeNode, result) {
 }
 
 // 商户下拉框渲染
+/**
+ *
+ * @param list
+ * @param element
+ * @param form
+ */
 function mercantsSelectList(list, element, form) {
     var merchantOption = ``;
     list.forEach((item, indx) => {
@@ -365,6 +468,11 @@ function mercantsSelectList(list, element, form) {
 
 
 // 左侧商户列表
+/**
+ *
+ * @param list
+ * @param element
+ */
 function leftMerchantsList(list, element) {
     var merchantsNameList = `<p style="margin:20px;color:#be954a;">商户</p>
   <div class="fixedAccount" mid="">
@@ -381,6 +489,14 @@ function leftMerchantsList(list, element) {
 
 
 //ajax方法的封装 callback, reject
+/**
+ *
+ * @param url
+ * @param type
+ * @param data
+ * @param userToken
+ * @returns {*}
+ */
 function ajaxFun(url, type, data, userToken) {
     return $.ajax({
         type,
@@ -394,6 +510,18 @@ function ajaxFun(url, type, data, userToken) {
     })
 };
 
+/**
+ *
+ * @param url
+ * @param type
+ * @param data
+ * @param userToken
+ * @param mask
+ * @param element
+ * @param elementChild
+ * @param layer
+ * @returns {Promise<unknown>}
+ */
 function loadingAjax(url, type, data, userToken, mask, element, elementChild, layer) {
     return new Promise(function (resolve, reject) {
         ajaxFun(url, type, data, userToken, resolve, reject).then((res) => {
@@ -665,6 +793,11 @@ function fixedFun() {
 
 
 // 千分位金额
+/**
+ *
+ * @param num
+ * @returns {string}
+ */
 function percentileMoney(num) {
     if (num === '') num = 0;
     num = num.toString().replace(/[^\d\.-]/g, ''); //转成字符串并去掉其中除数字, . 和 - 之外的其它字符。
