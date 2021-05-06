@@ -83,8 +83,8 @@ export default {
           { label: "所属机构", prop: "affiliatedInstitutions", viewDisplay: false, },
         ],
         ...this.group_def([
-          ...this.group_column_formslot("uploadExcelOrder", {}),
-          ...this.group_column_formslot("exportQualityTesting", {}),
+          ...this.group_column_formslot("uploadExcelOrder"),
+          ...this.group_column_formslot("exportQualityTesting"),
         ]),
       }
     }

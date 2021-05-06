@@ -52,8 +52,6 @@ import balanceRecord from '@/views/company/list/balanceRecord'
 import usageRecord from '@/views/company/list/usageRecord'
 import exportTask from '@/views/exportTask'
 import excelTask from '@/views/excelTask/'
-
-
 //import api from "@/api/api";
 /**
  * TODO:商家列表（全部）
@@ -107,7 +105,6 @@ export default {
         addBtn: true,
         addBtnText: '新增商家',
         menuType: 'menu',
-
         viewBtn: false,
         column: [
           ...this.column_def("商家ID", "bicId", true, { search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false, }),
@@ -123,15 +120,11 @@ export default {
           ...this.column_textarea("备注", "remark", false, { viewDisplay: false, editDisplay: true })
         ],
         ...this.group_def([
-          ...this.group_column_formslot("uploadExcelCompany", {
-            msg: "若商家在系统中已存在，余额将会以系统中余额为准，不做修改!",
-            uploadData: { title: '商家', url: '/company/excelCompany', href: './assets/uploadCompany.xlsx' },
-          }),
-
-          ...this.group_column_formslot("reduceBalance", {}),
-          ...this.group_column_formslot("usageRecord", {}),
-          ...this.group_column_formslot("getExportTaskList", {}),
-          ...this.group_column_formslot("exportQualityTesting", {}),
+          ...this.group_column_formslot("uploadExcelCompany"),
+          ...this.group_column_formslot("reduceBalance"),
+          ...this.group_column_formslot("usageRecord"),
+          ...this.group_column_formslot("getExportTaskList"),
+          ...this.group_column_formslot("exportQualityTesting"),
         ]),
       },
     }

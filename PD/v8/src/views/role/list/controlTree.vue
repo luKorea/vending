@@ -33,7 +33,6 @@ export default {
     check() {
       let res = this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys())
       this.$emit('checked', res);
-      console.log('check', res);
     },
   }
 };

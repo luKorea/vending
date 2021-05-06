@@ -99,7 +99,7 @@ export default {
           { prop: 'deliveryTime', label: '出库时间', minWidth: 180, viewDisplay: false, },
         ],
         ...this.group_def([
-          ...this.group_column_formslot("getExportTaskList", {}),
+          ...this.group_column_formslot("getExportTaskList"),
         ]),
       }
     }
