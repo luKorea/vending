@@ -5,6 +5,9 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+/**
+ * TODO:首页
+ */
 export default {
   name: 'Dashboard',
   computed: {
