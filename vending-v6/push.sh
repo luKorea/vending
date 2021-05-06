@@ -5,8 +5,10 @@ baseball=$(
 )
 cd "$baseball" || exit
 pnpm run build
-git add .
 remark=$(date +"%Y-%m-%d %H:%M:%S")
-git commit -m "korea ${remark}"
+read -p 'Please input the modified content of this version': note
+git add .
+git commit -m "${note} ${remark}"
 git pull origin dev
 git push origin dev
+git push github dev
