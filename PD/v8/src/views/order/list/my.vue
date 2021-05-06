@@ -45,13 +45,13 @@ export default {
       rowKey: 'orderId',
       option: {
         menu: false,
-        columnBtn: false,
+        columnBtn: true,
         clearExclude: ['orderTime'],
         column: [
           { prop: 'orderId', fixed: 'left', label: '订单编号', minWidth: 180, search: true, searchSpan: 6, viewDisplay: false, },
           { prop: 'orderYard', fixed: 'left', label: '订单码', minWidth: 100, search: true, searchSpan: 6, viewDisplay: false, },
           { prop: 'bicId', fixed: 'left', label: '商家ID', minWidth: 100, viewDisplay: false, },
-          { prop: 'companyName', fixed: 'left', label: '商家名称', minWidth: 180,  viewDisplay: false, },
+          { prop: 'companyName', fixed: 'left', label: '商家名称', minWidth: 180, viewDisplay: false, },
           { prop: 'orderAppointFlag', label: '订单履约状态', minWidth: 180, overHidden: true, viewDisplay: false, },
           { prop: 'combinedBillFee', label: '合单费', minWidth: 180, overHidden: true, viewDisplay: false, },
           { prop: 'ztBasicFreight', label: '中通基本运费', minWidth: 180, overHidden: true, viewDisplay: false, },
@@ -99,9 +99,6 @@ export default {
           { prop: 'deliveryTime', label: '出库时间', minWidth: 180, viewDisplay: false, },
         ],
         ...this.group_def([
-          ...this.group_column_formslot("uploadExcelOrder", {
-            uploadData: { title: '订单', url: 'order/excelOrder', href: './assets/uploadOrder.xlsx' },
-          }),
           ...this.group_column_formslot("getExportTaskList", {}),
         ]),
       }

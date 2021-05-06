@@ -40,7 +40,7 @@ import permissionMix from "@/mixins/permissionMix";
 /**
  * 组件
  */
-import uploadExcel from '@/views/company/list/uploadExcel'
+
 import balanceRecord from '@/views/company/list/balanceRecord'
 import usageRecord from '@/views/company/list/usageRecord'
 import exportTask from '@/views/exportTask'
@@ -51,7 +51,6 @@ import excelTask from '@/views/excelTask/'
  */
 export default {
   components: {
-    uploadExcel,
     balanceRecord,
     usageRecord,
     excelTask,
@@ -108,13 +107,6 @@ export default {
           ...this.column_textarea("备注", "remark", false, { viewDisplay: false, editDisplay: true })
         ],
         ...this.group_def([
-          ...this.group_column_formslot("uploadExcelCompany", {
-            msg: "若商家在系统中已存在，余额将会以系统中余额为准，不做修改!",
-            uploadData: { title: '商家', url: '/company/excelCompany', href: './assets/uploadCompany.xlsx' },
-          }),
-          ...this.group_column_formslot("uploadExcelOrder", {
-            uploadData: { title: '质检费', url: '/quelityTesting/excelOrder', href: './assets/uploadQuality.xlsx' },
-          }),
           ...this.group_column_formslot("reduceBalance", {}),
           ...this.group_column_formslot("usageRecord", {}),
           ...this.group_column_formslot("getExportTaskList", {}),

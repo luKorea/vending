@@ -39,7 +39,7 @@ export default {
                 emptyBtnText: '重置',
                 dialogWidth: '60%',
                 menuWidth: 140,
-                searchMenuPosition:'left',
+                searchMenuPosition: 'left',
                 column: [
                     {
                         label: '编号',//列名称
@@ -65,7 +65,7 @@ export default {
                         minRows: 1,//设置计数器允许的最小值
                         maxRows: 10,//设置计数器允许的最大值
                         filters: true,//筛选
-                        
+
 
                         rules://表单规则,参考ele表单规则配置
                             [
@@ -155,10 +155,14 @@ export default {
         /**
          * 关闭对话框
          * @param {*} name 
+         * @param {*} flag =true 关闭
          */
-        closeDialog(name) {
+        closeDialog(name, flag) {
             if (this.$refs[name]) {
                 this.$refs[name].getList()
+            }
+            if (flag) {
+                this.$refs.crud.closeDialog()
             }
             this.getList()
         },

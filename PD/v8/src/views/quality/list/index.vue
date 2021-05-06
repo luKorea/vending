@@ -2,12 +2,12 @@
     <div class="app-container">
         <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :search.sync="search" :page.sync="page">
             <template slot="menuLeft">
-                <el-button class="el-icon-upload2" v-if="hasPermission('/quelityTesting/excelOrder')" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入质检费'},0)">导入质检费</el-button>
-                <el-button class="el-icon-download" v-if="hasPermission('/quelityTesting/exportQualityTesting')" size="small" @click="rowView({formslot:'exportQualityTesting',viewTitle:'导出质检费'},0)">
+                <el-button class="el-icon-upload2" v-if="hasPermission(config.excel.url)" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入质检费'},0)">导入质检费</el-button>
+                <el-button class="el-icon-download" v-if="hasPermission(config.exportExcel)" size="small" @click="rowView({formslot:'exportQualityTesting',viewTitle:'导出质检费'},0)">
                     导出质检费</el-button>
             </template>
             <div slot="uploadExcelOrderForm" slot-scope="scope">
-                <uploadExcel @closeDialog="closeDialog('excelTask2')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
+                <uploadExcel @closeDialog="closeDialog('excelTask2')" :data="config.excel" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
                 <excelTask :Pconfig="config" ref="excelTask2" type="2"></excelTask>
             </div>
             <div slot="exportQualityTestingForm" slot-scope="scope">
@@ -47,16 +47,15 @@ export default {
         delete: '',
         update: '',
         list: '/quelityTesting/getQualityTesting',
-
         exportExcel: '/quelityTesting/exportQualityTesting',
         exportTask: '/exportTask/getQualityTestingExportTaskList',
-
-        excelTask: '/excelTask/getQualityTestingExcelTaskList'
-
+        excelTask: '/excelTask/getQualityTestingExcelTaskList',
+        excel: { title: '质检费', url: '/quelityTesting/excelOrder', href: './assets/uploadQuality.xlsx' }
       },
       rowKey: 'id',
       option: {
         menu: false,
+        columnBtn: true,
         clearExclude: ['date'],
         column: [
           {
@@ -84,9 +83,7 @@ export default {
           { label: "所属机构", prop: "affiliatedInstitutions", viewDisplay: false, },
         ],
         ...this.group_def([
-          ...this.group_column_formslot("uploadExcelOrder", {
-            uploadData: { title: '质检费', url: '/quelityTesting/excelOrder', href: './assets/uploadQuality.xlsx' },
-          }),
+          ...this.group_column_formslot("uploadExcelOrder", {}),
           ...this.group_column_formslot("exportQualityTesting", {}),
         ]),
       }

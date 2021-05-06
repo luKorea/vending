@@ -1,13 +1,13 @@
 <template>
     <div class="row-c">
-        <el-upload ref="upload" style="margin: auto;" :limit="1" accept=".xlsx, .xls" :action="uploadData.url" :disabled="isUploading" :http-request="handleFileUpload" :auto-upload="true" drag>
+        <el-upload ref="upload" style="margin: auto;" :limit="1" accept=".xlsx, .xls" :action="data.url" :disabled="isUploading" :http-request="handleFileUpload" :auto-upload="true" drag>
             <i class="el-icon-upload" />
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div slot="tip" class="el-upload__tip" style="color:#ff0000;text-align: center;">
-                <el-link :href="uploadData.href" class="dowloadX" :download="uploadData.title+'导入模板.xlsx'" type="primary" style="font-size:12px" icon="el-icon-warning-outline">
-                    下载{{uploadData.title}}导入模板</el-link>
-                <br v-if="msg">
-                {{msg}}
+                <el-link :href="data.href" class="dowloadX" :download="data.title+'导入模板.xlsx'" type="primary" style="font-size:12px" icon="el-icon-warning-outline">
+                    下载{{data.title}}导入模板</el-link>
+                <br v-if="data.msg">
+                {{data.msg}}
                 <br>
                 提示：仅允许导入“xls”或“xlsx”格式文件！
             </div>
@@ -22,15 +22,7 @@ import { req } from '@/utils/req.js'
 export default {
   components: {},
   props: {
-    uploadData: {
-      type: Object,
-      default: {
-        title: '',
-        url: '', // 上传的地址
-        href: ''
-      }
-    },
-    msg: "",
+    data: {},
   },
   watch: {
 
@@ -55,7 +47,7 @@ export default {
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       });
-      req(that.uploadData.url, form, "upload", true, true).then(function (res) {
+      req(that.data.url, form, "upload", true, true).then(function (res) {
         console.log(res);
         that.$refs.upload.clearFiles()
         that.isUploading = false

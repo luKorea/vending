@@ -44,6 +44,7 @@ export default {
       rowKey: 'id',
       option: {
         menu: false,
+        columnBtn: true,
         clearExclude: ['date'],
         column: [
           {
@@ -71,9 +72,6 @@ export default {
           { label: "所属机构", prop: "affiliatedInstitutions", viewDisplay: false, },
         ],
         ...this.group_def([
-          ...this.group_column_formslot("uploadExcelOrder", {
-            uploadData: { title: '质检费', url: '/quelityTesting/excelOrder', href: './assets/uploadQuality.xlsx' },
-          }),
           ...this.group_column_formslot("exportQualityTesting", {}),
         ]),
       }
