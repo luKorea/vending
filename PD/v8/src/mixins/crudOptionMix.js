@@ -89,6 +89,22 @@ export default {
                 })
         },
         /**
+        * 参数处理checkbox
+        * @param {*} label 
+        * @param {*} prop 
+        * @param {*} isRequired 
+        * @param {*} other 
+        * @returns 
+        */
+        column_checkbox(label, prop, isRequired, other) {
+            return this.column_def(label, prop, isRequired,
+                {
+                    type: 'checkbox',
+                    ...other,
+                })
+        },
+
+        /**
          * 参数处理 下拉选择
          * @param {*} label 
          * @param {*} prop 

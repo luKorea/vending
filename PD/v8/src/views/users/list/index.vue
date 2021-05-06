@@ -1,6 +1,7 @@
 <template>
     <div class="app-container">
         <avue-crud v-bind="bindVal" v-on="onEvent" :search.sync="search" v-model="form" :page.sync="page">
+
         </avue-crud>
     </div>
 </template>
@@ -10,10 +11,12 @@ import permissionMix from "@/mixins/permissionMix";
 import { mapGetters } from 'vuex'
 import { req } from '@/utils/req.js'
 import { required } from '@/utils/rules.js'
+
 /**
  * TODO:用户管理
  */
 export default {
+
   computed: {
     ...mapGetters([
       'name'
@@ -65,8 +68,9 @@ export default {
             hide: true,
             viewDisplay: false,
           },
+
           {
-            label: "是否启用", prop: "lockCount", addDisplay: false,
+            label: "是否启用", prop: "lockCount", addDisplay: false,editDisplay: false,
             type: 'select',
             dicData: [
               { label: '否', value: 0 },
@@ -87,7 +91,7 @@ export default {
                 return item.roleName
               }).join(',')
             },
-       
+
           },
           {
             label: "创建人", prop: "addUser", display: false,
@@ -140,7 +144,7 @@ export default {
       let password = this.findObject(this.option.column, 'password')
       let comfirmPassword = this.findObject(this.option.column, 'comfirmPassword')
       let validator = [{
-        required: false, validator: (rule, value, callback) => {
+        validator: (rule, value, callback) => {
           if (that.form.password) {
             if (value === '') {
               callback(new Error('请再次输入密码'))
@@ -153,12 +157,31 @@ export default {
             callback()
           }
         }, trigger: 'blur'
-      }]
+      },
+
+      ]
+
+      let validator2 = [
+        {
+          validator: (rule, value, callback) => {
+            if (value) {
+              let reg = /(?!.*\s)(?!^[\u4E00-\u9FA5]+$)(?!^[a-zA-Z]+$)(?!^[\d]+$)(?!^[^\u4E00-\u9FA5a-zA-Z\d]+$)^.{6,16}$/
+              if (!reg.test(value)) {
+                callback(new Error('密码必须是由6-16位字母、数字、特殊字符最少2种组合（不能有中文和空格）'))
+              } else {
+                callback()
+              }
+            } else {
+              callback()
+            }
+          }, trigger: 'blur'
+        },
+      ]
       if (type === 'add') {
-        password.rules = required('密码')
+        password.rules = required('密码').concat(validator2)
         comfirmPassword.rules = required('确认密码').concat(validator)
       } else {
-        password.rules = []
+        password.rules = [].concat(validator2)
         comfirmPassword.rules = validator
       }
       if (type == 'edit') {

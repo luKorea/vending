@@ -85,7 +85,7 @@ export default {
             searchRange: true,
             search: true,
             valueFormat: 'yyyy-MM-dd',
-            format: 'yyyy-MM-dd',
+            format: 'yyyy-MM-dd HH:mm:ss',
             searchValue: [startTime, endTime],
             viewDisplay: false,
             searchOrder: 1,

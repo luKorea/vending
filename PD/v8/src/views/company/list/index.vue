@@ -34,6 +34,22 @@
             <div slot="getExportTaskListForm" slot-scope="scope">
                 <exportTask title="导出商家" :Pconfig="config" :row="scope.row" type="3" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
             </div>
+            <template slot-scope="{disabled,size}" slot="isMoneyRemindSearch">
+                <el-checkbox v-model="search.isMoneyRemind" :disabled="disabled" :size="size" label="是否查询低于预警值" border></el-checkbox>
+            </template>
+            <template slot-scope="{disabled,size}" slot="rangeBalanceSearch">
+                <div class="row rangeSearch">
+                    <el-input placeholder="最小" :step="step" v-model="search.startBalance" type="number" :disabled="disabled" :size="size" />
+                    <el-input placeholder="最大" :step="step" v-model="search.endBalance" type="number" :disabled="disabled" :size="size" />
+                </div>
+            </template>
+            <template slot-scope="{disabled,size}" slot="rangeUsableBalanceSearch">
+                <div class="row rangeSearch">
+                    <el-input placeholder="最小" :step="step" v-model="search.startUsableBalance" type="number" :disabled="disabled" :size="size" />
+                    <el-input placeholder="最大" :step="step" v-model="search.endUsableBalance" type="number" :disabled="disabled" :size="size" />
+                </div>
+            </template>
+
         </avue-crud>
     </div>
 </template>
@@ -52,6 +68,8 @@ import balanceRecord from '@/views/company/list/balanceRecord'
 import usageRecord from '@/views/company/list/usageRecord'
 import exportTask from '@/views/exportTask'
 import excelTask from '@/views/excelTask/'
+import numberRange from '@/components/Form/numberRange'
+
 //import api from "@/api/api";
 /**
  * TODO:商家列表（全部）
@@ -62,7 +80,8 @@ export default {
     balanceRecord,
     usageRecord,
     excelTask,
-    exportTask
+    exportTask,
+    numberRange
   },
   mixins: [
     crudMix,
@@ -73,6 +92,14 @@ export default {
   },
   data() {
     return {
+      step: 100,
+      search: {
+        isMoneyRemind: false,
+        startBalance: '',
+        endBalance: '',
+        startUsableBalance: '',
+        endUsableBalance: '',
+      },
       config: {
         detail: '',
         save: '/company/addCompany',
@@ -101,17 +128,23 @@ export default {
       },
       rowKey: 'companyId',
       option: {
-        index: true,
+        // index: true,
         addBtn: true,
         addBtnText: '新增商家',
         menuType: 'menu',
         viewBtn: false,
+
         column: [
           ...this.column_def("商家ID", "bicId", true, { search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false, }),
           ...this.column_def("商家名称", "companyName", true, { search: true, searchSpan: 6, fixed: 'left', viewDisplay: false, }),
           ...this.column_def("是否启用", "startUsingStr", false, { hide: true, addDisplay: false, editDisplay: false, viewDisplay: false }),
           ...this.column_switch("是否启用", "startUsing", false, { hide: true, value: 2, addDisplay: false, editDisplay: false, viewDisplay: false, dicData: [{ value: 1, label: '否' }, { value: 2, label: '是' }], }),
-          ...this.column_money("余额", "balance", true, { viewDisplay: false, editDisabled: true }),
+          ...this.column_money("余额", "balance", true, { searchslot: true, viewDisplay: false, editDisabled: true }),
+
+          ...this.column_money("余额", "rangeBalance", false, { hide: true, search: true, searchslot: true, searchSpan: 6, searchslot: true, viewDisplay: false, editDisplay: false }),
+          ...this.column_money("可用余额", "rangeUsableBalance", false, { hide: true, search: true, searchslot: true, searchSpan: 6, searchslot: true, viewDisplay: false, editDisplay: false }),
+          ...this.column_switch("", "isMoneyRemind", false, { hide: true, search: true, searchslot: true, searchSpan: 6, searchslot: true, viewDisplay: false, editDisplay: false, dicData: [{ value: 1, label: '是' }, { value: 2, label: '否' }], }),
+
           ...this.column_money("冻结金额", "freezeMoney", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
           ...this.column_money("可用余额", "usableBalance", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
           ...this.column_money("余额预警值", "moneyRemind", true, { viewDisplay: false, editDisabled: true }),
@@ -133,6 +166,20 @@ export default {
 
   },
   methods: {
+    //列表前
+    listBefore() {
+      for (let key in this.search) {
+        this.params[key] = this.search[key];
+      }
+      this.search.isMoneyRemind ? (this.params.isMoneyRemind = 1) : (this.params.isMoneyRemind = 2);
+    },
+    //重置条件
+    resetBefore() {
+      for (let key in this.search) {
+        this.search[key] = '';
+      }
+      this.search.isMoneyRemind = false;
+    },
     //*100
     By100() {
       let that = this;

@@ -30,7 +30,7 @@ export default {
       },
       rowKey: 'logcompanyId',
       option: {
-        index: true,
+        //index: true,
         menu: false,
         column: [
           { label: "充值/调减时间", prop: "logTime", type: "datetime", format: 'yyyy-MM-DD HH:mm', },

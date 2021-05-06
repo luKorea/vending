@@ -60,7 +60,7 @@ export default {
       },
       rowKey: 'bicId',
       option: {
-        index: true,
+        // index: true,
         menu: false,
         column: [
           { label: "使用时间", prop: "day" },

@@ -28,7 +28,7 @@ export default {
       },
       rowKey: 'bicId',
       option: {
-        index: true,
+        // index: true,
         addBtn: false,
         delBtn: false,
         editBtn: false,

@@ -84,7 +84,7 @@ export default {
       },
       rowKey: 'companyId',
       option: {
-        index: true,
+        // index: true,
         addBtn: false,
         editBtn: false,
         delBtn: false,
