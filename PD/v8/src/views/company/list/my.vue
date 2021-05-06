@@ -89,7 +89,7 @@ export default {
         editBtn: false,
         delBtn: false,
         menuType: 'menu',
-  
+        stripe: false,
         viewBtn: false,
         column: [
           ...this.column_def("商家ID", "bicId", true, { editDisabled: true, fixed: 'left', viewDisplay: false, }),

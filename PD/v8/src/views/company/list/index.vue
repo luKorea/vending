@@ -133,7 +133,7 @@ export default {
         addBtnText: '新增商家',
         menuType: 'menu',
         viewBtn: false,
-
+        stripe: false,
         column: [
           ...this.column_def("商家ID", "bicId", true, { search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false, }),
           ...this.column_def("商家名称", "companyName", true, { search: true, searchSpan: 6, fixed: 'left', viewDisplay: false, }),
