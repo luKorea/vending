@@ -252,14 +252,16 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 app_key: payFormData.app_key,//支付密钥
             });
             var editUrl = `/pay/testWxPay`
-        } else if (payFormData.typeIndex === '1') {
+        }
+        else if (payFormData.typeIndex === '1') {
             var textParam = JSON.stringify({
                 app_id: payFormData.aliPayId,//支付宝商户ID
                 app_private_key: payFormData.app_private_key,//应用私钥
                 alipay_public_key: payFormData.alipay_public_key//公众号密钥
             });
             var editUrl = `/pay/testAliPay`
-        } else if (type === '3') {
+        }
+        else if (type === '3') {
             var editPayObj = JSON.stringify({
                 alipay_public_key: payFormData.ICBC_alipay_public_key,
                 mchId: payFormData.mchId,
@@ -300,7 +302,8 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 layer.msg(err.message, {icon: 2})
             })
             return;
-        } else if (type === '4') {
+        }
+        else if (type === '4') {
             var textParam = JSON.stringify({
                 mchId: payFormData.juhemchId,
                 app_id: payFormData.juheapp_id,
