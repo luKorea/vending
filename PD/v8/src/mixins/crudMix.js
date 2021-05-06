@@ -24,7 +24,7 @@ export default {
                 align: 'center',
                 headerAlign: 'center',
                 border: true,
-                stripe: true,
+                stripe: true,//斑马纹
                 refreshBtn: true,
                 columnBtn: false,
                 excelBtn: false,
