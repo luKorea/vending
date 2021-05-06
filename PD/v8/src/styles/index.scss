@@ -1,0 +1,117 @@
+@import './element-variables.scss';
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './element-ui.scss';
+@import './sidebar.scss';
+
+body {
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+label {
+  font-weight: 700;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#app {
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+//flex
+.col,
+.col-c {
+  display: flex;
+  flex-direction: column;
+}
+
+.row,
+.row-c {
+  display: flex;
+}
+
+.row {
+  flex-direction: row;
+}
+
+// main-container global css
+.app-container {
+  padding: 20px;
+}
+@media screen and (max-width: 768px) {
+  .app-container {
+    padding: 10px;
+  }
+}
+
+.filter-container {
+  padding-bottom: 10px;
+}
+
+.form-container .el-form-item__content {
+  margin-left: 0px;
+}
+
+//chrome浏览器中自带input样式input:-internal-autofill-selected（修改input背景色）
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-transition-delay: 111111s;
+  -webkit-transition: color 11111s ease-out, background-color 111111s ease-out;
+  transition-delay: 111111s;
+  transition: color 11111s ease-out, background-color 111111s ease-out;
+}
+/* swiper */
+
+.swiper-pagination-bullet-active {
+  background-color: #fff;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  margin: 0 3px;
+}

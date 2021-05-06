@@ -3,7 +3,7 @@
     <div class="login-container">
         <div class="bg">
             <div class="swiper-container">
-                <div class="swiper-wrapper " >
+                <div class="swiper-wrapper ">
                     <img src="../../../public/img/1.jpg" alt="" class="swiper-slide ">
                     <img src="../../../public/img/2.jpg" alt="" class="swiper-slide ">
                     <img src="../../../public/img/3.jpg" alt="" class="swiper-slide ">
@@ -108,9 +108,6 @@ export default {
         pagination: {
           el: '.swiper-pagination',
           clickable: true,
-          // renderBullet: function (index, className) {
-          //   return '<span class="' + className + '">' + (index + 1) + '</span>';
-          // },
         },
       });
     })
@@ -191,6 +188,8 @@ $cursor: #fff;
     color: $cursor;
   }
 }
+
+/* reset element-ui css */
 .login-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -202,9 +201,6 @@ $cursor: #fff;
   width: 100%;
   height: 100%;
   margin: 0 auto;
-}
-/* reset element-ui css */
-.login-container {
   .el-input {
     display: inline-block;
     height: 47px;
@@ -218,12 +214,6 @@ $cursor: #fff;
       padding: 12px 5px 12px 15px;
       color: #000000;
       height: 47px;
-      caret-color: $cursor;
-
-      // &:-webkit-autofill {
-      //   box-shadow: 0 0 0px 1000px $bg inset !important;
-      //   -webkit-text-fill-color: $cursor !important;
-      // }
     }
   }
 
@@ -240,7 +230,6 @@ $cursor: #fff;
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
-
 
 .login-container {
   min-height: 100%;
@@ -422,7 +411,6 @@ $light_gray: #eee;
 
 /* swiper */
 
-
 .swiper-pagination-bullet-active {
   background-color: #fff;
 }
@@ -432,5 +420,4 @@ $light_gray: #eee;
   height: 10px;
   margin: 0 3px;
 }
-
 </style>
