@@ -413,14 +413,7 @@ $light_gray: #eee;
 
   .login-container {
     .bg {
-      z-index: 11;
-      .swiper-container {
-        width: 100%;
-        height: 40vw;
-        top: 0;
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-      }
+      display: none;
     }
     .wrap {
       right: 0;
@@ -463,6 +456,4 @@ $light_gray: #eee;
     }
   }
 }
-
-
 </style>
