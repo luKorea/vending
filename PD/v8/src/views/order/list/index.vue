@@ -2,12 +2,13 @@
     <div class="app-container">
         <avue-crud v-bind="bindVal" v-on="onEvent" v-model="form" :search.sync="search" :page.sync="page">
             <template slot="menuLeft">
-                <el-button v-if="hasPermission(config.excelTask)" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入订单'},0)">导入订单</el-button>
+                <el-button v-if="hasPermission(config.excel.url)" class="el-icon-upload2" size="small" @click="rowView({formslot:'uploadExcelOrder',viewTitle:'导入订单'},0)">导入订单</el-button>
                 <el-button v-if="hasPermission(config.exportExcel)" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出订单'},0)">导出订单</el-button>
             </template>
             <div slot="uploadExcelOrderForm" slot-scope="scope">
-                <uploadExcel @closeDialog="closeDialog('excelTask1')" :uploadData="scope.column.uploadData" :msg="scope.column.msg" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                <excelTask :Pconfig="config"  ref="excelTask1" type="1"></excelTask>
+                <uploadExcel @closeDialog="closeDialog('excelTask1')" :data="config.excel" v-if="form&&form.formslot==scope.column.prop">
+                </uploadExcel>
+                <excelTask :Pconfig="config" ref="excelTask1" type="1"></excelTask>
             </div>
             <div slot="getExportTaskListForm" slot-scope="scope">
                 <exportTask title="导出订单" :Pconfig="config" :row="scope.row" :exportParams="params" type="1" v-if="form&&form.formslot==scope.column.prop"></exportTask>
@@ -48,14 +49,17 @@ export default {
         list: '/order/getOrder',
         exportExcel: '/order/exportOrder',
         exportTask: '/exportTask/getOrderExportTaskList',
-        excelTask: '/excelTask/getOrderExcelTaskList'
-       
+        excelTask: '/excelTask/getOrderExcelTaskList',
+        excel: {
+          title: '订单', url: '/order/excelOrder', href: './assets/uploadOrder.xlsx'
+        }
       },
       rowKey: 'orderId',
       option: {
         menu: false,
         columnBtn: false,
         clearExclude: ['orderTime'],
+        columnBtn: true,
         column: [
           { prop: 'orderId', fixed: 'left', label: '订单编号', minWidth: 180, search: true, searchSpan: 6, viewDisplay: false, },
           { prop: 'orderYard', fixed: 'left', label: '订单码', minWidth: 100, search: true, searchSpan: 6, viewDisplay: false, },
@@ -108,10 +112,8 @@ export default {
           { prop: 'deliveryTime', label: '出库时间', minWidth: 180, viewDisplay: false, },
         ],
         ...this.group_def([
-          ...this.group_column_formslot("uploadExcelOrder", {
-            uploadData: { title: '订单', url: 'order/excelOrder', href: './assets/uploadOrder.xlsx' },
-          }),
-          ...this.group_column_formslot("getExportTaskList", {}),
+          ...this.group_column_formslot("uploadExcelOrder"),
+          ...this.group_column_formslot("getExportTaskList"),
         ]),
       }
     }

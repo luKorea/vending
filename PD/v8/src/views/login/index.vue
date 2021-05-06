@@ -22,7 +22,7 @@
                 <el-form ref="loginForm" :model="loginForm" :rules="loginRules" style="width: 100%;" auto-complete="on" label-position="left">
                     <div class="wrap-left">
                         <img src="../../../public/img/icon.png" alt="" style="border-radius: 50%;">
-                        <div style="font-size: 26px;">物流-质检费控系统</div>
+                        <div style="font-size: 26px;">{{defaultSettingsTitle}}</div>
                     </div>
                     <div class="login-inp list">
                         <img src="../../../public/img/account.png" alt="">
@@ -413,14 +413,7 @@ $light_gray: #eee;
 
   .login-container {
     .bg {
-      z-index: 11;
-      .swiper-container {
-        width: 100%;
-        height: 40vw;
-        top: 0;
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-      }
+      display: none;
     }
     .wrap {
       right: 0;
@@ -463,6 +456,4 @@ $light_gray: #eee;
     }
   }
 }
-
-
 </style>
