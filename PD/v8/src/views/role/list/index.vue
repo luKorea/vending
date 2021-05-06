@@ -13,7 +13,7 @@ import { mapGetters } from 'vuex'
 import { req } from '@/utils/req.js'
 import permissionMix from "@/mixins/permissionMix";
 import controlTree from "@/views/role/list/controlTree";
-import { DeepClone } from '@/utils/parameterCopy'
+
 /**
  * TODO:角色管理
  */
@@ -32,6 +32,8 @@ export default {
   ],
   data() {
     return {
+      controlList: [],
+      controlListChecked: [],
       isIndeterminate: false,
       defaultProps: {
         children: 'controlList',
@@ -83,11 +85,28 @@ export default {
       },
     }
   },
+  watch: {
+    //监听处理添加时，编辑除用户权限之外的权限，把用户权限清除
+    form: {
+      handler: function (val, oldVal) {
+        val.controlList = this.controlListChecked
+      },
+      deep: true
+    }
+  },
   methods: {
+    updateBefore() {
+      this.form.controlList = this.controlListChecked
+      return 1;
+    },
+    addBefore() {
+      this.form.controlList = this.controlListChecked
+      return 1;
+    },
     //选择
     checked(val) {
-      //深拷贝
-      this.form.controlList = DeepClone(val)
+      console.log('checked', val);
+      this.controlListChecked = val;
     },
     //删除前
     delBefore(row) {
@@ -125,6 +144,10 @@ export default {
           that.recursive(false)
         }
       }
+      if (type == 'add') {
+        that.form.controlList = [];
+        that.controlListChecked = [];
+      }
       that.form = Object.assign(that.form, that.form)
     },
     //打开获取数据后
@@ -152,6 +175,7 @@ export default {
       form.controlList = form.controlList.filter((v) => {
         return obj[v]
       })
+      that.controlListChecked = form.controlList;
       that.form = Object.assign(form, {})
     },
     //获取列表后
