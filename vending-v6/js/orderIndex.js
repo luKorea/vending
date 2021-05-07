@@ -54,7 +54,7 @@ $.ajax({
 var payFlag = [],
     payTypeData = '',
     // 判断是微信或支付宝浏览器
-    payTypeIndex = '',
+    payTypeIndex = 3,
     open = '';
 
 // // // 解密
@@ -94,7 +94,6 @@ function decrypt(cipher) {
         payTypeData = goodsData.payee[payFlag.indexOf(2)];
         getCode(payTypeData.app_id)
     } else if (type === 'sd') {
-        console.log(111);
         payTypeIndex = 3;
         payTypeData = goodsData.payee[payFlag.indexOf(4)];
     } else {
@@ -399,12 +398,12 @@ function shanPay() {
             "Content-Type": "application/json",
         },
         success: function (res) {
-            const form = decrypt1(res.data);
-            const div = document.createElement('div')
-            div.id = 'shande'
-            div.innerHTML = form
-            document.body.appendChild(div)
-            document.querySelector('#shande').children[0].submit() // 执行后会唤起支付宝
+            window.location.href =  decrypt1(res.data);
+            // const div = document.createElement('div')
+            // div.id = 'shande'
+            // div.innerHTML = form
+            // document.body.appendChild(div)
+            // document.querySelector('#shande').children[0].submit() // 执行后会唤起支付宝
         },
         error: function (res) {
             prompt(res);
