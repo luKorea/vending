@@ -45,7 +45,7 @@ export default {
     }
   },
   methods: {
-    //获取列表前
+    //获取列表
     listBefore() {
       this.params.companyId = this.row.companyId
     }

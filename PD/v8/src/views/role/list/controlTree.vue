@@ -16,9 +16,6 @@ export default {
       default:[]
     },
   },
-  watch: {
-
-  },
   data() {
     return {
       defaultProps: {
