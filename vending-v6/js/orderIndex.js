@@ -91,7 +91,7 @@ function decrypt(cipher) {
         payTypeIndex = 2;
         payTypeData = goodsData.payee[payFlag.indexOf(2)];
         getCode(payTypeData.app_id)
-    } else if (type === '杉德') {
+    } else if (type === 'sd') {
         payTypeIndex = 3;
         payTypeData = goodsData.payee[payFlag.indexOf(4)];
     } else {
