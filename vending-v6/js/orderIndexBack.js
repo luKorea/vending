@@ -23,6 +23,7 @@ function encrypts(content) {
 // return ;
 var str = getQueryString('goods'),
     type = getQueryString('type');
+type= decodeURIComponent(type)
 console.log(type);
 var goodsData = null;
 $.ajax({
@@ -93,7 +94,7 @@ function decrypt(cipher) {
         payTypeData = goodsData.payee[payFlag.indexOf(2)];
         getCode(payTypeData.app_id)
     }
-    else if (type === '杉德') {
+    else if (type === 'sd') {
         payTypeIndex = 3;
         // payTypeData = goodsData.payee[payFlag.indexOf(3)];
     }
