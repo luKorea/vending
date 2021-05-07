@@ -1,5 +1,5 @@
 <template>
-    <div class="row-c">
+    <div class="row-c UploadExcel ">
         <el-upload ref="upload" style="margin: auto;" :limit="1" accept=".xlsx, .xls" :action="data.url" :disabled="isUploading" :http-request="handleFileUpload" :auto-upload="true" drag>
             <i class="el-icon-upload" />
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -68,5 +68,11 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
+.UploadExcel .el-upload {
+  width: 100%;
+  .el-upload-dragger {
+    width: auto;
+  }
+}
 </style>

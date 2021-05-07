@@ -37,7 +37,7 @@ export default {
                 viewTitle: '查看',
                 editTitle: '编辑',
                 emptyBtnText: '重置',
-                dialogWidth: '60%',
+                dialogWidth: '92%',
                 menuWidth: 140,
                 searchMenuPosition: 'left',
                 emptyBtnIcon:'el-icon-close',

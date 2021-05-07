@@ -62,7 +62,7 @@ import permissionMix from "@/mixins/permissionMix";
 /**
  * 组件
  */
-import UploadExcel from '@/views/company/list/UploadExcel'
+import UploadExcel from '@/views/UploadExcel'
 import BalanceRecord from '@/views/company/list/BalanceRecord'
 import UsageRecord from '@/views/company/list/UsageRecord'
 import ExportTask from '@/views/ExportTask'

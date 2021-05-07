@@ -19,7 +19,7 @@
 <script>
 import crudMix from "@/mixins/crudMix";
 import permissionMix from "@/mixins/permissionMix";
-import UploadExcel from '@/views/company/list/UploadExcel'
+import UploadExcel from '@/views/UploadExcel'
 import ExportTask from '@/views/ExportTask'
 import ExcelTask from '@/views/ExcelTask'
 /**
