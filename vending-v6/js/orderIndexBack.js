@@ -23,8 +23,7 @@ function encrypts(content) {
 // return ;
 var str = getQueryString('goods'),
     type = getQueryString('type');
-type= decodeURIComponent(type)
-console.log(type);
+
 var goodsData = null;
 $.ajax({
     type: 'post',
