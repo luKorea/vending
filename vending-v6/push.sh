@@ -11,4 +11,4 @@ git add .
 git commit -m "${note} ${remark}"
 git pull origin dev
 git push origin dev
-git push github dev
+# git push github dev
