@@ -1,5 +1,5 @@
 import '../MyCss/index.css';
-import {decrypt1, getQueryString, loadAjax, numFormat1, prompt} from '../common/common-mail.js';
+import {loadAjax, prompt, numFormat1, getQueryString, timeStamp, decrypt1} from '../common/common-mail.js';
 
 // 进入页面获取数据
 // 加密
@@ -20,6 +20,8 @@ function encrypts(content) {
     });
     return String(encryptResult);//把object转化为string
 }
+
+// return ;
 var str = getQueryString('goods'),
     type = getQueryString('type');
 console.log(type);
@@ -92,6 +94,7 @@ function decrypt(cipher) {
         payTypeData = goodsData.payee[payFlag.indexOf(2)];
         getCode(payTypeData.app_id)
     } else if (type === 'sd') {
+        console.log(111);
         payTypeIndex = 3;
         payTypeData = goodsData.payee[payFlag.indexOf(4)];
     } else {
@@ -168,6 +171,7 @@ function payTypeSelect() {
             break;
     }
 }
+
 
 
 // 邮寄订单支付
@@ -267,7 +271,7 @@ function onBridgeReady(wxData) {
             paySign: wxData.paySign, // 支付签名
         },
         function (res) {
-            if (res.err_msg === "get_brand_wcpay_request:ok") {
+            if (res.err_msg == "get_brand_wcpay_request:ok") {
                 // 使用以上方式判断前端返回,微信团队郑重提示：
                 //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
             } else {
@@ -395,12 +399,12 @@ function shanPay() {
             "Content-Type": "application/json",
         },
         success: function (res) {
-            window.location.href = res.data;
-            // const div = document.createElement('div')
-            // div.id = 'shande'
-            // div.innerHTML = form
-            // document.body.appendChild(div)
-            // document.querySelector('#shande').children[0].submit() // 执行后会唤起支付宝
+            const form = decrypt1(res.data);
+            const div = document.createElement('div')
+            div.id = 'shande'
+            div.innerHTML = form
+            document.body.appendChild(div)
+            document.querySelector('#shande').children[0].submit() // 执行后会唤起支付宝
         },
         error: function (res) {
             prompt(res);

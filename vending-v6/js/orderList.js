@@ -161,7 +161,7 @@ function orderListFun(listStr) {
                 </li>`
     });
     $('.ordertListBox ul').html(str);
-    setTimeout(function () {// <-- Simulate network congestion, remove setTimeout from production!
+    setTimeout(function () {//
         if (refIndex == 1) {
             refIndex++
             refresher.init({
@@ -170,7 +170,7 @@ function orderListFun(listStr) {
                 pullUpAction: Load
             });
         }
-        ordertListBox.refresh();/****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
+        ordertListBox.refresh();
     }, 500);
     // ordertListBox.refresh();
 };
@@ -219,7 +219,7 @@ $('.back').click(function () {
 });
 
 function Refresh() {
-    setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+    setTimeout(function () {	//
         var el, li, i;
         // el =document.querySelector("#ordertListBox ul");
         //这里写你的刷新代码
