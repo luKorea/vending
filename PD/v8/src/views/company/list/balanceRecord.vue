@@ -11,7 +11,7 @@ import crudMix from "@/mixins/crudMix";
  */
 export default {
   mixins: [
-    crudMix,
+    crudMix,  
   ],
   props: {
     row: {},
