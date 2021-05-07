@@ -28,7 +28,7 @@ export default {
       },
       rowKey: 'orderId',
       option: {
-        index: true,
+        
         menu: false,
         column: [
           { prop: 'orderId', fixed: 'left', label: '订单编号', minWidth: 180, viewDisplay: false, },
@@ -63,8 +63,7 @@ export default {
           {
             prop: 'orderTime', label: '下单时间', minWidth: 180,
             type: 'date',
-            valueFormat: 'yyyy-MM-dd',
-            format: 'yyyy-MM-dd',
+            format: 'yyyy-MM-dd HH:mm:ss',
           },
           { prop: 'storageTime', label: '入库时间', minWidth: 180, viewDisplay: false, },
           { prop: 'inspectTime', label: '送检时间', minWidth: 180, viewDisplay: false, },

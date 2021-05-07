@@ -6,7 +6,7 @@
 </template>
 <script>
 /**
- * TODO:角色权限树
+ * TODO:角色权限树  
  */
 export default {
   props: {
@@ -15,9 +15,6 @@ export default {
       type:Array,
       default:[]
     },
-  },
-  watch: {
-
   },
   data() {
     return {

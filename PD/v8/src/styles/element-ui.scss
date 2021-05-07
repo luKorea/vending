@@ -64,11 +64,12 @@
 }
 
 .el-table .warning-row {
-  background: oldlace !important;
+  background: oldlace;
 }
 
+
 .el-table .success-row {
-  background: #f0f9eb !important;
+  background: #f0f9eb;
 }
 
 .avue-crud.avue-crud--card {
@@ -154,14 +155,17 @@
     display: none !important;
   }
 }
-.levelbox1{
+
+.levelbox1 {
   margin-left: 24px;
   line-height: 21px;
 }
+
 .levelbox2 {
   margin-top: 0px;
   margin-bottom: 5px;
   margin-left: 24px;
+
   .level2 {
     width: 30%;
     display: inline-block;
@@ -180,4 +184,14 @@
     }
   }
 
+}
+
+.rangeSearch .el-input__inner {
+  padding-right: 0;
+}
+
+@media only screen and (min-width: 768px) {
+  .el-col-24 {
+    width: 100%;
+  }
 }

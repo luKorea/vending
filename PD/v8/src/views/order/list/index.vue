@@ -6,12 +6,12 @@
                 <el-button v-if="hasPermission(config.exportExcel)" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出订单'},0)">导出订单</el-button>
             </template>
             <div slot="uploadExcelOrderForm" slot-scope="scope">
-                <uploadExcel @closeDialog="closeDialog('excelTask1')" :data="config.excel" v-if="form&&form.formslot==scope.column.prop">
-                </uploadExcel>
-                <excelTask :Pconfig="config" ref="excelTask1" type="1"></excelTask>
+                <UploadExcel @closeDialog="closeDialog('excelTask1')" :data="config.excel" v-if="form&&form.formslot==scope.column.prop">
+                </UploadExcel>
+                <ExcelTask :Pconfig="config" ref="excelTask1" type="1"></ExcelTask>
             </div>
             <div slot="getExportTaskListForm" slot-scope="scope">
-                <exportTask title="导出订单" :Pconfig="config" :row="scope.row" :exportParams="params" type="1" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                <ExportTask title="导出订单" :Pconfig="config" :row="scope.row" :exportParams="params" type="1" v-if="form&&form.formslot==scope.column.prop"></ExportTask>
             </div>
         </avue-crud>
     </div>
@@ -19,17 +19,17 @@
 <script>
 import crudMix from "@/mixins/crudMix";
 import permissionMix from "@/mixins/permissionMix";
-import uploadExcel from '@/views/company/list/uploadExcel'
-import exportTask from '@/views/exportTask'
-import excelTask from '@/views/excelTask/'
+import UploadExcel from '@/views/UploadExcel'
+import ExportTask from '@/views/ExportTask'
+import ExcelTask from '@/views/ExcelTask'
 /**
  * TODO:订单列表(全部)
  */
 export default {
   components: {
-    uploadExcel,
-    exportTask,
-    excelTask
+    UploadExcel,
+    ExportTask,
+    ExcelTask
   },
   mixins: [
     crudMix,
@@ -98,7 +98,7 @@ export default {
             searchRange: true,
             search: true,
             valueFormat: 'yyyy-MM-dd',
-            format: 'yyyy-MM-dd',
+            format: 'yyyy-MM-dd HH:mm:ss',
             searchValue: [startTime, endTime],
             viewDisplay: false,
             searchOrder: 1,

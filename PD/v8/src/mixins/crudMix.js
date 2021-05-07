@@ -20,11 +20,11 @@ export default {
             },
             data: [],
             option: {
-                index: true,
+                // index: true,
                 align: 'center',
                 headerAlign: 'center',
                 border: true,
-                stripe: true,
+                stripe: true,//斑马纹
                 refreshBtn: true,
                 columnBtn: false,
                 excelBtn: false,
@@ -37,9 +37,10 @@ export default {
                 viewTitle: '查看',
                 editTitle: '编辑',
                 emptyBtnText: '重置',
-                dialogWidth: '60%',
+                dialogWidth: '92%',
                 menuWidth: 140,
                 searchMenuPosition: 'left',
+                emptyBtnIcon:'el-icon-close',
                 column: [
                     {
                         label: '编号',//列名称
@@ -65,7 +66,7 @@ export default {
                         minRows: 1,//设置计数器允许的最小值
                         maxRows: 10,//设置计数器允许的最大值
                         filters: true,//筛选
-
+                        showColumn: false,//控制列显隐控制
 
                         rules://表单规则,参考ele表单规则配置
                             [
@@ -171,7 +172,7 @@ export default {
          * @param {*} row 
          * @param {*} index 
          */
-        rowView(row, index) {//自定义查看
+        rowView(row, index) {//自定义查看(group_def group_column_formslot 生效 )
             if (this.option && this.option.group && this.option.group.length > 0) {
                 this.option.group[0].column.forEach((v) => {
                     v.prop == row.formslot ? v.viewDisplay = true : v.viewDisplay = false

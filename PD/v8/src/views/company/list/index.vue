@@ -22,18 +22,33 @@
                 <el-button v-if="hasPermission(config.exportExcel)" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出商家'},0)">导出商家</el-button>
             </template>
             <div slot="uploadExcelCompanyForm" slot-scope="scope">
-                <uploadExcel @closeDialog="closeDialog('excelTask3')" :data="config.excel" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                <excelTask :Pconfig="config" ref="excelTask3" type="3"></excelTask>
+                <UploadExcel @closeDialog="closeDialog('excelTask3')" :data="config.excel" v-if="form&&form.formslot==scope.column.prop"></UploadExcel>
+                <ExcelTask :Pconfig="config" ref="excelTask3" type="3"></ExcelTask>
             </div>
             <div slot="reduceBalanceForm" slot-scope="scope">
-                <balanceRecord :Pconfig="config" :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></balanceRecord>
+                <BalanceRecord :Pconfig="config" :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></BalanceRecord>
             </div>
             <div slot="usageRecordForm" slot-scope="scope">
-                <usageRecord :Pconfig="config" :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></usageRecord>
+                <UsageRecord :Pconfig="config" :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></UsageRecord>
             </div>
             <div slot="getExportTaskListForm" slot-scope="scope">
-                <exportTask title="导出商家" :Pconfig="config" :row="scope.row" type="3" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                <ExportTask title="导出商家" :Pconfig="config" :row="scope.row" type="3" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></ExportTask>
             </div>
+            <template slot-scope="{disabled,size}" slot="isMoneyRemindSearch">
+                <el-checkbox v-model="search.isMoneyRemind" :disabled="disabled" :size="size" label="查询预警商户" border></el-checkbox>
+            </template>
+            <template slot-scope="{disabled,size}" slot="rangeBalanceSearch">
+                <div class="row rangeSearch">
+                    <el-input placeholder="最小" :step="step" v-model="search.startBalance" type="number" :disabled="disabled" :size="size" />
+                    <el-input placeholder="最大" :step="step" v-model="search.endBalance" type="number" :disabled="disabled" :size="size" />
+                </div>
+            </template>
+            <template slot-scope="{disabled,size}" slot="rangeUsableBalanceSearch">
+                <div class="row rangeSearch">
+                    <el-input placeholder="最小" :step="step" v-model="search.startUsableBalance" type="number" :disabled="disabled" :size="size" />
+                    <el-input placeholder="最大" :step="step" v-model="search.endUsableBalance" type="number" :disabled="disabled" :size="size" />
+                </div>
+            </template>
         </avue-crud>
     </div>
 </template>
@@ -47,22 +62,24 @@ import permissionMix from "@/mixins/permissionMix";
 /**
  * 组件
  */
-import uploadExcel from '@/views/company/list/uploadExcel'
-import balanceRecord from '@/views/company/list/balanceRecord'
-import usageRecord from '@/views/company/list/usageRecord'
-import exportTask from '@/views/exportTask'
-import excelTask from '@/views/excelTask/'
+import UploadExcel from '@/views/UploadExcel'
+import BalanceRecord from '@/views/company/list/BalanceRecord'
+import UsageRecord from '@/views/company/list/UsageRecord'
+import ExportTask from '@/views/ExportTask'
+import ExcelTask from '@/views/ExcelTask'
+
+
 //import api from "@/api/api";
 /**
  * TODO:商家列表（全部）
  */
 export default {
   components: {
-    uploadExcel,
-    balanceRecord,
-    usageRecord,
-    excelTask,
-    exportTask
+    UploadExcel,
+    BalanceRecord,
+    UsageRecord,
+    ExcelTask,
+    ExportTask,
   },
   mixins: [
     crudMix,
@@ -73,6 +90,14 @@ export default {
   },
   data() {
     return {
+      step: 100,
+      search: {
+        isMoneyRemind: false,
+        startBalance: '',
+        endBalance: '',
+        startUsableBalance: '',
+        endUsableBalance: '',
+      },
       config: {
         detail: '',
         save: '/company/addCompany',
@@ -101,23 +126,28 @@ export default {
       },
       rowKey: 'companyId',
       option: {
-        index: true,
+
         addBtn: true,
         addBtnText: '新增商家',
         menuType: 'menu',
         viewBtn: false,
+        stripe: false,
         column: [
           ...this.column_def("商家ID", "bicId", true, { search: true, searchSpan: 6, editDisabled: true, fixed: 'left', viewDisplay: false, }),
           ...this.column_def("商家名称", "companyName", true, { search: true, searchSpan: 6, fixed: 'left', viewDisplay: false, }),
           ...this.column_def("是否启用", "startUsingStr", false, { hide: true, addDisplay: false, editDisplay: false, viewDisplay: false }),
           ...this.column_switch("是否启用", "startUsing", false, { hide: true, value: 2, addDisplay: false, editDisplay: false, viewDisplay: false, dicData: [{ value: 1, label: '否' }, { value: 2, label: '是' }], }),
-          ...this.column_money("余额", "balance", true, { viewDisplay: false, editDisabled: true }),
+          ...this.column_money("余额", "balance", true, { searchslot: true, viewDisplay: false, editDisabled: true }),
           ...this.column_money("冻结金额", "freezeMoney", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
           ...this.column_money("可用余额", "usableBalance", true, { addDisplay: false, viewDisplay: false, editDisplay: false }),
           ...this.column_money("余额预警值", "moneyRemind", true, { viewDisplay: false, editDisabled: true }),
           ...this.column_money("充值金额", "Recharge", true, { addDisplay: false, viewDisplay: false, display: true, hide: true }),
           ...this.column_money("调减金额", "Reduce", true, { addDisplay: false, viewDisplay: false, display: true, hide: true }),
-          ...this.column_textarea("备注", "remark", false, { viewDisplay: false, editDisplay: true })
+          ...this.column_textarea("备注", "remark", false, { viewDisplay: false, editDisplay: true }),
+
+          ...this.column_searchslot("余额", "rangeBalance"),
+          ...this.column_searchslot("可用余额", "rangeUsableBalance"),
+          ...this.column_searchslot("", "isMoneyRemind"),
         ],
         ...this.group_def([
           ...this.group_column_formslot("uploadExcelCompany"),
@@ -133,6 +163,20 @@ export default {
 
   },
   methods: {
+    //列表前
+    listBefore() {
+      for (let key in this.search) {
+        this.params[key] = this.search[key];
+      }
+      this.search.isMoneyRemind ? (this.params.isMoneyRemind = 1) : (this.params.isMoneyRemind = 2);
+    },
+    //重置条件
+    resetBefore() {
+      for (let key in this.search) {
+        this.search[key] = '';
+      }
+      this.search.isMoneyRemind = false;
+    },
     //*100
     By100() {
       let that = this;

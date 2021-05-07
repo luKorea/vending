@@ -1,5 +1,5 @@
 <template>
-    <div class="row-c">
+    <div class="row-c UploadExcel ">
         <el-upload ref="upload" style="margin: auto;" :limit="1" accept=".xlsx, .xls" :action="data.url" :disabled="isUploading" :http-request="handleFileUpload" :auto-upload="true" drag>
             <i class="el-icon-upload" />
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -20,7 +20,6 @@ import { req } from '@/utils/req.js'
  * TODO:上传文件模板
  */
 export default {
-  components: {},
   props: {
     data: {},
   },
@@ -53,13 +52,6 @@ export default {
         that.isUploading = false
         that.$emit('closeDialog')
         loading.close();
-        if (res.code != 200) {
-          that.$alert(res.data && res.data.join(','), '提示', {
-            confirmButtonText: '确定',
-            callback: action => {
-            }
-          });
-        }
       }).catch(function (err) {
         that.$refs.upload.clearFiles()
         that.isUploading = false
@@ -69,5 +61,11 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
+.UploadExcel .el-upload {
+  width: 100%;
+  .el-upload-dragger {
+    width: auto;
+  }
+}
 </style>

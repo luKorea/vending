@@ -10,8 +10,6 @@ import crudMix from "@/mixins/crudMix";
  * TODO:导入记录
  */
 export default {
-  components: {
-  },
   mixins: [
     crudMix,
   ],
@@ -34,7 +32,7 @@ export default {
       },
       rowKey: 'id',
       option: {
-        index: true,
+        // index: true,
         menu: false,
         column: [
           { label: "ID", prop: "id", width: 60 },

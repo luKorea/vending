@@ -19,13 +19,13 @@
                 <el-button v-if="hasPermission(config.exportExcel)" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出商家'},0)">导出商家</el-button>
             </template>
             <div slot="reduceBalanceForm" slot-scope="scope">
-                <balanceRecord :Pconfig="config" :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></balanceRecord>
+                <BalanceRecord :Pconfig="config" :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></BalanceRecord>
             </div>
             <div slot="usageRecordForm" slot-scope="scope">
-                <usageRecord :Pconfig="config" :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></usageRecord>
+                <UsageRecord :Pconfig="config" :row="scope.row" v-if="form&&form.formslot==scope.column.prop"></UsageRecord>
             </div>
             <div slot="getExportTaskListForm" slot-scope="scope">
-                <exportTask title="导出商家" :Pconfig="config" :row="scope.row" type="3" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                <ExportTask title="导出商家" :Pconfig="config" :row="scope.row" type="3" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></ExportTask>
             </div>
         </avue-crud>
     </div>
@@ -41,20 +41,19 @@ import permissionMix from "@/mixins/permissionMix";
  * 组件
  */
 
-import balanceRecord from '@/views/company/list/balanceRecord'
-import usageRecord from '@/views/company/list/usageRecord'
-import exportTask from '@/views/exportTask'
-import excelTask from '@/views/excelTask/'
+import BalanceRecord from '@/views/company/list/BalanceRecord'
+import UsageRecord from '@/views/company/list/UsageRecord'
+import ExportTask from '@/views/ExportTask'
+
 
 /**
  * TODO:商家列表（我的）
  */
 export default {
   components: {
-    balanceRecord,
-    usageRecord,
-    excelTask,
-    exportTask
+    BalanceRecord,
+    UsageRecord,
+    ExportTask
   },
   mixins: [
     crudMix,
@@ -84,12 +83,12 @@ export default {
       },
       rowKey: 'companyId',
       option: {
-        index: true,
+        
         addBtn: false,
         editBtn: false,
         delBtn: false,
         menuType: 'menu',
-  
+        stripe: false,
         viewBtn: false,
         column: [
           ...this.column_def("商家ID", "bicId", true, { editDisabled: true, fixed: 'left', viewDisplay: false, }),
