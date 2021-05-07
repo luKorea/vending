@@ -2,7 +2,7 @@
     <div class="app-container">
         <avue-crud v-bind="bindVal" v-on="onEvent" :search.sync="search" v-model="form" :page.sync="page">
             <template slot-scope="scope" slot="controlListForm">
-                <controlTree :key="scope" @checked="checked" :defaultExpandedKeys="form.controlList" :data="controlList"></controlTree>
+                <ControlTree class="ControlTree" :key="scope" @checked="checked" :defaultExpandedKeys="form.controlList" :data="controlList"></ControlTree>
             </template>
         </avue-crud>
     </div>
@@ -12,14 +12,14 @@ import crudMix from "@/mixins/crudMix";
 import { mapGetters } from 'vuex'
 import { req } from '@/utils/req.js'
 import permissionMix from "@/mixins/permissionMix";
-import controlTree from "@/views/role/list/controlTree";
+import ControlTree from "@/views/role/list/ControlTree";
 
 /**
  * TODO:角色管理
  */
 export default {
   components: {
-    controlTree
+    ControlTree
   },
   computed: {
     ...mapGetters([

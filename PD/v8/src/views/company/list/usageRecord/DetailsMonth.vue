@@ -13,10 +13,10 @@
                 <span v-else>--</span>
             </template>
             <div slot="qualityDayForm" slot-scope="scope">
-                <qualityDay :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></qualityDay>
+                <QualityDay :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></QualityDay>
             </div>
             <div slot="expressDayForm" slot-scope="scope">
-                <expressDay :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></expressDay>
+                <ExpressDay :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></ExpressDay>
             </div>
         </avue-crud>
     </div>
@@ -29,15 +29,15 @@ import crudMix from "@/mixins/crudMix";
 /**
  * 组件
  */
-import qualityDay from '@/views/company/list/usageRecord/QualityDay'
-import expressDay from '@/views/company/list/usageRecord/ExpressDay'
+import QualityDay from '@/views/company/list/UsageRecord/QualityDay'
+import ExpressDay from '@/views/company/list/UsageRecord/ExpressDay'
 /**
  * TODO:每日详情
  */
 export default {
   components: {
-    qualityDay,
-    expressDay
+    QualityDay,
+    ExpressDay
   },
   mixins: [
     crudMix,
@@ -60,10 +60,10 @@ export default {
       },
       rowKey: 'bicId',
       option: {
-        // index: true,
+        
         menu: false,
         column: [
-          { label: "使用时间", prop: "day" },
+          ...this.column_def("使用时间", "day", false, {}),
           ...this.column_money("快递费用", "expressFee", false, { viewDisplay: false, solt: true, }),
           ...this.column_money("质检费用", "qualityInspectionFee", false, { viewDisplay: false, solt: true, }),
           ...this.column_money("使用金额", "monthMoney", false, { viewDisplay: false })

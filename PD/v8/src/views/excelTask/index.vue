@@ -10,8 +10,6 @@ import crudMix from "@/mixins/crudMix";
  * TODO:导入记录
  */
 export default {
-  components: {
-  },
   mixins: [
     crudMix,
   ],

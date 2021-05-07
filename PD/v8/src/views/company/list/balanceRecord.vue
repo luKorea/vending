@@ -10,8 +10,6 @@ import crudMix from "@/mixins/crudMix";
  * TODO:充值/调减记录
  */
 export default {
-  components: {
-  },
   mixins: [
     crudMix,
   ],
@@ -30,10 +28,9 @@ export default {
       },
       rowKey: 'logcompanyId',
       option: {
-        //index: true,
         menu: false,
         column: [
-          { label: "充值/调减时间", prop: "logTime", type: "datetime", format: 'yyyy-MM-DD HH:mm', },
+          ...this.column_datetime("充值/调减时间", "logTime", false),
           ...this.column_money("充值/调减前余额", "frontBalance", false, { viewDisplay: false }),
           ...this.column_money("充值/调减金额", "money", false, { viewDisplay: false }),
           ...this.column_money("充值/调减后余额", "laterBalance", false, { viewDisplay: false }),
@@ -43,7 +40,7 @@ export default {
     }
   },
   created() {
-    if (this.Pconfig&&this.Pconfig.getTopUpLog) {
+    if (this.Pconfig && this.Pconfig.getTopUpLog) {
       this.config.list = this.Pconfig.getTopUpLog;
     }
   },

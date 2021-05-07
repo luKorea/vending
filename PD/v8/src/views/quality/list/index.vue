@@ -7,11 +7,11 @@
                     导出质检费</el-button>
             </template>
             <div slot="uploadExcelOrderForm" slot-scope="scope">
-                <uploadExcel @closeDialog="closeDialog('excelTask2')" :data="config.excel" v-if="form&&form.formslot==scope.column.prop"></uploadExcel>
-                <excelTask :Pconfig="config" ref="excelTask2" type="2"></excelTask>
+                <UploadExcel @closeDialog="closeDialog('excelTask2')" :data="config.excel" v-if="form&&form.formslot==scope.column.prop"></UploadExcel>
+                <ExcelTask :Pconfig="config" ref="excelTask2" type="2"></ExcelTask>
             </div>
             <div slot="exportQualityTestingForm" slot-scope="scope">
-                <exportTask title="导出质检费" :Pconfig="config" :row="scope.row" type="2" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                <ExportTask title="导出质检费" :Pconfig="config" :row="scope.row" type="2" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></ExportTask>
             </div>
         </avue-crud>
     </div>
@@ -19,17 +19,17 @@
 <script>
 import crudMix from "@/mixins/crudMix";
 import permissionMix from "@/mixins/permissionMix";
-import uploadExcel from '@/views/company/list/uploadExcel'
-import exportTask from '@/views/exportTask'
-import excelTask from '@/views/excelTask/'
+import UploadExcel from '@/views/company/list/UploadExcel'
+import ExportTask from '@/views/ExportTask'
+import ExcelTask from '@/views/ExcelTask'
 /**
  * TODO:质检列表(全部)
  */
 export default {
   components: {
-    uploadExcel,
-    exportTask,
-    excelTask
+    UploadExcel,
+    ExportTask,
+    ExcelTask
   },
   mixins: [
     crudMix,

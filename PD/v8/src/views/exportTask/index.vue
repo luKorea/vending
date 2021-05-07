@@ -19,8 +19,6 @@ import { req } from '@/utils/req.js'
  * TODO:导出记录
  */
 export default {
-  components: {
-  },
   mixins: [
     crudMix,
   ],

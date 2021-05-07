@@ -20,7 +20,6 @@ import { req } from '@/utils/req.js'
  * TODO:上传文件模板
  */
 export default {
-  components: {},
   props: {
     data: {},
   },

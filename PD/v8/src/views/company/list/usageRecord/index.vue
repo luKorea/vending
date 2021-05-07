@@ -7,7 +7,7 @@
                 </el-button>
             </template>
             <div slot="DetailsMonthForm" slot-scope="scope">
-                <detailsMonth :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></detailsMonth>
+                <DetailsMonth :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></DetailsMonth>
             </div>
             <template slot-scope="scope" slot="expressFee">
                 <span v-if="scope.row.expressFee&&scope.row.expressFee>0"
@@ -22,10 +22,10 @@
                 <span v-else>--</span>
             </template>
             <div slot="qualityDayForm" slot-scope="scope">
-                <qualityDay :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></qualityDay>
+                <QualityDay :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></QualityDay>
             </div>
             <div slot="expressDayForm" slot-scope="scope">
-                <expressDay :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></expressDay>
+                <ExpressDay :Pconfig="Pconfig" :row="{...scope.row,...row}" v-if="form&&form.formslot==scope.column.prop"></ExpressDay>
             </div>
         </avue-crud>
     </div>
@@ -33,17 +33,17 @@
 <script>
 import crudMix from "@/mixins/crudMix";
 
-import detailsMonth from '@/views/company/list/usageRecord/DetailsMonth'
-import qualityDay from '@/views/company/list/usageRecord/QualityDay'
-import expressDay from '@/views/company/list/usageRecord/ExpressDay'
+import DetailsMonth from '@/views/company/list/UsageRecord/DetailsMonth'
+import QualityDay from '@/views/company/list/UsageRecord/QualityDay'
+import ExpressDay from '@/views/company/list/UsageRecord/ExpressDay'
 /**
  * TODO:使用详情
  */
 export default {
   components: {
-    detailsMonth,
-    qualityDay,
-    expressDay
+    DetailsMonth,
+    QualityDay,
+    ExpressDay
   },
   mixins: [
     crudMix,
@@ -66,18 +66,18 @@ export default {
       },
       rowKey: 'bicId',
       option: {
-        // index: true,
+        
         addBtn: false,
         delBtn: false,
         editBtn: false,
         viewBtn: false,
-    
+
         column: [
           { label: "使用月份", prop: "statisticsTime", type: "datetime", format: 'yyyy-MM', },
-          { label: "快递费用", prop: "expressFee", solt: true, },
-          { label: "质检费用", prop: "qualityInspectionFee", solt: true, },
+          ...this.column_money("快递费用", "expressFee", false, { solt: true, }),
+          ...this.column_money("质检费用", "qualityInspectionFee", false, { solt: true, }),
           ...this.column_money("使用金额", "monthMoney", false, {}),
-          { label: "更新时间", prop: "updateTime", type: "datetime", format: 'yyyy-MM-DD HH:mm', },
+          ...this.column_datetime("更新时间", "updateTime", false, {}),
         ],
         ...this.group_def([
           ...this.group_column_formslot("DetailsMonth", {}),

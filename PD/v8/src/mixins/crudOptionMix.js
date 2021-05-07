@@ -103,7 +103,45 @@ export default {
                     ...other,
                 })
         },
-
+        /**
+         * 参数处理 日期时间
+         * @param {*} label 
+         * @param {*} prop 
+         * @param {*} isRequired 
+         * @param {*} other 
+         * @returns 
+         */
+        column_datetime(label, prop, isRequired, other) {
+            return this.column_def(label, prop, isRequired,
+                {
+                    type: 'datetime',
+                    format: 'yyyy-MM-DD HH:mm:ss',
+                    width: 140,
+                    ...other,
+                })
+        },
+        /**
+         * 参数处理 搜索自定义
+         * @param {*} label 
+         * @param {*} prop 
+         * @param {*} isRequired 
+         * @param {*} other 
+         * @returns 
+         */
+        column_searchslot(label, prop, isRequired, other) {
+            return this.column_def(label, prop, false,
+                {
+                    hide: true,
+                    search: true,
+                    searchslot: true,
+                    searchSpan: 6,
+                    searchslot: true,
+                    addDisplay: false,
+                    viewDisplay: false,
+                    editDisplay: false,
+                    ...other,
+                })
+        },
         /**
          * 参数处理 下拉选择
          * @param {*} label 
@@ -147,7 +185,7 @@ export default {
             }
         },
         /**
-         * 分组参数处理 自定义表单插槽  
+         * 分组参数处理 自定义表单插槽  查看 
          * @param {*} prop 
          * @param {*} other 
          * @returns 

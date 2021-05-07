@@ -6,7 +6,7 @@
                     导出质检费</el-button>
             </template>
             <div slot="exportQualityTestingForm" slot-scope="scope">
-                <exportTask :Pconfig="config" title="导出质检费" :row="scope.row" type="2" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                <ExportTask :Pconfig="config" title="导出质检费" :row="scope.row" type="2" :exportParams="params" v-if="form&&form.formslot==scope.column.prop"></ExportTask>
             </div>
         </avue-crud>
     </div>
@@ -14,13 +14,13 @@
 <script>
 import crudMix from "@/mixins/crudMix";
 import permissionMix from "@/mixins/permissionMix";
-import exportTask from '@/views/exportTask'
+import ExportTask from '@/views/ExportTask'
 /**
  * TODO:质检列表(我的)
  */
 export default {
   components: {
-    exportTask,
+    ExportTask,
   },
   mixins: [
     crudMix,

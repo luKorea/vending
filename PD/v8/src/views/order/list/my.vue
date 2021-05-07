@@ -5,7 +5,7 @@
                 <el-button v-if="hasPermission(config.exportExcel)" class="el-icon-download" size="small" @click="rowView({formslot:'getExportTaskList',viewTitle:'导出订单'},0)">导出订单</el-button>
             </template>
             <div slot="getExportTaskListForm" slot-scope="scope">
-                <exportTask :Pconfig="config" title="导出订单" :row="scope.row" :exportParams="params" type="1" v-if="form&&form.formslot==scope.column.prop"></exportTask>
+                <ExportTask :Pconfig="config" title="导出订单" :row="scope.row" :exportParams="params" type="1" v-if="form&&form.formslot==scope.column.prop"></ExportTask>
             </div>
         </avue-crud>
     </div>
@@ -14,13 +14,13 @@
 import crudMix from "@/mixins/crudMix";
 import permissionMix from "@/mixins/permissionMix";
 
-import exportTask from '@/views/exportTask'
+import ExportTask from '@/views/ExportTask'
 /**
  * TODO:订单列表(我的)
  */
 export default {
   components: {
-    exportTask,
+    ExportTask,
   },
   mixins: [
     crudMix,
