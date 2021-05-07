@@ -1,6 +1,3 @@
-/**
- * @class CreateWebSocket
- */
 class CreateWebSocket {
 
     constructor(url) {

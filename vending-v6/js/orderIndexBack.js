@@ -1,5 +1,5 @@
 import '../MyCss/index.css';
-import {decrypt1, getQueryString, loadAjax, numFormat1, prompt} from '../common/common-mail.js';
+import {loadAjax, prompt, numFormat1, getQueryString, timeStamp, decrypt1} from '../common/common-mail.js';
 
 // 进入页面获取数据
 // 加密
@@ -20,6 +20,7 @@ function encrypts(content) {
     });
     return String(encryptResult);//把object转化为string
 }
+// return ;
 var str = getQueryString('goods'),
     type = getQueryString('type');
 console.log(type);
@@ -81,20 +82,22 @@ function decrypt(cipher) {
         ;
         payTypeIndex = 1;
         payTypeData = goodsData.payee[payFlag.indexOf(1)]
-    } else if (browser.match(/MicroMessenger/i) == "micromessenger") {
+    }
+    else if (browser.match(/MicroMessenger/i) == "micromessenger") {
         if (payFlag.indexOf(2) == -1) {
             $('.determineCont h1').html('当前不支持微信付款，请使用其他方式进行扫码购买！')
             $('.determineCont').show();
             return;
-        }
-        ;
+        };
         payTypeIndex = 2;
         payTypeData = goodsData.payee[payFlag.indexOf(2)];
         getCode(payTypeData.app_id)
-    } else if (type === '杉德') {
+    }
+    else if (type === '杉德') {
         payTypeIndex = 3;
-        payTypeData = goodsData.payee[payFlag.indexOf(4)];
-    } else {
+        // payTypeData = goodsData.payee[payFlag.indexOf(3)];
+    }
+    else {
         $('.determineCont h1').html('请使用支付宝或者微信扫码进行购买！')
         $('.determineCont').show();
         return;
@@ -154,22 +157,6 @@ $("#city").click(function (e) {
 // 提交
 var nun = 0;
 
-
-function payTypeSelect() {
-    switch (payTypeIndex) {
-        case 1:
-            aliPay();
-            break;
-        case 2:
-            wxPay();
-            break;
-        case 3:
-            shanPay();
-            break;
-    }
-}
-
-
 // 邮寄订单支付
 $('.footer1 h1').click(function () {
     if (!($('#hcity').val() && $('#hproper').val() && $('#harea').val())) {
@@ -183,14 +170,60 @@ $('.footer1 h1').click(function () {
     if (phoneTest($('.phone').val()) != 1) {
         return;
     }
-    payTypeSelect();
+    ;
+    $('.mask').show();
+    if (payTypeIndex === 1) {
+        var pushOrder = JSON.stringify({
+            merchantId: goodsData.merchant,
+            sales_no: $('.informationList input[name="salse"]').val(),
+            payee: payTypeData.payee,
+            notes: $('.informationList input[name="notes"]').val(),
+            sign_name: $('.informationList input[name="name"]').val(),
+            sign_address: $('#city').val() + $('.informationList input[name="addressss"]').val(),
+            sign_phone: $('.informationList input[name="phone"]').val(),
+            goods: goodsData.goods,
+            machineId: goodsData.machineId,
+        });
+        var alipayObj = JSON.stringify({
+            data: encrypts(pushOrder)
+        })
+        aliPay(alipayObj);
+    }
+    else if (payTypeIndex === 2) {
+        wxPay();
+    }
+    else if (payTypeIndex === 3) {
+        shanPay();
+    }
 });
 // 普通订单支付
 $('.footer2 h1').click(function () {
-    payTypeSelect();
+    if (payTypeIndex === 1) {
+        // $('.mask').show();
+        // var pushOrder = JSON.stringify({
+        //     merchantId: goodsData.merchant,
+        //     sales_no: $('.informationList input[name="salse2"]').val(),
+        //     payee: payTypeData.payee,
+        //     goods: goodsData.goods,
+        //     machineId: goodsData.machineId
+        // });
+        // var alipayObj = JSON.stringify({
+        //     data: encrypts(pushOrder)
+        // })
+        aliPay();
+    }
+    else if (payTypeIndex === 2) {
+        $('.mask').show();
+        wxPay();
+    }
+    else if (payTypeIndex === 3) {
+        $('.mask').show();
+        shanPay();
+    }
 });
 // 取消
 $('.cancelFlag p').eq(0).click(function () {
+    // $('.determineCont').hide();
     window.location.href = 'placeOrder.html'
 });
 
@@ -254,29 +287,6 @@ function keyNumber(NumberOne) {
         })
     }, 1500)
 }
-
-// 微信支付
-function onBridgeReady(wxData) {
-    WeixinJSBridge.invoke(
-        'getBrandWCPayRequest', {
-            appId: wxData.appId,
-            timeStamp: wxData.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-            nonceStr: wxData.nonceStr, // 支付签名随机串，不长于 32 位
-            package: wxData.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
-            signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-            paySign: wxData.paySign, // 支付签名
-        },
-        function (res) {
-            if (res.err_msg === "get_brand_wcpay_request:ok") {
-                // 使用以上方式判断前端返回,微信团队郑重提示：
-                //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
-            } else {
-                prompt('已取消支付');
-                clearInterval(setTime);
-            }
-        });
-}
-
 // 微信支付方法
 function wxPay() {
     $('.mask').show();
@@ -319,6 +329,27 @@ function wxPay() {
     })
 }
 
+// 微信支付
+function onBridgeReady(wxData)  {
+    WeixinJSBridge.invoke(
+        'getBrandWCPayRequest', {
+            appId: wxData.appId,
+            timeStamp: wxData.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+            nonceStr: wxData.nonceStr, // 支付签名随机串，不长于 32 位
+            package: wxData.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+            signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+            paySign: wxData.paySign, // 支付签名
+        },
+        function (res) {
+            if (res.err_msg == "get_brand_wcpay_request:ok") {
+                // 使用以上方式判断前端返回,微信团队郑重提示：
+                //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+            } else {
+                prompt('已取消支付');
+                clearInterval(setTime);
+            }
+        });
+}
 // 支付宝支付
 function aliPay() {
     $('.mask').show();
@@ -386,21 +417,21 @@ function shanPay() {
     });
     $.ajax({
         type: 'post',
-        url: '/api/pay/sandPay',
+        url: '/api/pay/alipay_js',
         timeout: 10000,
-        data: JSON.stringify({
+        data:  JSON.stringify({
             data: encrypts(pushOrder)
         }),
         headers: {
             "Content-Type": "application/json",
         },
         success: function (res) {
-            window.location.href = res.data;
-            // const div = document.createElement('div')
-            // div.id = 'shande'
-            // div.innerHTML = form
-            // document.body.appendChild(div)
-            // document.querySelector('#shande').children[0].submit() // 执行后会唤起支付宝
+            const form = decrypt1(res.data);
+            const div = document.createElement('div')
+            div.id = 'shande'
+            div.innerHTML = form
+            document.body.appendChild(div)
+            document.querySelector('#shande').children[0].submit() // 执行后会唤起支付宝
         },
         error: function (res) {
             prompt(res);

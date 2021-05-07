@@ -615,7 +615,7 @@
 
     }
     .editor-content .layui-form{
-        width: 60%;
+        width: 100%;
     }
     .layui-table-body{
         max-height: 500px !important;

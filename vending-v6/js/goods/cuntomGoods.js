@@ -174,6 +174,77 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
 
     });
 
+
+    // TODO 关联分则规则
+    $('.relation').click(function () {
+        console.log(singleData, 'relationData');
+        $('.text').html(`${singleData.info} 关联分则规则`);
+        $('.relationRules').show();
+        // if (singleData.payType.indexOf('4') > -1) {
+        //     $('.relationRules').show();
+        //     getRulesList(singleData.machineId).then(res => {
+        //         form.val('relationRules', {
+        //             status: singleData.status,
+        //             accsplitRuleNo: singleData.accsplitRuleNo
+        //         })
+        //     })
+        // } else {
+        //     layer.msg('您的支付方式不是杉德支付，不能关联分则规则', {icon: 7});
+        // }
+    });
+    // 获取分账列表
+    function getRulesList(merchantId) {
+        return new Promise((resolve, reject) => {
+            loadingAjax('/accSplit/getAccRule', 'post', JSON.stringify({
+                pageNum: 1,
+                pageSize: 200,
+                merchantId,
+            }), sessionStorage.token).then(res => {
+                var optionList = ``;
+                $.each(res.data.list, function (index, ele) {
+                    optionList += `<option value="${ele.accsplitRuleNo}">${ele.accsplitRuleName}</option>`
+                });
+                $('#rules').html(optionList);
+                form.render('select');
+                resolve();
+            }).catch(err => {
+                reject(err);
+            })
+        })
+    }
+
+    // 提交分账
+    $('.relationBtn').click(function () {
+        let data = form.val('relationRules');
+        data['machineId'] = machineSetData.machineId;
+        data['payId'] = machineSetData.payType;
+        loadingAjax('/accSplit/associationRule', 'post', JSON.stringify(data), token).then(res => {
+            if (res.code === 200) {
+                layer.msg('关联成功', {icon: 1});
+                machineList.reload({
+                    where: {}
+                })
+                hideRules();
+            } else {
+                layer.msg('失败', {icon: 2})
+            }
+        }).catch(err => {
+            layer.msg(err, {icon: 2})
+        })
+    });
+
+    // 取消分账
+    function hideRules() {
+        $('.relationRules').hide();
+    }
+
+    $('.relationRules .cancelBtn').click(function () {
+        hideRules();
+    })
+
+
+
+
     // 商品状态下拉框数据请求
     var form = layui.form;
 
