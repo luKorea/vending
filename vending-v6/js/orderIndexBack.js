@@ -25,6 +25,8 @@ var str = getQueryString('goods'),
     type = getQueryString('type');
 
 var goodsData = null;
+
+
 $.ajax({
     type: 'post',
     url: '/api/order/getMailData',
