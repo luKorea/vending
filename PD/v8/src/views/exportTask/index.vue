@@ -5,8 +5,8 @@
                 <el-button type="primary" class="el-icon-download" size="small" :loading="deriveExcelloading" @click.native="exportURL(config.exportExcel)">{{title}}</el-button>
             </template>
             <template slot="filePath" slot-scope="scope">
-                <el-link v-if="scope.row.filePath&&scope.row.status==1" :href="scope.row.filePath" class="dowloadX" :download="scope.row.fileName+'.xlsx'" type="primary" style="font-size:12px"
-                    icon="el-icon-download">
+                <el-link v-if="scope.row.filePath&&scope.row.status==1" target="_blank" :href="scope.row.filePath" class="dowloadX" :download="scope.row.fileName+'.xlsx'" type="primary"
+                    style="font-size:12px" icon="el-icon-download">
                     下载</el-link>
             </template>
         </avue-crud>

@@ -52,13 +52,6 @@ export default {
         that.isUploading = false
         that.$emit('closeDialog')
         loading.close();
-        if (res.code != 200) {
-          that.$alert(res.data && res.data.join(','), '提示', {
-            confirmButtonText: '确定',
-            callback: action => {
-            }
-          });
-        }
       }).catch(function (err) {
         that.$refs.upload.clearFiles()
         that.isUploading = false
