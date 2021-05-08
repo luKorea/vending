@@ -6,7 +6,7 @@ baseball=$(
 cd "$baseball" || exit
 remark=$(date +"%Y-%m-%d %H:%M:%S")
 read -p 'Please input the modified content of this version': note
-# pnpm run build
+pnpm run build
 git add .
 git commit -m "${note} ${remark}"
 git pull origin dev

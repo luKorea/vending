@@ -1,5 +1,5 @@
 import '../MyCss/index.css';
-import {decrypt1, getQueryString, loadAjax, numFormat1, prompt} from '../common/common-mail.js';
+import {loadAjax, prompt, numFormat1, getQueryString, timeStamp, decrypt1} from '../common/common-mail.js';
 
 // 进入页面获取数据
 // 加密
@@ -20,9 +20,11 @@ function encrypts(content) {
     });
     return String(encryptResult);//把object转化为string
 }
+
+// return ;
 var str = getQueryString('goods'),
     type = getQueryString('type');
-console.log(type);
+console.log(type,'支付类型');
 var goodsData = null;
 $.ajax({
     type: 'post',
@@ -52,7 +54,7 @@ $.ajax({
 var payFlag = [],
     payTypeData = '',
     // 判断是微信或支付宝浏览器
-    payTypeIndex = '',
+    payTypeIndex = 3,
     open = '';
 
 // // // 解密
@@ -72,7 +74,7 @@ function decrypt(cipher) {
     });
     // getCode();
     var browser = navigator.userAgent.toLowerCase();
-    if (browser.match(/Alipay/i) == "alipay") {
+    if (browser.match(/Alipay/i) == "alipay"  &&　type === 'al') {
         if (payFlag.indexOf(1) == -1) {
             $('.determineCont h1').html('当前不支持支付宝付款，请使用其他方式进行扫码购买！')
             $('.determineCont').show();
@@ -81,7 +83,7 @@ function decrypt(cipher) {
         ;
         payTypeIndex = 1;
         payTypeData = goodsData.payee[payFlag.indexOf(1)]
-    } else if (browser.match(/MicroMessenger/i) == "micromessenger") {
+    } else if (browser.match(/MicroMessenger/i) == "micromessenger" && type === 'wx') {
         if (payFlag.indexOf(2) == -1) {
             $('.determineCont h1').html('当前不支持微信付款，请使用其他方式进行扫码购买！')
             $('.determineCont').show();
@@ -168,6 +170,7 @@ function payTypeSelect() {
             break;
     }
 }
+
 
 
 // 邮寄订单支付
@@ -267,7 +270,7 @@ function onBridgeReady(wxData) {
             paySign: wxData.paySign, // 支付签名
         },
         function (res) {
-            if (res.err_msg === "get_brand_wcpay_request:ok") {
+            if (res.err_msg == "get_brand_wcpay_request:ok") {
                 // 使用以上方式判断前端返回,微信团队郑重提示：
                 //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
             } else {
@@ -396,11 +399,6 @@ function shanPay() {
         },
         success: function (res) {
             window.location.href = res.data;
-            // const div = document.createElement('div')
-            // div.id = 'shande'
-            // div.innerHTML = form
-            // document.body.appendChild(div)
-            // document.querySelector('#shande').children[0].submit() // 执行后会唤起支付宝
         },
         error: function (res) {
             prompt(res);
