@@ -74,7 +74,7 @@ function decrypt(cipher) {
     });
     // getCode();
     var browser = navigator.userAgent.toLowerCase();
-    if (browser.match(/Alipay/i) == "alipay") {
+    if (browser.match(/Alipay/i) == "alipay"  &&　type === 'al') {
         if (payFlag.indexOf(1) == -1) {
             $('.determineCont h1').html('当前不支持支付宝付款，请使用其他方式进行扫码购买！')
             $('.determineCont').show();
@@ -83,7 +83,7 @@ function decrypt(cipher) {
         ;
         payTypeIndex = 1;
         payTypeData = goodsData.payee[payFlag.indexOf(1)]
-    } else if (browser.match(/MicroMessenger/i) == "micromessenger") {
+    } else if (browser.match(/MicroMessenger/i) == "micromessenger" && type === 'wx') {
         if (payFlag.indexOf(2) == -1) {
             $('.determineCont h1').html('当前不支持微信付款，请使用其他方式进行扫码购买！')
             $('.determineCont').show();
@@ -398,12 +398,7 @@ function shanPay() {
             "Content-Type": "application/json",
         },
         success: function (res) {
-            window.location.href =  decrypt1(res.data);
-            // const div = document.createElement('div')
-            // div.id = 'shande'
-            // div.innerHTML = form
-            // document.body.appendChild(div)
-            // document.querySelector('#shande').children[0].submit() // 执行后会唤起支付宝
+            window.location.href = res.data;
         },
         error: function (res) {
             prompt(res);
