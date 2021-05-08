@@ -24,7 +24,7 @@ function encrypts(content) {
 // return ;
 var str = getQueryString('goods'),
     type = getQueryString('type');
-console.log(type);
+console.log(type,'支付类型');
 var goodsData = null;
 $.ajax({
     type: 'post',
