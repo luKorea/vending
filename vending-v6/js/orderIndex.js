@@ -24,7 +24,7 @@ function encrypts(content) {
 // return ;
 var str = getQueryString('goods'),
     type = getQueryString('type');
-console.log(type,'支付类型');
+console.log(type, '支付类型');
 var goodsData = null;
 $.ajax({
     type: 'post',
@@ -72,30 +72,27 @@ function decrypt(cipher) {
     goodsData.payee.forEach(item => {
         payFlag.push(item.payType);
     });
-    // getCode();
     var browser = navigator.userAgent.toLowerCase();
-    if (browser.match(/Alipay/i) == "alipay"  &&　type === 'al') {
-        if (payFlag.indexOf(1) == -1) {
+    if (type === 'sd') {
+        payTypeIndex = 3;
+        payTypeData = goodsData.payee[payFlag.indexOf(4)];
+    } else if (browser.match(/Alipay/i) == "alipay") {
+        if (payFlag.indexOf(1) === -1) {
             $('.determineCont h1').html('当前不支持支付宝付款，请使用其他方式进行扫码购买！')
             $('.determineCont').show();
             return;
         }
-        ;
         payTypeIndex = 1;
         payTypeData = goodsData.payee[payFlag.indexOf(1)]
-    } else if (browser.match(/MicroMessenger/i) == "micromessenger" && type === 'wx') {
-        if (payFlag.indexOf(2) == -1) {
+    } else if (browser.match(/MicroMessenger/i) == "micromessenger") {
+        if (payFlag.indexOf(2) === -1) {
             $('.determineCont h1').html('当前不支持微信付款，请使用其他方式进行扫码购买！')
             $('.determineCont').show();
             return;
         }
-        ;
         payTypeIndex = 2;
         payTypeData = goodsData.payee[payFlag.indexOf(2)];
         getCode(payTypeData.app_id)
-    } else if (type === 'sd') {
-        payTypeIndex = 3;
-        payTypeData = goodsData.payee[payFlag.indexOf(4)];
     } else {
         $('.determineCont h1').html('请使用支付宝或者微信扫码进行购买！')
         $('.determineCont').show();
@@ -108,14 +105,14 @@ function decrypt(cipher) {
     });
     console.log(goodsData, '商品数据');
     console.log(goodsData.goods[0].mail, '类型');
-    if (goodsData.goods[0].mail == 1) {
+    if (+goodsData.goods[0].mail === 1) {
         $('.userInformation1').show();
         $('.userInformation2').hide();
         $('.footer2').hide();
         $('.footer1').show();
         document.title = '邮寄商品购买';
         $('.header h1').html('邮寄商品购买')
-    } else if (goodsData.goods[0].mail == 0) {
+    } else if (+goodsData.goods[0].mail === 0) {
         $('.userInformation1').hide();
         $('.userInformation2').show();
         $('.footer2').show();
@@ -126,13 +123,13 @@ function decrypt(cipher) {
     loadAjax('/api/scanSuccess', 'post', socketObj).then(res => {
     }).catch(err => {
     });
-};
+}
 
 function getCode(appid) {
     let code = getQueryString('code')//获取url中的code值
     let appId = appid;//填写公众号APPID
     let local = window.location.href;//当前地址
-    if (code == null || code == '') {//没有授权的code
+    if (code == null || code === '') {//没有授权的code
         window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${encodeURIComponent(local)}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`  //跳转授权链接
         scope = snsapi_base //这句是静默授权的意思
     } else {//获取到授权的code
@@ -172,7 +169,6 @@ function payTypeSelect() {
 }
 
 
-
 // 邮寄订单支付
 $('.footer1 h1').click(function () {
     if (!($('#hcity').val() && $('#hproper').val() && $('#harea').val())) {
@@ -207,7 +203,7 @@ function phoneTest(value) {
         }
     }
     return flag
-};
+}
 
 // 渲染
 function goodsListStr(list) {
@@ -229,7 +225,7 @@ function goodsListStr(list) {
                     </li>`
     });
     $('.goodsList').html(goodsStr)
-};
+}
 
 // 两分钟不提交页面作废
 setTimeout(_ => {
@@ -246,7 +242,7 @@ function keyNumber(NumberOne) {
             data: encrypts(NumberOne)
         });
         loadAjax('/api/pay/getPayStatus', 'post', dataObj).then(res => {
-            if (res.data.payStatus == 2) {
+            if (+res.data.payStatus === 2) {
                 clearInterval(setTime)
                 if (res.data.url === '' || res.data.url === null) {
                     location.href = 'placeOrder.html';
@@ -270,7 +266,7 @@ function onBridgeReady(wxData) {
             paySign: wxData.paySign, // 支付签名
         },
         function (res) {
-            if (res.err_msg == "get_brand_wcpay_request:ok") {
+            if (res.err_msg === "get_brand_wcpay_request:ok") {
                 // 使用以上方式判断前端返回,微信团队郑重提示：
                 //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
             } else {
@@ -285,7 +281,7 @@ function wxPay() {
     $('.mask').show();
     var pushOrder = JSON.stringify({
         merchantId: goodsData.merchant,
-        sales_no: goodsData.goods[0].mail == 1 ?
+        sales_no: +goodsData.goods[0].mail === 1 ?
             $('.informationList input[name="salse"]').val() :
             $('.informationList input[name="salse2"]').val(),
         payee: payTypeData.payee,
@@ -348,7 +344,7 @@ function aliPay() {
         },
         success: function (res) {
             let data = decrypt1(res.data)
-            if (res.message.indexOf('测试') !== -1) {
+            if (res.message.indexOf('测试') != -1) {
                 const form = data;
                 const div = document.createElement('div')
                 div.id = 'alipay'
