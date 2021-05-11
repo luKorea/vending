@@ -38,15 +38,15 @@
                 <el-checkbox v-model="search.isMoneyRemind" :disabled="disabled" :size="size" label="查询预警商户" border></el-checkbox>
             </template>
             <template slot-scope="{disabled,size}" slot="rangeBalanceSearch">
-                <div class="row rangeSearch">
-                    <el-input placeholder="最小" :step="step" v-model="search.startBalance" type="number" :disabled="disabled" :size="size" />
-                    <el-input placeholder="最大" :step="step" v-model="search.endBalance" type="number" :disabled="disabled" :size="size" />
+                <div class="row rangeSearch el-date-editor el-range-editor el-input__inner el-date-editor--daterange el-range-editor--small">
+                    <el-input  placeholder="" :step="step" v-model="search.startBalance" type="number" :disabled="disabled" :size="size" />
+                   <span class="el-range-separator">-</span> <el-input  placeholder="" :step="step" v-model="search.endBalance" type="number" :disabled="disabled" :size="size" />
                 </div>
             </template>
             <template slot-scope="{disabled,size}" slot="rangeUsableBalanceSearch">
-                <div class="row rangeSearch">
-                    <el-input placeholder="最小" :step="step" v-model="search.startUsableBalance" type="number" :disabled="disabled" :size="size" />
-                    <el-input placeholder="最大" :step="step" v-model="search.endUsableBalance" type="number" :disabled="disabled" :size="size" />
+                <div class="row rangeSearch el-date-editor el-range-editor el-input__inner el-date-editor--daterange el-range-editor--small">
+                    <el-input  placeholder="" :step="step" v-model="search.startUsableBalance" type="number" :disabled="disabled" :size="size" />
+                    <span class="el-range-separator">-</span><el-input  placeholder="" :step="step" v-model="search.endUsableBalance" type="number" :disabled="disabled" :size="size" />
                 </div>
             </template>
         </avue-crud>
