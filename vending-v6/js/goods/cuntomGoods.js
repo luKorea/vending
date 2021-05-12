@@ -49,9 +49,9 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             token,
         },
         cols: [[
-            {align: 'center',type: 'checkbox', fixed: 'left'},
+            {align: 'center', type: 'checkbox', fixed: 'left'},
             {field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center', fixed: 'left'},
-            {field: 'goods_Core', width: 180, title: '商品编号', align: 'center',fixed: 'left'},
+            {field: 'goods_Core', width: 180, title: '商品编号', align: 'center', fixed: 'left'},
             {
                 fixed: 'left',
                 field: 'goods_Name',
@@ -192,6 +192,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         //     layer.msg('您的支付方式不是杉德支付，不能关联分则规则', {icon: 7});
         // }
     });
+
     // 获取分账列表
     function getRulesList(merchantId) {
         return new Promise((resolve, reject) => {
@@ -241,8 +242,6 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     $('.relationRules .cancelBtn').click(function () {
         hideRules();
     })
-
-
 
 
     // 商品状态下拉框数据请求
@@ -342,7 +341,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             , "goodsPrice": singleData.goods_Price //零售价
             , "goodsCost": singleData.goods_Cost //成本价
             , "goodsParam": singleData.goods_Param //规格描述
-            , 'goodsStatus': singleData.goods_Status //商品状态
+            , 'goodsStatus': singleData.goods_Status, //商品状态
+            'cycle': singleData.cycle, // 分账周期(月结: 0,日结: 1): cycle
+            'acc_split_total_rate': singleData.acc_split_total_rate, // 分账占订单金额比例: acc_split_total_rate
+            'acc_split_rule': singleData.acc_split_rule, // 分账规则编号:
         });
         console.log(singleData.mail, 'hdkjfksjdhfkjsdhfjk')
         singleData.mail == 1 ? $('.editor input[name="editmail"]').prop('checked', true) : $('.editor input[name="editmail"]').prop('checked', false)
@@ -403,7 +405,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                 goods_Status: EditValData.goodsStatus, //状态
                 goods_Images: $('#editImg').attr("src"), //商品图片 不在form里
                 goods_Descript: editGoodsDateils, //商品详情，编辑器里的内容
-                mail: $('.editor input[name="editmail"]').prop('checked') ? 1 : 0
+                mail: $('.editor input[name="editmail"]').prop('checked') ? 1 : 0,
+                'cycle': EditValData.cycle, // 分账周期(月结: 0,日结: 1): cycle
+                'acc_split_total_rate': EditValData.acc_split_total_rate, // 分账占订单金额比例: acc_split_total_rate
+                'acc_split_rule': EditValData.acc_split_rule, // 分账规则编号:
             });
             $('.mask').fadeIn();
             $('.maskSpan').addClass('maskIcon');
@@ -547,7 +552,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                     goods_Images: addGoodsImg, //商品图片 不在form里
                     goods_Descript: addGoodsDateails, //商品详情，编辑器里的内容
                     merchantId: sessionStorage.machineID,
-                    mail: $('.addGoods input[name="mail"]').prop('checked') ? 1 : 0
+                    mail: $('.addGoods input[name="mail"]').prop('checked') ? 1 : 0,
+                    'cycle': +addValData.cycle, // 分账周期(月结: 0,日结: 1): cycle
+                    'acc_split_total_rate': addValData.acc_split_total_rate, // 分账占订单金额比例: acc_split_total_rate
+                    'acc_split_rule': addValData.acc_split_rule, // 分账规则编号:
                 });
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
@@ -556,13 +564,16 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                     $('.upload-demo2 .upload-list2').fadeOut();
                     addGoodsImg = null;
                     form.val("addValData", {
-                        "goodsBarcode": ''
-                        , "goodsName": ''
-                        , "goodsType": ''
-                        , "goodsBrand": ''
-                        , "goodsPrice": ''
-                        , "goodsCost": 0
-                        , "goodsParam": ''
+                        "goodsBarcode": '',
+                        "goodsName": '',
+                        "goodsType": '',
+                        "goodsBrand": '',
+                        "goodsPrice": '',
+                        "goodsCost": 0,
+                        "goodsParam": '',
+                        'cycle': '', // 分账周期(月结: 0,日结: 1): cycle
+                        'acc_split_total_rate': '', // 分账占订单金额比例: acc_split_total_rate
+                        'acc_split_rule': '', // 分账规则编号:
                     });
                     addGoodsDateails = '';
                     layer.msg('添加成功', {icon: 1});
@@ -625,10 +636,10 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                 token,
             },
             cols: [[
-                {field: 'img',  title: '图片', align: 'center', templet: "#materiaImgtmp"},
-                {field: 'name',  title: '图片名', align: 'center',},
+                {field: 'img', title: '图片', align: 'center', templet: "#materiaImgtmp"},
+                {field: 'name', title: '图片名', align: 'center',},
                 // { field: 'number', width: 200, title: '图片编号', },
-                {field: 'publishTime',  title: '发布时间', align: 'center'},
+                {field: 'publishTime', title: '发布时间', align: 'center'},
                 {field: 'addUser', title: '发布人', align: 'center',},
                 {
                     field: 'operationa',
@@ -760,8 +771,8 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             cols: [[
                 // { field: 'Img', width: 150, title: '素材图',templet: "" },
                 // { type: 'checkbox', },
-                {field: 'name',  title: '视频名', align: 'center',},
-                {field: 'publishTime',  title: '发布时间', align: 'center'},
+                {field: 'name', title: '视频名', align: 'center',},
+                {field: 'publishTime', title: '发布时间', align: 'center'},
                 {field: 'addUser', title: '发布人', align: 'center',},
                 // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
                 {field: 'operation', title: '操作', toolbar: '#barDemoVideo', align: 'center',},
@@ -930,7 +941,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             },
             cols: [[
                 {type: 'checkbox'},
-                {field: 'goods_images',title: '图片', templet: "#Listimgtmp", align: 'center'},
+                {field: 'goods_images', title: '图片', templet: "#Listimgtmp", align: 'center'},
                 {
                     field: 'goods_Name',
 
@@ -941,12 +952,12 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                         return (d.mail == 1 ? '(邮寄)' + d.goods_Name : d.goods_Name)
                     }
                 },
-                {field: `classifyName`,  title: '商品类目', align: 'center',},
-                {field: `tempMerchant` , title: '商品所属商户', align: 'center',},
-                {field: `topMerchant`,  title: '推送商户', align: 'center',},
-                {field: `targetMerchant`,  title: '接收商户', align: 'center',},
+                {field: `classifyName`, title: '商品类目', align: 'center',},
+                {field: `tempMerchant`, title: '商品所属商户', align: 'center',},
+                {field: `topMerchant`, title: '推送商户', align: 'center',},
+                {field: `targetMerchant`, title: '接收商户', align: 'center',},
                 {
-                    field: 'goods_Param',  title: '接收状态 ', align: 'center', templet: function (d) {
+                    field: 'goods_Param', title: '接收状态 ', align: 'center', templet: function (d) {
                         return d.received == 0 ? '未接收' : '已接收'
                     }
                 },
@@ -1192,7 +1203,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             cols: [[
                 {checkbox: true},
                 {field: 'goods_images', title: '图片', templet: "#imgtmp", align: 'center'},
-                {field: 'goods_Core',  title: '商品编号', align: 'center'},
+                {field: 'goods_Core', title: '商品编号', align: 'center'},
                 {
                     field: 'goods_Name',
                     title: '商品名',
@@ -1206,7 +1217,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
                     field: 'goods_Price', align: 'center', title: '销售价 ', templet: d => percentileMoney(d.goods_Price)
                 },
                 {
-                    field: 'mail',title: '是否邮寄商品', align: 'center', templet: function (d) {
+                    field: 'mail', title: '是否邮寄商品', align: 'center', templet: function (d) {
                         return d.mail == 0 ? '否' : '是'
                     }
                 },
@@ -1281,7 +1292,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
             cols: [[
                 {checkbox: true},
                 {
-                    field: 'number',  title: '售货机编号', align: 'center', templet: function (d) {
+                    field: 'number', title: '售货机编号', align: 'center', templet: function (d) {
                         return d.number ? d.number : '-'
                     }
                 },

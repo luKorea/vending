@@ -1,10 +1,18 @@
 class CreateWebSocket {
 
+    /**
+     *
+     * @param url
+     */
     constructor(url) {
         this.connect(url)
         this.myUrl = url
     }
 
+    /**
+     *
+     * @param url
+     */
     connect(url) {//连接服务器
         this.ws = new WebSocket(url)
         this.ws.onopen = (e) => {

@@ -234,14 +234,34 @@
                                     </div>
                                 </li>
                                 <!-- TODO 分账规则 -->
-<!--                                <li>-->
-<!--                                    <div class="editor-list" style="margin-bottom:22px">-->
-<!--                                        <label for=""><span style="color:red;">*</span> 分账编号</label>-->
-<!--                                        <div class="editorWidthInput">-->
-<!--                                            <input type="text" name="goodsBarcode">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </li>-->
+                                <li>
+                                    <div class="editor-list" style="margin-bottom:22px"
+                                         style="display: flex;align-items: center;">
+                                        <label for="" style="width: 157px">分账周期</label>
+                                        <form class="layui-form" action="">
+                                            <div class="layui-form-item" style="margin: 0;">
+                                                <input type="radio" name="cycle" value="0" title="月结">
+                                                <input type="radio" name="cycle" value="1" title="日结">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="editor-list" style="margin-bottom:22px">
+                                        <label for=""><span style="color:red;">*</span> 分账规则编号</label>
+                                        <div class="editorWidthInput">
+                                            <input type="text" name="acc_split_rule">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="editor-list" style="margin-bottom:22px">
+                                        <label for=""><span style="color:red;">*</span> 分账占订单金额比例</label>
+                                        <div class="editorWidthInput">
+                                            <input type="text" name="acc_split_total_rate">
+                                        </div>
+                                    </div>
+                                </li>
                                 <li>
                                     <div class="editor-list" style="margin-bottom:22px">
                                         <label for=""><span style="color:red;">*</span> 商品名</label>
@@ -391,14 +411,34 @@
                                     </div>
                                 </li>
                                 <!-- TODO 分账规则 -->
-<!--                                <li>-->
-<!--                                    <div class="editor-list" style="margin-bottom:22px">-->
-<!--                                        <label for=""><span style="color:red;">*</span> 分账编号</label>-->
-<!--                                        <div class="editorWidthInput">-->
-<!--                                            <input type="text" name="goodsBarcode">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </li>-->
+                                <li>
+                                    <div class="editor-list"
+                                         style="display: flex;margin-bottom:22px;align-items: center;">
+                                        <label for="" style="width: 157px"> 分账周期</label>
+                                        <form class="layui-form" action="">
+                                            <div class="layui-form-item" style="margin: 0;">
+                                                <input type="radio" name="cycle" value="0" title="月结">
+                                                <input type="radio" name="cycle" value="1" title="日结">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="editor-list" style="margin-bottom:22px">
+                                        <label for=""><span style="color:red;">*</span> 分账规则编号</label>
+                                        <div class="editorWidthInput">
+                                            <input type="text" name="acc_split_rule">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="editor-list" style="margin-bottom:22px">
+                                        <label for=""><span style="color:red;">*</span> 分账占订单金额比例</label>
+                                        <div class="editorWidthInput">
+                                            <input type="text" name="acc_split_total_rate">
+                                        </div>
+                                    </div>
+                                </li>
                                 <li>
                                     <div class="editor-list" style="margin-bottom:22px">
                                         <label for=""><span style="color:red;">*</span> 商品名</label>
