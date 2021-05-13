@@ -155,7 +155,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             $('.changePay .WeChat').hide();
             $('.changePay .Alipay').hide();
             $('.changePay .juhePay').hide();
-        } else if (payData.payType == 4) {
+        } else if (payData.payType == 4 || payData.payType == 5) {
             juheUploadEditSiVal = payData.app_private_key;
             juheUploadEditGongVal = payData.alipay_public_key;
             $('.changePay .juhePay').show();
@@ -178,16 +178,16 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             app_key: payData.payName === '微信' ? payData.app_key : '',
             MerchantsKey: payData.payName === '微信' ? payData.app_private_key : '',
             aliPayId: payData.payName === '支付宝' ? payData.app_id : '',
-            alipay_public_key: payData.payName === '支付宝' || tyoe === '4' ? payData.alipay_public_key : '',
-            app_private_key: payData.payName === '支付宝' || tyoe === '4' ? payData.app_private_key : '',
+            alipay_public_key: payData.payName === '支付宝' || (tyoe === '4' || tyoe === '5') ? payData.alipay_public_key : '',
+            app_private_key: payData.payName === '支付宝' || (tyoe === '4' || tyoe === '5') ? payData.app_private_key : '',
             mchId: tyoe === '3' ? payData.mchId : '',
             app_id: tyoe === '3' ? payData.app_id : '',
             ICBC_app_key: tyoe === '3' ? payData.app_key : '',
             ICBC_alipay_public_key: tyoe === '3' ? payData.alipay_public_key : '',
             ICBC_app_private_key: tyoe === '3' ? payData.app_private_key : '',
-            juhemchId: tyoe === '4' ? payData.mchId : '',
-            juheapp_id: tyoe === '4' ? payData.app_id : '',
-            juheapp_key: tyoe === '4' ? payData.app_key : '',
+            juhemchId: tyoe === '4' || tyoe === '5' ? payData.mchId : '',
+            juheapp_id: tyoe === '4' || tyoe === '5' ? payData.app_id : '',
+            juheapp_key: tyoe === '4' || tyoe === '5' ? payData.app_key : '',
         });
         popupShow('changePay', 'changeBox')
     });
@@ -231,7 +231,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 layer.msg('带*为必填', {icon: 7});
                 return;
             }
-        } else if (type === '4') {
+        } else if (type === '4' || type === '5') {
             if (!(payFormData.payee && payFormData.juhemchId && payFormData.juheapp_key)) {
                 layer.msg('带*为必填', {icon: 7});
                 return;
@@ -303,7 +303,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             })
             return;
         }
-        else if (type === '4') {
+        else if (type === '4' || type === '5') {
             var textParam = JSON.stringify({
                 mchId: payFormData.juhemchId,
                 app_id: payFormData.juheapp_id,
@@ -319,11 +319,11 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 id: payData.id,
                 payee: payFormData.payee,
                 payType: type,
-                app_id: type === '2' ? payFormData.officialId : type=== '4' ? payFormData.juheapp_id : payFormData.aliPayId,
-                app_key: type === '2' ? payFormData.app_key : type === '4' ? payFormData.juheapp_key :  '',
-                mchId: type === '2' ? payFormData.MerchantsId : type === '4' ? payFormData.juhemchId : '',
-                alipay_public_key:  type === '1' ? payFormData.alipay_public_key : type === '4' ? juheUploadEditGongVal : '',
-                app_private_key: type ===  '1' ? payFormData.app_private_key : type === '4' ? juheUploadEditSiVal : payFormData.MerchantsKey,
+                app_id: type === '2' ? payFormData.officialId : type === '4' || type === '5' ? payFormData.juheapp_id : payFormData.aliPayId,
+                app_key: type === '2' ? payFormData.app_key : type === '4' || type === '5' ? payFormData.juheapp_key :  '',
+                mchId: type === '2' ? payFormData.MerchantsId : type === '4' || type === '5' ? payFormData.juhemchId : '',
+                alipay_public_key:  type === '1' ? payFormData.alipay_public_key : type === '4' || type === '5' ? juheUploadEditGongVal : '',
+                app_private_key: type ===  '1' ? payFormData.app_private_key : type === '4' || type === '5' ? juheUploadEditSiVal : payFormData.MerchantsKey,
                 cert_dir: type === '2' ? editUploadVal : null
             });
             loadingAjax('/pay/updatePayParam', 'post', editPay, sessionStorage.token, 'mask', 'changePay', 'changeBox', layer).then(res => {
@@ -436,7 +436,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             $('.addePay .WeChat').hide();
             $('.addePay .Alipay').hide();
             $('.addePay .juhePay').hide();
-        } else if (data.value == 4) {
+        } else if (data.value == 4 || data.value == 5) {
             $('.addePay .juhePay').show();
             $('.addePay .IcbcPay').hide();
             $('.addePay .WeChat').hide();
@@ -472,7 +472,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 layer.msg('带*为必填', {icon: 7});
                 return;
             }
-        } else if (typeIndex === '4') {
+        } else if (typeIndex === '4' || typeIndex === '5') {
             console.log(addData);
             if (!(addData.payee && addData.juhemchId && addData.juheapp_key)) {
                 layer.msg('带*为必填', {icon: 7});
@@ -494,7 +494,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
         }
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
-        if (typeIndex !== '2' && typeIndex !== '1' && typeIndex !== '3' && typeIndex !== '4') {
+        if (typeIndex !== '2' && typeIndex !== '1' && typeIndex !== '3' && typeIndex !== '4' && typeIndex !== '5') {
             var editPay = JSON.stringify({
                 merchantId: merchantsPay,
                 payee: addData.payee,
@@ -596,7 +596,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
             // 杉德商户私钥证书密码  app_key
             // 杉德商户私钥证书(.pfx) app_private_key
         // 杉德公钥证书(.cer)   alipay_public_key
-        else if (typeIndex === '4') {
+        else if (typeIndex === '4' || typeIndex === '5') {
             var textParam = JSON.stringify({
                 mchId: addData.juhemchId,
                 app_id: addData.juheapp_id,
@@ -612,11 +612,11 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 merchantId: merchantsPay,
                 payee: addData.payee,
                 payType: typeIndex,
-                app_id: typeIndex === '2' ? addData.officialId : typeIndex === '4' ? addData.juheapp_id : addData.aliPayId,
-                app_key: typeIndex === '2' || typeIndex === '4' ? addData.juheapp_key : '',
-                mchId: typeIndex === '2' ? addData.MerchantsId : typeIndex === '4' ? addData.juhemchId : '',
-                alipay_public_key: typeIndex === '1' ? addData.alipay_public_key : typeIndex === '4' ? juheUploadGongVal : '',
-                app_private_key: typeIndex === '1' ? addData.app_private_key : typeIndex === '4' ? juheUploadSiVal : addData.MerchantsKey
+                app_id: typeIndex === '2' ? addData.officialId : (typeIndex === '4' || typeIndex === '5') ? addData.juheapp_id : addData.aliPayId,
+                app_key: typeIndex === '2' || (typeIndex === '4' || typeIndex === '5') ? addData.juheapp_key : '',
+                mchId: typeIndex === '2' ? addData.MerchantsId : (typeIndex === '4' || typeIndex === '5') ? addData.juhemchId : '',
+                alipay_public_key: typeIndex === '1' ? addData.alipay_public_key : (typeIndex === '4' || typeIndex === '5') ? juheUploadGongVal : '',
+                app_private_key: typeIndex === '1' ? addData.app_private_key : (typeIndex === '4' || typeIndex === '5') ? juheUploadSiVal : addData.MerchantsKey
             })
             console.log(JSON.parse(editPay), 'editdPay');
             loadingAjax('/pay/newPayParam', 'post', editPay, sessionStorage.token, 'mask', 'addePay', 'addBox', layer).then(res => {

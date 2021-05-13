@@ -561,6 +561,25 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 }).catch(err => {
                     layer.msg(err.message, {icon: 2});
                 })
+            } else if (+orderData.payType === 4 || +orderData.payType === 5) {
+                var refundData = JSON.stringify({
+                    machineId: orderData.machineId,
+                    orderId: orderData.number,
+                    goodId: goodsData.goods_Id,
+                    count: Number($('.refundNumber input').val()),
+                    transaction_id: orderData.transaction_id,
+                    amount: Number($('.sumInput input[name="sum"]').val()),
+                    pay_id: orderData.pay_id
+                });
+                loadingAjax('/pay/sandRefund', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox').then(res => {
+                    layer.msg(res.message, {icon: 1});
+                    popupHide('orderDetails', 'orderDetailsBox');
+                    orderTable.reload({
+                        where: {}
+                    })
+                }).catch(err => {
+                    layer.msg(err.message, {icon: 2});
+                })
             }
         }).catch(err => {
             console.log(err)
@@ -614,10 +633,12 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
 
             });
             var url = '';
-            if (orderData.payType == 0) {
+            if (+orderData.payType === 0) {
                 url = `${vApi}/pay/refund_alipay`
-            } else if (orderData.payType == 1) {
+            } else if (+orderData.payType === 1) {
                 url = `${vApi}/pay/refund_wxpay`
+            } else if (+orderData.payType === 4 || +orderData.payType === 5) {
+                url = `${vApi}/pay/sandRefund`
             }
             loadingAjax(url, 'post', refundData, sessionStorage.token, 'mask', 'orderDetails ', 'orderDetailsBox', layer).then(res => {
                 layer.msg(res.message, {icon: 1});

@@ -548,6 +548,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('您的支付方式不是杉德支付，不能关联分则规则', {icon: 7});
         }
     });
+
     // 获取分账列表
     function getRulesList(merchantId) {
         return new Promise((resolve, reject) => {
@@ -1679,38 +1680,27 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         var payList = JSON.stringify({
             machineId: machindID,
         })
-        loadingAjax('/pay/getMachinePayParam', 'post', payList, sessionStorage.token).then(res => {
-            loadingAjax('/pay/getPayParam', 'post', JSON.stringify({merchantId: Number(merchantsID)}), sessionStorage.token).then(pres => {
+        loadingAjax('/pay/getMachinePayParam', 'post', payList, token).then(res => {
+            loadingAjax('/pay/getPayParam', 'post', JSON.stringify({merchantId: Number(merchantsID)}), token).then(pres => {
                 var setPayStr = ''
                 res.data.forEach((item, index) => {
-                    let id = +item.id;
-                    if (id === 1) {
-                        aliId = item.selectPay.length > 0 ? item.selectPay[0].mpId : 0
-                    } else if (id === 2) {
-                        weId = item.selectPay.length > 0 ? item.selectPay[0].mpId : 0
-                    } else if (id === 3) {
-                        AcbcId = item.selectPay.length > 0 ? item.selectPay[0].mpId : 0
-                    } else if (id === 4) {
-                        shadeId = item.selectPay.length > 0 ? item.selectPay[0].mpId : 0
-                    }
+                    console.log(item);
                     if (+item.status === 1) {
                         setPayStr += `<div class="layui-form-item">
-                                        <label class="layui-form-label">${item.tName}：</label>
-                                    <div class="layui-input-block">`
+                                        <label class="layui-form-label" style="color: #9a6e3a">${item.tName}：</label>
+                                    <div style="display: flex">`
                         if (+item.selectPay.length === 0) {
-                            setPayStr += `<input type="radio" 
-lay-filter="${id === 3 || id === 4 ? 'radioTest3' : 'radioTest'}" name="${item.id}" value="${0 + '-' + 0}" title="无" checked>`
+                            setPayStr += `<input type="radio" lay-filter="radioTest" name="${item.id}"
+value="${0 + '-' + 0 + '-' + item.tName}" title="无" checked>`
                         } else {
-                            setPayStr += `<input type="radio" 
-lay-filter="${id === 3 || id === 4 ? 'radioTest3' : 'radioTest'}" name="${item.id}" value="${item.selectPay[0].mpId + '-' + 0}" title="无" >`
+                            setPayStr += `<input type="radio" lay-filter="radioTest" name="${item.id}" 
+value="${item.selectPay[0].mpId + '-' + 0 + '-' + item.tName}" title="无" >`
                         }
                         pres.data.forEach((e, i) => {
-                            if (id === +e.payType) {
-                                console.log(item && item.selectPay.length > 0 && item.selectPay[0].paramId, e.id);
-                                setPayStr += `<input type="radio" lay-filter="${id === 3 || id === 4 ? 'radioTest3' : 'radioTest'}" 
-name="${item.id}" 
-value="${(item.selectPay.length > 0 ? item.selectPay[0].mpId : 0) + '-' + e.id}" 
-title="${e.payee}" ${item.selectPay.length <= 0 ? '' : +item.selectPay[0].paramId === +e.id ? 'checked' : ''} >`
+                            if (+item.id === +e.payType) {
+                                setPayStr += `<input type="radio" lay-filter="radioTest" name="${item.id}" 
+value="${(item.selectPay.length > 0 ? item.selectPay[0].mpId : 0) + '-' + e.id + '-' + item.tName}" title="${e.payee}" 
+${item.selectPay.length <= 0 ? '' : +item.selectPay[0].paramId === +e.id ? 'checked' : ''} >`
                             }
                         })
                         setPayStr += `</div>
@@ -1734,42 +1724,18 @@ title="${e.payee}" ${item.selectPay.length <= 0 ? '' : +item.selectPay[0].paramI
     })
 
     form.on('radio(radioTest)', function (data) {
-        layer.confirm('确定修改收款账户？(温馨提示：工行支付, 杉德支付不能与微信支付、支付宝支付共用)', function (index) {
+        console.log(data);
+        layer.confirm('确定修改收款账户？(温馨提示：微信支付、支付宝支付不能与其他支付方式共存)', function (index) {
             layer.close(index);
             var dataID = data.value.split('-');
-            var setMachinePay = JSON.stringify({
+            loadingAjax('/pay/updateMachinePayParam', 'post', JSON.stringify({
                 machineId: machineSetData.machineId,
                 paramId: +dataID[1],
-                mpId: +dataID[0]
-            });
-            loadingAjax('/pay/updateMachinePayParam', 'post', setMachinePay, sessionStorage.token).then(res => {
+                mpId: +dataID[0],
+                title: dataID[2]
+            }), token).then(res => {
                 layer.msg(res.message, {icon: 1})
-                if (+dataID[1] !== 0 && +AcbcId !== 0) {
-                    var acbcObj = JSON.stringify({
-                        machineId: machineSetData.machineId,
-                        paramId: 0,
-                        mpId: +AcbcId
-                    })
-                    loadingAjax('/pay/updateMachinePayParam', 'post', acbcObj, sessionStorage.token).then(res => {
-                        supportpay(machineSetData.machineId, machineSetData.userNum);
-                    }).catch(err => {
-                    })
-                }
-                if (+dataID[1] !== 0 && +shadeId !== 0) {
-                    var shadeObj = JSON.stringify({
-                        machineId: machineSetData.machineId,
-                        paramId: 0,
-                        mpId: +shadeId
-                    })
-                    loadingAjax('/pay/updateMachinePayParam', 'post', shadeObj, sessionStorage.token).then(res => {
-                        supportpay(machineSetData.machineId, machineSetData.userNum);
-                    }).catch(err => {
-                    })
-                } else {
-                    supportpay(machineSetData.machineId, machineSetData.userNum);
-                }
-
-
+                supportpay(machineSetData.machineId, machineSetData.userNum);
             }).catch(err => {
                 layer.msg(err.message, {icon: 2})
             })
@@ -1777,72 +1743,6 @@ title="${e.payee}" ${item.selectPay.length <= 0 ? '' : +item.selectPay[0].paramI
             supportpay(machineSetData.machineId, machineSetData.userNum)
         })
     });
-    form.on('radio(radioTest3)', function (data) {
-        console.log(shadeId);
-        layer.confirm('确定修改收款账户？(温馨提示：工行支付, 杉德支付不能与微信支付、支付宝支付共用)', function (index) {
-            layer.close(index);
-            var dataID = data.value.split('-');
-            var setMachinePay = JSON.stringify({
-                machineId: machineSetData.machineId,
-                paramId: +dataID[1],
-                mpId: +dataID[0]
-            });
-            loadingAjax('/pay/updateMachinePayParam', 'post', setMachinePay, sessionStorage.token).then(res => {
-                // TODO
-                layer.msg(res.message, {icon: 1})
-                if (+dataID[1] !== 0 && +weId !== 0) {
-                    var weObj = JSON.stringify({
-                        machineId: machineSetData.machineId,
-                        paramId: 0,
-                        mpId: +weId
-                    })
-                    loadingAjax('/pay/updateMachinePayParam', 'post', weObj, sessionStorage.token).then(res => {
-                        supportpay(machineSetData.machineId, machineSetData.userNum);
-                    }).catch(err => {
-                    })
-                }
-                if (+dataID[1] !== 0 && +aliId !== 0) {
-                    var aliObj = JSON.stringify({
-                        machineId: machineSetData.machineId,
-                        paramId: 0,
-                        mpId: +aliId
-                    })
-                    loadingAjax('/pay/updateMachinePayParam', 'post', aliObj, sessionStorage.token).then(res => {
-                        supportpay(machineSetData.machineId, machineSetData.userNum);
-                    }).catch(err => {
-                    })
-                }
-                if (+dataID[1] !== 0 && +shadeId !== 0) {
-                    var shadeObj = JSON.stringify({
-                        machineId: machineSetData.machineId,
-                        paramId: 0,
-                        mpId: +shadeId
-                    })
-                    loadingAjax('/pay/updateMachinePayParam', 'post', shadeObj, sessionStorage.token).then(res => {
-                        supportpay(machineSetData.machineId, machineSetData.userNum);
-                    }).catch(err => {
-                    })
-                }
-                if (+dataID[1] !== 0 && +AcbcId !== 0) {
-                    var acbcObj = JSON.stringify({
-                        machineId: machineSetData.machineId,
-                        paramId: 0,
-                        mpId: +AcbcId
-                    })
-                    loadingAjax('/pay/updateMachinePayParam', 'post', acbcObj, sessionStorage.token).then(res => {
-                        supportpay(machineSetData.machineId, machineSetData.userNum);
-                    }).catch(err => {
-                    })
-                } else {
-                    supportpay(machineSetData.machineId, machineSetData.userNum);
-                }
-            }).catch(err => {
-                layer.msg(err.message, {icon: 2})
-            })
-        }, function () {
-            supportpay(machineSetData.machineId, machineSetData.userNum)
-        })
-    })
     //   客服信息部分
     var machineServiceFlag = false;
     // 更改客服微信二维码

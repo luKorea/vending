@@ -144,6 +144,9 @@ function setPayType(type) {
         case 4:
             str = '杉德支付';
             break;
+        case 5:
+            str = '杉德银联支付';
+            break;
     }
     return str;
 }

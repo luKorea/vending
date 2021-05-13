@@ -303,19 +303,6 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
-        // saveTableWidth(tableCols);
-        // mailTable.reload({
-        //     where: {
-        //         condition: startTime,
-        //         conditionTwo: endTime,
-        //         conditionThree: $('.key-contnet input[name="orderCode"]').val(),
-        //         dispatch_status: $('.newKeyContent select[name="takeStatus"]').val(),
-        //         sign_name: $('.newKeyContent input[name="takeName"]').val(),
-        //         sign_phone: $('.newKeyContent input[name="takePhone"]').val(),
-        //         refund: $('.newKeyContent select[name="keyrefundStatus"]').val(),
-        //     },
-        //     cols: tableCols
-        // })
         mailTable.reload({
             where: {
                 condition: startTime,
@@ -473,6 +460,29 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
                     // total:0.01
                 });
                 loadingAjax('/pay/refund_wxpay', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox', layer).then(res => {
+                    layer.msg(res.message, {icon: 1});
+
+                    mailTable.reload({
+                        where: {}
+                    });
+                    popupHide('goodsCont ', 'goodsBox ');
+                }).catch(err => {
+                    layer.msg(err.message, {icon: 2});
+                })
+            } else if (+mailOrderData.payType === 4 || +mailOrderData.payType === 5) {
+                var refundData = JSON.stringify({
+                    machineId: mailOrderData.machineId,
+                    orderId: mailOrderData.number,
+                    goodId: goodsData.goods_Id,
+                    count: Number($('.refundNumber input').val()),
+                    amount: Number($('.sumInput input[name="sum"]').val()),
+                    pay_id: mailOrderData.pay_id,
+                    // amount:0.01,
+                    transaction_id: mailOrderData.transaction_id,
+                    total: mailOrderData.amount,
+                    // total:0.01
+                });
+                loadingAjax('/pay/sandRefund', 'post', refundData, sessionStorage.token, 'mask', 'refundNUmCont', 'refundBox', layer).then(res => {
                     layer.msg(res.message, {icon: 1});
 
                     mailTable.reload({

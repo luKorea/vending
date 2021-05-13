@@ -328,7 +328,7 @@ input {
     display: flex;
     justify-content: start;
     flex-wrap: nowrap;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .setCoreListOne {
