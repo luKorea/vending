@@ -105,15 +105,11 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
 
     // 查询事件
     $('.queryBtn').click(function () {
-        // saveTableWidth(tableCols)
-        // tableIns.reload({
-        //     where: {
-        //     },
-        //     cols: tableCols
-        // })
+        saveTableWidth(tableCols)
         tableIns.reload({
             where: {
-            }
+            },
+            cols: tableCols
         })
     })
     var indexFlag = null;

@@ -164,21 +164,14 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
 
     //查询
     $('.queryBtn').click(function () {
-        // saveTableWidth(tableCols);
-        // orderTable.reload({
-        //     where: {
-        //         good_code: $('.newKeyContent input[name="codeNumber"]').val(),
-        //         start_time: startTime ? startTime : null,
-        //         end_time: endTime ? endTime : null,
-        //     },
-        //     cols: tableCols
-        // })
+        saveTableWidth(tableCols);
         orderTable.reload({
             where: {
                 good_code: $('.newKeyContent input[name="codeNumber"]').val(),
                 start_time: startTime ? startTime : null,
                 end_time: endTime ? endTime : null,
-            }
+            },
+            cols: tableCols
         })
     });
 

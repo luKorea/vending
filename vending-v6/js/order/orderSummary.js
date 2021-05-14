@@ -315,7 +315,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
-        // saveTableWidth(tableCols)
+        saveTableWidth(tableCols)
         tableIns.reload({
             where: {
                 startTime,
@@ -324,7 +324,7 @@ layui.use(['table', 'form', 'layer', 'tree', 'laydate'], function () {
                 conditionSix: $('.newKeyContent select[name="keyPayStatus"]').val(),
                 refund: $('.newKeyContent select[name="keyrefundStatus"]').val(),
             },
-            // cols: tableCols
+            cols: tableCols
         })
     })
 })

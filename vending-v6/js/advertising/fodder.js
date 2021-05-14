@@ -1,14 +1,15 @@
 import '../../MyCss/advertising/fodder.css'
+
 layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     // tooltip('.refreshBtnList', { transition: true, time: 200 });
     var permissionsData0 = window.parent.permissionsData1(),
         merchantId = sessionStorage.machineID,
-     permissionsObj = {
-        362: false,
-        371: false,
-        369: false,
-        387: false,
-    },
+        permissionsObj = {
+            362: false,
+            371: false,
+            369: false,
+            387: false,
+        },
         permissionsObjFlag = permissionsVal1(permissionsObj, permissionsData0);
 
     function permissions() {
@@ -24,13 +25,13 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         // 日期选择
         laydate = layui.laydate,
         tableCols = [[
-            { type: 'checkbox', },
-            { field: 'img', title: '微缩图', templet: "#imgtmp", align: 'center' },
-            { field: 'name', title: '素材名', align: 'center', },
-            { field: 'size',  title: '大小(MB)', align: 'center', },
+            {type: 'checkbox',},
+            {field: 'img', title: '微缩图', templet: "#imgtmp", align: 'center'},
+            {field: 'name', title: '素材名', align: 'center',},
+            {field: 'size', title: '大小(MB)', align: 'center',},
             // { field: 'amendTime', width: 130, title: '分辨率', },
             {
-                field: 'advertisingAttribute', align: 'center',  title: '素材属性', templet: function (d) {
+                field: 'advertisingAttribute', align: 'center', title: '素材属性', templet: function (d) {
                     return d.advertisingAttribute == 0 ? '图片' : '视频'
                 }
             },
@@ -39,7 +40,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     return d.advertisingType == 0 ? '横屏' : '竖屏'
                 }
             },
-            { field: 'duration', title: '播放时长', align: 'center' },
+            {field: 'duration', title: '播放时长', align: 'center'},
             {
                 field: 'checkStatus', align: 'center', title: '审核状态', templet: function (d) {
                     return d.checkStatus == 0 ? '未审核' : d.checkStatus == 1 ? '待审核' : d.checkStatus == 2 ? '审核通过' : '审核不通过'
@@ -50,11 +51,11 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     return d.advertisingStatus == '1' ? '启用' : '不启用'
                 }
             },
-            { field: 'addUser',  title: '创建人 ', align: 'center', },
-            { field: 'creationTime',  title: '创建时间', align: 'center', },
+            {field: 'addUser', title: '创建人 ', align: 'center',},
+            {field: 'creationTime', title: '创建时间', align: 'center',},
 
             // { field: 'operation', width: 200, title: '操作', toolbar: '#barDemo',fixed: 'right',right: 0 },
-            { field: 'operation', title: '操作', toolbar: '#barDemo', align: 'center'},
+            {field: 'operation', title: '操作', toolbar: '#barDemo', align: 'center'},
         ]],
         tree = layui.tree;
     //开始时间
@@ -129,25 +130,11 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
     // 查询事件
     $('.keyQueryBtn').click(function () {
         if (timeFlag(startTime, endTime)) {
-            layer.msg('时间选择范围最多三个月', { icon: 7 });
+            layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
         var KeyValData = form.val("KeyValData");
-        // saveTableWidth(tableCols)
-        // advertisingLis.reload({
-        // where: {
-        //     keyWord: KeyValData.name,//关键字
-        //         attribute: KeyValData.attribute,//素材属性
-        //         type: KeyValData.type,//素材类别
-        //         checkStatus: KeyValData.checkStatus,//审核状态
-        //         minSize: KeyValData.minSize,//最小mb
-        //         maxSize: KeyValData.maxSize,//最大mb
-        //         status: KeyValData.advertisingStatus,//素材状态
-        //         startTime: startTime,//开始时间
-        //         endTime: endTime//结束时间
-        // }
-        //     cols: tableCols
-        // })
+        saveTableWidth(tableCols)
         tableIns.reload({
             where: {
                 keyWord: KeyValData.name,//关键字
@@ -159,7 +146,8 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 status: KeyValData.advertisingStatus,//素材状态
                 startTime: startTime,//开始时间
                 endTime: endTime//结束时间
-            }
+            },
+            cols: tableCols
         })
     })
     // 上传素材弹出说明框
@@ -197,26 +185,24 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 layer.close(index);
                 $('.mask').fadeIn();
                 $('.maskSpan').addClass('maskIcon');
-                loadingAjax('/advertising/deleteAdvertising', 'post', JSON.stringify({ list: listID }), sessionStorage.token, 'mask', '', '', layer).then(res => {
-                    layer.msg(res.message, { icon: 1 });
+                loadingAjax('/advertising/deleteAdvertising', 'post', JSON.stringify({list: listID}), sessionStorage.token, 'mask', '', '', layer).then(res => {
+                    layer.msg(res.message, {icon: 1});
                     tableIns.reload({
-                        where: {
-                        }
+                        where: {}
                     })
                 }).catch(err => {
                     if (err.code == 202) {
-                        layer.msg(err.message, { icon: 7 });
+                        layer.msg(err.message, {icon: 7});
                         tableIns.reload({
-                            where: {
-                            }
+                            where: {}
                         });
                     } else {
-                        layer.msg(err.message, { icon: 7 });
+                        layer.msg(err.message, {icon: 7});
                     }
                 })
             });
         } else {
-            layer.msg('请选择要删除的素材', { icon: 7 });
+            layer.msg('请选择要删除的素材', {icon: 7});
         }
     });
     // 收起左边账号事件
@@ -229,62 +215,62 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         $('.on-left').hide()
     })
     var indexFlag = null,
-     valData = null,
-    // 素材内容
-     editImgVideo = null,
-    // 素材大小
-     editSize = null,
-    // 素材时长
-     editDuration = null,
-     operationFlag=null;
+        valData = null,
+        // 素材内容
+        editImgVideo = null,
+        // 素材大小
+        editSize = null,
+        // 素材时长
+        editDuration = null,
+        operationFlag = null;
     table.on('tool(moneyData)', function (obj) {
         valData = obj.data;
         event.stopPropagation();
         if (obj.event === 'operation') {
             if (operationFlag == obj.data.vid) {
-              $('.ListOperation').fadeOut();
-              operationFlag = null;
-              return;
+                $('.ListOperation').fadeOut();
+                operationFlag = null;
+                return;
             }
             operationFlag = obj.data.vid;
             $('.ListOperation').fadeIn();
             $('.ListOperation').css({
-              left: $(this).offset().left - 35 + 'px',
-              top: $(this).offset().top + 35 + 'px'
+                left: $(this).offset().left - 35 + 'px',
+                top: $(this).offset().top + 35 + 'px'
             })
-          }
+        }
     });
-    $('.ListOperation .edit').click(function(){
+    $('.ListOperation .edit').click(function () {
         popupShow('editMaterialCont', 'uploadMateriaBox');
-            form.val("editValData", {
-                "materialName": valData.name,
-                "materiaAttribute": valData.advertisingAttribute,
-                "materiaType": valData.advertisingType,
-                "materiaStatus": valData.advertisingStatus
-            })
-            if (valData.checkStatus == '0') {
-                $('.editCont select[name="materiaAttribute"]').prop("disabled", '');
-                $('.editCont select[name="materiaType"]').prop("disabled", '');
-                form.render();
-                $('.materiaDowEdit').show().children().show();
-                if (valData.advertisingAttribute == '0') {
-                    $('.editImgBtn').show().siblings('.editVideoBtn').hide();
-                    $('.materiaImgEdit img').attr('src', valData.img).show().siblings().hide();
-                } else {
-                    $('.editVideoBtn').show().siblings('.editImgBtn').hide();
-                    $('.materiaImgEdit video').attr('src', valData.img).show().siblings().hide();
-                }
+        form.val("editValData", {
+            "materialName": valData.name,
+            "materiaAttribute": valData.advertisingAttribute,
+            "materiaType": valData.advertisingType,
+            "materiaStatus": valData.advertisingStatus
+        })
+        if (valData.checkStatus == '0') {
+            $('.editCont select[name="materiaAttribute"]').prop("disabled", '');
+            $('.editCont select[name="materiaType"]').prop("disabled", '');
+            form.render();
+            $('.materiaDowEdit').show().children().show();
+            if (valData.advertisingAttribute == '0') {
+                $('.editImgBtn').show().siblings('.editVideoBtn').hide();
+                $('.materiaImgEdit img').attr('src', valData.img).show().siblings().hide();
             } else {
-                $('.editCont select[name="materiaAttribute"]').prop("disabled", true);
-                $('.editCont select[name="materiaType"]').prop("disabled", true);
-                form.render();
-                $('.editImgBtn').hide();
-                $('.editVideoBtn').hide();
-                $('.materiaDowEdit').hide().children().hide();
-                $('.materiaImgEdit img').hide().siblings().hide();
+                $('.editVideoBtn').show().siblings('.editImgBtn').hide();
+                $('.materiaImgEdit video').attr('src', valData.img).show().siblings().hide();
             }
+        } else {
+            $('.editCont select[name="materiaAttribute"]').prop("disabled", true);
+            $('.editCont select[name="materiaType"]').prop("disabled", true);
+            form.render();
+            $('.editImgBtn').hide();
+            $('.editVideoBtn').hide();
+            $('.materiaDowEdit').hide().children().hide();
+            $('.materiaImgEdit img').hide().siblings().hide();
+        }
     });
-    $('.ListOperation .Tpreview').click(function(){
+    $('.ListOperation .Tpreview').click(function () {
         if (valData.img.indexOf('mp4') > -1) {
             $('.imgCont video').attr('src', valData.img).show().siblings().hide();
         } else {
@@ -312,7 +298,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             });
             auditMethods('1', checkList, '/advertising/submitAdvertisingStatus');
         } else {
-            layer.msg('请选择需要提交审核的素材', { icon: 7 });
+            layer.msg('请选择需要提交审核的素材', {icon: 7});
         }
     });
 
@@ -336,7 +322,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             })
 
         } else {
-            layer.msg('请选择需要通过审核的素材', { icon: 7 });
+            layer.msg('请选择需要通过审核的素材', {icon: 7});
         }
     });
 
@@ -359,7 +345,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 auditMethods('0', noPassList, '/advertising/checkAdvertisingStatus')
             })
         } else {
-            layer.msg('请选择需要不通过审核的素材', { icon: 7 });
+            layer.msg('请选择需要不通过审核的素材', {icon: 7});
         }
     })
     //
@@ -368,13 +354,13 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         var editValDataConfirm = form.val("editValData");
 
         if (!editValDataConfirm.materialName) {
-            layer.msg('素材名不能空', { icon: 7 });
+            layer.msg('素材名不能空', {icon: 7});
             return;
         }
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon');
         if (valData.checkStatus == '0') {
-            loadingAjax('/advertising/findAdvertising', 'post', JSON.stringify({ id: valData.vid }),
+            loadingAjax('/advertising/findAdvertising', 'post', JSON.stringify({id: valData.vid}),
                 sessionStorage.token, '', '', '', layer).then(res => {
                 if (res.data == '0') {
                     editImgVideo = valData.img;
@@ -394,10 +380,9 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                             editSize,
                             valData.url);
                     } else {
-                        layer.msg('素材属性不正确', { icon: 7 });
+                        layer.msg('素材属性不正确', {icon: 7});
                     }
-                }
-                else {
+                } else {
                     layer.confirm('检测到当前素材只能修改素材名和状态，是否继续修改？', function (index) {
                         editMaterial(
                             valData.vid,
@@ -413,10 +398,9 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     })
                 }
             }).catch(err => {
-                layer.msg(err.message, { icon: 2 });
+                layer.msg(err.message, {icon: 2});
             });
-        }
-        else {
+        } else {
             editMaterial(
                 valData.vid,
                 editValDataConfirm.materialName,
@@ -470,12 +454,12 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                 } else if (res.code == 403) {
                     window.parent.location.href = "login.html";
                 } else {
-                    layer.msg(res.message, { icon: 2 })
+                    layer.msg(res.message, {icon: 2})
                 }
             }, error: function (err) {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon')
-                layer.msg('图片上传失败', { icon: 2 })
+                layer.msg('图片上传失败', {icon: 2})
             }
         })
     });
@@ -518,7 +502,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             }, error: function (err) {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon');
-                layer.msg('视频上传失败', { icon: 2 })
+                layer.msg('视频上传失败', {icon: 2})
             }
         })
 
@@ -539,13 +523,12 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
         });
         loadingAjax('/advertising/updateAdvertising', 'post', editObj, sessionStorage.token, 'mask', 'editMaterialCont', 'uploadMateriaBox', layer).then(res => {
             tableIns.reload({
-                where: {
-                }
+                where: {}
             });
             editImgVideo = null;
-            layer.msg(res.message, { icon: 1 });
+            layer.msg(res.message, {icon: 1});
         }).catch(err => {
-            layer.msg(err.message, { icon: 2 })
+            layer.msg(err.message, {icon: 2})
         })
     }
 
@@ -646,7 +629,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
             }, error: function (err) {
                 $('.mask').fadeOut();
                 $('.maskSpan').removeClass('maskIcon')
-                layer.msg('上传视频失败', { icon: 2 })
+                layer.msg('上传视频失败', {icon: 2})
             }
         })
     });
@@ -687,11 +670,12 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                             }, error: function (err) {
                                 $('.mask').fadeOut();
                                 $('.maskSpan').removeClass('maskIcon')
-                                layer.msg('上传图片失败', { icon });
+                                layer.msg('上传图片失败', {icon});
                                 return false;
                             }
                         })
-                    };
+                    }
+                    ;
                     // 提交
                     var addFooderObj = JSON.stringify({
                         advertisingAttribute: addList.materiaAttribute,//属性
@@ -705,10 +689,9 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     })
                     loadingAjax('/advertising/saveAdvertising', 'post', addFooderObj, sessionStorage.token, 'mask', 'uploadMaterialCont', 'uploadMateriaBox', layer).then(res => {
                         tableIns.reload({
-                            where: {
-                            }
+                            where: {}
                         });
-                        layer.msg(res.message, { icon: 1 })
+                        layer.msg(res.message, {icon: 1})
                         form.val("uploadValData", {
                             "materialName": '',
                             "materiaAttribute": '',
@@ -723,35 +706,36 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                         imgVideoHttp = null;
                         ImgFile = null;
                     }).catch(err => {
-                        layer.msg(err.message, { icon: 2 })
+                        layer.msg(err.message, {icon: 2})
                     })
                 }, 300)
 
             } else {
-                layer.msg('请上传图片或视频', { icon: 7 })
+                layer.msg('请上传图片或视频', {icon: 7})
             }
         } else {
-            layer.msg('带*为必填', { icon: 7 })
+            layer.msg('带*为必填', {icon: 7})
         }
     })
 
     // 提交审核，审核通过，审核不通过方法
     function auditMethods(type, data, url) {
-        loadingAjax(url, 'post', JSON.stringify({ data, type }), sessionStorage.token, 'mask', '', '', layer).then(res => {
-            layer.msg(res.message, { icon: 1 });
+        loadingAjax(url, 'post', JSON.stringify({
+            data,
+            type
+        }), sessionStorage.token, 'mask', '', '', layer).then(res => {
+            layer.msg(res.message, {icon: 1});
             tableIns.reload({
-                where: {
-                }
+                where: {}
             })
         }).catch(err => {
             if (err.code == 202) {
-                layer.msg(err.message, { icon: 7 });
+                layer.msg(err.message, {icon: 7});
                 tableIns.reload({
-                    where: {
-                    }
+                    where: {}
                 });
             } else {
-                layer.msg(err.message, { icon: 2 });
+                layer.msg(err.message, {icon: 2});
             }
         })
     }
@@ -775,6 +759,7 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
 
     var dataList = treeList();
     treeFun1(tree, 'test1', tableIns, dataList);
+
     function treeFun1(tree, element, tableID, data) {
         tree.render({
             elem: `#${element}`,
@@ -828,9 +813,9 @@ layui.use(['laydate', 'table', 'layer', 'tree'], function () {
                     'merchantId': Number(merchantId)
                 }
             })
-            layer.msg('已刷新', { icon: 1 })
+            layer.msg('已刷新', {icon: 1})
         } else {
-            layer.msg('已刷新', { icon: 1 })
+            layer.msg('已刷新', {icon: 1})
         }
 
     })

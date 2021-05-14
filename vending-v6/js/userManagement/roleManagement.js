@@ -396,10 +396,12 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
     }
     // 查询
     $('.queryBtnClick').click(function () {
+        saveTableWidth(tableCols);
         tableIns.reload({
             where: {
                 condition: $('.KyeText').val()
-            }
+            },
+            cols: tableCols
         })
     });
     // 全选

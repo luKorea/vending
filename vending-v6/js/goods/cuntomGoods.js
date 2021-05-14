@@ -40,6 +40,85 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
     // 商品图片
     var goodsImage = null;
     var token = sessionStorage.token + '';
+    var tableCols = [[
+        {align: 'center', type: 'checkbox', fixed: 'left'},
+        {field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center', fixed: 'left'},
+        {field: 'goods_Core', width: 180, title: '商品编号', align: 'center', fixed: 'left'},
+        {
+            fixed: 'left',
+            field: 'goods_Name',
+            width: 200,
+            title: '商品名',
+            color: '#409eff',
+            align: 'center',
+            templet: function (d) {
+                return (d.mail == 1 ? '(邮寄)' + d.goods_Name : d.goods_Name)
+            }
+        },
+        {
+            field: 'mail', width: 120, title: '是否邮寄商品', align: 'center', templet: function (d) {
+                return d.mail == 0 ? '否' : '是'
+            }
+        },
+        {
+            field: 'goods_Status', width: 120, title: '商品状态', align: 'center', templet: function (d) {
+                return d.goods_Status == 1 ? '启用' : '不启用'
+            }
+        },
+        {field: `classifyName`, width: 120, title: '商品类目', align: 'center'},
+        {
+            field: 'goods_Price',
+            width: 120,
+            align: 'center',
+            title: '销售价 ',
+            templet: d => percentileMoney(d.goods_Price)
+        },
+        {
+            field: 'goods_Cost',
+            width: 120,
+            align: 'center',
+            title: '成本价 ',
+            templet: d => percentileMoney(d.goods_Cost)
+        },
+        {field: 'goods_Param', width: 120, title: '规格说明 ', align: 'center'},
+        // { field: 'vipPrice', width: 120, title: '会员价 ' },
+        // { field: 'strategy', width: 120, title: '优惠价策略 ' },
+        // { field: 'goodsActivity', width: 120, title: '其他活动 ' },
+        {
+            field: 'create_user', width: 130, title: '创建人 ', align: 'center'
+        },
+        {
+            field: 'goods_Time', width: 200, title: '创建时间 ', align: 'center', templet: function (d) {
+                if (d.goods_Time) {
+                    return timeStamp(d.goods_Time)
+                } else {
+                    return '-';
+                }
+            }
+        },
+        {field: 'update_user', width: 130, title: '最后修改人 ', align: 'center'},
+        {
+            field: 'update_time', width: 200, title: '最后修改时间 ', align: 'center', templet: function (d) {
+                if (d.update_time) {
+                    return timeStamp(d.update_time)
+                } else {
+                    return '-';
+                }
+            }
+        },
+
+        {
+            field: 'operation',
+            fixed: 'right',
+            align: 'center',
+            position: 'absolute',
+            right: 0,
+            width: 150,
+            title: '操作',
+            toolbar: '#barDemo'
+        },
+        // { fixed: 'right', width: 160, align: 'center', toolbar: '#barDemo' }
+    ]];
     var tableIns = table.render({
         elem: '#tableTest'
         , url: `${vApi}/goods/findAll`
@@ -48,85 +127,7 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
         headers: {
             token,
         },
-        cols: [[
-            {align: 'center', type: 'checkbox', fixed: 'left'},
-            {field: 'goods_images', width: 100, title: '图片', templet: "#imgtmp", align: 'center', fixed: 'left'},
-            {field: 'goods_Core', width: 180, title: '商品编号', align: 'center', fixed: 'left'},
-            {
-                fixed: 'left',
-                field: 'goods_Name',
-                width: 200,
-                title: '商品名',
-                color: '#409eff',
-                align: 'center',
-                templet: function (d) {
-                    return (d.mail == 1 ? '(邮寄)' + d.goods_Name : d.goods_Name)
-                }
-            },
-            {
-                field: 'mail', width: 120, title: '是否邮寄商品', align: 'center', templet: function (d) {
-                    return d.mail == 0 ? '否' : '是'
-                }
-            },
-            {
-                field: 'goods_Status', width: 120, title: '商品状态', align: 'center', templet: function (d) {
-                    return d.goods_Status == 1 ? '启用' : '不启用'
-                }
-            },
-            {field: `classifyName`, width: 120, title: '商品类目', align: 'center'},
-            {
-                field: 'goods_Price',
-                width: 120,
-                align: 'center',
-                title: '销售价 ',
-                templet: d => percentileMoney(d.goods_Price)
-            },
-            {
-                field: 'goods_Cost',
-                width: 120,
-                align: 'center',
-                title: '成本价 ',
-                templet: d => percentileMoney(d.goods_Cost)
-            },
-            {field: 'goods_Param', width: 120, title: '规格说明 ', align: 'center'},
-            // { field: 'vipPrice', width: 120, title: '会员价 ' },
-            // { field: 'strategy', width: 120, title: '优惠价策略 ' },
-            // { field: 'goodsActivity', width: 120, title: '其他活动 ' },
-            {
-                field: 'create_user', width: 130, title: '创建人 ', align: 'center'
-            },
-            {
-                field: 'goods_Time', width: 200, title: '创建时间 ', align: 'center', templet: function (d) {
-                    if (d.goods_Time) {
-                        return timeStamp(d.goods_Time)
-                    } else {
-                        return '-';
-                    }
-                }
-            },
-            {field: 'update_user', width: 130, title: '最后修改人 ', align: 'center'},
-            {
-                field: 'update_time', width: 200, title: '最后修改时间 ', align: 'center', templet: function (d) {
-                    if (d.update_time) {
-                        return timeStamp(d.update_time)
-                    } else {
-                        return '-';
-                    }
-                }
-            },
-
-            {
-                field: 'operation',
-                fixed: 'right',
-                align: 'center',
-                position: 'absolute',
-                right: 0,
-                width: 150,
-                title: '操作',
-                toolbar: '#barDemo'
-            },
-            // { fixed: 'right', width: 160, align: 'center', toolbar: '#barDemo' }
-        ]]
+        cols: tableCols
         , id: 'tableId'
         , page: true
         , loading: true,
@@ -288,12 +289,14 @@ layui.use(['table', 'form', 'layer', 'layedit', 'tree'], function () {
 
     // 点击查询事件，重新渲染数据表格
     $('.query-btnClick').click(function () {
+        saveTableWidth(tableCols);
         tableIns.reload({
             where: {
                 conditionTwo: $(".KyeText").val(), //关键字
                 conditionThree: GoodsTypeID, //分类
                 conditionFour: stateId, //商品状态
-            }
+            },
+            cols: tableCols
         })
     })
 

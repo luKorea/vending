@@ -71,6 +71,127 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
         form = layui.form,
         tree = layui.tree,
         laydate = layui.laydate,
+        tableCols =  [[
+            {
+                fixed: 'left',
+                field: 'info', width: 330, title: '售货机名', align: 'center', templet: function (d) {
+                    if (d.info) {
+                        return d.info
+                    } else {
+                        return `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>
+                            <div><span style="color:red;">*</span>(序列号:${d.machineId})</div>`
+                    }
+                }
+            },
+            {
+                field: 'number', width: 150, title: '售货机编号', align: 'center', templet: function (d) {
+                    return d.number ? d.number : '-'
+                }
+            },
+            {
+                field: 'info', width: 150, title: '售货机类别', align: 'center', templet: function (d) {
+                    if (d.machinesource) {
+                        return d.machinesource == 1 ? 'ZJ' : 'YY'
+                    } else {
+                        return '-'
+                    }
+                }
+            },
+            {
+                field: 'machineURL', width: 220, title: '支付成功跳转地址', align: 'center',
+                templet: function (d) {
+                    return (d.machineURL && (d.machineURL !== null || d.machineURL !== undefined)) ? `<a href="${d.machineURL}" target="_blank" style="color: rgb(190, 149, 74)">${d.machineURL}</a>` : '-'
+                }
+            },
+            {
+                field: 'location', width: 350, title: '地址', align: 'center', templet: function (d) {
+                    return d.location ? d.location : ' - '
+                }
+            },
+            {
+                field: 'trafficInfo', width: 160, title: '流量使用情况(MB)', align: 'center'
+            },
+            {
+                field: 'iot_card', width: 160, title: '物联网卡号', align: 'center'
+            },
+            {
+                field: 'warning', width: 130, title: '缺货情况', align: 'center', templet: function (d) {
+                    if (d.storage_warning[0].warning) {
+                        return ` <div>
+                            <span class="${d.storage_warning[0].way_count < 10 ? 'tableStateCellTrue' : d.storage_warning[0].way_count < 30 ? 'tableStateCellFalse' : 'red'}">${d.storage_warning[0].warning}</span>
+                        </div>`
+
+                    } else {
+                        return '-'
+                    }
+
+                }
+            },
+            {
+                field: 'way_count', width: 130, title: '缺货货道数量', align: 'center', templet: function (d) {
+                    return d.storage_warning[0].way_count
+                }
+            },
+            {
+                field: 'onlineStatus', width: 130, title: '在线状态', align: 'center', templet: function (d) {
+                    return `<div><span class="${d.onlineStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.onlineStatus == 0 ? '离线' : '在线'}</span></div>`
+                }
+            },
+            {
+                field: 'offline_time', width: 180, title: '离线时长', align: 'center',
+            },
+            {
+                field: 'offline_time', width: 180, title: '上次离线时间', align: 'center', templet: function (d) {
+                    return d.time ? d.time : '-'
+                }
+            },
+            {
+                field: 'actionStatus', width: 130, title: '是否激活', align: 'center', templet: function (d) {
+                    return `<div><span class="${d.actionStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.actionStatus == 0 ? '未激活' : '已激活'}</span></div>`
+                }
+            },
+            {
+                field: 'openStatus', width: 130, title: '营业状态', align: 'center', templet: function (d) {
+                    return `<div><span class="${d.openStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.openStatus == 0 ? '暂停营业' : '营业'}</span></div>`
+                }
+            },
+            {field: 'merchantName', width: 150, title: '所属商户', align: 'center',},
+            {
+                field: 'versions', width: 200, title: '当前版本(待升级版本)', align: 'center', templet: function (d) {
+                    return `${d.versions ? d.versions : '-'}(${d.appVersion ? d.appVersion : '-'})`
+                }
+            },
+            // { field: 'controllerVersion', width: 135, title: '控制器版本', },
+            {
+                field: 'connectTime', width: 170, title: '联机时间', align: 'center', templet: function (d) {
+                    if (d.actionTime) {
+                        return timeStamp(d.connectTime)
+                    } else {
+                        return '-'
+                    }
+                }
+            },
+            {
+                field: 'actionTime', width: 170, title: '激活时间', align: 'center', templet: function (d) {
+                    if (d.actionTime) {
+                        return timeStamp(d.actionTime)
+                    } else {
+                        return '-'
+                    }
+
+                }
+            },
+            {field: 'description', width: 150, title: '描述', align: 'center'},
+            {
+                field: 'operation',
+                fixed: 'right',
+                right: 0,
+                width: 150,
+                title: '操作',
+                toolbar: '#barDemo',
+                align: 'center'
+            },
+        ]],
         machineList = table.render({
             elem: '#machineTable',
             url: `${vApi}/machine/getMachineList`,
@@ -80,127 +201,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 token,
             },
             height: 600,
-            cols: [[
-                {
-                    fixed: 'left',
-                    field: 'info', width: 330, title: '售货机名', align: 'center', templet: function (d) {
-                        if (d.info) {
-                            return d.info
-                        } else {
-                            return `<div><span style="color:red;">*</span>(售货机为新上线机器，请编辑售货机信息！)</div>
-                            <div><span style="color:red;">*</span>(序列号:${d.machineId})</div>`
-                        }
-                    }
-                },
-                {
-                    field: 'number', width: 150, title: '售货机编号', align: 'center', templet: function (d) {
-                        return d.number ? d.number : '-'
-                    }
-                },
-                {
-                    field: 'info', width: 150, title: '售货机类别', align: 'center', templet: function (d) {
-                        if (d.machinesource) {
-                            return d.machinesource == 1 ? 'ZJ' : 'YY'
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
-                {
-                    field: 'machineURL', width: 220, title: '支付成功跳转地址', align: 'center',
-                    templet: function (d) {
-                        return (d.machineURL && (d.machineURL !== null || d.machineURL !== undefined)) ? `<a href="${d.machineURL}" target="_blank" style="color: rgb(190, 149, 74)">${d.machineURL}</a>` : '-'
-                    }
-                },
-                {
-                    field: 'location', width: 350, title: '地址', align: 'center', templet: function (d) {
-                        return d.location ? d.location : ' - '
-                    }
-                },
-                {
-                    field: 'trafficInfo', width: 160, title: '流量使用情况(MB)', align: 'center'
-                },
-                {
-                    field: 'iot_card', width: 160, title: '物联网卡号', align: 'center'
-                },
-                {
-                    field: 'warning', width: 130, title: '缺货情况', align: 'center', templet: function (d) {
-                        if (d.storage_warning[0].warning) {
-                            return ` <div>
-                            <span class="${d.storage_warning[0].way_count < 10 ? 'tableStateCellTrue' : d.storage_warning[0].way_count < 30 ? 'tableStateCellFalse' : 'red'}">${d.storage_warning[0].warning}</span>
-                        </div>`
-
-                        } else {
-                            return '-'
-                        }
-
-                    }
-                },
-                {
-                    field: 'way_count', width: 130, title: '缺货货道数量', align: 'center', templet: function (d) {
-                        return d.storage_warning[0].way_count
-                    }
-                },
-                {
-                    field: 'onlineStatus', width: 130, title: '在线状态', align: 'center', templet: function (d) {
-                        return `<div><span class="${d.onlineStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.onlineStatus == 0 ? '离线' : '在线'}</span></div>`
-                    }
-                },
-                {
-                    field: 'offline_time', width: 180, title: '离线时长', align: 'center',
-                },
-                {
-                    field: 'offline_time', width: 180, title: '上次离线时间', align: 'center', templet: function (d) {
-                        return d.time ? d.time : '-'
-                    }
-                },
-                {
-                    field: 'actionStatus', width: 130, title: '是否激活', align: 'center', templet: function (d) {
-                        return `<div><span class="${d.actionStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.actionStatus == 0 ? '未激活' : '已激活'}</span></div>`
-                    }
-                },
-                {
-                    field: 'openStatus', width: 130, title: '营业状态', align: 'center', templet: function (d) {
-                        return `<div><span class="${d.openStatus != 0 ? 'tableStateCellTrue' : 'tableStateCellFalse'}">${d.openStatus == 0 ? '暂停营业' : '营业'}</span></div>`
-                    }
-                },
-                {field: 'merchantName', width: 150, title: '所属商户', align: 'center',},
-                {
-                    field: 'versions', width: 200, title: '当前版本(待升级版本)', align: 'center', templet: function (d) {
-                        return `${d.versions ? d.versions : '-'}(${d.appVersion ? d.appVersion : '-'})`
-                    }
-                },
-                // { field: 'controllerVersion', width: 135, title: '控制器版本', },
-                {
-                    field: 'connectTime', width: 170, title: '联机时间', align: 'center', templet: function (d) {
-                        if (d.actionTime) {
-                            return timeStamp(d.connectTime)
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
-                {
-                    field: 'actionTime', width: 170, title: '激活时间', align: 'center', templet: function (d) {
-                        if (d.actionTime) {
-                            return timeStamp(d.actionTime)
-                        } else {
-                            return '-'
-                        }
-
-                    }
-                },
-                {field: 'description', width: 150, title: '描述', align: 'center'},
-                {
-                    field: 'operation',
-                    fixed: 'right',
-                    right: 0,
-                    width: 150,
-                    title: '操作',
-                    toolbar: '#barDemo',
-                    align: 'center'
-                },
-            ]]
+            cols: tableCols
             , id: 'tableId'
             , page: true
             , loading: true
@@ -246,6 +247,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
     // 查询
     $('.machineListKeyBtn').click(function () {
         var machineData = form.val("machineData");
+        saveTableWidth(tableCols);
         machineList.reload({
             where: {
                 onlineStatus: machineData.onlineStatus ? Number(machineData.onlineStatus) : '',
@@ -254,7 +256,8 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // stockStatus:machineData.openStatus? Number(machineData.openStatus):'',
                 stockStatus: machineData.CreationTime ? Number(machineData.CreationTime) : '',
                 keyword: machineData.machineKeyText
-            }
+            },
+            cols: tableCols
         })
     });
     $('.refreshBtnList').click(function () {

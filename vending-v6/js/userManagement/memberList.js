@@ -112,13 +112,10 @@ layui.use(['table', 'form', 'layer', 'tree', 'util', 'transfer'], function () {
 
         // 查询
         $('.queryBtnClick ').click(function () {
-            // saveTableWidth(tableCols);
-            // tableIns.reload({
-            //     where: {conditionTwo: $('.mian input[name="keyMerchants"]').val()},
-            //     cols: tableCols
-            // });
+            saveTableWidth(tableCols);
             tableIns.reload({
-                where: {conditionTwo: $('.mian input[name="keyMerchants"]').val()}
+                where: {conditionTwo: $('.mian input[name="keyMerchants"]').val()},
+                cols: tableCols
             });
         });
         //监听工具条

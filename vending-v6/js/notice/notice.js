@@ -489,12 +489,12 @@ layui.use(['table', 'form', 'layer',], function () {
     })
     // 查询公告
     $('.queryBtn').click(function () {
-        // saveTableWidth(tableCols)
+        saveTableWidth(tableCols)
         noticeTableIns.reload({
             where: {
                 keyword: $('.key-contnet input[name="keyMerchants"]').val()
             },
-            // cols: tableCols
+            cols: tableCols
         })
     })
     // $('.xlsx').change(function(e){

@@ -152,12 +152,12 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
 
     // 查询
     $('.queryBtn').click(function () {
-        // saveTableWidth(tableCols)
+        saveTableWidth(tableCols)
         salesTableIn.reload({
             where: {
                 keyword: $('.KyeText').val().trim()
             },
-            // cols: tableCols
+            cols: tableCols
         })
     })
 

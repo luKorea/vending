@@ -52,19 +52,13 @@ layui.use(['element', 'laydate', 'table', 'carousel', 'tree', 'form'], function 
             layer.msg('时间选择范围最多三个月', { icon: 7 });
             return;
         }
-        // saveTableWidth(tableCols)
-        // advertisingLis.reload({
-        //     where: {
-        //         condition: startTime,
-        //         conditionTwo: endTime,
-        //     },
-        //     cols: tableCols
-        // })
+        saveTableWidth(tableCols)
         advertisingLis.reload({
             where: {
                 condition: startTime,
                 conditionTwo: endTime,
-            }
+            },
+            cols: tableCols
         })
     })
     // 展开

@@ -366,12 +366,12 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
     }
     // 查询消息
     $('.queryBtn').click(function () {
-        // saveTableWidth(tableCols)
+        saveTableWidth(tableCols)
         massageTableIn.reload({
             where: {
                 keyword: $('.KyeText').val()
             },
-            // cols: tableCols
+            cols: tableCols
         })
     })
     // 监听点击信息

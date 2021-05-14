@@ -303,6 +303,7 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
+        saveTableWidth(tableCols);
         mailTable.reload({
             where: {
                 condition: startTime,
@@ -312,7 +313,8 @@ layui.use(['table', 'layer', 'form', 'laydate', 'tree'], function () {
                 sign_name: $('.newKeyContent input[name="takeName"]').val(),
                 sign_phone: $('.newKeyContent input[name="takePhone"]').val(),
                 refund: $('.newKeyContent select[name="keyrefundStatus"]').val(),
-            }
+            },
+            cols: tableCols
         })
     });
     // 刷新页面

@@ -223,13 +223,13 @@ layui.use(['table', 'form', 'layer', 'tree', 'util'], function () {
 
     // 查询
     $('.queryBtnClick').click(function () {
-        // saveTableWidth(tableCols);
+        saveTableWidth(tableCols);
         tableIns.reload({
             where: {
                 condition: $('.addMember input[name="keyMerchants"]').val(),
                 conditionThree: '0'
             },
-            // cols: tableCols
+            cols: tableCols
         })
     })
     //点击添加成员事件

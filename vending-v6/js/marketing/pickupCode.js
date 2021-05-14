@@ -867,17 +867,12 @@ layui.use(['form', 'layer', 'table', 'transfer', 'tree'], function () {
 
     // 活动查询
     $('.queryBtnClick').click(function () {
-        // saveTableWidth(tableCols)
-        // activityTable.reload({
-        //     where: {
-        //         condition: $('.activityListKey .KyeText').val()
-        //     },
-        //      cols: tableCols
-        // });
+        saveTableWidth(tableCols)
         activityTable.reload({
             where: {
                 condition: $('.activityListKey .KyeText').val()
-            }
+            },
+             cols: tableCols
         });
     });
     // 取货码查询

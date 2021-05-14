@@ -121,14 +121,14 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
             layer.msg('时间选择范围最多三个月', { icon: 7 });
             return;
         }
-        // saveTableWidth(tableCols)
+        saveTableWidth(tableCols)
         salesTableIn.reload({
             where: {
                 start_time: startTime,
                 end_time: endTime,
                 refund: $('.newKeyItem input[name="open"]').prop('checked') ? 0 : 1,
             },
-            // cols: tableCols
+            cols: tableCols
         })
     });
     // 刷新页面

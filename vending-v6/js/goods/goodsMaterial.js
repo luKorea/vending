@@ -124,17 +124,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
   })
 
   var table = layui.table,
-    // 商品列表图片
-    advertisingLis = table.render({
-      elem: '#ImgData',
-      method: 'post',
-      url: `${vApi}/good_material/getGoodMaterial`,
-      contentType: "application/json",
-      headers: {
-        token,
-      },
-      height: 500,
-      cols: [[
+      tableCols = [[
         { type: 'checkbox' },
         { field: 'img',  title: '图片', templet: "#imgtmp", align: 'center' },
         { field: 'name',  title: '图片名', align: 'center', },
@@ -150,7 +140,18 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
 
         // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
         { field: 'operation',  title: '操作', toolbar: '#barDemoImg', align: 'center', },
-      ]]
+      ]],
+    // 商品列表图片
+    advertisingLis = table.render({
+      elem: '#ImgData',
+      method: 'post',
+      url: `${vApi}/good_material/getGoodMaterial`,
+      contentType: "application/json",
+      headers: {
+        token,
+      },
+      height: 500,
+      cols: tableCols
       , page: true
       , id: 'ImgListData'
       , loading: true,
@@ -285,6 +286,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       layer.msg('时间选择范围最多三个月', { icon: 7 });
       return;
     }
+    saveTableWidth(tableCols);
     advertisingLis.reload({
       where: {
         conditionThree: $('.newKeyContent input[name="KeyImgName"]').val(),
@@ -292,15 +294,13 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         condition: startTime,
         conditionTwo: endTime,
         conditionFive: $('.ImgContnet select[name="logoImgStatus"]').val()
-      }
+      },
+      cols: tableCols
     })
   });
   // 视频查询
   $('.VideoQueryBtnClick').click(function () {
-    // if (timeFlag(startTime2, endTime2)) {
-    //   layer.msg('时间选择范围最多三个月', { icon: 7 });
-    //   return;
-    // }
+    saveTableWidth(videoCols);
     videoTable.reload({
       where: {
         conditionThree: $('.newKeyContent input[name="keyVideoName"]').val(),
@@ -308,7 +308,8 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         condition: startTime2,
         conditionTwo: endTime2,
         conditionFive: $('.VideoContnet select[name="videoStatus"]').val()
-      }
+      },
+      cols: videoCols
     })
   });
   // 详情图片查询
@@ -317,6 +318,7 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
       layer.msg('时间选择范围最多三个月', { icon: 7 });
       return;
     }
+    saveTableWidth(detailCols);
     detailsTable.reload({
       where: {
         conditionThree: $('.details input[name="KeyImgName"]').val(),
@@ -324,22 +326,12 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         condition: startTime3,
         conditionTwo: endTime3,
         conditionFive: $('.details select[name="detailsImgStatus"]').val()
-      }
+      },
+      cols: detailCols
     })
   })
-  var videoTable = null;
-  // 视频列表
-  function videoTableFun() {
-    videoTable = table.render({
-      elem: '#VideoData',
-      method: 'post',
-      url: `${vApi}/good_material/getGoodMaterial`,
-      contentType: "application/json",
-      headers: {
-        token,
-      },
-      height: 500,
-      cols: [[
+  var videoTable = null,
+      videoCols  = [[
         // { field: 'Img', width: 150, title: '素材图',templet: "" },
         { type: 'checkbox', },
         { field: 'name', title: '视频名', align: 'center', },
@@ -356,6 +348,18 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
         { field: 'operation', title: '操作', toolbar: '#barDemoVideo', align: 'center', },
 
       ]]
+  // 视频列表
+  function videoTableFun() {
+    videoTable = table.render({
+      elem: '#VideoData',
+      method: 'post',
+      url: `${vApi}/good_material/getGoodMaterial`,
+      contentType: "application/json",
+      headers: {
+        token,
+      },
+      height: 500,
+      cols: videoCols
       , page: true
       , id: 'VideoListData'
       , loading: true,
@@ -837,18 +841,8 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
 
 
   // 详情图片列表
-  var detailsTable = null;
-  function detailsTableFun() {
-    detailsTable = table.render({
-      elem: '#detailsImgData',
-      method: 'post',
-      url: `${vApi}/good_material/getGoodMaterial`,
-      contentType: "application/json",
-      headers: {
-        token,
-      },
-      height: 500,
-      cols: [[
+  var detailsTable = null,
+      detailCols =  [[
         { type: 'checkbox', },
         { field: 'img', title: '图片', templet: "#detailsImgtmp", align: 'center' },
         { field: 'name',  title: '图片名', align: 'center', },
@@ -864,7 +858,18 @@ layui.use(['form', 'layer', 'laydate', 'table', 'tree'], function () {
 
         // {field:'operation', width:120, title: 'caozuo', fixed: 'right'}
         { field: 'operation',  title: '操作', toolbar: '#barDemoImg', align: 'center', },
-      ]]
+      ]];
+  function detailsTableFun() {
+    detailsTable = table.render({
+      elem: '#detailsImgData',
+      method: 'post',
+      url: `${vApi}/good_material/getGoodMaterial`,
+      contentType: "application/json",
+      headers: {
+        token,
+      },
+      height: 500,
+      cols: detailCols
       , page: true
       , id: 'detailsId'
       , loading: true,

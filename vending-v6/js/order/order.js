@@ -420,18 +420,7 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
             layer.msg('时间选择范围最多三个月', {icon: 7});
             return;
         }
-        // saveTableWidth(tableCols);
-        // orderTable.reload({
-        //     where: {
-        //         condition: startTime,
-        //         conditionTwo: endTime,
-        //         conditionThree: $('.key-contnet input[name="orderCode"]').val(),
-        //         conditionSix: $('.newKeyContent select[name="keyPayStatus"]').val(),
-        //         shipStatus: $('.newKeyContent select[name="keyShipStatus"]').val(),
-        //         refund: $('.newKeyContent select[name="keyrefundStatus"]').val(),
-        //     },
-        //     cols: tableCols
-        // })
+        saveTableWidth(tableCols);
         orderTable.reload({
             where: {
                 condition: startTime,
@@ -440,7 +429,8 @@ layui.use(['laydate', 'table', 'tree', 'flow', 'layer', 'form'], function () {
                 conditionSix: $('.newKeyContent select[name="keyPayStatus"]').val(),
                 shipStatus: $('.newKeyContent select[name="keyShipStatus"]').val(),
                 refund: $('.newKeyContent select[name="keyrefundStatus"]').val(),
-            }
+            },
+            cols: tableCols
         })
     });
     // 刷新页面
