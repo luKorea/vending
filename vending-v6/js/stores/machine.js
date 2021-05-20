@@ -971,18 +971,11 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                     }
                 },
                 {field: 'before_count', align: 'center', title: '出货前数量',},
-                // { field: 'ship_count', width: 135, align: 'center', title: '出货数量',templet:function(d){
-                //     return d.ship_status==1?'1':'0'
-                // } },
                 {
                     field: 'before_count', align: 'center', title: '出货后数量', templet: function (d) {
                         return d.before_count ? (+d.ship_status === 1 || +d.ship_status === 2 ? d.before_count - 1 : d.before_count) : '-'
                     }
                 },
-                // { field: 'ship_f', width: 140, align: 'center', title: '出货失败数量',templet:function(d){
-                //     return d.ship_status==1?'0':'1'
-                // } },
-
                 {
                     field: 'ship_type', align: 'center', title: '出货类型', templet: function (d) {
                         return d.ship_type == 1 ? '订单' : '取货码'
