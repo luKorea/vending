@@ -976,7 +976,7 @@ layui.use(['table', 'form', 'layer', 'laydate', 'tree'], function () {
                 // } },
                 {
                     field: 'before_count', align: 'center', title: '出货后数量', templet: function (d) {
-                        return d.before_count ? (d.ship_status == 1 ? d.before_count - 1 : d.before_count) : '-'
+                        return d.before_count ? (+d.ship_status === 1 || +d.ship_status === 2 ? d.before_count - 1 : d.before_count) : '-'
                     }
                 },
                 // { field: 'ship_f', width: 140, align: 'center', title: '出货失败数量',templet:function(d){
