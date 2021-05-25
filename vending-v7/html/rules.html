@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分账规则管理</title>
+    <link rel="stylesheet" href="./assets/public/datepicker.css">
+    <script src="../assets/public/documentWrite.js"></script>
+    <style>
+        .c-datepicker-date-editor {
+            border: none;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrap">
+    <div style="width: 100%;display: flex;">
+        <!-- 左边部分 -->
+        <div class="left-mian">
+            <div class="accountContnet" style="margin-left:15px;">
+                <button type="button" class="layui-btn layui-btn-primary refreshBtnList">
+                    <i class="layui-icon layui-icon-refresh-3"></i>
+                    <span>刷新</span>
+                </button>
+                <p style="margin:20px 20px 10px ;color:#be954a;">商户列表</p>
+                <div id="testGoods" class="demo-tree demo-tree-box"></div>
+            </div>
+            <!-- 右侧栏 -->
+            <div class="sidebar"><i class="layui-icon layui-icon-left"></i></div>
+        </div>
+        <i class="layui-icon layui-icon-right  on-left"></i>
+        <div class="margin" style="width: 100%">
+            <div class="newHeader">
+                <div class="newKeyContent">
+                    <div class="newKeyItem">
+                        <label for="">关键字</label>
+                        <div>
+                            <input type="text" name="keyMerchants" class="KyeText" placeholder="请输入规则名">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary queryBtn">
+                        <i class="layui-icon layui-icon-search"></i>
+                        <span>查询</span>
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary addSalesBtn hide">
+                        <i class="layui-icon layui-icon-add-circle"></i>
+                        <span>新增分账规则</span>
+                    </button>
+                </div>
+                <div class="newKeyContent">
+                    <button type="button" class="layui-btn layui-btn-primary queryBtn">
+                        <i class="layui-icon layui-icon-refresh-3 "></i>
+                        <span>刷新</span>
+                    </button>
+                </div>
+            </div>
+            <div class="salesTableList" style="margin-top: 10px; width: 100%">
+                <div class="tableList">
+                    <table class="layui-hide" id="salesTable" lay-filter="salesTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- 新增编辑分账规则 -->
+<div class="addSalesCont maskContnet" style="overflow-y: auto;">
+    <div class="addSalesBox margin0">
+        <div class="playHeader">
+            <span class="text">新增分账规则</span>
+            <button class="close" type="button">
+                <i class="layui-icon layui-icon-close"></i>
+            </button>
+        </div>
+        <div class="addSalesBody">
+            <form lay-filter="formData" class="layui-form" style="width: 100%">
+                <div class="listFlex">
+                    <label for="" style="width: 150px"><span style="color: red;">*</span>规则名:</label>
+                    <input type="text" name="accsplitRuleName" placeholder="请输入规则名">
+                </div>
+                <div class="listFlex">
+                    <label for="" style="width: 130px"><span style="color: red;">*</span>收款账户:</label>
+                    <select name="payId" id="payId"></select>
+                </div>
+                <div class="listFlex machineChoose">
+                    <label for="" style="width: 130px"><span style="color: red;">*</span>接受方:</label>
+                    <button class="layui-btn layui-btn-normal goodsChooseBtn btn" type="button">
+                        <i class="layui-icon layui-icon-user"></i>
+                        <span>选择接收方</span>
+                    </button>
+                    <p style="color: red; margin-left: 10px" class="goodsFlag">未选择</p>
+                </div>
+
+                <div class="listFlex">
+                    <label for="" style="width: 150px"><span style="color: red;">*</span>有效时间:</label>
+                    <div class="c-datepicker-date-editor J-datepicker-range" style="display: flex; align-items: center">
+                        <input placeholder="生效时间" name="effectiveDate" class="c-datepicker-data-input" value="">
+                        <span class="c-datepicker-range-separator">-</span>
+                        <input placeholder="失效时间" name="expiryDate" class="c-datepicker-data-input" value="">
+                    </div>
+                </div>
+
+                <div class="listFlex">
+                    <label for="" style="width: 150px"><span style="color: red">*</span>默认规则标识：</label>
+                    <input type="radio" name="defaultRule" value="1" title="默认">
+                    <input type="radio" name="defaultRule" value="0" title="非默认">
+                </div>
+                <div class="listFlex">
+                    <label for="" style="width: 150px"><span style="color: red">*</span>接收方分账模式：</label>
+                    <input type="radio" name="accsplitMode" value="1" title="指定比例">
+                    <input type="radio" name="accsplitMode" value="0" title="指定金额">
+                </div>
+
+                <div class="listFlex">
+                    <label for="" style="width: 150px"><span style="color: red">*</span>分账金额计算模式：</label>
+                    <input type="radio" name="accsplitRule" lay-filter="accsplitRule" value="0" title="固定金额">
+                    <input type="radio" name="accsplitRule" lay-filter="accsplitRule" value="1" title="按订单金额比例">
+                </div>
+
+                <div class="listFlex money" style="display: none">
+                    <label for="" style="width: 150px"><span style="color: red;">*</span>待分账金额:</label>
+                    <input type="number" min="0" name="accsplitTotalAmt" placeholder="请输入待分账金额">
+                </div>
+                <div class="listFlex proportion"  style="display: none">
+                    <label for="" style="width: 150px"><span style="color: red;">*</span>待分账比例:</label>
+                    <input type="number" min="0" max="100" name="accsplitTotalRate" placeholder="请输入待分账比例">
+                </div>
+                <div class="listFlex">
+                    <label for="" style="width: 150px"><span style="color: red">*</span>是否启用：</label>
+                    <input type="radio" name="status" value="1" title="启用" checked>
+                    <input type="radio" name="status" value="0" title="禁用">
+                </div>
+
+            </form>
+        </div>
+        <div class="footerBtn">
+            <button class="layui-btn layui-btn-normal confirmBtn btn " style="margin: 0 0 0 15px;">
+                <span>确定</span>
+            </button>
+            <button class="layui-btn layui-btn-normal btn  cancelBtn" style="margin: 0 0 0 15px;">
+                <span>取消</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 接收方列表 -->
+<div class="goodsCont maskContnet" style="overflow-y: auto;">
+    <div class="goodsBox margin0">
+        <div class="playHeader">
+            <span>接收方列表</span>
+            <button class="close close-list" type="button">
+                <i class="layui-icon layui-icon-close"></i>
+            </button>
+        </div>
+        <div class="goodsBody">
+            <div class="data-list-contnet">
+                <div class="goodsChooseList">
+                    <table class="layui-hide" id="goodsTable" lay-filter="goodsTable"></table>
+                </div>
+            </div>
+        </div>
+        <div class="goodsFooter">
+            <button class="layui-btn layui-btn-normal btn determineBtn" type="button">
+                <span>确定</span>
+            </button>
+            <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
+                <span>取消</span>
+            </button>
+        </div>
+    </div>
+</div>
+<!-- 已选择的接收方 -->
+<div class="chooseGoods maskContnet" style="overflow-y: auto;">
+    <div class="margin0 chooseGoodsBox">
+        <div class="playHeader">
+            <span>已选择的接收方</span>
+            <p style="color: red; margin-bottom: 10px">温馨提示：请确保输入的分账金额或分账比例大于0!</p>
+            <button class="close close-list" type="button">
+                <i class="layui-icon layui-icon-close"></i>
+            </button>
+        </div>
+        <div class="chooseBody">
+            <ul class="SetTitle">
+                <li class="SetName">
+                    <div>接收方名称</div>
+                </li>
+                <li class="SetName">
+                    <div>接收方编号</div>
+                </li>
+                <li class="SetName">
+                    <div>失效日期</div>
+                </li>
+                <li class="duration">
+                    <div>优先固定分账金额</div>
+                </li>
+                <li class="duration">
+                    <div>分账金额</div>
+                </li>
+                <li class="duration">
+                    <div>分账比例（%）</div>
+                </li>
+            </ul>
+            <ul class="SetContList">
+            </ul>
+        </div>
+        <div class="chooseFooter">
+            <button class="layui-btn layui-btn-normal btn determineBtn" type="button">
+                <span>确定</span>
+            </button>
+            <button class="layui-btn layui-btn-normal btn moreChoose" type="button">
+                <span>选择其他接收方</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 操作部分 -->
+<ul class="ListOperation">
+    <li class="edit">编辑</li>
+    <li class="receiverList">接收方列表</li>
+    <li class="del">删除</li>
+</ul>
+
+
+<!-- 数据处理弹窗 -->
+<div class="mask maskContnet">
+    <div class="TitleContentWith">
+            <span class="maskSpan" style="display: inline-block;">
+                <i class="layui-icon layui-icon-loading "></i>
+            </span>
+        数据处理中，请稍候
+    </div>
+</div>
+</body>
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn Toperation" lay-event="operation">
+            <span style="color:#fff;">操作</span>
+            <i class="layui-icon layui-icon-triangle-d"></i>
+        </button>
+    </div>
+</script>
+<script src="./assets/public/moment.min.js"></script>
+<script src="./assets/public/datepicker.all.min.js"></script>
+
+</html>

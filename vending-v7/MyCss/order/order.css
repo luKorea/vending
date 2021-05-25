@@ -1,0 +1,281 @@
+.data-left{
+    -webkit-box-flex: 0;
+    overflow: hidden;
+    /* padding-top: 17px; */
+    position: relative;
+    padding-right: 40px;
+    width: 400px;
+    flex: 0 0 400px;
+ }
+.sidebar{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 550px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    background-color: #fff;
+    text-align: center;
+    color: #d3dce6;
+    cursor: pointer;
+    display: table;
+    z-index: 50;
+    border-right: 12px solid #eee;
+}
+.sidebar i{
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    color: #999;
+    right: -6px;
+    display: block;
+    width: 32px;
+    line-height: 76px;
+    font-size: 24px;
+    height: 76px;
+    background-color: #eee;
+    border-radius: 10px 0 0 10px;
+    -webkit-transition: right 1s;
+    top: 187px !important;
+}
+.data-left input{
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: none;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+}
+.data-left p{
+    margin: 10px;
+    color: #be954a ;
+    font-weight: bold;
+}
+.account{
+    height: 520px;
+    width: 100%;
+    float: left;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+    cursor: default;
+    background: #fff;
+    color: #606266;
+    /* text-align: center; */
+    overflow: auto;
+}
+.account span{
+    /* color: #409EFF; */
+    font-size: 14px;
+}
+.equipment{
+    height: 520px;
+    width: 100%;
+    float: left;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+    cursor: default;
+    background: #fff;
+    color: #606266;
+    overflow: hidden;
+}
+.equipment>div{
+    cursor: pointer;
+    /* display: flex;
+    -webkit-box-align: center;
+    align-items: center; */
+    /* height: 26px; */
+    /* white-space: nowrap; */
+    white-space:nowrap;
+    flex: 1;
+}
+.data-right{
+    width: 100%;
+    overflow: hidden;
+}
+.data-right .layui-table-body{
+    max-height: 468px;
+}
+.goodsListBody .layui-table-body{
+    max-height: 120px;
+    min-height: 60px;
+}
+.goodsListBody{
+    width: 100%;
+    overflow: hidden;
+}
+.goodsListBody .layui-form{
+    width: 100%;
+    overflow-x: auto;
+}
+.goodsListBody .layui-table-view{
+
+    border-bottom: none !important;
+}
+.machineList{
+    padding-left:10px;
+    width: 100%;
+    overflow-x: auto;
+    height: 95%;
+    overflow: auto;
+    margin-top: 10px;
+}
+.machineList span{
+    display: block;
+    padding: 5px 0;
+}
+.equipment .active{
+    color: #be954a;
+    font-weight: bold;
+}
+.orderDetailsBox ,.exportBox{
+    width: 800px;
+    position: relative;
+    margin: 2vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    padding-bottom: 15px;
+}
+.exportBox{
+    width: 500px;
+}
+.refundBox{
+    width: 400px;
+    position: relative;
+    margin: 20vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+    padding-bottom: 15px;
+    padding: 20px;
+    border-radius: 5px;
+}
+.detailsBody{
+    width: 96%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.orderDetails .detailsHeader{
+    padding: 15px 0;
+    border-bottom: 1px solid rgb(233, 233, 233);
+
+}
+.detailsHeader h2{
+    color: #606266;
+    font-size: 16px;
+    font-weight: bold;
+}
+.detailsHeader .btn{
+    padding: 10px 15px;
+}
+.informmationBody{
+    flex-wrap: wrap;
+    margin: 0;
+    border-bottom: 3px solid rgb(233, 233, 233);
+
+}
+.informmationBody>div{
+    width: 50%;
+    line-height: 50px;
+    color: #606266;
+    font-size: 14px;
+}
+.collectionBody{
+    flex-wrap: wrap;
+    margin: 0;
+    border-bottom: 3px solid rgb(233, 233, 233);
+}
+.collectionBody>div,.merchantsBody>div{
+    width: 33.333%;
+    line-height: 50px;
+    color: #606266;
+    font-size: 14px;
+}
+.merchantsBody{
+    flex-wrap: wrap;
+    margin: 0;
+    border-bottom: 3px solid rgb(233, 233, 233);
+}
+.refundNumber{
+    margin-top: 10px;
+}
+.refundNumber input{
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: none;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+    text-align: center;
+}
+.chooseCan,.cancelBtn,.passCancelBtn{
+    color: #606266;
+    background: #fff !important;
+    border: 1px solid #dcdfe6 !important;
+}
+.chooseCan:hover,.cancelBtn:hover,.passCancelBtn:hover{
+    color: #be954a;
+    border: 1px solid #be954a !important;;
+}
+.exportBody{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+}
+.exportBody p{
+    text-align: center;
+    color: red;
+    margin-bottom: 15px;
+}
+.passwordCont{
+    width: 600px;
+    position: relative;
+    margin: 10vh auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+.passBody{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+}
+
+
+.over-line .layui-table-view .layui-table {
+    margin: 0 !important;
+    height: 100% !important;
+}
+

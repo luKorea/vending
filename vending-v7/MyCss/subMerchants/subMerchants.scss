@@ -1,0 +1,202 @@
+.orderBox {
+  margin-top: 20px;
+
+  .orderBody {
+    display: flex;
+    width: 100%;
+
+    .activityBox {
+      margin-top: 10px;
+      -webkit-box-flex: 0;
+      overflow: hidden;
+      position: relative;
+      padding-right: 40px;
+      width: 1000px;
+      flex: 0 0 400px;
+
+      .width50 {
+        float: left;
+        cursor: pointer;
+        white-space: nowrap;
+        flex: 1 1 0%;
+        overflow: auto;
+        width: 50%;
+      }
+
+      p {
+        margin: 10px;
+        color: #be954a;
+        font-weight: bold;
+      }
+
+      .activityList {
+        height: 530px;
+        width: 100%;
+        float: left;
+        overflow: auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+        box-sizing: border-box;
+        position: relative;
+        cursor: default;
+        background: #fff;
+        color: #606266;
+        overflow: auto;
+
+        .active {
+          color: #be954a;
+          font-weight: bold;
+        }
+
+        #demo {
+          padding-left: 10px;
+        }
+      }
+
+      .activityList1 {
+        span {
+          display: block !important;
+          padding: 5px 0;
+          cursor: pointer;
+        }
+
+        .active {
+          color: #be954a;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .orderTable {
+      width: 100%;
+      overflow: hidden;
+      //margin-top: 30px;
+    }
+  }
+}
+
+.orderTable {
+  .layui-form {
+    width: 100%;
+
+    tr td {
+      cursor: pointer;
+    }
+  }
+}
+
+
+.over-line .layui-table-view .layui-table {
+  margin: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+
+/* 添加编辑成员部分 */
+.MemberOperation{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 99;
+  color: #606266;
+  line-height: 24px;
+  font-size: 14px;
+  display: none;
+}
+.MemberContent,.addBox{
+  width: 900px;
+  position: relative;
+  margin: 2vh auto 50px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+.OperationHeader{
+  padding: 20px 20px 10px;
+  text-align: center;
+}
+.OperationHeader>span{
+  line-height: 24px;
+  font-size: 18px;
+  color: #303133;
+}
+.OperationHeader>button{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 0;
+  background: 0 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+.OperationHeader>button :hover{
+  color: #be954a;
+}
+.OperationHeader>button i{
+  color: #909399;
+}
+.listInput{
+  margin-bottom: 22px;
+  display: flex;
+  justify-content: safe;
+  align-items: center;
+}
+.listInput label{
+  width: 100px;
+  text-align: right;
+  font-size: 14px;
+  color: #606266;
+  line-height: 40px;
+  padding: 0 12px 0 0;
+  box-sizing: border-box;
+}
+.inputWidth{
+  line-height: 40px;
+  font-size: 14px;
+  width: 70%;
+}
+.inputWidth input{
+  -webkit-appearance: none;
+  background-color: #fff;
+  background-image: none;
+  border-radius: 4px;
+  border: 1px solid #dcdfe6;
+  box-sizing: border-box;
+  color: #606266;
+  display: inline-block;
+  font-size: inherit;
+  height: 40px;
+  line-height: 40px;
+  outline: none;
+  padding: 0 15px;
+  transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+  width: 100%;
+}
+.inputWidth input:hover{
+  border-color: #be954a;
+}
+.layui-form-onswitch{
+  border-color: #be954a;
+  background-color: #be954a;
+}
+.cancel-btn,.addCancelBtn{
+  color: #606266;
+  background: #fff !important;
+  border: 1px solid #dcdfe6 !important;
+}
+.cancel-btn:hover,.addCancelBtn:hover{
+  border-color: #be954a !important ;
+  color: #be954a !important;
+}
+
+.w80 {
+  width: 120px !important;
+}

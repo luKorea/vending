@@ -1,10 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字货币子商户配置</title>
+    <script src="../assets/public/documentWrite.js"></script>
 </head>
 <body>
-$END$
+<div class="wrap">
+    <div class="margin">
+        <div class="newHeader" style="margin-top: 30px;">
+            <div class="newHeaderText">
+                操作部分
+            </div>
+            <div class="newKeyContent">
+                <button type="button" class="layui-btn layui-btn-primary addBtn">
+                    <i class="layui-icon layui-icon-add-1"></i>
+                    <span>新增</span>
+                </button>
+            </div>
+            <div class="newKeyContent">
+                <button type="button" class="layui-btn layui-btn-primary queryBtn">
+                    <i class="layui-icon layui-icon-refresh-3 "></i>
+                    <span>刷新</span>
+                </button>
+            </div>
+        </div>
+        <div class="orderBox">
+            <div class="orderBody">
+                <div class="activityBox">
+                    <div class="width50">
+                        <p>商户列表</p>
+                        <div class="activityList">
+                            <button type="button" class="layui-btn layui-btn-primary refreshBtnList">
+                                <i class="layui-icon layui-icon-refresh-3"></i>
+                                <span>刷新</span>
+                            </button>
+                            <div style="padding: 10px;">
+                                <div id="test1" class="demo-tree demo-tree-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="width50 ">
+                        <p>数字货币商户</p>
+                        <div class="activityList activityList1">
+                            <div class="activityArr" id="demo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar">
+                        <i class="layui-icon layui-icon-left"></i>
+                    </div>
+                </div>
+                <i class="layui-icon layui-icon-right  onLeft" style="z-index: 888;"></i>
+                <div class="orderTable" style="width: 100%">
+                    <div class="over-line">
+                        <table style="width: 100% !important;" class="layui-hide" id="moneyData" lay-filter="moneyData"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 添加成员 编辑子商户 -->
+    <div class="MemberOperation" style="overflow-y: auto;">
+        <div class="MemberContent margin0">
+            <div class="OperationHeader">
+                <span class="subTitle">新增子商户</span>
+                <button class="cancel_btn">
+                    <i class="layui-icon layui-icon-close"></i>
+                </button>
+            </div>
+            <div style="text-align: initial;padding: 25px 25px 30px;">
+                <form class="layui-form" lay-filter="information" style="width: 100%">
+                    <div class="listFlex">
+                        <label class="w80"><span style="color: red;">*</span>子商户名称：</label>
+                        <input type="text" name="sub_name" autocomplete="off" placeholder="请输入子商户名称">
+                    </div>
+                    <div class="listFlex">
+                        <label class="w80"><span style="color: red;">*</span>商户名称：</label>
+                        <input type="text" name="merchant_name" autocomplete="off"　placeholder="请输入商户名称">
+                    </div>
+                    <div class="listFlex">
+                        <label class="w80"><span style="color: red;">*</span>商户简称：</label>
+                        <input type="text" name="merchant_short_name" autocomplete="off"　placeholder="请输入商户简称">
+                    </div>
+                    <div class="listFlex">
+                        <label class="w80"><span style="color: red;">*</span>商户钱包ID：</label>
+                        <input type="text" name="wallet_id" autocomplete="off"　placeholder="请输入商户钱包ID">
+                    </div>
+                    <div class="listFlex">
+                        <label class="w80"><span style="color: red;">*</span>联系人：</label>
+                        <input type="text" name="contact_name" autocomplete="off"　placeholder="请输入联系人">
+                    </div>
+                    <div class="listFlex">
+                        <label class="w80"><span style="color: red;">*</span>联系人电话：</label>
+                        <input type="text" name="service_phone" autocomplete="off"　placeholder="请输入联系人电话">
+                    </div>
+                    <div class="listFlex">
+                        <label class="w80"><span style="color: red;">*</span>联系邮箱：</label>
+                        <input type="text" name="contact_email" autocomplete="off"　placeholder="请输入联系邮箱">
+                    </div>
+                    <div class="listFlex">
+                        <label class="w80"><span style="color: red;">*</span>商户备注：</label>
+                        <input type="text" name="merchant_remark" autocomplete="off"　placeholder="请输入商户备注">
+                    </div>
+                </form>
+                <div style="text-align: center; margin-top: 15px;">
+                    <button class="layui-btn layui-btn-normal btn submit_btn" type="button">
+                        <span>提交</span>
+                    </button>
+                    <button class="layui-btn layui-btn-normal btn cancel-btn cancel_btn" type="button">
+                        <span>取消</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 操作部分 -->
+    <ul class="ListOperation">
+        <li class="edit">编辑</li>
+        <li class="relation">关联</li>
+    </ul>
+</div>
 </body>
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm btn Toperation " lay-event="operation">
+            <span style="color:#fff;">操作</span>
+            <i class="layui-icon layui-icon-triangle-d"></i>
+        </button>
+    </div>
+</script>
 </html>
