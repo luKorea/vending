@@ -260,12 +260,13 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 layer.msg('带*为必填', {icon: 7});
                 return;
             }
-        } else {
-            if (!(payFormData.payee && payFormData.aliPayId)) {
-                layer.msg('带*为必填', {icon: 7});
-                return;
-            }
         }
+        // } else {
+        //     if (!(payFormData.payee && payFormData.aliPayId)) {
+        //         layer.msg('带*为必填', {icon: 7});
+        //         return;
+        //     }
+        // }
         $('.mask').fadeIn();
         $('.maskSpan').addClass('maskIcon')
         if (type === '2') {
@@ -340,7 +341,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 app_key: payFormData.app_key_number,
                 app_private_key: payFormData.app_private_key_number
             });
-            var editUrl = '/pay/testSand'
+            var editUrl = '/pay/test_DC'
         }
         loadingAjax(editUrl, 'post', textParam, sessionStorage.token, 'mask', '', '', layer).then(res => {
             var editPay = JSON.stringify({
@@ -681,7 +682,7 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                 app_key: addData.app_key_number,
                 app_private_key: addData.app_private_key_number
             });
-            var editUrl = '/pay'
+            var editUrl = '/pay/test_DC'
         }
 
         loadingAjax(editUrl, 'post', textParam, sessionStorage.token, 'mask', '', '', layer).then(res => {
@@ -693,7 +694,9 @@ layui.use(['table', 'form', 'layer', 'tree'], function () {
                     (typeIndex === '4' || typeIndex === '5') ? addData.juheapp_id :
                         typeIndex === '6' ? addData.app_id_number :
                             addData.aliPayId,
-                app_key: typeIndex === '2' || (typeIndex === '4' || typeIndex === '5') ? addData.juheapp_key : '',
+                app_key: typeIndex === '2' || (typeIndex === '4' || typeIndex === '5') ? addData.juheapp_key :
+                    typeIndex === '6' ? addData.app_key_number :
+                        '',
                 mchId: typeIndex === '2' ? addData.MerchantsId : (typeIndex === '4' || typeIndex === '5') ? addData.juhemchId
                     : typeIndex === '6' ? addData.numberId : '',
                 alipay_public_key: typeIndex === '1' ? addData.alipay_public_key :
